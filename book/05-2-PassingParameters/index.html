@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>5.2&mdash;Passing Parameters</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/d.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 5.2</p>
+        <p id='lessonTitle'>Passing Parameters</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">
+            L</span>et me ask you a question</b>. Read this cartoon and
+            tell me, is this a good deal, or what? I don't mean the wager on Popeye
+            versus Kid Panther; I mean, is
+            Wimpy's offer of payment on Tuesday, for a hamburger today,
+            a good deal?
+        </p>
+
+        <p> <img src="images/popeye.gif" class="right" alt="A hamburger today.">
+            The answer is, <b>you can't tell</b>; at least not without knowing
+            <b>exactly how much</b> Wimpy is willing to pay next Tuesday
+            for that "six-dollar burger" today, and, of course, how likely
+            you are to collect.
+        </p>
+        <p> Although we laugh at the Wimpy character, his offer is really
+            the basis for most commerce in the world today, and many
+            computer programs are devoted to figuring out exactly how
+            much that burger is worth. We call this concept "the time
+            value of money".
+        </p>
+        <p> Although Java has a host of different mathematical and
+            <code>String</code> functions, it's doesn't have any
+            functions dedicated to providing answers to questions like
+            this (like Excel does). If you want those answers, you'll
+            need to build those functions yourself.
+        </p>
+        <p> That's what you'll learn how to do in this section.
+        </p>
+        <ul>
+            <li> We'll start by building a simple loan calculator, where
+                you can enter the principle, (the hamburger's "list price"),
+                the term, (exactly <u>which</u> Tuesday are we talking about),
+                and the interest rate, (the <b>rent</b>, given the variables
+                of risk and return).
+            </li>
+            <li>Then, we'll turn that calculation into a procedure and
+                pass each of these values as <b>parameters</b>.
+            </li>
+        </ul>
+        <p> Then, in the next section, you'll learn how to turn that procedure
+            into a <b>reusable function</b>, just like the functions in the
+            <code>Math</code> class.
+        </p>
+        <p> That's the plan; let's get started with our calculator.
+        </p>
+    <h2>Introduction to Finance</h2>
+        <p> <b>Suppose I lend you a thousand dollars
+            today</b>, on your promise to pay me back in a year. I
+            first consider my options. With my thousand I could:
+            <img src='images/lending.png' class='right' alt='Lending money.'>
+        </p>
+        <ul>
+            <li>put it in the bank and get back thirty-five extra dollars
+                at the end of the year.
+            </li>
+            <li>buy some shares of Google stock and hope that
+                I can sell it for more than I paid for it at the
+                end of the year.
+            </li>
+
+            <li>lend it to my brother-in-law who has a great invention,
+                which he's sure will pay me back two thousand dollars
+                after the year.
+            </li>
+            <li>lend it to you.</li>
+        </ul>
+        <p> If I put it in the bank, baring revolution or another
+            financial meltdown, I'm pretty sure to
+            get my interest back. If I lend it to my brother-in-law,
+            I <b>may</b> get my two thousand back, (but it would be a miracle).
+        </p>
+        <p> Investing in Google and lending the money to you both
+            probably fall somewhere in between those two extremes.
+            Because there's a little more risk (than putting the
+            money in the bank), I'd <b>expect</b> to
+            <i>make a little more</i> money if things go well for you.
+            So, I'd lend you the money for, say 20%, or $200 for the
+            year.
+        </p>
+    <h3>Simple Interest</h3>
+        <p> This is called <b>simple interest</b> because it is,
+            well, <b>simple</b>. Here's a program, <b>SimpleInterest.java</b>,
+            (which you can find with this chapter's code folder),
+            that calculates the amount you'll need to repay:<br>
+            <img src="images/interest01b.gif" class="inlineCenter" alt="SimpleInterest01.java">
+            With simple interest, when the year's
+            up, you write  me a check for $1,200, and everybody's happy.
+        </p>
+        <p> Well, <i>almost</i> everybody!
+            <img src='images/wife.png' class='left' alt='My wife saying alter the deal.'>
+        </p>
+        <p> My wife <i>really</i> doesn't like the deal. "Make him
+            pay you back a little bit each month", she says.
+            "That way, if he loses his job, we won't lose the
+            entire thousand as well as the interest."
+        </p>
+        <p> Now, the question is, how <b>much</b> should you
+            pay me back each month? When you first look at the
+            problem, it looks simple. 20% interest on a thousand
+            dollars is $200, for a total of $1,200, so the
+            monthly payments should be $100, right?
+        </p>
+        <p> Well, I'm <b>perfectly</b> willing to <b>lend you</b> money
+            on those terms, but it really isn't a good deal for
+            you. That's because in the simple interest example,
+            you got to keep my thousand for the entire year. In
+            the revised example, you only get to keep <b>part</b>
+            of my money for the entire year, but pay
+            "rent" on the entire amount.
+        </p>
+    <h3>Monthly Payments</h3>
+        <p> So, how should we <i>correctly</i> calculate the payments? Like this:</p>
+        <ul>
+            <li>For the first month, you kept my entire thousand,
+                so you should pay me one month's interest on
+                the whole thing. Now one month's interest is
+                20% / 12 * $1,000 or $16.67. The remaining
+                $83.33 is just returning me part of the money
+                that I lent you.
+            </li>
+            <li>In the second month, you only have $916.67 of my
+                money, so you shouldn't have to pay as much
+                interest. Instead of $16.67 you only have to pay
+                $15.28, and the rest goes to pay me back a
+                little more on my original thousand.
+            </li>
+        </ul>
+
+        <p> If you keep this up, you'll see that you end up paying
+            me back all of my money way before the entire year is
+            up. Of course, you don't want to do that! You'd rather
+            pay me back less money each month, so the payments
+            come out even. How do we calculate what those payments
+            should be?
+        </p>
+        <p> Rather than going back and forth, lowering the payments,
+            and then increasing them, until you come out with the
+            right amount at the end, you can use a calculation,
+            like the one shown here, from a finance textbook:
+            <img src="images/interest02.gif" class="inlineCenter" alt="A version of the payment function.">
+            In this case:
+        </p>
+        <ul>
+            <li><b>c</b> stands for the <b>monthly</b> (or <i>period</i>) interest rate.</li>
+            <li><b>n</b> stands for the number of months or payments.</li>
+        </ul>
+        <div class='alert'>
+        <p>I don't really recommend the names <code>n</code> and <code>c</code>
+            for your programs. I've used them here only because those were the names
+            used in the financial function that I copied from the textbook.
+        </p>
+        </div>
+        <p> We can put this into a program, along with some variables to make the
+            program interactive, and end up with a useful loan calculator:<br>
+            <img src="images/interest03b.gif" class="inlineCenter" alt="A version of the payment function.">
+            Here's what the program looks like when run against the
+            $1,000 I lent you at the beginning of this section:
+            <img src="images/interest04b.gif" class="right" alt="Running the payment calculator.">
+        </p>
+        <p> Notice that instead of paying me back $100 a month, your actual payments
+            are only $92.63.
+        </p>
+        <p> Here are some program notes:
+        </p>
+        <ol>
+            <li class="d">The program asks the user for the loan amount, annual interest rate,
+                and term of the loan in years. These are stored in <code>double</code> variables.
+            </li>
+            <li class="d">For the interest rate, the user's input is divided by 1200
+                because we need the <i>monthly</i> interest rate in the formula.
+                (That's 100, because we want to turn the entered value 7.5 into
+                the mathematical annual percentage .075, and 12 because we want
+                to convert from annual to monthly.) If
+                you wanted to print the annual rate as part of the message to the user,
+                you might want to do this calculation separately and store that in another
+                variable.
+            </li>
+            <li class="d">Similarly, the term in years input by the user is multiplied
+                by 12 to store the number of monthly periods in the variable <code>n</code>,
+                which is what the formula requires.
+            </li>
+            <li class="d">The <code>Math.pow</code> function is used to calculate
+                the payment, using the formula from the textbook. (There are other
+                formulas you can use as well.) Because I added the line
+                <code>import static java.lang.Math.*;</code> to the top of my
+                program, I don't have to prefix each use of the <code>pow()</code>
+                function with the name of the <code>Math</code> class.
+            </li>
+            <li class="d">Finally, the program prints out the value for the
+                monthly payment as well as the total future (total) value of
+                all the payments.
+            </li>
+        </ol>
+        <div class='exercise'>
+        <h5>Try It Out</h5>
+        <p> You'll find <b>PaymentCalculator.java</b> in this chapter's
+            code folder. Open, compile and run it. Then, you can follow along
+            with the rest of this section. When you're done, makes sure that
+            your modified <b>PaymentCalculatorProcedures.java</b>
+            program works like the original.
+        </p>
+        </div>
+    <h2>Procedures and Parameters</h2>
+        <p> Instead of writing a <i>stand-alone</i> program that gets
+            the user's input, calculates the payment, and then prints
+            the results, it would be more useful to put your code into
+            procedures that could be reused whenever you wanted.
+        </p>
+        <p> Here's a first attempt. I simply took the program
+            <b>PaymentCalculator.java</b> and renamed it
+            <b>PaymentCalculatorProcedures</b>. Then, inside the program
+            I moved the calculations and the printing into a
+            new procedure named <code>printLoanData()</code>,
+            <b>just like you did earlier</b>, when you
+            studied procedural
+            decomposition:
+            <img src="images/parameters01b.gif" class="inlineCenter" alt="A procedure and local variables.">
+            Unfortunately, this doesn't work as cleanly as it did with
+            the <b>Abacus</b> program. That's because the variables
+            <code>loan</code>, <code>c</code> and
+            <code>n</code> are all <b>local</b> to the <code>main()</code>
+            method. When you define a variable inside a procedure, you can
+            <b>only</b> use that variable inside the same procedure,
+            <b>not</b> inside another procedure like
+            <code>printLoanData()</code>.
+        </p>
+        <p> When you try to compile <b>PaymentCalculatorProcedures</b>,
+            you'll see a slew of error messages that look like this:<br>
+            <img src='images/compile-error.gif' class='inlineCenter' alt='Local variables.'>
+            As you can see, inside the <code>printLoanData()</code> method,
+            the Java compiler cannot see the variable named <code>loan</code>,
+            since it was defined and initialized in another method
+            (<code>main()</code>).
+        </P>
+    <h3>Parameters or Arguments</h3>
+        <p>Most procedures and functions require additional <b>input information</b>
+            to carry out their work. A method that computes square roots, for instance,
+            requires the number to operate on. The  <code>printLoanData()</code>
+            procedure shown here, requires the loan amount, the monthly rate and
+            the term of the loan before it can calculate the payments.
+        </p>
+        <p> Fortunately, it is very easy to do this by writing your
+            procedures and functions so that they accept <b>parameters</b>,
+            and then <b>passing</b> different values when you actually call the procedure.
+        </p>
+    <h3>Actual Parameters</h3>
+        <p>There are actually <b>two</b> kinds of parameters used when you
+            write computer programs: <b>formal</b> parameters, and
+            <b>actual</b> parameters.
+        </p>
+        <p>A <b>formal parameter</b> is simply a local variable, specifically
+            designed to transfer information from one method to another.
+            Actual parameters are <b>values</b> you supply when you <b>call</b>
+            the method. When you call the method, the actual parameters are used to
+            initialize the formal parameters.
+        </p>
+        <p> Let's see how that works in our case by passing the loan amount,
+            annual rate and term in years as actual parameters when we
+            <b>call</b> the <code>printLoanData()</code> procedure:
+            <img src="images/parameters02b.gif" class="inlineCenter" alt="Passing actual parameters to printLoanData">
+            In addition to passing three actual parameters, I've also
+            "cleaned up" the code a little. Notice that I have:
+        </p>
+        <ul>
+            <li>Changed the names of each of the variables to make the program
+                clearer.
+            </li>
+            <li>Called the <code>nextDouble()</code> input function to accept the
+                user's input and store it in my three variables.
+            </li>
+            <li>Skipped the calculations previously used to turn rate into a
+                monthly rate and years into months. I'll make those adjustments
+                when I calculate the payment inside the procedure.
+            </li>
+            <li><b>Passed</b> each of the three variables to <code>printLoanData()</code>
+                by placing them in the <b>parameter list</b> which, up until now,
+                we've left empty.
+            </li>
+        </ul>
+        <p> If I compile after making these changes, I'll actually get
+            <b>more</b> errors that I did before,
+            because when I <b>defined</b> the procedure, I <b>didn't</b> define any
+            <b>formal parameters</b> to match the actual parameters that I've passed
+            when calling the procedure.
+        </p>
+        <p> Let's change that now.</p>
+    <h3>Formal Parameters</h3>
+        <p> A <b>formal parameter</b> is simply a local variable, specifically
+            designed to transfer information from one method to another.
+            A <b>regular local variable</b>, for instance, is declared like this.
+            <img src='images/localvar01.gif' class='right' alt='Defining a local variable.'>
+        </p>
+        <p> As you remember, a variable declaration creates
+            a "bucket" where you can store a value&#8212;in this case,
+            <code>myLocalVar</code> is an <code>int</code>-sized
+            bucket that can hold an <code>int</code> value. The
+            actual value, <b>32</b> is stored in the "bucket" when
+            it is initialized; however, the initialization must happen
+            inside the method&#8212;there is no way to initialize the
+            local variable from outside.
+        </p>
+        <p><b>A formal parameter</b> works exactly like this local
+            variable <b>except</b>:
+            </p>
+            <ol>
+                <li class='d'>A formal parameter is declared <b>inside the parameter
+                    list</b>&#8212;that is,
+                    inside the parentheses following the method name&#8212;and
+                    <b>not</b> inside the method body. In the example shown here,
+                    I've defined two formal parameters, the <code>int p1</code> and
+                    the <code>double p2</code>.
+                    <img src='images/formalparameters.gif' class='inline' alt='Formal parameter defintions.'>
+
+                </li>
+                <li class='d'>Each formal parameter declaration must include <b>both</b> the
+                    type of the variable <b>and</b> a name. Separate parameter definitions
+                    with a comma. (Remember that you can
+                    use a single type along with several names when
+                    declaring regular local variables, like this:
+                    <p class="code" style='margin-bottom:.5em;'>
+                    int a, b, c;
+                    </p>
+                    This kind of syntax is <b>not</b> legal when declaring
+                    parameters; <b>each</b> formal parameter must have both a name
+                    and a type.
+                </li>
+                <li class='d'>A formal parameter is initialized by <b>calling</b> the
+                    method, <b>not</b> by using the assignment operator.
+                </li>
+            </ol>
+        <p> To change the definition of <code>printLoanData()</code>
+            to add the three formal parameters that are needed, you would
+            write something like this:<br>
+            <img src="images/parameters05b.gif" class="inlineCenter" alt="Defining formal parameters.">
+            Notice that each formal parameter is a complete variable
+            declaration with its own type and name. Note also that the
+            names I've used for the formal parameters here, <b>are not the
+            same</b> as the names of the actual parameters I've used when
+            calling the procedure. (They <b>could</b> be the same name, but
+            I've used different names to highlight the fact that these are
+            <b>different</b> variables.)
+        </p>
+        <p> To initialize the formal parameters <code>principle</code>,
+            <code>rate</code> and <code>term</code>, you <b>pass</b> different
+            values as <b>actual parameters</b>. Actual parameters, you remember,
+            are <b>values</b> you supply when you <b>call</b> the procedure. When
+            you call <code>printLoanData()</code>, the values stored in the
+            variables <code>loanAmount</code>, <code>apr</code> and <code>years</code>
+            in the <code>run()</code> method are used to <b>initialize</b> the
+            formal parameters in <code>printLoanData()</code>, <b>exactly as if
+            the procedure started with this line</b>:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public static void printLoanData()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double principle = loanAmount;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double rate = apr;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double term = years;
+        </p>
+        <p> When you create a <b>local variable</b> and initialize it inside
+            a procedure, the local variable (like the example <code>myLocalVar</code>
+            shown earlier) has the same value (32) <b>every time</b> that
+            the procedure is called. In contrast, the formal parameters
+            <code>principle</code>, <code>rate</code> and <code>term</code>
+            may have <b>different</b> values each time <code>printLoanData()</code>
+            is called. This means that by calling a procedure using different
+            <b>actual</b> parameters, you can <b>customize</b> the
+            way that the method behaves.
+        </p>
+    <h3>Finishing printLoanData()</h3>
+        <p> If you are typing along and try to compile, you'll see that DrJava reports that
+            <code>printLoanData()</code> <b>still</b> has errors! That's because
+            the names of the formal parameters, and the names of the variables
+            used in the actual calculations are different.
+        </p>
+        <p> To fix this, just create local variables for <code>c</code> and
+            <code>n</code>,  using the formal parameters. Then, change the
+            formula to use <code>principle</code>
+            instead of <code>loan</code> like this:<br>
+            <img src="images/parameters04b.gif" class="inlineCenter" alt="Finishing printLoanData().">
+        </p>
+
+    <h3>Pass By Value</h3>
+        <p>When you call a method, the formal parameter receives a
+            <b>copy</b> of the actual parameter. This is called
+            <b>pass by value</b>. The actual parameters you use may be
+            either literals or variables; in both cases a copy is made.
+        </p><p>Suppose, for instance, inside your <code>main()</code> method
+            that you have two local variables, named
+            <code>a</code> and <code>b</code>, containing the values
+            <b>52</b> and <b>17</b>. Now, suppose that you
+            called <code>myMethod()</code> and passed as actual parameters,
+            the variables <code>a</code>, and <code>b</code>.
+        </p>
+        <p> When you pass the variables <code>a</code> and <code>b</code> to
+            the method <code>myMethod()</code>, the values <b>52</b> and
+            <b>17</b> are copied into the formal parameters <code>j</code>
+            and <code>k</code>, as shown here:<br>
+            <img src="images/e08.gif" class='inlineCenter' alt="Passing parameters by value">
+            In the example shown here, the formal parameters <code>j</code>
+            and <code>k</code> are changed inside the method to <b>13</b>
+            and <b>52</b>. This has no effect at all on the variables
+            <code>a</code> and <code>b</code>.
+        </p>
+    <h3>Type Checking</h3>
+        <p> When you call a method, the actual parameters you
+            pass must be <b>compatible</b> with the types of the formal parameters.
+            Java will attempt to ensure this using a process called
+            <b>type-checking</b>.
+        </p>
+        <p> Generally, what this means is that when a method is expecting a
+            <code>String</code> parameter, you can't pass an <code>int</code>,
+            and vice-versa. As you saw when we looked at Java's
+            primitive types, there are some numeric types that are compatible
+            with each other, and some that are not. For instance, if a method
+            is expecting a <b>floating-point</b> number, you can usually pass it an
+            <b>int</b>, but the reverse isn't true.
+        </p>
+        <div class="alert">
+        <p>Type checking doesn't catch <b>every</b> error when
+            you pass parameters to methods. If you write:<br>
+            <img src='images/type-checking.png' class='inlineCenter' alt='Calling a method with the wrong parameter order.'>
+            the compiler <b>will not </b> catch your error. Because both
+            <code>apr</code> and <code>years</code> have the same type
+            (<code>double</code>), the compiler doesn't distinguish between them.
+            All it's doing is checking to see that you are passing the
+            right <b>kind</b> of value, not the <b>right</b> value.
+            This will result in a <b>logic error</b>, since the APR will be
+            used for the term in the calculation, and vice-versa.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Passing Parameters Summary
+        </p>
+        <ul>
+            <li>Variables defined inside a method are <b>local</b> to the
+                method, and <b>cannot be seen</b> inside other procedures
+                or functions.
+            </li>
+            <li>To use a local variable in a different procedure, you
+                <b>pass the variable</b> as an <b>actual parameter</b>
+                or <b>argument</b>. To do this, place the variable's
+                name inside the procedure's parameter list, when
+                <b>calling</b> the procedure.
+            </li>
+            <li>When passing <b>multiple parameters</b>, separate each
+                variable name with commas. <b>Do not</b> use a type (such as
+                <code>int</code>) before the variable name.
+            </li>
+            <li>When you <b>define</b> the procedure, create a <b>formal
+                parameter</b> for each value you want to pass into the
+                procedure. A formal parameter consists of a <b>variable
+                type, followed by a name</b>. Each formal parameter
+                must have its own type.
+            </li>
+            <li>When you call the procedure, each actual parameter is
+                <b>copied</b> into the procedure's corresponding formal
+                parameter. The values are copied <b>by position</b>. The
+                number of formal and actual parameters must be the same,
+                and their types must be compatible.
+            </li>
+            <li>For numeric and <code>String</code> parameters, changes made to
+                the formal parameters inside the procedure
+                <b>cannot change or affect</b> the actual parameters passed
+                to the procedure. This is called <b>pass by value</b>.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

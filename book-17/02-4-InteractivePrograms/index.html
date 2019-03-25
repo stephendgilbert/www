@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Console Input</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Console Input</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'><b><span class="cap">I</span>n traditional console programs</b>
+            (those that make use of the
+            system console), the <b>standard input stream</b>, <code>System.in</code>
+            can be used to read from the console keyboard, just like
+            <code>System.out</code> can be used for console output.
+        </p>
+        <p> Unfortunately, there are two difficulties with this:</p>
+        <ul>
+            <li>the <code>System.in</code> object only knows how to read
+                raw bytes, not strings or numbers.
+            </li>
+            <li>because it is possible that an <b>input error</b> could occur,
+                Java requires code using <code>System.in.read()</code> to explicitly
+                handle any <b>exceptions</b> that can occur, something that is
+                a little too complicated for the first few chapters of this text.
+            </li>
+        </ul>
+        <p> To make up for these deficiencies in the standard input stream,
+            the <code>Scanner</code> class was added to Java 5 to make
+            reading data from the keyboard <b>easier</b> than in previous
+            versions of Java. The <code>Scanner</code> class uses of
+            the <b>standard input stream</b>, <code>System.in</code>, but
+            allows you to read strings and numbers without complications.
+        </p>
+    <h2>Object Variables</h2>
+        <p> Java has two major ways of representing data: <b>primitive</b>
+            types like numbers and characters, and <b>object</b> or
+            <b>library</b> types
+            like fonts, buttons, <code>String</code>s and the
+            <code>Scanner</code> that we'll use for input. 
+            While you won't be defining your own custom types (called
+            classes) until later in the semester, you <b>will</b> need to know how to
+            <b>create object variables</b> to do input.
+        </p>
+        <p> Recall that you <b>define</b> or <b>declare</b> a variable
+            by explicitly describing:
+        </p>
+
+        <ul>
+            <li> What kind (type) of thing will be stored in the variable</li>
+            <li> What name you want to use for the variable</li>
+            <li> What initial value the variable should have</li>
+        </ul>
+        <p> To store a value into your variable you use the <b>assignment
+            operator</b>. The assignment operator copies the
+            value on its right, and stores it in the object on its left.
+            To create a local variable of type <code>Fraction</code> (a
+            class type that I've defined), write something like:<br>
+            <img src='images/fraction01.gif' class='inlineCenter' alt='Creating a Fraction.'>
+            As you can see, the variable's <b>type</b> is
+            <code>Fraction</code>, and the variable's <b>name</b> is
+            <code>oneHalf</code>, but how do we provide a value?
+        </p>
+    <h3>Constructing Objects</h3>
+        <p> What should we put on the right-hand-side of the assignment
+            operator? If our variable was one of Java's primitive
+            numeric types we could use a <b>literal value</b>
+            to do something like this:
+        </p>
+        <p class="code">
+            int someNumber = 27;
+        </p>
+        <p> Since <code>oneHalf</code> is an <b>object</b> or <b>reference</b>
+            type, however, we need to learn how to <b>construct</b> an
+            object; we can't just use a literal value like <code>27</code>. 
+            Fortunately, constructing an object is easy; you use the
+            keyword <code>new</code> along with a <b>constructor</b>.
+            A <b>constructor</b> is simply a method that initializes objects.
+        </p>
+
+        <p class="pullquote">A class represents a blueprint that describes
+            the attributes and methods of an object and the constructor is
+            the factory that creates the goods.<br>
+            <img src='images/factory.png' class='inlineCenter' alt='A constructor as a factory.'>
+        </p>
+        <p> Constructors <b>always</b> have the same
+            name as the thing you're trying to create. Since we're trying
+            to create a <code>Fraction</code> object, we know that the
+            constructor is a method named <code>Fraction()</code>. Now we can
+            finish what we started:
+        </p>
+        <p class="code">
+            Fraction oneHalf = new Fraction( . . . );<br>
+        </p>
+    <h3>Constructor Arguments</h3>
+        <p> Well, more or less finished. Notice that constructor <b>argument
+            list</b> is empty&#8212;there's nothing inside the parentheses.
+            Most objects have several constructors, each one taking a
+            different number or type of arguments. Just as with methods,
+            arguments allow us to  <b>customize</b> its operation.
+        </p>
+        <p> One version of the <code>Fraction</code> class takes two integer
+            parameters, representing the numerator and denominator. Here
+            is code to create
+            three <code>Fraction</code> variables:
+            <img src='images/fraction02.gif' class='inlineCenter' alt='Using the Fraction constructor.'>
+        </p>
+        <p> <img src="images/a04.gif" class="right" alt="Creating three Fractions.">
+            and here's what those three variables, along with
+            the objects created by the constructors, look like
+            in memory.
+        </p>
+        <p> The biggest difference between <b>object</b> and <b>primitive</b>
+            variables is that with primitives, the variable you create
+            contains a <b>value</b>. With <b>objects</b>, the variable
+            that you create only <b>refers to</b> the object. That's why
+            in my example here, the two variables <code>b</code> and
+            <code>c</code> both refer to (or <b>share</b>) the same
+            <code>Fraction</code> object.
+        </p>
+        <p> Again, we'll cover this in greater depth later in the
+            text. For the first half of the course, we'll
+            concentrate on programming fundamentals, using mostly
+            the primitive numeric types and some classes from the
+            Java class libraries.
+        </p>
+    <h2>Introducing the <code>Scanner</code> Class</h2>
+        <img src='images/interactions.gif' class='right' style='margin-top:-2em;' alt='The DrJava Interactions Pane.'>
+        <p>
+            To do a few experiments with the <code>Scanner</code> class,
+            I'm going to use <b>DrJava</b>'s Interactions
+            Pane. This will let me try out each individual programming
+            step, without having to write an entire program. To get the most out
+            of this, follow along on your computer.
+        </p>
+    <h3>Step 1: Create a Scanner Object</h3>
+        <p> Start by creating a <code>Scanner</code> variable.
+            I'll call my variable <code>cin</code> (which stands for
+            Console Input, and is the name of the similar console input object
+            in the Standard C++ library).
+        </p>
+        <p> Once you create the variable, you need to initialize it by
+            calling its constructor, using the <code>new</code> operator.
+            The <code>Scanner</code> constructor
+            needs a parameter, which tells it where to get the raw bytes 
+            that it will process. Pass the standard input stream, <code>System.in</code>:<br>
+            <img src='images/scanner01a.gif' class='inlineCenter' alt='The Scanner class.'>
+            This should look pretty familiar; it's almost exactly the
+            same as the examples shown at the earlier with the <code>Fraction</code>
+            class. The only thing that's really changed are the <b>type</b> of
+            the object variable, and the kinds of <b>arguments</b> you
+            need to supply.
+        </p>
+        <p> Type this in and then press the <b>Enter</b>
+            key to <b>interpret and execute</b> the statement.
+        </p>
+        <div class='callout'>
+            AAAARG! What's this?
+        </div>
+        <p> <img src='images/scanner03a.gif' class='inlineCenter' alt='An error message.'>
+            Well, <b class='ry'>don't worry</b>. That just brings us to Step 2. Before you
+            take that step though, <b>cancel</b> the "Auto Import Class"
+            dialog box. Although DrJava will try to help you by adding the
+            necessary code, I want <b>you</b> to recognize the
+            problem, and add the needed code yourself.
+        </p>
+    <h3>Step 2: Import the Scanner</h3>
+        <p> Before you can actually <b>create</b> a <code>Scanner</code>
+            variable or object, you have to make the <code>Scanner</code>
+            <b>class</b> "available" to your program. The class <b>isn't</b>
+            part of the <b>java.lang</b> package, like the <code>System</code>
+            class is, so you have to <code>import</code> it into your
+            program. The <code>Scanner</code> class is in the <code>java.util</code>
+            package, which, as its name suggests, contains <b>commonly used utility
+            classes</b>.
+        </p>
+        <p> To import a package you use an <code>import</code> statement like one of these:
+            <img src='images/scanner04a.gif' class='inlineCenter' alt='The Import Declarations button.'>
+            This first <code>import</code> line is called a <b>specific</b>
+            <code>import</code>, since it only refers to a single class.
+            The second example shows a <b>wildcard</b> <code>import</code>
+            statement that makes <b>all of the classes</b> in the <code>java.util</code>
+            package available. 
+        </p>
+        <p> Once the <code>import</code> statement has been added, use the
+            <b>"up-arrow" to re-execute the previous statement</b>,
+            which creates the <code>Scanner</code> object without any errors.
+        </p>
+    <h3>Step 3: "Prompt" the User for Input</h3>
+        <p> When you ask the user for input, you have to first
+            <b>tell them what to type</b>. You don't want just a blank screen
+            with a blinking cursor! That's not user-friendly.
+        </p>
+        <p> Telling the user what input to type is called <b>prompting</b>
+            the user. You can use the <code>System.out</code> <code>print()</code>
+            and <code>println()</code> methods. If you use <code>print()</code>
+            then the user input on the same line as the
+            prompt, which is often the most natural.
+        </p>
+        <p> For instance, if we want to ask the user to enter their
+            name, we might write:
+        </p>
+        <p class='code'>
+            System.out.print("So, what's your name then? ");
+        </p>
+        <p> Notice the space following the prompt, so that the user input doesn't
+            start immediately after the question mark.
+        </p>
+        <div class='info'>
+        <p> This is an important concept when working with console I/O: <b>always</b> let
+            the user know <b>exactly</b> what kind of information they should enter.
+        </p>
+        </div>
+    <h3>Step 4: Read the Input</h3>
+        <p> To <b>read the name that the user enters</b>,
+            (as a <code>String</code>), you use the
+            <code>Scanner</code> class <code>next()</code> or
+            <code>nextLine()</code> method. If you want to get
+            just a <b>single word</b>, like the first name or last name,
+            then use the <code>next()</code> method. If you use
+            <code>nextLine()</code>, then the <code>Scanner</code> returns
+            everything on the line, no matter how many words the user types.
+        </p>
+        <p> When we receive input from the user, we'll need to
+            store it somewhere in memory. As you may have guessed, that means
+            we'll need to create a <b>variable</b>. Since we asked for the
+            user's <b>name</b>, that means we want a <code>String</code>
+            variable, not an integer.
+        </p>
+        <p> Let's try it; type this into the Interactions Pane, making sure,
+            as you type each line, you <b>use Shift-Enter</b> to
+            end the line, so that DrJava doesn't interpret and execute
+            the line immediately:<br>
+            <img src='images/scanner06b.gif' class='inlineCenter' alt='Reading input into a variable.'>
+            This fragments consists of two executable lines:
+            one that asks the user to enter their name, and one that
+            reads the user's response.
+        </p>
+        <p> Once you've typed this in, press
+            <b>Enter</b> all by itself to execute both lines.<br>
+            <img src='images/scanner07b.gif' class='inlineCenter' alt='Reading input into a variable.'>
+            When the code is executed, the program stops and waits for the user to
+            type in some text and then press the Enter key. (The technical
+            term for stopping like this is called <i>blocking</i>.) Once
+            the user presses Enter, the information supplied at the keyboard
+            is retrieved, and stored in the <code>userName</code> variable.
+        </p>
+        <div class='info'>
+        <p> In DrJava, as you can see, the input occurs in the Interactions
+            Pane, and DrJava puts a nice outline around where the user is
+            supposed to type in the response. When you do this in a
+            regular program, you won't get the outline. We'll look
+            at an example of that shortly.
+        </div>
+        <p> Once you've read the user's response into a variable, then you
+            can use that as part of your calculation or output. To print
+            the user's name as part of your output, you could add a
+            line like this:<br>
+            <img src='images/scanner08a.gif' class='inlineCenter' alt='Combining input with concatenation.'>
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>CS 170 - Chapter 12 Exercises &amp; Assignments</title>
+    <style type='text/css'>
+        li { line-height:1.45em; }
+        li div[class=code] {
+            font-size:1.2em;
+            margin:1em;
+        }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner11">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 170&mdash;Chapter 12</p>
+        <p id='lessonTitle'>Exercises &amp; Assignments</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>T</span>his week you should get more
+            practice writing your own classes</b> including those
+            that throw exceptions and those that contain
+            <code>static</code> methods.
+            You'll also have an opportunity to write your own unit
+            tests.
+            Here's the list of things you should do this week.</p>
+    <ol>
+        <li class='d'>
+            <b class='grn'>Assertions &amp; Exceptions&mdash;MyStudent</b>:
+            Implement a class <code>MyStudent</code>. For the purpose of this exercise,
+            a student has a name and a total quiz score. Supply an appropriate
+            constructor. (Remember, when you create a student, the total quiz score
+            will be 0, so you don't need to pass that as a parameter.) Also,
+            supply the following methods:
+            <p class='code' style='font-size:1.2em;'>
+                String getName()<br>
+                void addQuiz(int score)<br>
+                int getTotalScore()<br>
+                double getAverageScore()
+            </p>
+            To compute the last method, remember that you'll also need to keep track of how
+            many quizzes the student actually took.
+            <p> If a programmer passes an empty <code>String</code> or a <b>null String</b>
+                to the constructor, then throw an <code>IllegalArgumentException</code>.
+                Add an assertion to <code>getTotalScore()</code> to check that
+                the total is not negative.
+            </p>
+            <p> There is no <b>Check</b> program for this assignment.
+                You need to write your own unit test to check your code,
+                which is the next exercise.
+            </p>
+        </li>
+
+        <li class='d'>
+            <b class='grn'>Unit Tests&mdash;MyStudentTest</b>:
+            In class you learned how to write a unit test for the
+            <code>PongScore</code> class. Using the lecture
+            (and the online text) as a model, write your own
+            tests for <b>MyStudent.java</b>n named <b>MyStudentTest</b>.
+            <p>Your unit tests should completely check every constructor
+            and method in the <code>MyStudent</code> class.
+            You should make sure:
+        <ul>
+            <li>Test pass rate: <b>all</b> of your tests should pass.</li>
+            <li>Code coverage: <b>every method</b> and <b>every branch</b>
+                inside every method should be covered.</li>
+            <li>Problem coverage: you should make sure that your inputs
+                cover legitimate values as well as boundary conditions.
+            </li>
+        </ul>
+        <p> You can look on the <b>Solutions</b> page if you get stuck on
+            this exercise.
+        </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Static Methods and Testing&mdash;Geometry</b>:
+            Write a class named <b><i>Geometry</i></b> that contains the following
+            <b>static</b> methods.
+            <ul>
+            <li><code>sphereVolume(double r)</code></li>
+            <li><code>sphereSurface(double r)</code></li>
+            <li><code>cylinderVolume(double r, double h)</code></li>
+            <li><code>cylinderSurface(double r, double h)</code></li>
+            <li><code>coneVolume(double r, double h)</code></li>
+            <li><code>coneSurface(double r, double h)</code></li>
+            </ul>
+            <p>Each will be a
+            <b>static</b> method that returns a double. Use Google to look
+            up the appropriate formulae. (For the coneSurface make sure you
+            include the entire surface area including the bottom of the cone,
+            and not just the lateral surface area.)
+            </p>
+
+            <p>Along with the <b><i>Geometry</i></b> class, implement a JUnit
+            Test Case class named <b><i>GeometryTest</i></b>, that tests
+            each of your methods.
+            </p>
+            <p> You can look on the <b>Solutions</b> page if you get stuck on
+                this exercise.
+            </p>
+        </li>
+        <li class='d'>
+            <b>Extra-Credit Assignment #6&mdash;Multiple Interacting Classes)</b>:
+            For those of you looking for a challenge, complete the game of <b>NIM</b>.
+            Here's what the program should look like when you run it:<br>
+            <img src='images/ec02.gif' class='inline' alt='Running the game of Nim.'>
+            This larger problem makes use of multiple classes, and those classes must
+            cooperate to play the game shown here. The <a href='ec06-F11.pdf' target="_blank">
+            <b>Extra-Credit #6 Handout</b></a> (PDF) has all of the information on
+            completing the assignment.
+            <p>
+            Submit <b>Nim.jar</b> before the deadline. Make sure your JAR file
+            contains the source code for your classes.
+        </li>
+    </ol>
+</div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

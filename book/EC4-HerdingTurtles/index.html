@@ -1,0 +1,625 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>EC4&mdash;Herding Turtles</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner07">
+        <img id='lessonLogo' src='../images/h.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Extra-Credit # 4</p>
+        <p id='lessonTitle'>Herding Turtles</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/ht02.png' class='right' style='margin-top:-3em;' alt='The Herding Turtles screen.'>
+            <b><span class='cap'>I</span>n previous chapters you've learned</b>
+            how to animate individual objects and how to respond to
+            mouse and button click events.
+        </p>
+        <p> Now that you know how to use arrays, though, you can
+            animate a whole screenful of critters. To see how that
+            works, and to teach you about responding to keystroke
+            events, we're going to create a simple video game
+            named <b>TurtleHerder</b>.<br>
+        </p>
+    <h2>The TurtleHerder Game</h2>
+        <p><b><span class='cap2'>T</span>he idea behind the game is
+            pretty simple</b>. You have a lawn with a herd of turtles wandering
+            randomly. If they wander off of the lawn, the turtle dies and you
+            lose a point. Your job is to direct the turtles into the pen that
+            you've constructed, where they'll be safe.<br>
+            <img src='images/ht01.png' class='inlineCenter' alt='The Herding Turtles screen.'>
+        </p>
+        <p> To control the turtles you need a <b>turtle herder</b>. Of course, if
+            they were sheep, we'd just grab a sheep-dog. However, since they're
+            turtles, they simply <b>ignore</b> sheep dogs. To help you out, though,
+            you have a <b>turtle-frog</b>, which you can control with your
+            arrow keys.
+        </p>
+    <h3>Setting the Scene</h3>
+        <p> I've placed the starter files and images in the chapter's code folder.
+            Go ahead and use DrJava to open <b>TurtleHerder.java</b> and run
+            it. As you can see, except for the window itself, which I've adjusted
+            using two constants at the bottom of the screen, your game
+            is completely empty.
+        </p>
+        <p> Our first step is to place the lawn on the screen. We can do that
+            inside the <code>init()</code> method. The <b>images</b>
+            folder contains the file <b>lawn.png</b>, which you can load
+            and place on the screen as a <code>GImage()</code>:<br>
+            <img src='images/ht03.png' class='inlineCenter' alt='Adding the lawn.'>
+            Notice that since I've placed <b>lawn.png</b> in the images
+            folder, we <b>don't</b> need to specify the folder name when
+            we construct the <code>GImage</code> object; the <code>GImage</code>
+            constructor, <b>automatically</b> searches that folder, looking
+            for the file.
+        </p>
+        <p> Note also that I've specified a fixed offset from the top and bottom
+            to place the lawn where I want on the screen. Go ahead and run it
+            at this point, and you should see the lawn nicely placed
+            on the screen.<br>
+            <img src='images/ht04.png' class='inlineCenter' alt='Adding the lawn--running.'>
+        </p>
+    <h3>Adding the Herd</h3>
+        <p> We'll represent our herd of turtles by <b>creating an array</b> of
+            <code>GTurtle</code> objects. <code>GTurtle</code> is one of the
+            classes in the ACM library.<br>
+            <img src='images/ht05.png' class='inlineCenter' alt='Adding the turtles.'>
+            To do that:
+        </p>
+        <ol>
+            <li>Create a <b>constant</b>, <code>NUM_TURTLES</code> representing
+                the number of turtles in the herd. For right now, let's start
+                with five turtles.
+            </li>
+            <li><b>Create and instantiate</b> an array variable, <code>herd</code>
+                that contains <code>NUM_TURTLES</code> <code>GTurtle</code>
+                references.
+            </li>
+        </ol>
+        <p> Because <code>GTurtle</code> is an object type, the array that
+            <code>herd</code> refers to will contain <code>null</code>
+            <code>GTurtle</code> references, <b>not</b> <code>GTurtle</code>
+            objects. You'll need to <b>create the turtles</b> that live
+            in the array inside your <code>init()</code> method.
+        </p>
+        <div class='alert'>
+        <p> Note also, because we'll be animating all of the turtles in
+            the herd, that we need to make <code>herd</code> an
+            <b>instance variable</b>, not a local variable, so that
+            we can access the elements from the <code>advanceOneFrame()</code>
+            method.
+        </p>
+        </div>
+    <h3>Creating and Placing the Herd</h3>
+        <p>Inside the <code>init()</code> method we need to
+            <b>populate the array</b> by creating a <code>GTurtle</code>
+            object, placing its reference in one of the <code>herd</code>
+            elements, and then placing the turtle on the lawn.
+        </p>
+        <p> You'll recall that when we want to <b>initialize</b> an object
+            array, we use the standard <code>for</code> loop
+            <b>array initialization idiom</b> along with <b>object instantiation</b>
+            of each element, like this:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            for (int i = 0; i &lt; herd.length; i++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;herd[i] = new GTurtle();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// other initialization</span><br>
+            }<br>
+        </p>
+        <p> As we create each turtle, we'll want to point it in
+            a random direction. I'd also like all of the turtles
+            to be arranged in a circle, pointing towards the center.<br>
+            <img src='images/ht06.png' class='inlineCenter' alt='Adding the turtles.'>
+            To do that we can:
+        </p>
+        <ol>
+            <li class='d'>create a <code>GPoint</code> variable
+                to represent the center of the lawn.
+            </li>
+            <li class='d'>get a <code>RandomGenerator</code> instance
+                and generate a random direction. (Note, that we'll
+                want to create the random number generator outside
+                of the loop.)
+            </li>
+            <li class='d'>use the <code>setDirection()</code> method
+                to apply the new random direction.
+            </li>
+            <li>Once we've done those steps, we can add the new turtle
+                to the center of the lawn, move it forward (in its random
+                direction) 100 units, and finally, turn it around
+                180 degrees, so it's pointing back where it came from.
+            </li>
+        </ol>
+        <p>Here's what the lawn looks like when it runs. Of course
+            your turtles will be at random locations around the
+            center point.<br>
+            <img src='images/ht07.png' class='inlineCenter' alt='Adding the turtles.'>
+        </p>
+    <h3>Move 'em Out</h3>
+        <p> Now, we want to get the turtles moving on the screen.
+            To do that, we'll add our generic animation loop by:
+        </p>
+        <ol>
+            <li class='d'>creating a <code>FRAME_RATE</code> constant
+                set to 30 FPS.
+            </li>
+            <li class='d'>adding an endless loop inside the
+                <code>run()</code> method that calls <code>advanceOneFrame()</code>
+                and then calls <code>pause(FRAME_RATE)</code>.
+            </li>
+            <li class='d'>adding an empty <code>advanceOneFrame()</code>
+                method so that the code will compile.
+            </li>
+        </ol>
+        <p> Here's what your code should look like at this point:<br>
+            <img src='images/ht08.png' class='inlineCenter' alt='The basic animation loop.'>
+        </p>
+        <div class='alert'>
+        <p> I haven't showed you the <code>FRAME_RATE</code> constant,
+            because I declared it up at the top of the file with the
+            other constants.
+        </p>
+        </div>
+        <p>If you go ahead and compile and run, you'll see that
+            nothing happens. What we need to do inside the frame
+            method, is to <b>move each turtle</b> in the array
+            by some amount. To simplify things, I'll just move
+            each one forward by 2.
+        </p>
+        <p> Here's the code you should add:<br>
+            <img src='images/ht09.png' class='inlineCenter' alt='Moving the turtles.'>
+            Go ahead and compile and run after adding this and
+            you'll see that the turtles move forward and eventually
+            off of the lawn altogether.
+        </p>
+        <p> Of course, seeing as they're turtles, they <b>move kinda
+            slow</b>. So you don't spend the rest of the semester
+            waiting for your herd to move off screen, add this
+            line to the <code>init()</code> method, inside
+            the loop where your turtle is instantiated.
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            herd[i].setSpeed(1.0); <span class='cmt'>// maximum speed</span>
+        <p>
+        <p> Of course, as you can see, nothing happens when the turtles
+            leave the lawn. We'll tackle that problem next.<br>
+            <img src='images/ht10.png' class='inlineCenter' alt='Moving the turtles.'>
+        <p>
+    <h3>Collision Detection</h3>
+        <p> A few chapters ago, when you first learned to bounce a ball around
+            the screen, you were introduced to the idea of <b>collision detection</b>.
+            To make sure your ball didn't leave the screen, you checked its coordinates
+            against the screen coordinates and then adjusted the horizontal and
+            vertical velocity accordingly.
+        </p>
+        <p> The principle is the same with our herd of turtles; the only difference is that
+            you need to do it for <b>each</b> turtle, instead of with just one
+            breakout ball. Also, instead of using the screen coordinates, we'll use the
+            coordinates of our <code>lawn</code> object.
+    <h4>Staying On the Lawn</h4>
+        <p> To mark the boundary of the area where we want to contain our turtles,
+            we'll use the technique of a <b>collision rectangle</b>. By creating
+            an in-memory rectangle and then checking if it <b>contains</b> our turtle, we
+            can avoid checking the four separate comparisons that were necessary
+            with the Breakout game.
+        </p>
+        <p> Our first step is to create the rectangle. We'll use the ACM <code>GRectangle</code>
+            class, which is almost identical to the AWT <code>Rectangle</code> class, except that
+            its coordinates are all <code>double</code> values, instead of <code>int</code>.
+        </p>
+        <ol>
+            <li> Start by creating a <code>GRectangle</code> <b>instance variable</b> named
+                <code>lawnRect</code>, and an <code>int</code> variable named
+                <code>turtleSize</code> like this:<br>
+                <img src='images/ht11.png' class='inline' alt='The lawnRect and turtleSize instance variables.'>
+            </li>
+            <li> To initialze the variables, we need to add a couple of lines of code in the
+                <code>init()</code> method, <b>following</b> the loop that initializes the
+                herd of turtles (because we need to ask the first turtle in the herd its
+                size.) To initialize the collision rectangle, just use the <code>lawn</code>'s
+                <code>getBounds()</code> method, like this:<br>
+                <img src='images/ht12.png' class='inline' alt='Initializing the lawnRect instance variable.'>
+                After initializing <code>lawnRect</code> we want to <b>shrink it</b> by
+                half the size of a turtle to simplify our calculations. The easiest way
+                to do that is to use the <code>GRectangle</code>'s <code>grow()</code>
+                method, passing it a negative number (half the size of a turtle in
+                this case), to cause it to contract on all four sides.
+            </li>
+        </ol>
+        <p> To actually <b>use</b> the new collision rectangle, return to the
+            <code>advanceOneFrame()</code> method, add some braces around your loop,
+            and then <b>test</b> to see if the turtle is still on the lawn after
+            it moves.
+        </p>
+        <p> Check to see if the turtle is on the lawn by calling it's <code>getLocation()</code>
+            method, which returns a <code>GPoint</code>, and passing that to the
+            <code>lawnRect</code>'s <code>contains()</code> method. If the answer comes
+            back <code>true</code>, then the turtle is on the lawn; <b>if not</b>, then
+            the turtle has wandered off, and needs to be turned around.
+        </p>
+        <p> Here's the code that simply turns checks to see if it bounced off the top
+            or bottom, or, if it bounced off one of the sides, and then adjusts the
+            turtle's direction accordingly:<br>
+            <img src='images/ht13.png' class='inlineCenter' alt='Checking for a collision.'>
+            You might recognize this code from the <b>PolarBounce</b> program, in our
+            first lesson on animation. Once you've added this code, run your program, and you'll see that the
+            turtles now all stay on the lawn.
+        </p>
+    <h4>Turtle-to-Turtle Collisions</h4>
+        <p> Even though the turtles stay on the lawn now, they <b>still</b> walk right
+            over each other. (Technically, they walk right <b>thorugh</b> each other,
+            but that's kind of a quibble.)
+        </p>
+        <p> To institute turtle-to-turtle collision detection, we need to compare
+            the turtle that is moving with every other turtle, and then deflect
+            both turtles if they have collided. Of course, <b>that requires a
+            <b class='ry'>nested</b> loop!</b>
+            This loop needs to appear <b class='ry'>after</b> the loop that moves
+            your turtles and checks to make sure they appear on the lawn.
+        </p>
+        <p>Here's
+            the basic idea:
+        </p>
+        <ol>
+            <li class='d'>Grab the first turtle and compare it with all of
+                the rest of the turtles in the array, starting with the
+                second.
+            </li>
+            <li class='d'>Do the same thing with all of the remaining
+                turtles, <b>except for the last</b>. However, when you
+                get to your second turtle, you no longer need to check
+                to compare it to the first, since you already did that
+                on the <b>first</b> trip through the loop.
+            </li>
+        </ol>
+        <p>That means that the basic loop skeleton will look like this:</p>
+        <p class='code' style='font-size:1.25em;'>
+        for (int i = 0; i &lt; herd.length - 1; i++) <span class='cmt'>// 0 to len-2</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;for (int j = i + 1; j &lt; herd.length; j++)<span class='cmt'>// j starts at i + 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// check for collisions here</span>
+        </p>
+        <p> Inside your loop, check for turtle-turtle
+            collisions, and, if they collide, you can simply "bounce" them off
+            each other by changing their directions.
+        </p>
+        <p> Here's the code to do that:<br>
+            <img src='images/ht17.png' class='inlineCenter' alt='Checking for turtle-turtle collisions.'>
+            Notice that this code is <b class='ry'>after</b> the previous loop,
+            but <b class='ry'>still inside</b> the <code>advanceOneFrame()</code>
+            method.
+            Instead of putting the actual code for colliding and bouncing, I've called
+            a pair of <b>user-defined methods</b>, to make the loop a little simpler and
+            easier to understand. Let's look at those now.
+        </p>
+    <h5>When Turtles Collide</h5>
+        <p> We'll say that two turtles have collided if the distance between their
+            centers is less than the size of the turtle. The ACM <code>GMath</code>
+            class has a <code>distance()</code> method that does this calculation
+            for us (although we could do it manually, using the Pythagorean Theorem
+            easily enough).
+        </p>
+        <p> Here's the code for <code>collides()</code> method which you can add to
+            your program below the <code>run()</code> method:<br>
+            <img src='images/ht15.png' class='inlineCenter' alt='Checking for collisions.'>
+            Notice that the method:
+        </p>
+        <ol>
+            <li class='d'>First checks to make sure that <code>t1</code> is not equal
+                to <code>t2</code>. Since the simplified <code>for</code> loop visits
+                each element, we don't want to check to see if one of the turtles
+                collides with itself. Because of the <code>&amp;&amp;</code> operator's
+                <b>short-circuit evaluation</b>, if the two parameters refer to the
+                same turtle object, the method simply returns <code>false</code> and
+                goes no further.
+            </li>
+            <li class='d'> Using the <code>GMath.distance()</code> function and the <code>getX()</code>
+                and <code>getY()</code> methods in the <code>GTurtle</code> class, we
+                see how close the two turtles are.
+            </li>
+            <li class='d'> If the center of the two turtles is less than two-thirds of
+                the turtle size, we'll return <code>true</code>. If the turtles were
+                perfectly round, using the turtle size itself would work, but because
+                they aren't it makes it look like they are bouncing when still a
+                little ways apart.
+            </li>
+        </ol>
+    <h5>Bouncing Turtles</h5>
+        <p> When two turtles get too close to each other, we can bounce them
+            in the opposite directions, simply by "swapping" their directions,
+            using the same algorithm you learned when shuffling arrays earlier.
+        </p>
+        <p> Here's the code:<br>
+            <img src='images/ht18.png' class='inlineCenter' alt='Bouncing turtles.'>
+            Notice that after swapping directions (1), I move one of them a little
+            to avoid setting up a "vibrating" effect the next time through the
+            loop (2), in the event that the next frame doesn't move them far enough
+            apart.
+        </p>
+    <h5>Fighting Turtles</h5>
+        <p> As an alternative to simply bouncing the turtles, you might want to
+            have them interact with each other in a more complex way.
+            The user-defined <code>fight()</code> method is another simulation that
+            shows what happens when turtles get too close to each other; it's
+            an effect that I like, but feel free to make your own modifications:<br>
+            <img src='images/ht16.png' class='inlineCenter' alt='Turtles interacting.'>
+            In this code:
+        </p>
+        <ul>
+            <li>We generate a random number between 5 and 34.9 and then "flip a coin"
+                to decide if it should be positive or negative. (The code <code>Math.random() &lt; .5</code>
+                is true about 50% of the time.)
+            </li>
+            <li>We then point the first turtle in a new direction by adding this
+                random number to its current direction.
+            </li>
+            <li> Finally, the method moves the second turtle forward 2 pixels
+                to move it out of the way for the next iteration.
+            </li>
+        </ul>
+        <p> If you run the program now, you'll see that the turtles all stay on the
+            lawn, but they also chase each other around if they happen to run into
+            another turtle.
+        </p>
+    <h2> Frogs and Keyboard Events</h2>
+        <p> To turn our program into a game, we'll need a couple more players:</p>
+        <ul>
+            <li>The <b>gate</b> that the turtles have to pass through to leave
+                the lawn.
+            </li>
+            <li>The <b>turtle herder</b>, whose job it is to direct the turtles
+                through the gate.
+            </li>
+            <li>A clock and and a counter that can keep track of how long
+                it's taken you to get your turtles into the pen.
+            </li>
+        </ul>
+        <p> Let's start with our turtle-herder, the famous <b>TurtleFrog</b>.</p>
+    <h3>The Turtle Frog</h3>
+        <p> To create the turtle-herder, use the image <code>frog-up.png</code>
+            and add a new <code>GImage</code> instance variable named
+            <code>herder</code>, like this:<br>
+            <img src='images/ht19.png' class='inlineCenter' alt='The turtle-herder.'>
+            Then, inside the <code>init()</code> method, add your herder to the
+            center of the bottom of the screen, about 30 pixels up from the bottom,
+            like this:<br>
+            <img src='images/ht20.png' class='inlineCenter' alt='The turtle-herder on screen.'>
+            Run your program and you'll see your turtle-herder waiting for you to
+            put it to work.
+            <img src='images/ht21.png' class='inlineCenter' alt='The turtle-herder on screen.'>
+        </p>
+        <p> Let's start with the gate that the turtles have to pass through.</p>
+    <h3>Controlling the Frog</h3>
+        <p> Instead of using the mouse, we want to control the from by <b>using
+            the arrow keys</b> on your keyboard. To do that, just add these lines
+            <b class='ry'>to the end</b> of your <code>init()</code> method:<br>
+            <img src='images/ht22.png' class='inlineCenter' alt='Hooking up keyboard events.'>
+            This should look familiar, since you did something almost identical to
+            activate mouse events in your previous applications.
+        </p>
+        <div class='alert'>
+        <p> The second line is
+            necessary here to "give the keyboard focus" to your program when it first
+            begins. If you omit this line, then your program will still work, but
+            you'll have to click it with the mouse before using the keyboard.
+        </p>
+        </div>
+        <p> Once you've activated "keyboard listening", just as you did
+            with mouse events, you <b>respond</b> to keyboard events by writing an
+            <b>event-handler method</b>.
+        </p>
+    <h3>Keyboard Events</h3>
+        <p> There are three different event-handlers you can write to
+            respond to keyboard events: <code>keyPressed()</code>,
+            <code>keyReleased()</code> and <code>keyTyped()</code>. All
+            three handlers take a <code>KeyEvent</code> parameter, which
+            you'll use to to find out which key was pressed.
+        </p>
+        <p> To control our turtle-herder, we'll use the <code>keyPressed()</code>
+            method to control our turtle-herder. Here's the basic skeleton to
+            add to you program:<br>
+            <img src='images/ht23.png' class='inlineCenter' alt='Keyboard event-handler skeleton.'>
+        </p>
+        <div class='info'>
+        <p> The <code>keyTyped()</code> method is used for "higher-level"
+            keyboard processing, when you want to know which character would
+            be typed into a text-area, for instance. With <code>keyTyped()</code>,
+            you'll use the <code>KeyEvent</code>'s <code>getKeyChar()</code> method
+            to determine the specific Unicode value typed at the keyboard. With
+            <code>keyPressed()</code> and <code>keyReleased()</code> we are only
+            concerned with the physical keys that are pressed, so we use
+            <code>getKeyCode()</code> instead.
+        </p>
+        </div>
+    <h4>Key Codes</h4>
+        <p> The actual key-codes you'll use are constants inside the <code>KeyEvent</code>
+            class. All of these named constants start with <code>VK</code>, which stands
+            for "virtual key". The four we're interested in are <code>KeyEvent.VK_UP</code>
+            and <code>KeyEvent.VK_DOWN</code> (the up and down arrows), along with
+            <code>KeyEvent.VK_LEFT</code> and <code>KeyEvent.VK_RIGHT</code>
+            (the left and right arrows).
+        </p>
+        <p> We can put those into our <code>switch</code> statement like this:<br>
+            <img src='images/ht24.png' class='inlineCenter' alt='Keycode case blocks.'>
+        </p>
+    <h4>Frog States</h4>
+        <p> It's tempting, now that we've captured the user's keystrokes, to just
+            move the frog left or right or up or down in response to the arrow
+            pressed. Unfortunately, this is a little too simplistic, and makes
+            the game action really jerky, since the user has to keep pounding
+            on the keys to move the turtle.
+        </p>
+        <p> What we want to do instead is simply set the <b>state</b> of the frog's
+            movement inside the key handler, and then do all of our movement in
+            the main animation loop as always.
+        </p>
+        <p> Here's how to do that:</p>
+        <ol>
+            <li class='d'>Create five <code>int</code> <b>class-wide constants</b> named
+                <code>STOPPED</code>, <code>NORTH</code>, <code>SOUTH</code>,
+                <code>EAST</code>, <code>WEST</code>.
+                Set each to a different value. (It doesn't matter what the values are.)
+            </li>
+            <li class='d'>Create an <code>int</code> <b>instance variable</b> named
+                <code>herderState</code> and
+                initialize it to <code>STOPPED</code>, like this:<br>
+                <img src='images/ht25.png' class='inlineCenter' alt='Herder-state constants.'>
+            </li>
+            <li class='d'>Inside your keyboard event-handler, set the value of
+                <code>herderState</code> inside each of the different case blocks,
+                like this:<br>
+                <img src='images/ht26.png' class='inlineCenter' alt='Setting the herder-state.'>
+            </li>
+        </ol>
+        <p> Finally, once you've done that, you need to add a <code>switch</code>
+            statement to the beginning  of your <code>animateFrame()</code> method to move the herder based
+            on its current state. Here's some code that does that:<br>
+            <img src='images/ht27.png' class='inlineCenter' alt='Moving the frog.'>
+            Run the program and you'll see that the frog moves in the direction
+            you press the arrow keys. Press any other key and the frog pauses.
+        </p>
+    <h4>Frog Images</h4>
+        <p> Even though the frog now follows the arrows, it still faces the same
+            direction. We can fix that by changing the image used any time that
+            the frog switches direction. The images that I've supplied have the
+            names <code>"frog-right.png"</code>, <code>"frog-left.png"</code>,
+            <code>"frog-up.png"</code> and <code>"frog-down.png"</code>.
+        </p>
+        <p> Add an <code>if</code> statement to each of the even-handler case
+            blocks and switch the image if necessary, like this:<br>
+            <img src='images/ht28.png' class='inlineCenter' alt='Switching frog images.'>
+            Now when you start moving East (for instance), the frog faces the direction that
+            it's moving.
+            <img src='images/ht30.png' class='inlineCenter' alt='Switching frog images.'>
+        </p>
+    <h3>Herding the Turtles</h3>
+        <p> To actually control the turtles, you now need to handle
+            herder-turtle collisions as well as turtle-turtle
+            collisions. We'll check for those collisions <b>right
+            after</b> the turtle-turtle collisions.
+        </p>
+        <p> Here's the code you need to add:<br>
+            <img src='images/ht31.png' class='inlineCenter' alt='Handling turtle-turtle collisions.'>
+            Here's what the code does:
+        </p>
+        <ol>
+            <li class='d'> First, we need to find the <b>center</b>
+                of the turtle-herder image. Since our turtle-herder is
+                a <code>GImage</code> object, it's <code>x</code>,<code>y</code>
+                coordinates represent the upper-left corner of the image.
+                To find the center we just do a few calculations, as shown
+                here.
+            </li>
+            <li class='d'>Now that we have the center of the frog, we can
+                <b>write a loop</b> that visits every turtle in the herd.
+                That's the easy part.
+            </li>
+            <li class='d'>Inside the loop we need to see if the turtle and
+                the frog are colliding. One easy way to do that is to
+                use the <code>GMath</code> <code>distance()</code> method which uses the
+                Pythagorean Theorem to find the distance between the center
+                of the frog and the current turtle. If that distance is less
+                than half the turtle width plus half the herder width, then
+                the players are too close.
+            </li>
+            <li class='d'>We want the turtle to respond by running in the opposite
+                direction from the frog, just like a real herding situation. To
+                help out, we can employ another <code>GMath</code> method,
+                <code>angle()</code>. Once we know the angle between the
+                frog and turtle, we can just send the turtle off in exactly
+                the opposite direction.
+            </li>
+        </ol>
+    <h2>The Turtle Gate</h2>
+        <p><b><span class='cap'>F</span>or the turtle gate</b>, towards which your
+            herder will try to move your turtles, I've grabbed another image which we'll
+            use to initialize an instance variable, like this:<br>
+            <img src='images/ht32.png' class='inlineCenter' alt='Creating the turtle gate.'>
+            and then place in the lower-right corner of the lawn's bounding rectangle,
+            like this:<br>
+            <img src='images/ht33.png' class='inlineCenter' alt='Placing the turtle gate.'>
+            Here's the lawn with the gate added:<br>
+            <img src='images/ht34.png' class='inlineCenter' alt='The turtle gate.'>
+        </p>
+    <h3>Through the Gates</h3>
+        <p> To check for turtle-turtle-gate collisions, we'll need to add another
+            fragment of code to our <code>advanceOneFrame()</code> method. This is
+            the last thing we'll check for:<br>
+            <img src='images/ht35.png' class='inlineCenter' alt='Sending turtles through the gate.'>
+            Here's what this portion of code does:
+        </p>
+        <ol>
+            <li class='d'>We start with the regular loop that visits every
+                turtle in the herd. When a turtle goes through the gate, we'll need
+                to remove it from the herd, so we need to <b>modify the actual
+                array</b>. That means we <b class='ry'>can't</b> use the simplified
+                <code>foreach</code> loop we've used previously.
+            </li>
+            <li class='d'>Rather than using a more complex and realistic algorithm,
+                we'll just check to see if our turtle is withing the bounds of the
+                <code>GImage</code> rectangle and count that as good enough.
+            </li>
+            <li class='d'>Once we get a turtle going through the gate, we need to
+                do several things.
+                <ul>
+                    <li>We need to remove the turtle object from the application's
+                        canvas. We do that with the <code>remove()</code> method.
+                    </li>
+                    <li>We also need to remove the turtle from the herd itself.
+                        Of course, since arrays are fixed-size collections, we
+                        can't do that, so, as an alternative, we set the
+                        reference in the array to <code>null</code>.
+                    </li>
+                    <li>Then, we want to make some kind of "marker" that indicates
+                        one of the turtles has "moved into the corral". The last
+                        four lines in the loop do that.
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <p> When you add this code, compile and run, you'll see that when a
+            turtle is herded into the gate, it disappears off the lawn and
+            reappears as a marker at the bottom of the screen:<br>
+            <img src='images/ht36.png' class='inlineCenter' alt='Sending turtles through the gate.'>
+            Unfortunately, your program <b class='ry'>also crashes</b> as
+            soon as the first turtle goes through the gate. Not good.
+        </p>
+    <h3>Ghosts of Turtles Past</h3>
+        <p> If you track down the crash in the stack-trace printed in DrJava's
+            output window, you'll see that it relates to moving or calling other
+            methods on a <code>GTurtle</code> object, once that turtle's reference
+            has been set to <code>null</code>.
+        </p>
+        <p> To fix this, all we have to do is locate <b class='ry'>every</b> loop
+            that traverses the <code>herd</code> inside the <code>advanceOneFrame()</code>
+            method, and add a <code>continue</code> at the top of the loop, when the
+            current turtle is <code>null</code>. Here's the code I've added to
+            the first loop:<br>
+            <img src='images/ht37.png' class='inlineCenter' alt='Handling null turtles.'>
+            You'll need to do this for <b>all</b> of the remaining loops, including
+            the <b>nested loop</b> that handles turtle-turtle collision.
+        </p>
+    <h3>Finish Up</h3>
+        <p> Well, that's as far as I'm going to take you with <b>TurtleHerder</b>.
+            You're on your own to add scoring, timekeeping, and maybe some
+            buttons to restart the game once all of the turtles are safely
+            in their pen.
+        </p>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

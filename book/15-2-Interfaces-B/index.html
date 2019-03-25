@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>15.2&mdash;Interface Inheritance</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner08">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 15.2</p>
+        <p id='lessonTitle'>Interface Inheritance</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/abstract.png' class='right' alt='An abstract painting.'>
+            <b><span class='cap'>A</span>n interface is like an <i>extremely</i>
+            abstract class</b>&#8212;one that
+            contains <b>only</b> abstract methods. Because all of its methods
+            are abstract, you can never create an object directly from an
+            interface, just as you can't directly create an instance of an
+            abstract class.
+        </p>
+        <p> An abstract class allows a designer to provide
+            general behavior in the abstract class, while forcing those
+            who extend the class to define particular methods (such as
+            the <code>draw()</code> method in the last section) before
+            they can create objects.
+        </p>
+        <p> An interface works the same way,
+            except this <b>it doesn't provide any behavior</b>; it only specifies
+            what methods <b>must</b> be implemented.
+        </p>
+    <h2>Pure Specification</h2>
+        <p> <b><span class='cap2'>T</span>hink of regular inheritance as
+            specialization</b> and
+            abstract classes as <b>specification</b>. You may, however,
+            find remaining places where you want to factor out common behavior.
+            The problem is that the objects sharing that common behavior <b>are
+            otherwise unrelated</b>. When this happens, that's where Java's
+            facility for writing a <b>pure specification</b>, the Java interface,
+            comes into play.<br>
+            <img src='images/pure.png' class='inlineCenter' alt='A Pure Specification logo.'>
+            The interface mechanism differs from the forms of inheritance
+            we have discussed so far in three important ways:
+        </p>
+        <ul>
+            <li>When a class <code>implements</code> an <code>interface</code>,
+                it <b>doesn&#8217;t receive any method implementations or non-final
+                fields</b> from the interface. Interfaces <b>can</b> be used to
+                define inherited <b>constants</b>, but they can&#8217;t be used to define
+                non-constant data. Any fields defined within an interface are
+                implicitly <code>final</code>.
+            </li>
+            <li>Unlike inheritance, a class may <code>implement</code> <b>several</b> interfaces.
+                This facility can be used to simulate multiple inheritance,
+                where a subclass inherits behavior from each of several
+                superclasses. This is the only way to model this kind of
+                relationship in Java, which supports only single inheritance
+                (every class other than <code>Object</code> has exactly one direct ancestor).
+            </li>
+
+            <li>Classes that <code>implement</code> the same interface don&#8217;t need to be
+                substitutable in the Liskov sense, <b>except</b> with respect to
+                the interface they implement. Thus, if a class <code>implements</code> the
+                <code>Runnable</code> interface, it <b>is-a</b> <code>Runnable</code> object,
+                and it can be used anywhere a <code>Runnable</code> object is expected.
+                <code>Runnable</code> objects <b>don&#8217;t
+                have to be otherwise related</b>, however. Because they <code>implement
+                Runnable</code>, they must have a <code>run()</code> method; otherwise the class
+                won&#8217;t compile. There&#8217;s no guarantee they&#8217;ll have any
+                other methods or fields in common.
+            </li>
+        </ul>
+    <h3>Why Interfaces Are Useful</h3>
+        <p> An interface doesn't specify anything about <b>how</b> a
+            class must implement a particular method&#8212;only that it must
+            contain a particular set of methods having a particular
+            signature.
+        </p>
+        <p> <img src="images/obey02.png" class="right" alt="An obey image.">
+            When a class declares that it <b>implements</b> an
+            interface, it makes a binding promise to provide a concrete
+            implementation of <b>every method of the interface</b>. You can
+            think of this promise as a contract. If you use an object
+            that implements a particular interface, you know that it
+            can respond to any method that the interface requires.
+        </p>
+        <p> If a class fails to make good on its promise, the
+            Java compiler will reject it. Thus, like abstract classes,
+            interfaces make it possible to pre-determine that a given
+            class will understand a particular set of methods. But,
+            because <b>a class can implement several interfaces</b>,
+            interfaces allow you to pre-determine that a given class
+            will understand several entire sets of methods. The trade-
+            off is that an interface cannot include even one concrete
+            method.
+        </p>
+    <h3>Mix-ins and Multiple Inheritance</h3>
+        <p> C++ is a popular object-oriented language that is similar to
+            Java in many ways. In fact, C++ is Java's "father": Most of the
+            syntax of Java is taken from C++ and its "father," C.
+        </p>
+        <p> Unlike Java, C++ includes an object-oriented capability known as
+            <b>multiple inheritance</b>, which allows a subclass to be
+            derived from two (or more) superclasses. Multiple inheritance
+            can be a very handy thing. For example, it lets you create a
+            class <code>AmphibiousVehicle</code> from the parent classes
+            <code>LandVehicle</code> and <code>WaterVehicle</code>.<br>
+            <img src="images/amphibious.png" class="inlineCenter" alt="An amphibious vehicle.">
+            An <code>AmphibiousVehicle</code> can travel on land or water, and so
+            inherits wheels or treads from its <code>LandVehicle</code> parent, and
+            a prop or screw and rudder from its <code>WaterVehicle</code>
+            parent. You can't do this in Java, because Java classes can have
+            only one parent class.
+        </p>
+    <h4>Problems of Multiple Inheritance</h4>
+        <p>Multiple inheritance is not all roses, however; that's why the
+            designers of Java decided to omit this capability. One problem
+            occurs when each of the parent classes has a method of the same
+            name. For example, what happens when you send a <code>go()</code>
+            message to an <code>AmphibiousVehicle</code>? Does it turn its
+            treads or its prop?
+        </p>
+        <p>
+            Certainly, you could implement a
+            <code>go()</code> method within <code>AmphibiousVehicle</code> that
+            eliminates the ambiguity, spinning the treads if the
+            vehicle is on land and the prop if the vehicle is on water.
+            Languages like C++ that support multiple inheritance
+            usually provide some mechanism for automatically resolving
+            such ambiguities.<br>
+             <img src="images/doublediamond.png" class="inlineCenter" alt="Problems of multiple inheritance.">
+            But when classes have parents,
+            grandparents, and great-grandparents, and when each
+            generation has two, three, or four of each, things get
+            frightfully complicated. Given the limited memory and
+            mental facilities of humans, a programmer may not be quite
+            sure exactly what method will be executed in response to a
+            given message.
+        </p>
+
+        <p> "This," as the saying goes, "is not a good thing."</p>
+    <h4>Java's Solution</h4>
+        <p> Java cuts through this complexity by requiring that a class
+            have only a single parent: this is called <b>single
+            inheritance</b>. (C# and all of the languages in Microsoft's
+            new .NET Framework also do this.) Thus, you always know exactly
+            what method will be executed.
+        </p>
+        <p> But multiple inheritance serves an important
+            function. It is important to be able to create classes that
+            understand several types of messages. Interfaces provide
+            that capability.<br>
+            <img src="images/interfaces.png" class="inlineCenter" alt="Interfaces and multiple inheritance.">
+        </p>
+
+        <p> Because of this, we can say that Java allows <b>multiple specification inheritance</b>,
+            but only <b>single implementation inheritance</b>.
+        </p>
+
+    <h2>Defining Interfaces</h2>
+        <p><b><span class='cap2'>L</span>ike a <code>public</code> class,
+            an interface must be
+            placed in a file</b> that has the same name as the interface, and that
+            has the extension .java. Inside the file, you define an interface
+            just as you would a class, substituting the keyword <code>interface</code>
+            for the keyword <code>class</code> in the header, like this:<br>
+            <img src='images/paintable01.png' class='inlineCenter' alt='The Paintable interface.'>
+            Because all methods in an interface <b>must</b> be
+            abstract, you <b>don't</b> have to use the <code>abstract</code>
+            keyword in front of each one. You cannot supply a body for any
+            of the methods, of course; if you do so, Java will not compile
+            your code.
+        </p>
+    <h3>Using Interfaces</h3>
+        <p> Instead of <b>extending</b> the interface, you use the
+            <code><b>implements</b></code> keyword to specify the
+            interface&#8212;or interfaces&#8212;that relate to a given class:<br>
+            <img src='images/whatsit.png' class='inlineCenter' alt='Implementing an interface.'>
+            Here, <code>WhatsIt</code> is a subclass of <code>Widget</code>,
+            and, since <code>WhatsIt</code> implements the
+            <code>Paintable</code> interface, it <b class='ry'>must</b> contain
+            a method with the signature: <code>public void paint(Graphics g);</code>.
+        </p>
+        <p> Note that both the <code>extends</code> and <code>implements</code>
+            keywords are used together. Because every class in Java is a
+            subclass of another class, (except for <code>Object</code>, of
+            course), this will usually be the case, unless your new class
+            is a direct subclass of the <code>Object</code> class.
+        </p>
+        <p> Note also that <code>implements</code> allows you to specify
+            more than one interface, unlike extends, and that you separate
+            the different interfaces with a comma (,).
+        </p>
+    <h3>Fields in Interfaces</h3>
+        <p> In addition to abstract methods, an interface can include
+            fields; but the fields must be <code>static final</code>
+            and, therefore, must also be initialized:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            public interface AnInterface<br>
+
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public int aMethod(int arg);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public int anotherMethod(int arg1, int arg2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public static final int A_CONSTANT = 100;<br>
+            }<br>
+        </p>
+
+        <p> Such fields are useful for defining constants used as arguments
+            to methods defined by the interface. Constants defined in an
+            interface are also quite useful when several classes in a package
+            share the same common constant definitions. Because you can
+            implement more than one interface, you can put all the common
+            constants into a single interface and just have each class
+            implement that interface in addition to any others it implements.
+        </p>
+        <p> Constants defined in interfaces have one last
+            benefit. If you write a class that implements an interface
+            that contains constant fields, you can refer to those
+            fields without the class or interface qualifier that would
+            otherwise be required.
+        </p>
+    <h2>Hands-On Interfaces</h2>
+        <p> <b><span class='cap2'>L</span>et's take a look at how interfaces
+            are used "in real life"</b>.
+            Back when we designed the <code>Deck</code> class in the last
+            chapter, you were
+            able to use the <code>Collections.shuffle()</code> static method
+            to shuffle the deck. This worked just fine, because the
+            <code>shuffle</code> method really didn't have to know anything
+            about the contents of the elements it was shuffling. If just
+            placed them in random order.
+        </p>
+        <p> The <code>Collections</code> class <b>also</b> has a <code>sort()</code>
+            method that does the opposite of a shuffle; instead of placing the
+            elements of the list in random order, it places them <b>in order</b>
+            in a specific way.
+        </p>
+    <h3>Sorting the Deck of Cards</h3>
+        <p> Open the <code>Deck</code> class in this chapter's code folder,
+            and go to the bottom, where you'll find the <code>shuffle()</code>
+            method and a placeholder for you to add your own <code>sort()</code>
+            method:
+        </p>
+        <ol>
+            <li class='d'><b>Copy</b> the entire <code>shuffle()</code> method and
+                <b>paste</b> it in the section marked Exercise 7.
+            </li>
+            <li class='d'>Change the name of the method to <code>sort()</code>
+                and change <code>Collections.shuffle()</code> to
+                <code>Collections.sort()</code>.
+            </li>
+        </ol>
+        <p> Surprisingly, while the <code>shuffle()</code> method worked just
+            fine, the <code>sort()</code> method seems to have a few problems:<br>
+            <img src='images/sort01.gif' class='inlineCenter' alt='Trying to sort the deck of cards.'>
+        </p>
+    <h3>What's the Problem?</h3>
+        <p> Why doesn't the code work? Because, while the <code>sort()</code>
+            method doesn't really care about what kinds of things it is
+            asked to sort, it really doesn't <b>know how</b> to sort
+            playing cards, any more than it would know how to sort eggs
+            or shirts. That's why the error message says that it doesn't
+            have a <code>sort(java.util.ArrayList&lt;PlayingCard&gt;)</code>
+            method.
+        </p>
+        <p> For the <code>sort()</code> method to sort your cards, it has
+            to rely on the <code>PlayingCard</code> class itself to <b>tell it</b>
+            about the order into which the cards should be placed.
+            Of course since the <code>PlayingCard</code> and
+            <code>Collection</code> classes aren't related to each other,
+            they need a mechanism to <b>ensure</b> that the card class
+            will be able to keep up its end of the bargain.
+        </p>
+        <p> As you might have guessed, this is done by <b>implementing
+            an interface</b>: specifically, the <code>Comparable</code>
+            interface.
+        </p>
+    <h3>Implementing Comparable</h3>
+        <p> The <code>Comparable</code> interface is one of the most widely
+            used interfaces in the Java class libraries, with hundreds
+            of different classes from <code>BigDecimal</code> to
+            <code>String</code> implementing it. In fact, any time you
+            design a class where ordering is important, you'll implement
+            the <code>Comparable</code> interface. (<i>Heads up: you may
+            be asked to do this on a programming exam as well.</i>)
+        </p>
+        <p> Implementing the interface is easy. Just add
+            <code>implements Comparable&lt;PlayingCard&gt;</code> to
+            the <code>PlayingCard</code> class header like this:<br>
+            <img src='images/comparable01.gif' class='inlineCenter' alt='Implementing the Comparable interface.'>
+            I usually put my <code>implements</code> lines below the class
+            heading as I've done here, so that the heading line doesn't
+            get too long.
+        </p>
+        <div class='info'>
+        <p> Notice that when you add the implements line, you specify the
+            <i>kind</i> of thing that you want to compare. This is a
+            <b>type parameter</b> similar to that used when defining an
+            <code>ArrayList</code>. Like <code>ArrayList</code> there is an
+            older version of the <code>Comparable</code> interface that works
+            with plain <code>Object</code> references. Writing code for
+            the older-style interface requires you to do some extra casting,
+            is less efficient, and a little less "safe". There is no reason
+            to use the older interface unless your code has to run on a
+            pre-Java 5 JVM.
+        </p>
+        </div>
+    <h4>Still Problems?</h4>
+        <p> Now, not only does our <code>Deck</code> class have errors,
+            but the <code>PlayingCard</code> class is broken as well.<br>
+            <img src='images/comparable06.gif' class='inlineCenter' alt='The compareTo() method.'>
+            <b class='ry'>This is not a good sign</b>.
+        </p>
+        <p> Well, you can relax. Remember that when you implement an
+            interface, you are signing a "contract" to supply certain
+            services. If you look up the documentation for the
+            <code>Comparable</code> interface, you'll see that
+            you are promising to supply the <code>compareTo()</code>
+            method:<br>
+            <img src='images/comparable02.gif' class='inlineCenter' alt='The compareTo() method.'>
+            As you can see, the method takes a single parameter (in
+            our case a <code>PlayingCard</code>) and returns 0 if the two
+            cards are the same, a positive number of the parameter is "greater
+            than" the current object, or a negative number of the parameter
+            is "less than" the current object.
+        </p>
+    <h3>Implementing compareTo</h3>
+        <p> Here are some hints for implementing the method. First,
+            you need to check if you are comparing to "yourself".
+            You can do that by checking if <code>this == other</code>.
+            If that's the case, then you can just return 0, like this:<br>
+            <img src='images/comparable04.gif' class='inlineCenter' alt='Comparing to yourself.'>
+            Next, you have to decide if you want the cards sorted in suit-major,
+            or in rank-major order. In other words, do you want all of
+            the Hearts, Spades and Clubs together (suit-major), <i>or</i>,
+            do you want all of the 2s, 3s, 4s, etc. together (rank-major).
+        </p>
+        <p> Fortunately there is not much difference between the two.
+            All enumerated types, (like <code>Rank</code> and <code>Suit</code>),
+            <b>already</b> implement the <code>compareTo()</code> method.
+            You can use that to compare the ranks and suits of the two
+            cards and store the differences in a pair of <code>int</code>
+            variables like this:<br>
+            <img src='images/comparable05.gif' class='inlineCenter' alt='Comparing to yourself.'>
+            Then, if you want suit-major order, you compare suits. If they are
+            the same, then you return the difference between ranks. If they
+            are different, then return the difference between suits.
+        </p>
+        <p> To change this from suit-major to rank-major order, just rearrange
+            the last three lines to compare ranks instead of suits.
+        </p>
+    <h4>CardSort Demo</h4>
+        <p> To see if your sorting worked, open the <b>CardSortDemo</b>
+            program, and then compile and run it. Here's what you should see
+            when you add a new deck:<br>
+            <img src='images/natural-order.gif' class='inlineCenter' alt='Natural ordering.'>
+            When you click the <b>Shuffle</b> button, you'll see the results
+            like this:<br>
+            <img src='images/shuffled-order.gif' class='inlineCenter' alt='Shuffled ordering.'>
+            Finally, if you click the <b>Sort</b> button, you'll see the
+            fruits of your <code>compareTo()</code> method:<br>
+            <img src='images/sorted-order.gif' class='inlineCenter' alt='Shuffled ordering.'>
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Interfaces Summary
+        </p>
+        <ul>
+            <li>Interfaces are like abstract classes that may contain
+                <b>only abstract methods</b> or constants.
+            </li>
+            <li>Interfaces are useful because they allow us to create a
+                new "type" by <b>specifying a common behavior</b>. With
+                interfaces we can group together unrelated types as if they were
+                in the same class hierarchy.
+            </li>
+            <li>To use an interface, a class must <b>implement, not extend</b>
+                it. A class may implement any number of interfaces, but extend
+                only one. This means in Java we can have
+                <b>multiple-specification-inheritance</b> but only <b>single</b>
+                implementation inheritance. These classes are sometimes called
+                <b>mix-ins</b>.
+            </li>
+            <li>When a class implements an interface, it promises to
+                <b>implement every abstract method</b> that the interface
+                contains. If it fails to do so, the code will not compile.
+            </li>
+            <li>An interface is saved in a Java source file, with the keyword
+                <code>interface</code> used instead of <code>class</code>. The
+                interface and all of its methods <b>must be public</b>. All
+                methods are <b>abstract</b>, but you don't use the <code>abstract</code>
+                keyword when defining them.
+            </li>
+            <li>To <b>use an interface</b> and an <code>implements</code> clause to
+                the class header, followed by any number of interface names. Separate
+                each name with a semicolon.
+            </li>
+            <li>You may <b>place named constants</b> inside an interface. The
+                constants must be <code>public</code>, <code>final</code> and
+                <code>static</code>.
+            </li>
+            <li>The <code>Comparable</code> interface is one of the
+                <b>most widely used interfaces</b> in the Java class libraries.
+                A class that implements this interface implements a
+                <code>compareTo()</code> method that instructs its callers
+                how to order its members.
+            </li>
+
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

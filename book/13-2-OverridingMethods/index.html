@@ -1,0 +1,425 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>13.2&mdash;Overriding Methods</title>
+
+</head>
+<body>
+    <div id='lessonBanner' class="banner14">
+        <img id='lessonLogo' src='../images/l.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 13.2</p>
+        <p id='lessonTitle'>Overriding Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>W</span>hen an inherited method doesn't do
+            exactly what you want</b>,
+            you can write a replacement method. This is called
+            <b>overriding</b> the method. The new version of the
+            method can either <b>completely replace</b> the existing version,
+            or you can <b>add some new actions</b> to the original. (You
+            <b>can't</b> however, just use <i>some</i> of the existing
+            behavior.)
+        </p>
+        <p> To illustrate this, we'll add <code>toString()</code> methods
+            to both of our demo classes. You can find the finished code
+            in <b>Inherit02.java</b>, part of this chapter's code folder.
+            The first change just adds <code>toString()</code> to the
+            <code>Person</code> class like this:<br>
+            <img src="images/inherit02a.png" class="inlineCenter" alt="The Person.toString() method.">
+            When you override a method like <code>toString()</code> you must:
+        </p>
+        <ol>
+            <li class="d">Use <b>exactly</b> the same number and type of
+                parameters as the original method in the superclass. There
+                are no conversions between <code>int</code> and <code>double</code>
+                for instance.
+            </li>
+            <li class="d">Return <b>exactly</b> the same type as the original
+                method.
+            </li>
+            <li class="d">Use an access specifier that is <b>at least</b> as
+                permissive as the superclass method. In other words, you can't
+                override a <code>public</code> method with a <code>private</code>
+                method.
+            </li>
+        </ol>
+        <p> With this new version of <code>toString()</code> our <b>Inherit02</b>
+            sample code looks like this when it runs:<br>
+            <img src="images/inherit02b.png" class="inlineCenter" alt="Using the Person toString() method.">
+            Note that the variable <code>pete</code> prints out the name as
+            you'd expect (since <code>pete</code> is a <code>Person</code>
+            object). The variable <code>steve</code> <b>also</b> uses the
+            new overridden <code>toString()</code> method defined in <code>Person</code>,
+            <b>instead</b> of the original version defined in the <code>Object</code>
+            class.
+        </p>
+        <p> When we replaced <code>toString()</code> for the <code>Person</code>
+            class, we <b>also</b> replaced it for <b>all of its subclasses</b>.
+        </p>
+    <h3>Writing Student toString()</h3>
+        <p> Now, let's override <code>toString()</code> in the <code>Student</code>
+            class as well. Here's a first attempt:<br>
+            <img src="images/inherit02c.png" class="inlineCenter" alt="Student toString() attempt 1.">
+            As you can see, though, the field <code>name</code> is <b>not
+            accessible</b>. This is the same problem we had earlier trying
+            to access <code>name</code> from the <code>Student</code> constructor.
+        </p>
+        <p> There we were able to get around the problem by using the inherited
+            <code>getName()</code> accessor method, and we can do the same thing
+            here, like this:<br>
+            <img src="images/inherit02d.png" class="inlineCenter" alt="Student toString() attempt 2.">
+            While this works, though, it doesn't take advantage of the fact
+            that we've <b>already written</b> the <code>toString()</code>
+            code for the <code>Person</code> class. Essentially, in the
+            <code>Student</code> version of <code>toString()</code>, we're
+            writing exactly the same code again.
+        </p>
+        <p> Isn't there some way we can run the original version of the
+            <code>toString()</code> method, and just <b>add on</b> the
+            new parts we want, like printing the student ID? Isn't there
+            some way we can <b>combine</b> inherited and overridden methods?
+        </p>
+        <p> <b>Yes</b>, there is.</p>
+    <h3>Calling Superclass Methods</h3>
+        <p> As you saw earlier, the <code>Student</code> class automatically
+            <b>inherited</b> both the <code>getName()</code> and the
+            <code>toString()</code> methods from the <code>Person</code>
+            class. When we created a <code>Student</code> object, we could
+            use both of those methods just as if they were defined in the
+            student class.
+        </p>
+        <p> Furthermore, when we defined new methods in the <code>Student</code>
+            class, we could <b>call</b> those inherited methods (such as
+            <code>getName()</code>), just as if they were defined inside
+            the <code>Student</code> class.
+        </p>
+        <p> Let's see if we can put that to work by calling the <b>inherited</b>
+            version of <code>toString()</code>, which already prints the
+            object's name, from inside the new overridden <code>toString()</code>
+            method. Here's what that looks like, and here's what happens:<br>
+            <img src="images/inherit02e.png" class="inlineCenter" alt="Student toString() attempt 3.">
+            The good news is that doing this is <b>not</b> syntactically
+            incorrect. The bad news is that your program blows up with
+            a <code>StackOverflowError</code> when you try to run it.
+        </p>
+        <p> The reason your program crashes is because when you call the
+            <code>toString()</code> method from inside a class that has
+            a definition for a <code>toString()</code> method, then the
+            overridden or <code>Student</code> version is used; it has
+            <b>replaced</b> the inherited <code>Person</code> version.
+            You are, in effect, calling the <code>Student</code> version
+            of <code>toString()</code> <b>from inside itself</b>. This
+            is called <b>recursion</b> and while it can be a powerful
+            problem-solving technique, doing it accidentally like this
+            usually results in a program crash.
+        </p>
+    <h4>The super Modifier</h4>
+        <p> This problem is similar to the one we encountered when we
+            had instance variables and local variables that both had
+            the same name. When that happened, we were able to use the
+            special identifier named <code>this</code> to differentiate
+            between the two variables.
+        </p>
+        <p> In this case we have an <b>inherited</b> superclass method named
+            <code>toString()</code> and an <b>overridden</b> subclass method
+            named <code>toString()</code>.
+            We can differentiate between them by using the special
+            identifier named <b>super</b>, like this:
+            <img src="images/inherit02f.png" class="inlineCenter" alt="Student toString() attempt 4.">
+            Now, the overridden <code>toString()</code> method calls the
+            superclass <code>toString()</code> method to do a portion of
+            its work.
+        </p>
+        <div class='alert'>
+        <p>Don't confuse method <b>overriding</b> (which is
+            what we're doing here), with method <b>overloading</b>. With
+            overloading, two or more methods have the same name, but different
+            parameter lists. Overloaded methods can exist in the same class
+            or in a subclass. (This is different than C++). Overriding methods
+            can only exist in a subclass and they must have exactly the
+            same parameters and return type as the method that they are
+            replacing.
+        </p>
+        </div>
+    <h3>Annotations and Documentation</h3>
+        <p> When you override a method, you <b>should</b> tell the compiler
+            that you intend to override a subclass method by <b>adding an
+            <code>@Override</code> annotation</b> just before the class
+            header. This goes <b>after</b> any Javadoc comment you might
+            want to add, <b>not inside</b> the comment. Note that the
+            <code>@Override</code> annotation is capitalized, while the
+            Javadoc tags, like <code>@author</code>, are not.
+        </p>
+        <p> Here is my recommended Javadoc and @override for the <code>Person</code>
+            version of <code>toString()</code>:<br>
+            <img src="images/inherit-doca.png" class="inlineCenter" alt="Documenting toString() in Person.">
+            Actually, when you do this, you <b>don't</b> have to provide
+            a Javadoc comment at all, and your code will still pass all
+            of the style checks. That's because when you override a
+            method, the comments from the superclass are automatically
+            inherited and added to an <b>Overrides</b> section inside
+            the Javadoc method detail for that method.
+        </p>
+        <p> Normally, however, you'll want to supply both a Javadoc and
+            an <code>@Override</code> annotation, since the overridden
+            method is likely to act differently than the version it
+            overrides in the subclass. At a minimum, your Javadoc should
+            include a sentence describing what the method does. You
+            may, however, omit all <code>@param</code> tags, unless
+            the parameters somehow act differently in the subclass.
+        </p>
+        <p>Here's what the resulting Javadoc looks like using those options:<br>
+            <img src="images/inherit-docb.png" class="inlineCenter" alt="Documenting toString() in Person.">
+            You can see the Javadoc (provided you're running with the JDK,
+            <b>not</b> the Eclipse compiler and the JRE) by right-clicking
+            your file and selecting <b>Preview Javadoc for File</b>.
+        </p>
+    <h2>Inheritance and Constructors</h2>
+        <p> The last thing you'll need to master to work with inheritance
+            is how it affects constructors. You remember that a class
+            constructor <b>must</b> have the same name as the class. That
+            means that when you create a new class, the new class
+            <b>doesn't inherit any of the superclass constructors</b>.
+            Instead, it needs to define new constructors of its own.
+        </p>
+        <p> To see how that works, let's add two constructors to the
+            <code>Person</code> class, which currently uses only the
+            <b>default</b> constructor that is automatically written
+            by Java, when you don't supply any explicit constructors:<br>
+            <img src="images/inherit03a.png" class="inlineCenter" alt="Two constructors for the Person class.">
+            Both constructors just print a message so we can keep track of
+            when they've been called. The working constructor uses its
+            <code>String</code> parameter to initialize the <code>name</code>
+            instance variable in addition to printing a diagnostic message.
+            I've also added a similar diagnostic message to the
+            <code>Student</code> class constructor.
+        </p>
+        <p> The test program creates two objects, one <code>Person</code> and
+            one <code>Student</code>, and prints out their info, just like
+            the previous example. When we run the test code in
+            <b>Inherit03.java</b> (which you'll find in this chapter's
+            code folder), you'll see that instead of two constructors,
+            <b>both</b> <code>Person</code> constructors have been called,
+            along with the <code>Student</code> constructor:<br>
+            <img src="images/inherit03b.png" class="inlineCenter" alt="Running the Inherit03 sample program.">
+            Why is that?
+        </p>
+    <h4>Constructor Chaining</h4>
+        <p> When you call a subclass constructor, before the constructor
+            can do <b>any</b> of its work, it first needs to make sure that
+            its superclass constructor has been called. This happens
+            <b>before</b> the first line in the subclass constructor
+            ever runs.
+        </p>
+        <p> You don't have to do anything special to make this happen.
+            When your constructor runs, if implicitly calls the <b>no-arg</b>
+            constructor in the superclass as its first line of code, and that
+            constructor calls <b>its</b> superclass constructor, and so on,
+            all the way up to the <code>Object</code> class. This is called
+            <b>constructor chaining</b>.
+        </p>
+        <p> So, consider for a second, the <code>Student</code> class
+            constructor shown here:<br>
+            <img src="images/inherit03c.png" class="inlineCenter" alt="The Student constructor.">
+            Even though you don't see it in the code,
+            <b>in reality</b> the following set of commands are run
+            when the <code>Student</code> construct is invoked
+            (after memory has been allocated and all instance variables
+            have been initialized):
+        </p>
+        <ol>
+            <li class="d">call the <code>Object</code> no-arg constructor</li>
+            <li class="d">call the <code>Person</code> no-arg constructor</li>
+            <li class="d">assign the parameter to the instance variable</li>
+            <li class="d">call the <code>setName()</code> inherited method</li>
+            <li class="d">print the diagnostic message</li>
+        </ol>
+        <p> That's why we saw <b>three diagnostic messages</b> in the sample program,
+            when we only created two objects. When we created the <code>Student</code>
+            object named <code>steve</code>, the <code>Student</code> constructor
+            <b>first</b> called the <b>no-arg</b> constructor for the <code>Person</code>
+            class. If the <code>Object</code> class no-arg constructor printed out
+            diagnostic messages, like our constructors do, then you won't have seen
+            two of those as well: one for the <code>Student</code> object and
+            one for the <code>Person</code> object.
+        </p>
+    <h3>Default and No-Arg Constructors</h3>
+        <p> What happens if we <b>remove</b> the no-arg constructor from the
+            <code>Person</code> class? If you comment it out, you'll see that
+            it doesn't affect the <code>Person</code> class at all, but the
+            <code>Student</code> constructor stops working:<br>
+            <img src="images/inherit03d.png" class="inlineCenter" alt="The Student constructor with no explicit Person constructor.">
+            As the error message shown here points out, every time you extend a class,
+            the superclass <b>must</b>:
+        </p>
+        <ol>
+            <li class="d">have a <b>no-arg constructor</b> like <code>Person()</code>, or</li>
+            <li class="d">have a <b>default</b> constructor which is automatically
+                written if the superclass has <b>no</b> explicit constructors, or</li>
+            <li class="d">the <b>subclass</b> (<code>Student</code> in this case) must
+                <b>explicitly</b> call <b>another</b> constructor.
+            </li>
+        </ol>
+        <p> That's what we want to look at now. How exactly do you explicitly call
+            a superclass constructor?
+        </p>
+    <h3>Calling super()</h3>
+        <p> You remember when you wrote overloaded constructors in
+            <i>Section 11.4&mdash;Constructors</i>, that
+            you could <b>invoke one constructor from another</b> by using the special
+            syntax <code>this()</code>. When you use <code>this()</code> to call
+            another constructor, it needed to appear on the first line of the
+            method.
+        </p>
+        <p> With inheritance, instead of calling another, overloaded constructor
+            in the same class, you can <b>call a constructor in your immediate
+            superclass</b>. Instead of using <code>this()</code>, you use
+            <code>super()</code> in a similar manner. As with <code>this()</code>,
+            <code>super()</code> must appear on the first line of the constructor
+            body. Of course that means you can use <code>this()</code> or
+            <code>super()</code>, not both.
+        </p>
+        <p> Here's how you'd modify the <code>Student</code> constructor to call
+            the <code>Person(String)</code> constructor, instead of using
+            the <code>setName()</code> method, as we've done up until now:<br>
+            <img src="images/inherit03e.png" class="inlineCenter" alt="Using super() with the Student constructor.">
+            Notice that the <code>setName()</code> method can be removed altogether
+            once you do this. This is the <b>normal way to write subclass constructors</b>.
+        </p>
+        <p> Now, when we run our sample program, instead of implicitly calling the
+            <code>Person</code> no-arg constructor (which no longer exists), we
+            <b>explicitly</b> chain to the <code>Person(String)</code> constructor
+            to initialize the <code>name</code> field:<br>
+            <img src="images/inherit03f.png" class="inlineCenter" alt="Explicit constructor chaining.">
+        </p>
+    <h2>Final Classes and Methods</h2>
+        <p> Since subclasses are free to provide replacement methods
+            for <b>every</b> public method defined in the superclass, it's
+            <b>possible</b>
+            for a subclass to replace a method that the original class
+            designer wanted left alone.
+        </p>
+        <p> If you look at the <code>Person</code> class, for instance, you
+            can see that the <code>getName()</code> method just returns the
+            name of the person. <b>This method works fine as is</b>, and there's
+            really no reason for a subclass to change it. Because of the
+            way the superclass was written, though, <b>nothing prevents a
+            subclass from overriding it</b> like this to change the way
+            the method works:
+        </p>
+        <p class="code" style='font-size:larger;'>
+            class Flatterer extends Person<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public String getName()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><span style="color: red;">return "Emperor " + super.getName();</span></b><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Although the subclass has no access to the <code>private</code>
+            instance variable <code>name</code>, because the <code>getName()</code>
+            method could be overridden, the subclass was able to change the
+            access to this method.
+        </p>
+        <p> To prevent this, when you design a base or superclass, you need
+            to consider which methods you want to allow others to extend
+            and which ones should be "set in stone". In our <code>Person</code>
+            class, there is no reason to let anyone change the way that
+            <code>getName()</code> or <code>setName()</code> work, so we can
+            <b>seal</b> them by using the keyword <code>final</code> like this:<br>
+            <img src="images/inherit03g.png" class="inlineCenter" alt="Creating a final method.">
+            When a method is marked <code>final</code> then subclasses are
+            <b>prevented</b> from overriding it.
+        </p>
+    <h3>Final Classes</h3>
+        <p> When you are designing a collection of classes, you normally
+            <b>won't want all of the classes to be extensible</b>. In the Java
+            Class Libraries, for instance, there are several classes that
+            you <b>can't extend</b>, such as <code>String</code> and <code>Math</code>.
+            The designers of the Java Class Libraries felt that allowing
+            people to create their own versions of the <code>String</code>
+            class would open up various security holes in the language.
+        </p>
+        <p> To prevent others from extending your class, just add
+            <code>final</code> to the class header, just like you
+            did for the method header. If you make a class non-extendable
+            by making it <code>final</code>, then there is no reason
+            to make the methods <code>final</code> as well.
+        </p>
+        <p> Well that's it for the boring finger exercises. Let's get back to the fun stuff.</p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Overriding Methods Summary
+        </p>
+        <ul>
+            <li>When an inherited method doesn't do exactly what you want,
+                you can write a replacement method. This is called
+                <b>overriding the method</b>.
+            </li>
+            <li>When overriding a method, you must use <b>exactly the same
+                signature</b> as the superclass method and <b>return the
+                same type</b>. You may make the access specifier more
+                permissive, making a <code>protected</code> method
+                <code>public</code>.
+            </li>
+            <li>When implementing an overridden method, you <b>cannot access
+                any of the superclass variables</b> (provided they are
+                <code>private</code> in the superclass, which is the normal case).
+                You <b>may call</b> any inherited superclass methods.
+            </li>
+            <li>When implementing an overridden method, you may completely
+                replace the superclass implementation, or, <b>combine the
+                original superclass implementation</b> with additional code.
+                To make use of the original superclass method, simply
+                <b>call the method</b>, being sure to preface it with
+                the receiver <code>super</code>.
+            </li>
+            <li>If you call a superclass overridden method from the subclass
+                <b>without</b> using the prefix <code>super</code>, then the
+                method will <b>call itself</b> instead of the superclass version,
+                something that is known as <b>infinite recursion</b>. Of course,
+                since your computer's memory <b>isn't</b> infinite your
+                program crashes with a <code>StackOverflowError</code>.
+            </li>
+            <li>When you override a method, your implementation should be
+                preceded with an <code>@Override</code> <b>annotation</b>
+                to allow the compiler to warn you if you define the method
+                signature incorrectly. You should add a Javadoc comment
+                for overridden methods, but you don't have to.
+            </li>
+            <li>With inheritance, <b>constructors are not inherited</b> because
+                they have the same name as the class. Instead, when you construct
+                a subclass object, the <b>superclass default constructor</b>
+                is automatically called immediately before the code in
+                the subclass constructor.
+            </li>
+            <li>If your superclass does not have a default or no-arg constructor,
+                then your subclass must have a constructor that <b>explicitly
+                calls a specific superclass constructor</b> on the first line of
+                each subclass constructor. This is done with the <code>super()</code>
+                "method" call. The version of the superclass constructor that
+                is run depends on the types of the arguments passed to
+                <code>super()</code>.
+            </li>
+            <li>You may <b>prevent inheritance</b> by marking your superclass
+                methods as <code>final</code> (to prevent overriding), or by
+                marking the class itself as <code>final</code> (to prevent
+                extension altogether).
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

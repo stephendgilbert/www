@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>salarray.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span>
+<span class="line">  3 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="com">/**</span>
+<span class="line">  6 </span><span class="com">   Reads data into an array, using 0 as a sentinel value.</span>
+<span class="line">  7 </span><span class="com">   &#64;param a the array to fill</span>
+<span class="line">  8 </span><span class="com">   &#64;param a_capacity the maximum size of a</span>
+<span class="line">  9 </span><span class="com">   &#64;param a_size filled with the size of a after reading the input</span>
+<span class="line"> 10 </span><span class="com"> */</span>
+<span class="line"> 11 </span><span class="kwb">void</span> <span class="kwd">read_data</span><span class="sym">(</span><span class="kwb">double</span> a<span class="sym">[],</span> <span class="kwb">int</span> a_capacity<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&amp;</span> a_size<span class="sym">)</span>
+<span class="line"> 12 </span><span class="sym">{</span>
+<span class="line"> 13 </span>   a_size <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 14 </span>
+<span class="line"> 15 </span>   <span class="kwb">bool</span> more <span class="sym">=</span> <span class="kwa">true</span><span class="sym">;</span>
+<span class="line"> 16 </span>   <span class="kwa">while</span> <span class="sym">(</span>more<span class="sym">)</span>
+<span class="line"> 17 </span>   <span class="sym">{</span>
+<span class="line"> 18 </span>      <span class="kwb">double</span> x<span class="sym">;</span>
+<span class="line"> 19 </span>      cin <span class="sym">&gt;&gt;</span> x<span class="sym">;</span>
+<span class="line"> 20 </span>      <span class="kwa">if</span> <span class="sym">(</span>x <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span>
+<span class="line"> 21 </span>         more <span class="sym">=</span> <span class="kwa">false</span><span class="sym">;</span>
+<span class="line"> 22 </span>      <span class="kwa">else if</span> <span class="sym">(</span>a_size <span class="sym">==</span> a_capacity<span class="sym">)</span>
+<span class="line"> 23 </span>      <span class="sym">{</span>
+<span class="line"> 24 </span>         cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Sorry--extra data ignored</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 25 </span>         more <span class="sym">=</span> <span class="kwa">false</span><span class="sym">;</span>
+<span class="line"> 26 </span>      <span class="sym">}</span>
+<span class="line"> 27 </span>      <span class="kwa">else</span>
+<span class="line"> 28 </span>      <span class="sym">{</span>
+<span class="line"> 29 </span>         a<span class="sym">[</span>a_size<span class="sym">] =</span> x<span class="sym">;</span>
+<span class="line"> 30 </span>         a_size<span class="sym">++;</span>
+<span class="line"> 31 </span>      <span class="sym">}</span>
+<span class="line"> 32 </span>   <span class="sym">}</span>
+<span class="line"> 33 </span><span class="sym">}</span>
+<span class="line"> 34 </span>
+<span class="line"> 35 </span><span class="com">/**</span>
+<span class="line"> 36 </span><span class="com"> Computes the maximum value in an array.</span>
+<span class="line"> 37 </span><span class="com"> &#64;param a the array</span>
+<span class="line"> 38 </span><span class="com"> &#64;param a_size the number of values in a</span>
+<span class="line"> 39 </span><span class="com"> */</span>
+<span class="line"> 40 </span><span class="kwb">double</span> <span class="kwd">maximum</span><span class="sym">(</span><span class="kwb">const double</span> a<span class="sym">[],</span> <span class="kwb">int</span> a_size<span class="sym">)</span>
+<span class="line"> 41 </span><span class="sym">{</span>
+<span class="line"> 42 </span>   <span class="kwa">if</span> <span class="sym">(</span>a_size <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span>
+<span class="line"> 43 </span>      <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 44 </span>   <span class="kwb">double</span> highest <span class="sym">=</span> a<span class="sym">[</span><span class="num">0</span><span class="sym">];</span>
+<span class="line"> 45 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span> i <span class="sym">&lt;</span> a_size<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 46 </span>      <span class="kwa">if</span> <span class="sym">(</span>a<span class="sym">[</span>i<span class="sym">] &gt;</span> highest<span class="sym">)</span>
+<span class="line"> 47 </span>         highest <span class="sym">=</span> a<span class="sym">[</span>i<span class="sym">];</span>
+<span class="line"> 48 </span>   <span class="kwa">return</span> highest<span class="sym">;</span>
+<span class="line"> 49 </span><span class="sym">}</span>
+<span class="line"> 50 </span>
+<span class="line"> 51 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 52 </span><span class="sym">{</span>
+<span class="line"> 53 </span>   <span class="kwb">const int</span> SALARIES_CAPACITY <span class="sym">=</span> <span class="num">100</span><span class="sym">;</span>
+<span class="line"> 54 </span>   <span class="kwb">double</span> salaries<span class="sym">[</span>SALARIES_CAPACITY<span class="sym">];</span>
+<span class="line"> 55 </span>   <span class="kwb">int</span> salaries_size <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 56 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter salaries, 0 to quit:</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 57 </span>
+<span class="line"> 58 </span>   <span class="kwd">read_data</span><span class="sym">(</span>salaries<span class="sym">,</span> SALARIES_CAPACITY<span class="sym">,</span> salaries_size<span class="sym">);</span>
+<span class="line"> 59 </span>
+<span class="line"> 60 </span>   <span class="kwb">double</span> maxsal <span class="sym">=</span> <span class="kwd">maximum</span><span class="sym">(</span>salaries<span class="sym">,</span> salaries_size<span class="sym">);</span>
+<span class="line"> 61 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;The maximum salary is &quot;</span> <span class="sym">&lt;&lt;</span> maxsal <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 62 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 63 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

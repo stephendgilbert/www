@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>sharedstring.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span>
+<span class="line">  3 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwc">class</span> SharedString
+<span class="line">  6 </span><span class="sym">{</span>
+<span class="line">  7 </span><span class="kwc">public</span><span class="sym">:</span>
+<span class="line">  8 </span>   <span class="kwd">SharedString</span><span class="sym">();</span>
+<span class="line">  9 </span>   <span class="kwd">SharedString</span><span class="sym">(</span><span class="kwb">const char</span><span class="sym">*</span> right<span class="sym">);</span>
+<span class="line"> 10 </span>   <span class="kwd">SharedString</span><span class="sym">(</span><span class="kwb">const</span> SharedString<span class="sym">&amp;</span> right<span class="sym">);</span>
+<span class="line"> 11 </span>   <span class="sym">~</span><span class="kwd">SharedString</span><span class="sym">();</span>
+<span class="line"> 12 </span>   SharedString<span class="sym">&amp;</span> <span class="kwc">operator</span><span class="sym">=(</span><span class="kwb">const</span> SharedString<span class="sym">&amp;);</span>
+<span class="line"> 13 </span><span class="kwc">private</span><span class="sym">:</span>
+<span class="line"> 14 </span>   <span class="kwc">class</span> StringReference<span class="sym">;</span>
+<span class="line"> 15 </span>   StringReference<span class="sym">*</span> p<span class="sym">;</span>
+<span class="line"> 16 </span>   <span class="kwb">void</span> <span class="kwd">reassign</span><span class="sym">(</span>StringReference<span class="sym">*);</span>
+<span class="line"> 17 </span><span class="sym">};</span>
+<span class="line"> 18 </span>
+<span class="line"> 19 </span><span class="kwc">class</span> SharedString<span class="sym">::</span>StringReference
+<span class="line"> 20 </span><span class="sym">{</span>
+<span class="line"> 21 </span><span class="kwc">public</span><span class="sym">:</span>
+<span class="line"> 22 </span>   <span class="kwb">int</span> count<span class="sym">;</span>
+<span class="line"> 23 </span>   <span class="kwb">char</span><span class="sym">*</span> buffer<span class="sym">;</span>
+<span class="line"> 24 </span>   <span class="kwd">StringReference</span><span class="sym">(</span><span class="kwb">const char</span><span class="sym">*</span> right<span class="sym">);</span>
+<span class="line"> 25 </span>   <span class="sym">~</span><span class="kwd">StringReference</span><span class="sym">();</span>
+<span class="line"> 26 </span><span class="sym">};</span>
+<span class="line"> 27 </span>
+<span class="line"> 28 </span>SharedString<span class="sym">::</span><span class="kwd">SharedString</span><span class="sym">() :</span> <span class="kwd">p</span><span class="sym">(</span>NULL<span class="sym">)</span>
+<span class="line"> 29 </span><span class="sym">{</span>
+<span class="line"> 30 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering SharedString()</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 31 </span><span class="sym">}</span>
+<span class="line"> 32 </span>
+<span class="line"> 33 </span>SharedString<span class="sym">::</span><span class="kwd">SharedString</span><span class="sym">(</span><span class="kwb">const char</span><span class="sym">*</span> right<span class="sym">) :</span> <span class="kwd">p</span><span class="sym">(</span>NULL<span class="sym">)</span>
+<span class="line"> 34 </span><span class="sym">{</span>
+<span class="line"> 35 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering SharedString(const char*) &quot;</span><span class="sym">;</span>
+<span class="line"> 36 </span>   <span class="kwd">reassign</span><span class="sym">(</span><span class="kwa">new</span> <span class="kwd">StringReference</span><span class="sym">(</span>right<span class="sym">));</span>
+<span class="line"> 37 </span><span class="sym">}</span>
+<span class="line"> 38 </span>
+<span class="line"> 39 </span>SharedString<span class="sym">::</span><span class="kwd">SharedString</span><span class="sym">(</span><span class="kwb">const</span> SharedString<span class="sym">&amp;</span> right<span class="sym">) :</span> <span class="kwd">p</span><span class="sym">(</span>NULL<span class="sym">)</span>
+<span class="line"> 40 </span><span class="sym">{</span>
+<span class="line"> 41 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering SharedString(const SharedString&amp;) &quot;</span><span class="sym">;</span>
+<span class="line"> 42 </span>   <span class="kwd">reassign</span><span class="sym">(</span>right<span class="sym">.</span>p<span class="sym">);</span>
+<span class="line"> 43 </span><span class="sym">}</span>
+<span class="line"> 44 </span>
+<span class="line"> 45 </span>SharedString<span class="sym">::~</span><span class="kwd">SharedString</span><span class="sym">()</span>
+<span class="line"> 46 </span><span class="sym">{</span>
+<span class="line"> 47 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering ~SharedString() &quot;</span><span class="sym">;</span>
+<span class="line"> 48 </span>   <span class="kwd">reassign</span><span class="sym">(</span>NULL<span class="sym">);</span>
+<span class="line"> 49 </span><span class="sym">}</span>
+<span class="line"> 50 </span>
+<span class="line"> 51 </span>SharedString<span class="sym">&amp;</span> SharedString<span class="sym">::</span><span class="kwc">operator</span><span class="sym">=(</span><span class="kwb">const</span> SharedString<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 52 </span><span class="sym">{</span>
+<span class="line"> 53 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering operator=(const SharedString&amp;) &quot;</span><span class="sym">;</span>
+<span class="line"> 54 </span>   <span class="kwd">reassign</span><span class="sym">(</span>right<span class="sym">.</span>p<span class="sym">);</span>
+<span class="line"> 55 </span>   <span class="kwa">return</span> <span class="sym">*</span><span class="kwa">this</span><span class="sym">;</span>
+<span class="line"> 56 </span><span class="sym">}</span>
+<span class="line"> 57 </span>
+<span class="line"> 58 </span><span class="kwb">void</span> SharedString<span class="sym">::</span><span class="kwd">reassign</span><span class="sym">(</span>SharedString<span class="sym">::</span>StringReference<span class="sym">*</span> np<span class="sym">)</span>
+<span class="line"> 59 </span><span class="sym">{</span>
+<span class="line"> 60 </span>   <span class="kwa">if</span> <span class="sym">(</span>np <span class="sym">==</span> NULL<span class="sym">)</span> <span class="slc">// Print old values</span>
+<span class="line"> 61 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;value: &quot;</span> <span class="sym">&lt;&lt;</span> p<span class="sym">-&gt;</span>buffer <span class="sym">&lt;&lt;</span> <span class="str">&quot; count: &quot;</span> <span class="sym">&lt;&lt;</span> p<span class="sym">-&gt;</span>count <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 62 </span>   <span class="kwa">if</span> <span class="sym">(</span>np <span class="sym">!=</span> NULL<span class="sym">)</span> <span class="slc">// Increment count on the new value</span>
+<span class="line"> 63 </span>      np<span class="sym">-&gt;</span>count <span class="sym">+=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 64 </span>   <span class="kwa">if</span> <span class="sym">(</span>p <span class="sym">!=</span> NULL<span class="sym">)</span>  <span class="slc">// Decrement reference counts on old value</span>
+<span class="line"> 65 </span>   <span class="sym">{</span>
+<span class="line"> 66 </span>      p<span class="sym">-&gt;</span>count <span class="sym">-=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 67 </span>      <span class="kwa">if</span> <span class="sym">(</span>p<span class="sym">-&gt;</span>count <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span>
+<span class="line"> 68 </span>         <span class="kwa">delete</span> p<span class="sym">;</span>
+<span class="line"> 69 </span>   <span class="sym">}</span>
+<span class="line"> 70 </span>   p <span class="sym">=</span> np<span class="sym">;</span>  <span class="slc">// Change binding</span>
+<span class="line"> 71 </span>   <span class="kwa">if</span> <span class="sym">(</span>p <span class="sym">!=</span> NULL<span class="sym">)</span> <span class="slc">// Print new values</span>
+<span class="line"> 72 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;value: &quot;</span> <span class="sym">&lt;&lt;</span> p<span class="sym">-&gt;</span>buffer <span class="sym">&lt;&lt;</span> <span class="str">&quot; count: &quot;</span> <span class="sym">&lt;&lt;</span> p<span class="sym">-&gt;</span>count <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 73 </span><span class="sym">}</span>
+<span class="line"> 74 </span>
+<span class="line"> 75 </span>SharedString<span class="sym">::</span>StringReference<span class="sym">::</span><span class="kwd">StringReference</span><span class="sym">(</span><span class="kwb">const char</span><span class="sym">*</span> right<span class="sym">)</span>
+<span class="line"> 76 </span><span class="sym">{</span>
+<span class="line"> 77 </span>   count <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 78 </span>   <span class="kwb">int</span> n <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 79 </span>   <span class="kwa">while</span> <span class="sym">(</span>right<span class="sym">[</span>n<span class="sym">] !=</span> <span class="str">'</span><span class="esc">\0</span><span class="str">'</span><span class="sym">)</span>
+<span class="line"> 80 </span>      n<span class="sym">++;</span>
+<span class="line"> 81 </span>   buffer <span class="sym">=</span> <span class="kwa">new</span> <span class="kwb">char</span><span class="sym">[</span><span class="num">1</span> <span class="sym">+</span> n<span class="sym">];</span>
+<span class="line"> 82 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> n<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 83 </span>      buffer<span class="sym">[</span>i<span class="sym">] =</span> right<span class="sym">[</span>i<span class="sym">];</span>
+<span class="line"> 84 </span>   buffer<span class="sym">[</span>n<span class="sym">] =</span> <span class="str">'</span><span class="esc">\0</span><span class="str">'</span><span class="sym">;</span>
+<span class="line"> 85 </span><span class="sym">}</span>
+<span class="line"> 86 </span>
+<span class="line"> 87 </span>SharedString<span class="sym">::</span>StringReference<span class="sym">::~</span><span class="kwd">StringReference</span><span class="sym">()</span>
+<span class="line"> 88 </span><span class="sym">{</span>
+<span class="line"> 89 </span>   <span class="kwa">delete</span><span class="sym">[]</span> buffer<span class="sym">;</span>
+<span class="line"> 90 </span><span class="sym">}</span>
+<span class="line"> 91 </span>
+<span class="line"> 92 </span>SharedString g<span class="sym">;</span> <span class="slc">// Global value</span>
+<span class="line"> 93 </span>
+<span class="line"> 94 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 95 </span><span class="sym">{</span>
+<span class="line"> 96 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Entering main</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 97 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;SharedString a =</span> <span class="esc">\&quot;</span><span class="str">Fred</span><span class="esc">\&quot;</span><span class="str">;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 98 </span>   SharedString a <span class="sym">=</span> <span class="str">&quot;Fred&quot;</span><span class="sym">;</span>
+<span class="line"> 99 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;SharedString b =</span> <span class="esc">\&quot;</span><span class="str">Alice</span><span class="esc">\&quot;</span><span class="str">;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">100 </span>   SharedString b <span class="sym">=</span> <span class="str">&quot;Alice&quot;</span><span class="sym">;</span>
+<span class="line">101 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;SharedString c;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">102 </span>   SharedString c<span class="sym">;</span>
+<span class="line">103 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;c = a;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">104 </span>   c <span class="sym">=</span> a<span class="sym">;</span>
+<span class="line">105 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;a = b;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">106 </span>   a <span class="sym">=</span> b<span class="sym">;</span>
+<span class="line">107 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;g = b;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">108 </span>   g <span class="sym">=</span> b<span class="sym">;</span>
+<span class="line">109 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Exiting main</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">110 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">111 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

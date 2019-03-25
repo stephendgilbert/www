@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>11.1&mdash;Partially-Filled Arrays</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.1</p>
+        <p id='lessonTitle'> Partially-Filled Arrays</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">S</span>ometimes, you don't need to process <i>all</i> of the elements in
+            an array</b>, and so the algorithms you studied in the last chaper
+            don't exactly fit the bill. This is where the <b>partially-filled</b>
+            array comes in.<br>
+            <img src='images/foxtrot-half-full.png' class='inlineCenter' alt='A glass half-full.'>
+            You'll want to use partial-array processing algorithms when:</p>
+        <ul>
+            <li>your array is constructed at run-time using user-supplied
+                data. Since you <b>don't know how many elements the array will
+                contain</b>, you'll need to know how to process a portion of an
+                array by using sentinel loops, to keep track of how
+                many elements the array contains.
+            </li>
+            <li>your want to <b>insert or delete elements</b> from an array. To do
+                this, you need to supply space for the extra elements, and
+                also keep track of which elements are valid. That means that
+                you'll need to work with algorithms that modify a portion
+                of an array by inserting or deleting elements.
+            </li>
+        </ul>
+        <p> In these situations, instead of using
+            the "natural" loop bounds, (from 0 to less-than the length), you'll need
+            to keep track of which elements you actually want to process. It also
+            means that you <b>can't</b> use the <i>foreach</i> version of the
+            <code>for</code> loop.
+        </p>
+        <p> The most common reason for processing only "part" of an array
+            is when only a portion of the array actually contains valid data.
+            Since the size of an array can't be changed after it's created,
+            programmers often "plan for the worst case", and make their arrays
+            large enough to hold the maximum amount of data that could possibly
+            be required.
+        </p>
+    <h2>Adding Elements</h2>
+        <p> In the <b>SumAvgCount</b> applet (from the last chapter), we filled all of the elements with
+            random numbers. Let's create an ACM console-mode program that allows the
+            user to input <i>any number of values</i>, instead of automatically
+            filling the array. In this chapter's code folder, you'll find a program,
+            <b>InputArray</b>, that shows you how you'd do it.
+        </p>
+        <p> Open the starter program in DrJava
+            and type along.
+        </p>
+    <h3>Capacity and Size</h3>
+        <p> To do this, we need to keep track of how many values the user
+            has entered, <b>and</b> how many empty slots are still available. Traditionally,
+            these two numbers are known as the array's <b><u>capacity</u></b>
+            and its <b><u>size</u></b>. Here's a picture that might make things
+            a little clearer:<br>
+            <img src="images/b17.gif" alt="An array with a capacity of 10 and a size of 4." class="inlineCenter">
+            The array shown here has a <code>length</code> of 10, which is also its
+            <b>capacity</b>. Only the first four elements have meaningful values,
+            though, so the <b>size</b> of the array is 4.
+        </p>
+        <p> In the <b>InputArray</b> program, you should first create a <code>Scanner</code>
+            variable to read the user's input. Of course, since this is an ACM
+            <code>ConsoleProgram</code>, we <b>could</b> use the built-in
+            <code>readDouble()</code> method. However, the <code>ConsoleProgram</code>
+            read methods can only read one number per line, while the <code>Scanner</code>
+            methods let you place several numbers on the same line, and then "pick them off."<br>
+            <img src="images/b16.png" class="inlineCenter" alt="The capacity and size variable declarations.">
+            Remember that when you use
+            <code>System.in</code> to initialize the <code>Scanner</code> object, your
+            input will come from the <b>system console</b>. We want to read
+            from the ACM program console, though, so we initialize our <code>Scanner</code>
+            using the <code>getReader()</code> method designed for just this purpose.
+        </p>
+        <p> After creating the <code>Scanner</code>, create two
+            variables to store these numbers:
+        </p>
+        <ul>
+            <li><code>capacity</code>, which stores the maximum number of items the
+                user <b>could</b> enter,
+            </li>
+            <li> and a separate variable, <code>size</code>, to keep track of how
+                many values have <b>actually</b> been entered.
+            </li>
+        </ul>
+        <p> Initialize <code>capacity</code>
+            using the built-in array <code>length</code> variable:
+        </p>
+    <h3>Reading the Input</h3>
+        <p> To initialize the array, use a sentinel loop along with the user input.
+            As each value is entered, store it in the array,
+            and then increment the variable indicating the number of
+            items in the array like this:
+            <img src="images/b18.png" class="inlineCenter" alt="The input loop.">
+            The input loop works like this:
+        </p>
+        <ol>
+            <li class="d">The user is told what to enter and how to end
+                the input (with a 0 or negative number).
+            </li>
+            <li class="d">A "loop and a half" is used for input, with the
+                <b>necessary bounds</b>, (that is, the maximum number of values
+                have been entered), used to control the loop.
+            </li>
+            <li class="d">Because we're using a loop-and-a-half, we need only
+                one input statement, into the local variable <code>num</code>.
+            </li>
+            <li class="d">The loop's <code>if</code> statement checks to see if
+                <code>num</code> is the sentinel value, and exits the loop if
+                it is.
+            </li>
+            <li class="d">If <code>num</code> is a valid value, it is stored into
+                the array, using the <code>size</code>
+                variable as the index.
+            </li>
+            <li class="d">Finally, the <code>size</code> variable is incremented,
+                so that the next input value will be stored in the next element
+                of the array.
+            </li>
+        </ol>
+    <h3>Print the Results</h3>
+        <p> The <b>SumAvgCount</b> program used a <i>foreach</i>
+            loop to process the array. With <b>InputArray</b>, though, you <b>can't</b> do that,
+            because not all of the values may in use. Instead, this program has to use
+            a traditional <code>for</code> loop because we only process the
+            "valid" elements, using the <code>size</code> variable to
+            control the loop:<br>
+            <img src="images/b19.png" class="inlineCenter" alt="Printing out the loop values.">
+            We'd like the output to look similar to the syntax used to write
+            an array literal, because it's a familiar form. That means that the
+            loop we use to print out the values must put a comma after each element,
+            except for the last.
+        </p>
+        <p> The easiest way to do this is to first, check the <b>postcondition</b>
+            value of <code>size</code> to make sure that the user has actually entered
+            <b><u>any</u></b> values. Otherwise, if the array is "empty", the loop would
+            "blow up" when we tried to print the first element in the array.
+        </p>
+        <p> If the array does contain valid elements. The loop prints the first
+            element, and then all of the remaining elements starting at the
+            second. (Notice that the <code>for</code> loop index starts with
+            1 and not with 0.) Each output statement begins by printing the
+            following comma from the previous element, followed by the current
+            array element value.
+        </p>
+        <p> Here's the output of the program with a few numbers entered:
+            <img src="images/b15.png" class="inlineCenter" alt="Running the InputArray program.">
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Complete the <b>InputArray</b> program and run it with some input as
+            shown above. There's no <b>Check</b> program for this exercise.
+        </p>
+        </div>
+    <h2>Inserting and Removing Array Elements</h2>
+        <p> The final algorithms that we'll cover in this section involve
+            <b>inserting</b> items into, and <b>removing</b> items from.
+            an array. Suppose, for instance, that instead of simply adding
+            items to the end of the "unoccupied" section of numbers in the
+            <b>InputArray</b> program, we placed each number into its
+            correct position in the array.
+        </p>
+        <p> Here's a picture that shows what I mean:
+            <img src="images/b21.gif" class="inlineCenter" alt="Placing each number into its correct position.">
+            As you can see, the array is partially filled, and the next number, 3.25,
+            has been input by the user. To put the number in its correct location
+            we need to:
+        </p>
+        <ol>
+            <li class="d">Locate the first number that is <b>larger</b> than the
+                number we're going to insert into the array. In this case, that's
+                the number 7.1. That's where we'll place our new number.
+            </li>
+            <li class="d">Before we can store the number in the array, though,
+                the element that's currently occupying that spot, (7.1), needs to be
+                moved to the right, and the number occupying the spot it is
+                moving to, (9.5), needs to be moved to the right as well. Since
+                9.5 is the last valid value in the array, we can stop there, but
+                if the array contained additional numbers, they'd have to be moved
+                as well.
+            </li>
+        </ol>
+        <p> Finally, after all of the existing numbers have been moved to the right,
+            we can come back and put our new number in the spot that's been opened
+            up for it.
+        </p>
+        <div class='info'>
+        <p> These algorithms usually only make sense when used with
+            partially filled arrays, those that use a separate <b>size</b> variable
+            indicating how many elements are actually occupied.
+            If you insert an element into a completely filled array, then
+            the last element in the array will be lost when the previous
+            items are moved to make room for the inserted item. In a similar
+            way, when you remove an item from regular array, you have to way
+            of indicating that the last value no longer contains a valid
+            entry.
+        </p>
+        </div>
+        <p> The program <b>InsertArray.java</b> in this chapter's code folder is similar to the <b>InputArray</b> program from
+            the previous section, except that the individual elements are added
+            in <b>sorted</b> order. I won't repeat all of the portions of the
+            program that are the same as <b>InputArray</b>; we'll just look at the
+            three sections that are <i>different</i>. If you need help completing
+            the other sections, look back in this section.
+        </p>
+    <h3>Find the Position</h3>
+        <p> The first step is to find the position where the new element should
+            be inserted. You do that by writing a loop that looks for the first
+            element that is <b>larger</b> than the element you want to insert.
+            Here's the code that does that:
+            <img src="images/b23.png" class="inlineCenter" alt="Locating the position for the inserted element.">
+            Note that the index value used in the <code>for</code> loop <b>is not</b>
+            declared inside the loop initializer section (although it is initialized there).
+            That's because, after the loop is finished, the variable <code>i</code> will
+            contain the location where the new element should be inserted. If we
+            declared the variable inside the loop initializer, we couldn't use it
+            outside of the loop body.
+        </p>
+        <p> Note also that if there are <b>no</b> elements in the array that are larger
+            than the number you are inserting, that <code>i</code> will contain the same
+            value as <code>size</code> when the loop ends, and that the number will then
+            be added to the end of the current elements, which is what we want.
+        </p>
+    <h3>Move the Existing Elements</h3>
+        <p> Before we can store <code>num</code> in the array, we need to move the
+            existing elements to the right, to "open up a hole" for the new value.
+            Here's the code from <b>InsertArray</b> that does that:
+            <img src="images/b25.png" class="inlineCenter" alt="Moving the array elements to the right.">
+            Note that rather than copying the elements from left to right, which
+            wouldn't work correctly, we start at the <b>end</b> of the array, and
+            move to the left, until we get to the location where we intend to insert
+            the new element.
+        </p>
+    <h3>Insert the New Element</h3>
+        <p> After moving the elements, you'll simply copy the new number into the
+            insert location, and then update the value of <code>size</code> as shown
+            here:
+            <img src="images/b26.png" class="inlineCenter" alt="Inserting the new element into the array and updating the size.">
+            If we run the program, using exactly the same input as we used when
+            we ran <b>InputArray</b> earlier in this lesson, you'll see that the
+            numbers that are printed are now in sorted order:
+            <img src="images/b22.png" class="inlineCenter" alt="Runnin InsertArray.java.">
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourslef</h5>
+        <p> Complete the <b>InsertArray</b> program and run it with some input as
+            shown above. There is no <b>Check</b> program but you can
+            compare your results with the picture shown here.
+        </p>
+        </div>
+    <h2>Removing Elements</h2>
+        <p> Removing the elements in an array works in an almost identical manner
+            as inserting elements, <b>except</b>, instead of moving a portion of the
+            array to the right, to "open up a hole", you need to move all of the
+            elements to the right of the deleted element leftwards to "close up
+            the gap".
+        </p>
+        <p> Here's a small fragment of code that does that. The variable <code>delPos</code>
+            is the location of the element you want to delete:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+        for (int i = delPos; i &lt; size-1; i++)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;ar[i] = ar[i + 1];
+        </p>
+        <p> Note that the bounds of this loop is <b>not</b> <code>i &lt; size</code>,
+            but <code>i &lt; size-1</code>. That's because, in the loop body we need
+            to grab the value to copy from <code>ar[i + 1]</code>. If we used
+           <code>size</code> as the bounds, we'd copy from an invalid element.
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Partially Filled Arrays Summary
+        </p>
+        <ul>
+            <li>A partially filled array is used when <b>only some of the
+                data is valid</b>. Because arrays can't be resized, partially
+                filled arrays are used when you don't know how much data
+                will be supplied by the user at runtime.
+            </li>
+            <li>Create separate variables for <code>size</code>
+                and <code>capacity</code>, setting <code>size</code> to <code>0</code>
+                and <code>capactity</code> to the <b>maximum amount of
+                expected data</b>. This is often called the worst-case
+                scenario. Then, create your array using <code>capacity</code>
+                for the size.
+            </li>
+            <li>To <b>add elements to</b> a partially-filled array, you'll
+                usually use a sentinel loop. Use the array capacity as the
+                loop's <b>necessary bounds</b>. Inside the loop, place each
+                element at subscript position <code>size</code>, and then
+                increment the <code>size</code> variable.
+            </li>
+            <li>To <b>process the elements</b> in a partially-filled
+                array, use a traditional <code>for</code> loop that goes
+                from <code>0</code> to <code>size - 1</code> (<b>instead of</b>
+                <code>length - 1</code>).
+            </li>
+            <li>To <b>insert elements</b> into a partially-filled array
+                (in order), you first find the location where the element
+                should go, then shift each element from that position to
+                the right by one, and finally place the new element into
+                position and increment the <code>size</code> variable.
+                For this to work correctly, the loop you use
+                to shift the elements to the right must work from the
+                right (that is the end) to the left.
+            </li>
+            <li>To <b>delete</b> an element at a particular position
+                you can simply <b>copy the last element</b> into that
+                postion and then decrement <code>size</code>, if order
+                does not matter. If the elements must remain in order,
+                you have to shift all of the elements from <code>position + 1</code>
+                to the left by one, and then decrement <code>size</code>.
+                This shifting loop must go from left to right, unlike
+                the insertion shifting loop.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

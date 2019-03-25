@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>9.5&mdash;Introducing Animation</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.5</p>
+        <p id='lessonTitle'>Introducing Animation</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">L</span>earning how to handle events</b>,
+            which you'll do in the next section, will let you create
+            <b>interactive</b> GUI programs that respond to user input.
+            <b>Animation</b>, the topic of this section, will let you
+            write programs that are visually exciting. <br>
+            <img src="images/animate01.gif" class="inline" alt="Egyptian animation.">
+            And, when you <b>combine</b> interactivity and animation, you'll have
+            everything you need to create your own video game empire.
+        </p>
+        <p> So, just what <b>is</b> animation? Here's a description from the
+            JTF tutorial, along with a couple of illustrations from Wikipedia.
+        </p>
+        <p> <img src="images/animate02.gif" class="right" alt="Animation frames.">
+            In computer graphics, the process of updating a graphical
+            display so that it changes over time is called animation.
+            Implementing animation typically involves displaying an initial
+            version of the picture and then changing it slightly over time
+            so that the individual changes appear continuous from one
+            version of the picture to the next.
+        </p>
+        <p> <img src="images/animate03.gif" class="left" style="margin-right: 2em;" alt="A gif animation.">
+            This strategy is analogous to classical film animation in which
+            cartoonists break up the motion of the scene into a series of
+            separate frames. The difference in time between each frame is
+            called a time step and is typically very short. Movies, for
+            example, typically run at 30 frames a second, which makes the
+            time step approximately 33 milliseconds.
+        </p>
+        <p> If you want to obtain smooth motion in Java, you need to use a
+            time step around this scale or even faster.
+        </p>
+    <h2>ACM Graphics Animation</h2>
+        <p> Let's start out by writing the <b>traditional bouncing ball</b>
+            program. Unlike the short GIF animation from Wikipedia, the
+            traditional bouncing-ball program is more like looking down on
+            a ball bouncing around a billiards table, assuming that there is no
+            gravity or friction to slow things down.
+        </p>
+        <p> Even though it's simple, I still get kind of excited when
+            I see the ball start bouncing! To make things a little more
+            interesting, instead of changing the <code>x</code> and
+            <code>y</code> coordinates of the ball separately, we'll make
+            use of the ACM <code>GObject</code> method <code>movePolar()</code>
+            and write our code in terms of <b>direction</b> and
+            <b>distance</b>.
+        </p>
+    <div class="redbox" style="padding-left: 2em;margin-right:2em;">
+        <h3 style='margin-top:5px;margin-left:0;'>Polar Coordinates?</h3>
+        <p> <img src="images/polarcoords.gif" class="right" alt="Polar coordinates.">
+            What <i>are</i> polar coordinates? Here's an explanation
+            from Wikipedia.
+        </p>
+        <p> In mathematics, the polar coordinate system
+            is a two-dimensional coordinate system in which each point
+            on a plane is determined by an angle and a distance.
+        </p>
+        <p> The polar coordinate system is especially useful in
+            situations where the relationship between two points
+            is most easily expressed in terms of angles and distance;
+            in the more familiar Cartesian or rectangular coordinate
+            system, such a relationship can only be found through
+            trigonometric formulation.
+        </p>
+        <p> Of course, that's just what we need to model our bouncing ball!</p>
+    </div>
+    <h3>The Basic Structure</h3>
+        <p> The basic structure for <b>every</b> animation program that
+            uses the ACM class libraries is always the same:<br>
+            <img src="images/animator.gif" class="inlineCenter" alt="The basic structure for an animated program.">
+            Here's what the parts do:
+        </p>
+        <ol>
+            <li class="d"><b>Instance variables</b>: the objects that you're
+                going to move need to be defined as instance variables,
+                since you'll interact with them inside several different
+                methods. You'll also normally initialize the frame rate,
+                as I've done here: 20 milliseconds means that the animation
+                will be drawn at around 50 frames per second.
+            </li>
+            <li class="d"><b>Initialization</b>: the <code>init()</code>
+                method is used to set up the initial state of your objects,
+                and to initialize the parameters for your animation, such
+                as speed and direction.
+            </li>
+            <li class="d"><b>Running</b>: the <code>run()</code> method
+                is used to animate the program. Usually, however, you'll
+                use <i>exactly the same</i> version of the method, which
+                consists of an endless loop. The real work of animating
+                the objects is done inside your <code>advanceOneFrame()</code>
+                method. The <code>pause()</code> method is used to make
+                sure that the frame stays on screen for a certain amount of
+                time.
+            </li>
+            <li class="d"><b>Draw a Frame</b>: the <code>advanceOneFrame()</code>
+                method is responsible for moving each of the animated objects,
+                and adjusting their state (such as speed or direction) as
+                necessary.
+            </li>
+        </ol>
+        <div class='info'>
+        <p> Not shown here is the <code>main()</code> method. As you recall,
+            every ACM program has a <code>main()</code> method that creates
+            an instance of your program and then starts that instance
+            running. I've left it out of this illustration because it
+            doesn't directly have to do with the animation.
+        </p>
+        </div>
+        <p> Now, let's look at each of these in terms of our
+            <b>PolarBounce</b> program. You can find the
+            source code in this chapter's code folder. Go ahead and
+            open it in DrJava.
+        </p>
+    <h3>Instance Variables</h3>
+        <p> Here are the instance (or program-wide) variables used in
+            <b>PolarBounce</b>:<br>
+            <img src="images/animate04.gif" class="inlineCenter" alt="Instance variables.">
+            Notice that:
+        </p>
+        <ul>
+            <li>A <code>GOval</code> object is used for the ball that
+                will be bounced around the screen.
+            </li>
+            <li>Both the distance the ball travels and the direction
+                (as a polar angle between 0 and 360 degrees) are
+                represented as <code>double</code> variables.
+            </li>
+        </ul>
+        <p> As with the "skeleton" code, the frame time is defined
+            as a constant integer. Remember that twenty milliseconds
+            will result in a nominal fifty-frames-per-second animation.
+        </p>
+    <h3>Initialization</h3>
+        <p> The first part of the initialization method initializes the
+            screen itself:<br>
+            <img src="images/animate05.gif" class="inlineCenter" alt="Initialize the background. Add a label.">
+            In addition to setting the background color to black,
+            I added a <code>JLabel</code> to the top panel, so that
+            the user knows to kick off the animation by clicking the
+            mouse. (You'll learn about this shortly in <i>Section 8.6&mdash;Meet
+            the Widgets</i>.)
+        </p>
+        <p> The next part to be initialized is the ball itself. I want
+            a 50-pixel solid yellow ball:<br>
+            <img src="images/animate06.gif" class="inlineCenter" alt="Create and intialize the ball.">
+            After the ball is created, its added to the center of
+            the screen.
+        </p>
+        <p> The last part to be initialized is the direction and
+            distance:<br>
+            <img src="images/animate07.gif" class="inlineCenter" alt="Initialize direction and distance.">
+            I've used random numbers to initialize both of these values.
+            To start with a <b>random direction</b>, I initialized that to
+            a value between 0 and 360. To make sure that the ball is always
+            moving, even if slowly, I used an expression that will always be
+            between 2 and 12.
+        </p>
+    <h3>Running</h3>
+        <p> The <b>running</b> loop is almost exactly like the one
+            I showed you in the animation skeleton earlier:<br>
+            <img src="images/animate08.gif" class="inlineCenter" alt="Running the animation.">
+            The only difference is the use of the ACM <code>waitForClick()</code>
+            method before entering the loop. You can call this method without
+            activating any of the other event-handling steps you'll meet
+            in the next section.
+        </p>
+    <h3>Advancing the Frame</h3>
+        <p> To animate the ball, we need to:</p>
+        <ul>
+            <li>move it, </li>
+            <li> and then check for the results.</li>
+        </ul>
+        <p> If our move results in a collision with either
+            the walls (on the sides) or the floor or ceiling, then we need
+            to adjust the direction in which we're moving in anticipation
+            of the next frame, coming up 20 milliseconds from now.
+        </p>
+        <p> The code to move the ball is pretty straightforward; it just
+            uses the <code>movePolar()</code> method as I discussed before:<br>
+            <img src="images/animate09.gif" class="inlineCenter" alt="Moving the ball.">
+        </p>
+        <p> To see if we "hit the wall", the calculations are a little
+            easier to read, if we create variables for the left, top, right
+            and bottom edges of the ball. You can write the code without
+            these extra variables, but then your Boolean conditions are
+            a little "noisy":
+            <img src="images/animate10.gif" class="inlineCenter" alt="Checking for a collision.">
+        </p>
+        <p> With the variables, the conditions are pretty simple. If you've
+            hit the left wall (<code>left &lt; 0</code>) or the right
+            wall (<code>right &gt;= getWidth()</code>), then you need
+            to adjust the angle by subtracting the current directions
+            from 180:<br>
+            <img src="images/animate11.gif" class="inlineCenter" alt="Checking for collisions, method 2.">
+            Of course that means you may end up with a negative angle
+            (when the current direction is greater than 180), but the
+            <code>movePolar()</code> method is smart enough to handle
+            that, and automatically adds 360.
+        </p>
+        <p> When you hit the floor or the ceiling, you perform a similar
+            calculation, only instead of subtracting from 180, you
+            subtract from 360.
+        </p>
+        <!--
+        <p> You can run the
+            <a href='javascript:var%20w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/PolarBounce.html","A Bouncing Ball","width=550,height=450,scrollbars=yes");'>
+            <b>PolarBounce</b></a> applet in a separate window by clicking
+            the link in this sentence.
+        </p>
+        -->
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Let's make a couple of changes. Instead of a 50-pixel yellow ball,
+            let's change that to a 20-pixel red ball. Also, when the ball hits
+            the side walls, speed it up a little and when it hits the top and
+            bottom walls, slow it down. You can click here to see how if
+            you get stuck.
+            <a href='../../movies/IC12-1-PolarBounce1/index.html' target='_blank'>
+            <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Introducing Animation Summary
+        </p>
+        <ul>
+            <li>Animation is the <b>appearance of motion</b> implemented by
+                making small changes to the position, size or color of a
+                component at a very rapid rate, typically 20 or 30 times
+                each second.
+            </li>
+            <li>In ACM graphical programs, the generic skeleton for an
+                animated program involves <b>creating the components</b> to
+                be animated as instance variables and then <b>adding an
+                animation loop</b> to the <code>run()</code> method. This
+                loop calls a method which <b>modifies the state of the animated
+                objects</b> and then <b>pauses</b> for a fixed time, while the
+                screen is repainted.
+            </li>
+
+        </ul>
+    </div>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

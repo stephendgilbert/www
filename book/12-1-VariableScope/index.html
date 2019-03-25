@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>12.1&mdash;Variable &amp; Method Scope</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/d.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 12.1</p>
+        <p id='lessonTitle'>Variable &amp; Method Scope</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src='images/bino.png' class='right' alt='Binoculars.'>
+        <b><span class="cap">N</span>ow that you know how to write
+            your own classes</b>, there are still a few topics left
+            to discuss. These topics deal, either directly or indirectly,
+            with "class design" and "writing methods".
+        </p>
+        <p> Along the way, we'll also revisit the topics of parameter passing
+            and method design. Let's start by looking at
+            variable and method <b>scope</b> along with the
+            related topic of <b>access specifiers</b> and <b>packages</b>.
+        </p>
+    <h2>Scope and Identifiers</h2>
+        <p> <img src="images/f01.gif" class="right" alt="A young man using binoculars.">
+            <b><span class='cap'>M</span>ost of us are pretty attuned
+            to the sound of our names</b>.
+            If you are at a party, and you hear someone call out "Sam!",
+            you'll probably look around and see if someone is trying to
+            get your attention. (Assuming your name is Sam, of course.)
+        </p>
+        <p> On the other hand, if you hear the name "Sam" in a movie, or
+            on TV, you're unlikely to do the same thing, because <b>the
+            context</b> makes it clear that <i>you're</i> not the Sam under discussion.
+        </p>
+        <p> Variable and method names work in a similar way; the same name can mean
+            different things, depending upon the context. As I'm sure you
+            remember, a variable is simply a <b>named</b>
+            memory location that stores a value. You'll also remember that
+            instance variables are different than local variables.
+            One of the things differentiating instance variables and local
+            variables is the <b>scope of variable names</b>.
+        </p>
+        <p> Scope is word that simply means "visibility", or ...
+        </p>
+        <p class="pullquote">...where is the name of a variable visible?</p>
+        <p> Your programs can have
+            two kinds of scope: <b>local scope</b> and <b>class scope</b>.
+            Let's start by looking at local scope.
+        </p>
+    <h2>Local Scope</h2>
+        <p> <b><span class='cap2'>V</span>ariables created inside a method</b>,
+            or variables created inside a flow-of-control "block"
+            have <b>local scope</b>. (A <i>block</i> is a section of code enclosed
+            in braces. The most common block is the body of a method. However,
+            the body of an <code>if</code> statement or a loop is
+            also a block.)
+        </p>
+        <div class='info'>
+        <p>Formal parameter variables also have local scope,
+            although, technically, they are defined outside of the block
+            that marks the extent of the method body. For scope purposes,
+            they are treated as having been defined on the first line
+            of the method body.
+        </p>
+        </div>
+        <p> Here are several examples that illustrate the rules Java
+            uses for local scope.
+        </p>
+    <h3>Same Scope</h3>
+        <p> Two variables in the same scope <b>may not</b> have the same name:</p>
+        <p class="code" style='font-size:1.25em;'>
+            public void methodOne(String s)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 5; <span class="cmt">// <span class="red">ERROR</span>, x already in this scope</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;long s = 3L; <span class="cmt">// <span class="red">ERROR</span>, s already in this scope</span><br>
+            }<br>
+        </p>
+        <p> Notice that we cannot create the <code>double</code> variable
+            named <code>x</code> because there is already an <code>int</code>
+            variable of that name defined in the same method.
+        </p>
+        <p> The same is true with
+            the <code>long</code> variable named <code>s</code>. While there
+            is no local variable of that name, there <b>is</b> a formal
+            parameter named <code>s</code> and its scope extends from
+            the point where it is declared (in the parameter list), to
+            the end of the method.
+        </p>
+    <h4>No Nested Local Block Scope</h4>
+        <p> In Java, you cannot "hide" one local variable by creating a
+            new local variable inside a nested block. (This is different
+            than C/C++, which does allow this.) Here's an example,
+            using the body of an <code>if</code> statement to create a
+            local nested block.
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = 5; <span class="cmt">// <span class="red">ERROR</span>, cannot nest local scopes in Java</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        </p>
+        <p> <b>However</b>, if there is no variable in the outer block,
+            you <b>may</b> create variables of the same name inside a block.
+            The scope of those variables is the block they are created in.
+            Here's an example of that:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = 5; <span class="cmt">// OK, local to the body of the if statement</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = 2.0; <span class="cmt">// OK; this is a <b>different</b> scope</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        </p>
+    <h4>for Loop Headers</h4>
+        <p> Variables declared inside a <code>for</code> loop header are
+            local to the <b>body</b> of the <code>for</code> loop. Variables
+            declared <b>before</b> the header, are local to the method
+            or block that contains the <code>for</code> loop.
+        </p>
+        <p> Here's an example:</p>
+        <p class="code"  style='font-size:1.25em;'>
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <b style="color: red;">SITUATION 1: IN THE HEADER</b></span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// i is in-scope inside the loop body</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// i is out-of-scope after the loop body</span><br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <b style="color: red;">SITUATION 2: BEFORE THE HEADER</b></span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int j; <span class="cmt">// j declared before the loop header</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (j = 0; . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// j is in-scope inside the loop body</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// j is still in-scope after the loop body</span><br>
+            }<br>
+        </p>
+    <h3>Different Scope</h3>
+        <p> Variables in different local scopes may have the same name.
+            Here's an example that is OK:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { int x = 5; }<br>
+            }
+        </p>
+        <p> The variable <b>x</b> defined inside <code>methodOne()</code>
+            is different than the variable <b>x</b> defined inside
+            <code>methodTwo()</code>. The body of <code>methodOne()</code>
+            is a <b>different</b> local scope than the body of
+            <code>methodTwo()</code>.
+        </p>
+        <p> Variables in different local scopes are <b>invisible</b> to each
+            other, and may not be accessed from another local scope.
+            Here's an example that illustrates this:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { x = 5; } <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <span class="red">ERROR</span>, x from methodOne() is invisible in methodTwo()</span><br>
+            }
+        </p>
+
+    <h3>Formal Parameters</h3>
+        <p> Just to reiterate, formal parameter variables have local scope for the entire
+            method. That is, you cannot have a local variable that has
+            the same name as one of the method's formal arguments.
+        </p>
+        <p> In the example shown here, <code>methodOne()</code> is illegal
+            because the formal parameter <b>x</b>, and the local variable
+            <code>x</code> have the same name.
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne(int x) { int x = 3; } <span class="red">// ERROR</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo(int y) { int x = 5; } <span class="cmt">// OK</span><br>
+            }
+        </p>
+    <h2>Class Scope</h2>
+        <p> <b><span class='cap2'>C</span>lass scope refers to the scope rules
+            that apply to instance
+            variables (fields)</b>. The scope of an instance variable is the
+            class it is defined in.
+            This means you <b>cannot</b> have two
+            instance variables with the same name, in the same class, just
+            like you cannot have two local variables with the same name
+            in the same method.
+        </p>
+        <div class='info'>
+        <p>Class scope is <b>also</b> affected by the access
+            modifiers <code>public</code>, <code>private</code>, and
+            <code>protected</code> which we'll talk about in a bit.
+        </p>
+        </div>
+    <h3>Different Classes</h3>
+        <p> What happens when two instance variables, in two different
+            classes, have the same name, like this?
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A { private int x = 3; }<br>
+            public class B { private double x = 3.3; }
+        </p>
+        <p> This is fine. Both <code>class A</code>, and <code>class B</code>
+            are different class scopes, so
+            the names don't clash with each other at all. That means,
+            just like with local variables, <b>methods</b> in <code>class A</code> cannot
+            access the instance variable <b>x</b> in <code>class B</code>, and vice-versa.
+        </p>
+    <h3>Instance and Local Variables</h3>
+        <p> Instance variables and local variables exist in different scopes,
+            so <b>a local variable may have the same name as an instance
+            variable</b> without triggering a syntax error. This is actually
+            very common, and it is a source of subtle and hard-to-find
+            bugs (as well as being incredibly annoying).
+        </p>
+        <p> When that happens, the <b>most local</b> variable name
+            takes precedence. Here's an example:</p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 2.2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">&nbsp;&nbsp;// OK; in local scope, hides field x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 7; <span class="cmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// x refers to the <b>local variable</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.x = 5.5; <span class="cmt">// this.x refers to the <b>field</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Remember, the <b>most local</b>
+            identifier takes precedence. That means that the local variable
+            <b>x</b> "wins out" over the field <b>x</b>. If the method needs
+            to access the <b>field</b> x, it can do so by prefixing the word
+            <code>this</code> as in the last line of <code>methodOne()</code>.
+        </p>
+        <div class='alert'>
+        <p> If a field is hidden
+            by a local variable, you use the keyword <code>this</code> to
+            access the field. Hiding a field with a local variable is a common
+            source of errors.
+        </p>
+        </div>
+    <h2>Access Specifiers</h2>
+        <p><b><span class='cap2'>C</span>losely related to the idea of
+            scope is the idea of <i>access control</i></b>. With local scope,
+            there is no access outside of the existing scope. With class
+            scope, however, it <b>is possible</b> to access a variable
+            defined inside one class scope from methods that are in
+            a different class.
+        </p>
+        <p> The keywords that control this are the <b>access level
+            modifiers</b> <code>public</code>, <code>private</code>,
+            <code>protected</code> and the default <i>package-private</i>
+            access.
+        </p>
+    <h3>Top-Level Access Control</h3>
+        <p> When writing a class definition, you can make your class
+            <code>public</code>, in which case that class is visible to all
+            classes everywhere. On the other hand, if you <b>don't</b> use the
+            <code>public</code> modifier, then the class is known as
+            a <i>package-private</i> class.
+        </p>
+        <p> A <i>package-private</i> class can only be used inside its
+            own package. (Packages are named groups of related
+            classes&mdash;you will learn about them in a little later.)
+            In terms of the classes we've written, it means that a
+            package-private class can only be used with other classes
+            defined in the same folder.
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            class A { private B b = new B(); }<br>
+            public class B { private A a = new A(); }
+        </p>
+        <p> In this example <code>class A</code> has package-private
+            or default scope, while <code>class B</code> is <code>public</code>.
+            If both classes are in the same package (or if both classes are in
+            the same folder and not defined in any package), then the code is
+            fine.
+        </p>
+        <p> However, if both classes are in different packages, then
+            <code>class A</code> is acceptable, because <code>class B</code>
+            is <code>public</code>, so it may be used from inside
+             <code>class A</code>. <b>However</b>, <code>class B</code> will not
+             compile, since it attempts to create an object of
+            <code>class A</code>, which is not in its package.
+        </p>
+        <div class='info'>
+        <p> In Java, you cannot have <code>private</code> or
+            <code>protected</code> top-level classes. A single file can
+            contain only a single <code>public</code> class, but may
+            contain <b>any number</b> of package-private classes.
+        </p>
+        </div>
+    <h3>Packages</h3>
+        <p>You've been working with <b>packages</b> since the beginning of
+            the semester, since all of the classes in the Java class library
+            are stored in different packages, such as <code>java.awt</code>
+            and <code>java.lang</code>. If you wish to use the <code>import</code>
+            statement to use code from another class in your program, then
+            that code must be inside a package.
+        </p>
+        <p> To place your class inside a package you do two things:</p>
+        <ul>
+            <li class='d'>Add a <code>package</code> statement as the
+                <b>first line</b> in your source code file. Here's an
+                example:
+                <p class='code' style='font-size:1.25em;'>
+                    package occ.cs170;<br>
+                    <span class='cmt'>// import statements go here</span><br>
+                    public class Sample { ... }<br>
+                </p>
+            </li>
+            <li class='d'>Place the code in a folder of the same
+                name as the package. In this case, it would need to
+                be inside a folder named <b>cs170</b>, which must, itself
+                be inside a folder named <b>occ</b>.
+            </li>
+        </ul>
+        <p>Here's the code for <b>Sample.java</b> (which you'll find
+            in this chapter's code folder):<br>
+            <img src='images/package01.png' class='inlineCenter' alt='Defining a package.'>
+            Notice how the folder that the code is stored in <b>matches</b>
+            the name of the package that the class is part of.
+        </p>
+    <h4>Using Classes in a Package</h4>
+        <p> If we want to <b>use</b> the <code>Sample</code> class in
+            our program, then the <b>root</b> of the package must be in
+            the <b>class-path</b> accessible when you run an compile
+            your code.
+        </p>
+        <p> In practice, that means that we can create another program,
+            called <b>TestSampleClass.java</b> that simply creates
+            an object of the class, like this:<br>
+            <img src='images/package02.png' class='inlineCenter' alt='Testing a package.'>
+            Notice, that this program <b>is not in the same package</b>
+            and <b>not</b> defined in the same folder. Instead, we access
+            the classes in the package by using the <code>import</code>
+            statement. You'll find this program inside the Chapter12 code
+            folder, with the <code>occ.cs170</code> package defined inside
+            the appropriate folders.
+        </p>
+        <div class='alert'>
+        <p> DrJava, since it was designed for introductory programming,
+            does a really <b>poor job of displaying package structure</b>. Other
+            IDE tools, like Eclipse, NetBeans or Idea make it much easier
+            to put your code into a package.
+        </p>
+        </div>
+    <h3>Member-Level Access Control</h3>
+        <p> At the member level, (fields and methods), you can also use
+            the <code>public</code> modifier or no modifier
+            (<i>package-private</i>) just as with top-level classes.
+            For methods and fields, though, there are two additional
+            access modifiers: <code>private</code> and <code>protected</code>.
+        </p>
+        <ul>
+            <li><code>private</code> specifies that the item can only
+                be accessed in its own class.
+            </li>
+            <li><code>protected</code> means that the item can be accessed
+                from any class in its own package (just like the default
+                <i>package-private</i>), <b>as well as</b> by any
+                subclass of its class, even if that class is in
+                another package.
+            </li>
+        </ul>
+        <p> The <code>occ.cs170.Sample</code> class defines four
+            appropriately-named <code>int</code> instance variables, and
+            the <b>TestSampleClass</b> program attempts to access each of
+            those variables from its <code>main()</code> method.
+        </p>
+        <p> If you uncomment each of the lines, one by one, and then
+            recompile, you'll see that only one of these succeeds.
+            Because the variable named <code>publicInt</code> was defined
+            with <code>public</code> access inside the <code>Sample</code>
+            class, the line: <code>int d = sc.publicInt;</code> compiles
+            correctly, and succeeds in accessing a class variable in
+            a different scope.
+        </p>
+    <h3>Access-Level Tips</h3>
+        <p> Access levels affect you in two ways.  First, when you use
+            classes that come from another source, such as the classes in the
+            Java platform, access levels determine which members of those classes
+            your own classes can use.  Second, when you write a class, you need to
+            decide what access level every member variable and every method in
+            your class should have.
+        <p>
+        <p> Using the correct access levels will help you write code
+            that is more reliable and less likely to "rot" as it is
+            modified and extended, especially if your classes are
+            designed to be extended with inheritance.
+        </p>
+        <p> Here are two good general-purpose rules.</p>
+        <ul>
+            <li>Use the most restrictive access level that makes sense for a
+                particular member.  Use <code>private</code> unless you have a good
+                reason not to.
+            </li>
+            <li>Avoid <code>public</code> fields except for constants.
+                Public fields tend to link you to a particular implementation
+                and limit your flexibility in changing your code.
+            </li>
+        </ul>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Variable and Method Scope Summary
+        </p>
+        <ul>
+            <li><b>Scope</b> refers to visibility; which variables and methods
+                are visible, and from where? <b>Access control</b> refers to permission
+                to read or modify a variable, even if it is visible.
+            </li>
+            <li><b>Local scope</b> applies to variables defined inside methods
+                or inside flow-of-control blocks. A local variable is visible
+                from the point where it is first declared until the block
+                it is declared inside ends. When the end of the block is
+                reached, the memory used for the variable is automatically
+                released.
+            </li>
+            <li>A local variable <b>remains in scope</b> inside any blocks
+                contained in the block where the variable is declared. (In other
+                words, a variable defined in a method is still visible inside
+                the body of an <code>if</code> statement or loop inside that
+                method.
+            </li>
+            <li>A local variable is <b>not visible</b> while executing a method call
+                inside a block. The memory for the variable still exists, but
+                the variable can't be seen from inside the method you are
+                executing.
+            </li>
+            <li>The names of local variables <b>must be unique in a given
+                local scope</b>. Normally that means one variable per name
+                inside each method. However, you may have several local
+                variables of the same name in a method, if each is declared
+                in a separate block scope, such as the body of a loop.
+            </li>
+            <li>Names of local variables <b>do not nest</b> in Java. You
+                cannot create a local variable in a block if a variable of
+                the same name already has been defined inside the method.
+            </li>
+            <li>The scope of <b>formal parameters</b> is the entire body
+                of the method, as if they were defined at the top of the
+                method body.
+            </li>
+            <li>The scope of a variable declared <b>in the initializer statement</b>
+                of a <code>for</code> loop header is <b>the body of the loop</b>, as if
+                it were defined on the first line of the loop body.
+            </li>
+            <li>Instance variables and methods both have <b>class scope</b>. The
+                names of any instance variable are visible inside any method in
+                the class, whether appearing before or after the definition of
+                the variable. Fields <b>may only</b>
+                access other fields that have been defined previously.
+            </li>
+            <li>The <b>names of any methods</b> are accessible inside
+                any other method (or to initialize any fields) whether defined
+                before or after the method definition.
+            </li>
+            <li>Local variables <b>may have the same name</b> as in instance
+                variable. The local variable <b>hides</b> the instance variable,
+                but if you qualify the name with the keyword <code>this</code>,
+                you may still use the "hidden" instance variable.
+            </li>
+            <li><b>Access specifiers</b> control the use of classes in different
+                packages and the use of variables defined in one scope in
+                methods defined in another scope. Access specifiers <b>only</b>
+                apply to class scope, never to local scope variables.
+            </li>
+            <li>Top-level classes may be <code>public</code> in which case
+                they may be used from any other class. If <code>public</code>
+                is <b>not used</b> in the class header, the class has
+                <b>default</b> or <b>package-private</b> access. That means
+                it can only be used by another class in the same package.
+            </li>
+            <li>A <code>package</code> statement, added to the top of your
+                code, allows you to <b>group together similar classes</b>. If your
+                class has a <code>package</code> statement, you may
+                <code>import</code> and use the classes from another package.
+                You're folder structure must match the package name.
+            </li>
+            <li>Individual <b>fields and methods</b> may be marked as <code>private</code>,
+                <code>protected</code>, <code>public</code> or you may use the
+                default, package-private access if you don't add an access
+                modifier to the field or method definition.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

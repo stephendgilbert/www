@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>6.5&mdash;Selection and Loop Functions</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 6.5</p>
+        <p id='lessonTitle'>Selection and Loop Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n the last chapter you learned how to write
+            procedures and functions</b>. In this chapter you learned how to
+            use the <code>if</code> statement and how to write <code>for</code>
+            loops.
+        </p>
+        <p> In this section, we want to <b>marry</b> those two concepts together,
+            and learn how to write <b>predicate</b> (or logical) functions,
+            and functions that process <code>String</code>s using the
+            <code>for</code> loop. These are similar to the problems
+            you'll see on your CS 170 programming proficiency quizzes.
+        </p>
+        <p> We'll start by looking at the concept of selection in
+            the context of writing your own functions.
+        </p>
+    <h2>Functions and Selection</h2>
+        <p> With procedures, it really doesn't matter (syntactically) if you
+            always have two alternatives. If you use a simple <code>if</code>
+            statement, then when the condition is <code>true</code>, the
+            actions in the body of the statement are executed; when the
+            condition is <code>false</code> then <b>nothing</b> happens.
+        </p>
+        <p> With a function, though, it's possible to have a <code>return</code>
+            statement inside of an <code>if</code> statement. If you do that,
+            though, you have to return a value in each and every case:
+            when your condition is <code>true</code> <b>and</b> when
+            your condition is <code>false</code>. That means that functions
+            using <code>if</code> can have <b>several</b> different
+            <code>return</code> statements, as long as every single
+            branch leads to a <code>return</code>.
+        </p>
+        <p> Let's look at a simple example. </p>
+    <h3>The isOdd() Function</h3>
+        <p> You can tell if an integer is odd by using the remainder
+            operator. If the remainder of the number divided by 2 is 1,
+            then the number is odd. We can put that algorithm
+            into a function like this:
+            <img src="images/functions10.gif" class="inline" alt="An isOdd() function.">
+            Notice that:
+        </p>
+        <ul>
+            <li><code>isOdd()</code> is a <b>predicate</b> function. That is,
+                it has a <code>boolean</code> return type.
+            </li>
+            <li>The function has one parameter, <code>n</code> which is
+                the number to test.
+            </li>
+            <li>If the remainder of the number divided by 2 is 1, we
+                return <code>true</code>, just like we said.
+            </li>
+        </ul>
+        <p><b class='ry'>So why is the compiler complaining?</b></p>
+        <p> The answer is very simple, yet it is one that students frequently
+            struggle with. A function must return a value for <b>each and
+            every path</b> through the code. This function returns a value
+            when the number <code>n</code> is odd. What does it do when the number is
+            even?
+        </p>
+        <p><b class='ry'>Nothing!</b></p>
+    <h4>Three Solutions</h4>
+        <p> There are several different ways to fix this problem. The
+            way that we've been doing it in class (and the classical
+            solution), is to create a <code>result</code> variable
+            at the top of your function, modify <code>result</code>
+            as necessary inside your <code>if</code> statement,
+            and then <code>return result</code> at the very
+            end of your function. That way you only have <b>one exit</b>
+            from your function.
+        </p>
+        <p> If you want to skip the <code>result</code> variable and
+            use the multiple-return style, then here are three
+            solutions that will work:
+        </p>
+        <ol>
+            <li class="d"> You can add an <code>else</code> clause for
+                the case when the number is <b>even</b> like this:<br>
+                <img src="images/functions11.gif" class="inline" alt="Using else in a function.">
+            </li>
+            <li class="d"> Since the <code>return</code> statement <b>ends
+                the function</b> when the number is odd (inside the
+                <code>if</code> statement body), any code following it
+                is <b>only executed when the number is even</b>. That
+                means you really don't need an <code>else</code>; you
+                can just write this:<br>
+                <img src="images/functions12.gif" class="inline" alt="The &quot;alternative&quot; return.">
+            </li>
+        </ol>
+    <h4>Boolean Return Values</h4>
+        <p> The third alternative is a little harder to explain, but you
+            should make the effort to understand it. Often, the <b>best</b>
+            way to implement a predicate function is to avoid using
+            <code>if</code> statements at all, and simply return the
+            result of the Boolean expression. Let me explain how that
+            works.
+        </p>
+        <p> Assume that we take the test expression inside the <code>if</code>
+            statement, and store it inside a <code>boolean</code> variable.
+            Once we do that, the variable (<code>result</code>) will
+            contain <code>true</code> if the number is odd and <code>false</code>
+            if the number is even.
+        </p>
+        <p> Then, we can simply <b>return</b> that <code>boolean</code> variable,
+            instead of the literal values, <code>true</code> or <code>false</code>,
+            like this:<br>
+            <img src="images/functions13.gif" class="inline" alt="Returning a boolean variable.">
+        </p>
+        <p> Of course, we really don't <b>need</b> the variable <code>result</code>,
+            do we? Instead, we can just return the Boolean expression
+            result like this:<br>
+            <img src="images/functions14.gif" class="inline" alt="Returning a boolean variable.">
+            This is a fairly standard way to write a predicate function.
+        </p>
+    <h2>Hands On Logic Problems</h2>
+        <p> Now it's your turn. Let's write some functions that
+            make decisions using the <code>if</code> statement.
+            You'll find the documentation for the
+            selection functions you need to write in <b>LogicProblems.java</b>,
+            which you'll find in this chapter's code folder:<br>
+            <img src='images/lastTwo01.gif' class='inlineCenter' alt='The lastTwo specs.'>
+            Just like the functions you worked on earlier, this problem:
+        </p>
+        <ol>
+            <li class='d'>Tells you the <b>name</b> of the function you need
+                to write; in this case, <code>lastTwo</code>.
+            </li>
+            <li class='d'>Tells you the name and type of each parameter.
+                This function has only one <code>String</code> parameter,
+                named <code>str</code>.
+            </li>
+            <li class='d'>Tells you what kind of value the function is going
+                to return. This function returns a new <code>String</code>.
+            </li>
+        </ol>
+        <p> As with the other examples you've seen, there is also a
+            narrative explanation, and a few examples, but you really
+            don't need that to get started, do you?
+        </p>
+    <h3>Before Everything: Write a Skeleton</h3>
+        <p> At this point, without knowing anything else, you can write
+            a syntactically correct function, that compiles and can be
+            tested. Add your code at the section marked 6 in the previous
+            picture:<br>
+            <img src='images/lastTwo02.gif' class='inlineCenter' alt='The lastTwo skeleton.'>
+            Notice how we can write the header by knowing the return type,
+            name and parameters. We write the "skeleton" body by:
+        </p>
+        <ol>
+            <li class='d'>Creating a <code>result</code> variable of the same
+                type as the function return type and initializing it to some
+                value. (Usually <code>false</code>, <code>0</code> or the
+                empty <code>String</code>, depending on the function type.)
+            </li>
+            <li class='d'>Returning the <code>result</code> at the end of
+                the function.
+            </li>
+        </ol>
+        <div class='alert'>
+            <p>Note that you don't <b>have</b> to use the <code>static</code> keyword on
+                your functions. You don't need it if all of your testing is
+                going to be with the DrJava <b>Check</b> program. If you want to add
+                a <code>main()</code> method and <b>call</b> your function
+                from that <code>main()</code> method, then you will need
+                to add the <code>static</code> keyword. <b>Check</b>
+                will work fine either way.
+            </p>
+        </div>
+        <p> Once this is done, you can run the <b>Check</b> program to
+            test the function. You'll see it passes at least one of the tests,
+            but fails all the others.<br>
+            <img src='images/lastTwo03.gif' class='inlineCenter' alt='Testing the lastTwo skeleton.'>
+            To complete the problem,
+            you'll need to go back to the problem description and
+            use some logic to actually solve the problem.
+        </p>
+    <h3>Handle the Normal Logic</h3>
+        <p> Rather than thinking about the exceptional situations, try to
+            figure out how to solve the "normal" situation. What steps would
+            you need to perform, for instance, if every input <code>String</code>
+            was guaranteed to be at least two characters long?
+        </p>
+        <p> Well, that's pretty straightforward. Here's some code that
+            does it:<br>
+            <img src='images/lastTwo04.gif' class='inlineCenter' alt='The lastTwo function.'>
+        </p>
+        <ol>
+            <li class='d'>First, find out how long the input <code>String</code>
+                is and store that in a variable. We can use the <code>String
+                length()</code> function for that.
+            </li>
+            <li class='d'>Next, use the <code>substring()</code> method, along
+                with the length to grab the front part of the input string;
+                everything except for the last two characters.
+            </li>
+            <li class='d'>To grab the last two characters, we can use the
+                <code>String charAt()</code> method and store the results
+                in another pair of variables: <code>char</code> variables
+                this time. (Remember that the last character is at position
+                length - 1 and the next-to-last character will be at
+                length - 2).
+            </li>
+            <li class='d'>Finally, we can put everything together by using
+                concatenation, simply reordering the last and next-to-last
+                characters when the result is reassembled.
+            </li>
+        </ol>
+        <p> When we run the tests this time, you'll see that all of them
+            pass except two. As you can see from the picture, these are the
+            tests where the input <code>String</code> is less than two
+            characters long:<br>
+            <img src='images/lastTwo05.gif' class='inlineCenter' alt='Testing the normal lastTwo() method.'>
+            <b class='ry'>This is where we need the <code>if</code> statement</b>.
+        </p>
+    <h3>Handling Unusual Input</h3>
+        <p> Since the failed tests only occur when the length of the
+            input <code>String</code> is less than two, we can add an
+            <code>if-else</code> statement to only perform the normal
+            processing when the input has adequate characters. If the
+            input <code>String</code> is too short, we'll just set
+            result equal to the original input.
+        </p>
+        <p> Here's the completed <code>lastTwo()</code> function that
+            implements these changes:<br>
+            <img src='images/lastTwo06.gif' class='inlineCenter' alt='Testing both input cases.'>
+        </p>
+
+    <h2>Loops and Functions</h2>
+        <p> Now let's get some practice using the
+            <code>for</code> loop to solve <code>String</code> problems.
+            To do that, open <b>LoopProblems.java</b> in DrJava.
+            Once you have it open,
+            scroll down and find the <b>doubleChar</b> problem:<br>
+            <img src="images/stringfunc10.gif" class="inlineCenter" alt="The doubleChar problem.">
+            As before you have:
+        </p>
+        <ol>
+            <li class='d'>The name of the function you need to write.</li>
+            <li class='d'>The Javadoc parameters and return type.</li>
+            <li class='d'>A short "problem statement".</li>
+            <li class='d'>Some examples.</li>
+            <li class='d'>A comment you should replace with the actual function.</li>
+        </ol>
+        <p> Before you start typing, though, let's take a look at
+            some basic strategy.
+            You'll normally want to attack these kinds of problems using
+            <b>the same basic strategy</b>. Here's how I do that.
+        </p>
+    <h3>Step 1: Skeleton and Return Type</h3>
+        <p> Even though all of these simple loop problems <b>process</b>
+            <code>Strings</code>, they don't necessarily <b>return</b>
+            <code>String</code> values. Some will, but others will return
+            <code>int</code> or <code>boolean</code> values.
+        </p>
+        <p> My first step (after I've written the header, of course), is to
+            always to create an "empty" variable of the
+            correct type and then add a return statement, so that I can
+            run the program and see what the tests do. Here's what you'd
+            do for <code>doubleChar()</code>:<br>
+            <img src="images/stringfunc12.gif" class="inlineCenter" alt="Step 1: the returned value.">
+        </p>
+    <h3>Step 2: Loop through the String</h3>
+        <p> These problems all require the use of loops.
+            Because you can easily find the length of the <code>String</code>,
+            you'll almost always use the <code>for</code> loop. Here's the
+            general pattern that I follow, even before I give any thought
+            to what my code is actually going to do:<br>
+            <img src="images/stringfunc13.gif" class="inlineCenter" alt="Step 2: string length and loop.">
+        </p>
+    <h3>Step 3: What's the Goal?</h3>
+        <p> Now we're ready to look at what the output should be. In this
+            case, we want our output to contain two characters for each
+            character in input.
+        </p>
+        <p> In general, if you want to examine every character, you can do
+            it like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            char ch = str.charAt(i);
+        </p>
+        <p> <b class='ry'>or</b>, you can do it like this:</p>
+        <p class="code" style='font-size:1.2em;'>
+            String chStr = str.subString(i, i + 1);
+        </p>
+        <p> The first technique gives you back a <code>char</code>
+            variable which is easy to compare using the various
+            relational operators. You'll have to use the second
+            technique if you need to process more than one character
+            on each repetition.
+        </p>
+        <p> In this case, we can go either way. We need to grab each
+            character and then "paste" that character onto the output
+            <code>String</code> two times to double it. Here's a version
+            using <code>charAt()</code>:<br>
+            <img src="images/stringfunc14.gif" class="inlineCenter" alt="Step 3: processing characters.">
+        </p>
+        <div class='alert'>
+        <p> Notice that you need to concatenate the characters with the
+            <code>String</code> output, not <b>add</b> the two characters
+            together and concatenate that. Concatenation works with
+            <code>Strings</code>, <b>not</b> characters. If you were to
+            write this:<br><br>
+            <span class='code'>
+            result += c + c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <br><br>
+            then the two characters would be <b>added</b> as Unicode characters and
+            the resulting <b>numeric</b> value would be pasted onto the
+            end of your <code>String</code>.
+        </p>
+        </div>
+        <p> Here's a version of the same loop, using the <code>substring()</code>
+            method instead of <code>charAt()</code>:<br>
+            <img src="images/stringfunc15.gif" class="inlineCenter" alt="Step 3: processing strings with substring.">
+            Note that because the variable <code>cStr</code> is a <code>String</code>
+            rather than a <code>char</code>, you <b>can</b> use the shorthand
+            assignment operator in this instance.
+        </p>
+    <h3>A Second Example</h3>
+        <p> Let's look at a second example, just to make sure you have the
+            idea. Scroll down until you find the problem named
+            <b>countHi</b>. For this, all you need to do is count the number of times
+            that the word "hi" appears in the given <code>String</code>.
+            <img src="images/stringfunc16.gif" class="inlineCenter" alt="The countHi Problem.">
+        </p>
+        <p> The first step is exactly like the previous problem. Because the
+            return type of this function is <code>int</code>, I create a
+            numeric variable (instead of a <code>String</code>), and return that:<br>
+            <img src="images/stringfunc17.gif" class="inlineCenter" alt="Step 1: return type.">
+        </p>
+        <p> The second step is very similar to last problem, but has a
+            <i>little twist</i> that you need to pay attention to. In the
+            first problem, our loop <b>visited each character</b>
+            in the <code>String</code>.
+        </p>
+        <p> In this problem, we are looking for
+            a <b>two-character</b> wide <code>String</code>, so we <b>can't</b>
+            loop through the <b>entire</b> <code>String</code>, because we
+            will be examining (or "extracting") two characters at a time, instead of only
+            one. If we looped through the entire <code>String</code>, then
+            when we got to the last character, and then tried to get a
+            substring consisting of the <b>next two characters</b>, the
+            program would generate an "out of bounds" <b>runtime error</b>.
+        </p>
+        <p> In general, if was intend to extract or examine <b>n</b>
+            characters, then our loop should go <b>from 0 to len - (n - 1)</b>
+            like I've done here:<br>
+            <img src="images/stringfunc18.gif" class="inlineCenter" alt="Step 2: extract substring.">
+            Note also, that the <code>substring</code> extraction code
+            <b>always</b> looks like <code>str.substring(i, i + n)</code>
+            where <b>n</b> is the number of characters for the resulting
+            substring, and the loop condition always looks like
+            <code>i &lt; len - (n - 1)</code>. In this case, since we want to get
+            two characters, "n" is 2 and the loop condition is <code>i &lt; len - 1</code>.
+        </p>
+        <p> Finally, to compare the extracted substring with the literal
+            value "hi", you need to use the <code>equals()</code> method.
+            If <code>equals()</code> returns <code>true</code>, then you'll
+            <b>increment</b> your counter. Here's what the final loop
+            looks like:<br>
+            <img src="images/stringfunc19.gif" class="inlineCenter" alt="Step 3: counting matches.">
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

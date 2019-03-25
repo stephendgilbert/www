@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>11.2&mdash;Object 2D Arrays</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/d.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.2</p>
+        <p id='lessonTitle'>Object Arrays</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/carddemo.gif" class="right" alt="An application that uses object arrays.">
+            <b><span class="cap">N</span>ow let's turn our attention to</b>
+            creating and using arrays that contain <b>objects</b> instead of
+            those that contain primitive values. Instead of using individual
+            <code>GImage</code> objects in your programs, you may want to
+            use <i>arrays</i> of <code>GImage</code> objects, like those
+            pictured in the demo app here.
+        </p>
+        <p> Let's start, though, by looking at storing objects in POA (or
+            <b>Plain Old Arrays</b>). To get started, open the file
+            <b>CardDemo.java</b> in this chapter's code folder.
+        </p>
+    <h2>Arrays Of Objects</h2>
+        <p> You create an array of objects using exactly <b>the same syntax</b>
+            you use to create an array of primitive types.
+            Here, for instance, is how you create an array of
+            <code>GImage</code> objects for the hand of cards
+            that appears in the application pictured at the beginning of this
+            section:<br>
+            <img src='images/definition.gif' class='inlineCenter'
+                alt='GImage[] deck = new GImage[52];'
+                title='GImage[] deck = new GImage[52];'>
+            Go ahead and make this change to <b>CardDemo</b> and then compile
+            and try to run. As you can see, your program will compile fine. Up
+            to this point, objects arrays and primitive arrays work just the
+            same. When you try to <b>run</b> your program, though, you'll have
+            problems when you follow the instructions and click the application:<br>
+            <img src='images/nullpointer.gif' class='inlineCenter' alt='A NullPointerException.'>
+            Let's see why this problem occurs when we attempt to <b>use</b> the
+            <code>GImage</code> objects inside the <code>deck</code> array.
+        </p>
+    <h3>Initializing the Elements</h3>
+        <p> If the <code>deck</code> variable were an array of
+            <code>double</code> or <code>int</code>, each element would
+            <b>automatically</b> be initialized to 0, so you could use
+            the array immediately.
+            With object arrays, however, each element is initialized to
+            the special value <code>null</code> like this:<br>
+            <img src="images/z04b.png" class="inlineCenter" alt="Creating an instance of an object array">
+            Notice in this picture:
+        </p>
+        <ul>
+            <li>When we create the array variable <code>deck</code> that the
+                variable contains <code>null</code>, since we haven't created
+                any <code>GImage</code> objects yet.
+            </li>
+            <li>Next, when we instantiate the array, Java creates 52
+                <code>GImage</code> object references (although this picture only
+                shows the first five), and stores a reference that points to
+                those array elements inside the array variable <code>deck</code>
+            </li>
+        </ul>
+        <div class='alert'>
+            <p>Note, though, that the array elements themselves are <b>not</b>
+                <code>GImage</code> objects, but <code>GImage</code> references.
+                And, just like the original array variable <code>deck</code>,
+                each of those references contains the value <code>null</code>.
+            </p>
+        </div>
+        <p>The value <code>null</code> is not very useful in its own
+            right. Actually, it's not useful <b>at all</b>. Before you
+            can use <code>deck</code> you have to fill each element
+            with a valid <code>GImage</code> reference by using the
+            <code>new</code> operator on each element in the array
+            like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            int len = deck.length;<br>
+            for (int i=0; i &lt; len; i++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// Calculate the filename for this image</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;deck[i] = new GImage(imageName);<br>
+            }
+        </p>
+        <p> Once you're finished, each element in the <code>deck</code>
+            array points to a new <code>GImage</code> card image, as this
+            illustration shows:<br>
+            <img src="images/z05.png" class="inlineCenter" alt="The toolBar array after initialization">
+            As you can see, every object array requires three steps to be
+            useful:
+        </p>
+        <ol>
+            <li>Declare an <b>array variable</b>.</li>
+            <li>Create (or <i>instantiate</i>) the <b>array object</b>.</li>
+            <li>Create and attach objects <b>for each element</b> in the
+                array.</li>
+        </ol>
+    <h3>Your Turn: Instantiating the GImage Elements</h3>
+        <p> Of course, the code fragment I showed you was a little condensed,
+            just so you could see the basic idea. In reality, we want each
+            playing card to have a different image, and we want each card
+            in the deck to appear exactly once.
+        </p>
+        <p> Near the top of <b>CardDemo.java</b> you'll notice the two <code>char</code>
+            array variables, <code>suits</code> and <code>ranks</code> that have
+            already been defined for you:<br>
+            <img src='images/suits-ranks.gif' class='inlineCenter' alt='Suits and Ranks.'>
+            These arrays represent the characters that are used
+            in the names of each of the card image files. For instance, the
+            file for the Two of Clubs is named <code>"2c.gif"</code>. Of course, since the
+            card images are inside the <b>cards</b> folder, we need to construct a
+            <code>String</code> that looks like <code>"cards/2c.gif"</code> to
+            load that image.
+        </p>
+        <p> Notice that <code>suits</code> contains four characters
+            <code>'c'</code>, <code>'s'</code>, <code>'d'</code> and
+            <code>'h'</code>, representing the suits <i>Clubs</i>,
+            <i>Spades</i>, <i>Diamonds</i> and <i>Hearts</i>. In a similar manner,
+            the <code>ranks</code> variable contains thirteen characters,
+            representing the thirteen values of the cards in each suit. Digits
+            are used for the cards 2-9, t is used for 10, and q, k, j, a are
+            used for the "face" cards and the Ace.
+        </p>
+    <h4>Computing the Image Names</h4>
+        <p> To compute the image names, we need to use a <b>nested</b> <code>for</code>
+            loop. The <b>outer</b> loop will go through the four characters in the
+            <code>suits</code>, while the <b>inner</b> loop will go through the
+            thirteen characters in <code>ranks</code>. (I use the index variables
+            <code>s</code> and <code>r</code> for these to help me remember
+            which is which. Go ahead and add the code shown here:<br>
+            <img src='images/nested-loop.gif' class='inlineCenter' alt='The first loop.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>The <b>outer</b> loop uses the <code>length</code> of the
+                <code>suits</code> array as its bounds. Each time through
+                the outer loop, the variable <code>s</code> will contain
+                the index of the next element in <code>suits</code>.
+            </li>
+            <li class='d'>The <b>inner</b> loop uses the <code>length</code> of
+                <code>ranks</code> in the same way; the index for this inner
+                loop is named <code>r</code>. Each time the outer loop changes,
+                we'll go through the inner loop once for each element in
+                <code>ranks</code> (13 times).
+            </li>
+            <li class='d'>Inside the inner loop, we use the current element
+                of <code>suits</code> along with the current element of
+                <code>ranks</code> to construct the name of the image file
+                that we want to load.
+            </li>
+        </ol>
+    <h4>Inserting the Elements</h4>
+        <p> Now that you have the names, it's an easy matter to create
+            the <code>GImage</code> object for each card, and to place that card in
+            its position inside the <code>deck</code> array. There are
+            two things you need to do though.
+        </p>
+        <ol>
+            <li class='d'>We need another index variable to keep track of
+                the card's position in the array. You <b>can</b> calculate
+                that using the loop indexes <code>r</code> and <code>s</code>
+                along with some arithmetic, but it's probably easier and
+                clearer to keep a separate variable.
+            </li>
+            <li class='d'>Inside the inner loop, after calculating the image
+                name, you need to construct a <code>GImage</code> object using
+                the name, and add it to the array, using the index variable.
+                Immediately <b>after</b> doing that, you must remember to
+                increment your array counter. (Otherwise, each playing card
+                image will be put into position 0).
+            </li>
+        </ol>
+        <p> Here's the finished fragment of code with those changes:<br>
+            <img src='images/adding-images.gif' class='inlineCenter' alt='Adding GImages to the array.'>
+        </p>
+    <h3>Improving Your Deal</h3>
+        <p> Sometimes, when you run the program, you'll see that one (or more)
+            cards are missing, like this:<br>
+            <img src='images/missing-card.gif' class='inlineCenter' alt='Missing Cards.'>
+            At first, you might think that this is because we made a mistake when
+            populating the array. That's not the case though.
+        </p>
+        <p> The problem occurs because of the way that we chose our random cards.
+            As I mentioned in the last chapter, choosing five indexes using
+            <code>Math.random()</code> means that about 8% of the time, you'll
+            choose the same card twice. You can fix this by doing what I mentioned.
+            Before picking the cards, just shuffle the <code>deck</code> and
+            then use the first five cards. If you want to try this, I've
+            left a marker in the code along with some comments.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Object Arrays Summary
+        </p>
+        <ul>
+            <li>When an array contains <b>objects</b> you must separately
+                instantiate the array elements. When the array is
+                instantiated, each element is initialized to a
+                <b>null reference</b>.
+            </li>
+            <li>You can instantiate the elements in an object array
+                by using a loop or by using an initializer list.
+            </li>
+            <li>When an array contains objects, use the <b>subscripted
+                element name</b> as the receiver when you call any
+                of the object methods: <code>pixels[i].setRed(0)</code>.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

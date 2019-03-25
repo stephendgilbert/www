@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>matrix2.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iomanip&gt;</span>
+<span class="line">  2 </span><span class="dir">#include</span> <span class="dstr">&quot;matrix2.h&quot;</span><span class="dir"></span>
+<span class="line">  3 </span>
+<span class="line">  4 </span>Matrix<span class="sym">::</span><span class="kwd">Matrix</span><span class="sym">(</span><span class="kwb">int</span> r<span class="sym">,</span> <span class="kwb">int</span> c<span class="sym">)</span>
+<span class="line">  5 </span>   <span class="sym">:</span> <span class="kwd">rows</span><span class="sym">(</span>r<span class="sym">),</span> <span class="kwd">columns</span><span class="sym">(</span>c<span class="sym">),</span> <span class="kwd">elements</span><span class="sym">(</span><span class="kwa">new</span> <span class="kwb">double</span><span class="sym">[</span>rows <span class="sym">*</span> columns<span class="sym">])</span>
+<span class="line">  6 </span><span class="sym">{</span>
+<span class="line">  7 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> rows <span class="sym">*</span> columns<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line">  8 </span>      elements<span class="sym">[</span>i<span class="sym">] =</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">  9 </span><span class="sym">}</span>
+<span class="line"> 10 </span>
+<span class="line"> 11 </span>Matrix<span class="sym">&amp;</span> Matrix<span class="sym">::</span><span class="kwc">operator</span><span class="sym">=(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> other<span class="sym">)</span>
+<span class="line"> 12 </span><span class="sym">{</span>
+<span class="line"> 13 </span>   <span class="kwa">if</span> <span class="sym">(</span><span class="kwa">this</span> <span class="sym">!= &amp;</span>other<span class="sym">)</span>
+<span class="line"> 14 </span>   <span class="sym">{</span>
+<span class="line"> 15 </span>      <span class="kwd">free</span><span class="sym">();</span>
+<span class="line"> 16 </span>      <span class="kwd">copy</span><span class="sym">(</span>other<span class="sym">);</span>
+<span class="line"> 17 </span>   <span class="sym">}</span>
+<span class="line"> 18 </span>   <span class="kwa">return</span> <span class="sym">*</span><span class="kwa">this</span><span class="sym">;</span>
+<span class="line"> 19 </span><span class="sym">}</span>
+<span class="line"> 20 </span>
+<span class="line"> 21 </span><span class="kwb">void</span> Matrix<span class="sym">::</span><span class="kwd">copy</span><span class="sym">(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> other<span class="sym">)</span>
+<span class="line"> 22 </span><span class="sym">{</span>
+<span class="line"> 23 </span>   rows <span class="sym">=</span> other<span class="sym">.</span>rows<span class="sym">;</span>
+<span class="line"> 24 </span>   columns <span class="sym">=</span> other<span class="sym">.</span>columns<span class="sym">;</span>
+<span class="line"> 25 </span>   elements <span class="sym">=</span> <span class="kwa">new</span> <span class="kwb">double</span><span class="sym">[</span>rows <span class="sym">*</span> columns<span class="sym">];</span>
+<span class="line"> 26 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> rows <span class="sym">*</span> columns<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 27 </span>      elements<span class="sym">[</span>i<span class="sym">] =</span> other<span class="sym">.</span>elements<span class="sym">[</span>i<span class="sym">];</span>
+<span class="line"> 28 </span><span class="sym">}</span>
+<span class="line"> 29 </span>
+<span class="line"> 30 </span>Matrix<span class="sym">&amp;</span> Matrix<span class="sym">::</span><span class="kwc">operator</span><span class="sym">+=(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 31 </span><span class="sym">{</span>
+<span class="line"> 32 </span>   <span class="kwd">assert</span><span class="sym">(</span>rows <span class="sym">==</span> right<span class="sym">.</span>rows <span class="sym">&amp;&amp;</span> columns <span class="sym">==</span> right<span class="sym">.</span>columns<span class="sym">);</span>
+<span class="line"> 33 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> rows<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 34 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> columns<span class="sym">;</span> j<span class="sym">++)</span>
+<span class="line"> 35 </span>         <span class="sym">(*</span><span class="kwa">this</span><span class="sym">)(</span>i<span class="sym">,</span> j<span class="sym">) +=</span> <span class="kwd">right</span><span class="sym">(</span>i<span class="sym">,</span> j<span class="sym">);</span>
+<span class="line"> 36 </span>   <span class="kwa">return</span> <span class="sym">*</span><span class="kwa">this</span><span class="sym">;</span>
+<span class="line"> 37 </span><span class="sym">}</span>
+<span class="line"> 38 </span>
+<span class="line"> 39 </span>Matrix <span class="kwc">operator</span><span class="sym">+(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Matrix<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 40 </span><span class="sym">{</span>
+<span class="line"> 41 </span>   Matrix result <span class="sym">=</span> left<span class="sym">;</span>
+<span class="line"> 42 </span>   result <span class="sym">+=</span> right<span class="sym">;</span>
+<span class="line"> 43 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 44 </span><span class="sym">}</span>
+<span class="line"> 45 </span>
+<span class="line"> 46 </span>Matrix <span class="kwc">operator</span><span class="sym">*(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Matrix<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 47 </span><span class="sym">{</span>
+<span class="line"> 48 </span>   <span class="kwd">assert</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">() ==</span> right<span class="sym">.</span><span class="kwd">get_rows</span><span class="sym">());</span>
+<span class="line"> 49 </span>   Matrix <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">get_rows</span><span class="sym">(),</span> right<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">());</span>
+<span class="line"> 50 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> left<span class="sym">.</span><span class="kwd">get_rows</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 51 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> right<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">();</span> j<span class="sym">++)</span>
+<span class="line"> 52 </span>         <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> k <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> k <span class="sym">&lt;</span> left<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">();</span> k<span class="sym">++)</span>
+<span class="line"> 53 </span>            <span class="kwd">result</span><span class="sym">(</span>i<span class="sym">,</span> j<span class="sym">) +=</span> <span class="kwd">left</span><span class="sym">(</span>i<span class="sym">,</span> k<span class="sym">) *</span> <span class="kwd">right</span><span class="sym">(</span>k<span class="sym">,</span> j<span class="sym">);</span>
+<span class="line"> 54 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 55 </span><span class="sym">}</span>
+<span class="line"> 56 </span>
+<span class="line"> 57 </span>Matrix <span class="kwc">operator</span><span class="sym">*(</span><span class="kwb">const</span> Matrix<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">double</span> right<span class="sym">)</span>
+<span class="line"> 58 </span><span class="sym">{</span>
+<span class="line"> 59 </span>   Matrix <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">);</span>
+<span class="line"> 60 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> result<span class="sym">.</span><span class="kwd">get_rows</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 61 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> result<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">();</span> j<span class="sym">++)</span>
+<span class="line"> 62 </span>         <span class="kwd">result</span><span class="sym">(</span>i<span class="sym">,</span> j<span class="sym">) *=</span> right<span class="sym">;</span>
+<span class="line"> 63 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 64 </span><span class="sym">}</span>
+<span class="line"> 65 </span>
+<span class="line"> 66 </span>ostream<span class="sym">&amp;</span> <span class="kwc">operator</span><span class="sym">&lt;&lt;(</span>ostream<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Matrix<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 67 </span><span class="sym">{</span>
+<span class="line"> 68 </span>   <span class="kwb">const int</span> WIDTH <span class="sym">=</span> <span class="num">10</span><span class="sym">;</span>
+<span class="line"> 69 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> right<span class="sym">.</span><span class="kwd">get_rows</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 70 </span>   <span class="sym">{</span>
+<span class="line"> 71 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> right<span class="sym">.</span><span class="kwd">get_columns</span><span class="sym">();</span> j<span class="sym">++)</span>
+<span class="line"> 72 </span>         left <span class="sym">&lt;&lt;</span> <span class="kwd">setw</span><span class="sym">(</span>WIDTH<span class="sym">) &lt;&lt;</span> <span class="kwd">right</span><span class="sym">(</span>i<span class="sym">,</span> j<span class="sym">);</span>
+<span class="line"> 73 </span>      left <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 74 </span>   <span class="sym">}</span>
+<span class="line"> 75 </span>   <span class="kwa">return</span> left<span class="sym">;</span>
+<span class="line"> 76 </span><span class="sym">}</span>
+<span class="line"> 77 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

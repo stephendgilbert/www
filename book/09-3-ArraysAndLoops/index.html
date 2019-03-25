@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>9.3&mdash;Arrays And Loops</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/i.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.3</p>
+        <p id='lessonTitle'>Arrays And Loops</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/b01.gif" class="right" alt="The Loop Guru album cover.">
+            <b><span class="cap">L</span>oop Guru, the
+            album by Duniya</b>, features "<i>Nearly 69 minutes of infectious electronic
+            rhythms ranging from whirly dance grooves to worldly atmospheric shivers
+            that take us from the dance floor to the chill room</i>".
+        </p>
+        <p> Whatever; I just like the name of the album.</p>
+        <p> In this section we'll take a look at various ways that
+            we can <b>process</b> arrays, many of them designed to
+            turn you into a <i>real</i> loop guru. We'll look at:
+        </p>
+        <ul>
+            <li>Algorithms that process and modify the elements of an entire
+                array, such as initialization.
+            </li>
+            <li>Read-only algorithms that can make use of Java's <i>foreach</i>
+                loop syntax for visiting each array element.
+            </li>
+            <li>Algorithms that process a portion of an array by using sentinel
+                loops.
+            </li>
+            <li>Algorithms that modify a portion of an array by inserting or deleting
+                elements.
+            </li>
+        </ul>
+        <p> Let's start by learning about the algorithms that process an entire
+            array, and that may, (or may not) modify the array elements. This
+            includes operations like initialization, sorting, and reversing the
+            elements in an array, (something you'll need to do for your exams).
+        </p>
+    <h3>Using Loops to Process Arrays</h3>
+        <p>The real advantage of arrays
+            is that they allow you to
+            apply the <b>same processing</b> to <b>all of the elements</b> by
+            using a loop. We can divide this processing into two kinds:
+        </p>
+        <ul>
+            <li>Algorithms that <b>may modify</b> the elements of the array as they are
+                processed. This includes initialization, sorting, and otherwise
+                rearranging items. It also includes algorithms where the position
+                of the elements in the array is significant or must be noted.
+            </li>
+            <li>Algorithms that <b>need only to read</b> the values contained in the
+                array. These algorithms solve many counting and calculating
+                problems.
+            </li>
+        </ul>
+        <p> We'll use different kinds of loops for both types of algorithms,
+            although you <b>can</b> use the modifying <code>for</code> loop
+            on the read-only calculation problems as well.
+        </p>
+    <h2>Modifying Array Loops</h2>
+        <p> For array processing, where the elements may be modified, or where
+            the positions of the elements is important, the <code>for</code> loop
+            is the loop of choice, because the <code>array.length</code>
+            field creates a natural bounds for a counter-controlled loop,
+            and because the loop index can do double-duty as the subscript to
+            access the array elements.
+        </p>
+        <p> Here are a few examples of common loops and the situation where
+            you'll use them.
+        </p>
+    <h3>Initializing an Array</h3>
+        <p> If you need to initialize an array to a value other than zero,
+            the initializer list is useful only for short arrays. Typing in
+            even 25 or 50 values can get very tedious. Instead, you should
+            use a <code>for</code> loop that follows this pattern:
+        </p>
+        <ol>
+            <li class="d">Retrieve the length of the array and use it as the
+                loop's count bounds.
+            </li>
+            <li class="d"> Write a <code>for</code> loop that goes from 0 to
+                less-than the count bounds.
+            </li>
+            <li class="d"> Assign a new value to each element that you wish
+                to modify inside the loop body.
+            </li>
+        </ol>
+        <p> This <b>idiom</b> or <b>pattern</b> is the standard way to process an array when you
+            want to visit every element, and you need to modify the contents of
+            the elements, or some of the elements. Here's an example that
+            uses this pattern to fill an array with random numbers:<br>
+            <img src='images/initialization.gif' class='inlineCenter' alt='Initializaing an array.'>
+            Notice that the loop follows exactly the three steps described
+            by the pattern.
+        </p>
+    <h3>Initializing a String Array</h3>
+        <p> When you create an object or <code>String</code> array using the
+            <code>new</code> operator, all of the elements in the array contain
+            the <b>null</b> <code>String</code>, not the <b>empty</b> <code>String</code>.
+            Before you can use any of those array elements, you'll need to initialize them.
+        </p>
+        <p> Let's look at an example that shows how you'd initialize an array
+            containing a "page" worth of the text from the book Moby Dick.<br>
+            <img src="images/moby.gif" class="inline" alt="Initializing an array from Moby Dick.">
+            Here's are the things you should notice:
+        </p>
+        <ol>
+            <li class="d">Lines 30 and 31 create the <code>String</code> array <code>lines</code>
+                using the constant <code>LPP</code>, which stands for <b>lines per page</b>.
+                Since you don't know how many lines the file contains, you can't create
+                an array big enough to hold the entire book. Notice that line 31 uses a single
+                line to both declare the array variable and to instantiate.
+            </li>
+            <li class="d">Lines 32 and 33 create a <code>Scanner</code> variable that
+                will <b>iterate</b> over the text file, Moby Dick.
+                You can use the ACM <code>MediaTools</code> class to open
+                the data file that is then passed to the <code>Scanner</code>
+                constructor.
+            </li>
+            <li class="d">Iterators use the <code>hasNext()</code> group of methods to
+                control their operators. You're going to process the file, line by line,
+                so you'll use the <code>hasNextLine()</code> version one line 36 as the
+                <b>outer</b> loop controller. Even though you're going to process
+                the file page by page, this loop will make sure that you process
+                the entire file.
+            </li>
+            <li class="d">The <b>inner</b> <code>for</code> loop on line 38 makes
+                sure that you process the entire array. It's important that every
+                element in the array is initialized, because you don't want any
+                data from the previous page to remain when you process the next one.
+                Because you need to access <b>every</b> element, the <code>for</code> loop,
+                along with the <code>length</code> field, are the obvious choices.
+        </li></ol>
+        <p> Inside the inner loop, it's <b>possible</b> to reach the end of the
+            file. That means you need to use <code>if</code> statements to
+            check the end-of-file status again, before retrieving the current
+            line from the file and storing it in the appropriate array element.
+        </p>
+        <p> If you <b>do</b> run out of data in the file, you still need to process
+            the remaining data elements in the <code>lines</code> array, filling
+            them with <b>null</b> to "erase" any data left from the last page.
+        </p>
+
+    <h3>Moving Array Elements</h3>
+        <p>
+            Array elements often need to be rearranged for a variety of reasons.
+            You may want to <b>sort</b> the names in a list, randomly <b>shuffle</b> the cards
+            in a deck, or <b>reverse</b> the characters in a <code>String</code>. All of
+            these require you to process all of the elements in the array,
+            (often more than once), and modify or move the elements.
+        </p>
+        <p><img src="images/b04.gif" class="right" alt="The Pick-3 Lotto System.">
+            Let's look at an interesting problem: suppose you have a big glass globe
+            filled with 50 "lotto" balls. Each ball is numbered. You want to pick
+            three of the balls for a lottery game called "Pick 3 Lotto".
+        </p>
+        <ul>
+            <li>The numbers have to be randomly selected between 1 and 50 (inclusive)</li>
+            <li>No number can appear twice</li>
+        </ul>
+        <p> You'll probably be tempted to start with some code like this:</p>
+        <p class="code">
+            int n1 = 1 + (int)(Math.random() * 50);<br>
+            int n2 = 1 + (int)(Math.random() * 50);<br>
+            int n3 =  1 + (int)(Math.random() * 50);
+        </p>
+        <p> Unfortunately, this generates duplicates, (that is, 2 of the 3 numbers will
+            be the same), <b>about 8% of the time</b>, which is an impossibility in the
+            game you're trying to simulate. (That's also why you can't use this method
+            for selecting cards from a deck of cards for your new Video Poker game;
+            you always end up with two Ace of Spades at the most inconvenient times!)
+        </p>
+        <p> Instead, the best way to solve this problem is to put all of the
+            lottery balls
+            (numbers) into an array, <b>shuffle</b> the array, and then pick the
+            first three (randomly ordered) elements. That way, a single ball can never
+            be picked twice.
+        </p>
+        <p> Which brings us to the question: how do you shuffle the numbers in a
+            list, given this definition and initialization:<br>
+            <img src='images/lotto-def.gif' class='inlineCenter' alt='Defining an array.'>
+            To shuffle the elements in the array, you:
+        </p>
+        <ol>
+            <li class="d">loop through the entire array.</li>
+            <li class="d">use your random number generator to
+                pick one index from the array.
+            </li>
+            <li class="d">"swap" the value at the loop index with
+                the value at the random index.
+            </li>
+        </ol>
+        <p> Here's what the "shuffle" algorithm looks like in code:<br>
+            <img src='images/shuffle01.gif' class='inlineCenter' alt='The naive shuffle algorithm.'>
+        </p>
+        <div class='info'>
+        <p>
+            <b>The "swap" Pattern</b><br>
+            One common coding pattern that you should learn and remember it
+            the code for "swapping" two values, since it occurs regularly
+            in computer programs, and its one algorithm that students often
+            do incorrectly. To swap two values you:<br><br>
+            &nbsp;&nbsp;&nbsp;a. create a temporary variable and save the value in
+                    the first variable in the temporary.<br>
+            &nbsp;&nbsp;&nbsp;b. use assignment to copy the second variable's value into
+                    the first variable.<br>
+            &nbsp;&nbsp;&nbsp;c. use assignment to copy the temporary value into the second
+                    variable.<br><br>
+            Note that after step b is completed, both variables have the same
+            value, which is why the temporary variable is required. Without the temporary
+            variable, the value in the first variable gets lost, and both end up
+            the same.
+        </p>
+        </div>
+    <h3>A Better Shuffle</h3>
+        <p> The problem with the shuffle algorithm that I just showed you is that
+            it really <b>isn't random</b>. Different numbers have higher probabilities
+            of showing up, than other numbers. That's because whenever you exchange an
+            element with another, you also have a chance of exchanging with elements
+            that have already been shuffled.
+        </p>
+        <p> A better algorithm, known as the <b>Fisher-Yates</b> or <b>Knuth</b> shuffle,
+            works like this:
+        </p>
+        <ol>
+            <li class='d'>Take the <b>last</b> ball in the array (or card in the deck),
+                and exchange it with any other ball. After this exchange, this
+                ball will never be swapped again. It will also be guaranteed
+                <b>not</b> to be itself.
+            </li>
+            <li class='d'>Then, take the next-to-last ball, and exchange it with any
+                of the remaining un-shuffled ball.
+            </li>
+        </ol>
+        <p> Continue on until the first ball has been swapped. Here's what this
+            version of the shuffle algorithm looks like in code:<br>
+            <img src='images/shuffle02.gif' class='inlineCenter' alt='The Fisher-Yates shuffle algorithm.'>
+            The main difference are that the loop <b>counts down</b> from 50 to 0,
+            instead of counting up, and, that the random ball is selected <b>only</b>
+            from the <b>remaining balls</b>, instead of being selected from all of
+            the elements.
+        </p>
+        <p> It's hard to believe, but such a small difference can have a huge effect
+            on the final results.
+        </p>
+    <h2>Non-Modifying Algorithms</h2>
+        <p> Starting with Java 5, a simplified form of the <code>for</code> loop was introduced,
+            known as the <i>foreach</i> loop (even though it doesn't actually use
+            the word <i>foreach</i>). The <i>foreach</i> loop is used when:
+        </p>
+        <ol>
+            <li class="d">You want to visit every element in the array (like the
+                <code>for</code> loop from the previous section.)
+            </li>
+            <li class="d">You don't need to modify any of the elements or use the loop
+                counter as part of your calculation.
+            </li>
+        </ol>
+        <p> You can think of the <i>foreach</i> loop as a <b>read-only</b> version
+            of the <code>for</code> loop. Here's the syntax of the <i>foreach</i> loop
+            used to print the elements in the array <code>randNums</code>, created in
+            the last section, along with the equivalent <code>for</code> loop variety.<br>
+            <img src='images/foreach01.gif' class='inlineCenter' alt='Using the foreach loop.'>
+            Both examples are from an ACM <code>ConsoleProgram</code> so they use the
+            simplified versions of the <code>print()</code> and <code>println()</code>
+            methods to perform their output.
+        </p>
+        <div class='info'>
+        <p><b>Note</b>: because the <i>iterator</i> variable (<code>num</code>
+            in our example shown here) is a copy of the individual array elements, you
+            can't <b>change</b> the elements of an array using the <i>foreach</i> loop,
+            if the array contains primitive values.
+            Think of <i>foreach</i> as a <b>read-only</b> <code>for</code> loop with
+            slightly simplified syntax. You can <b>always</b> replace it with the
+            traditional <code>for</code> loop used in the first section, and you
+            <b>should</b> if you're going to run your program on a pre-Java 5
+            platform.<br><br>
+            If the <b>array contains objects</b>, though,
+            like the <code>Pixel</code> objects in a <code>Picture</code>, you
+            <b>can</b> call <b>mutator</b> methods that change the object that
+            the array element refers to, even though you are using
+            the simplified <code>for</code> loop. Your instructor may have
+            had you do that in lecture.
+        </p>
+        </div>
+    <h3>The BasicArray Example</h3>
+        <p> The simple program <b>BasicArray.java</b>, (which you can find in
+            this chapter's code folder), shows the application of <b>both</b> of these loops.
+        </p>
+        <ul>
+        <li>On lines 24-25 a conventional <code>for</code> loop is used to <b>initialize</b>
+            all of the elements in the array:
+            <img src="images/b02c.gif" class="inline" alt="Lines 24-25 in BasicArray.java">
+        </li>
+        <li>After the array elements are initialized, the sixth element (<code>list[5]</code>)
+            is changed to 999, and the <i>foreach</i> syntax is used to display all of
+            the elements in the array on lines 30-31:
+            <img src="images/b03c.gif" class="inline" alt="Lines 30-31 in BasicArray.java">
+        </li>
+        </ul>
+        <p> Let's look at some other algorithms where the <i>foreach</i> loop could
+            be used. (That is, where we a) need to process the entire array, and b)
+            won't be changing any elements.)
+        </p>
+    <h3>Summing, Counting, and Averaging</h3>
+        <p> Summing, counting, and averaging are all common operations
+            performed on arrays. Here are two loops from a Java applet named
+            <b>SumAvgCount</b> that you can use as examples when you have to perform
+            these operations:
+            <img src="images/b05.gif" class="inline" alt="Summing Averaging and Counting.">
+            Try it yourself.
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/SumAvgCount.html","Processing Arrays with Loops","width=575,height=350,scrollbars=yes");'>
+            <b>Run the applet</b></a> by clicking the link
+            in this sentence. Then, press the button and the applet will initialize the
+            <code>randAR</code> array using <code>Math.random()</code> and a traditional
+            <code>for</code> loop. (Not shown here.)
+        </p>
+        <p> The second loop, (the first shown at the top of this screenshot), uses the
+            <i>foreach</i> version of the <code>for</code> loop to sum up all of
+            the elements, and then the average is calculated. The final loop,
+            (shown at the bottom of the screenshot), also uses <i>foreach</i>
+            to calculate the percentage of numbers
+            that are larger than, and the percentage of numbers that
+            are smaller than the average.
+        </p>
+        <p> If you don't want to run the program, here's what it looks
+            like, just to give you an idea:<br>
+            <img src="images/b13.gif" alt="Running the SumAvgCount applet" class="inlineCenter">
+        </p>
+    <h3>Smallest and Largest: Extreme Values</h3>
+        <p> The <b>SumAvgCount</b> program counts the
+            number of values that are larger than the average, and those that
+            are smaller than the average, and then displays the percentage.
+            Of course, that's kind of a <b>silly statistic</b>, because, by definition,
+            it's always going to be close to 50%; that's how an average
+            is calculated.
+        </p>
+        <p> A <b><u>better</u></b> use of our time is to find the largest and
+            smallest input values, a process known as
+            <b class='ry'>locating extreme values</b>, (probably not as exciting as
+            the <i>extreme sports</i> shown in these postcards):<br>
+            <img src="images/b11.gif" class="inlineCenter" alt="Extreme cow sports.">
+            Of course, since we're no longer counting anything, let's
+            come up with a different name for the program, OK?. In a fit
+            of creativity, I'll call this program <b>ExtremeValues.java</b>.
+        </p>
+        <p> Here's the third loop in this program, (which is identical to
+            <b>SumAvgCount</b> up to this point):
+            <img src="images/b10b.gif" class="inline" alt="The largest and smallest.">
+            Here's how the code works:
+        </p>
+        <ol>
+            <li class="d">First, initialize two variables, and initialize them
+                so that they point to the first element in the array. If the
+                array has only a single element, then it is <b>both</b> the
+                largest and smallest element in the array.
+            </li>
+            <li class="d">Since we've already handled the first element, our
+                loop starts counting at the second, with an index value of 1.
+                As before, we go up to the end of the array, the
+                value stored in <code>len</code>.
+            </li>
+            <li class="d">As we visit each element, we compare it to the
+                values stored in <code>larger</code> and <code>smaller</code>,
+                and reset the variables if required. Because both variables
+                are initially set to the same value, we can use an <code>else
+                if</code> statement here, rather than the independent
+                <code>if</code> statements that would be required if we
+                had used very large or very small initial values instead.
+            </li>
+        </ol>
+        <p> Once we're done, we can run the program, and get this output:
+            <img src="images/b12.gif" class="inlineCenter" alt="Running ExtremeValues.java">
+            Or you can
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/ExtremeValues.html","Finding Extreme Values","width=575,height=350,scrollbars=yes");'>
+            <b>run the applet</b></a> on your own computer by clicking the link
+            in this sentence. (Both <b>SumAvgCount.java</b> and
+            <b>ExtremeValues.java</b> can be found
+            in this chapter's code folder.)
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Arrays and Loops Summary
+        </p>
+        <ul>
+            <li>If you need to <b>modify the array</b>, then use a <code>for</code>
+                loop, using the <code>length</code> field as the loop bounds. Use
+                the loop counter as the array subscript.
+            </li>
+            <li>Common modifying loops include initialization, shuffling,
+                sorting, shifting and reversing.
+            </li>
+            <li>Modifying loops <b>follow a similar pattern</b>: retrieve the
+                <code>length</code> for the loop bounds, write an
+                <b>asymmetric loop</b> that goes from <code>0</code> to
+                <code>len - 1</code>, use the loop counter to access each
+                individual element.
+            </li>
+            <li><b>Moving array elements</b> (such as shuffling, sorting and
+                shifting) usually involve exchanging a pair of elements in
+                each loop iteration. To exchange two elements, you use the
+                <b>swap pattern or idiom</b> of saving one element in a temporary
+                variable, overwriting that element with the exchanged
+                element, and then overwriting the exchanged element with
+                the temporary value.
+            </li>
+            <li><b>Non-modifying</b> loop algorithms only need to read each
+                element that they process. If the entire array is to be
+                processed, the <b>simplified <code>for</code> loop</b>
+                can be used to make your code shorter. With this loop,
+                you <b>cannot modify the array elements</b>.
+            </li>
+            <li>When <b>counting or summing</b> elements, you must create
+                variables to hold the output value, such as a counter
+                and/or an accumulator, and then use them to store the
+                array values as you loop through the array.
+            </li>
+            <li>To find the <b>extreme values</b> in an array (largest
+                and/or smallest), create a variable to hold the result
+                and initialize it to the first element in the array.
+                Then, compare each remaining element in the array.
+                When a larger (or smaller) element is found, store
+                that value in your result variable.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

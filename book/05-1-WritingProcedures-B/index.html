@@ -1,0 +1,525 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>5.1&mdash;Writing Procedures</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner04">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 5.1</p>
+        <p id='lessonTitle'>Writing Procedures</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/recipe.gif" class="right" alt="A recipe for fried snake.">
+            <b><span class="cap">W</span>riting a program</b> is a lot like
+            creating a recipe&mdash;kind of like this government recipe for <b>Fried Snake</b>
+            from the <i>Guam Division of Aquatic and Wildlife Resources</i>.
+        </p>
+        <p> When you create a recipe you define two things:
+        </p>
+        <ul>
+            <li>the ingredients you need: a skinned snake, a cup of
+                sherry, black pepper, lemon juice and so on.
+            </li>
+            <li>the procedures for preparing and cooking those ingredients;
+                marinate, drain, dredge, fry and drain.
+            </li>
+        </ul>
+        <p> Programs are similar. Instead of ingredients, you define
+            <b>variables</b> to hold the data that your program will use.
+            Instead of a list of chopping, dicing and baking instructions,
+            you define a set of <b>procedures</b> and <b>functions</b>
+            to process the data in those variables. These procedures
+            and functions will make up an <b>algorithm</b> that produces
+            the output you desire; perhaps a tasty piece of KFS!
+            <img src='../images/smiley.gif' style='vertical-align:top' alt='A happy-face icon.'>
+        </p>
+    <h2>Methods, Procedures and Functions</h2>
+        <p> In object-oriented languages like Java, we usually use the
+            term <b>method</b> to refer to both procedures and functions.
+            I'm going to <i>informally</i> use
+            the older, and more general terms though, to refer to specific
+            <b>kinds</b> of methods:
+        </p>
+        <ul>
+            <li><b>procedures</b> to refer to methods that carry out an
+                action, like the <code>println()</code> procedure in the
+                <code>PrintStream</code> class, and
+            </li>
+            <li><b>functions</b> to refer to methods that <b>return a value</b>
+                to the caller, and that can be used to initialize variables
+                or as part of an expression, like the various functions
+                in the <code>Math</code> class.
+            </li>
+        </ul>
+        <p>In the last few chapters you've learned
+            how to <b>call</b> procedures like <code>print()</code> or
+            <code>drawString()</code>. You also learned how to
+            <b>define</b> the <code>main()</code>, <code>run()</code>
+            and <code>paint()</code> methods (depending on the <i>kind</i>
+            of program you're writing).
+            Now, let's learn how to write your own procedures,
+            and not simply call or redefine pre-existing methods,
+            like <code>println()</code> or <code>paint()</code>.
+        </p>
+        <p> Most programs that you write will have <b>programmer-defined methods</b>.
+            User-defined methods are designed to accomplish a single, simple task,
+            and help to make your classes more flexible and easier to
+            understand.
+        </p>
+    <h3>Why Methods?</h3>
+        <p> Up until now, we've written programs where all of the
+            instructions are in a single method. As
+            your programs become larger, though, your code will become
+            much harder to understand, modify and debug.<br>
+            <img src='images/goldberg.png' class='inlineCenter' alt='A Rube Goldberg cartoon.'>
+            A better solution is to <b>divide the work</b> into different
+            named sections of code or <b>procedures</b>. To carry our
+            recipe metaphor a little further, instead of having a single
+            <code>run()</code> method to cook your snake, you could divide
+            the program into <code>marinate()</code>, <code>dredge()</code>,
+            <code>fry()</code> and <code>drain()</code> methods.
+        </p>
+        <p> Such simple, helper methods make the overall program easier to
+            understand and easier to modify and are part of the concept of
+            <b>structured programming</b>. Let's take a brief look at that
+            before we go on.
+        </p>
+    <h2> Structured Programming</h2>
+
+         <p>
+            <b><span class="cap">B</span>y the late 1960s</b>, high-level languages were in
+            full-flower, and there were a lot of them. Programmers
+            had become monumentally more productive; at least,
+            they were churning out a whole bunch of code. A
+            decade earlier, a 20,000 line program was huge. Now
+            programmers were thinking in terms of
+            hundreds-of-thousands, and even millions of lines
+            of code.
+        </p>
+        <p>
+            Despite the increased productivity, however, there
+            was a small problem: the portions were huge but the
+            quality left a bit to be desired. The Cold-War was
+            going full-steam-ahead, and the government couldn't
+            help but notice that when they ordered a new software
+            system, the software:
+        </p>
+        <ul>
+            <li> Cost a whole lot more than promised.</li>
+
+            <li> Failed to arrive when promised</li>
+            <li> Failed to work if it did arrive</li>
+        </ul>
+        <p> <img src="images/sereport.gif" class="right" alt="The 1969 NATO conference report cover.">
+            The government, and the military in particular,
+            (what with
+            $900 toilet seats and all), doesn't enjoy a reputation
+            as an especially savvy consumer.
+            (Undoubtedly this
+            reputation is undeserved.)
+            The crisis in software
+            quality, however, made everyone sit up and take note,
+            and, in the late 1960s, the NATO countries sponsored
+            a pair of conferences which gave rise to the term <b>Software
+            Engineering</b>. (<a href="http://homepages.cs.ncl.ac.uk/brian.randell/NATO/index.html" target="_blank"><b>Click here</b></a> if you'd like to read the original
+            reports from the 1968 Garmisch and 1969 Rome conferences. They're
+            both quite interesting, as is Brian Randell's history of how the
+            reports got written.)
+        </p>
+
+        <p>
+            The questions the conference attendees asked were simple:</p>
+        <ul>
+            <li> Why does software cost more than is planned?</li>
+            <li> Why doesn't software work the way is was designed?</li>
+            <li> Why aren't software projects completed as planned?</li>
+
+        </ul>
+        <p> In other words&#8212;to paraphrase Professor Henry Higgins'
+            famous line from <b>My Fair Lady</b>:
+        </p>
+            <div class="pullquote">
+                Why isn't a word processor more like a truck?
+            </div>
+        <p> In many ways, Software Engineering was kind of a bust:
+            software is still late, bloated, and buggy. Despite
+            that, some real good came out out the conference. A
+            diverse group of people, around the world, now began
+            to look at how to build <b>good</b> software. Before
+            this, everyone was just kind of amazed that it could
+            be done at all.
+        </p>
+
+        <p> These efforts, and their results, are often called
+            <b>structured programming</b>. Structured programming is
+            important in its own right, but also because
+            Object-Oriented Programming (OOP) builds upon the
+            principles discovered by structured programming.</p>
+
+    <h3>Procedural Decomposition</h3>
+        <p> The first principle in structured programming is that
+            <b>little programs are easier to write, understand, and
+            maintain, than are big programs</b>. This principle is
+            called "<b>divide and conquer</b>", or "<b>procedural
+            decomposition</b>".
+        </p>
+
+        <p>Structured Programming
+            encourages programmers to organize their programs as a
+            hierarchy of small sub-programs (often called
+            <b>procedures</b> or <b>functions</b>) that each
+            perform one small part of a task like this:<br>
+            <img src="images/divide_conquer.gif" alt="Dividing a large problem into procedures." class='inlineCenter'>
+            This looks almost like our snake recipe example, doesn't it?
+        </p>
+    <h2>User-Defined Procedures</h2>
+        <p><b><span class="cap">A</span>s I just mentioned</b>,
+            some methods perform an action, and some methods calculate or
+            retrieve information. In many languages, the first type is
+            known as a <b>procedure</b> and the second is known as a
+            <b>function</b>. Java hasn't formally adopted these terms,
+            but they are commonly used in the Computer Science world,
+            so you should be familiar with them.
+        </p>
+        <p> We'll start out learning to write "simple"
+            procedures&#8212;methods that carry out an action, and
+            that don't require any additional information to carry out
+            their task. Then, we'll turn our attention to writing
+            more complex methods: those that accept parameters, and
+            those that return a value.
+        </p>
+    <h3>Drawing an Abacus</h3>
+        <p> Here's an application named <b>Abacus1</b> (which you can find inside
+            this chapter's code folder), that calls the
+            <code>println()</code> procedure inside the
+            <code>main()</code> method to display a simple ASCII-Art picture
+            of a Chinese Abacus.<br>
+            <img src="images/abacus01.gif" class="inlineCenter" alt="The Abacus1 program.">
+        </p>
+        <p> The <b>Abacus</b> program contains a <b>definition</b> for just
+            one method, <code>main()</code>. All of your
+            instructions are inside the <code>main()</code> method, using
+            the global <code>System.out</code> object to print your output.
+        </p>
+        <div class='info'>
+        <p> You'll notice in this program instead of using <code>System.out.println()</code>,
+            I'm just using <code>out.println()</code>. I can do that because I
+            added a line to the top of my program: <code>import static java.lang.System.*;</code>.
+            This allows me to skip the <code>System.</code> in front of each
+            <code>println()</code> statement. Technically, that's because
+            <code>out</code> is a <code>static</code> object inside the
+            <code>System</code> class.
+        </p>
+        </div>
+    <h3>Top-Down Design</h3>
+        <p> We'll start by splitting the program into individual user-defined methods.
+            In DrJava, use File->Save As... to save a copy of the file
+            <b>Abacus1.java</b> as <b>Abacus2.java</b>.
+            Change the <b>class name</b> and then save again. Then, re-open the
+            original Abacus1 file so both are open in your Files Pane.
+            Your screen should look like this:
+            <img src='images/abacus02a.gif' class='inlineCenter' alt='Saving the file.'>
+            This way, if you "mess up", you can always re-open <b>Abacus1.java</b>
+            and everything will be as normal. We'll also use Abacus1 to copy the
+            original lines and paste them into Abacus2.
+        </p>
+        <p> Now, inside the <code>main()</code> method,
+            replace the individual <code>println()</code> statements with the
+            two commands <code>printTopHalf()</code> and <code>printBottomHalf()</code>
+            as shown here:
+            <img src="images/abacus2a.gif" class="inlineCenter" alt="The Abacus2 program main() method.">
+        </p>
+        <p> To <b>call</b> a simple procedure (or method or user-defined command)
+            <b>from within the class where it is defined</b>, you just:
+        </p>
+        <ol>
+            <li class='d'>use the name of the method</li>
+            <li class='d'>followed by an empty set of parentheses</li>
+            <li class='d'>followed by a semicolon</li>
+        </ol>
+        <p> This is called <b>top-down design</b>. Rather than placing the individual
+            details inside the <code>main()</code> method, I listed the
+            individual steps that I want to carry out at the highest-level possible.
+            If I were writing a program called <code>FriedSnake</code>, then
+            my <code>main()</code> method may have looked like this:
+        </p>
+        <p class="code">
+            gatherIngredients();<br>
+            marinate();<br>
+            dredge();<br>
+            fry();<br>
+            drain();<br>
+        </p>
+        <div class='info'>
+        <p> Note that these are <b>not</b> commands in the Java library, but
+            <b class='ry'>commands that
+            I've just made up</b> to simplify the program that I'm trying to write.
+            One way to think about this is to realize that a
+            <b>procedure</b> is simply a <b>user-defined command</b>.
+        </p>
+        </div>
+    <h3>Defining the Methods</h3>
+        <p> As you click the Compile button right now, you'll see that
+            DrJava isn't at all happy that you've called your own commands
+            or procedures inside the <code>main()</code>
+            method. That's because, even though you've <b>called</b> the methods,
+            you've yet to <b>define</b> them. Here's how you do that.
+        </p>
+        <p> First, a method is defined inside the body of the class that
+            contains it, never inside another method. To define a new procedure
+            or command, you simply add a method definition that has these
+            six parts. (You've seen these briefly in previous chapters).
+            <img src="images/abacus2b.gif" class="inlineCenter" alt="The printTopHalf() method skelton.">
+        </p>
+        <blockquote>
+        <h4>1. Access modifier</h4>
+            <p> The access modifier determines who can call the method.
+                Normally, you'll make your methods <code>public</code>,
+                although in this case, you <u>could</u> make the access
+                specifier <code>private</code>, since it is only
+                being used by the <code>main()</code> method in
+                the same class.
+            </p>
+        <h4>2. <code>static</code> modifier</h4>
+            <p> The <code>static</code> modifier is necessary whenever
+                you want to call a procedure or function from inside the
+                <code>main()</code> method, (or from within <i>other</i>
+                <code>static</code> methods). This is <b>not</b> actually
+                very common. Once we've learned how to define classes,
+                you'll very rarely use the <code>static</code> modifier.
+                If I had written the Abacus program as an ACM program or
+                applet, we wouldn't need to use <code>static</code> either.
+            </p>
+        <h4>3. Return type</h4>
+            <p> The return type is used for methods that produce
+                a value, so that the method can be used in an expression.
+                Procedures or simple methods don't return a value, they just carry
+                out an action, so we use the "anti-type" named <code>void</code>
+                for this element.
+            </p>
+        <h4>4. Name</h4>
+            <p> The name of our first method is  <code>printTopHalf()</code> and
+                the name of the second method is <code>printBottomHalf()</code>.
+                Method names must follow the rules for Java identifiers,
+                just as attributes do. Here, we're also following the Java
+                naming conventions, starting our method names with a
+                lowercase letter and using uppercase letters to begin
+                each embedded word.
+            </p>
+        <h4>5. Parameter list</h4>
+            <p> Because the simple procedures we're discussing don't
+                take parameters, the parameter list is empty. You still have
+                to include the parentheses, however.
+            </p>
+        <h4>6. Method body</h4>
+            <p> The method body is enclosed in braces { }, following
+                the parameter list. Since we don't pass any parameters
+                to either method, we simply use the <code>println()</code>
+                to display the appropriate portion of the abacus.
+            </p>
+        </blockquote>
+        <p> The actual statements inside the <code>printTopHalf()</code> method would be
+            the same as those in the <code>main()</code> method, as shown here:<br>
+            <img src="images/abacus02c.gif" class="inline" alt="The printTopHalf() method.">
+            I've just copied the statements from <b>Abacus1.java</b>, (which is
+            one reason I reopened it after creating Abacus2.)
+        </p>
+    <div class="redbox" style="padding: 0.5em 2em 0pt; margin-left: -1em;">
+        <div style="text-align: center; font-size: 1.25em; color: red; font-weight: bold;">
+        <span style="border-bottom: 1px solid red; background: transparent none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        Procedure Reminders
+        </span>
+        </div>
+
+        <p> You cannot use procedures as part of an expression,
+            like you can when calling a function.
+        </p>
+        <p> Make sure you understand the difference between <b>defining</b>
+            a procedure and <b>calling</b>, (or <b>invoking</b>), a procedure.
+        </p>
+        <p><b>A procedure definition</b>:</p>
+        <ul>
+            <li><b>Always</b> has a return type before the name</li>
+            <li><b>Never</b> ends in a semicolon</li>
+            <li><b>Is followed</b> by a pair of <b>braces</b></li>
+        </ul>
+        <p><b>Calling a procedure</b>:</p>
+        <ul>
+            <li><b>Never</b> has a return type before the name</li>
+            <li><b>Always</b> ends in a semicolon</li>
+        </ul>
+    </div>
+    <h2>Procedural Decomposition Revisited</h2>
+        <p> <img src="images/b02.gif" class="right" alt="Two girls looking surprised.">
+            "OK", I can hear you thinking, "<i>exactly</i> what was the
+            point of using procedures? The code certainly isn't
+            shorter or easier to understand? The version with everything
+            in the main() method was clearer!"
+        </p>
+        <p> And, I have to agree with you. The point of the preceding section
+            <b>wasn't</b> to show you a great application of procedures,
+            but to show you the <b>syntax</b> of procedure definitions and
+            procedure calls in the simplest possible context.
+        </p>
+        <p> Now we can look at one of the principle reasons for using
+            procedures: <b>eliminating redundancy</b>. Procedures allow us
+            to place commonly used actions or calculations in a <b>named</b>
+            block of code and then to simply use that new name instead
+            of repeating the same block of code over and over again.
+        </p>
+        <p> Of course, you've been taking advantage of this in every
+            program you've written. The code for printing a simple integer
+            to the console, without using any procedures, is more than
+            one hundred lines of Java code. Imagine if you had to repeat
+            that same code, every time you wanted to print a value on
+            the console, instead of simply using the <code>print()</code>
+            procedure.
+        </p>
+    <h3>Another Look at the Abacus</h3>
+        <p> So, let's take another look at the Abacus program. Go ahead and
+            use <b>Save As</b> once again to make a <b>third</b> copy of the original,
+            naming this one <b>Abacus3.java</b>. Don't forget to change the class
+            name. Here's what your screen
+            should look like:<br>
+            <img src="images/abacus3aa.gif" class="inline" alt="The new screen.">
+            If you look in the <code>main()</code> method,
+            you'll notice that there are six lines of
+            output that are <b>completely identical</b>:<br>
+            <img src="images/abacus03a.gif" class="inline" alt="Identical methods.">
+        </p>
+        <p> In <b>Abacus3</b> we can extract those methods into a single
+            <b>method definition</b> named <code>printBeads()</code> that looks like this:<br>
+            <img src="images/abacus3b.gif" class="inlineCenter" alt="Print a single line of beads.">
+            Then, in the <code>main()</code> method we can <b>call</b> the
+            <code>printBeads()</code> method <b>instead of
+            repeating the same code over and over</b>, like this:<br>
+            <img src="images/abacus3c.gif" class="inlineCenter" alt="Calling the printBeads() method.">
+        </p>
+    <h3>Stepwise Refinement</h3>
+        <p> Of course, we <b>still</b> have redundancy, or repeated lines of code. The
+            <code>main()</code> method now contains <b>six</b> calls to
+            <code>printBeads()</code>. You'll find that's often true; you'll write
+            a method to eliminate redundancy and then find that you still have
+            more work to do. This is known as <b>stepwise refinement</b> and it's
+            part of a strategy of <b>iterative development</b>. As you
+            learn to program you should try to:
+        </p>
+        <ul>
+            <li>Make simple changes, so you won't get confused.</li>
+            <li>Test or evaluate your changes and see if there is more redundancy you
+                can eliminate.
+            </li>
+            <li>Repeat the first two steps until there are no more improvements to be made.</li>
+        </ul>
+    <h4>Adding More Methods</h4>
+        <p> If you look at <code>Abacus3</code>, you'll see that <code>printBeads()</code> is
+            called twice in the top portion, and four times in the bottom portion. Let's
+            put the principle of stepwise refinement to work, and eliminate the redundancy
+            in the top portion. We can do that by replacing the two adjacent
+            calls to <code>printBeads()</code> with a single call to a new method named
+            <code>printTwoBeads()</code> like this:<br>
+            <img src="images/abacus4a.gif" class="inlineCenter" alt="Calling the printTwoBeads() method.">
+        </p>
+        <p> To <b>define</b> the <code>printTwoBeads()</code> method, instead of
+            writing two <code>println()</code> statements, we just call the <b>existing</b>
+            <code>printBeads()</code> method twice like this:<br>
+            <img src="images/abacus4b.gif" class="inlineCenter" alt="Defining the printTwoBeads() method.">
+            Notice that the <code>main()</code> method calls <code>printTwoBeads()</code>
+            and that <code>printTwoBeads</code> calls <code>printBeads()</code>.
+            (And, of course, <code>printBeads()</code> calls the <code>println()</code>
+            method from the <code>PrintStream</code> class.)
+        </p>
+    <h4>printFourBeads()</h4>
+        <p> We can do the same thing with the four adjacent calls to
+            <code>printBeads()</code> in the bottom half of the <code>main()</code> method,
+            replacing them with a single <b>call</b> to <code>printFourBeads()</code> like this:<br>
+            <img src="images/abacus4c.gif" class="inlineCenter" alt="Calling the printFourBeads() method.">
+            And similarly, we can <b>define</b> <code>printFourBeads()</code> by using
+            the <code>printTwoBeads()</code> method we just wrote, like this:<br>
+            <img src="images/abacus4d.gif" class="inlineCenter" alt="Defining the printFourBeads() method.">
+            By <b>reusing simple commands</b>, we can create more complex commands.
+        </p>
+
+        <p> One way of looking
+            at this relationship is by using a <b>hierarchy chart</b> like that shown in
+            the <i>Structured Programming</i> section earlier. Here is a complete hierarchy
+            chart for the Abacus3 program (starting at the <code>main()</code> method):
+            <img src="images/hierarchy.gif" class="inlineCenter" alt="The Abacus3 hierarchy chart.">
+        </p>
+    <h4> Finishing Up</h4>
+        <p> Even though it doesn't eliminate redundancy, we can make the
+            program more modular by putting the top, middle and bottom
+            parts into their own procedures as well, so that the finished
+            <code>main()</code> method looks like this:<br>
+            <img src='images/finished-run.gif' class='inlineCenter' alt='The final Abacus4 run() method.'>
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Procedures Summary
+        </p>
+        <ul>
+            <li>The "generic" informal term for user-defined methods that
+                carry out an action is a <b>procedure</b>, and the term for methods
+                that calculate a value is <b>function</b>.
+            </li>
+            <li><b>Procedures</b> are like the individual steps in a recipe;
+                they work together to accomplish a larger purpose.
+            </li>
+            <li><b>Procedural decomposition</b> means dividing a large program
+                into smaller code. This technique makes the overall program
+                easier to understand and easier to modify.
+            </li>
+            <li> Procedural decomposition is also known as <b>divide and
+                conquer</b>, and is the first principle in <b>structured
+                programming</b>. Structured programming is one technique
+                developed starting in the late 1960s as part of the
+                <b>Software Engineering</b> approach to building more
+                reliable software.
+            </li>
+            <li><b>Top-down design</b> is the technique of defining a
+                program in terms of the <b>most general purpose, highest-level
+                steps</b> initially, calling user-defined procedures that have yet to be
+                defined.
+            </li>
+            <li>To <b>define</b> a procedure you specify the 1) <b>access modifier</b>,
+                2) optional <code>static</code> modifier, 3) <b>return type</b>,
+                4) method <b>name</b>, 5) the <b>parameter list</b> and 6) the
+                <b>body</b> enclosed in braces:<br>
+                <img src='images/abacus2b.gif' class='inlineCenter'
+                    style='width:475px;' alt='A method definition.'>
+            </li>
+            <li>To <b>call</b> a procedure, use it's name, supply any required
+                values inside the parameter list, and end with a semicolon.
+            </li>
+            <li>A main reason to use procedures is to <b>eliminate redundancy</b>,
+                or repeated code, in your programs.
+            </li>
+            <li><b>Stepwise refinement</b> means making repeated small changes
+                to your program. Such <b>iterative development</b> makes it
+                easier to avoid getting confused.
+            </li>
+            <li>By reusing simple procedures, you can create <b>more complex
+                commands</b>.
+            </li>
+            <li>A <b>hierarchy chart</b> shows the <b>relationships</b> between
+                procedures.
+            </li>
+        </ul>
+        </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075,<a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

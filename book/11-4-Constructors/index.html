@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>11.4&mdash;Defining Constructors</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner14">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.4</p>
+        <p id='lessonTitle'>Defining Constructors</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">N</span>ow that you know how about encapsulation</b>,
+            let's turn our attention to the topic of <b>initialization</b>.
+            In <b>AppletBounce4</b> you used your applet's <code>init()</code>
+            method to initialize the fields of your bouncing ball, helped
+            along by the <i>mutator methods</i> that you developed.
+        </p>
+        <p> Normally, though, you want to do things <i>differently</i>;
+            instead of using mutators to initialize your objects, you
+            should <i>really</i> use <b>constructors</b>. This section will
+            teach you how to write constructors for the classes you create.
+        </p>
+        <p> If you think of a class definition as the blueprint for
+            <b>defining</b> objects, then think of the <code>new</code> operator as the
+            <b>factory for creating</b> objects, using the instructions
+            contained in the constructor to customize each object
+            as required.<br>
+            <img src="images/factory-sm.png" class="inlineCenter" style="margin-left: -2em;" alt="Constructors as a factory.">
+            Constructors are kind of like <code>init()</code> methods
+            in some ways, and <i>unlike methods at all</i> in others. It's
+            probably best to put constructors in their own category.
+        </p>
+        <p> When you define your own classes, you'll use constructors to:
+        </p>
+        <ol>
+            <li class='d'>put each object into a <b>known state</b> when is created.</li>
+            <li class='d'>allow users to create <b>customized objects</b> rather than
+            using mutators to modify a single "stock" object.</li>
+
+        </ol>
+        <p> Let's start by looking at how constructors work, and how
+            you use one.
+        </p>
+    <h2>How Constructors Work</h2>
+        <p> In the last few chapters, you've had a lot of practice <b>using</b> constructors;
+            you created <code>GRect</code>, <code>GImage</code> and
+            <code>JButton</code> objects (for instance), always by using
+            a constructor. <b>But</b>, you may not have given a lot of
+            thought to what <b>actually happened</b> when you did that.
+        </p>
+        <p> As you've seen, <b>constructors are used (or called) differently
+            than methods</b>.
+            Instead of calling a constructor directly, you <b>implicitly</b>
+            call it by using the <code>new</code> operator.
+        </p>
+        <p> When you use the <code>new</code> operator to construct an object,
+            the Java Virtual Machine carries out these actions, in order:
+        </p>
+        <ul>
+            <li>First, it uses the class definition to see <b>how much memory
+                is required</b> for the data portion (field definitions)
+                in the new object. (Just like reading a blueprint to see
+                what parts are needed, right?)
+            </li>
+            <li>Next, it <b>allocates that memory</b> from an area known as
+                the heap. When it allocates the memory, it saves the address
+                of the chunk of memory. (Like actually pulling the parts
+                from inventory.)
+            </li>
+            <li>Next, it <b>assigns the initial values</b> to the data fields
+                that you've defined. If you've supplied initial values when
+                defining your fields, those values are used; otherwise each
+                field is set to the default value.
+            </li>
+            <li>Next, if a constructor has been defined, the <b>constructor
+                is run</b>. Usually the constructor initializes the rest of
+                the fields.
+            </li>
+            <li>Finally, the <b>saved memory address is stored</b> internally
+                in a <b>reference table</b> which is kind of like the key
+                cabinet a valet uses to store your car keys at a nice
+                restaurant. Then, the program returns the "claim check"
+                used to find the address, known as a <b>reference</b>.
+                Usually, you'll store that reference in an object variable.
+            </li>
+        </ul>
+    <h3>AppletBounce5 and the ConstructorBall Class</h3>
+        <p> To show you how to work with constructors, we'll develop one
+            more bouncing ball class, this one imaginatively
+            named <b>ConstructorBall</b>. Along with the
+            <code>ConstructorBall</code> class, we'll write another
+            applet, <b>AppletBounce5</b>.<br>
+            <img src="images/cb01.gif" class="inlineCenter" alt="ConstructorBall and AppletBounce5.">
+            To create the skeletons, just use DrJava to save
+            <b>EncapsulatedBall.java</b> and <b>AppletBounce4.java</b>, using the new
+            names <b>ConstructorBall</b> and <b>AppletBounce5</b>.
+            Inside each new file change the class names appropriately,
+            and remember to change the
+            <code>ball</code> instance variable to a
+            <code>ConstructorBall</code> instead of an
+            <code>EncapsulatedBall</code> (in two places).
+        </p>
+        <div class='alert'>
+        <p> Once you've made these changes you should be able
+            to compile and run both programs, and they should
+            work just as their predecessors did. Don't go on
+            to the next step until you can get <code>ConstructorBall</code>
+            and <code>AppletBounce5</code> to both compile.
+        </p>
+        </div>
+        <p> Once you add a constructor to your <code>ConstructorBall</code>
+            class, users will be able to eliminate the unnecessary
+            mutator code inside the applet's <code>init()</code>
+            method, and easily create customized <code>Ball</code>
+            objects, just like they do for the other classes
+            you've been working with, like <code>GOval</code>
+            and <code>JLabel</code>.
+        </p>
+        <p> So, open the <code>ConstructorBall</code> source code, and
+            let's take a look at constructor syntax.
+        </p>
+    <h2>Constructor Syntax</h2>
+        <p> Constructors are defined, much like methods, inside a class
+            definition, but the syntax for defining a constructor is slightly
+            different than the syntax you use for defining a method.
+            A constructor looks <b>exactly</b> like a
+            method definition with two constraints:<br>
+           <img src="images/x02.gif" class="inlineCenter" alt="The constructor syntax">
+        </p>
+        <ul>
+            <li>A constructor will <b>always</b> have the same name as
+                the class that contains it. There are no exceptions.
+            </li>
+
+            <li>The constructor will have <b>no return type</b>,
+                not even <b>void</b>. Writing a constructor definition
+                using a return type does not create a syntax or runtime error. It just doesn't work.
+                If it has a return type, then it is a <i>method</i>,
+                <b>not</b> a constructor, even if it has the same name as
+                the class.
+            </li>
+        </ul>
+        <p> Constructors almost always start with the
+            keyword <code>public</code>, which is <b>always</b> followed
+            by the name of the class. The class name is then
+            followed by a pair of parentheses containing any arguments.
+            If no arguments are required, then the parentheses are empty.
+        </p>
+        <p> Inside the body of the constructor, which is delimited by braces,
+            just like the body of a method, you can have any number of
+            statements. <b>The purpose of these statements is to initialize the
+            fields in your newly created object.</b>
+        </p>
+
+    <h2>Default and No-Arg Constructor</h2>
+        <p> If you look inside our newly created <code>ConstructorBall</code>
+            class, it's obvious that there <b>is no constructor defined</b>.
+            Nevertheless, inside the <code>AppletBounce5 init()</code>
+            method, you'll find a line of code that looks like this:<br>
+            <img src="images/defaultconstructor.gif" class="inlineCenter" alt="Calling the default constructor.">
+            Since we didn't write a constructor, and the <code>new</code>
+            operator <b>always</b> calls the constructor, then where did
+            this "invisible" constructor come from?
+        </p>
+        <p> The truth is, you don't <b>have</b> to write a constructor for
+            your classes. If your class <b>does not</b> contain an
+            explicit constructor, then Java will "write" an <b>implicit</b>
+            for you. This implicitly written constructor is
+            called <b>the default constructor</b>.
+        </p>
+        <p> The default constructor doesn't actually do <b>any</b>
+            initialization, beyond initializing all the fields to a known
+            value (usually 0). And, if you add <b>any explicit constructors
+            at all</b>, <b>Java will remove the invisible default constructor</b>
+            that it originally gave you.
+        </p>
+    <h3>The "No-Arg" Constructor</h3>
+        <p> You can write <b>your own version of the default</b> constructor.
+            This is called the <b>no-arg</b> constructor, and it will
+            be called in place of the default constructor, if you
+            write one for your class. Its purpose is to initialize each field
+            in the object to a predefined or <b>default</b> value, so
+            the object is in a usable state.
+        </p>
+        <p> Let's try adding a no-arg constructor to <code>ConstructorBall</code>.
+            Start by simple writing the constructor "skeleton", like this:<br>
+            <img src="images/cb02.gif" class="inlineCenter" alt="The constructor skeleton.">
+            As you can see, the no-arg constructor:
+        </p>
+        <ul>
+            <li>starts with the keyword <code>public</code></li>
+            <li>has <b>no</b> return type, <b>not even <code>void</code></b></li>
+            <li>has <b>the same name as the class</b></li>
+            <li>has <b>no arguments or parameters</b> defined</li>
+        </ul>
+        <p> So, what should you put in the body of the no-arg constructor?
+            Well, since the purpose is to put the object into a predefined
+            state, just copy the code from the <code>AppletBall5 init()</code>
+            method that previously initialized your ball:<br>
+            <img src="images/cb03.gif" class="inlineCenter" alt="The initialization code.">
+            Once you've copied the code over, notice that there are two problems:
+        </p>
+        <ol>
+            <li class="d">There is no <b>ball</b> object. The code is now
+                <b>inside</b> the <code>ConstructorBall</code> class. Fixing
+                this is easy; just remove the <code>ball.</code> in front
+                of each line as I've shown here.
+            </li>
+            <li class="d">You can't call <code>getWidth()</code> or
+                <code>getHeight()</code> when setting the location of the
+                ball. Those are both <b>applet</b> methods, <b>not</b>
+                <code>ConstructorBall</code> methods, and this code is
+                <b>no longer part of your applet</b>.
+            </li>
+        </ol>
+        <p> There is no easy fix for the second problem (at least, there is
+            no easy fix in terms of the no-argument constructor). Instead,
+            for right now, just set the ball to some random location on
+            the screen, making sure that it is, at least, some distance
+            from the top and left margins. Here's some code that does
+            that:<br>
+            <img src="images/cb04.gif" class="inlineCenter" alt="The modified no-arg constructor.">
+            Once you've done that, you can just remove all of the
+            initialization code from <code>AppletBounce5</code>. When
+            you're done, your <b>applet does not access any of the
+            ball's data elements</b>. Instead, it simply creates a
+            ball object, and tells it to <code>move()</code> and
+            <code>draw()</code> itself. <b>How</b> that happens is
+            entirely up to the <code>ConstructorBall</code> class itself.
+        </p>
+        <p> Here's the applet's <code>init()</code> method after making
+            this change:<br>
+            <img src="images/ab5a.gif" class="inlineCenter" alt="The modified init() method.">
+        </p>
+    <h2>Overloaded Constructors</h2>
+        <p> The purpose for writing a no-arg constructor is to put your
+            objects into a <b>known state</b> when they are created. But a known
+            state is not the same as an ideal state. For instance, a
+            <code>JLabel</code> or <code>JButton</code> with no text are not
+            very useful.
+        </p>
+        <p> The same thing is true with the no-argument
+            <code>ConstructorBall</code> constructor. Adding
+            a non-arg constructor made it possible to create
+            <code>ConstructorBall</code> objects without accessing the
+            internal members of the class. However, it doesn't make
+            it very easy to create <b>customized</b> bouncing balls
+            for our applet.
+        </p>
+        <p> What we'd really like
+            to do is be able to use the class something like this:
+        </p>
+
+        <p class="code">
+            Point center = new Point(getHeight()/2, getWidth()/2); <br>
+            ball1 = new ConstructorBall(10);  <span class="cmt">// radius of 10</span><br>
+            ball2 = new ConstructorBall(15, center);  <span class="cmt">// small &amp; centered</span><br>
+        </p>
+        <p> And, maybe some others. For both of these, we'll need to add
+            <b>additional constructors</b> that take parameters or arguments.
+        </p>
+    <h3>The Working Constructor</h3>
+        <p> Normally, when designing constructors, there will be one
+            constructor that allows you to initialize most of the fields.
+            This constructor is usually called the <b>working constructor</b>.
+        </p>
+        <div class='info'>
+        <p><b>Which Fields Should Be Initialized?</b><br>
+            When talking about the working constructor, you'll often hear
+            people say that the working constructor should give the user
+            the ability to initialize all of the object's fields. That is
+            often true, but not always.
+            <br><br>
+            The working constructor is the constructor that allows you to
+            specify values for all of the <b>user-definable</b> fields.
+            It is very common for a class to have fields which are
+            automatically initialized through a built-in calculation, often
+            involving other fields. When this is the case, it is important
+            that those fields <b>not</b> be initialized through arguments
+            passed to the working constructor.
+        </p>
+        </div>
+    <h4>Getting Started</h4>
+        <p> Since the <code>ConstructorBall</code> class has five different
+            fields, the working constructor would normally allow you
+            to set all of them. <b>However</b>, <i>for example's sake,
+            let's assume that we want the ball to always set its velocity
+            using a random value.</i>
+        </p>
+        <p> If you've already written a default constructor, the
+            easiest way to get started is to make a <b>copy
+            of the default constructor</b>, and then change the
+            parameter list to include parameters for each field
+            that you want to initialize:
+            <img src="images/cb07.gif" class="inlineCenter" alt="Copy the default constructor.">
+            As you can see here, we want to supply values for
+            <code>radius</code>, <code>location</code> and
+            <code>color</code>. For each one, we just add a
+            parameter variable like this:
+            <img src="images/cb08.gif" class="inlineCenter" alt="Add a parameter list.">
+        </p>
+        <p> To finish the working constructor, you need to initialize
+            each of the fields. You can do that just by passing the
+            parameter variables to each of the mutators like this:
+            <img src="images/cb09.gif" class="inlineCenter" alt="The ConstructorBall working constructor.">
+        </p>
+    <h4>Immutable Objects: An Alternative</h4>
+        <p> We originally added mutators to our ball class, because when
+            we made the instance variables <code>private</code>, we could
+            no longer initialize the fields of our ball inside the applets
+            that created the ball objects. Now that we have constructors,
+            though, you might want to do things differently.
+        </p>
+        <p> An <b>immutable</b> object is one that cannot be changed
+            once it has been constructed. Immutable objects are a little
+            "safer", since they can't accidentally (or intentionally)
+            modified as your program runs. The Java <code>String</code>
+            class is immutable for just this reason.
+        </p>
+        <p> To make a class immutable, all you need to do is to remove
+            all of the <code>public</code> "setter" (or mutator) methods.
+            You can change the setter methods to <code>private</code>,
+            so that your new working constructor will still work as
+            it is, or, if you like, you can remove them all together.
+            If you do that, then you need to change the constructors
+            so that they directly assign their values to the fields
+            themselves, like this:<br>
+            <img src="images/cb05.gif" class="inlineCenter" alt="The ConstructorBall working constructor.">
+            Notice that when you assign a parameter variable like
+            <code>radius</code> to a field of the same name, that you
+            <b>must</b> use <code>this.</code> in front of the field
+            name. If you don't do that, you <b>won't</b> have a syntax
+            or runtime error, but nothing will be assigned to your
+            field either.
+        </p>
+    <h3>Using the Working Constructor</h3>
+        <p> To <b>use</b> the working constructor, you need to change
+            <code>AppletBounce5</code> like this. Instead of using the
+            default, 50-pixel wide ball, I've initialized <code>ball</code>
+            to a 20-pixel red ball, and placed it in the center of the
+            screen:<br>
+            <img src="images/ab5b.gif" class="inlineCenter" alt="Using the working constructor.">
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> OK, let's try that out. Use the working constructor to
+            complete <b>AppletBounce5</b>. Use a different color and
+            size for the ball than I've done here.
+        </p>
+        </div>
+    <h3>Using this</h3>
+        <p> When you send a message to an object, you are, in effect,
+            calling one of that object's methods. When an object is
+            running a method, you can refer to the object that is running
+            the method by using the keyword <code>this</code>.
+        </p>
+        <p> It turns out that <code>this</code> is less useful than it might
+            seem. Most of the things that you can do by using the keyword
+            <code>this</code>, are easily done in another manner. For
+            instance, inside a method, you can tell the current object to
+            execute one of its methods by sending the message to
+            <code>this</code>, like so:
+        </p>
+
+        <p class="code">
+            public void init()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt"> // Tell this applet to add myButton</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">this.add(myButton);</span><br>
+            }
+        </p>
+
+        <p> If you don't use <code>this</code>, however, the message is sent
+            to the current object anyway, so most folks just don't bother.
+        </p>
+    <h4>Parameter or Field?</h4>
+        <p> One place where <code>this</code> <b>is</b> useful is in
+            differentiating <b>instance variables</b> from
+            <b>formal arguments</b> of the same name. If you notice in the
+            <code>ConstructorBall</code> working constructor I used the names
+            <code>radius</code>, <code>location</code> and <code>color</code>
+            for the <b>parameters</b> that are used to initialize the
+            <b>fields</b> or the same names.
+        </p>
+        <p> When you use the same names for parameters, as for fields,
+            you <b>must</b> use the keyword <code>this</code> to allow
+            Java to tell which is which.
+        </p>
+        <p> Since <code>this</code> refers to the "current" object,
+            <code>this.radius</code> is a field, but <code>radius</code>
+            is the formal parameter passed to the <code>ConstructorBall</code>
+            constructor. To avoid a surfeit of confusion, by convention
+            this construction is only used in constructors and in
+            mutators.
+        </p>
+    <h4>Using this()</h4>
+        <p> You may have noticed that much of the code inside the working
+            constructor is repeated inside the no-arg constructor. If we
+            add more constructors, then you'll end up repeating even more
+            code.
+        </p>
+        <p> To avoid this duplicated code, you can:</p>
+        <ul>
+            <li>write the working constructor first.</li>
+            <li><b>call</b> the working constructor from your other
+                constructors, passing default values for the
+                missing parameters.
+            </li>
+        </ul>
+        <p> Since you can't actually <b>call</b> a constructor like you
+            can call a method, the short cut way to do it is to use the
+            <b>pseudo-constructor</b> named <code>this()</code>. Here's
+            an example of the no-arg constructor, rewritten to use
+            this technique:<br>
+            <img src="images/cb06.gif" class="inlineCenter" alt="Rewriting the no-arg constructor.">
+            When you do this, instead of initializing the fields directly,
+            the working constructor is called, and the value 25 is passed
+            to the <code>radius</code> parameter in that constructor,
+            (and so on for the remaining parameters.)
+        </p>
+        <p> The only "downside" to doing it this way, is that when you use
+            <code>this()</code> to call another constructor in the same class,
+            it <b>must be the first line that appears in the constructor</b>.
+            If you try to create a <code>Point</code> object containing the
+            default location, and then call <code>this()</code>, your code
+            will <b>not compile</b>.
+        </p>
+        <div class='info'>
+        <p> You <b>can</b> however, have more lines <i>following</i>
+            the call to <code>this()</code>. That means you can use one
+            constructor to do the "base" initialization, and then add
+            <b>more customization</b> to the initialized object.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Defining Constructors Summary
+        </p>
+        <ul>
+            <li>Constructors are used to <b>initialize</b> objects.</li>
+            <li>Constructors act like an <b>object</b> factory, with the class definition working
+                as a blueprint.</li>
+            <li>Constructors are <b>called</b> by using the <code>new</code> operator.</li>
+            <li>Constructors have <b>the same name</b> as their class.</li>
+            <li>Constructors <b>never have a return value</b>.</li>
+
+            <li>Constructors <b>may have parameters</b>, allowing you to customize object construction.</li>
+            <li>Constructors may have no parameters, but provide a default
+                value for every field instead.
+            </li>
+            <li>Use <code>this.fieldName</code> to <b>refer to fields inside a constructor</b>.</li>
+            <li>Use <code>this()</code> to <b>call one constructor from another</b>.</li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

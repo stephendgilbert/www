@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>6.6&mdash;Selection Functions</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 6.6</p>
+        <p id='lessonTitle'>Selection Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n the last chapter you learned how to write
+            procedures and functions</b>. In this chapter you learned how to
+            use the <code>if</code> statement and how to make more
+            complex desicions using the logical operators and nested
+            conditions.
+        </p>
+        <p> In this section, we want to <b>marry</b> those two concepts together,
+            and learn how to write <b>predicate</b> (or logical) functions.
+            These are similar to the problems
+            you'll see on your CS 170 programming proficiency quizzes.
+        </p>
+        <p> We'll start by looking at the concept of selection in
+            the context of writing your own functions.
+        </p>
+    <h2>Functions and Selection</h2>
+        <p> With procedures, it really doesn't matter (syntactically) if you
+            always have two alternatives. If you use a simple <code>if</code>
+            statement, then when the condition is <code>true</code>, the
+            actions in the body of the statement are executed; when the
+            condition is <code>false</code> then <b>nothing</b> happens.
+        </p>
+        <p> With a function, though, it's possible to have a <code>return</code>
+            statement inside of an <code>if</code> statement. If you do that,
+            though, you have to return a value in each and every case:
+            when your condition is <code>true</code> <b>and</b> when
+            your condition is <code>false</code>. That means that functions
+            using <code>if</code> can have <b>several</b> different
+            <code>return</code> statements, as long as every single
+            branch leads to a <code>return</code>.
+        </p>
+        <p> Let's look at a simple example. </p>
+    <h3>The isOdd() Function</h3>
+        <p> You can tell if an integer is odd by using the remainder
+            operator. If the remainder of the number divided by 2 is 1,
+            then the number is odd. We can put that algorithm
+            into a function like this:
+            <img src="images/functions10.gif" class="inline" alt="An isOdd() function.">
+            Notice that:
+        </p>
+        <ul>
+            <li><code>isOdd()</code> is a <b>predicate</b> function. That is,
+                it has a <code>boolean</code> return type.
+            </li>
+            <li>The function has one parameter, <code>n</code> which is
+                the number to test.
+            </li>
+            <li>If the remainder of the number divided by 2 is 1, we
+                return <code>true</code>, just like we said.
+            </li>
+        </ul>
+        <p><b class='ry'>So why is the compiler complaining?</b></p>
+        <p> The answer is very simple, yet it is one that students frequently
+            struggle with. A function must return a value for <b>each and
+            every path</b> through the code. This function returns a value
+            when the number <code>n</code> is odd. What does it do when the number is
+            even?
+        </p>
+        <p><b class='ry'>Nothing!</b></p>
+    <h4>Three Solutions</h4>
+        <p> There are several different ways to fix this problem. The
+            way that we've been doing it in class (and the classical
+            solution), is to create a <code>result</code> variable
+            at the top of your function, modify <code>result</code>
+            as necessary inside your <code>if</code> statement,
+            and then <code>return result</code> at the very
+            end of your function. That way you only have <b>one exit</b>
+            from your function.
+        </p>
+        <p> If you want to skip the <code>result</code> variable and
+            use the multiple-return style, then here are three
+            solutions that will work:
+        </p>
+        <ol>
+            <li class="d"> You can add an <code>else</code> clause for
+                the case when the number is <b>even</b> like this:<br>
+                <img src="images/functions11.gif" class="inline" alt="Using else in a function.">
+            </li>
+            <li class="d"> Since the <code>return</code> statement <b>ends
+                the function</b> when the number is odd (inside the
+                <code>if</code> statement body), any code following it
+                is <b>only executed when the number is even</b>. That
+                means you really don't need an <code>else</code>; you
+                can just write this:<br>
+                <img src="images/functions12.gif" class="inline" alt="The &quot;alternative&quot; return.">
+            </li>
+        </ol>
+    <h4>Boolean Return Values</h4>
+        <p> The third alternative is a little harder to explain, but you
+            should make the effort to understand it. Often, the <b>best</b>
+            way to implement a predicate function is to avoid using
+            <code>if</code> statements at all, and simply return the
+            result of the Boolean expression. Let me explain how that
+            works.
+        </p>
+        <p> Assume that we take the test expression inside the <code>if</code>
+            statement, and store it inside a <code>boolean</code> variable.
+            Once we do that, the variable (<code>result</code>) will
+            contain <code>true</code> if the number is odd and <code>false</code>
+            if the number is even.
+        </p>
+        <p> Then, we can simply <b>return</b> that <code>boolean</code> variable,
+            instead of the literal values, <code>true</code> or <code>false</code>,
+            like this:<br>
+            <img src="images/functions13.gif" class="inline" alt="Returning a boolean variable.">
+        </p>
+        <p> Of course, we really don't <b>need</b> the variable <code>result</code>,
+            do we? Instead, we can just return the Boolean expression
+            result like this:<br>
+            <img src="images/functions14.gif" class="inline" alt="Returning a boolean variable.">
+            This is a fairly standard way to write a predicate function.
+        </p>
+    <h2>Hands On Logic Problems</h2>
+        <p> Now it's your turn. Let's write some functions that
+            make decisions using the <code>if</code> statement.
+            You'll find the documentation for the
+            selection functions you need to write in <b>LogicProblems.java</b>,
+            which you'll find in this chapter's code folder:<br>
+            <img src='images/lastTwo01.gif' class='inlineCenter' alt='The lastTwo specs.'>
+            Just like the functions you worked on earlier, this problem:
+        </p>
+        <ol>
+            <li class='d'>Tells you the <b>name</b> of the function you need
+                to write; in this case, <code>lastTwo</code>.
+            </li>
+            <li class='d'>Tells you the name and type of each parameter.
+                This function has only one <code>String</code> parameter,
+                named <code>str</code>.
+            </li>
+            <li class='d'>Tells you what kind of value the function is going
+                to return. This function returns a new <code>String</code>.
+            </li>
+        </ol>
+        <p> As with the other examples you've seen, there is also a
+            narrative explanation, and a few examples, but you really
+            don't need that to get started, do you?
+        </p>
+    <h3>Before Everything: Write a Skeleton</h3>
+        <p> At this point, without knowing anything else, you can write
+            a syntactically correct function, that compiles and can be
+            tested. Add your code at the section marked 6 in the previous
+            picture:<br>
+            <img src='images/lastTwo02.gif' class='inlineCenter' alt='The lastTwo skeleton.'>
+            Notice how we can write the header by knowing the return type,
+            name and parameters. We write the "skeleton" body by:
+        </p>
+        <ol>
+            <li class='d'>Creating a <code>result</code> variable of the same
+                type as the function return type and initializing it to some
+                value. (Usually <code>false</code>, <code>0</code> or the
+                empty <code>String</code>, depending on the function type.)
+            </li>
+            <li class='d'>Returning the <code>result</code> at the end of
+                the function.
+            </li>
+        </ol>
+        <div class='alert'>
+            <p>Note that you don't <b>have</b> to use the <code>static</code> keyword on
+                your functions. You don't need it if all of your testing is
+                going to be with the DrJava <b>Check</b> program. If you want to add
+                a <code>main()</code> method and <b>call</b> your function
+                from that <code>main()</code> method, then you will need
+                to add the <code>static</code> keyword. <b>Check</b>
+                will work fine either way.
+            </p>
+        </div>
+        <p> Once this is done, you can run the <b>Check</b> program to
+            test the function. You'll see it passes at least one of the tests,
+            but fails all the others.<br>
+            <img src='images/lastTwo03.gif' class='inlineCenter' alt='Testing the lastTwo skeleton.'>
+            To complete the problem,
+            you'll need to go back to the problem description and
+            use some logic to actually solve the problem.
+        </p>
+    <h3>Handle the Normal Logic</h3>
+        <p> Rather than thinking about the exceptional situations, try to
+            figure out how to solve the "normal" situation. What steps would
+            you need to perform, for instance, if every input <code>String</code>
+            was guaranteed to be at least two characters long?
+        </p>
+        <p> Well, that's pretty straightforward. Here's some code that
+            does it:<br>
+            <img src='images/lastTwo04.gif' class='inlineCenter' alt='The lastTwo function.'>
+        </p>
+        <ol>
+            <li class='d'>First, find out how long the input <code>String</code>
+                is and store that in a variable. We can use the <code>String
+                length()</code> function for that.
+            </li>
+            <li class='d'>Next, use the <code>substring()</code> method, along
+                with the length to grab the front part of the input string;
+                everything except for the last two characters.
+            </li>
+            <li class='d'>To grab the last two characters, we can use the
+                <code>String charAt()</code> method and store the results
+                in another pair of variables: <code>char</code> variables
+                this time. (Remember that the last character is at position
+                length - 1 and the next-to-last character will be at
+                length - 2).
+            </li>
+            <li class='d'>Finally, we can put everything together by using
+                concatenation, simply reordering the last and next-to-last
+                characters when the result is reassembled.
+            </li>
+        </ol>
+        <p> When we run the tests this time, you'll see that all of them
+            pass except two. As you can see from the picture, these are the
+            tests where the input <code>String</code> is less than two
+            characters long:<br>
+            <img src='images/lastTwo05.gif' class='inlineCenter' alt='Testing the normal lastTwo() method.'>
+            <b class='ry'>This is where we need the <code>if</code> statement</b>.
+        </p>
+    <h3>Handling Unusual Input</h3>
+        <p> Since the failed tests only occur when the length of the
+            input <code>String</code> is less than two, we can add an
+            <code>if-else</code> statement to only perform the normal
+            processing when the input has adequate characters. If the
+            input <code>String</code> is too short, we'll just set
+            result equal to the original input.
+        </p>
+        <p> Here's the completed <code>lastTwo()</code> function that
+            implements these changes:<br>
+            <img src='images/lastTwo06.gif' class='inlineCenter' alt='Testing both input cases.'>
+        </p>
+
+    <h2>Hands-On: Logical Operators</h2>
+
+        <p>
+            <b><span class='cap2'>I</span>n the first section this week</b>
+            you you learned how to write functions that used
+            <code>if</code> statements</b>. But, what if your function needs
+            to test several conditions? Well, you can use
+            Java's <b>logical</b> operators to combine several Boolean
+            conditions into a single test and use <b>that</b> as
+            your <code>if</code> condition.
+        </p>
+        <p> <img src="images/cigar.gif" class="right" alt="Cartoon cigar.">
+            Nick Parlente, the Stanford Computer Science professor who
+            hosts the <i>Nifty Assignments</i> panel at the annual
+            SIGCSE conference, is something of an expert on squirrels,
+            like those that hang around the OCC Computing Center.
+        </p>
+        <p> According to Nick, "when squirrels get together for a party,
+            they like to have cigars," much like Tom and Jerry from this
+            old cartoon created when I was a kid.
+        </p>
+        <p> Now, according to Nick, "a squirrel party is successful
+            when the number of cigars is between 40 and 60, inclusive.
+            Unless it is the weekend, in which case there is no upper
+            bound on the number of cigars."
+        </p>
+        <p> Let's use Java to write a function named <code>cigarParty()</code>
+            using the <code>if</code> statement to give our furry friends
+            some decision-making help. You'll find the documentation for the
+            function you need to write in the <b>LogicalOperators.java</b>
+            file in this chapter's code folder:<br>
+            <img src='images/cigarparty00.gif' class='inlineCenter' alt='The cigarParty specs.'>
+            Just like the string functions you worked on earlier, this problem:
+        </p>
+        <ol>
+            <li class='d'>Tells you the <b>name</b> of the function you need
+                to write; in this case, <code>cigarParty</code>.
+            </li>
+            <li class='d'>Tells you the name and type of each parameter.
+                In this case, the first parameter, named <code>cigars</code>
+                is a number. (This doesn't tell you what <i>kind</i> of
+                number, but the examples section later on can provide some
+                additional hints.) The second parameter, <code>isWeekend</code>
+                is <code>true</code> or <code>false</code> so you know that
+                it has to be a <code>boolean</code>
+            </li>
+            <li class='d'>Tells you what kind of value the function is going
+                to return. Since this function returns <code>true</code> or
+                <code>false</code>, we know it's a <code>boolean</code>
+                function.
+            </li>
+        </ol>
+    <h3>Before Everything: Write a Skeleton</h3>
+        <p> At this point, without knowing anything else, you can write
+            a syntactically correct function, that compiles and can be
+            tested. Add your code at the section marked 6 in the previous
+            picture:<br>
+            <img src='images/cigarparty01.gif' class='inlineCenter' alt='The cigarParty skeleton.'>
+            Notice how we can write the header by knowing the return type,
+            name and parameters. We write the "skeleton" body by:
+        </p>
+        <ol>
+            <li class='d'>Creating a <code>result</code> variable of the same
+                type as the function return type and initializing it to some
+                value. (Usually <code>false</code>, <code>0</code> or the
+                empty <code>String</code>, depending on the function type.)
+            </li>
+            <li class='d'>Returning the <code>result</code> at the end of
+                the function.
+            </li>
+        </ol>
+        <p> Once this is done, you can run the <b>Check</b> program to
+            test the function. You'll see it passes some of the tests,
+            (since there are only two possible return types with a
+            Boolean function), but fails others. To complete the problem,
+            you'll need to go back to the problem description and
+            use some logic to actually solve the problem.
+        </p>
+
+    <h3>Attempt 1: One Condition at a Time</h3>
+        <p> Before we look at using the <b>logical</b> operators,
+            let's see if we can solve the problem the "old-fashioned
+            way". To do that, you just need to
+            break it into several discreet steps, and think of one part
+            of the problem at once. Let's just consider the upper bounds.
+        </p>
+        <p> Since our result starts
+            out as <code>false</code>, let's start by handling the
+            parameter <code>isWeekend</code>. If it's the weekend,
+            we know that there is no upper limit on the number of
+            cigars. Let's not worry about the lower limit just yet
+            and say that, if it's the weekend, the party is a
+            success.
+        </p>
+        <p> Here's the code we can use to implement that assumption:<br>
+            <img src="images/cigarparty04.gif" class="inline" alt="cigarParty solution step 1.">
+            When we submit the problem, you'll see that more than half of the
+            tests now pass:<br>
+            <img src='images/cigarparty05.gif' class='inlineCenter' alt='Testing after condition 1.'>
+        </p>
+    <h3>Attempt 2: Refine the Results</h3>
+        <p> Now we've handled the case where it's the weekend. Let's handle the
+            upper bounds when it's <b>not</b> a weekend. We know in that case,
+            our party will be successful if there are no more than 60 cigars.
+            Here's how we'd implement Step 2:<br>
+            <img src='images/cigarparty06.gif' class='inlineCenter' alt='cigarParty step 2.'>
+            When we submit the problem, you'll see that we now pass about 64% of the
+            tests. More importantly, the only tests we fail are those where the
+            number of cigars is less than 40:<br>
+            <img src='images/cigarparty07.gif' class='inlineCenter' alt='Testing cigarParty step 2.'>
+        </p>
+    <h3>Attempt 3: Handling the Failure</h3>
+        <p> Our two previous <code>if</code> statements took care of all of
+            the upper bounds conditions. We are correctly returning
+            <code>false</code> any time the squirrels are given more than
+            40 cigars on a weekday. Adding one last condition to <i>re-set</i>
+            the result back to <code>false</code> in those cases where there
+            are too few cigars, leaves us with this:<br>
+            <img src='images/cigarparty08.gif' class='inlineCenter' alt='cigarParty step 3.'>
+            Since that handles all the remaining problems, testing now shows no
+            errors:<br>
+            <img src='images/cigarparty09.gif' class='inlineCenter' alt='Testing cigarParty step 3.'>
+        </p>
+    <h3>Attempt 4: The Logical Operators</h3>
+        <p> Although you <b>can</b> solve most logic problems using
+            "brute force" like this, most of them will be much easier
+            (not to mention <b>shorter</b>), once you pull the logical
+            operators out of your toolbox.
+        </p>
+        <p> Notice that, in this case a party is successful if the
+            number of cigars is at least 40 and no more than 60
+            on the weekdays. We can combine that into a single
+            condition, like this:<br>
+            <img src='images/cigarparty10.gif' class='inlineCenter' alt='cigarParty with logical operators.'>
+            Notice the parentheses surrounding the last two relational
+            expressions. Remember that <code>&amp;&amp;</code> has higher
+            precedence than <code>||</code>. The parentheses make sure
+            that the last two conditions are checked first, and the result
+            (either it is the weekend or the maximum number of cigars is
+            not more than 60) is combined with the first condition (the
+            number of cigars is at least 40). If both of <b>those</b>
+            are true, then the party is a success.
+        </p>
+        <p> If you remove the parentheses, though, you are saying that
+            if the cigars are at least forty and it is the weekend,
+            or, if the cigars are not more than 60, the party is a success.
+            Of course that means that the party will be successful with
+            no cigars anytime, and a weekend party with a hundred cigars
+            would be a failure:<br>
+            <img src='images/cigarparty11.gif' class='inlineCenter' alt='cigarParty with logical operators, missing parentheses.'>
+            Who knew parentheses could be such a big deal?
+        </p>
+    <h4>A Final Simplification</h4>
+        <p> You'll notice that the solution for the Cigar Party first
+            creates a <code>result</code> variable, sets it to <code>false</code>
+            and then returns it. That's a good habit to get into when you
+            are first developing a function; working step-by-step to develop
+            a skeleton helps you to avoid skipping a step.
+        </p>
+        <p> After you finish, though, you may want to simplify things a
+            little, by just using the Boolean test expressions as the
+            return value for your function. After all, if the condition
+            is <code>true</code> you return <code>true</code>, and, if the
+            condition is <code>false</code> you return <code>false</code>.
+            That means you can rewrite <code>cigarParty()</code> like
+            this:<br>
+            <img src='images/cigarparty12.gif' class='inlineCenter' alt='cigarParty with predicate return value.'>
+            This is a very common form for Boolean or <b>predicate</b> functions.
+        </p>
+    <h2>Hands On: Multiple Choice</h2>
+        <p> <img src='images/fashion.png' class='right' style='margin-top:-3em;' alt='Yes, no or maybe?'>
+            Now, let's look at a problem that requires you to handle several different
+            branches. In DrJava, open up <b>MultipleChoice.java</b> which is part
+            of this chapter's code folder. Then, take a look at the first problem,
+            <b>dateFashion</b>.
+        </p>
+        <p> For this problem, you and your date are trying to get a table at
+            a restaurant. The parameter "you" is the stylishness
+            of your clothes, in the range 0 to 10, and "date" is
+            the stylishness of your date's clothes. The result
+            getting the table is encoded as an int value with 0
+            meaning no, 1 meaning maybe, and 2 meaning yes.
+        </p>
+        <p> If either of you is <i>very</i> stylish, (8 or more), then
+            the result is 2 (definitely a yes!). There's one little exception,
+            though: if either of you has style of 2 or less, then the result
+            is 0 (no). Otherwise  the result is 1 (maybe).
+        </p>
+    <h3>Step 1: The Skeleton</h3>
+        <p> Before you get too emotionally wrapped up in whether or not
+            you're going to get into the restaurant, take a deep breath,
+            relax, and, just like you've done with every other method,
+            <b>write the skeleton</b>:<br>
+            <img src='images/dateFashion-skeleton.gif' class='inlineCenter' alt='The dateFashion skeleton.'>
+            As with all methods:
+        </p>
+        <ol>
+            <li class='d'>Start with the header. Since this function will return 0, 1, or 2,
+                the return type should be <code>int</code>. Both parameters, <code>you</code>
+                and your <code>date</code> will also be <code>int</code> parameters,
+                since they'll contain the stylishness of your clothes (0..10).
+            </li>
+            <li class='d'>The next step is always to create the return variable. Since
+                this function returns an <code>int</code>, create an <code>int</code>
+                variable named <code>result</code> and set it to 0. (That doesn't mean
+                that you're a pessimist, assuming you won't get in; it just means you
+                have to set the default return type to something!)
+            </li>
+            <li class='d'>Finally, to make the function <b>syntactically correct</b>,
+                you need to end the function with a <code>return</code> statement
+                as shown here.
+            </li>
+        </ol>
+        <p> Now that you've created the skeleton, you can try out the <b>Check</b>
+            program tests to see what you need to fix:<br>
+            <img src='images/check-results01.gif' class='inlineCenter' alt='First-pass check results.'>
+            Wow 50% Of course we only passed for the times we were turned down
+            for a table, so that's kind of depressing.
+        </p>
+    <h3>Step 2: Turned Down</h3>
+        <p> It might seem silly to check for a situation where we're turned
+            down, since we already <b>passed</b> all of those tests. However,
+            the other tests really rely on the fact that neither you nor your
+            date have committed a fashion faux-pas.
+        </p>
+        <p> Here's what the first-pass condition should look like:<br>
+            <img src='images/dateFashion02.gif' class='inlineCenter' alt='First condition in dateFashion.'>
+            Of course, there's no reason testing again, since all the answers
+            are still zero.
+        </p>
+    <h3>Step 3: Very Stylish</h3>
+        <p> Now that we've eliminated any chance of getting turned down, though,
+            we can look at our two remaining options. The easiest to handle is
+            if we are very stylish. It's important to add this as a "ladder" or
+            <code>else if</code> statement, and not as another <code>if</code>
+            or as an <code>else</code>.
+        </p>
+        <p> Here's the code for this step:<br>
+            <img src='images/dateFashion03.gif' class='inlineCenter' alt='Another case in dateFashion.'>
+            Now, if you run the tests, you'll see that only the maybe cases
+            are left:<br>
+            <img src='images/check-results02.gif' class='inlineCenter' alt='Second-pass check results.'>
+        </p>
+    <h3>Step 4: Maybe</h3>
+        <p> Since we've taken care of both the stylish and the "off" days,
+            it's time to handle the normal case: not too marvelous and not
+            too dorky, but just right. Since that's <b>everything else</b>,
+            you <b>don't</b> use <code>else if</code>, but end the multiple-selection
+            ladder with an <code>else</code> like this:<br>
+            <img src='images/dateFashion04.gif' class='inlineCenter' alt='The final else in dateFashion.'>
+        </p>
+    <h3>A Final Refinement</h3>
+        <p> Many of you (like me) are kind of uneasy about first setting and then
+            <i>re-setting</i> <code>result</code> to 0. After we've finished, you can see that
+            setting <code>result</code> to the default case (1 or maybe) can actually
+            make your code a little simple, since it allows you to eliminate
+            the final <code>else</code> statement like this:<br>
+            <img src='images/dateFashion05.gif' class='inlineCenter' alt='Simplifying dateFashion.'>
+        </p>
+    <h4>Formatting Options</h4>
+        <p> As I mentioned earlier, you don't <b>need</b> to use braces if
+            the body of your <code>if</code> statements contains only a
+            single line. However, if you don't use braces, you should generally
+            try to keep the statement on one line, as I've done here.
+        </p>
+    <h2>Hands On: Nested Selection</h2>
+        <p> <img src='images/parrot.png' class='right' style='margin-top:-3em;' alt='A singing parrot?'>
+            Let's look at a different selection problem that require you to handle several different
+            branches. We'll solve this one by using <b>nested</b> <code>if</code>
+            statements, instead of sequential <code>if</code> statements.
+            You'll find this problem in <b>MultipleChoice.java</b> also,
+            immediately following the <code>dateFashion()</code> problem.
+            This second problem is named  <b>parrotTrouble</b>.
+        </p>
+        <p> For the <b>parrotTrouble</b> problem, we have a loud talking parrot.
+            The "hour" parameter is the current hour time in the range 0..23.
+            We are in trouble with our neighbors if the parrot is talking and
+            the hour is before 7 or after 20. Your function should return true
+            if we are in trouble.
+        </p>
+    <h3>Step 1: Guess What?</h3>
+        <p> I don't even have to tell you this part, do I? By now you should
+            be able to whip out that skeleton without even being asked:<br>
+            <img src='images/parrot01.gif' class='inlineCenter' alt='parrotTrouble skeleton.'>
+            Of course, since it's a Boolean function, you should pass about
+            half of the tests. If you don't, just change the default value
+            for <code>result</code> from <code>false</code> to <code>true</code>.
+            (A little test-taking tip!)
+        </p>
+    <h3>Step 2: Examine the Parameters</h3>
+        <p> Notice now that we have two kinds of parameters; in other words,
+            we're going to test two things:
+        </p>
+        <ol>
+            <li>Whether the parrot is talking or singing</li>
+            <li>What time it is</li>
+        </ol>
+        <p> That's <i>kind of like</i> the income tax example, where we <i>first</i>
+            tested the filing status and <i>then</i> tested the income level.
+            In this case, we want to write an <code>if</code> statement that
+            tests if the bird is talking. If it is, we'll set <code>result</code>
+            to false like this:<br>
+            <img src='images/parrot02.gif' class='inlineCenter' alt='parrotTrouble first if.'>
+            Of course none of you would think of writing <code>if (isTalking == true)</code>
+            because that would be redundant, right?
+        </p>
+        <p> Good. I thought not! Now let's test our code:<br>
+            <img src='images/parrot03.gif' class='inlineCenter' alt='parrotTrouble test 1.'>
+            Well, 75% is pretty good, but it looks like our <code>if</code> statement
+            actually broke some tests that worked before. It says that we're in trouble
+            even though it's now 7 AM, and our parrot should be able to squawk without
+            causing a ruckus!
+        </p>
+        <p style='font-size:12pt;text-align:center;'>
+            <b class='ry'>Looks like we need a nested <code>if</code> statement!</b>
+        </p>
+    <h3>Step 3: A Nested Selection</h3>
+        <p> After we check to see if the parrot is talking, we need to check
+            again and see if it's actually "no-talking" time. We do that by
+            adding a <b>nested <code>if</code> statement</b> to our code,
+            like this:<br>
+            <img src='images/parrot04.gif' class='inlineCenter' alt='A nested if statement.'>
+        </p>
+    <h2>For More Practice ...</h2>
+        <p> In this section, you got some <b>hands-on practice</b> with
+            techniques for handling more complex selections. If you have
+            several conditions to test, you can <b>combine</b> several Boolean
+            conditions into one by using the <b>logical operators</b>.
+            If you have several different branches you want to execute
+            you can use <b>sequential</b> or <b>nested</b> <code>if</code>
+            statements.
+        </p>
+        <p> To get more practice with these kinds of problems, you can
+            complete the additional exercises assigned by your instructor.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

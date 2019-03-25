@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Runtime Errors</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner08">
+        <img id='lessonLogo' src='../images/g.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Runtime Errors</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">R</span>untime errors are the errors that
+            occur when you try to run your program</b>, instead of
+            the errors you see when you <i>compile</i> your code.
+            Runtime errors really come in three
+            varieties:
+        </p>
+        <ul>
+            <li><img src='images/herald.gif' class='right' alt='A herald.'>
+                For some errors, the Java Virtual Machine will step in and
+                <b>announces to the world</b> that you've done something
+                wrong. Like syntax errors, such "program crashes" are
+                often annoying, but ultimately for the best.
+            </li>
+            <li>For other errors, the JVM is <b>unable</b> to print an error
+                message; your program just quits working altogether. With
+                such "hanging programs", it's obvious that something is wrong,
+                but, other than the symptoms, you receive no other help in
+                solving the problem.
+            </li>
+            <li>The last group of errors&mdash;the really difficult errors&mdash;occur
+                silently and without warning. These <b>logical errors</b> are
+                those that cause your program to behave incorrectly, but,
+                unless you're on the lookout, you might not even notice that
+                anything is wrong.
+            </li>
+        </ul>
+        <p>Let's start by investigating the first of these, those errors that
+            "announce themselves".
+        </p>
+    <h2>Errors that Announce Themselves</h2>
+        <p> An error that prints an error message when your program is
+            running is called a <b>runtime exception</b>. Runtime exceptions
+            are nice for two reasons.
+        </p>
+        <ul>
+            <li>First, when the Java Virtual Machine (JVM) notices that something is
+                wrong as your program is running, it makes an effort to notify you.
+                It does this by <b>creating and throwing</b> a special kind of object
+                (called a <code>Throwable</code> object) that contains information
+                about what went wrong. Here's a picture of some of those classes:<br>
+                <img src="images/throwable.gif" class='inlineCenter' alt="Some Throwable classes.">
+            </li>
+            <li>Second, Java's exception-handling mechanism allows you to
+                <b>intercept and correct</b> many runtime exceptions. 
+            </li>
+        </ul>
+        <p> You'll learn how to trigger your own exceptions later in this course.
+            You'll also learn how to use Java's <code>try-catch</code>
+            statements to intercept those objects. For right now, though, let's start
+            by taking a look at what a runtime exception looks like when it is thrown.
+        </p>
+    <h3>The RuntimeError Applet</h3>
+        <p>In this week's code folder you'll find a program, (a Java Applet), named
+            <code class='b'>RuntimeError</code> that we'll use to
+            study some of the most common types of runtime errors.
+            This applet allows the user to trigger three
+            types of runtime errors by pressing an appropriate button.
+            Here's what the applet looks like when it runs in DrJava:<br>
+            <img src="images/g01.png" alt="Running the RuntimeError applet" class='inlineCenter'>
+        </p>
+
+    <h3>NullPointerException</h3>
+        <p> Once the program is running, go ahead an press the
+            "Nobody's Home" button. In both the DrJava Interactions pane,
+            and in the DrJava Console window, you'll see something that looks like
+            this:<br>
+            <img src="images/g02.png" alt="Pressing Nobody's Home in Java Console" class='inlineCenter'>
+            As you can see from the JVM's error message, the error is a
+            <code>NullPointerException</code> and the problem occurs in
+            <b>RuntimeError</b>'s <code>tryNull()</code>
+            method, at line 56. The <code>tryNull()</code> method was
+            called from the <code>actionPerformed()</code> method, at
+            line 35.
+        </p>
+        <p>If you look up the code for the <code>tryNull()</code> method,
+            you'll find this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            <span class="red"><b>// RuntimeError.tryNull()</b></span>
+            <br><br>
+            void tryNull()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; b.setLabel("Uh Oh!");<br>
+            }
+        </p>
+        <p> Now, when you first look at this code, the problem is not immediately obvious.
+            We could trace back through the code to the
+            <code>actionPerformed()</code> method that called
+            <code>tryNull()</code>, but that still won't lead us
+            to the problem.
+        </p>
+    <h4>What It Means</h4>
+        <p> Instead, to find the error, you have to understand what
+            <code>NullPointerException</code> <b>means</b>.
+            A <code>NullPointerException</code> is Java's way of saying:
+            "This object variable doesn't refer to a real object".
+        </p>
+        <p> You can't send a <code>setLabel()</code>
+            message to a <code>Button</code> object that doesn't exist, and
+            so the JVM simply steps in and prints an error message.
+        </p>
+        <p class="pullquote">Remember, a
+            NullPointerException really
+            means "uninitialized object"
+        </p>
+        <p> Looking back through the code to where
+            the <code>JButton</code> variable <code>b</code> is defined you'll
+            find:
+        </p>
+        <p class="code" style='font-size:1.2em;'>JButton b; // This has the value null</p>
+        <p>Initialize the <code>JButton</code> using <b>any</b> constructor, and
+            the problem will go away.
+        </p>
+    <h3>ArithmeticException</h3>
+        <p> When you press the "Problems with Math" button, your Java
+            Console window will look something like this:<br>
+            <img src="images/g03.png" alt="Pressing the Problems with Math button" class='inlineCenter'>
+            Java's VM throws an <code>ArtithmeticException</code> whenever
+            you ask it to perform an illegal arithmetic operation. As you
+            can see from the message, the error occurred in the
+            <code>divideZero(</code>) method. If you pull up the method,
+            which is shown here, you can see that, sure enough, the
+            program attempts the impossible:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            <span class="red"><b>// RuntimeError.divideZero()</b></span>
+            <br><br>
+            void divideZero()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; int numerator = 3;<br>
+            &nbsp;&nbsp;&nbsp; int denominator = 0;<br>
+            &nbsp;&nbsp;&nbsp; int problem = numerator / denominator;<br>
+            }
+        </p>
+        <p> Unlike <code>NullPointerException</code>, the
+            <code>ArtithmeticException</code> is usually not a puzzle when it
+            occurs. The solution, too, is usually straightforward:
+            <b class='ry'>"don't do that"</b>. With careful programming you should be
+            able to eliminate this exception.
+        </p>
+        <div class='info'>
+        <p><b>Note : </b>You might wonder why the divideZero()
+            method could not simply say : int problem = 3 / 0; The reason
+            is because Java's <b>compiler</b> is smart enough to recognize that this
+            as an error and won't compile the code.
+        </p>
+        </div>
+    <h3>NumberFormatException</h3>
+        <p>The third runtime error exposed by the <b>RuntimeError</b> applet
+            is a little different than the other two. Java generates a
+            <code>NullPointerException</code> in an attempt to protect the
+            integrity of the JVM, and it throws an
+            <code>ArtithmeticException</code> to protect the integrity of
+            the mathematical universe as we know it.
+        </p>
+        <p> The last runtime error generated by this applet falls into
+            neither of these categories. If you press the "How Much is a Cat"
+            button, Java generates a message that says, essentially,
+            "I don't know how to do that:"<br>
+            <img src="images/g04.png" alt="Pressing the How Much is a Cat button" class='inlineCenter'>
+            Following the line numbers, you can see that the error occurs
+            in the <code>Integer.parseInt()</code> method&#8212;a method in the
+            standard Java class library. Both of the previous runtime errors
+            were intrinsic runtime errors&#8212;errors generated directly
+            by the JVM. This is not.
+        </p>
+    <h4>What it Means</h4>
+        <p> If you trace back from where the original error occurred, you
+            find that the method <code>convertCat()</code> was the last time
+            that <b>RuntimeError.java</b> had hold of the code. Let's take
+            a look:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            <b style='color:red;'>// RuntimeError.convertCat()</b>
+            <br><br>
+            void convertCat()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; String num = "Cat";<br>
+            &nbsp;&nbsp;&nbsp; int bad = Integer.parseInt( num );<br>
+            }
+        </p>
+        <p> As you can see, the error is caused by asking the
+            <code>Integer</code> class to convert the <code>String</code>
+            <code>Cat</code> into an <code>int</code>. This is not an
+            impossible task&#8212;at least not impossible in the same sense that
+            dividing by zero is impossible.
+        </p>
+        <p> It is also harder to protect against. As you found out in
+            previous assignments, when you get input from your users, they
+            can type, essentially, anything in response to your request for
+            input. If you use the <code>String</code> input functions, like
+            <code>nextLine()</code> to read numeric input, then
+            when you convert the text retrieved from the user
+            into a number, it is almost impossible to first check the contents
+            of the <code>String</code> to be sure that the conversion will
+            succeed.
+        </p>
+        <p> For that reason, Java provides a way to recover from this sort of
+            runtime error&#8212;the <code>try</code>-<code>catch</code> mechanism.
+            You'll learn how to apply <code>try</code>-<code>catch</code>
+            later in the course.
+        </p>
+    <h4>InputMismatchException</h4>
+        <p>Another runtime exception that is closely related to
+            <code>NumberFormatException</code> is the <code>InputMismatchException</code>
+            thrown by <code>Scanner</code> methods such as <code>nextInt()</code>, when
+            the input is formatted incorrectly.
+        </p>
+    <h2>Other Runtime Errors</h2>
+        <p>Not all programs are as obliging
+            as the runtime exceptions. Some programs simply stop
+            responding to user input. These programs are called "hanging
+            programs". It's obvious, when you run such a program, that
+            <b>something</b> is wrong.
+        </p>
+        <p> Discovering what the problem is,
+            and fixing it, however, is sometimes a little more difficult.
+            Knowing about the most common reasons for hanging programs helps.
+        </p>
+        <p>Hanging programs usually stop responding for one of two reasons:</p>
+        <ol>
+            <li>You've written an "endless" or "dead" loop.</li>
+            <li>You have a "system" error.</li>
+        </ol>
+        <p> Endless loops are the most common reason for your program to hang.
+            When we cover writing loops in a later chapter, you'll learn
+            several ways to avoid this common error.
+        </p>
+    <h3>"System" Errors</h3>
+        <p> In addition to hanging because of an endless loop, your program might also
+            hang because of a "system error." This catch-all phrase covers a lot of
+            ground. Most of the time, the system error really doesn't have anything
+            to do with your program at all, and there's nothing you can do about it.
+            Sometimes, though, you can change something in your program that will prevent
+            the system error from occurring.
+        </p>
+        <p> Most system errors, at least those where the system hangs, occur for
+            one of two reasons:
+        </p>
+        <ol>
+            <li class="d">A necessary computer resource is depleted.</li>
+            <li class="d">Multiple programs have "deadlocked" waiting for
+                access to the same resource.</li>
+        </ol>
+        <p> An example of a system resource is the <code>Graphics</code>
+            class. If you confine your use of the <code>Graphics</code>
+            class to the <code>Graphics</code> object you receive in the
+            <code>paint()</code> method, you won't have any problems.
+            If, however, you use the <code>getGraphics()</code> method
+            to draw <b>outside</b> of the <code>paint()</code> method, like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+        public void drawHead()<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Graphics pen = this.getGraphics();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;pen.fillOval(0, 0, getWidth(), getHeight());<br>
+        }
+        </p>
+        <p> and, you forget to call the <code>dispose()</code> method after
+            you are finished, you may exhaust your operating system's
+            supply of "graphic device contexts". When this happens, your
+            Java program becomes unable to repaint itself. It doesn't hang,
+            exactly, but for all intents and purposes, it's dead.
+        </p>
+        <p> <img src="images/deadlock.gif" class="right" alt="A deadlock illustration.">
+            Other resources that are often similarly limited and that can
+            result in similar resource depletion include <code>Color</code>
+            objects, threads, streams, and network connections.
+        </p>
+
+    <h4>Deadlock</h4>
+        <p> <b>Deadlock</b> occurs when two processes, or threads, both attempt to
+            acquire a resource used by the other. If you have an input and
+            output file, for instance, one program may open the input file
+            first, while the other opens the output file first. Both programs
+            can get stuck and wait forever for the other program to give up
+            the resource which it needs.
+        </p>
+        <p> Deadlock is common when it comes to writing multi-threaded
+            programs, something that we haven't done in this class.
+        </p>
+    <h3>Logical Errors</h3>
+        <p> Logical errors are different than the other errors we've discussed
+            up to this point. It's not just that logical errors are harder
+            to correct&#8212;but they are&#8212;it's that it is incredibly difficult
+            to discover that an error has occurred at all. In fact, an entire
+            phase of the software development cycle&#8212;the testing phase&#8212;is
+            devoted to discovering such hidden, unrevealed errors.
+        </p>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

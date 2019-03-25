@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>7.3&mdash;Counted while Loops</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/i.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 7.3</p>
+        <p id='lessonTitle'>Counted while Loops</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/z07sm.gif" alt="The CS101 logo." class="right">
+        <b><span class="cap">T</span>he <code>for</code>
+            loop makes
+            writing counted loops very easy</b> because it puts the pieces
+            you need&#8212;a place to initialize your counter, a place to test
+            your counter, and a place to update your counter&#8212;all within
+            easy reach.
+        </p>
+        <p> You <b>can</b>, however, do exactly the same thing with Java's
+            simpler, but more general-purpose <code>while</code> loop.
+            In my mind, though, using a <code>while</code> loop
+            is just not quite as convenient.
+        </p>
+    <h2>The while Loop Syntax</h2>
+        <p> The <code>while</code> loop, which you can see in the
+            illustration below, only has three parts:
+        </p>
+        <ul>
+            <li>the keyword <code>while</code></li>
+            <li>a <code>boolean</code> test</li>
+            <li>a loop body</li>
+        </ul>
+        <img src="images/x01.gif" alt="The while syntax" class="inline">
+        <p> To use the <code>while</code> statement to build
+            a counted loop, you must do three things:
+        </p>
+        <ol>
+            <li class='d'>Create a counter variable, and initialize it before
+                the loop starts. This takes the place of the
+                <b>initialization expression</b> in the <code>for</code> loop.
+            </li>
+            <li class='d'>Test the counter variable inside the <code>while</code>
+                condition.
+            </li>
+            <li class='d'>Update your counter at the <b>end</b> of the loop body.
+                This takes the place of the <b>update expression</b> in the
+                <code>for</code> loop.
+            </li>
+        </ol>
+        <p> Here's the basic skeleton for a counted loop, written
+            with <code>while</code>:<br>
+            <img src='images/counted-while.png' class='inlineCenter' alt='The counted while loop skeleton.'>
+        </p>
+    <h2>While Loop Caveats</h2>
+        <p> There are three common errors that often occur when
+            writing counted loops using <code>while</code>. By learning what
+            they are, and then checking for each one when you write your
+            loops, you increase your chances of writing a correct loop the
+            first time.
+        </p>
+    <h3>Expired Counters</h3>
+        <p> When using the <code>for</code> loop, you usually create
+            and initialize your counter variables inside the initialization
+            expression of the <code>for</code> loop. If you forget to do so,
+            the <code>for</code> loop condition usually looks "empty", which
+            acts as a reminder.
+        </p>
+        <p> With the <code>while</code> loop, however, you must define
+            and initialize your counter <b>outside</b> the
+            <code>while</code> loop. This has several implications:
+        </p>
+        <ul>
+            <li>In the <code>for</code> loop, the scope of the counter
+                variable is restricted to the body of the loop. That is not
+                true for the <code>while</code> loop.
+            </li>
+            <li>If you have several <code>while</code> loops, and each
+                of them use the same counter variable name, then you cannot
+                redeclare the variable for each new loop. All of your loops
+                will use <b>the same variable</b>.
+            </li>
+            <li>You must, however, remember to <b>reinitialize</b>
+                the counter before each loop, even though you can't
+                <b>redefine</b> it. Forgetting to do this often leads to
+                the case of the <b>expired counter</b>. If a counted
+                <code>while</code> loop is preceded by another, and both
+                use the same counter variable, you may forget to reinitialize
+                the counter for the second loop. This doesn't create a
+                syntax error, but it does give you the wrong answer.
+            </li>
+        </ul>
+        <p> There are two possible solutions to the expired counter
+            problem.
+        </p>
+        <ol>
+            <li class='d'>If you give all of your counters unique names, you
+                won't run into the problem. Sometimes, however, this is hard
+                to do. Thinking up a new name when you really want to use
+                the common counter names like <b>i</b>, <b>idx</b>, or
+                <b>counter</b>, can be difficult.
+            </li>
+            <li class='d'>A better solution is to train yourself to <b>always
+                initialize your counter on the line immediately preceding
+                the while condition</b>. After a bit, a missing
+                initialization starts to look as "empty" as the missing
+                initialization section in a <code>for</code> loop.
+            </li>
+        </ol>
+    <h3>Endless Loops</h3>
+        <p> An <b>endless</b> loop is a loop that doesn't end, because the
+            loop test condition always evaluates to false. Although
+            endless loops are sometimes intentionally, most of the time
+            they are the result of a mistake that you've made when specifying
+            the loop's exit condition or bounds.<br>
+            <img src="images/endless-loop.png" class="inlineCenter" alt="An M.C. Escher endless loop.">
+            The problem of endless loops is not unique to counted
+            <code>while</code> loops. You can create endless loops in a
+            variety of ways. Still, a counted <code>while</code> loop lends
+            itself to endless loops in a way that the others don't. Because the
+            <code>while</code> loop places the counter update expression at
+            the <b>bottom</b> of the loop&#8212;which may be far removed from the
+            <code>while</code> loop condition by the time all of the
+            intervening statements have been added&#8212;it is easy to forget it.
+        </p>
+        <p> With the <code>for</code> loop, leaving out the update
+            expression creates an "empty" looking loop condition, but not
+            with the <code>while</code> loop.
+        </p>
+        <p> The easiest solution to this problem is to use
+            the loop-building strategy presented in this chapter.
+            If you start by first writing the "mechanics" of the loop&#8212;bounds,
+            precondition, and update&#8212;you are less likely to get distracted
+            by the "real" statements and forget to add the update expression
+            at the end of the loop.
+        </p>
+    <h3>Phantom Semicolon</h3>
+        <p> This last problem is also not restricted to <code>while</code>
+            loops; it affects selection statements and <code>for</code>
+            loops as well.
+            <img src='images/phantom-semicolon.png' class='right' alt='The Phantom Semicolon.'>
+        </p>
+        <p>
+            If you put a semicolon after the condition of a <code>while</code>
+            (or <code>for</code>) loop, the body of the loop becomes the
+            <b>null</b> statement. Here's an example.
+        </p>
+        <p>Because of the semicolon, you are saying:</p>
+        <p class="pullquote">
+            As long as <code>cups</code> is less than ten, do nothing.
+        </p>
+        <p>This creates two problems:</p>
+        <ol>
+            <li class='d'>If <code>cups</code> was originally less than ten,
+                (as in the illustration here), you
+                will have an <b>endless loop</b>. Because nothing in the <b>null</b>
+                body changes the value of <code>cups</code>, it will
+                remain at its initial value.
+            </li>
+            <li class='d'>If <code>cups</code> were greater-than or equal-to ten,
+                you wouldn't have an endless loop, but the statements that
+                were intended to be executed as part of the loop body would
+                be executed <b>exactly once</b> regardless of the test
+                condition.
+            </li>
+        </ol>
+    <h3>Where To Now?</h3>
+        <p> After reading the preceding section, you might be
+            wondering why anyone would bother with <code>while</code> at all.
+            The <code>for</code> loop seems so much more capable.
+        </p>
+        <p> That's true for counted loops; if you are going
+            to write loops that are controlled by a counter, you should
+            probably use the <code>for</code> loop. But, not all loops, or
+            even most loops, are counter-controlled. Event controlled loops
+            are much more common, and there, the <code>while</code>
+            loop reigns.
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Counted while Loops Summary
+        </p>
+        <ul>
+            <li>The <b>syntax</b> of the <code>while</code> loop consists
+                of the keyword <code>while</code>, followed by a
+                Boolean condition in parentheses, followed by the
+                statement to execute. If you wish to execute mutliple
+                statements, follow the condition with a <b>block</b>.
+            </li>
+            <li>The general purpose <code>while</code> loop
+                repeats the statements in its body, <b>as long as its
+                Boolean condition is <code>true</code></b>.
+            </li>
+            <li>To write <b>counted loops with <code>while</code></b> you must
+                create a counter variable before the loop is encountered,
+                test the counter in the loop condition, and update the
+                counter at the <b>end of the loop body</b>.
+            </li>
+            <li>The pitfall of an <b>expired counter</b> occurs when you
+                fail to initialize your counter to its starting position
+                immediately before your loop begins.
+            </li>
+            <li>An <b>endless loop</b> occurs when you fail to update
+                your loop counter at the bottom of the loop body.
+            </li>
+            <li>A <b>phantom semicolon</b>, placed after the loop condition,
+                can lead to either an endless loop or a body that is
+                executed exactly once, regardless of the condition. In
+                all cases, placing a semicolon after the <code>while</code>
+                loop condition <b>is a logical error</b>.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

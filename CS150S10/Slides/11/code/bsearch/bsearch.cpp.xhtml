@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>bsearch.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../../Scripts/highlight.css"/>
+</head>
+<body class="hl"><pre class="hl"><span class="hl line">  1 </span><span class="hl dir">#include &lt;iostream&gt;</span>
+<span class="hl line">  2 </span>
+<span class="hl line">  3 </span><span class="hl dir">#include</span> <span class="hl dstr">&quot;util.h&quot;</span><span class="hl dir"></span>
+<span class="hl line">  4 </span>
+<span class="hl line">  5 </span><span class="hl com">/**</span>
+<span class="hl line">  6 </span><span class="hl com">   Finds an element in a sorted vector.</span>
+<span class="hl line">  7 </span><span class="hl com">   &#64;param v the sorted vector with the elements to search</span>
+<span class="hl line">  8 </span><span class="hl com">   &#64;param from the start of the range to search</span>
+<span class="hl line">  9 </span><span class="hl com">   &#64;param to the end of the range to search</span>
+<span class="hl line"> 10 </span><span class="hl com">   &#64;param value the value to search for</span>
+<span class="hl line"> 11 </span><span class="hl com">   &#64;return the index of the first match, or -1 if not found</span>
+<span class="hl line"> 12 </span><span class="hl com">*/</span>
+<span class="hl line"> 13 </span><span class="hl kwb">int</span> <span class="hl kwd">binary_search</span><span class="hl sym">(</span>vector<span class="hl sym">&lt;</span><span class="hl kwb">int</span><span class="hl sym">&gt;</span> v<span class="hl sym">,</span> <span class="hl kwb">int</span> from<span class="hl sym">,</span> <span class="hl kwb">int</span> to<span class="hl sym">,</span> <span class="hl kwb">int</span> value<span class="hl sym">)</span>
+<span class="hl line"> 14 </span><span class="hl sym">{</span>
+<span class="hl line"> 15 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>from <span class="hl sym">&gt;</span> to<span class="hl sym">)</span>
+<span class="hl line"> 16 </span>      <span class="hl kwa">return</span> <span class="hl sym">-</span><span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line"> 17 </span>   <span class="hl kwb">int</span> mid <span class="hl sym">= (</span>from <span class="hl sym">+</span> to<span class="hl sym">) /</span> <span class="hl num">2</span><span class="hl sym">;</span>
+<span class="hl line"> 18 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>v<span class="hl sym">[</span>mid<span class="hl sym">] ==</span> value<span class="hl sym">)</span>
+<span class="hl line"> 19 </span>      <span class="hl kwa">return</span> mid<span class="hl sym">;</span>
+<span class="hl line"> 20 </span>   <span class="hl kwa">else if</span> <span class="hl sym">(</span>v<span class="hl sym">[</span>mid<span class="hl sym">] &lt;</span> value<span class="hl sym">)</span>
+<span class="hl line"> 21 </span>      <span class="hl kwa">return</span> <span class="hl kwd">binary_search</span><span class="hl sym">(</span>v<span class="hl sym">,</span> mid <span class="hl sym">+</span> <span class="hl num">1</span><span class="hl sym">,</span> to<span class="hl sym">,</span> value<span class="hl sym">);</span>
+<span class="hl line"> 22 </span>   <span class="hl kwa">else</span>
+<span class="hl line"> 23 </span>      <span class="hl kwa">return</span> <span class="hl kwd">binary_search</span><span class="hl sym">(</span>v<span class="hl sym">,</span> from<span class="hl sym">,</span> mid <span class="hl sym">-</span> <span class="hl num">1</span><span class="hl sym">,</span> value<span class="hl sym">);</span>
+<span class="hl line"> 24 </span><span class="hl sym">}</span>
+<span class="hl line"> 25 </span>
+<span class="hl line"> 26 </span><span class="hl kwb">int</span> <span class="hl kwd">main</span><span class="hl sym">()</span>
+<span class="hl line"> 27 </span><span class="hl sym">{</span>
+<span class="hl line"> 28 </span>   <span class="hl kwd">rand_seed</span><span class="hl sym">();</span>
+<span class="hl line"> 29 </span>   vector<span class="hl sym">&lt;</span><span class="hl kwb">int</span><span class="hl sym">&gt;</span> <span class="hl kwd">v</span><span class="hl sym">(</span><span class="hl num">20</span><span class="hl sym">);</span>
+<span class="hl line"> 30 </span>   v<span class="hl sym">[</span><span class="hl num">0</span><span class="hl sym">] =</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line"> 31 </span>   <span class="hl kwa">for</span> <span class="hl sym">(</span><span class="hl kwb">int</span> i <span class="hl sym">=</span> <span class="hl num">1</span><span class="hl sym">;</span> i <span class="hl sym">&lt;</span> v<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">();</span> i<span class="hl sym">++)</span>
+<span class="hl line"> 32 </span>      v<span class="hl sym">[</span>i<span class="hl sym">] =</span> v<span class="hl sym">[</span>i <span class="hl sym">-</span> <span class="hl num">1</span><span class="hl sym">] +</span> <span class="hl kwd">rand_int</span><span class="hl sym">(</span><span class="hl num">1</span><span class="hl sym">,</span> <span class="hl num">10</span><span class="hl sym">);</span>
+<span class="hl line"> 33 </span>
+<span class="hl line"> 34 </span>   <span class="hl kwd">print</span><span class="hl sym">(</span>v<span class="hl sym">);</span>
+<span class="hl line"> 35 </span>   cout <span class="hl sym">&lt;&lt;</span> <span class="hl str">&quot;Enter number to search for: &quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 36 </span>   <span class="hl kwb">int</span> n<span class="hl sym">;</span>
+<span class="hl line"> 37 </span>   cin <span class="hl sym">&gt;&gt;</span> n<span class="hl sym">;</span>
+<span class="hl line"> 38 </span>   <span class="hl kwb">int</span> j <span class="hl sym">=</span> <span class="hl kwd">binary_search</span><span class="hl sym">(</span>v<span class="hl sym">,</span> <span class="hl num">0</span><span class="hl sym">,</span> v<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() -</span> <span class="hl num">1</span><span class="hl sym">,</span> n<span class="hl sym">);</span>
+<span class="hl line"> 39 </span>   cout <span class="hl sym">&lt;&lt;</span> <span class="hl str">&quot;Found in position &quot;</span> <span class="hl sym">&lt;&lt;</span> j <span class="hl sym">&lt;&lt;</span> <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 40 </span>   <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl sym">;</span>
+<span class="hl line"> 41 </span><span class="hl sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.6.10, http://www.andre-simon.de/-->

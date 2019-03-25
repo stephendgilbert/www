@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>7.4&mdash;Loop Functions</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 7.4</p>
+        <p id='lessonTitle'>Loop Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n the last chapter you learned how to write
+            functions</b> that made decisions. In this chapter you learned how
+            write <code>for</code>
+            loops and <code>while</code> loops.
+        </p>
+        <p> In this section, we want to <b>marry</b> those two concepts together,
+            and learn how to write functions that process
+            <code>String</code>s and numbers using the <code>for</code> loop
+            and the <code>while</code> loop. These are similar to the problems
+            you'll see on your CS 170 programming proficiency quizzes.
+        </p>
+    <h2>Loops and Functions</h2>
+        <p> We'll start by getting some practice using the
+            <code>for</code> loop to solve <code>String</code> problems.
+            To do that, open <b>LoopProblems.java</b> in DrJava.
+            Once you have it open,
+            scroll down and find the <b>doubleChar</b> problem:<br>
+            <img src="images/stringfunc10.gif" class="inlineCenter" alt="The doubleChar problem.">
+            As before you have:
+        </p>
+        <ol>
+            <li class='d'>The name of the function you need to write.</li>
+            <li class='d'>The Javadoc parameters and return type.</li>
+            <li class='d'>A short "problem statement".</li>
+            <li class='d'>Some examples.</li>
+            <li class='d'>A comment you should replace with the actual function.</li>
+        </ol>
+        <p> Before you start typing, though, let's take a look at
+            some basic strategy.
+            You'll normally want to attack these kinds of problems using
+            <b>the same basic strategy</b>. Here's how I do that.
+        </p>
+    <h3>Step 1: Skeleton and Return Type</h3>
+        <p> Even though all of these simple loop problems <b>process</b>
+            <code>Strings</code>, they don't necessarily <b>return</b>
+            <code>String</code> values. Some will, but others will return
+            <code>int</code> or <code>boolean</code> values.
+        </p>
+        <p> My first step (after I've written the header, of course), is to
+            always to create an "empty" variable of the
+            correct type and then add a return statement, so that I can
+            run the program and see what the tests do. Here's what you'd
+            do for <code>doubleChar()</code>:<br>
+            <img src="images/stringfunc12.gif" class="inlineCenter" alt="Step 1: the returned value.">
+        </p>
+    <h3>Step 2: Loop through the String</h3>
+        <p> These problems all require the use of loops.
+            Because you can easily find the length of the <code>String</code>,
+            you'll almost always use the <code>for</code> loop. Here's the
+            general pattern that I follow, even before I give any thought
+            to what my code is actually going to do:<br>
+            <img src="images/stringfunc13.gif" class="inlineCenter" alt="Step 2: string length and loop.">
+        </p>
+    <h3>Step 3: What's the Goal?</h3>
+        <p> Now we're ready to look at what the output should be. In this
+            case, we want our output to contain two characters for each
+            character in input.
+        </p>
+        <p> In general, if you want to examine every character, you can do
+            it like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            char ch = str.charAt(i);
+        </p>
+        <p> <b class='ry'>or</b>, you can do it like this:</p>
+        <p class="code" style='font-size:1.2em;'>
+            String chStr = str.subString(i, i + 1);
+        </p>
+        <p> The first technique gives you back a <code>char</code>
+            variable which is easy to compare using the various
+            relational operators. You'll have to use the second
+            technique if you need to process more than one character
+            on each repetition.
+        </p>
+        <p> In this case, we can go either way. We need to grab each
+            character and then "paste" that character onto the output
+            <code>String</code> two times to double it. Here's a version
+            using <code>charAt()</code>:<br>
+            <img src="images/stringfunc14.gif" class="inlineCenter" alt="Step 3: processing characters.">
+        </p>
+        <div class='alert'>
+        <p> Notice that you need to concatenate the characters with the
+            <code>String</code> output, not <b>add</b> the two characters
+            together and concatenate that. Concatenation works with
+            <code>Strings</code>, <b>not</b> characters. If you were to
+            write this:<br><br>
+            <span class='code'>
+            result += c + c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <br><br>
+            then the two characters would be <b>added</b> as Unicode characters and
+            the resulting <b>numeric</b> value would be pasted onto the
+            end of your <code>String</code>.
+        </p>
+        </div>
+        <p> Here's a version of the same loop, using the <code>substring()</code>
+            method instead of <code>charAt()</code>:<br>
+            <img src="images/stringfunc15.gif" class="inlineCenter" alt="Step 3: processing strings with substring.">
+            Note that because the variable <code>cStr</code> is a <code>String</code>
+            rather than a <code>char</code>, you <b>can</b> use the shorthand
+            assignment operator in this instance.
+        </p>
+    <h3>A Second Example</h3>
+        <p> Let's look at a second example, just to make sure you have the
+            idea. Scroll down until you find the problem named
+            <b>countHi</b>. For this, all you need to do is count the number of times
+            that the word "hi" appears in the given <code>String</code>.
+            <img src="images/stringfunc16.gif" class="inlineCenter" alt="The countHi Problem.">
+        </p>
+        <p> The first step is exactly like the previous problem. Because the
+            return type of this function is <code>int</code>, I create a
+            numeric variable (instead of a <code>String</code>), and return that:<br>
+            <img src="images/stringfunc17.gif" class="inlineCenter" alt="Step 1: return type.">
+        </p>
+        <p> The second step is very similar to last problem, but has a
+            <i>little twist</i> that you need to pay attention to. In the
+            first problem, our loop <b>visited each character</b>
+            in the <code>String</code>.
+        </p>
+        <p> In this problem, we are looking for
+            a <b>two-character</b> wide <code>String</code>, so we <b>can't</b>
+            loop through the <b>entire</b> <code>String</code>, because we
+            will be examining (or "extracting") two characters at a time, instead of only
+            one. If we looped through the entire <code>String</code>, then
+            when we got to the last character, and then tried to get a
+            substring consisting of the <b>next two characters</b>, the
+            program would generate an "out of bounds" <b>runtime error</b>.
+        </p>
+        <p> In general, if was intend to extract or examine <b>n</b>
+            characters, then our loop should go <b>from 0 to len - (n - 1)</b>
+            like I've done here:<br>
+            <img src="images/stringfunc18.gif" class="inlineCenter" alt="Step 2: extract substring.">
+            Note also, that the <code>substring</code> extraction code
+            <b>always</b> looks like <code>str.substring(i, i + n)</code>
+            where <b>n</b> is the number of characters for the resulting
+            substring, and the loop condition always looks like
+            <code>i &lt; len - (n - 1)</code>. In this case, since we want to get
+            two characters, "n" is 2 and the loop condition is <code>i &lt; len - 1</code>.
+        </p>
+        <p> Finally, to compare the extracted substring with the literal
+            value "hi", you need to use the <code>equals()</code> method.
+            If <code>equals()</code> returns <code>true</code>, then you'll
+            <b>increment</b> your counter. Here's what the final loop
+            looks like:<br>
+            <img src="images/stringfunc19.gif" class="inlineCenter" alt="Step 3: counting matches.">
+        </p>
+    <h2>Hands-On While Loop Problems</h2>
+        <p> To get some practice using the <code>while</code> loop, open the
+            <b>WhileLoopProblems</b> program in this chapter's code folder,
+            and then locate the <code>mixString()</code> problem at the top of the
+            file:<br>
+            <img src='images/mixString01.gif' class='inlineCenter' alt='The mixString problem.'>
+            As you can see, the <code>mixString()</code> method has two
+            input <code>String</code>s, <code>a</code> and <code>b</code>,
+            and your method is going to produce a new <code>String</code>
+            with the characters from <code>a</code> and <code>b</code>
+            <b>interleaved</b>. If one input <code>String</code> is
+            larger than the other, then the extra characters will appear
+            at the <b>end</b> of the output <code>String</code>.
+        </p>
+        <div class='alert'>
+        <p> While you <b>could</b> solve this using the <code>for</code>
+            loop, the purpose of the exercises is to learn how to use the
+            <code>while</code> loop. Because of that, the test program actually
+            has to read your source code to see if you are using <code>while</code>
+            instead of <code>for</code>. That means you can't have <b>any</b>
+            <code>for</code> loops inside
+            your method, even if they are commented out.
+        </p>
+        </div>
+    <h3>Solving the Problem</h3>
+        <p>So, where do we start, now that we're working with <code>while</code>
+            loops instead of <code>for</code> loops?<br>
+            <img src='images/pinky.png' class='inlineCenter' alt='Pinky solves a CS 170 problem.'>
+        </p>
+        <p style='font-weight:bold; font-size:xx-large;color:red;text-align:center;'>
+            We Start With the Method Skeleton!<br>
+            <img src='images/mixString02.gif' class='inlineCenter' alt='The skeleton for mixString.'>
+        </p>
+        <p> Once you have the header, the results and the <code>return</code>
+            expression, you can run your tests.<br>
+            <img src='images/mixString03.gif' class='inlineCenter' alt='Tests with no while loops.'>
+            HMMM. That's kind of annoying. It looks like we really <b>do</b>
+            need to use the <code>while</code> loop, or the test program
+            won't even check the program.
+        </p>
+    <h3>The while Loop Skeleton</h3>
+        <p> No worries though. Just like we had a standard loop skeleton for
+            a <code>for</code> loop, we can do the same thing for <code>while</code>.
+            (You'll find this skeleton earlier in the lesson.) Applying that to
+            the <code>mixString</code> problem gives us this:<br>
+            <img src='images/mixString04.gif' class='inlineCenter' alt='The while loop skeleton.'>
+            In this case I:
+        </p>
+        <ol>
+            <li class='d'>Create a "dummy" variable for ending the loop.</li>
+            <li class='d'>Create a counter before the loop starts.</li>
+            <li class='d'>Compare the counter to the loop bounds in the
+                <code>while</code> conditional expression.
+            </li>
+            <li class='d'>Update my counter at the end of each loop
+                repetition.
+            </li>
+        </ol>
+        <p> A textbook example. Now let's think about our loop <b>plan</b>
+            and see how we actually solve the problem.
+        </p>
+    <h3>What is the Loop's Bounds?</h3>
+        <p> In this problem, we want to interleave the characters from
+            two <code>String</code>s, but each may have a different length.
+            That means that our loop will have to <b>stop</b> when the
+            shorter <code>String</code> has been processed.
+        </p>
+        <p> We can use that information to set our bounds variable
+            <code>len</code> to the length of the shorter <code>String</code>,
+            like this:<br>
+            <img src='images/mixString05.gif' class='inlineCenter' alt='The while loop bounds.'>
+            Now, the loop will stop at the right place.
+        </p>
+        <p> We've already taken care of the bounds precondition and advancing
+            the loop by using our ready-made while-loop skeleton. So let's
+            move on to the goal.
+        </p>
+    <h3>The Loop Operations</h3>
+        <p> Our generic function skeleton took care of Step 4 in our
+            standard loop-development plan (creating variables to hold the
+            loop's output.) Let's move on to Step 5: the loop operations.
+        </p>
+        <p> What we want to do in each repetition, is place one character
+            from <code>a</code> in the output, followed by the character
+            at the same index position from <code>b</code>. We can do that
+            easily by using this code:<br>
+            <img src='images/mixString06.gif' class='inlineCenter' alt='The while loop operation.'>
+            At this point, our method should pass all of the tests
+            where the input <code>String</code>s are both the same length.
+            Unfortunately, the fellow who wrote the tests was especially
+            devious, and so only 3 of the 13 tests actually have equal-length
+            parameters. <b class='ry'>Bummer</b>.
+        </p>
+    <h3>The Loop Post-Conditions</h3>
+        <p> That means, to solve this problem, we'll have to think of the
+            <b>post-conditions</b> to the loop. Remember, a loop ends because
+            its bounds are reached, <b>not</b> because its goal has been
+            accomplished.
+        </p>
+        <p> How can we tell if our loop has accomplished all we desired?
+            By using the <code>if</code> statement to check if conditions
+            are as we expect. In this case, if the variable <code>len</code>
+            is less than the length of either input <code>String</code>,
+            then we still have some characters left over. We need to
+            "paste" them onto the end of the output like this:<br>
+            <img src='images/mixString07.gif' class='inlineCenter' alt='The while loop post-condition.'>
+            Notice that because we're using a counted <code>while</code> loop
+            <b>instead of</b> a <code>for</code> loop, that the counter
+            <code>i</code> is still available after the loop ends. That
+            means we can use <code>i</code> to extract the rest of either
+            <code>a</code> or <code>b</code> if necessary.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

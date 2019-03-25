@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>True and False</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner12">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>True and False</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/boole.gif" class="right" alt="George Boole.">
+            <b><span class="cap">G</span>eorge Boole was one of the most
+            famous mathematicians</b> of the 19th century. Born in 1815 to a
+            working-class family, he was a self-taught child prodigy in
+            both science and Latin. Even though he couldn&#8217;t afford to attend
+            college, he became a professor of Mathematics (and later
+            the Dean of Science) at Queens College in Cork Ireland.
+        </p>
+        <p> Boole&#8217;s 1854 paper, <i>"An Investigation Into the Laws of
+            Thought, on Which are Founded the Mathematical Theories
+            of Logic and Probability"</i> detailed the relationship
+            between algebra and logic. This paper was the foundation
+            of the discipline now known as <b>Boolean logic</b> or
+            <b>Boolean algebra</b>, and these are the ideas that
+            underlay much of today's computer technology.
+        </p>
+        <p> George Boole died on 8th December, 1864 after walking to school
+            in the pouring rain at the end of November. He proceeded
+            to teach in wet clothes, and, as a result he contracted
+            a chest infection which ultimately turned into pneumonia.
+        </p>
+        <p> His condition was made worse by his wife's attempts to help
+            him.
+            <img src="images/yoda.gif" class="right" alt="George Boole.">
+            She subscribed to the widely held view that the cure
+            should match the cause and so while George took to his bed,
+            she threw buckets of cold water over him.
+
+        </p>
+        <p>
+            Boole is still honored in his native Ireland. Here's a rare
+            picture of one his most famous later disciples, in front of
+            the Boole library in Cork Ireland.
+        </p>
+        <p> We'll begin this chapter by taking a closer look at the
+            <code>boolean</code> primitive type, which contains the
+            two values <b>true</b> and <b>false</b>, and which was
+            named after George Boole. Then, we'll put the
+            <code>boolean</code> type to work <b>making decisions</b>.
+        </p>
+        <div class='info'>
+        <p>Note that the <code>boolean</code> primitive type
+            is all lowercase (just like all of Java's keywords). There is
+            also a <code>Boolean</code> <b>class</b>, which is a <i>wrapper</i>
+            class, like the <code>Integer</code> and <code>Double</code>
+            classes. Finally, when we talk about a true/false value
+            in the abstract, it is customary to capitalize it, since it
+            is named after old George. Thus in the text
+            you'll see the sentences like this:<i>"The logical operators create
+            Boolean values which you can use as part of a Boolean expression
+            or store in a <code>boolean</code> variable."</i>
+        </p>
+        </div>
+   <h2>The boolean Type</h2>
+        <p> Recall that Java has four
+            primitive type families: integers, floating-point numbers,
+            characters and Booleans. Up to now, you've learned quite
+            a bit about each of these families except for the
+            <code>boolean</code> type.
+        </p>
+        <p> The <code>char</code> type consists of all of the Unicode
+            values, while the <code>byte</code> type consists of all of
+            the whole numbers between -128 and 127. The <code>boolean</code>
+            primitive type is simpler: it consists <i>only</i> of the two literal
+            values <b>true</b> and <b>false</b>.
+        </p>
+        <p> As with the other primitive types, you can have <code>boolean</code>
+            variables and <code>boolean</code> literals. To write the
+            <code>boolean</code> literal values you simply write <b>true</b>
+            or <b>false</b>. Make sure you don't accidentally write
+            <b>True</b> or <b>TRUE</b>; that's not the same thing.
+        </p>
+        <div class='alert'>
+        <p>C and C++ programmers are often lulled into a sense of
+            false familiarity by Java's syntax. Boolean types are one of the
+            areas where C and Java differ. In C and C++ Boolean values are
+            convertible to numeric values (0 being false and everything else
+            being true). This is not the case in Java. There is no conversion
+            between numeric types and Boolean types; they are completely
+            separate concepts.
+        </p>
+        </div>
+    <h3>Boolean Variables</h3>
+        <p> You create a <code>boolean</code> variable the same way
+            you create an <code>int</code>, <code>long</code>, or
+            <code>double</code> variable: you start with the type,
+            select a name, and then (optionally) initialize your variable.
+        </p>
+        <p>Here are two <code>boolean</code> variables definitions:</p>
+        <p class="code">
+            boolean isEmpty = true;<br>
+            boolean isDone;
+        </p>
+        <p> The same rules apply to <code>boolean</code> variables as
+            apply to integer or floating point variables. If you fail
+            to initialize a <code>boolean</code> <b>local variable</b>,
+            then you must assign a value before using the variable
+            or Java will refuse to compile your code.
+        </p>
+        <p>When you choose a name for a <code>boolean</code> variable,
+            try to think about how the variable will be used. Try to
+            name your variables so that when the value is <b>true</b>,
+            your conditional expressions can be phrased "naturally"
+            like this</i>:
+        </p>
+        <p class='code'>
+            if (isVisible) ...<br>
+            if (canCompute) ...<br>
+        </p>
+    <h2>The Relational and Equality Operators</h2>
+        <p> Although <code>boolean</code> literals and <code>boolean</code> variables
+            <b>can</b> be useful, <b>most</b> of the time, you'll create the
+            Boolean values used in your program by making use of Java's
+            <b>relational</b> or <b>equality</b> operators, often in the context of
+            a <b>selection</b> or <b>iterative</b> conditional statement.
+        </p>
+
+        <p> A relational operator <b>compares</b> two values and returns a
+            Boolean value based on a question about the relationship
+            of one value to the other. (That's why they're called the <i>relational</i>
+            operators.)
+            Using a relational operator is a little like the parlor game,
+            "Twenty questions." You use the operator to "ask" if one number
+            is larger than, smaller than, or equal to, another. The
+            operator "responds" with <b>true</b> or <b>false</b>.
+        </p>
+        <p> Java has six operators which are used to compare
+            numerical values. Here's an illustration of the use of each:
+        </p>
+        <table class='options'>
+        <thead>
+            <tr>
+                <th>Example</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>a &lt; b</td>
+                <td class='desc'>true if a is less than b; otherwise false</td>
+            </tr>
+            <tr>
+                <td>a &lt;= b</td>
+                <td class="desc">true if a is less than or equal to b; otherwise false</td>
+            </tr>
+            <tr>
+                <td>a &gt; b</td>
+                <td class="tdata">true if a is greater than b; otherwise false</td>
+            </tr>
+            <tr>
+                <td>a &gt;= b</td>
+                <td class="desc">true if a is greater than or equal to b; otherwise false</td>
+            </tr>
+            <tr>
+                <td>a == b</td>
+                <td class="desc">true if a is equal to b, otherwise false</td>
+            </tr>
+            <tr>
+                <td>a != b</td>
+                <td class="desc">true if a is not equal to b, otherwise false</td>
+            </tr>
+        </tbody>
+        </table>
+        <p> Those operators that
+            require two symbols (<code class='b'>&lt;=</code>, <code class='b'>&gt;=</code>, 
+            <code class='b'>==</code>, and <code class='b'>!=</code>) must be typed with no 
+            space between the two symbols.
+        </p>
+        <div class='info'>
+        <p>Some textbooks reserve the term <i>relational operator</i>
+            for the first four of these,&#8212;and call the last two the <i>equality</i>
+            operators. Often you'll see <b>all six operators</b> called the relational
+            operators, with the first four "non-equality" operators called the
+            <i>inequality</i> operators, instead of the relational operators.
+            I'll use <i>relational</i> to refer to the whole group,
+            but will still use <i>equality operators</i> to refer to
+            <code>==</code> and <code>!=</code>.
+        </p>
+        </div>
+     <h3>Relationship Pitfalls</h3>
+        <p> <img src='images/relationships.png' class='right' style='margin-top:-3em;' alt='A couple sharing a milkshake.'>
+            If you come from another programming language,
+            here are some potential pitfalls you should look for:
+        </p>
+        <ul>
+            <li>The "is equal to" operator is <b><code>==</code></b>, not
+                <b><code>=</code></b>, which is the <b>assignment</b> operator.
+                The error message you'll encounter when you confuse these
+                two is not very informative. Nevertheless, it's better than
+                C++, where you may not even get an error message.
+            </li>
+            <li>The "not-equals" operator is <b><code>!=</code></b>, not
+                <b>&lt;&gt;</b>. Again, the error message you'll get if
+                you accidently type this is not very helpful.
+            </li>
+            <li>Make sure you use <b>&gt;=</b> for greater-than
+                or equal, and not <b>=&gt;</b>, which is not a valid
+                symbol. (Of course, the compiler easily catches this one.)
+            </li>
+        </ul>
+        <p> The relational operators act a little differently when applied
+            to primitive numeric types than when applied to objects
+            like <code>String</code>s. Let's look
+            at the primitive numeric types first, and then, in the next
+            section, tackle <code>String</code>s and other objects.
+        </p>
+    <h2>Numeric Relations</h2>
+        <p> Each of the relational operators requires two primitive
+            numeric operands, and the expression produces a
+            <code>boolean</code> (<b>true</b>/<b>false</b>) result.
+            You can usually mix <i>any</i> of the primitive numeric
+            types, <b>including the <code>char</code> type</b> in
+            relational expressions. You normally don't have to worry about
+            mixed-type comparisons, like you do with mixed-type expressions;
+            for the most part, they will work just like you'd expect.<br>
+            <img src="images/a07.gif" class='inlineCenter' alt="Comparing primitive values.">
+            Here are some examples typed into DrJava:<br>
+            <img src='images/comparing-numbers.gif' class='inlineCenter' alt='Comparing different numeric types.'>
+            As you can see, you can compare characters, integers (both
+            large and small) and floating-point numbers, with <b>wild disregard</b>
+            for the type of each operand. This is completely unlike the
+            assignment operator, where you can't assign a <code>double</code>
+            value to a <code>float</code> variable, without a cast.
+        </p>
+        <p> There is, however, one place where
+            you must be especially wary: when you compare two
+            floating-point numbers. If you look at my example here, both the
+            <code>double</code> variable <code>a</code> and the <code>float</code>
+            variable <code>f</code> contain the same initial value. Yet when
+            you compare them for equality, the results are <b>not</b> true.
+        </p>
+    <h3>Floating-point Relations</h3>
+        <p> Even though you <b>can</b> compare numbers without regard for
+            their types, that doesn't mean that the results will always
+            be meaningful. As a general rule, you should <b>never</b>
+            directly compare two floating point numbers using the equality
+            operators (<b><code>!=</code></b>, <b><code>==</code></b>)
+            because of the "round-off" errors that can occur.
+        </p>
+        <p> This week's code folder contains a short console-mode program,
+            <code class='b'>RelationalExamples.java</code>, that illustrates many of the
+            pitfalls that can arise when comparing floating-point numbers.
+            Let's look at a couple of instances:
+        </p>
+    <h4>Different Types</h4>
+        <p>
+            In the first section, two floating-point variables (<b>a</b> and <b>b</b>)
+            are created and initialized using the values <b>2.34</b> and
+            <b>2.34F</b> which are <b>logically</b> identical.
+            Then, these values are compared using the relational operators
+            and the result of that comparison is printed:<br>
+            <img src="images/boolean03.gif" class="inlineCenter" alt="Comparing different types.">
+            If you run the code, you'll see that the two values are never equal,
+            because they have different bit patterns that can't be accurately
+            compared. Many times the comparison <b>will</b> be correct, but
+            often it won't, so you can rely on it.
+        </p>
+    <h4>Comparing Calculated Values</h4>
+        <p> Calculations involving floating-point numbers are done in binary,
+            so even if all operands have the same type, you cannot be sure that
+            the bit-patterns will match exactly.
+        </p>
+        <p> Here are two examples. Look at the variable
+            definition for <b>c</b>,
+            which multiplies .1 times 10, yielding (theoretically) 1.0.
+            Note then the comparison of <b>c</b> with <b>1.0</b>.
+            Is it <b>true</b> or <b>false</b>?<br>
+            <img src="images/boolean04.gif" class="inlineCenter" alt="Literals or calculations.">
+            I'm sure you realize that this <i>should</i> be <b>true</b>, and that's
+            what Java reports. Well, if that's so, what about the variable
+            <b>d</b>? Obviously, adding .1 ten times is
+            <i>mathematically</i> the same expression as multiplying .1 times 10,
+            yet Java considers this one to be <b>false</b>.
+        </p>
+        <p> Here's a second example from Cay Horstmann's Java Concepts textbook.<br>
+            <img src="images/boolean05.gif" class="inlineCenter" alt="Floating-point roundoff.">
+            Here he uses the <code>Math.sqrt()</code> function
+            to get the square root of 2, multiplies the result by itself,
+            (yielding, theoretically, 2), and then subtracts 2.
+            This result should be, mathematically, 0. Instead, Java reports
+            that the answer is 4.440892098500626E-16.
+        </p>
+        <p> Programmers encountering this behavior for the first time,
+            often think that this is a bug, but it is not. This
+            is <b>not</b> a bug in Java, or its ability to add. This is
+            just the way that binary floating-point numbers work. It's in
+            the nature of the numbers themselves.
+        </p>
+        <p class="pullquote">
+            Don't compare floating point numbers using the equality operators.
+        </p>
+        <img src="images/gas.gif" class="right" alt="Gas prices">
+    <h3>Two Solutions</h3>
+        <p>
+            To <i>accurately</i> compare floating point numbers after a
+            calculation, you'll have to first decide what is "close enough".
+            If you buy gasoline, for instance, you might notice the price often priced to include
+            9/10 of a cent, but no one ever pays 9/10 of a cent&#8212;because
+            our currency doesn't have amounts less than a penny. So,
+            if you were comparing two floating-point numbers where
+            it was important to be accurate only to a penny, you'd want the
+            number 1.256 and 1.257 to be "equal".
+        </p>
+    <h4>Call on Math</h4>
+        <p> Correctly comparing floating point values <b>always</b>
+            requires some judgment on your part; there is no way to
+            make it automatic. What may be "close enough" in one situation
+            may be wildly inappropriate in another. If you are comparing the
+            size of two virus samples, a difference of .000001 is really
+            significant; if you are comparing two calculated prices for
+            an e-shopping application, they are not.
+        </p>
+        <p> Once you've decided on how many decimals are significant,
+            a really easy solution is to use the <code>Math.round()</code>
+            function to generate primitive integer values that can
+            be compared accurately. Let me give you an example.
+        </p>
+        <p> Suppose we have the two variables
+            <code>price1</code> and <code>price2</code> in an
+            e-shopping type of application. We want
+            to see if they were equal to <b>two decimal points</b>, but
+            we'd like the numbers rounded. To do this, we can
+            use this comparison:
+        </p>
+        <p class='code'>
+            boolean priceSame; <span class='cmt'>// variable to hold results</span><br>
+            priceSame = Math.round(price1 * 100) == Math.round(price2 * 100);
+        </p>
+        <p> By multiplying the two variables by 100, we are converting
+            a price like $ 1.252 into a "cents" value like 125.2. Then,
+            the <code>Math.round()</code> function returns the nearest
+            whole number to its argument as a <code>long</code>.
+            In our case, if <code>price1</code> contained the value <code>1.252</code>
+            and <code>price2</code> contained the value <code>1.256</code>,
+            then <code>Math.round()</code> would turn those into
+            <code>125</code> and <code>126</code> respectively,
+            which is what we need for our purposes.
+        </p>
+        <p> If we need more precision, just increase the
+            multiplier. You can easily do that with the <code>Math.pow()</code>
+            function like this:
+        </p>
+        <p class='code'>
+            double decimals;<br>
+            decimals = Math.pow(10, 2); <span class='cmt'>// 2 decimal places</span><br>
+            decimals = Math.pow(10, 4); <span class='cmt'>// 4 decimal places</span><br>
+            decimals = Math.pow(10, 12); <span class='cmt'>// 12 decimal places</span><br>
+        </p>
+    <h4>The EPSILON Solution</h4>
+        <p> Since type <code>double</code> is accurate to about 16 digits of
+            precision, we can <b>generalize</b> by using a fudge factor (often
+            called EPSILON) of 10E-14. Using this scheme, two <code>double</code>
+            values are equal if the absolute value of their difference is
+            less than or equal to EPSILON). Here's some Java code that
+            does that for the examples we've seen so far:<br>
+            <img src="images/boolean06.gif" class="inlineCenter" alt="Effective floating-point comparisons.">
+            When you run this, you'll see that the variables <b>c</b> and <b>d</b>
+            are <i>effectively</i> equal, and that the variable <b>result</b> is
+            <i>effectively</i> 0.
+        </p>
+    <h4>Caveats</h4>
+        <p>This doesn't work perfectly if the numbers are very large&#8212;in
+            the millions&#8212;in which case you may need to make your EPSILON
+            factor larger. If the numbers are large enough, your problem
+            will be the opposite: numbers that are logically different will
+            be identical when it comes time to compare them.<br>
+            <img src="images/boolean07.gif" class="inlineCenter" alt="Large numbers.">
+            For instance, if you have a <code>double</code>
+            variable containing 3.25E50 and you add a million, (or
+            subtract a million), you'll still end up with
+            <b>exactly the same number</b>. A <code>double</code> can
+            store very, very large and very, very small numbers, but it
+            both cases, only fifteen or sixteen digits are significant.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

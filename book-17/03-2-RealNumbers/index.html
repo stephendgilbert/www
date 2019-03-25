@@ -1,0 +1,395 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Real Numbers</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner04">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Real Numbers</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'><b><span class="cap">J</span>ava has both object types</b>, 
+            such as <code>Scanner</code> and
+            <code>String</code>, and <b>primitive types</b>, which consist
+            of numbers, characters, and true-false values.
+            <img src="images/d10.gif" class="right" alt="A fraction.">
+            You just met the four Java <b>integer types</b>:
+            <code>byte</code>, <code>short</code>, <code>int</code>, and
+            <code>long</code>. Each integer type represents a set of signed,
+            whole numbers of a particular range; <code>byte</code> has the
+            smallest range, and <code>long</code> has the largest. None of
+            these integer types, however, can represent fractional
+            or "real" numbers.
+        </p>
+        <p> Real numbers in Java are represented by
+            the two <b>floating-point</b> types, <code>float</code> and
+            <code>double</code>. Floating-point primitive types
+            can hold fractional values in addition to whole numbers. These
+            types are the topic of this section.
+        </p>
+    <h3>How Floating-Point Numbers Are Stored</h3>
+        <p> You've previously seen how binary numbers are used
+            to represent whole numbers, or integers. We also
+            use binary numbers to represent <b>real</b> or
+            <b>floating-point</b> numbers. You might wonder
+            how this is possible, though, since you can't really
+            have "half a bit":<br>
+            <img src='images/half-bit.png' class='inlineCenter' alt='Cant have a half-bit.'>
+            Instead, floating-point binary numbers can store fractional
+            values because <b>they use a different internal format</b> than
+            binary integers do.
+        </p>
+        <p> Instead of storing one simple binary value,
+            floating-point numbers are stored as <b>two</b> binary
+            numbers: an integer value, called the <b>exponent</b>,
+            and a binary fraction known as the <b>significand</b> or,
+            more informally, the <b>manitissa</b>. In addition,
+            floating-point numbers keep one bit reserved to store
+            the <b>sign</b> of the number.<br>
+            <img src="images/storage2.png" class='inlineCenter' alt="Floating-point storage.">
+            When the actual value is used, a mathematical operation is
+            performed by your computer using the two binary numbers to
+            compute the final amount.
+        </p>
+        <div class="redbox">
+        <p> Here's an example. Suppose we want to store the real number
+            13.75 as a floating point number. We'd first convert the
+            whole number part to the binary number <code>1101</code>
+            as shown in the previous lesson. But, how do we represent
+            the .75 part?
+        </p>
+        <p> The fractional portion of a binary number works just the
+            same way as the fractional portion of a decimal number.
+            In a decimal number the first place to the right of the
+            decimal is 1/10, the next 1/100, and the next 1/1000.
+            With the binary, or base 2 system, the first position to
+            the right is 1/2, the next 1/4, and the following 1/8.
+        </p>
+        <p> <img src='images/1375.png' class='right' alt='Binary representation of 13.75.'>
+            Given this information, you can see that we can represent
+            the decimal number <code>13.75</code> as the binary number
+            <code>1101.11</code>, where the <code>.11</code> represents
+            1/2 + 1/4 or .75 in decimal.
+        </p>
+        <p> To store this number in the floating-point format, we move
+            the binary point to the left by 4 places, so we have a
+            mantissa of <code>110111</code> and an exponent of
+            <code>100</code> (4 in decimal). Since the number is
+            positive, the sign bit is <code>0</code>.
+        </p>
+        </div>
+        <div class='info'>
+        <p> If you're interested, you can learn more about how
+            floating-point numbers are stored, including all of the
+            nity-gritty details that I've just glossed over, get started
+            by reading the
+            <a href="http://en.wikipedia.org/wiki/Floating_point" target="_blank">
+            <b>Wikipedia</b></a> article on floating-point numbers.
+        </p>
+        </div>
+    <h3>Floating-point Limitations</h3>
+        <p> Because of this scheme, floating point numbers are
+            often only an approximation of the <b>actual</b> number you are
+            trying to represent.
+        </p>
+        <p> <img src="images/z02.gif" class='right' alt="Windows Calculator after dividing 1 by 3.">
+            Most of us are familiar with this concept from fifth and
+            sixth grade when we learned about fractions and decimal numbers.
+            In fifth grade we learned that 1 divided by 3 was 1/3, and
+            1/3 + 1/3 + 1/3 was 1.
+        </p>
+        <p>
+            When decimal numbers came round the next year, however, things
+            got a little more complex; 1 divided by 3 became .3333333
+            and there didn't seem to be any way to get back to where you
+            started by adding the results together.
+        </p>
+        <p> The same <b>kind of thing</b> occurs with binary floating point
+            numbers. Just as you <b>cannot</b> accurately represent the
+            number 1/3 as a decimal (base 10) number, there are certain
+            numbers that cannot be represented in binary (base 2).
+            The only difference is that there are <b>more</b> repeating
+            fractions with binary numbers, than there are in decimal.
+        </p>
+        <p> This type of problem is called a <b>representational error</b>,
+            or, sometimes, a <b>rounding error</b>.
+        </p>
+        <p> Floating-point numbers are also susceptible to other kinds of
+            errors that can snare the unwary or the extra-weary. If you add
+            a very small number and a very large number together, for
+            instance, you will often exceed the number of digits that the
+            floating-point number can accurately represent. You can find
+            out more in the Wikipedia article referenced earlier.
+        </p>
+    <h2>Java's Floating-point Numbers</h2>
+        <p> <img src='images/big-gulp.png' style='margin-top:-2em;' class='right' alt='Big gulp.'>
+            <b><span class='cap'>J</span>ava has two different primitive types for storing
+            floating-point numbers</b>, the <code>float</code> and the
+            <code>double</code>.
+            Think of them as the Big Gulp (32 oz.) and <b>Super</b>
+            Big Gulp (64 oz.) of
+            floating-point numbers. As with the different types in the
+            integer family, each of these two types uses a different
+            amount of memory and can represent a different range of
+            numbers.
+        </p>
+        <p> While the different integer types differ only in their range,
+            floating-point types differ in their <b>precision</b> as well. The
+            precision of a floating point number is measured by the
+            number of <b>significant digits</b> in its presentation.
+            For instance, assume that your source code contains the following
+            very large number:
+        </p>
+        <p class='code'>
+        double num = 1234567898765432123456.78987654321;
+        </p>
+        <p>When it comes time to use or display the number, you'll find that
+            not all that information was actually captured; in fact, the value
+            for type <code>double</code> <b>only</b> retains about 15 or 16
+            digits of <b>precision</b>, so the actual value of the variable
+            <code>num</code> is <b><code>1234567898765432200000.0</code></b>.
+        </p>
+        <p> Not only did we lose all of the fractional part of the number,
+            but the "whole" digits were rounded to the nearest 100,000. Not
+            very accurate, huh?
+        </p>
+        <p>Here are the stats, (range and precision), for the two types:
+        </p>
+    <h3>double</h3>
+        <p>
+            The <code>double</code>, (which is the default format
+            for floating-point literals, just like <code>int</code>
+            is the default format for integer literals), uses eight
+            bytes (64 bits) of storage.
+        </p>
+        <p> The <b>range</b> of numbers it can represent include the
+            positive and negative numbers as small as 4.94E-324,
+            and positive or negative numbers as large as 1.79E+308.
+        </p>
+        <p class="note">For those of you not conversant with
+            exponential notation, that last is the number 1.79 with
+            the decimal point moved to right by 308 places. That is a
+            <b>very</b> big number.
+        </p>
+        <p> The <b>precision</b> for a double is approximately 16
+            significant digits.
+        </p>
+    <h3>float</h3>
+        <p> The <code>float</code> uses half the storage as a
+            <code>double</code>, at four bytes (32 bits).
+        </p>
+        <p> The float has about 8 digits of <b>precision</b>, and its
+            <b>range</b> can represent very small positive or negative
+            numbers from 1.4E-45, and very large positive
+            or negative numbers up to 3.4E+38.
+        </p>
+        <div class='info'>
+        <p> As you can see, the <code>double</code> type has
+            a range approximately ten times that of the <code>float</code>,
+            although its precision is only about twice the <code>float</code>.
+            That is the meaning of the name <code>double</code>, which is
+            short for <b>double precision</b>. For the same reason, some
+            other languages, such as Visual Basic, call the <code>float</code>
+            type, a <code>single</code>. The <code>float</code>
+            type in Python is the same as <code>double</code> in Java.
+        </p>
+        </div>
+    <h3>Floating-point Variables</h3>
+        <p> Just as with integers, you create floating-point variables
+            by specifying the <b>type</b>, (<code>float</code> or
+            <code>double</code>), and a <b>name</b>, optionally followed by
+            an initializer. As with the integers, you can use
+            <b>floating-point literals</b>, previously initialized
+            <b>variables</b>, <b>expressions</b>, or <b>user-input methods</b>
+            to initialize your floating-point variables.
+        </p>
+        <p>You can write floating-point literals in two different ways:</p>
+        <ul>
+            <li>using decimal notation, or</li>
+            <li>using exponential, (or scientific), notation.</li>
+        </ul>
+        <p> When you use decimal notation, you may use an <b>optional sign</b>,
+            followed by digits and a single decimal point. You may have digits
+            on either side (or both sides) of the decimal-point, but you
+            don't <b>have</b> to have digits on both sides of the decimal,
+            as you do in some languages (such as Pascal).
+        </p>
+        <p> These are both valid variables, initialized using floating-point
+            literals and written using decimal notation:
+        </p>
+        <p class="code">
+            double first = .234; &nbsp;&nbsp;&nbsp;<span class="cmt">// No digit before</span><br>
+            double second = 7.5432; <span class="cmt">// Digits on both sides</span><br>
+        </p>
+    <h4>About Those floats</h4>
+        <p> When you write a floating-point literal, Java automatically
+            uses the <code>double</code> type. This creates a problem when
+            you want to store the number in a <code>float</code> variable.
+        </p>
+        <p> Remember that floating-point numbers are stored in a different
+            format than binary integers. To store a <code>double</code>
+            value in a <code>float</code> variable, Java <b>cannot</b>
+            simply copy part of the number, as it does for integers. Instead,
+            Java has to recompute both the mantissa and the exponent
+            portion of the number, which it <b>does not do automatically</b>.
+        </p>
+        <p> Because of this, when you want to store a literal floating-point
+            number in a <code>float</code> variable, you <b>must</b> add an
+            <b>F</b> at the end of the number like this:
+        </p>
+        <p class="code">
+            float third = 3.5F;<br>
+            float fourth = .2756f;
+        </p>
+        <div class='alert'>
+        <p>Note that you may use either an uppercase <b>F</b>
+             or a lowercase <b>f</b>. You may alos append an uppercase
+             <b>D</b> or a lowercase <b>d</b> to a literal to signify that
+             it is of type <code>double</code>. This is occasionally useful:
+             the literal <code>7</code>, for instance, is an <code>int</code>,
+             while <code>7d</code> and <code>7.0</code> are both
+             <code>double</code>.
+        </p>
+        </div>
+    <h4>Exponential Notation</h4>
+        <p> You can also write floating-point literals using exponential,
+            (aka scientific), notation. To use exponential notation,
+            write the first digit of your number, followed by a
+            decimal point and all of the rest of your digits.
+        </p>
+        <p>For instance, to write the number <b><code>23456.789</code></b>
+            in exponential notation, start by writing:
+        </p>
+        <div class="box">
+            <code><b>2.3456789</b></code>
+        </div>
+        <p> Immediately following this, write an <b><code>e</code></b>
+            or an <b><code>E</code></b>&#8212;making sure you don't
+            add any spaces&#8212;followed by the number of places required
+            to move the decimal when the number is "decoded."
+        </p>
+        <p> In our example, we need to move the decimal <b>to the right</b>
+            by four places to reconstruct our original, so the finished
+            number would look like this:
+        </p>
+        <div class="box">
+            <b><code>2.3456789E4</code></b>
+        </div>
+        <p> If the number you're working with is small&#8212;say
+            <b><code>.000004572</code></b>&#8212;you do the same thing.
+            The only difference is you use a <b>negative exponent</b> which says,
+            "move the decimal point to the left, not the right". To write
+            the preceding number in exponential notation you'd write:
+        </p>
+        <div class="box">
+            <b><code>4.572e-6</code></b>
+        </div>
+        <div class='alert'>
+        <p>Make sure you don't confuse using a negative
+            exponent (where the sign goes after the E/e) and a negative
+            number, where the sign goes <b>before the first digit</b>.
+        </p>
+        </div>
+    <h2>What About Money?</h2>
+        <p> <img src='images/salami.png' class='right' alt='Salami slices.'>
+            The limitations of floating-point numbers
+            are <b>especially</b> troubling when it
+            comes to money, because one of the numbers that <b>can't</b> be
+            accurately represented in binary is 1/10, or a dime. That
+            means that if a computer uses floating-point numbers to
+            keep track of the money in your bank account, there's a
+            chance for someone to siphon off small amounts on
+            each transaction.
+        </p>
+        <p>
+            This is called <i>salami slicing</i> and it's the basis
+            behind the plot of several different films, including
+            Superman 3, (with Richard Pryor playing the accountant
+            Gus Gorman), Hackers and Office Space.<br>
+            <img src='images/pryor.png' class='right' alt='Gus Gorman in Superman III.'>
+        </p>
+    <h3>Some Solutions</h3>
+        <p> So, then, what should we do about money, since floating-point
+            numbers are so "approximate"? There are several
+            solutions.
+        </p>
+        <p> First, we could keep track of all numeric values using
+            integers, which are always completely accurate, even if they
+            don't have the same range as floating-point numbers.
+            Instead of keeping track of a floating-point value
+            like $ 1,253.75, you'd store it as the integer 125,375,
+            and remember that the number represents <b>pennies</b>.
+        </p>
+        <p> If you have to do a floating-point calculation, such as
+            averaging, you'd need to manually "round" the value by
+            adding a half-cent or .005 before converting the floating-point
+            number back to an int.
+        </p>
+        <p> That's what high-performance financial applications, like
+            those used by Wall Street and banks, do. Rather than
+            using floating point numbers at all, you can store the actual
+            data and do calculations in thousands or a cent (called mills)
+            and only convert to dollars and cents when doing input and
+            output.
+        </p>
+        <p> The only problem is, since a long can only store
+            numbers up to about +/= 18 quintillion, the largest dollar
+            amount you'll be able to represent is about 180 trillion. That's
+            probably enough for your personal financial situation (as long
+            as the dollar doesn't accelerate its devaluation), but it's not
+            enough for things like the national debt.
+        </p>
+    <h4>A Money Data Type</h4>
+        <p> A better solution would be to create an accurate type to
+            represent <code>Money</code>. Many programming languages
+            have something like this. In C#, for instance, this type
+            is known as <code>Decimal</code>. Generically, these are
+            called <i>BCD</i> or <i>Binary Coded Decimal</i> types.
+        </p>
+        <p> While Java doesn't have a BCD primitive type, it does have
+            several <b>arbitrary-range number systems</b> represented
+            as classes in the Java Class Libraries. An arbitrary-range
+            number system is one that more closely mimics the theoretical
+            number system, since it's numbers aren't restricted to a
+            particular amount of storage.
+        </p>
+        <p> The Java class that's best
+            for money is called <code>BigDecimal</code>. Using
+            <code>BigDecimal</code> for your calculations, though,
+            is more complex and your program will run more slowly.
+        </p>
+    <h3>Which Should You Use?</h3>
+        <p> Choosing between using scientific notation and decimal
+            notation when you write your literals is usually not difficult.
+            If you have very large numbers or very small numbers, you
+            should use scientific notation. If you have "numbers of everyday
+            experience", you probably want to use regular decimal notation.
+        </p>
+        <p> Deciding between the types <code>float</code> and <code>double</code>
+            also is usually not very difficult. The type <code>double</code>
+            is the "natural" type for most floating-point hardware today,
+            so, unless you have some compelling reason to use
+            <code>float</code>, don't.
+        </p>
+        <p> Finally, what about choosing between <code>int</code> and
+            <code>double</code>? Why not just do everything as a <code>
+            double</code> so you only have to deal with one numeric type?
+            As tempting as that sounds, doing calculations with <code>double
+            </code> is significantly slower than using <code>int</code>.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

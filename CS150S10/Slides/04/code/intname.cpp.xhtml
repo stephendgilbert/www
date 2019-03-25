@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>intname.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl"><pre class="hl"><span class="hl line">  1 </span><span class="hl dir">#include &lt;iostream&gt;</span>
+<span class="hl line">  2 </span><span class="hl dir">#include &lt;string&gt;</span>
+<span class="hl line">  3 </span>
+<span class="hl line">  4 </span><span class="hl kwa">using namespace</span> std<span class="hl sym">;</span>
+<span class="hl line">  5 </span>
+<span class="hl line">  6 </span><span class="hl com">/**</span>
+<span class="hl line">  7 </span><span class="hl com">   Turns a digit into its English name.</span>
+<span class="hl line">  8 </span><span class="hl com">   &#64;param n an integer between 1 and 9</span>
+<span class="hl line">  9 </span><span class="hl com">   &#64;return the name of n (&quot;one&quot; . . . &quot;nine&quot;)</span>
+<span class="hl line"> 10 </span><span class="hl com">*/</span>
+<span class="hl line"> 11 </span>string <span class="hl kwd">digit_name</span><span class="hl sym">(</span><span class="hl kwb">int</span> n<span class="hl sym">)</span>
+<span class="hl line"> 12 </span><span class="hl sym">{</span>
+<span class="hl line"> 13 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">1</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;one&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 14 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">2</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;two&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 15 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">3</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;three&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 16 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">4</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;four&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 17 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">5</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;five&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 18 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">6</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;six&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 19 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">7</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;seven&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 20 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">8</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;eight&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 21 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">9</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;nine&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 22 </span>   <span class="hl kwa">return</span> <span class="hl str">&quot;&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 23 </span><span class="hl sym">}</span>
+<span class="hl line"> 24 </span>
+<span class="hl line"> 25 </span><span class="hl com">/**</span>
+<span class="hl line"> 26 </span><span class="hl com">   Turns a number between 10 and 19 into its English name.</span>
+<span class="hl line"> 27 </span><span class="hl com">   &#64;param n an integer between 10 and 19</span>
+<span class="hl line"> 28 </span><span class="hl com">   &#64;return the name of n (&quot;ten&quot; . . . &quot;nineteen&quot;)</span>
+<span class="hl line"> 29 </span><span class="hl com">*/</span>
+<span class="hl line"> 30 </span>string <span class="hl kwd">teen_name</span><span class="hl sym">(</span><span class="hl kwb">int</span> n<span class="hl sym">)</span>
+<span class="hl line"> 31 </span><span class="hl sym">{</span>
+<span class="hl line"> 32 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">10</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;ten&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 33 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">11</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;eleven&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 34 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">12</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;twelve&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 35 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">13</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;thirteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 36 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">14</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;fourteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 37 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">15</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;fifteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 38 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">16</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;sixteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 39 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">17</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;seventeen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 40 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">18</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;eighteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 41 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">19</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;nineteen&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 42 </span>   <span class="hl kwa">return</span> <span class="hl str">&quot;&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 43 </span><span class="hl sym">}</span>
+<span class="hl line"> 44 </span>
+<span class="hl line"> 45 </span><span class="hl com">/**</span>
+<span class="hl line"> 46 </span><span class="hl com">   Gives the English name of a multiple of 10.</span>
+<span class="hl line"> 47 </span><span class="hl com">   &#64;param n an integer between 2 and 9</span>
+<span class="hl line"> 48 </span><span class="hl com">   &#64;return the name of 10 * n (&quot;twenty&quot; . . . &quot;ninety&quot;)</span>
+<span class="hl line"> 49 </span><span class="hl com">*/</span>
+<span class="hl line"> 50 </span>string <span class="hl kwd">tens_name</span><span class="hl sym">(</span><span class="hl kwb">int</span> n<span class="hl sym">)</span>
+<span class="hl line"> 51 </span><span class="hl sym">{</span>
+<span class="hl line"> 52 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">2</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;twenty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 53 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">3</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;thirty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 54 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">4</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;forty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 55 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">5</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;fifty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 56 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">6</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;sixty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 57 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">7</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;seventy&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 58 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">8</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;eighty&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 59 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>n <span class="hl sym">==</span> <span class="hl num">9</span><span class="hl sym">)</span> <span class="hl kwa">return</span> <span class="hl str">&quot;ninety&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 60 </span>   <span class="hl kwa">return</span> <span class="hl str">&quot;&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 61 </span><span class="hl sym">}</span>
+<span class="hl line"> 62 </span>
+<span class="hl line"> 63 </span><span class="hl com">/**</span>
+<span class="hl line"> 64 </span><span class="hl com">   Turns a number into its English name.</span>
+<span class="hl line"> 65 </span><span class="hl com">   &#64;param n a positive integer &lt; 1,000,000</span>
+<span class="hl line"> 66 </span><span class="hl com">   &#64;return the name of n (e.g. &quot;two hundred seventy four&quot;)</span>
+<span class="hl line"> 67 </span><span class="hl com">*/</span>
+<span class="hl line"> 68 </span>string <span class="hl kwd">int_name</span><span class="hl sym">(</span><span class="hl kwb">int</span> n<span class="hl sym">)</span>
+<span class="hl line"> 69 </span><span class="hl sym">{</span>
+<span class="hl line"> 70 </span>   <span class="hl kwb">int</span> c <span class="hl sym">=</span> n<span class="hl sym">;</span> <span class="hl slc">// The part that still needs to be converted</span>
+<span class="hl line"> 71 </span>   string r<span class="hl sym">;</span> <span class="hl slc">// The return value</span>
+<span class="hl line"> 72 </span>
+<span class="hl line"> 73 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>c <span class="hl sym">&gt;=</span> <span class="hl num">1000</span><span class="hl sym">)</span>
+<span class="hl line"> 74 </span>   <span class="hl sym">{</span>
+<span class="hl line"> 75 </span>      r <span class="hl sym">=</span> <span class="hl kwd">int_name</span><span class="hl sym">(</span>c <span class="hl sym">/</span> <span class="hl num">1000</span><span class="hl sym">) +</span> <span class="hl str">&quot; thousand&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 76 </span>      c <span class="hl sym">=</span> c <span class="hl sym">%</span> <span class="hl num">1000</span><span class="hl sym">;</span>
+<span class="hl line"> 77 </span>   <span class="hl sym">}</span>
+<span class="hl line"> 78 </span>
+<span class="hl line"> 79 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>c <span class="hl sym">&gt;=</span> <span class="hl num">100</span><span class="hl sym">)</span>
+<span class="hl line"> 80 </span>   <span class="hl sym">{</span>
+<span class="hl line"> 81 </span>      r <span class="hl sym">=</span> r <span class="hl sym">+</span> <span class="hl str">&quot; &quot;</span> <span class="hl sym">+</span> <span class="hl kwd">digit_name</span><span class="hl sym">(</span>c <span class="hl sym">/</span> <span class="hl num">100</span><span class="hl sym">) +</span> <span class="hl str">&quot; hundred&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 82 </span>      c <span class="hl sym">=</span> c <span class="hl sym">%</span> <span class="hl num">100</span><span class="hl sym">;</span>
+<span class="hl line"> 83 </span>   <span class="hl sym">}</span>
+<span class="hl line"> 84 </span>
+<span class="hl line"> 85 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>c <span class="hl sym">&gt;=</span> <span class="hl num">20</span><span class="hl sym">)</span>
+<span class="hl line"> 86 </span>   <span class="hl sym">{</span>
+<span class="hl line"> 87 </span>      r <span class="hl sym">=</span> r <span class="hl sym">+</span> <span class="hl str">&quot; &quot;</span> <span class="hl sym">+</span> <span class="hl kwd">tens_name</span><span class="hl sym">(</span>c <span class="hl sym">/</span> <span class="hl num">10</span><span class="hl sym">);</span>
+<span class="hl line"> 88 </span>      c <span class="hl sym">=</span> c <span class="hl sym">%</span> <span class="hl num">10</span><span class="hl sym">;</span>
+<span class="hl line"> 89 </span>   <span class="hl sym">}</span>
+<span class="hl line"> 90 </span>
+<span class="hl line"> 91 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>c <span class="hl sym">&gt;=</span> <span class="hl num">10</span><span class="hl sym">)</span>
+<span class="hl line"> 92 </span>   <span class="hl sym">{</span>
+<span class="hl line"> 93 </span>      r <span class="hl sym">=</span> r <span class="hl sym">+</span> <span class="hl str">&quot; &quot;</span> <span class="hl sym">+</span> <span class="hl kwd">teen_name</span><span class="hl sym">(</span>c<span class="hl sym">);</span>
+<span class="hl line"> 94 </span>      c <span class="hl sym">=</span> <span class="hl num">0</span><span class="hl sym">;</span>
+<span class="hl line"> 95 </span>   <span class="hl sym">}</span>
+<span class="hl line"> 96 </span>
+<span class="hl line"> 97 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>c <span class="hl sym">&gt;</span> <span class="hl num">0</span><span class="hl sym">)</span>
+<span class="hl line"> 98 </span>      r <span class="hl sym">=</span> r <span class="hl sym">+</span> <span class="hl str">&quot; &quot;</span> <span class="hl sym">+</span> <span class="hl kwd">digit_name</span><span class="hl sym">(</span>c<span class="hl sym">);</span>
+<span class="hl line"> 99 </span>
+<span class="hl line">100 </span>   <span class="hl kwa">return</span> r<span class="hl sym">;</span>
+<span class="hl line">101 </span><span class="hl sym">}</span>
+<span class="hl line">102 </span>
+<span class="hl line">103 </span><span class="hl kwb">int</span> <span class="hl kwd">main</span><span class="hl sym">()</span>
+<span class="hl line">104 </span><span class="hl sym">{</span>
+<span class="hl line">105 </span>   <span class="hl kwb">int</span> n<span class="hl sym">;</span>
+<span class="hl line">106 </span>   cout <span class="hl sym">&lt;&lt;</span> <span class="hl str">&quot;Please enter a positive integer: &quot;</span><span class="hl sym">;</span>
+<span class="hl line">107 </span>   cin <span class="hl sym">&gt;&gt;</span> n<span class="hl sym">;</span>
+<span class="hl line">108 </span>   cout <span class="hl sym">&lt;&lt;</span> <span class="hl kwd">int_name</span><span class="hl sym">(</span>n<span class="hl sym">);</span>
+<span class="hl line">109 </span>   <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl sym">;</span>
+<span class="hl line">110 </span><span class="hl sym">}</span>
+<span class="hl line">111 </span>
+<span class="hl line">112 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.6.10, http://www.andre-simon.de/-->

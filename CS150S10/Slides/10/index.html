@@ -1,0 +1,520 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.'>
+	<meta name='Publisher' content='John Wiley & Sons, Inc.'>
+	<meta http-equiv='Content-Language' content='en-us'>
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+	<meta name='Date' content='2008'>
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'>
+	//<![CDATA[
+		title()
+		//]]>
+	</script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To learn about the method of recursion </li>
+	<li> To understand the relationship between recursion and iteration </li>
+	<li> To analyze problems that are much easier to solve by recursion than
+	by iteration </li>
+	<li> To learn to "think recursively" </li>	
+	<li> To be able to use recursive helper functions </li>
+	<li> To understand when the use of recursion affects the efficiency
+	of an algorithm </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Intro </h1>
+<h3> Recursion is:</h3>
+<ul>
+	<li> When the same computation recurs, or occurs repeatedly,
+	as the problem is solved</li>
+	<li> A technique that breaks up complex computational problems into simpler
+	ones </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "1" )
+		//]]>
+	</script>
+	Triangle Numbers</h1>
+<ul>
+	<li> Compute the <i>nth triangle number</i>, which is the area of a
+		triangle of width n, assuming each [] square has area 1:
+		<code>
+[]
+[][]
+[][][]</code>
+	</li>
+	<li> We will use a class to represent a Triangle </li>
+	<li> If the width of the triangle is 1, its area is 1:
+<code>
+int Triangle::get_area()
+{
+   if (width == 1) return 1;
+   ...
+}
+</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1>Triangle Numbers (Larger Triangle) </h1>
+<ul>
+	<li> To deal with general case, consider this picture:
+		<code>
+<span class='blue'>[]
+[][]
+[][][]</span>
+[][][][]</code>
+	</li>
+	<li> Knowing the area of the smaller, colored triangle, the area of the
+		larger triangle is:
+		<code>
+smaller_area + width</code> </li>
+	<li> To find the smaller area, make a smaller triangle and ask it for its
+		size:
+		<code>
+Triangle smaller_triangle(width - 1);
+int smaller_area = smaller_triangle.get_area();</code>
+	</li>
+	<li> If the width is 1, then of course the area is 1. Then the area of
+		the larger triangle is clearly the sum of the smaller area and the
+		width </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Triangle Numbers (Key Ideas) </h1>
+<ul>
+	<li> Full <tt>get_area</tt> function:
+<code>
+int Triangle::get_area() const
+{
+   if (width == 1) return 1;
+   Triangle smaller_triangle(width - 1);
+   int smaller_area = smaller_triangle.get_area();
+   return smaller_area + width;
+}</code>
+	</li>
+	<li> To make sure that recursion is successful:
+		<ul>
+			<li> Every recursive call must simplify the computation in some
+				way </li>
+			<li> There must be special cases to handle the simplest
+				computation directly </li>
+			</ul>
+		</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Triangle Numbers &mdash; <tt>triangle.cpp</tt></h1>	
+	<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "triangle.cpp" )
+	//]]>
+</script>
+</div>
+
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Infinite Recursion </h3>
+<ul> 
+	<li> A function calling itself over and over with no end in sight </li>
+	<li> Exhausts all bookkeeping memory </li>
+	<li> Program shuts down and reports a "stack fault" </li>
+	<li> Happens because the parameter values didn't get simpler or a
+		terminating case is missing </li>	
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "2" )
+		//]]>
+	</script>
+	Permutations</h1>
+<ul>
+	<li> A rearrangement of the letters </li>
+	<li> Function that generates all permutations of a word:
+		<code>
+vector&lt;string&gt; generate_permutations(string word)</code>
+		<ul>
+			<li> Iterates through the character positions of the word </li>
+			<li> Each loop iteration creates a shorter word that omits the current
+				position </li>
+			<li> Compute the permutations of the shorter word </li>
+			<li> For each of the shorter permutations, add the omitted letter </li>
+		</ul>
+	</li>
+	<li> Algorithm is recursive &mdash; uses the fact that we can generate
+		the permutations of shorter words
+		<ul>
+			<li> Stopping point is word of length one. Permutation is only
+			itself </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Permutations &mdash; <tt>permute.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "permute.cpp" )
+//]]>
+</script>
+</div>
+
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+<script type='text/javascript'>
+//<![CDATA[
+	taxonomy( "2" )
+//]]>
+</script>
+</h1>
+<h3> Tracing Through Recursive Functions </h3>
+<ul> 
+<li>When debugging, watch the call stack to understand which nested call you are in </li></ul>
+</div>
+
+<div class='slide'>
+<h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+	section( "3" )
+	//]]>
+</script>
+Thinking Recursively</h1>
+<h3>Step 1</h3>
+<ul>
+	<li> Goal is to implement the predicate function
+		<code>
+bool is_palindrome(string s)</code>
+	</li>
+	<li> Consider ways to simplify the inputs so that the same
+		problem can be applied to the simpler input </li>
+	<li> In our example, the input is the string that we need to test </li>
+	<li> Possible ways to simplify:
+		<ul>
+			<li> Remove the first character </li>
+			<li> Remove a character from the middle </li>
+			<li> Cut the string into two halves </li>
+		</ul>
+	</li>
+	<li> To find a recursive solution, reduce the input to a
+	simpler input for the same problem </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Thinking Recursively  </h1>
+ <h3>Step 2</h3>
+<ul>
+	<li> Combine solutions with simpler inputs to a solution of the original
+		problem </li>
+	<li> Consider solutions from Step 1. How can you apply the solution for 
+	the simpler inputs to current problem? </li>
+	<li> In the palindrome problem, you cannot cut the string in half because 
+		you will not be able to further test for the palindromes:
+		<code>
+"rotor": "rot" and "or"</code>
+	</li>
+	<li> More promising is removing the first and last characters:
+		<code>
+"rotor": "oto"</code>
+	</li>
+	<li> Then, a word is a palindrome if:
+		<ul>
+			<li> The first and last letters match, and </li>
+			<li> The word obtained by removing the first and last 
+			letters is a palindrome </li>
+		</ul>
+	</li>
+</ul>
+</div>
+	
+<div class='slide'>
+<h1> Thinking Recursively</h1>
+ <h3>Step 3 </h3>
+<ul>
+	<li> Find solutions to the simplest inputs </li>
+	<li> To ensure recursion comes to a stop, deal
+	with simplest inputs separately </li>
+	<li> The simplest strings for the palindrome test:
+		<ul>
+			<li> Strings with 2 characters </li>
+			<li> Strings with a single character </li>
+			<li> The empty string </li>
+		</ul>
+	</li>
+	<li> A string with 2 characters actually breaks in half into a single
+		character, which is a palindromes in itself </li>
+	<li> Strings of length 0 or 1 are palindromes because they are the same when read backwards</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Thinking Recursively</h1>
+ <h3>Step 4 </h3>
+<ul>
+	<li> Combine the simple cases and the reduction step </li>
+	<li> Make separate cases for the simple inputs from Step 3
+	<li> If the input isn't one of the simplest cases, implement logic from Step 2 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Thinking Recursively &mdash; <tt>palindrome.cpp </tt></h1>	
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "palindrome.cpp" )
+	//]]>
+</script>
+</div>
+
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "4" )
+		//]]>
+	</script>
+	Recursive Helper Functions</h1>
+
+<ul>
+	<li> slight change to original problem can help to find a recursive solution
+		 </li>
+	<li> Adjust the <tt>start</tt> and <tt>end</tt>
+		parameters to skip over matching letter pairs, instead of constructing
+		new <tt>string</tt> objects to represent the shorter strings
+		<code>
+/*	
+   Tests whether a substring of a string is a palindrome.
+   @param s the string to test
+   @param start the index of the first character of the substring
+   @param end the index of the last character of the substring
+   @return true if the substring is a palindrome 
+*/
+bool substring_is_palindrome(string s, int start, int end)
+{
+   // Separate case for substrings of length 0 and 1
+   if (start >= end) return true;
+	
+   if (s[start] == s[end])
+      // Test substring that doesn¿t contain the first and last letters
+      return substring_is_palindrome(s, start + 1, end - 1);
+   else
+      return false;
+}</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "5" )
+		//]]>
+	</script>
+	Mutual Recursion</h1>
+
+<ul>
+	<li> In a mutual recursion, a set of cooperating functions calls each
+		other repeatedly </li>
+	<li> We will develop a program that can compute the values of arithmetic
+		expressions such as:
+		<code>
+3 + 4 * 5
+(3 + 4) * 5
+1 - (2 - (3 - (4 - 5)))</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Mutual Recursion </h1>
+<table border=0>
+<tr>
+	<td>
+		<div class='center'>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "image1.png" )
+			//]]>
+			</script>
+			<p class='caption'> <span class='blue'>Figure 3</span> Syntax Diagrams for
+			Evaluating an Expression:</p>
+		</div>
+	</td>
+	<td>
+		<ul>
+			<li> <dfn>expression</dfn> &mdash; either a term, or a sum or
+				difference of terms </li>
+			<li> <dfn>term</dfn> &mdash; either a factor, or a product or quotient of
+				factors </li>
+			<li> <dfn>factor</dfn> &mdash; a number or expression enclosed
+				in parentheses </li>
+		</ul>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Mutual Recursion</h1>
+<ul>
+	<li> To compute the value of an expression, implement
+		<ul>
+			<li> <tt>expression_value</tt> &mdash; first calls <tt>term_value</tt> to get
+				the value of the first term. If the next input character is + or -,
+				it calls <tt>term_value</tt> again and does the appropriate operation </li>
+			<li> <tt>term_value</tt> &mdash; calls <tt>factor_value</tt> in the same way,
+				multiplying or dividing </li>
+			<li> <tt>factor_value</tt> &mdash; checks if the next character is a '(' or a
+				digit. If there is a parenthesis, it makes a recursive call to
+				<tt>expression_value</tt> </li>
+		</ul>
+	</li>
+	<li> The three are mutually recursive </li>
+	<li> At each recursive call, at least some of the characters of the
+	input are consumed, so eventually the recursion must come to an end </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Mutual Recursion &mdash; <tt>eval.cpp</tt> </h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "eval.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "6" )
+		//]]>
+	</script>
+	The Efficiency of Recursion </h1>
+<ul>
+	<li> Occasionally, a recursive solution runs much slower than its
+	iterative counterpart</li>
+	<li> Usually the recursive solution runs at about the same
+	speed </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> The Efficiency of Recursion &mdash; <tt>fibtest.cpp</tt> </h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fibtest.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of Recursion &mdash; <tt>fibtrace.cpp</tt> </h1>
+<p> To determine why it takes so long to process, insert trace messages in
+	the function </p>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fibtrace.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of Recursion (Fibonacci) </h1>
+<ul>
+	<li> Computing the Fibonacci sequence takes so long because it is
+	computing the same values over and over </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "image2.png" )
+//]]>
+</script>
+</div>
+<p class='caption'> <span class='blue'>Figure 5</span> Call Pattern of the
+Recursive fib Function </p>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of Recursion &mdash; <tt>fibloop.cpp</tt> </h1>
+<ul>
+	<li> This function runs <i>much</i> faster, and does not compute many
+	intermediate results multiple times </li>
+</ul>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fibloop.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of Recursion</h1>
+<h2>Palindrome Comparison</h2>
+<ul>
+	<li> In the case of the palindrome, both the iteration and recursion run
+		at about the same speed </li>
+	<li> Iteration executes the loop <i>n</i>/2 times </li>
+</ul>
+</div>
+
+</body>
+</html>

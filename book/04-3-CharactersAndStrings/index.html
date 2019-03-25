@@ -1,0 +1,705 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>4.3&mdash;Characters and Strings</title>
+    <style type='text/css'>
+        td, th { padding: 5px; }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner12">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 4.3</p>
+        <p id='lessonTitle'>Characters and Strings</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/f01.gif" class="right" alt="A telegraph key.">
+            <b><span class="cap">A</span>s you saw in Chapter 1</b>,
+            computers store <i>character data</i> by using an
+            agreed-upon correspondence or mapping between a number and
+            a character, similar to the encoding used in Morse Code.
+        </p>
+        <p> Rather than use Morse-Code, invented for the telegraph,
+            computer makers invented new codes. One of these was
+            <a href="http://jargon.net/jargonfile/e/EBCDIC.html" target="_blank">
+            <b>EBCDIC</b></a>, invented by IBM for use
+            on their mainframe computers.
+        </p>
+        <p> IBM considered EBCDIC a <i>proprietary</i> technology,
+            so the American Standards Institute (ANSI), created an
+            "open source" alternative, called ASCII (The American Standard
+            Code for Information Interchange), which has been, more or
+            less, the standard in the PC and Unix worlds.
+        </p>
+    <h3>ASCII</h3>
+        <a href='javascript:var%20w=window.open("images/z03.gif","","width=585,height=630");'>
+        <img class="right" style="border:none;" src="images/z04.gif" alt="ASCII Chart. (Click image to enlarge.)">
+      </a>
+        <p> ASCII uses 7 bits to store its characters. In
+            ASCII for instance, the number 65 stands for the capital A.
+            Here is a chart showing the standard ASCII characters and their
+            numeric representations. (If your eyesight is getting a little
+            blurry, as mine is, click the image and you can see the chart
+            full-size.)
+        </p>
+        <p> Because ASCII only uses 7 bits, each character can be stored in
+            a single byte, with room left over for some additional information.
+            This additional bit has been put to a variety of uses. The early
+            CPM/PC word processor, WordStar, used the extra bit to embed
+            "soft" line breaks. With the introduction of the IBM PC, the
+            extra bit was used to provide an additional 128 characters,
+            including some widely used line-drawing characters.
+            <br style='clear:both;'>
+        </p>
+        <p> Many, however found that they didn't need that extra bit after all,
+            and that seven bits were more than enough. Do a search on ASCII
+            using your favorite search engine, and you'll see what I mean.
+        </p>
+    <div class="box" style="line-height: 75%;font-family:monospace;font-weight:bold;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )&nbsp; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~(^^^^)~ <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+) @@ \~_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |\ <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/&nbsp;&nbsp;&nbsp;&nbsp; | \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+\~/ <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+( 0&nbsp; 0&nbsp; ) \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hey <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+---___/~&nbsp; \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hiya <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/'__/ |&nbsp;&nbsp; ~-_____/
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Doin? <br>
+        &nbsp;&nbsp; o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _&nbsp;&nbsp; ~----~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ___---~ <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+((~\&nbsp; _|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Oops! I mean MOOOOOOO <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o&nbsp; O //-_ \/ |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~&nbsp; | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^&nbsp;&nbsp; \_ /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+~&nbsp; | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp; ~ | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp; \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /\ <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/ -_____-\&nbsp;&nbsp; \ ~~-*&nbsp; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .==. <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/ /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /
+/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; | <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/~&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //~&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |__|&nbsp; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+~~~~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~~~~
+    </div>
+    <p> This is a picture of a cow blowing bubbles, isn't it?</p>
+    <h3>Unicode</h3>
+        <p> Although ASCII met a real need for a quasi-universal
+            character encoding during the first half-century of the
+            computer age, today ASCII is really showing its age. The
+            computer world is now much larger than it was in the past,
+            especially with the Internet explosion. Not only are computer
+            users using non-English languages, but their languages are often
+            written using non-Roman alphabets; alphabets that <b>won't</b>
+            fit into ASCII's seven or eight bits, no matter how much
+            they are shoe-horned.
+        </p>
+        <p> <a href='http://www.unicode.org/' target="blank">
+            <img src='images/unicode.png' class='right' style='border:none;'
+                alt='The Unicode Logo.'
+                title='Click to go to the Unicode Web Site.'>
+            </a>
+            Several alternative character encoding schemes
+            have been suggested to replace ASCII, and as a programmer you
+            might have to deal with some of them, such as
+            <a href='http://en.wikipedia.org/wiki/DBCS' target='_blank'>
+            <b>DBCS</b></a>
+            (<i>Double-Byte Character Set</i>), and other
+            multi-byte character sets.
+        </p>
+        <p> By now, however, it looks like the winner in the race to
+            succeed ASCII is the <b>Unicode</b> character set, which is,
+            as you might suspect, is used by Java to represent characters.
+            You can find more about Unicode by clicking the logo on the
+            right to visit their Web site.
+        </p>
+        <p> Now, let's see how Java stores characters internally. To help
+            us out, we'll use our specialist in internal
+            examinations, <b>DrJava</b>'s Interactions Pane.
+        </p>
+    <h2>The char Data Type</h2>
+        <p> Java stores characters using the <code>char</code>
+            primitive data type. Unlike the integer and floating-point types,
+            the <code>char</code> family has only one member. Each
+            <code>char</code> variable, (or literal), uses <b>two bytes</b>
+            of storage. Each character is stored as an <b>unsigned binary
+            integer</b>, and is interpreted by using the Unicode character set.
+        </p>
+        <div class='info'>
+        <p> Because the <code>char</code> type is internally represented as
+            a number, you can use the arithmetic operators to manipulate
+            <code>char</code> variables. However, when you do this, the
+            result is a number that must be cast back to a <code>char</code>
+            before it is used.
+        </p>
+        </div>
+        <p>
+            By now, the pattern you use to create a <code>char</code>
+            variable should look familiar; it's the same one you used to
+            create <code>int</code> and <code>double</code> variables.
+            You create <code>char</code> variables like the examples
+            shown here:
+            <img src='images/char01.gif' class='right' alt='Defining several different char varaibles.'>
+        </p>
+        <p> These characters represent:</p>
+        <ul>
+            <li>my middle initial</li>
+            <li>the character produced when you hold down the
+                Control key and press the letter A.
+            </li>
+            <li>the character produced when you press the Tab key</li>
+            <li>the character produced when you type the backslash character</li>
+            <li>and the character that represents the copyright symbol,
+                which doesn't appear on your keyboard.
+            </li>
+        </ul>
+        <p> Each of the variables shown here requires a <b>slightly different
+            form of initialization</b>, even when we use <b>character literals</b>.
+        </p>
+    <h3>A Literal D</h3>
+        <p> Let's start with the first, and easiest of these examples.
+            How do you write a literal <b>D</b>? <i>(That's my middle
+            initial.)</i> If you try simply inserting the character&#8212;which
+            is what you did with literal integers and floating point
+            numbers&#8212;you end up with this:<br>
+            <img src='images/char02.gif' class='inlineCenter' alt='A literal D incorrectly.'>
+            At first, this looks OK, but it turns out to have a fatal flaw.
+            How does the compiler know whether you want the <b>character
+            literal</b> D, or a <b>variable or class named</b> D? Since
+            D is a valid <b>identifier</b>, the compiler goes searching for it,
+            comes up empty, and issues a stern rebuke.
+        </p>
+        <p> The solution is easy. To placate the Java compiler,
+            we simply have to add some <b>punctuation</b> to our character to
+            let the compiler know that it is, in fact, <b>a character literal</b>.
+            The punctuation used is the single quote (') character.
+            With this new-found knowledge, it's obvious that our definition
+            should be written as:<br>
+            <img src='images/char03.gif' class='inlineCenter' alt='char middleInitial initialization.'>
+            When you write a character literal, you can only enclose
+            <b>one</b> single character at a time; also, make sure you
+            use the single quotes, not the double quotes. These are both
+            illegal:<br>
+            <img src='images/char04.gif' class='inlineCenter' alt='Illegal initialization types.'>
+            Notice that even though the second example contains only a single
+            character, it <b>is not</b> a <code>char</code> literal, but a
+            <code>String</code> literal, because of the <b>double</b> quotes.
+            Strings are <b>objects</b>, not primitive
+            types, and so Java won't permit this assignment.
+        </p>
+    <h3>Other Literals</h3>
+        <p> Writing a literal D proved to be quite simple, but
+            how about the other characters? Let's start with <b>controlA</b>.
+        </p>
+        <p> The first 128 characters in the Unicode character set
+            are the same as those used by ASCII. In ASCII, (and in
+            Unicode), the first 32 characters are called <b>control
+            characters</b>. These are non-printing characters that
+            were given the name control characters because they were used
+            to control terminals and printers during the early days of
+            computing.
+        </p>
+        <p> To produce a control character, you hold down the Control key
+            (often abbreviated Ctrl) on
+            your keyboard (much like you would with the Shift key),
+            and press one of the alphabetic characters A-Z. This yields the
+            control characters whose ASCII/Unicode values are 1-26.
+        </p>
+        <div class='info'>
+        <p>
+            Control characters <b>still</b> are used to control the
+            programs you run. If you open your word processor and start
+            typing, when you type Ctrl+S, instead of inserting the
+            character with the Unicode value 19 (Ctrl-S), your word processor
+            is likely to <b>save</b> your file instead.
+        </p>
+        </div>
+        <p> As you may have guessed, you can initialize <b>controlA</b>
+            by just using its integer Unicode value like this:<br>
+            <img src='images/char06.gif' class='inlineCenter' alt='Using a numeric literal to initialize a char varaible.'>
+            A better way, (because it makes your intentions clearer),
+            is to use a <b>Unicode escape sequence</b>,
+            which you'll meet in the next few sections.
+        </p>
+    <h3>"Special" Control Characters</h3>
+        <p> The next character we need to initialize is called
+            <b>horizontalTab</b>. If you look back at the ASCII chart, or
+            at the first page of the Unicode character charts, you'll see
+            that many of the control characters have names, which allude
+            to their functions under traditional computer systems. For
+            instance, the character Unicode 7 (Ctrl-G) is also
+            called the <b>BEL</b> character, because it produced audible
+            output on the early teletypes.
+            <img src='images/char07.gif' class='right' alt='Some control-character names.'>
+        </p>
+        <p> Using the same scheme, Unicode character 8 was the <b>BS</b>
+            (back-space) character, and Unicode character 9 was the
+            horizontal tab character, or <b>HTAB</b>, the character
+            produced by pressing the Tab key on your keyboard.
+        </p>
+        <p> Rather than remembering which code belonged to which key,
+            however, programmers came up with a shorthand notation for these keys
+            called an <b>escape sequence</b>. Here's a short explanation,
+            repeated from earlier in the text, when the concept was
+            first introduced:
+        </p>
+    <div class="box">
+        <p style="margin-top: 0; text-align:center; padding:.25em; background-color:honeydew;font-weight:bold;font-size: larger;">
+            What is an Escape Sequence?
+        </p>
+        <p> An escape sequence is a method of writing "difficult"
+            characters, that is, characters that are invisible or that
+            are used, normally to delimit other characters.
+        </p>
+        <p> The first part of an escape sequence is to designate one
+            character as the "<b>escape character</b>". When that character
+            is encountered&#8212;in a character literal or in a group of
+            characters, called a <code>String</code>&#8212;the compiler treats
+            it as a flag that means:
+        </p>
+        <p style="text-align:center;background-color:transparent; color: blue; font-size: larger;font-weight:bold;">
+            "Look out! The next character is special."
+        </p>
+        <p> In Java, the escape character is the <b>backslash</b>.
+            Whenever a backslash appears in a character constant, the
+            following character is set aside for special treatment.
+        </p>
+    </div>
+        <p> Java maintains "special notation" for several of the
+            common control characters, as escape sequences.
+            These include:
+        </p>
+        <table style="width:500px;margin:auto;" border="1">
+        <tbody>
+            <tr>
+                <th class="tcode">\n</th>
+                <td class="tdata">The newline character (Unicode 10)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\r</th>
+                <td class="tdata">The carriage-return (ENTER) (Unicode 13)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\t</th>
+                <td class="tdata">The horizontal tab character (Unicode 9)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\f</th>
+                <td class="tdata">The form-feed character (Unicode 12)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\b</th>
+                <td class="tdata">The backspace character (Unicode 8)</td>
+            </tr>
+        </tbody>
+        </table>
+        <p> With this information, it's easy to see how to initialize the
+            <b>horizontalTab</b> variable, using one of the special
+            escape characters:<br>
+            <img src='images/char08.gif' class='inlineCenter' alt='Initializing the horizontal tab with a predefined escape sequence.'>
+        </p>
+        <div class='alert'>
+        <p> Notice that when you use an escape sequence to
+            initialize a <code>char</code> variable, that you use
+            <b>single
+            quotes</b> around the whole sequence, even though the
+            sequence consists of multiple typed characters. The compiler
+            turns the compiled code <b>into a single character</b>.
+        </p>
+        </div>
+    <h3>Unicode Escapes</h3>
+        <p> In addition to using one of the special escape values shown
+            here, you can use an escape sequence to represent <b>any
+            character</b> in the Unicode character set. A Unicode escape
+            sequence starts with a backslash-u, like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            char copyright = <span class="red">'\u . . .'</span>;
+        </p>
+        <p> and is followed by the four-digit, hexadecimal Unicode
+            value, (called the <b>code point</b>), which you can look up at the
+            <b><a href="http://www.unicode.org/charts/" target="_blank">
+            Unicode Consortium</a></b>. (These are the PDF charts, I usually
+            prefer the GIF charts, but they seem to have disappeared from
+            the site. There is
+            <a href="http://macchiato.com/unicode/chart/" target="_blank">
+            <b>a JavaScript utility</b></a> available for finding
+            Unicode characters, which you may prefer.)
+        </p>
+        <p> Once you've found the 4-digit code point, you put the whole thing in
+            single quotes, just like a regular character literal.
+            Here are some examples:<br>
+            <img src='images/char09.gif' class='inlineCenter' alt='Some Unicode Escape Sequences.'>
+        </p>
+    <h3>Glyphs versus Characters</h3>
+        <p> Java allows you to use <b>any</b> of the Unicode characters
+            in your programs, by simply following the examples above.
+            However, you may be disappointed to find that not all of
+            the characters <b>display</b> the way that you expect in
+            your console programs or Java applets.
+        </p>
+        <p> That's because in even though Java stores
+            the characters internally using Unicode, when it displays the
+            characters, it uses the <b>glyphs</b> or "character pictures"
+            supplied by your operating system's
+            native font. The exact same character, for instance, can
+            be displayed in several different ways; all of the examples
+            here:<br>
+            <img src="images/f02.gif" class="inlineCenter" alt="Several different representations of a lowercase a.">
+            are different ways of representing the character 'a'.
+        </p>
+        <p> If your operating system's native font is <b>Unicode aware</b>,
+            (that is, if it has pictures or glyphs for all of the Unicode
+            characters), your applet will display correctly. If, however,
+            it only contains the basic ASCII characters, then the others
+            will not display as you expect.
+        </p>
+    <h4>Different Widget Sets</h4>
+        <p> This is further complicated when it comes to Java's GUI
+            user interface "widget" sets. Even if you use a Unicode font in
+            your Java applet, your platform's widgets, (like the AWT
+            <code>Label</code> and <code>Button</code> classes), may not
+            support Unicode. The more modern widgets, like the JFC
+            <code>JLabel</code> and <code>JButton</code> usually <b>do</b>
+            support Unicode, however. Whether or not the characters you
+            want to see are available, though, depends on the fonts
+            on your machine.
+        </p>
+    <h2>More On Strings</h2>
+        <p> <img src="images/cooper.jpeg" class="right" alt="Gary Cooper.">
+            <b><span class="cap2">E</span>ven Gary Cooper</b>, a
+            man of notoriously few words, was not reduced to speaking in
+            single characters. Most communication requires <i>groups</i>
+            of characters. In human speech we call these phrases and
+            sentences. In Java, we store phrases and sentences in
+            <code>Strings</code>.
+        </p>
+        <p> In earlier chapters, you met the <code>String</code>
+            class and worked with literals, escape sequences, output,
+            and concatenation. In this chapter, we want to take a look at the <b>methods</b>
+            available to <code>String</code> objects. But first,
+            a little review.
+        </p>
+        <p>In Java, a <code>String</code> is: </p>
+        <p class="pullquote">
+            an immutable sequence of 0..n characters.
+        </p>
+        <p> There are two things to notice about this definition that
+            makes Java <code>String</code> objects different than characters,
+            and different than strings in other programming languages.
+        </p>
+        <ul>
+            <li>First, Java strings are <b>immutable</b> or constant.
+                Just as the character literal 'A' cannot suddenly morph
+                into 'B', so a <code>String</code> object, once created,
+                can <b>never</b> be changed. It will always be composed
+                of <b>exactly</b> the same sequence of characters.
+                <div class='info'>
+                <p>This is much different than C or Pascal, where you
+                can change the individual characters that a string
+                contains. Java has the <code>StringBuilder</code> and
+                <code>StringBuffer</code> classes, which work more like strings
+                in other programming languages.
+                </p>
+                </div>
+            </li>
+            <li> Second, Java strings can hold <b>0..n</b> characters,
+                while a <code>char</code> variable must always hold
+                <b>exactly</b> one character.
+            </li>
+        </ul>
+        <p> Let's take a closer look at the nature of the <code>String</code>
+            class.
+        </p>
+    <h3>Object or Primitive?</h3>
+        <p> Because Java has a strong syntactical resemblance to
+            the C programming language, programmers often expect Java
+            <code>String</code> objects to act like "null-terminated arrays of
+            <code>char</code>", which is what strings are in C.
+            Java's <code>String</code> objects don't act like that at all!
+        </p>
+        <p> In fact, Java <b>String</b>s act a little bit like objects,
+            (but with some unusual features), and a little bit like
+            primitive types.
+        </p>
+        <ul>
+            <li><code>String</code> objects, for instance, are the <b>only</b>
+                object types that allows you to initialize them using
+                <b>literals</b>, without using the <code>new</code> operator.
+            </li>
+            <li> Furthermore, unlike the other object types, <code>String</code>
+                objects can be manipulated with several different
+                <b>operators</b>.
+            </li>
+        </ul>
+        <p> <img src="images/z06b.gif" alt="The image shows two String variables, first and second, that both refer to [or point to] the same sequence of characters" class="right">
+            <code>Strings</code> are <b>not</b> primitive, or fundamental
+            types, however. Unlike primitive types, <code>String</code>
+            variables hold <b>references</b> to <code>Strings</code>,
+            not the actual character values. That means that two
+            <code>String</code> variables can refer to the same,
+            actual <code>String</code> object like that shown
+            in the screenshot to the right.
+        </p>
+        <p> As you can imagine, if one of the <code>String</code> variables
+            shown here were allowed to change the contents of the
+            <code>String</code> object, "<b>Hello Dolly</b>", it would
+            have a serious impact on the other. That's the reason that
+            <code>String</code> objects are immutable in Java.
+        </p>
+        <p> This is not to say that you can't manipulate a <code>String</code>.
+            Unlike the numeric and character primitives, the
+            <code>String</code> has a rich variety of methods that can be
+            used to control them; they are not restricted to operator
+            manipulation. To look up those methods, you'll use the
+            <b>online Javadoc</b> documentation system, which you'll
+            learn how to use in the next section.
+        </p>
+    <h3>String Literals</h3>
+        <p> To initialize a <code>String</code> variable using a <b>literal</b>,
+            just form your <code>String</code> using regular characters,
+            and enclose the whole thing in double quotes, like this:
+        </p>
+        <p class="code">
+            String greeting = "G'day Mate!";
+        </p>
+        <p> Note that you don't have to use the escape character with the
+            single quote, when the single quote is used inside
+            a <code>String</code> literal.
+        </p>
+        <p> An embedded escape sequence inside a <code>String</code> will
+            be expanded when the characters are stored.
+            For instance, you could write:
+        </p>
+        <p class="code">
+            String message = "\u00BC is \u00BD of \u00BD";<br>
+            <span class="cmt">// Says "¼ is ½ of ½"</span>
+        </p>
+    <div class='exercise'>
+        <h5>Try it Yourself</h5>
+        <p> Here are a couple more "escape-character" exercises.</p>
+        <ul>
+        <li> Use the Unicode charts (and Google) to find the Unicode value
+            for the Registered trademark symbol (not &#8482; but &#0174;).
+            Display a sentence using the Interactions Pane contains the
+            character.
+        </li>
+        <li> Print the <code>String</code>: "The tab escape sequence is
+            \t, while the newline is \n." in the Interactions Pane.
+        </li>
+        </ul>
+
+    </div>
+
+    <h4>The null String</h4>
+        <p> A <code>String</code> variable that points to "nothing" is
+            called the <b>null</b> <code>String</code>. You cannot send
+            any messages to a <b>null</b> <code>String</code> or apply
+            any operations to a <b>null</b> <code>String</code>, except
+            for the assignment operator.
+        </p>
+        <p> Here are two field definitions that illustrate the <b>null</b>
+            <code>String</code>:
+        </p>
+        <p class="code">
+            String s1; <span class="cmt">// Not inititialized; value is null</span><br>
+            String s2 = null;
+        </p>
+        <p> In the first case, the <code>String</code> <b>s1</b> is not
+            assigned a value, so it is given the value <b>null</b> by
+            default. In the second example, the special object constant
+            value <b>null</b> is assigned to the <code>String</code>
+            <b>s2</b>.
+        </p>
+        <div class='alert'>
+        <p  >Note that if the <code>String</code>
+            <code>s1</code> is a <b>local</b> variable, Java <b>won't</b>
+            compile your code if you attempt to use the variable. If
+            <code>s1</code> were an instance or class variable, though,
+            Java wouldn't prevent you from using the variable, but a runtime
+            error would occur when you used it, just as it would
+            for the variable <code>s2</code>.
+        </p>
+        </div>
+    <h4>The Empty String</h4>
+        <p> A <b>null</b> <code>String</code> does not refer to anything.
+            The <b>empty</b> <code>String</code>, in contrast, refers to
+            a valid <code>String</code> object, one that contains <b>zero</b>
+            characters. Unlike the <b>null</b> <code>String</code>, the
+            empty <code>String</code> responds to messages and may be used
+            in <code>String</code> expressions.
+        </p>
+        <p> To create an empty <code>String</code> you use a pair of
+            adjacent double-quotes with no intervening spaces like this:
+        </p>
+        <p class="code">
+            String emptyString = "";
+        </p>
+        <div class='exercise'>
+        <h5>Try it Yourself</h5>
+        <p> OK, let's try both kinds of <code>String</code>s in DrJava.</p>
+        <ul>
+            <li>Create two variables. <code>s1</code> is a <code>null
+                String</code> and <code>s2</code> is an empty <code>String</code>.
+            </li>
+            <li>Display both of their values by simply typing their names
+                (one per line) and pressing Enter
+            </li>
+        </ul>
+        <p> See if I'm right about the methods. Evaluate the expression
+            <code>s1.length()</code> to try to display the length of
+            <code>s1</code>.
+        </p>
+        </div>
+    <h3>String Operations</h3>
+        <p> Although <code>Strings</code> are really reference types,
+            like other objects, there are also have several operators
+            that act upon <code>String</code> operands.
+        </p>
+        <p> When used with <code>Strings</code>, the "plus sign" (+) acts to
+            "paste" two <code>Strings</code> together to form a new
+            <code>String</code>, a process called <b>concatenation</b>,
+            (as you saw in earlier chapters.)
+            In addition, though, the shorthand operator (<b>+=</b>)
+            also performs concatenation when its left-hand operand is a
+            <code>String</code> variable.
+        </p>
+        <p> Here are some examples of <code>String</code> concatenation:</p>
+        <p class="code">
+            String s1 = "How";<br>
+            String s2 = "now";<br>
+            String s3 = "cow?";
+            <br>
+            String s4 = s1 + " " + s2;<br>
+            s4 += " brown " + s3;
+        </p>
+        <p> Note that you can concatenate both variables and
+            <code>String</code> literals. You can use the += operator only
+            when the value on the left is a <code>String</code>
+            <b>variable</b>, as in the last line.
+        </p>
+        <p> Well, that's the basics. In the next section, you'll learn how to
+            use some of the <b>methods</b> in the <code>String</code>
+            class, and how to <b>read the Java documentation</b>.
+        </p>
+        <div class='exercise'>
+        <h5>Try it Yourself</h5>
+        <p> Let's try out some
+            <code>String</code> concatenation. What happens if you
+            concatenate your name to a <code>null String</code>?
+            What happens if you use += to add your name to a <code>null
+            String</code> (that is, if the <code>null String</code> is
+            the variable that appears on the left of the shorthand
+            assignment operator)? Try both of these.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Characters and Strings Summary
+        </p>
+        <ul>
+            <li> Computers store characters by <b>encoding</b> them using an
+                agreed-upon mapping between a number and a character.
+            </li>
+            <li> Early computer encodings, such as <b>ASCII</b> and <b>EBCDIC</b>
+                used 7 or 8-bit character types.
+            </li>
+            <li>The <b>Unicode</b> character encoding uses 16 or more bits to
+                represent at least 65,000 different characters in many different
+                alphabets.
+            </li>
+            <li>Java's <b>primitive character type</b> is the <code>char</code>;
+                a 16-bit numeric value interpreted using the Unicode encoding
+                scheme.
+            </li>
+            <li> To write a <code>char</code> <b>literal</b>, enclose a single
+                character <b>inside single quotes</b> like this: <code>'D'</code>.
+            </li>
+            <li> <b>Predefined escape sequences</b> represent individual characters
+                that are difficult to type or to insert into your program text. Even
+                though your source code includes several characters, like '\t', only
+                one character is actually inserted into your code.
+            </li>
+            <li> <b>Unicode escape sequences</b> allow you to use <b>any</b> Unicode
+                character in your program, even those that are not on your keyboard.
+                A Unicode escape starts with <code>\u</code>, followed by the
+                4-digit hexadecimal Unicode <b>code point</b> used to represent
+                the letter, like this, <code>'\u2122'</code>, which indicates the
+                "trademark" character.
+            </li>
+            <li> For displaying output, Unicode characters <b>fonts available
+                on the computer</b> running the program. If a font does not have
+                a "picture" (or <i>glyph</i>) for a particular character, it
+                will display some alternative (typically a question mark or box).
+            </li>
+            <li> Even if your computer has Unicode fonts, software may prevent
+                the characters from displaying correctly. (You may be able to
+                display Unicode variables in the Interaction Pane, but not print
+                them using <code>System.out</code>.)
+            </li>
+            <li> <code>String</code> objects are sequences of 0-n characters.
+                Once a <code>String</code> is created, it cannot be changed.
+                We say Java <code>String</code>s are <b>immutable</b>.
+            </li>
+            <li> <code>String</code>s are actually <b>objects</b> that have
+                some special capabilities just for convenience sake. They
+                are <b>not</b> primitive or built-in types as in some
+                languages.
+            </li>
+            <li> <code>String</code> <b>literals</b> are just characters enclosed
+                in <b>double quotes</b>. If your text contains escape sequences,
+                you do not need to quote them separately.
+            </li>
+            <li>The <b>empty</b> <code>String</code> is one that contains 0
+                characters, while the <b>null</b> <code>String</code> is a
+                variable that does not refer to a <code>String</code> object.
+            </li>
+            <li><code>String</code> objects may be combined to create new
+                strings, using the <b>concatenation operators</b>, <code>+</code>
+                and <code>+=</code>. The later operator may only be used with
+                a <code>String</code> variable, not with a literal.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

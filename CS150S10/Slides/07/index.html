@@ -1,0 +1,1198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		'2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Author' content='Kurt Schmidt' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To learn how to declare, initialize and use pointers </li>
+  <li> To become familiar with dynamic memory allocation and deallocation </li>
+	<li> To use pointers in common programming situations that involve
+		optional and shared objects </li>
+	<li> To avoid the common errors of dangling pointers and memory leaks </li>
+  <li> To understand the relationship between arrays and pointers </li>
+  <li> To be able to convert between string objects and character 
+    pointers </li>
+	<li> To learn about function pointers and how they are used </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Pointers </h1>
+<ul>
+	<li> An object variable <em>contains</em> an object </li>
+	<li> A pointer specifies <em>where</em> an object is located </li>
+	<li> A pointer variable stores an object's location </li>
+	<li> Pointers can refer to objects allocated on demand </li>
+	<li> Pointers provide access to shared objects </li>
+	<li> Necessary for <dfn>polymorphism</dfn> </li>
+	<li> Pointers are closely related to the implementation of arrays </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Pointers and Memory Allocation </h1>
+<ul>
+  <li> The C++ run-time system can create new objects </li>
+  <li> A <i>memory allocator</i> finds a storage location for a new object
+		<code>
+new Employee;</code>
+	</li>
+  <li> The memory allocator keeps a large storage area, called 
+    the <i>heap</i> </li>
+  <li> The heap is a flexible pool of memory that can hold values 
+    of any type </li>
+	<li> When you allocate a new heap object, the memory allocator tells where
+		the object is located, by giving you the object's <i>memory address</i>
+		</li>
+	<li> Use a <i>pointer</i> to store and manipulate a memory address</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Deallocating Dynamic Memory </h1>
+<ul>
+	<li> The expression: <code>new Employee</code> </li>
+	
+	<li>is very different from: <code>Employee harry;</code>
+	</li>
+	<li> <var>harry</var> lives on a <dfn>stack</dfn>
+		<ul>
+			<li> The <dfn>stack</dfn> is a storage area associated with the
+			defining function </li>
+		</ul>
+		<code>
+void f()
+{
+   Employee harry; // memory for employee allocated on the stack
+   ... 
+
+} // Memory for employee automatically reclaimed</code>
+	<li> Values allocated from the heap stay alive until the programmer
+		reclaims it </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Pointers and Memory Allocation </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> The allocator returns an <dfn>address</dfn>, or
+				<dfn>pointer</dfn> </li>
+			<li> Pointers are stored in a pointer variable </li>
+			<li> To declare pointers:
+				<code>
+Employee* boss;
+Time* deadline;</code>
+			</li>
+			<li> The types <tt>Employee*</tt> and <tt>Time*</tt> are pointers to
+				employee and time objects </li>
+			<li> <tt>boss</tt> and <tt>deadline</tt> store addresses </li>
+			<li> They do <strong>not</strong> store actual employee or time
+				objects </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig1.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> Pointers and the
+			Objects to Which They Point </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Pointers and Memory Allocation </h1>
+<ul>
+  <li> You can also call the <tt>new</tt> command in conjunction 
+    with a constructor to initialize the object
+		<code>
+Employee* boss = new Employee("Lin, Lisa", 68000);</code>
+	</li>
+	<li> To access a value, given a pointer, you must <dfn>dereference</dfn>
+		the pointer
+		<code>
+Employee* boss = ...;
+raise_salary(<span class='hl'>*boss</span>, 10);</code>
+	</li>
+	<li> To get the boss' name, you might try
+		<code>
+string name = *boss.get_name(); // Error</code>
+	</li>
+	<li> <tt>.</tt> has higher precedence; you tried to send the pointer
+		itself a message </li>
+	<li> This will get an <tt>Employee</tt> object, then get its name:
+		<code>
+string name = (*boss).get_name(); // Error</code>
+	</li>
+	<li> The <tt>-&gt;</tt> operator does the same thing:
+		<code>
+string name = boss-&gt;get_name(); // Error</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Pointers and Memory Allocation </h1>
+<ul>
+  <li> The special value <tt>NULL</tt> indicates that a pointer 
+    doesn't point anywhere </li>
+	<li> Never leave a pointer uninitialized </li>
+	<li> Set them to <tt>NULL</tt> when you define them
+		<code>
+Employee* boss = NULL; // will set later
+. . .
+if (boss != NULL) name = boss-&gt;get_name(); // OK</code>
+	</li>
+  <li> You cannot dereference a <tt>NULL</tt> pointer
+		<code>
+Employee* boss = NULL;
+string name = boss-&gt;get_name(); // NO!! Program will crash</code>
+	</li>
+	<li> Crashing is better than processing erroneous data
+		<code>
+Employee* boss;
+string name = boss-&gt;get_name(); // NO!! boss contains a random address</code>
+	</li>
+	<li> Better still, test for the sentinel, as above </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	: <tt>new</tt> Expression </h1>
+<div class='syntax'>
+<code>new <i>type_name</i>
+new <i>type_name</i>(<i>expression</i><sub>1</sub>,<i> expression</i><sub>2</sub>, ... ,<i> expression<sub>n</sub></i>)</code>
+	<h3> Example: </h3>
+<code>new Time;
+new Employee(&quot;Lin, Lisa&quot;, 68000)</code>
+	<h3> Purpose: </h3>
+		<p> Allocate and construct a value on the heap and return 
+			a pointer to the value. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Pointer Variable Definition </h1>
+<div class='syntax'>
+<code><i>type_name</i>*<i> variable_name</i>;<i>
+type_name</i>*<i> variable_name </i>=<i> expression</i>;</code>
+	<h3> Example: </h3>
+<code>Employee* boss;
+Product* p = new Product;</code>
+	<h3> Purpose: </h3>
+		<p> Define a new pointer variable, and optionally supply an initial
+			value. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : Pointer Dereferencing </h1>
+<div class='syntax'>
+<code>*<i>pointer_expression
+pointer_expression</i>-&gt;<i>class_member</i></code>
+	<h3> Example: </h3>
+<code>*boss
+boss-&gt;set_salary(70000)</code>
+	<h3> Purpose: </h3>
+		<p> Access the object to which a pointer points. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Declaring Two Pointers on the Same Line </h3>
+<ul>
+	<li> In this declaration, <tt>p</tt> is a pointer, while <tt>q</tt> is an
+		actual <tt>Employee</tt>
+		<code>
+Employee* p, q;</code>
+	</li>
+	<li> To make them both pointers:
+		<code>
+Employee *p, *q;</code>
+		(the spacing is irrelevant)
+	</li>
+	<li> Might be clearer to use a line for each declaration:
+		<code>
+Employee *p;
+Employee *q;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> The <tt>this</tt> Pointer </h3>
+<ul>
+	<li> Every (non-static) method has a <tt>this</tt> pointer </li>
+	<li> <tt>this</tt> is the pointer to the implicit parameter </li>
+	<li> If you call
+		<code>
+next.is_better_than(best)</code>
+		<ul>
+			<li> <tt>this</tt> is of type <tt>Product*</tt> </li>
+			<li> <tt>this</tt> points to <tt>next</tt> </li>
+		</ul>
+	</li>
+	<li> Could be used like this:
+		<code>
+bool Product::is_better_than(Product b)
+{
+   if (this-&gt;price == 0) return true;
+   if (b.price == 0) return false;
+   return this-&gt;score / this-&gt;price &gt; b.score / b.price;
+}</code>
+	</li>
+	<li> Note, <tt>b</tt> is an object, <tt>this</tt> is a pointer </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Deallocating Dynamic Memory </h1>
+<ul>
+	<li> You must manually reclaim dynamically allocated objects </li>
+	<li> Use the <tt>delete</tt> operator
+		<code>
+void g()
+{
+   Employee* boss;
+   boss = new Employee(...); // Memory for employee allocated on the heap
+   ...
+   delete boss; // Memory for employee manually reclaimed
+}</code>
+	</li>
+	<li> <tt>delete</tt> does nothing to <tt>boss</tt> </li>
+	<li> <tt>boss</tt> is a stack variable &mdash; will be reclaimed at the
+		end of the block </li>
+	<li> <tt>delete</tt> frees the memory that <tt>boss</tt> pointed to
+	</li>
+	<li> <tt>boss</tt> is not set to <tt>NULL</tt>; it points to the same
+		place </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+ : <tt>delete</tt> Expression </h1>
+	<div class='syntax'>
+		<code>delete <i>pointer_expression</i>; </code>
+	<h3> Example: </h3>
+		<code>delete boss;</code>
+	<h3> Purpose: </h3>
+		<p> Deallocate a value that is stored on the heap and allow the
+			memory to be reallocated. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> Dangling Pointers </h3>
+<ul>
+	<li> A pointer that doesn't point to a valid object
+		<ul>
+			<li> Pointer wasn't initialized, or </li>
+			<li> Object pointer referenced was reclaimed </li>
+		</ul>
+	</li>
+	<li> Writing to this location may change other variables, or your program
+	</li>
+	<li> Reading from this location might crash your program (if you're lucky)
+	</li>
+	<li> This is particularly insidious:
+		<code>
+delete boss;
+string name = boss-&gt;get_name(); // NO!! boss points to a deleted element</code>
+		<ul>
+			<li> Almost impossible to catch during testing </li>
+			<li> Object appears to still be there </li>
+			<li> Location might well be claimed for something else </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Memory Leaks </h3>
+<ul>
+	<li> A memory block that is not deallocated is a <i>memory leak</i>
+	</li>
+  <li> Leaked memory can cause the heap to run out of memory
+    <ul>
+      <li> Program crashes </li>
+      <li> Computer freezes up </li>
+    </ul>
+  </li>
+	<li> Each <tt>new</tt> should be paired with a <tt>delete</tt> </li>
+	<li> Memory leaks should be avoided, for memory-intensive or long-running
+		programs </li>
+	<li> Should be avoided for smaller programs, too </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> The Address Operator </h3>
+<ul>
+	<li> The <tt>&amp;</tt> operator (<dfn>address</dfn> operator) returns the
+		address of an existing, stack variable
+	
+
+<code>
+Employee harry;
+Employee* p = &amp;harry;</code></li>
+
+</ul>
+<table>
+<tr>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig2.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 2</span> The Address Operator </p>
+		</div>
+	</td>
+</tr>
+</table>
+<ul>
+	<li> Never <tt>delete</tt> a stack variable!
+		<code>
+delete &amp;harry; // NEVER!</code>
+	</li>
+	<li> That location would then be on the stack, <em>and</em> part of the heap memory
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Common Uses for Pointers </h1>
+<h2> Optional Attributes </h2>
+<ul>
+	<li> Consider a department class, which allows for an optional
+		receptionist:
+		<code>
+class Department
+{
+   ...
+private:
+   string name;
+   Employee* receptionist;
+};</code>
+	</li>
+	<li> <tt>receptionist</tt> points to an actual employee, or is
+		<tt>NULL</tt> if not needed </li>
+  <li> This is better than allocating space for an object that 
+    might not be used.
+		<code>
+class Department // Modeled without pointers
+{
+   ...
+private:
+   string name;
+   bool has_receptionist;
+   Employee receptionist;
+};</code>
+    </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Common Uses for Pointers </h1>
+<h2> Object Sharing </h2>
+<ul>
+	<li> Rather than duplicating objects, use pointers to share the object
+	</li>
+  <li> Example: In some departments, the secretary and the receptionist are
+		the same person 
+
+
+<code>
+class Department
+{
+   ...
+private:
+   string name;
+   Employee* receptionist;
+   Employee* secretary;
+};</code>	</li>
+
+</ul>
+<table>
+<tr>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig3.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 3</span> Three Pointers Share
+		an Employee Object </p>
+		</div>
+	</td>
+</tr>
+</table>
+<code>...
+Employee* tina = new Employee(&quot;Tester, Tina&quot;, 50000);
+Department qc(&quot;Quality Control&quot;);
+qc.set_receptionist(tina);
+qc.set_secretary(tina);
+tina-&gt;set_salary(55000);</code>
+</div>
+
+<div class='slide'>
+<h1> Common Uses for Pointers </h1>
+<h2> Sharing Objects (cont.) </h2>
+<ul>
+	<li> Particularly important when changes to the object need to be observed
+		by all users of the object </li>
+	<li> Without using pointers, changing Tina's salary would not update the
+		information in the receptionist or secretary attribute </li>
+</ul>
+<table>
+<tr>
+	<td>
+<code>Employee tina("Tester, Tina", 50000);
+Department qc("Quality Control");
+qc.set_receptionist(tina);
+qc.set_secretary(tina);
+tina.set_salary(55000);</code>
+		<ul>
+			<li> Department object now contains two copies of Tina </li>
+			<li> Copies are not affected by Tina's raise </li>
+		</ul>
+	</td>
+	<td>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig4.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 4</span> Separate Employee
+Objects </p>
+</div>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Common Uses for Pointers - <tt>department.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "department.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> References </h3>
+<ul>
+	<li> You saw reference parameters in &sect; 4.8
+		<code>
+void raise_salary(Employee&amp; e, double by)
+{
+   double new_salary = e.get_salary() * (1 + by / 100);
+   e.set_salary(new_salary);
+}</code>
+	</li>
+	<li> The value of <tt>harry</tt> may change in this call:
+		<code>
+raise_salary(harry, percent);</code>
+	</li>
+	<li> References are just syntactic sugar for pointers </li>
+	<li> This function receives the address of an <tt>Employee</tt> object,
+		and a copy of a <tt>double</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+(cont.)
+</h1>
+<h3> References </h3>
+<ul>
+	<li> In C this function would've been written:
+		<code>
+void raise_salary(Employee* pe, double by)
+{
+   double new_salary = pe-&gt;get_salary() * (1 + by / 100);
+   pe-&gt;set_salary(new_salary);
+}</code>
+	</li>
+	<li> The call, above, would look like this:
+		<code>
+raise_salary(<span class='hl'>&amp;</span>harry, percent);</code>
+	</li>
+	<li> When you use references, the compiler takes care of referencing and
+		dereferencing pointers </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Arrays and Pointers </h1>
+<ul>
+  <li> There is an intimate connection between arrays and pointers 
+    in C++ </li>
+  <li> The name of an array is a pointer to the starting element 
+		<code>
+int a[10];
+int* p = a; // now p points to a[0];</code>
+	</li>
+	<li> <tt>a</tt> can be dereferenced: 
+		<tt>
+   *a = 12;</tt> is the same as <tt> a[0] = 12;</tt></li>
+	
+  <li> Pointers into arrays support <dfn>pointer arithmetic</dfn>:
+		<tt>
+   *(a + 3)</tt> is the same as <tt>a[3]</tt></li>
+	
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Arrays and Pointers </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> This relationship is called the <dfn>array/pointer duality 
+				law</dfn> </li>
+			<li> For any integer <tt>n</tt>, 
+				<code>
+*(a + n) &equiv; a[n]</code>
+			</li>
+			<li> This explains why array indices start at 0 </li>
+			<li> <tt>a</tt> (<tt>a+0</tt>) points to the start of the array </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig7.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 7</span> Pointers into an
+			Array </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Arrays and Pointers </h1>
+<ul>
+  <li> When an array is passed into a function, it is actually 
+    a pointer to the starting element of the array 
+		<code>
+double maximum(const double a[], int a_size)
+{
+   if (a_size == 0) return 0;
+   double highest = a[0];
+   for (int i = 0; i &lt; a_size; i++)
+      if (a[i] &gt; highest)
+         highest = a[i];
+   return highest;
+}</code>
+	</li>
+	<li> The function receives only the starting address of the array
+		<code>
+double maximum(<span class='hl'>const double* a</span>, int a_size)
+{
+   // Identical code as above yields same results 
+   ... 
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "4" )
+		//]]>
+	</script>
+</h1>
+<h3> Using Pointers to Step Through an Array </h3>
+<ul><li> Rather than incrementing an index, increment the pointer
+<code>
+double maximum(const double* a, int a_size)
+{
+   if (a_size == 0) return 0;
+   double highest = *a;
+   const double* p = a + 1;
+   int count = a_size - 1;
+   while (count &gt; 0)
+   {
+      if (*p &gt; highest)
+         highest = *p;
+      p++;
+      count--;
+   }
+   return highest;
+}</code></li></ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "6" )
+	//]]>
+	</script>
+</h1>
+<h3> Returning a Pointer to a Local Array </h3>
+<ul><li> Don't return pointers to local (stack) variables 
+<code>
+double* minmax(const double a[], int a_size)
+{
+   assert(a_size &gt; 0);
+   double result[2];
+   result[0] = a[0]; // result[0] is the minimum 
+   result[1] = a[0]; // result[1] is the maximum
+    
+   for (int i = 0; i &lt; a_size; i++)
+   {
+      if (a[i] &lt; result[0]) result[0] = a[i];
+      if (a[i] &gt; result[1]) result[1] = a[i];
+   }
+   return result; // ERROR!
+}</code></li></ul>
+<ul>
+	<li> <tt>result</tt> is local to <tt>minmax</tt> </li>
+	<li> When function exits, <tt>result</tt> is gone </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "5" )
+		//]]>
+	</script>
+</h1>
+<h3> Dynamically Allocated Arrays </h3>
+<ul>
+	<li> You can allocate arrays from the heap:
+		<code>
+int staff_capacity = ...;
+Employee* staff = new Employee[staff_capacity];</code>
+	</li>
+	<li> <tt>new[]</tt> operator allocates an array of
+		<tt>staff_capacity</tt> <tt>Employee</tt>s (using default constructor)
+	</li>
+	<li> Size does <strong>not</strong> need to be known at compile time
+	</li>
+	<li> Manipulated just like any other array </li>
+	<li> This is how variable-sized containers, like the <tt>Vector</tt>, is
+		implemented </li>
+	<li> <strong>Must be deallocated (reclaimed)</strong> using the
+		<tt>delete[]</tt> operator:
+		<code>
+delete[] staff;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "5" )
+		//]]>
+	</script>
+(cont.) </h1>
+<h3> Dynamically Allocated Arrays - Resizing </h3>
+<ul>
+	<li> If later you need a larger array:
+		<ul>
+			<li> get larger array from the heap </li>
+			<li> copy the contents over </li>
+			<li> delete the original array </li>
+			<li> fix up your pointers:
+		</ul>
+		<code>
+int bigger_capacity = 2 * staff_capacity;
+Employee* bigger = new Employee[bigger_capacity];
+for (int i = 0; i &lt; staff_capacity; i++)
+   bigger[i] = staff[i];
+delete[] staff;
+staff = bigger;
+staff_capacity = bigger_capacity;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Pointers to Character Strings </h1>
+<ul>
+  <li> C++ inherits primitive string handling from the C language, in which strings are represented as arrays of <tt>char</tt> 
+    values </li>
+  <li> Though not recommended for use, you'll need to recognize character pointers or arrays 
+    in your programs when you see them
+	</li>
+	<li> Literal strings are stored inside <tt>char</tt> arrays
+		<code>
+char s[] = "Harry";
+		</code>
+	<table class='array'>
+    <tr class='index'> 
+      <td> 0 </td>
+      <td> 1 </td>
+      <td> 2 </td>
+      <td> 3 </td>
+      <td> 4 </td>
+      <td> 5 </td>
+    </tr>
+    <tr class='data'> 
+      <td> 'H' </td>
+      <td> 'a' </td>
+      <td> 'r' </td>
+      <td> 'r' </td>
+      <td> 'y' </td>
+      <td> '\0' </td>
+    </tr>
+  </table>
+  </li>
+	<li> Space for the null-terminator (<tt>\n</tt>) is automatically
+		allocated </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Pointers to Character Strings </h1>
+<ul>
+	<li> Many pre-STL functions return a <tt>char*</tt> </li>
+  <li> Use constructor <tt>string(char 
+    *)</tt> to convert any character pointer or array to a safe 
+    and convenient <tt>string</tt> object:
+		<code>
+char* p = "Harry";
+string name(p);</code>
+	</li>
+	<li> Some functions require a <tt>char*</tt> as an argument </li>
+	<li> The <tt>string::c_str</tt> method returns a <tt>char*</tt> that points to
+		the first character in the string object </li>
+  <li> E.g., <tt>tempnam()</tt>, in the standard library, yields 
+    the name of a temporary file, and expects a <tt>char*</tt> parameter for the 
+    directory name:
+		<code>
+string dir = ...;
+char* p = tempnam(<span class='hl'>dir.c_str()</span>, NULL);</code>
+    </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "7" )
+	//]]>
+	</script>
+</h1>
+<h3> Failing to Allocate Memory </h3>
+<ul><li> Writing (or copying) a string to random memory is a <em>very</em>
+common and dangerous error 
+<code>
+   char* p;
+   strcpy(p, "Harry");</code></li>
+
+	<li> This is <strong>not</strong> a syntax error </li>
+	<li> If you're lucky, the address is not legal, and the program crashes
+	</li>
+	<li> If you're less lucky, the data will be written wherever </li>
+	<li> This is a very insidious error; tough to detect, and tough to find
+		<ul>
+			<li> It might be corrupting somebody else's memory </li>
+			<li> Somebody else might be overwriting "your" string </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8" )
+	//]]>
+	</script>
+</h1>
+<h3> Confusing Character Pointers and Arrays </h3>
+<p> Compare </p>
+<code>char* p = "Harry";</code>
+<p> to </p>
+<code>char s[] = "Harry";</code>
+<p>which is shorthand for </p>
+<code>char s[6] = { 'H', 'a', 'r', 'r', 'y', '\0' };</code>
+<ul><li> <tt>s</tt> is an array: </li>
+
+	<li> Statically allocated </li>
+	<li> A constant pointer (of type <tt>char* const</tt>) </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8" )
+	//]]>
+	</script>
+(cont.) </h1>
+<h3> Confusing Character Pointers and Arrays </h3>
+<ul><li> <tt>p</tt> is a pointer <em>variable</em> </li>
+
+	<li> Can be set to another location </li>
+	<li> Contents are stored elsewhere </li>
+	<li> Best to treat as read-only (<tt>const char*</tt>) </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> Character Pointers
+and Arrays </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "9" )
+	//]]>
+	</script>
+</h1>
+<h3> Copying Character Pointers </h3>
+<ul><li>Assignment, copying and comparing <tt>string</tt> objects is
+intuitive: 
+<code>
+   string s = "Harry";
+   string t = s;
+   t[0] = 'L'; // now s is "Harry" and t is "Larry"</code></li>
+
+<li><tt>s</tt> and <tt>t</tt> are distinct objects </li>
+</ul>
+<table>
+<tr>
+	<td>
+<ul><li>Same example, using pointers: 
+<code>
+   char* p = "Harry";
+   char* q = p;
+   q[0] = 'L'; // Now both p and q point to "Larry"</code></li>
+		
+			<li> <tt>p</tt> and <tt>q</tt> are distinct pointers, storing the same
+				address </li>
+			<li> Both refer to the same object </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig10.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 10</span> Two Character
+			Pointers into the Same Character Array </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "9" )
+	//]]>
+	</script>
+(cont.) </h1>
+<h3> Copying Character Pointers </h3>
+<ul><li>Arrays can <strong>not</strong> be assigned in the usual way: 
+<code>
+ char a[] = "Harry";
+ char b[6];
+ b = a; // ERROR</code></li>
+<li> Use <tt>strcpy()</tt>: 
+<code>
+ strcpy(b, a);</code></li>
+<li> Since <tt>strcpy()</tt> has no idea how large array <tt>b</tt> might be,
+this is safer: 
+<code>
+ strcpy(b, a, 5);</code></li></ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Pointers to Functions </h1>
+<ul><li> Sometimes a function depends on another function 
+
+		<ul>
+			<li> Consider a function that prints a table of values of the function
+			<br/> <var>f</var>(<var>n</var>) = <var>n</var><sup>2</sup> : </li>
+		</ul><br/>
+	<tr>
+	<td> 
+
+<td>
+		<!--
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "img_6.1.png" )
+		//]]>
+		</script>
+		-->
+		<table border='1' cellpadding='1' cellspacing='1'>
+			<tr> <td> 1 </td> <td> 1 </td> </tr>
+			<tr> <td> 2 </td> <td> 4 </td> </tr>
+			<tr> <td> 3 </td> <td> 9 </td> </tr>
+			<tr> <td> 4 </td> <td> 16 </td> </tr>
+			<tr> <td> ... </td> <td> &nbsp; </td> </tr>
+			<tr> <td> 10 </td> <td> 100 </td> </tr>
+		</table><br/>
+	</td>
+</tr>
+
+<ul>
+	<li> Same logic to print the values of
+		<var>f</var>(<var>x</var>) = <var>x</var> - 2 </li>
+	<li> Function <tt>print_table</tt> takes a
+		<dfn>function pointer</dfn> as an argument </li>
+	<li> As with arrays, the name of a function is really a pointer to a
+		function:
+		<code>
+print_table(sqrt);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Pointers to Functions </h1>
+<ul>
+	<li> To print a table of squares, first make a <tt>square</tt> function:
+		<code>
+double square(double x) { return x * x; }
+...
+print_table(square);</code>
+	</li>
+	<li> The function to print a table:
+		<code>
+void print_table(DoubleFunPointer f)
+{
+   cout &lt;&lt; setprecision(2);
+   for (double x = 1; x &lt;= 10; x++)
+   {
+      double y = f(x);
+      cout &lt;&lt; setw(10) &lt;&lt; x &lt;&lt; "|" &lt;&lt; setw(10) &lt;&lt; y &lt;&lt; endl;
+   }
+}</code>
+	<ul>
+		<li> <tt>DoubleFunPointer</tt> will be explained shortly </li>
+	</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Pointers to Functions </h1>
+<ul>
+	<li> The parameter <tt>f</tt> can be used as any other function </li>
+	<li> Some prefer to call the function like this:
+		<code>
+(*f)(x)</code>
+	</li>
+	<li> To declare the function pointer:
+		<code>
+double (*f)(double)</code>
+	</li>
+	<li> This is a function (not a pointer) which returns a <tt>double*</tt> :
+		<code>
+double *f(double)</code>
+	</li>
+	<li> <tt>print_table()</tt> looks like this:
+		<code>
+void print_table(<span class='hl'>double (*f)(double)</span>)</code>
+	</li>
+	<li> A <dfn>type definition</dfn> makes this easier to read:
+		<code>
+typedef double (*DoubleFunPointer)(double);
+void print_table(DoubleFunPointer f);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+	: <tt>typedef</tt> Statement </h1>
+<div class='syntax'>
+	<code>typedef <i>declaration</i>;</code>
+	<h3> Example: </h3>
+<pre>typedef int (*IntFunPtr)(int); </pre>
+	<h3> Purpose: </h3>
+	<p> Create an alias for a complicated type name. </p>
+</div>
+</div>
+
+</body>
+</html>

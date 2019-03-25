@@ -1,0 +1,507 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>5.4&mdash;Style Rules</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner07">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 5.4</p>
+        <p id='lessonTitle'>Style Rules</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/styleguide.png' class='right' alt='The DC Comics styleguide.'>
+            <b><span class="cap">I</span>n addition to correctness</b>,
+            your programming quizzes are also graded
+            for <b>programming style</b>. In the rest of this section,
+            I'll go over the CS 170 style guidelines that will be used
+            in this class.
+        </p>
+        <p> The guidelines that we'll be
+            using are a version of one that has been
+            used with good success both in industrial practice and for college
+            courses. It is a modification of
+            <a href="http://www.horstmann.com/bigj/style.html" target="_blank">
+            <b>the style guide</b></a> written by <b>Cay Horstmann</b> at
+            <b>San Jose State University</b>.
+        </p>
+
+        <p> A style guide is a set of <b>mandatory</b> requirements for
+            layout and formatting. Uniform style makes it easier for you
+            to read code from your instructor and classmates, just like
+            a cartooning style-guide, like the one used by D.C. Comics,
+            makes sure that all of the inkers and painters know to make
+            Superman's cape red, and Green Lantern's tights, well....,
+            green.
+        </p>
+        <p> A style guide makes you a more productive programmer because
+            it <b>reduces gratuitous choice.</b> If you don't have to make
+            choices about trivial matters, you can spend your energy on the
+            solution of real problems.
+        </p>
+    <h3>The CS 170 Style Rules</h3>
+        <p> In these guidelines, several constructs are plainly outlawed.
+            That doesn't mean that programmers using them are evil or
+            incompetent. It does mean that the constructs are not essential
+            and can be expressed just as well or even better with other
+            language constructs.
+        </p>
+        <p> If you already have programming experience, in Java or another
+            language, you may be initially uncomfortable at giving up some
+            fond habits. However, it is a sign of professionalism to set
+            aside personal preferences in minor matters and to compromise
+            for the benefit of your group.
+        </p>
+        <p> These guidelines are necessarily somewhat dull. They also mention
+            features that you may not yet have seen in class. Here are the most
+            important highlights:
+        </p>
+        <ul>
+            <li>Tabs are set every four spaces.</li>
+            <li>Variable and method names are <b>lowercase</b>, with
+                occasional <b>upperCase</b> characters in the middle.
+            </li>
+            <li>Class names start with an <b>Uppercase</b> letter</li>
+            <li>Constant names are UPPERCASE, with an occasional UNDER_SCORE.</li>
+            <li>There are spaces after keywords and surrounding binary operators.</li>
+            <li>Braces must line up vertically and code must be indented in
+                a block.
+            </li>
+            <li>No magic numbers may be used.</li>
+            <li>Every method must have a Javadoc comment. </li>
+            <li>Use, at most, 30 lines of code per method.</li>
+            <li>All non-<code>final</code> instance variables must be
+                <code>private</code>.
+            </li>
+        </ul>
+        <p> Before we get to the specifics, let's take a look at some
+            of the general style issues you'll face.
+        </p>
+    <h3>General Style Issues</h3>
+        <p> Let's look at a couple of style issues you'll need to
+            understand when you write your own Java programs. To do
+            that, I want you to open <b>both</b> the programs
+            <b>StrungOut.java</b> and <b>ScrunchedProgram.java</b> and we'll
+            see how to fix them. (You'll find them in the code folder
+            for this chapter.)
+        </p>
+        <p> Java is a free-form language. That means that statements
+            <b>may</b> span several lines, or may all be (generally)
+            run together. like these two examples:<br>
+            <img src='images/scrunched.png' class='inlineCenter' alt='Srunched up code.'>
+            You probably <b>don't</b> want to write code like this, however,
+            and you <b>certainly</b> don't want to <b>read</b> code
+            written using this style. And, even if you do,
+            <b style='color:red;background-color:yellow'>I don't want to
+            read code that looks like this!</b>. Since <b>at least</b>
+            10% of each quiz grade is based on correct style, you'll
+            probably want to learn how to fix it.
+        </p>
+        <p> You should use whitespace such as
+            blank lines and indenting to <b>improve</b> the readability of your
+            programs, not <b>reduce</b> the readability.
+            Try to group related statements together into "paragraphs", and separate
+            such groups from unrelated groups of statement by inserting blank lines
+            and comments.
+        </p>
+        <p> If you have a "messed up" file, like the two shown here,
+            start by looking for the braces and semi-colons. Each
+            brace (<code><b>{ }</b></code>) should appear on its
+            own line. After every semi-colon, you should have a
+            new line.
+        </p>
+        <div class='drjava-note'>
+        <p>
+            Fortunately, the DrJava IDE makes formatting your code
+            somewhat easier. When you press Enter on a line containing
+            a brace, it will try to align the brace correctly. In
+            addition, after you have the program broken into lines,
+            just select the entire program and then click
+            <b>Indent Lines</b> from the <b>Edit</b> menu. This won't
+            fix all of your coding problems but it will help get you started
+            with the correct code layout.
+        </p>
+        </div>
+        <p> Go ahead and apply the standard formatting to both files so you
+            can see that it works. Here's what <b>ScrunchedProgram.java</b> looks like after being
+            "de-scrunched" using DrJava's auto-indent feature:<br>
+            <img src='images/de-scrunched.gif' class='inlineCenter' alt='Applying the auto-format.'>
+            Auto-indent will take care of 90% of your style problems.
+            For the rest, you'll have to look at some of the style rules
+            in detail. Let's start with file rules and comments.
+        </p>
+    <h3>Source Files and Classes</h3>
+        <p> Each Java program is a collection of one or more source files. The
+            executable program is obtained by compiling these files.
+            Organize the    material in each file as follows:
+        </p>
+        <ul>
+            <li><code>package</code> statement (we won't use these in CS 170)</li>
+            <li><code>import</code> statements</li>
+            <li>A comment explaining the purpose of this file</li>
+            <li>A <code>public</code> class</li>
+            <li>Other classes, if appropriate</li>
+        </ul>
+
+        <p> The comment explaining the purpose of this file should be in the format
+            recognized by the <b>javadoc</b> utility. Start with a
+            <code>/**</code> and use the <code>@author</code> and
+            <code>@version</code> tags to supply your name and the
+            date when you started the program.
+        </p>
+        <p> Here's a "template" you can follow with placeholders for
+            this information. <br>
+            <img src='images/file-comment01.gif' class='inlineCenter' alt='The file comment placeholder.'>
+            To get started, just type the opening <code>/**</code> and press Enter
+            in DrJava and it will put start a new line with a <code>*</code>,
+            where you can add the description:
+            in a placeholder for you.
+        </p>
+        <p>Go ahead and add the file-comment placeholder to both
+            <b>Scrunched</b> and <b>StrungOut</b>. Then modify the
+            comments you see there so that it looks something like
+            this:
+            <img src='images/file-comment03.gif' class='inlineCenter' alt='The file comments completed.'>
+        </p>
+        <div class='drjava-note'>
+        <p> Make sure that the first sentence ends with a period, and
+            that you've included both the version and author tags.
+            These must be spelled correctly, even though they are
+            inside a comment. The Checkstyle program checks to make sure you've
+            actually filled in the information, in case you're wondering.
+        </p>
+        </div>
+    <h3>Checking Your Style</h3>
+        <p> Before we look at the rest of the style rules,
+            which are kind of tedious and boring, let's look at
+            how you can <b>check your code for style</b>.<br>
+            <img src='images/checkstyle.png' class='inlineCenter' alt='Examples of style.'>
+            Instead of
+            running a unit test, like you did for correctness, you'll
+            use a <b>style checker
+            program</b> named <b>Checkstyle</b>. To run Checkstyle,
+            just press the <b>Style</b> button on the toolbar.
+        </p>
+    <h4>The Results</h4>
+        <p> Once Checkstyle checks you code, it will list each
+            line that has a problem according to the rules.
+            Notice that in addition to the total style errors found,
+            Checkstyle will show you the row and column in your
+            source code where the error occurs.
+        </p>
+        <p> After you've corrected the errors, <b>save and compile</b>,
+            and then click the <b>Check</b> button to check your
+            file once more.
+        </p>
+    <h2>The Rest of the Rules</h2>
+        <p> The rest of this lesson contains details on the various style
+            rules. You'll probably want to bookmark it so you can come back
+            and check a specific detail while you're completing an assignment.
+        </p>
+    <h3>Classes</h3>
+        <p> We'll usually put each class in its own file, so you won't need
+            a class comment; the file comment will do. However, if you do
+            have multiple classes in a file, each class should be preceded
+            by a class comment explaining its purpose.
+        </p>
+        <p>Use the following order for items in the class:</p>
+        <ol>
+            <li>Static Fields (<code>public static</code> only)</li>
+            <li>Instance Fields</li>
+            <li>Constructors</li>
+            <li>Instance Methods</li>
+            <li>Static Methods</li>
+            <li>Inner classes</li>
+        </ol>
+        <p>Leave a blank line after every method. </p>
+
+        <p> All non-<code>final</code> instance variables must be
+            <code>private</code>. Methods and <code>final</code>
+            instance variables can be either <code>public</code> or
+            <code>private</code>, as appropriate. <b style='color:red;background-color:yellow;'>
+            Methods that are going to be tested must be
+            <code>public</code>, not <code>private</code> though.</b>
+        </p>
+
+        <p> All features must be tagged <code>public</code>,
+            <code>private</code>, or <code>protected</code>.
+            Do not use the default visibility (that is, package visibility).
+        </p>
+
+    <h3>Methods</h3>
+        <p> Every method should start with a comment in
+            <b>Javadoc</b> format. Place your cursor on the line immediately before
+            the method heading and type <code>/**</code>
+            and press Enter. Press enter a few times, and then
+            <b>close</b> the comment. If you go head and try it out now on
+            the methods in <b>Scrunched</b> and <code>StrungOut</code>.
+            The results should look something like this (using the <code>run()</code>
+            method as an example):
+            <img src='images/method-comments-b.gif' class='inlineCenter' alt='Adding method comments.'>
+            Replace the placeholder comments with your own. Make sure you have
+            at least one sentence, and that it ends with a period.
+        </p>
+        <p> Here's an example of a more complex method comment:</p>
+        <p class='code'>
+            /**<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Convert calendar date into Julian day.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Note: This algorithm is from Press et al., Numerical Recipes<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;in C, 2nd ed., Cambridge University Press, 1992<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param day day of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param month month of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param year year of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@return the Julian day number that begins at noon of the<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;given calendar date.<br>
+            */<br>
+            public static int dat2jul(int day, int month, int year)<br>
+            { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. &nbsp;.&nbsp; .<br>
+            }
+        </p>
+        <p> Methods must have at most 30 lines of code. The method header,
+            comments, blank lines, and lines containing only braces are not included
+            in this count. This rule forces you to break up complex computations into
+            separate methods.
+        </p>
+    <h3>Variables and Constants</h3>
+        <p> Do not define all variables at the beginning of a block: </p>
+        <p class='code'>
+            {  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double xold; // Don't<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double xnew;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;boolean more;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. &nbsp;. &nbsp;.<br>
+            }
+        </p>
+
+        <p>Instead, define each variable just before it is used for the first time: </p>
+        <p class="code">
+            { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double xold = Integer.parseInt(input);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;boolean more = false;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;while (more)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double xnew = (xold + a / xold) / 2; // OK<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            }
+        </p>
+
+        <p>Do not define two variables on the same line: </p>
+        <p class="code">
+            int dimes = 0, nickels = 0; // Don't
+        </p>
+
+        <p>Instead, use two separate definitions:</p>
+        <p class="code">
+            int dimes = 0; // OK<br>
+            int nickels = 0;
+        </p>
+
+        <p> In Java, constants must be defined with the keyword
+            <code>final</code>.
+            If the constant is used by multiple methods, declare it as
+            <code>static final</code>.
+        </p>
+
+        <p>Do not use <b> magic numbers!</b> A magic number is a numeric constant
+          embedded in code, without a constant definition. Any number except -1, 0,
+          1, and 2 is considered magic: </p>
+        <p class="code">
+            if (p.getX() &lt; 300) // Don't
+        </p>
+
+        <p>Use <code>final</code> variables instead: </p>
+        <p class="code">
+            final double WINDOW_WIDTH = 300;<br>
+            . . .<br>
+            if (p.getX() &lt; WINDOW_WIDTH) // OK
+        </p>
+
+        <p>Even the most reasonable cosmic constant is going to change one day. You
+          think there are 365 days per year? Your customers on Mars are going to be
+          pretty unhappy about your silly prejudice. Make a constant </p>
+        <p class="code">
+            public static final int DAYS_PER_YEAR = 365;
+        </p>
+        <p>so that you can easily produce a Martian version without trying to find
+          all the 365s, 364s, 366s, 367s, and so on, in your code. </p>
+
+        <p>When declaring array variables, group the <code>[]</code>
+            with the type,  not the variable. </p>
+        <p class="code">
+            int[] values; // OK<br>
+            int values[]; // Ugh--this is an ugly holdover from C
+        </p>
+    <h3>Control Flow</h3>
+        <p> Avoid the &quot;<code>if</code> ... <code>if</code> ... <code>else</code>&quot;
+            trap. The code </p>
+        <p class="code">
+            if ( ... )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+            else ...;<br>
+        </p>
+        <p> will not do what the indentation level suggests, and it can take hours
+            to find such a bug. Always use an extra pair of <code>{</code> ...
+            <code>}</code> when dealing with &quot;<code>if</code> ... <code>if</code>
+            ... <code>else</code>&quot;:
+        </p>
+        <p class="code">
+            if ( ... )<br>
+            {  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+            } // {...} are necessary<br>
+            else ...;<br>
+            <br>
+            if ( ... )<br>
+            {  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;else ...;<br>
+            } // {...} not necessary, but they don't hurt
+        </p>
+    <h4>The for Statement</h4>
+        <p> Use <code>for</code> loops only when a variable runs from
+        somewhere to somewhere with some constant increment/decrement: </p>
+    <p class="code">
+        for (int i = 0; i &lt; a.length; i++)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);
+    </p>
+    <p>Do not use the <code>for</code> loop for weird constructs such as </p>
+    <p class="code">
+       for (a = a / 2; count &lt; ITERATIONS; System.out.println(xnew))
+       &nbsp;&nbsp;&nbsp;&nbsp;; // Don't
+
+    <p>Make such a loop into a <code>while</code> loop. That way, the sequence
+      of instructions is much clearer. </p>
+    <p class="code">
+        a = a / 2;<br>
+        while (count &lt; ITERATIONS) // OK<br>
+        {  . . .<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(xnew);<br>
+        }
+    </p>
+
+    <h3>Lexical Issues</h3>
+        <p> The following rules specify when to use upper- and
+            lowercase letters in identifier names.
+        </p>
+        <ul>
+            <li>All variable and method names and all data fields of
+                classes are in lowercase (maybe with an occasional
+                upperCase in the middle); for example,
+                <code>firstPlayer</code>.
+            </li>
+            <li>All constants are in uppercase (maybe with an occasional
+                UNDER_SCORE); for example, <code>CLOCK_RADIUS</code>.
+            <li>All class and interface names start with uppercase and are
+                followed by lowercase letters (maybe with an occasional
+                UpperCase letter); for example, <code>BankTeller</code>.
+            </li>
+        </ul>
+
+        <p> Names must be reasonably long and descriptive.
+            Use <code>firstPlayer</code> instead of <code>fp</code>.
+            No drppng f vwls. Local variables that are fairly routine can
+            be short (<code>ch</code>, <code>i</code>) as long as
+            they are really just boring holders for an input character, a loop
+            counter, and so on. Also, do not use <code>ctr</code>,
+            <code>c</code>, <code>cntr</code>, <code>cnt</code>,
+            <code>c2</code> for variables in your method. Surely these
+            variables all have specific purposes and can be
+            named to remind the reader of them (for example,
+            <code>current</code>, <code>next</code>, <code>previous</code>,
+            <code>result</code>, . . . ).
+        </p>
+    <h4>Indentation and White Space</h4>
+        <p> Use tab stops every four columns. (The DrJava editor is alreay
+            set up like this.)
+        </p>
+        <p> Use blank lines freely to separate parts of a method that
+            are logically distinct.
+        </p>
+        <p>Use a blank space around every binary operator: </p>
+        <p class="code">
+            x1 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);  // Good<br>
+            <br>
+            x1=(-b-Math.sqrt(b*b-4*a*c))/(2*a);//Bad
+        </p>
+        <p> Leave a blank space after (and not before) each comma or
+            semicolon. Do not leave a space before or after a parenthesis
+            or bracket in an expression. Leave spaces around the
+            <code>( . . . )</code> part of an <code>if</code>,
+            <code>while</code>, <code>for</code>, or <code>catch</code>
+            statement.
+        </p>
+        <p class="code">
+            if (x == 0) y = 0;<br>
+            <br>
+            f(a, b[i]);
+        </p>
+        <p>Every line must fit on 80 columns. (DrJava allows you to specify where the
+            right-hand column should be and displays a line in the editor for you.)
+            If you must break a statement, add an
+          indentation level for the continuation: </p>
+        <p class="code">
+            a[n] = ..................................................<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;+ .................;
+        </p>
+
+        <p> If the condition in an <code>if</code> or <code>while</code>
+            statement must be broken, be sure to brace the body in, <i>
+            even if it consists of only one statement:</i>
+        </p>
+        <p class="code">
+            if ( .........................................................<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; ..................<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;|| .......... )<br>
+            {  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            }
+        </p>
+
+        <p>If it weren't for the braces, it would be hard to separate the
+          continuation of the condition visually from the statement to be executed.
+        </p>
+
+    <h4>Braces</h4>
+
+        <p>Opening and closing braces must line up, either horizontally or
+          vertically: </p>
+        <p class="code">
+            while (i &lt; n) { System.out.println(a[i]); i++; }<br>
+            <br>
+            while (i &lt; n)<br>
+            {   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+            }
+        </p>
+
+        <p>Some programmers don't line up vertical braces but place the
+            <code>{</code> behind the key word: </p>
+        <p class="code">
+            while (i &lt; n) {   // DON'T DO THIS<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+            }
+        </p>
+        <p> Doing so makes it hard to check that the braces match. </p>
+
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

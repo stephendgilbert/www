@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>pqueue.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl"><pre class="hl"><span class="hl line">  1 </span><span class="hl dir">#include &lt;iostream&gt;</span>
+<span class="hl line">  2 </span><span class="hl dir">#include &lt;queue&gt;</span>
+<span class="hl line">  3 </span>
+<span class="hl line">  4 </span><span class="hl kwa">using namespace</span> std<span class="hl sym">;</span>
+<span class="hl line">  5 </span>
+<span class="hl line">  6 </span><span class="hl kwc">class</span> WorkOrder
+<span class="hl line">  7 </span><span class="hl sym">{</span>
+<span class="hl line">  8 </span><span class="hl kwc">public</span><span class="hl sym">:</span>
+<span class="hl line">  9 </span>   <span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl kwb">int</span> priority<span class="hl sym">,</span> string description<span class="hl sym">);</span>
+<span class="hl line"> 10 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_priority</span><span class="hl sym">()</span> <span class="hl kwb">const</span><span class="hl sym">;</span>
+<span class="hl line"> 11 </span>   string <span class="hl kwd">get_description</span><span class="hl sym">()</span> <span class="hl kwb">const</span><span class="hl sym">;</span>
+<span class="hl line"> 12 </span><span class="hl kwc">private</span><span class="hl sym">:</span>
+<span class="hl line"> 13 </span>   <span class="hl kwb">int</span> priority<span class="hl sym">;</span>
+<span class="hl line"> 14 </span>   string description<span class="hl sym">;</span>
+<span class="hl line"> 15 </span><span class="hl sym">};</span>
+<span class="hl line"> 16 </span>
+<span class="hl line"> 17 </span>WorkOrder<span class="hl sym">::</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl kwb">int</span> pr<span class="hl sym">,</span> string descr<span class="hl sym">)</span>
+<span class="hl line"> 18 </span><span class="hl sym">{</span>
+<span class="hl line"> 19 </span>   priority <span class="hl sym">=</span> pr<span class="hl sym">;</span>
+<span class="hl line"> 20 </span>   description <span class="hl sym">=</span> descr<span class="hl sym">;</span>
+<span class="hl line"> 21 </span><span class="hl sym">}</span>
+<span class="hl line"> 22 </span>
+<span class="hl line"> 23 </span><span class="hl kwb">int</span> WorkOrder<span class="hl sym">::</span><span class="hl kwd">get_priority</span><span class="hl sym">()</span> <span class="hl kwb">const</span>
+<span class="hl line"> 24 </span><span class="hl sym">{</span>
+<span class="hl line"> 25 </span>   <span class="hl kwa">return</span> priority<span class="hl sym">;</span>
+<span class="hl line"> 26 </span><span class="hl sym">}</span>
+<span class="hl line"> 27 </span>
+<span class="hl line"> 28 </span>string WorkOrder<span class="hl sym">::</span><span class="hl kwd">get_description</span><span class="hl sym">()</span> <span class="hl kwb">const</span>
+<span class="hl line"> 29 </span><span class="hl sym">{</span>
+<span class="hl line"> 30 </span>   <span class="hl kwa">return</span> description<span class="hl sym">;</span>
+<span class="hl line"> 31 </span><span class="hl sym">}</span>
+<span class="hl line"> 32 </span>
+<span class="hl line"> 33 </span><span class="hl kwb">bool</span> <span class="hl kwc">operator</span><span class="hl sym">&lt;(</span>WorkOrder a<span class="hl sym">,</span> WorkOrder b<span class="hl sym">)</span>
+<span class="hl line"> 34 </span><span class="hl sym">{</span>
+<span class="hl line"> 35 </span>   <span class="hl kwa">return</span> a<span class="hl sym">.</span><span class="hl kwd">get_priority</span><span class="hl sym">() &lt;</span> b<span class="hl sym">.</span><span class="hl kwd">get_priority</span><span class="hl sym">();</span>
+<span class="hl line"> 36 </span><span class="hl sym">}</span>
+<span class="hl line"> 37 </span>
+<span class="hl line"> 38 </span><span class="hl kwb">int</span> <span class="hl kwd">main</span><span class="hl sym">()</span>
+<span class="hl line"> 39 </span><span class="hl sym">{</span>
+<span class="hl line"> 40 </span>   priority_queue<span class="hl sym">&lt;</span>WorkOrder<span class="hl sym">&gt;</span> tasks<span class="hl sym">;</span>
+<span class="hl line"> 41 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">2</span><span class="hl sym">,</span> <span class="hl str">&quot;Shampoo carpets&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 42 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">3</span><span class="hl sym">,</span> <span class="hl str">&quot;Empty trash&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 43 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">2</span><span class="hl sym">,</span> <span class="hl str">&quot;Water plants&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 44 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">1</span><span class="hl sym">,</span> <span class="hl str">&quot;Remove pencil sharpener shavings&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 45 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">4</span><span class="hl sym">,</span> <span class="hl str">&quot;Replace light bulb&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 46 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">9</span><span class="hl sym">,</span> <span class="hl str">&quot;Fix overflowing sink&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 47 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">1</span><span class="hl sym">,</span> <span class="hl str">&quot;Clean coffee maker&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 48 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwd">WorkOrder</span><span class="hl sym">(</span><span class="hl num">5</span><span class="hl sym">,</span> <span class="hl str">&quot;Order cleaning supplies&quot;</span><span class="hl sym">));</span>
+<span class="hl line"> 49 </span>
+<span class="hl line"> 50 </span>   <span class="hl kwa">while</span> <span class="hl sym">(</span>tasks<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() &gt;</span> <span class="hl num">0</span><span class="hl sym">)</span>
+<span class="hl line"> 51 </span>   <span class="hl sym">{</span>
+<span class="hl line"> 52 </span>      WorkOrder task <span class="hl sym">=</span> tasks<span class="hl sym">.</span><span class="hl kwd">top</span><span class="hl sym">();</span>
+<span class="hl line"> 53 </span>      tasks<span class="hl sym">.</span><span class="hl kwd">pop</span><span class="hl sym">();</span>
+<span class="hl line"> 54 </span>      cout <span class="hl sym">&lt;&lt;</span> task<span class="hl sym">.</span><span class="hl kwd">get_priority</span><span class="hl sym">() &lt;&lt;</span> <span class="hl str">&quot; - &quot;</span>
+<span class="hl line"> 55 </span>         <span class="hl sym">&lt;&lt;</span> task<span class="hl sym">.</span><span class="hl kwd">get_description</span><span class="hl sym">() &lt;&lt;</span> <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl sym">;</span>
+<span class="hl line"> 56 </span>   <span class="hl sym">}</span>
+<span class="hl line"> 57 </span>   <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl sym">;</span>
+<span class="hl line"> 58 </span><span class="hl sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.6.10, http://www.andre-simon.de/-->

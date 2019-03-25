@@ -1,0 +1,2219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To understand the properties and limitations of integer and
+	floating-point numbers </li>
+	<li> To write arithmetic expressions and assignment statements in C++
+	</li>
+	<li> To appreciate the importance of comments and good code layout </li>
+	<li> To be able to define and initialize variables and constants </li>
+	<li> To learn how to read user input and display program output </li>
+	<li> To use the standard C++ <tt>string</tt> type to define and manipulate
+		character strings </li>
+	<li> To be able to write simple graphics programs  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		 section( "1" )
+	//]]>
+	</script>
+	Number Types </h1>
+<ul>
+  <li> Integer numbers (<tt>int</tt>) are whole numbers without 
+    a fractional part 
+    <ul>
+      <li> Includes zero and negative numbers </li>
+      <li> Used for storing values that are conceptually whole 
+        numbers (e.g. pennies) </li>
+      <li> Process faster and require less storage space </li>
+    </ul>
+  </li>
+  <li> Floating-point numbers (<tt>double</tt>) have decimal points </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Number Types &mdash; <tt>coins1.cpp</tt> </h1>
+<script type='text/javascript'>
+  //<![CDATA[
+  wrapCode( "coins1.cpp" )
+  //]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Number Types </h1>
+<ul>
+	<li> Coin counts are <i>integers</i> 
+		<ul>
+			<li> No fractional part </li>
+			<li> Zero and negative numbers also </li>
+			<li> Named <tt>int</tt> in C++ </li>
+		</ul>
+	</li>
+	<li>  Coin values are <i>floating-point numbers</i>
+		<ul>
+			<li> Can have decimals </li>
+			<li> Called <tt>double</tt> in C++ (cf. <tt>float</tt>) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Number Types </h1>
+<h3> Integers vs. floats </h3>
+<ul>
+	<li> Integer arithmetic is <em>exact</em> </li>
+	<li> Floats are <em>approximations</em> </li>
+	<li> <tt>int</tt> implies value is naturally a whole number </li>
+	<li> <tt>int</tt> takes less space than <tt>double</tt> </li>
+	<li> Integer processing is faster </li>
+	<li> Floats can store numbers from a much larger range </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Number Types </h1>
+<h3> Syntax </h3>
+<ul>
+  <li> Use the asterisk <tt>*</tt> for multiplication (not dot or cross)
+		<code>
+d * 10 </code>
+	</li>
+	<li> <em>No</em> commas in numbers in C++
+		<ul>
+			<li> Write 10,150.75 as <tt>10150.75</tt> </li>
+		</ul>
+	</li>
+	<li> Exponential notation:
+		<ul>
+			<li> Write 5.0 x 10<sup>-3</sup> as <tt>5.0E-3</tt> </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Number Types </h1>
+<h3> Output statement </h3>
+<code>cout &lt;&lt; "Total value = " &lt;&lt; total &lt;&lt; "\n"; </code>
+<ul>
+	<li> <i>stream</i> output </li>
+	<li> Display multiple items </li>
+</ul>
+<code> // Total value of the coins </code>
+<ul>
+  <li> <i>Block comment</i> </li>
+	<li> Ignored by the compiler </li>
+	<li> Explains the program to other programmers or yourself </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Number Types </h1>
+<h3> Symbolic name (variables) </h3>
+<ul>
+	<li> Locations to store values (<strong>not</strong> formulas!) </li>
+	<li> Make programs easier to read </li>
+	<li> Easier to update </li>
+	<li> Use descriptive names
+		<ul>
+			<li> Names must start with a letter or underscore </li>
+      <li> Remaining characters are letters, underscores, 
+        or numbers </li>
+			<li> No reserved words </li>
+			<li> Case <em>sensitive</em>! </li>
+		</ul>
+	</li>
+	<li> Don't use subscripts </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "1" )
+    //]]>
+  </script>
+ : Output Statement </h1>
+<div class='syntax'>
+<code>cout &lt;&lt; <i>expression</i><sub>1</sub> &lt;&lt; <i>expression</i><sub>2</sub> &lt;&lt; ... &lt;&lt; <i>expression</i><sub><i>n</i></sub>;</code>
+
+	<h3> Example: </h3>
+<code>cout &lt;&lt; pennies;
+cout &lt;&lt; &quot;Total value = &quot; &lt;&lt; total &lt;&lt; &quot;\n&quot;;</code>
+
+	<h3> Purpose: </h3>
+	<p>Prints the values of one or more expressions.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "2" )
+    //]]>
+  </script>
+ : Comment </h1>
+<div class='syntax'>
+<code><i>/* comment text */
+// comment text </i></code>
+	<h3> Example: </h3>
+<code><i>/*</i> Total value of the coins <i>*/</i>
+<i>//</i> Total value of the coins</code>
+
+	<h3> Purpose: </h3>
+	<p>Add a comment to help a human reader understand the program.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Comment </h1>
+<h3> Block Comment <tt>/* Comment text */</tt> </h3>
+<ul>
+	<li> Cover multiple lines </li>
+	<li> Do <strong>not</strong> nest </li>
+</ul>
+
+<h3> Line Comment <tt>// Comment text</tt> </h3>
+<ul>
+	<li> From <tt>//</tt> to EOL </li>
+</ul>
+
+<p> Avoid <tt>//*</tt> </p>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : Variable Definition </h1>  
+<div class='syntax'>
+<code><i>type_name variable_name;
+type_name variable_name = initial_value;</i>
+</code>
+	<h3> Example: </h3>
+<code>double total;
+int pennies = 8;</code>
+	<h3> Purpose: </h3>
+	<p> Define a new variable of a particular type, and optionally supply
+		an initial value.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "1" )
+    //]]>
+  </script>
+</h1>
+<h3> Numeric Ranges and Precisions </h3>
+<ul>
+	<li> <tt>int</tt>s have a limited <em>range</em>
+		<ul>
+			<li> -32,768 to 32,767 on a 16-bit machine </li>
+			<li> -2,147,483,648 (-2<sup>31</sup>) to 2,147,483,647
+			(2<sup>31</sup>-1) on a 32-bit machine </li>
+		</ul>
+	</li>
+	<li> Doubles have limited <em>precision</em>
+		<ul>
+			<li> <tt>double</tt>s have (roughly) 15 significant decimal digits
+			</li>	
+			<li> <tt>float</tt>s have only about 7 </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Input &mdash; <tt>coins2.cpp</tt> </h1> 
+<p> Programs generally input some data, and produce output based on the
+input </p>
+<script type='text/javascript'>
+  //<![CDATA[
+  wrapCode( "coins2.cpp" )
+  //]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Input </h1> 
+<h3> <tt>&gt;&gt;</tt> (<i>stream-insertion operator</i>) </h3>
+<ul>
+  <li> reads console input:  
+      <code>cin &gt;&gt; pennies;</code>
+	</li>
+  <li> Formats input.  Here, converts input to an <tt>int</tt>
+    <ul>
+			<li> Bad input fails. Subsequent input also fails </li>
+		</ul>
+	</li>
+	<li> Stores input in a variable </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Input </h1> 
+<ul>
+  <li> Can read multiple values:  
+		<code>cin &gt;&gt; pennies &gt;&gt; nickels &gt;&gt; dimes 
+			&gt;&gt; quarters;</code>
+	</li>
+  <li> Inputs are separated by <i>white space</i>:
+      <code>8 0 4 3</code>
+    <p> or on separate lines: </p>
+<code>8
+0
+4
+3</code>
+	</li>
+	<li> Input is <i>buffered</i>.  The second input on a line is saved for
+		the next input statement
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	</h1>
+<h3> Failed input </h3>  
+<p> <tt>&gt;&gt;</tt> operator not well-suited for unexpected user input.
+Consider <tt>coins2.cpp</tt>, where the user inputs <tt>10.75</tt>: </p>
+
+<code>cin &gt;&gt; pennies;</code>
+<ul>
+	<li> Consumes the <tt>10</tt> ( <tt>.</tt> isn't part of an <tt>int</tt> )
+	</li>
+	<li> Input stream now contains <tt>.75</tt> </li>
+</ul>
+<code>cin &gt;&gt; nickels;</code>
+<ul>
+	<li> <tt>.</tt> not part of an <tt>int</tt>.  Nothing is read </li>
+	<li> <tt>nickels</tt> retains previous value </li>
+	<li> <tt>cin</tt> is now in a "fail" state </li>
+	<li> All without warning </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Assignment </h1>  
+<h3> <tt>=</tt> (Assignment Statement) </h3>
+<ul>
+	<li> <tt>=</tt> operator assigns the RHS value to the variable on the
+		<i>left</i>
+		<code>total = pennies * 0.01;</code>
+	</li>
+	<li> LHS must be an <i>L-val</i>, a non-const variable </li>
+	<li> Does not store formulas; only values </li>
+  <li> <i>Assignment</i> is <strong>not</strong> <i>algebraic 
+    equality</i> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Assignment </h1>
+<ul>
+	<li> RHS evaluated first, to a single value, then stored in the LHS:
+		<code>
+total = count * 0.05 + total;</code><br>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig3.png" )
+		//]]>
+		</script>
+		<p> <span class='blue'>Figure 3</span> Assignment </p> 
+		</div>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Assignment </h1> 
+<h3> Types </h3>
+<ul>
+	<li> LHS and RHS <i>types</i> should match
+<code>float total;
+total = "a lot";</code>
+		is an error </li>
+	<li> Some <dfn>coercions</dfn> can be done by the compiler.  E.g., assigning
+		an <tt>int</tt> into a float type:
+		<code>total = count</code>
+	</li>
+	<li> Assigning a float type into an <tt>int</tt> causes truncation, loss
+	of data
+		<ul>
+			<li> <em>Should</em> generate a warning </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Assignment </h1>  
+<h3> Definition, initialization </h3>
+<ul>
+	<li><code>double total = count * 0.01;</code>
+		is a <i>definition</i> of <tt>total</tt>
+	</li>
+	<li> Creates a new variable, declares it of type <tt>double</tt> </li>
+	<li> Initializes it with <tt>count * 0.01</tt> </li>
+	<li> Can <strong>not</strong> redefine a variable (in the same scope)
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Assignment </h1>
+<h3> Increment and Decrement Operators </h3>
+<ul>
+	<li> Assignments such as <tt>month = month + 1;</tt> are very common in
+		programming </li>
+  <li> This assignment <i>increments</i> the variable <tt>month</tt> </li>
+  <li> C++ provides special shorthands for increment: 
+		<code>
+month++; // add 1 to month
+++month; // same thing, if used alone</code>
+  </li>
+  <li>C++ also supports <i>decrement</i>:  
+		<code>
+month--; // subtract 1 from month
+--month;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> Roundoff Errors </h3>  
+<ul>
+	<li> Float types are approximations; not always exact (consider 1/3) </li>
+	<li> They are <em>truncated</em> when cast to an <tt>int</tt>, not
+	rounded </li>
+	<li> Leads to rounding errors.  E.g.,
+		<code>
+int n = 4.35 * 100</code>
+		<ul>
+			<li> <tt>4.35 * 100</tt> is a <tt>double</tt> </li>
+			<li> <tt>n</tt> is an <tt>int</tt> </li>
+			<li> <tt>n</tt> stores the value 434 </li>
+		</ul>
+	</li>
+	<li> Add 0.5 to a number before converting to an integer </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "1" )
+    //]]>
+  </script>
+ : Cast </h1>  
+<div class='syntax'>
+<code>static_cast&lt;<i>type_name</i>&gt;(<i>expression</i>)</code>
+
+	<h3> Example: </h3>
+<code>static_cast&lt;int&gt;(x + 0.5)</code>
+	<h3> Purpose: </h3>
+	<p> Change an expression to a different type. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "3" )
+    //]]>
+  </script>
+</h1>
+<h3> Combining Assignment and Arithmetic </h3>
+	<code> total += count * 0.05; </code>
+<p> is just shorthand for </p>
+	<code> total = total + count * 0.05;</code>
+<ul>
+	<li> Similarly for other operations:
+		<code>
+-=  *= /= %=</code>
+		and others </li>
+	<li> Always safe to use in a larger expression </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "3" )
+    //]]>
+  </script> (cont.)
+</h1>
+<h3> Combining Assignment and Arithmetic </h3>
+<p> <tt>i++</tt> , e.g., should <strong>not</strong> be used in a larger
+	expression </p>
+<ul>
+	<li> This is a little tough to read:
+		<code>
+i = 4;
+j = i++;</code>
+		<tt>i</tt> is 5, but <tt>j</tt> is actually 4
+	</li>
+	<li> Not defined in C++:
+		<code>
+i = 4;
+j = i++ + i--;</code>
+		<tt>i</tt> is 4 after this statement, but <tt>j</tt> could be
+		<tt>4+5</tt>, or <tt>3+4</tt>; it's up to the compiler
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Constants </h1> 
+<ul>
+	<li> Descriptive identifiers make a program easier to read </li>
+	<li> The same is true for constants
+		<code>
+double total = bottles * 2 + cans * 0.355;</code>
+	</li>
+	<li> What is that <tt>0.355</tt> ? </li>
+	<li> It's the number of liters in a 12 oz. can </li>
+	<li> So, say it:
+		<code>
+const double BOTTLE_VOLUME = 2.0;
+const double CAN_VOLUME = 0.355;
+double total = bottles * BOTTLE_VOLUME + cans * CAN_VOLUME;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constants </h1> 
+<ul>
+	<li> Declared w/the keyword <tt>const</tt> </li>
+	<li> Can never change (assigned into) </li>
+	<li> Must be initialized at definition:
+		<code>
+const double CAN_VOLUME = 0.355;</code>
+	</li>
+	<li> Even better:
+		<code>
+const double LITER_PER_OZ = 0.029586;
+const double CAN_VOLUME = 12 * LITER_PER_OZ; // 12-oz. cans </code>
+	</li>
+	<li> Often written all in caps </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constants &mdash; <tt>volume.cpp</tt></h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "volume.cpp" )
+	//]]>
+</script>  
+</div>
+
+<div class='slide'>
+<h1> Constants </h1>
+<ul>
+	<li> Code easier to read 
+		<code>
+a = 6.67428e-11 * m / d / d</code>
+		Recognize the Universal Gravitational Constant (which is hardly
+		universal; it is very difficult to measure, and several values are
+		used)?
+	</li>
+	<li> Less prone to cookie-cutter errors </li>
+	<li> Easier to modify/maintain code:<br />
+		Consider changing bottles from 2 liters to 1/2 gallons
+		<ul>
+			<li> Search for every <tt>2</tt>, replace with <tt>1.893</tt> </li>
+			<li> Okay, not <em>every</em> 2 </li>
+			<li> Instead, just update your constant (and its comment) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "4" )
+		//]]>
+	</script>
+</h1>
+<h3> Enumerated Types </h3>  
+<ul>
+	<li> Some variables have a finite set of values </li>
+	<li> Consider days of the week, months of the year, color choices for this
+	year's Lotus Elise... </li>
+	<li> We can define <i>enumerated types</i>:
+		<code>
+enum Color { RED, YELLOW, GREEN, BLACK };</code>
+	</li>
+	<li> Makes a new type:
+		<code>
+Color car_color = RED;</code>
+	</li>
+	<li> Better than just enumerating constants:
+		<code>
+Color car_color = 7;</code>
+		will generate a compiler error
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Arithmetic </h1>  
+<ul>
+  <li> Arithmetic operators in C++, by decreasing precedence
+    <ul>
+      <li> Multiplication, division, modulus: <tt>* / %</tt> </li>
+      <li> Addition, subtraction: <tt>+ -</tt> </li>
+    </ul>
+		<strong>Note</strong>, there is <em>no</em> exponentiation operator
+  </li>
+  <li> After precedence is applied, all of these operators associate
+	left-to-right </li>
+  <li> Parentheses force evaluation </li>
+	<li> Parentheses can make code more legible </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Arithmetic </h1>
+<ul>
+	<li> <tt>4 + 6 / 2</tt> is 7 </li>
+	<li> <tt>(4 + 6) / 2</tt> is 5 </li>
+	<li> <tt>2 * 3 + 5</tt> is 11 </li>
+	<li> <tt>2 * (3 + 5)</tt> is 16 </li>
+	<li> <tt>8 - 3 - 2</tt> is 3 </li>
+	<li> <tt>8 - (3 - 2)</tt> is 7 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Arithmetic (Integer Division) </h1> 
+<ul>
+	<li> Integer division (and multiplication) is different from float
+	arithmetic </li>
+	<li> An integer divided by an integer is an integer </li>
+	<li> From grade school:  11/4 is 2r3 (2 remainder 3), so, in C++:
+    <code>
+11 / 4      // 2 </code>
+	</li>
+  <li> In division, if <em>either</em> of the operands is a floating-point 
+    number, floating-point division is used:  
+<code>
+11.0 / 4.0   // 2.75 
+11 / 4.0     // 2.75 
+11.0 / 4     // 2.75 </code>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Integer Division </h3>  
+<p> This is an easy thing to forget about.  Consider calculating the
+distance an object dropped from rest falls after <tt>t</tt> seconds:</p>
+<code>
+ d = 1 / 2 * 9.8 * t * t </code>
+<ul>
+	<li> Invariably 0 </li>
+	<li> Remember, evaluated left-to-right (given equal precedence) </li>
+	<li> You must write
+		<code>
+ d = 1.0 / 2 * 9.8 * t * t </code>
+		or
+		<code>
+ d = 1 / 2.0 * 9.8 * t * t </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+	(cont)
+</h1>
+<h3> Integer Division </h3>  
+<ul>
+	<li> You can use a caste:
+		<code>
+d = static_cast&lt;double&gt;(1) / 2 * 9.8 * t * t </code>
+	</li>
+	<li> But notice the error here:
+		<code>
+d = static_cast&lt;double&gt;(1 / 2 * 9.8 * t * t ) </code>
+	</li>
+	<li> The expression inside the parentheses
+		<code>
+(1 / 2 * 9.8 * t * t)</code>
+		is evaluated first, to 0
+	</li>
+	<li> This value is then cast to a <tt>double</tt>, yielding 0.0 </li>
+</ul>
+</div>
+ 
+<div class='slide'>
+<h1> Arithmetic &mdash; division, modulus </h1>
+<ul>
+  <li> To get the remainder of division between two integers, use 
+    the modulus operator <tt>%</tt>: 
+    <code>
+7 % 4      // 3 remainder </code>
+  </li>
+	<li> Modulus is undefined on float-types </li>
+	<li> Suppose we want to know the value of coins in a purse, in dollars and
+	cents
+		<ul>
+			<li> Compute total cents, as an integer </li>
+			<li> Divide to get the whole dollar amount
+				<code>
+dollars = value / 100 </code>
+			</li>
+			<li> Compute the remaining change
+				<code>
+cents = value % 100 </code>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Arithmetic &mdash; <tt>coins4.cpp</tt> </h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "coins4.cpp" )
+	//]]>
+</script>  
+</div>
+
+<div class='slide'>
+<h1> Arithmetic (cmath Library Functions) </h1> 
+<ul>
+	<li> Many useful functions are defined in the <tt>cmath</tt> header file
+	</li>
+	<li> <tt>pow(x, y)</tt> computes <tt>x<sup>y</sup></tt>, where
+		<tt>x</tt>, <tt>y</tt>, and the result are all <tt>double</tt>s </li>
+	<li> <tt>sqrt(x)</tt> computes the square root </li>
+	<li> Other common functions follow (the list is incomplete) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Arithmetic (cmath Library Functions) </h1> 
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> <span class='hl'>Table 3</span> Other Mathematical
+		Functions </th>
+</tr>
+</thead>
+<tbody>
+<tr> 
+	<th style='width:145px'> Function </th>
+	<th style='width:336px'> Description </th>
+</tr>
+<tr> 
+	<td> <tt>sin(x)</tt> </td>
+	<td> sine of <var>x</var> (in radians) </td>
+</tr>
+<tr> 
+	<td> <tt>cos(x)</tt> </td>
+	<td> cosine of <var>x</var> (in radians) </td>
+</tr>
+<tr> 
+	<td> <tt>tan(x)</tt> </td>
+	<td> tangent of <var>x</var> (in radians) </td>
+</tr>
+<tr> 
+	<td> <tt>exp(x)</tt> </td>
+	<td> e<sup><var>x</var></sup> </td>
+</tr>
+<tr> 
+	<td> <tt>log(x)</tt> </td>
+	<td> (natural log) ln(<var>x</var>), <var>x</var> &gt; 0 </td>
+</tr>
+<tr> 
+	<td> <tt>log10(x)</tt> </td>
+	<td> (decimal log) Log(<var>x</var>), <var>x</var> &gt; 0 </td>
+</tr>
+<tr> 
+	<td> <tt>ceil(x)</tt> </td>
+	<td> smallest integer &ge; <var>x</var> </td>
+</tr>
+<tr> 
+	<td> <tt>floor(x)</tt> </td>
+	<td> largest integer &le; <var>x</var> </td>
+</tr>
+<tr> 
+	<td> <tt>fabs(x)</tt> </td>
+	<td> absolute value |<var>x</var>| </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8" )
+	//]]>
+	</script>
+ : Function Call </h1>  
+<div class='syntax'>
+<code><i>function_name</i>(<i>expression</i><sub>1</sub>,<i>expression</i><sub>2</sub>, ..., <i>expression</i><sub><i>n</i></sub>);</code>
+
+    <h3> Example: </h3>
+<code>sqrt(x)
+pow(z + y, n)</code>
+    <h3> Purpose: </h3>
+		<p>Call a function and supply the values for the
+			function parameters.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='qualtip'> Quality Tip 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "5" )
+    //]]>
+  </script>
+</h1>
+<h3> Factor Out Common Code </h3>
+<p> Consider the Quadratic Formula: </p>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "quad_form.png" )
+//]]>
+</script>
+</div>
+<ul>
+	<li> We have no &plusmn;, so we might code this:
+		<code>
+x1 = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+x2 = (-b - sqrt(b * b - 4 * a * c)) / (2 * a);</code>
+	</li>
+	<li> Duplicating code, <tt>sqrt(b * b - 4 * a * c)</tt>
+		<ul>
+			<li> Wasteful </li>
+			<li> Error-prone </li>
+		</ul>
+	</li>
+	<li> Factor out common code:
+<code>
+double root = sqrt(b * b - 4 * a * c);
+x1 = (-b + root) / (2 * a);
+x2 = (-b - root) / (2 * a);</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Strings </h1>  
+<ul>
+	<li> Important data type, used by many programs </li>
+	<li> Sequence of characters </li>
+	<li> String literals are enclosed in double-quotes:
+		<code>
+"Hello"</code>
+		<ul>
+			<li> The quotes are not part of the string </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+  <script type='text/javascript'>
+    //<![CDATA[
+    taxonomy( "6.1" )
+    //]]>
+  </script>
+	String Variables
+</h1>
+<ul>
+  <li> Include the string header file:
+    <code>
+#include&lt;string&gt;</code>
+	</li>
+  <li> String variables are declared and assigned much like numbers:
+<code>
+string name = "John"; // declaration and initialization
+name = "Carl"; // assignment</code>
+	</li>
+	<li> Strings can be read from the keyboard and written to the screen:
+<code>
+cout &lt;&lt; "Please enter your name:"; // output
+cin &gt;&gt; name; // input (stops at first space)</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Strings </h1> 
+<ul>
+	<li> When reading strings, the input operator (<tt>&gt;&gt;</tt>) only
+	reads one word (up to the next white space) </li>
+  <li> Use the <tt>getline()</tt> function:
+			<code>
+getline(cin, name);</code>
+    to read all keystrokes until the newline (the [Enter] key)
+		<ul>
+			<li> The newline is extracted from the stream, but <em>not</em> stored
+			with the string </li>
+		</ul>
+	</li>
+	<li> If the user enters
+    <code>
+Harry Hacker</code>
+		then <tt>name</tt> will store the string <tt>"Harry Hacker"</tt>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Strings</h1> 
+<h2>Member Functions</h2>
+<ul>
+  <li> The number of characters in a string is its <i>length</i> </li>
+  <li> You can ask a string its length by using its <tt>length()</tt>
+		<i>method</i>, or <i>member function</i> </li>
+  <li> Invoked using <i>dot notation</i>
+		<code>
+name.length()</code>
+	</li>
+	<li> Much like sending a message to an object </li>
+</ul> </div>
+
+
+<div class='slide'>
+<h1 class='subsect'> 
+  <script type='text/javascript'>
+	//<![CDATA[
+    taxonomy( "6.2" )
+	//]]>
+  </script>
+	Substrings
+</h1>
+<ul>
+  <li> The <tt>substr</tt> member function is used 
+    to extract substrings 
+		<code>
+s.substr(<i>start</i>, <i>length</i>)</code>
+	</li>
+	<li> Result is <tt><i>length</i></tt> characters from <tt>s</tt>, starting
+		at index <tt><i>start</i></tt> </li>
+	<li> Indices are zero-based (first character is at index 0) </li>
+	<li> The last character is always one less than the length of the string
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Substrings </h1> 
+<code>
+string greeting = "Hello, World!\n";
+string sub = greeting.substr(0, 4);
+// sub is "Hell"</code><br>
+<table class='array'>
+	<tr class='data'> 
+		<td class='hl'> <tt>H</tt> </td>
+		<td class='hl'> <tt>e</tt> </td>
+		<td class='hl'> <tt>l</tt> </td>
+		<td class='hl'> <tt>l</tt> </td>
+		<td> <tt>o</tt> </td>
+		<td> <tt>,</tt> </td>
+		<td> <tt></tt> </td>
+		<td> <tt>W </tt> </td>
+		<td> <tt>o</tt> </td>
+		<td> <tt>r</tt> </td>
+		<td> <tt>l</tt> </td>
+		<td> <tt>d</tt> </td>
+		<td> <tt>!</tt> </td>
+		<td> <tt>\n</tt> </td>
+	</tr>
+	<tr class='index'>
+		<td> 0 </td>
+		<td> 1 </td>
+		<td> 2 </td>
+		<td> 3 </td>
+		<td> 4 </td>
+		<td> 5 </td>
+		<td> 6 </td>
+		<td> 7 </td>
+		<td> 8 </td>
+		<td> 9 </td>
+		<td> 10 </td>
+		<td> 11 </td>
+		<td> 12 </td>
+		<td> 13 </td>
+	</tr>
+</table>
+<p> To get the substring "World": </p>
+<code>string w = greeting.substr(7, 5)</code><br>
+
+<table class='array'>
+	<tr class='data'>
+		<td> <tt>H</tt> </td>
+		<td> <tt>e</tt> </td>
+		<td> <tt>l</tt> </td>
+		<td> <tt>l</tt> </td>
+		<td> <tt>o</tt> </td>
+		<td> <tt>,</tt> </td>
+		<td> <tt></tt> </td>
+		<td class='hl'> 
+			<tt>W </tt> </td>
+		<td class='hl'> 
+			<tt>o</tt> </td>
+		<td class='hl'> 
+			<tt>r</tt> </td>
+		<td class='hl'> 
+			<tt>l</tt> </td>
+		<td class='hl'> 
+			<tt>d</tt> </td>
+		<td> <tt>!</tt> </td>
+		<td> <tt>\n</tt>
+		</td>
+	</tr>
+	<tr class='index'>
+		<td> 0 </td>
+		<td> 1 </td>
+		<td> 2 </td>
+		<td> 3 </td>
+		<td> 4 </td>
+		<td> 5 </td>
+		<td> 6 </td>
+		<td> 7 </td>
+		<td> 8 </td>
+		<td> 9 </td>
+		<td> 10 </td>
+		<td> 11 </td>
+		<td> 12 </td>
+		<td> 13 </td>
+	</tr>
+</table>
+</div>
+<div class='slide'>
+<h1> String Functions </h1> 
+<table class='book'>
+	<tr> 
+		<th> Name </th>
+		<th> Purpose </th>
+	</tr>
+	<tr> 
+		<td> <tt>s.length()</tt> </td>
+		<td> The length of <tt>s</tt> </td>
+	</tr>
+	<tr> 
+		<td> <tt>s.substr(i)</tt> </td>
+		<td>
+			The substring of <tt>s</tt> from index <tt>i</tt> to the end of the string  
+		
+		</td>
+	</tr>
+	<tr> 
+		<td> <tt>s.substr(i, n)</tt> </td>
+		<td>
+			The substring of <tt>s</tt> of length <tt>n</tt> starting at index <tt>i</tt>
+		</td>
+	</tr>
+	<tr> 
+		<td> <tt>getline(f, s)</tt> </td>
+		<td> 
+			Read string <tt>s</tt> from 
+			the input stream <tt>f</tt>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "9" )
+	//]]>
+	</script>
+ : Member Function Call </h1>  
+<div class='syntax'>
+<code><i>expression</i>.<i>function_name</i>(<i>expression</i><sub>1</sub>, <i>expression</i><sub>2</sub>, ... , <i>expression<sub>n</sub></i>)</code>
+
+    <h3> Example: </h3>
+<code>name.length()
+name.substr(0, n - 1)</code>
+    <h3> Purpose: </h3>
+			<p>Call a member function and supply the 
+       values for the function parameters.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+  <script type='text/javascript'>
+	//<![CDATA[
+    taxonomy( "6.3" )
+	//]]>
+  </script>
+	Concatenation
+</h1>
+<ul>
+  <li> The <tt>+</tt> operator concatenates two strings. 
+		<code>
+string fname = "Harry";
+string lname = "Hacker";
+string name = fname + " " + lname;</code>
+  </li>
+  <li> One or both strings surrounding the + must be a <tt>string</tt> type
+		<code>
+"Harry" + " " </code>
+		won't work.  So, make it a string:
+		<code>
+string("Harry") + " "</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Concatenation &mdash; <tt>initials.cpp</tt></h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "initials.cpp" )
+	//]]>
+</script>  
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "6" )
+		//]]>
+	</script>
+</h1>
+<h3> Characters and C strings </h3>  
+<ul>
+	<li> <tt>char</tt> data type stores a single character
+		<ul>
+			<li> A character literal is denoted by single quotes:
+				<code>
+'c' 'Z' ' ' '\n' '\t' '\\' '"'</code>
+			</li>
+		</ul>
+	</li>
+	<li> "C strings" are arrays of <tt>chars</tt>, so, of type <tt>char[]</tt>
+	or <tt>char*</tt> 
+		<ul>
+			<li> How strings are stored in C, and C++ before the <tt>string</tt>
+			class </li>
+			<li> Require a lot of work for the programmer (housekeeping) </li>
+		</ul>
+	</li>
+	<li> The <tt>string</tt> type takes care of these chores </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+  <script type='text/javascript'>
+	//<![CDATA[
+    taxonomy( "6.4" )
+	//]]>
+  </script>
+	Formatted Output
+</h1>
+<ul>
+	<li> Default output maybe isn't as neat as you'd like:
+<code>
+cout &lt;&lt; pennies &lt;&lt; " " &lt;&lt; pennies * 0.01 &lt;&lt; "\n";
+cout &lt;&lt; nickels &lt;&lt; " " &lt;&lt; nickels * 0.05 &lt;&lt; "\n";
+cout &lt;&lt; dimes &lt;&lt; " " &lt;&lt; dimes * 0.10 &lt;&lt; "\n";
+cout &lt;&lt; quarters &lt;&lt; " " &lt;&lt; quarters * 0.25 &lt;&lt; "\n";</code>
+		would produce:
+<code>
+1 0.01
+12 0.6
+4 0.4
+120 30</code>
+	</li>
+	<li> Columns don't align </li>
+	<li> Money should have 2 places after the decimal </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Formatted Output </h1> 
+<ul>
+	<li> Use <i>manipulators</i> in the <tt>iomanip</tt> header to
+	format output:
+		<code>
+#include &lt;iomanip&gt;</code>
+	</li>
+	<li> <tt>setw()</tt> sets the field width of the <em>next</em> output </li>
+	<li> <tt>setprecision()</tt> sets the precision of subsequent floating point
+		numbers </li>
+  <li> <tt>fixed</tt> displays trailing zeroes </li>
+	<li> By default, numbers align right within a larger field </li>
+	<li> <strong>Note</strong>, <tt>setw()</tt> only applies to the next
+	output.  <tt>setprecision</tt> and <tt>fixed</tt> apply until changed
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Formatted Output </h1> 
+<code>
+cout &lt;&lt; fixed &lt;&lt; setprecision(2);
+cout &lt;&lt; setw(8) &lt;&lt; pennies &lt;&lt; &quot; &quot;
+  &lt;&lt; setw(8) &lt;&lt; pennies * 0.01 &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; setw(8) &lt;&lt; nickles &lt;&lt; &quot; &quot;
+  &lt;&lt; setw(8) &lt;&lt; nickles * 0.05&lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; setw(8) &lt;&lt; dimes &lt;&lt; &quot; &quot;
+  &lt;&lt; setw(8) &lt;&lt; dimes * 0.10 &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; setw(8) &lt;&lt; quarters &lt;&lt; &quot; &quot;
+  &lt;&lt; setw(8) &lt;&lt; quarters * 0.25 &lt;&lt; &quot;\n&quot;;</code>
+<p> Creates this nice output: </p>
+<code>  1   0.01
+ 12   0.60
+  4   0.40
+120  30.00</code>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+Using Objects </h1>
+<ul>
+	<li> An object is a computational entity which has both <i>state</i> and
+	<i>behavior</i> </li>
+	<li> Objects are responsible for themselves </li>
+	<li> You do not directly manipulate an object; you send it a message (via
+		its <i>methods</i>, or member functions </li>
+	<li> Objects are well-suited for modeling entities in the real world </li>
+	<li> C++ support <i>Object-Oriented</i> programming </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Using Objects </h1>
+<ul>
+	<li> An <i>object</i> is a value that can be created, stored 
+		and manipulated, <strong>without</strong> knowing its internal structure
+		</li>
+	<li> An object is created from a <i>class</i> </li>
+	<li> A class is a data type (like <tt>int</tt> or <tt>double</tt>) 
+		that is <i>programmer-defined</i>
+		<ul>
+			<li> It is a blueprint for making objects </li>
+		</ul>
+	</li>
+	<li> An object is an actual value, an <i>instance</i> of a class </li>
+	<li> The text contains a <tt>Time</tt>, <tt>Employee</tt>, and 
+		4 shape classes for us to learn to work with classes. 
+		<ul>
+			<li> Remember, these are programmer defined and not part 
+				of standard C++ </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "7.1" )
+	//]]>
+	</script>
+<tt>Time</tt> Objects </h1>
+<ul>
+	<li> To use the <tt>Time</tt> class, include the header file
+		that contains its declaration(s):
+		<code>#include "ccc_time.h"</code>
+		<ul>
+			<li> We use <tt>" "</tt> instead of <tt>&lt; &gt;</tt> because 
+				the file is not in the standard library </li>
+		</ul>
+	</li>
+	<li> (See online documentation of the code library for more information on
+		how to add the code to your program) 
+		<ul>
+			<li> The source (<tt>.cpp</tt>) files must also be compiled, and
+			linked in </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> <tt>Time</tt> Objects </h1>
+<ul>
+	<li> Creating any object is called <dfn>construction</dfn> </li>
+	<li> We may pass construction arguments to the <dfn>constructor</dfn> </li>
+	<li> To represent the last second of the day (11:59:59 pm):
+		<code>
+Time day_end( 23, 59, 59 ); /* Use a 24-hour clock */</code>
+		<ul>
+			<li> Creates an <dfn>unnamed</dfn> object </li>
+		</ul>
+	</li>
+	<li> To store this in a variable:
+		<code>Time day_end = Time( 23, 59, 59 );</code>
+	</li>
+	<li> Shorthand, same thing:
+		<code>Time day_end( 23, 59, 59 );</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> <tt>Time</tt> Objects </h1>
+<ul>
+	<li> A class may define many constructors (each with different parameter
+		lists) </li>
+	<li> If an object has a default initial state, the class provides a
+		<dfn>default constructor</dfn>, which takes no arguments:
+		<code>
+Time()</code>
+	</li>
+	<li> The <tt>Time</tt> class uses the current time as the default
+		<code>
+Time now; // Default constructor used </code>
+		<ul>
+			<li> Don't use parenthesis when defining a new variable
+				<code>
+Time later(); // NO! </code>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> <tt>Time</tt> Objects </h1>
+<p> An object can be overwritten: </p>
+<code>Time homework_due = Time(19, 0, 0);
+homework_due = Time(23, 59, 59);</code><br>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> Replacing an Object
+with Another </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "10" )
+	//]]>
+	</script>
+ : Object Construction </h1>
+<div class='syntax'>
+<code><i>ClassName</i>(<i>construction parameters</i>);
+<i>ClassName</i>( );</code>
+<h3> Example: </h3>
+<code>Time(19, 0, 0);
+Time();</code>
+<h3> Purpose: </h3>
+	<p> Construct a new object for use in an expression. The first version
+	uses the given parameters to set the object's initial state.  The second
+	sets the object to a default state. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "11" )
+	//]]>
+	</script>
+ : Object Variable Definition </h1>
+<div class='syntax'>
+<code><i>ClassName</i> <i>variable_name</i>(<i>construction parameters</i>);</code>
+<h3> Example: </h3>
+<code>Time homework_due(19, 0, 0);
+Time homework_due;</code>
+<h3> Purpose: </h3>
+	<p> Define a new object variable.  The first version uses the given
+	parameters to set the object's initial state.  The second sets the object
+	to a default state. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> <tt>Time</tt> Objects </h1>
+<table class='book'>
+<thead>
+	<tr>
+		<th colspan='2'> Table 5 Member Functions of the
+			<tt>Time</tt> Class </th>
+	</tr>
+</thead>
+<tbody>
+<tr><th> Name </th> <th> Purpose </th></tr>
+<tr><td> <tt>Time()</tt> </td> <td> Constructs the current time </td></tr>
+<tr>
+	<td> <tt>Time(h, m, s)</tt> </td>
+	<td> Constructs the time with hours <tt>h</tt>, minutes <tt>m</tt>, and seconds <tt>s</tt> </td>
+</tr>
+<tr><td><tt>t.get_seconds()</tt> </td> <td> Returns the seconds value of <tt>t</tt> </td></tr>
+<tr><td><tt> t.get_minutes()</tt> </td> <td> Returns the minutes value of <tt>t</tt> </td></tr>
+<tr><td><tt>t.get_hours()</tt></td> <td> Returns the hours value of <tt>t</tt> </td></tr>
+<tr><td><tt>t.add_seconds(n)</tt></td> <td> Changes <tt>t</tt> to move by <tt>n</tt> seconds </td></tr>
+<tr>
+	<td><tt>t.seconds_from(t2)</tt></td>
+	<td> Computes the number of seconds between <tt>t</tt> and <tt>t2</tt> </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Using Objects </h1>
+<h2>Mutators </h2>
+<ul>
+	<li> Only one method modifies an object, after it's been constructed:
+		<code>
+wake_up.add_seconds( 1000 );</code><br>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig10.png" )
+		//]]>
+		</script>
+		<p> <span class='blue'>Figure 10</span> Changing the State of an Object </p>
+		</div>
+	</li>
+	<li> Note the dot notation, for member functions </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Using Objects</h1>
+<ul>
+	<li> To add an hour:
+		<code>
+const int SECONDS_PER_HOUR = 60 * 60;
+homework_due.add_seconds( SECONDS_PER_HOUR );</code>
+	</li>
+	<li> We can subtract an hour:
+		<code>
+homework_due.add_seconds( -SECONDS_PER_HOUR );</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Using Objects </h1>
+<h2>Accessors</h2>
+<ul>
+	<li> There are three <dfn>accessor</dfn> methods (<dfn>getters</dfn>):
+		<code>
+get_seconds()
+get_minutes()
+get_hours()</code>
+	</li>
+	<li> To get the time stored in a given object, ask it:
+		<code>
+wake_up.get_seconds()
+wake_up.get_minutes()
+wake_up.get_hours()</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Using Objects - <tt>time.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "time.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Using Objects </h1>
+<ul>
+	<li> Analogous <dfn>getters</dfn> were not included in this class </li>
+	<li> What should be made of this?
+		<code>
+wake_up.set_hours( 9999 );</code>
+		
+	</li>
+	<li> The <tt>Time</tt> class was built to represent a clock, a time of day
+	</li>
+	<li> We could give it meaning, but, it's not intuitive, so, the author
+	chose not to supply this behavior </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "7.2" )
+	//]]>
+	</script>
+	<tt>Employee</tt> Objects </h1>
+<ul>
+  <li> Object-oriented programming makes it easy to model entities 
+    from real life </li>
+	<li> Makes the program easy to understand, modify </li>
+</ul>
+<p> As an example, the text provides a simple employee class: </p>
+<ul>
+	<li> Each <tt>Employee</tt> has a name and a salary, which are set 
+		at construction:
+		<code>
+Employee harry("Hacker, Harry", 45000.00);</code>
+	</li>
+	<li> Both attributes can be queried:
+<code>
+cout &lt;&lt; &quot;Name: &quot; &lt;&lt; harry.get_name() &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; &quot;Salary: &quot; &lt;&lt; harry.get_salary() &lt;&lt; &quot;\n&quot;;</code>
+	</li>
+	<li> Only the salary can be set (modified after construction):
+		<code>
+harry.set_salary(new_salary);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Using Objects </h1>
+<h2>Members of the <tt>Employee</tt> class</h2>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 6  Member Functions of the <tt>Employee</tt> Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr> <th> Name </th> <th> Purpose </th> </tr>
+<tr>
+	<td> <tt>Employee(n, s)</tt> </td>
+	<td> Constructs an employee with name <tt>n</tt> and salary <tt>s</tt>
+		</td>
+</tr>
+<tr>
+	<td> <tt>e.get_name()</tt> </td>
+	<td> Returns the name of <tt>e</tt> </td>
+</tr>
+<tr>
+	<td> <tt>e.get_salary()</tt> </td>
+	<td> Returns the salary of <tt>e</tt> </td>
+</tr>
+<tr>
+	<td> <tt>e.set_salary(s)</tt> </td>
+	<td> Sets salary of <tt>e</tt> to <tt>s</tt> </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Using Objects - <tt>employee.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "employee.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Using Objects  </h1>
+<p> Working on meaningful entities improves legibility </p>
+<table>
+	<tr>
+		<td>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "fig12a.png" )
+			//]]>
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "fig12b.png" )
+			//]]>
+			</script>
+		</td>
+		<td>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "fig12c.png" )
+			//]]>
+			</script>
+		</td>
+	</tr>
+</table>
+<p> <span class='blue'>Figure 12</span> An <tt>Employee</tt> Object </p>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "8" )
+	//]]>
+	</script>
+	Displaying Graphical Shapes </h1>
+<ul>
+	<li> Useful classes to render simple graphics </li>
+	<li> Provide basis for further examples, study </li>
+	<li> Classes provided by the author
+		<ul>
+			<li> Do not support <em>all</em> platforms </li>
+			<li> But, there's a text version which will work anywhere </li>
+		</ul>
+	</li>
+	<li> To use these graphics libraries you must include the header:
+		<code>
+#include "ccc_win.h"</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Displaying Graphical Shapes </h1>
+<h2><dfn>console</dfn> vs. <dfn>graphics</dfn></h2>
+<ul>
+	<li> <dfn>Console applications</dfn> read <tt>stdin</tt> (<tt>cin</tt>) and
+		display text to <tt>stdout</tt> (<tt>cout</tt>) in a console (or
+		<dfn>command</dfn> or <dfn>terminal</dfn>) window
+		<ul>
+			<li> These programs work almost anywhere </li>
+		</ul>
+	</li>
+	<li> <dfn>Graphics applications</dfn> read keystrokes and mouse clicks and
+		display graphical shapes on a GUI object
+		<ul>
+			<li> Requires a GUI desktop (such as MS Windows, gnome, enlightenment,
+			the Mac desktop, etc.) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Displaying Graphical Shapes </h1>
+<ul>
+	<li> The graphics library provided with this text, <tt>ccc_win</tt>, uses
+		a (single) window, called <tt>cwin</tt>
+		<ul>
+			<li> <strong>Caution:</strong> can have only <em>one</em> application
+			running </li>
+		</ul>
+	</li>
+	<li> Objects are inserted (sent to) this window, to be displayed:
+<code>Circle c;
+...
+cout &lt;&lt; c; // Won't display the circle 
+cwin &lt;&lt; c; // The circle will appear in the graphics window </code>
+    </li>
+  <li> This graphics package was created for use in the textbook 
+    (it's not part of standard C++) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8.1" )
+	//]]>
+	</script>
+ Graphics Objects </h1>
+<p> We can display points, circles, lines, and text messages </p>
+<ul>
+	<li> A <tt>Point</tt> has an <var>x</var>- and a <var>y</var>-coordinate
+		<code>
+Point(1, 3)</code>
+	</li>
+</ul>
+<table>
+<tr>
+	<td>
+		<p> Points are used in creating other graphical objects: </p>
+		<code>
+Circle(Point(1, 3), 2.5)</code>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig13.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 13</span> A Circle </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+	<h1> Graphics Objects - <tt>circle.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "circle.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<table>
+<tr>
+	<td> A line is created from two points: 
+		<code>
+Point p(1, 3);
+Point q(4, 7);
+Line s(p, q);</code>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig14.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 14</span> A Line </p>
+		</div>
+	</td>
+</tr>
+</table>
+<ul>
+	<li> Use <tt>get_start()</tt> and <tt>get_end()</tt> to get the endpoints
+	</li></ul>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<p> Use the <tt>Message</tt> class to display text anywhere in the graphics
+window. </p>
+<ul>
+	<li> Specify the message, and the location </li>
+	<li> The point specifies the upper left corner </li>
+</ul>
+<code>Point p(1, 3);
+Message greeting(p, "Hello, Window!");</code>
+<br>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig15.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 15</span> A <tt>Message</tt> </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<p> All objects share a <tt>move</tt> method </p>
+<code>obj.move(dx, dy)</code>
+<ul>
+	<li> Changes the position of the object </li>
+	<li> Arguments can be non-positive </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig16.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 16</span> The <tt>move</tt>
+Operation </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects - <tt>square.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "square.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 7  Member Functions of the <tt>Point</tt> Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Name </th>
+	<th> Purpose </th>
+</tr>
+<tr>
+	<td> <tt>Point(x, y)</tt> </td>
+	<td> Constructs a point at location (<tt>x</tt>, <tt>y</tt>) </td>
+</tr>
+<tr>
+	<td> <tt>p.get_x()</tt> </td>
+	<td> Returns the <var>x</var>-coordinate of point <tt>p</tt> </td>
+</tr>
+<tr>
+	<td> <tt>p.get_y()</tt> </td>
+	<td> Returns the <var>y</var>-coordinate of point <tt>p</tt> </td>
+</tr>
+<tr>
+	<td> <tt>p.move(dx, dy)</tt> </td>
+	<td> Moves point <tt>p</tt> by (<tt>dx</tt>, <tt>dy</tt>) </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 8  Member Functions of the <tt>Circle</tt> Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Name </th>
+	<th> Purpose </th>
+</tr>
+<tr>
+	<td> <tt>Circle(p, r)</tt> </td>
+	<td> Constructs a circle with center <tt>p</tt> and radius <tt>r</tt>
+	</td>
+</tr>
+<tr>
+	<td> <tt>c.get_center()</tt> </td>
+	<td> Returns the center point of circle <tt>c</tt> </td>
+</tr>
+<tr>
+	<td> <tt>c.get_radius()</tt> </td>
+	<td> Returns the radius of circle <tt>c</tt> </td>
+</tr>
+<tr>
+	<td> <tt>c.move(dx, dy)</tt> </td>
+	<td> Moves circle <tt>c</tt> by (<tt>dx</tt>, <tt>dy</tt>) </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 9  Member Functions of the <tt>Line</tt> Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Name </th>
+	<th> Purpose </th>
+</tr>
+<tr>
+	<td> <tt>Line(p, q)</tt> </td>
+	<td> Constructs a line joining points <tt>p</tt> and <tt>q</tt> </td>
+</tr>
+<tr>
+	<td> <tt>l.get_start()</tt> </td>
+	<td> Returns the starting point of line <tt>l</tt> </td>
+</tr>
+<tr>
+	<td> <tt>l.get_end()</tt> </td>
+	<td> Returns the ending point of line <tt>l</tt> </td>
+</tr>
+<tr>
+	<td> <tt>l.move(dx, dy)</tt> </td>
+	<td> Moves line <tt>l</tt> by (<tt>dx</tt>, <tt>dy</tt>) </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Graphics Objects </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 10  Member Functions of the <tt>Message</tt> Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Name </th>
+	<th> Purpose </th>
+</tr>
+<tr>
+	<td> <tt>Message(p, s)</tt> </td>
+	<td> Constructs a Message with starting point <tt>p</tt> and text string
+		<tt>s</tt> </td>
+</tr>
+<tr>
+	<td> <tt>Message(p, s)</tt> </td>
+	<td> Constructs a Message with starting point <tt>p</tt> and a label equal
+		to the number <tt>x</tt> </td>
+</tr>
+<tr>
+	<td> <tt>m.get_start()</tt> </td>
+	<td> Returns the starting point of message <tt>m</tt> </td>
+</tr>
+<tr>
+	<td> <tt>m.get_text()</tt> </td>
+	<td> Gets the text string of message <tt>m</tt> </td>
+</tr>
+<tr>
+	<td> <tt>m.move(dx, dy)</tt> </td>
+	<td> Moves line <tt>m</tt> by (<tt>dx</tt>, <tt>dy</tt>) </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8.2" )
+	//]]>
+	</script>
+	Choosing a Coordinate System </h1>
+<table>
+<tr>
+	<td>
+		To display graphics, we need to determine:
+		<ol>
+			<li> The origin </li>
+			<li> The unit of length </li>
+		</ol>
+		The library for this book:
+		<ul>
+			<li> Places the origin at the center </li>
+			<li> Makes each axis 20 units long, regardless of window dimensions </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig21.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 21</span> Default
+		Coordinate System for Graphics Library </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Choosing a Coordinate System </h1>
+<h2> Mapping Data to the Range </h2>
+<p> If your data doesn't fall on [-10, 10], you need to translate your
+coordinate system </p>
+<p> E.g., consider plotting average temperatures in Pheonix, AZ for each
+month of the year: </p>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> <var>x</var>-coordinates are months [1, 12] </li>
+			<li> <var>y</var>-coordinates are temperatures [11, 33] </li>
+			<li> To select this coordinate system:
+				<code>
+cwin.coord(1, 33, 12, 11);</code>
+			</li>
+			<li> Per convention, we specify the upper-left corner, then the
+			lower-right </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig22.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 22</span> Coordinate System
+		for Temperature </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Choosing a Coordinate System </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='4'> Table 11 Average Temperatures in Phoenix, Arizona </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Month </th>
+	<th> Average Temperature </th>
+	<th> Month </th>
+	<th> Average Temperature </th>
+</tr>
+<tr>
+	<td> January </td> <td> 11&deg;C </td> <td> July </td> <td> 33&deg;C </td>
+</tr>
+<tr>
+	<td> February </td> <td> 13&deg;C </td> <td> August </td> <td> 32&deg;C </td>
+</tr>
+<tr>
+	<td> March </td> <td> 16&deg;C </td> <td> September </td> <td> 29&deg;C </td>
+</tr>
+<tr>
+	<td> April </td> <td> 20&deg;C </td> <td> October </td> <td> 23&deg;C </td>
+</tr>
+<tr>
+	<td> May </td> <td> 25&deg;C </td> <td> November </td> <td> 16&deg;C </td>
+</tr>
+<tr>
+	<td> June </td> <td> 31&deg;C </td> <td> December </td> <td> 12&deg;C </td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+	<h1> Choosing a Coordinate System &mdash; <tt>phoenix.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "phoenix.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8.3" )
+	//]]>
+	</script>
+	Getting Input from the Graphics Window </h1>
+<p> The graphics library supplies a set of functions for getting text and
+mouse input from the user.  This is not a console application, so
+<tt>cin</tt> is not available to you. </p>
+<ul>
+	<li> To read string input:
+		<code>
+string <i>response</i> = cwin.get_string(<i>prompt</i>);</code>
+	</li>
+	<li> E.g.,
+		<code>
+string name = cwin.get_string("Please type your name:");</code>
+	</li>
+	<li> The user is prompted in a special input area, platform-dependent
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Getting Input from the Graphics Window </h1>
+<p> Library can also read numbers and mouse clicks. </p>
+<ul>
+	<li> Use <tt>get_int()</tt> or <tt>get_double()</tt> to read numbers:
+		<code>
+int age = cwin.get_int("Please enter your age:");</code>
+	</li>
+	<li> Use <tt>get_mouse()</tt> to get a <tt>Point</tt> on your coordinate
+		system:
+		<code>
+Point <i>response</i> = cwin.get_mouse(<i>prompt</i>);</code>
+	</li>
+	<li> E.g.,
+		<code>
+Point center = cwin.get_mouse("Click center of circle");</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Getting Input from the Graphics Window </h1>
+<table class='book'>
+<thead>
+<tr>
+	<th colspan='2'> Table 12 Member Functions of the GraphicWindow Class
+	</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<th> Name </th> <th> Purpose </th>
+</tr>
+<tr>
+	<td> <tt>w.coord(x1, y1, x2, y2)</tt> </td>
+	<td> Sets the coordinate system for subsequent drawing: (<tt>x1</tt>, <tt>y1</tt>) is the top left corner, (<tt>x2</tt>, <tt>y2</tt>) the bottom right corner </td>
+</tr>
+<tr>
+	<td> <tt>w &lt;&lt; x</tt> </td>
+	<td> Displays the object <tt>x</tt> (a point, circle, line, or message) in window <tt>w</tt> </td>
+</tr>
+<tr>
+	<td> <tt>w.clear()</tt> </td>
+	<td> Clears window <tt>w</tt> (erases its contents) </td>
+</tr>
+<tr>
+	<td> <tt>w.get_string(p)</tt> </td>
+	<td> Displays prompt <tt>p</tt> in window <tt>w</tt> and returns the entered string </td>
+</tr>
+<tr>
+	<td> <tt>w.get_int(p)</tt> </td>
+	<td> Displays prompt <tt>p</tt> in window <tt>w</tt> and returns the entered integer </td>
+</tr>
+<tr>
+	<td> <tt>w.get_double(p)</tt> </td>
+	<td> Displays prompt <tt>p</tt> in window <tt>w</tt> and returns the entered floating-point value </td>
+</tr>
+<tr>
+	<td> <tt>w.get_mouse(p)</tt> </td>
+	<td> Displays prompt <tt>p</tt> in window <tt>w</tt> and returns the mouse click point </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body>
+</html>

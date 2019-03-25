@@ -1,0 +1,537 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>1.5&mdash;Java Mechanics</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 1.6</p>
+        <p id='lessonTitle'>Java Mechanics</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/genie.jpg" class="right" alt="The magic of programming.">
+            <b><span class="cap2">I</span>n some ways, writing a computer program
+            is a little like magic</b>. You can think of your computer keyboard
+            like Harry Potter's magic wand or like Aladdin's magic lamp.
+            You type in the correct incantation, and, if you do it
+            <b>just right</b>, the compiler will accept your request
+            and compile and run your program.
+        </p>
+
+        <p> Of course, programming really <b>isn't</b> magic; instead of
+            memorizing a dusty volume of "Open Sesame", in this class, you'll
+            learn the <b>meaning</b> behind each of the phrases that make
+            up your Java programs. (I have to admit, though, that there <b>will</b>
+            still be times when I'll wave my hands, and say something that
+            sounds suspiciously like "Abracadabara". But those
+            times will get much rarer as the semester goes on.)
+        </p>
+    <h2>Java Mechanics</h2>
+        <p>To create your own Java programs,
+            you follow a <b>mechanical process</b>, a well-defined
+            set of steps called the <b>edit-compile-run</b> cycle
+            that looks like this:
+        <a href="images/edit-comp-run-lg.gif" target="_blank">
+            <img src="images/edit-comp-run-sm.gif"
+            title="The edit-compile-run cycle. (click to enlarge)" alt="The edit-compile-run cycle. (click to enlarge)"
+            class='right' style='border:none;'>
+        </a>
+        </p>
+        <ol>
+            <li class='d'>Create your <b>source code</b></li>
+
+            <li class='d'>Compile the code to produce object, or <b>bytecode</b></li>
+            <li class='d'>If <b>syntax errors</b> occur, return to your editor to fix them</li>
+            <li class='d'>Run your program using appletviewer or the Java interpreter</li>
+            <li class='d'>If <b>runtime errors occur</b>, return to your editor to fix them</li>
+        </ol>
+        <p> Learning this process is <b>necessary</b> before you can
+            learn to program, but it is <b>not</b> the
+            same as learning how to program; you must master the
+            process, but mastering the process
+            doesn't mean you'll write correct and elegant programs.
+        </p>
+    <p>Here are the steps in the process:</p>
+    <h3>Edit</h3>
+        <p> <img src='images/editor.png' class='right' style='width:125px;' alt='An editor icon.'>
+            When you write a program in a high-level language,
+            you write your instructions&#8212;in the form of programming
+            language statements&#8212;using a <b>plain text editor</b>.
+            The document
+            you produce at this stage is called <b>source code</b>.
+            In Java, your source code is placed into a file with the
+            extension <b>.java</b>.
+        </p>
+        <p> While you can write Java programs using a regular text
+            editor, like Windows Notepad, your Java IDE includes a
+            programming editor that knows all about
+            Java's syntax rules and can display different program
+            elements in different colors. This feature, called
+            <b>syntax highlighting</b>, helps you identify
+            inadvertent typing errors as you write your
+            programs.
+        </p>
+    <h3>Compile</h3>
+        <p> <img src='images/compiler.png' class='right' style='width:125px;' alt='Compiler icon.'>
+            Once you've written your program, you <b>
+            compile</b> it by using a software program called,
+            (surprise!), a <b>compiler</b>. The compiler turns
+            your source code into the machine language for the
+            Java Virtual Machine, and stores that code in a new
+            document. The "generic" name for this file is
+            <b>object code</b>, but the Java-specific form of
+            object code is called <b>bytecode</b>. If your
+            program fails to compile, (if you have "grammatical"
+            or <b>syntax</b> errors in your source code), then
+            you must re-edit the code until it compiles correctly.
+        </p>
+        <p> Sun supplies a Java Development Kit (or JDK) that has a
+            command-line compiler named <b>javac</b>. Using the command-line
+            and the javac compiler, you can compile a Java program named
+            <b>FirstApp.java</b> like this:<br>
+            <img src='images/j2se16b.gif' class='inlineCenter' alt='Compiling a program from the command-line.'>
+            If you haven't made any syntax errors, the compiler places the
+            Java <b>bytecode</b> it generates in a new file named
+            <b>FirstApp.class</b>. If there <b>are</b> syntax mistakes,
+            the compiler reports them on the command-line like this,
+            and <b>no</b> class file is generated.<br>
+            <img src='images/syntax-error.png' class='inlineCenter' alt='A syntax error from the command line.'>
+
+        </p>
+        <div class='alert'>
+        <p><b>Note:</b> On Windows or Linux, you can only use the <b>javac</b> compiler like this
+            if you have downloaded and installed the Sun JDK (or, if you're
+            on a Mac, where the JDK is installed automatically). Since you
+            don't absolutely have to have the JDK for this class, these
+            "incantations" might not work on your machine.
+        </p>
+        </div>
+        <p>Once a program compiles without errors,
+            it is <b>syntactically</b> correct. It still may
+            contain runtime or logic errors, however. <b>Runtime</b> errors
+            are errors that cause your program to "crash" when it runs, usually
+            displaying a nasty error message on the screen. <b>Logic</b> errors
+            occur when your program produces the <b>wrong output</b>; it may give
+            the wrong answer or carry out an action at the wrong time, like
+            giving you a "C" when your percentage grade in the class is exactly 80%.
+            (This kind of logic error is called a <b>fencepost</b> error).
+        </p>
+
+    <h3>Run</h3>
+        <p> <img src='images/linker.png' class='right' style='width:215px;' alt='A linker icon.'>
+            Once your program compiles, you <b>run</b> it. All high-level
+            languages require a significant amount of additional
+            machine-language code&#8212;in addition to the code you've
+            written&#8212;before your program will actually run. This
+            additional code is contained in collections of classes known as
+            <b>libraries</b>. In Java, these different libraries are placed in special zip files
+            known as Java Archives or <b>JAR</b> files.
+        </p>
+        <p> How this additional code is added to your program varies from
+            language to language and from system to system. Generically,
+            this is called <b>linking</b>, when library code is combined
+            with the code you've written to produce and <b>executable image</b>
+            in memory that can be run. With Java, this happens behind the
+            scenes as part of the process of compiling your program, and then,
+            again, when you run your program. There is no separate explicit
+            linking step that you have to worry about.
+        </p>
+        <p> Internally, Java uses something called the <b>classpath</b>
+            (or <b>build path</b>) to know  which libraries or folders to
+            search for additional classes. Your IDE will normally take care
+            of this for you when you use only the classes available with the
+            JRE. When you use additional library classes (like we'll do with
+            the ACM JTF class libraries and the JUnit testing libraries),
+            you'll have to explicitly adjust the build path inside your IDE.
+        </p>
+    <h4>Testing</h4>
+        <p> <img src='images/runner.png' class='right' style='width:125px;' alt='A runner icon.'>
+            When you <b>run</b> your program, the first thing
+            you'll want to do is to verify that it runs as you
+            expect it. This process is called <b>testing</b>. It
+            is not uncommon to find that your program has some
+            logic errors that can only be discovered when the
+            program runs. These errors may even make your program
+            "crash". These kinds of errors are called <b>runtime
+            errors</b>
+        </p>
+        <p> To fix a runtime error, you go back to the
+            very first step&#8212;your source code&#8212;and make changes
+            there, repeating the edit-compile-run cycle until
+            the program runs correctly.
+        </p>
+    <h2>Hands-On: Your First Java Programs</h2>
+        <p> <b>Well, enough theory!</b> Let's learn how to use DrJava to
+            create three different kinds of programs:
+        </p>
+        <ul>
+            <li>a simple Java console-mode application.</li>
+            <li>a graphical application, using simple popup windows.
+            </li>
+            <li>a Java <b>applet</b> that can be embedded inside a
+                Web page.
+            </li>
+        </ul>
+        <p> Each of these "simplest possible programs"
+            will just print your own name, along with a little message,
+            when you run them.
+        </p>
+        <div class='alert'>
+        <p> <a href='http://www.drjava.org/' target='_blank'>
+            <img src='images/drjava06.png' class='right' style='margin-top:-2em;border:none;'
+                title='Click to visit the official DrJava Web site.'
+                alt='The DrJava logo.'>
+            </a>
+            Make sure you have installed and configured the OCC version of
+            DrJava before you start. Your instructor will provide you with
+            a handout containing detailed instructions, or, will provide
+            you with instructions during your lecture.
+        </p>
+        </div>
+        <p> Go ahead and start DrJava on your own machine and then follow
+            along.
+        </p>
+
+    <h3>Step 1: Source Code</h3>
+        <p> As you know from earlier in this section, the first step in
+            writing a computer program is to type the Java instructions
+            that your program should follow. In DrJava, you'll type your
+            source code in the <b>Definitions Pane</b> in the top-right
+            portion of the screen:<br>
+            <img src='images/ocdj11b.gif' class='inlineCenter' alt='Your first Java program'>
+            When DrJava starts up, it creates an <b>Untitled</b> blank file
+            in the left pane (called the <b>Files Pane</b>). All you have
+            to do is to add the rest of the code!
+            Of course, you don't <b>know</b> the Java programming language
+            (yet!!!), so all you have to do right now is type in the code
+            I've supplied here:<br>
+            <img src='images/firstapp02.gif' class='inlineCenter' alt='Your first program.'>
+            Make sure you replace the text following the @author tag with
+            your name. (Delete everything following, including the parentheses).
+            Do the same thing with the following (@version) line, replacing the
+            placeholder with the date that you completed the work.
+        </p>
+        <p> Finally, make sure you replace my name with your own in the third
+            statement inside the <code>main()</code> method. (Line 16 in
+            the screenshot.) When you've typed in all of the code shown here,
+            save your file. Since we haven't saved this file before, navigate
+            over to the Chapter01 folder, and save the file<br>
+            <img src='images/firstapp03.png' class='inlineCenter' alt='Saving your program.'>
+            Notice that DrJava automatically supplies a name (<b>MyFirstConsoleProgram</b>)
+            that matches the name of the class in the definitions pane. DrJava
+            also supplies the <code>.java</code> extension if you fail to type
+            it in.
+        </p>
+    <h3>Step 2: Compile Your Code</h3>
+        <p> Once your program is successfully saved, you'll need to convert
+            it to Java machine code (called <b>bytecode</b>) that the computer
+            can understand. You can do this in two ways:<br>
+            <img src='images/compile.png' class='inlineCenter' alt='Compiling your code.'>
+        </p>
+        <ul>
+            <li>Right-click the name of the file you want to compile in
+                the <b>Files Pane</b>, and select <b>Compile</b> from
+                the context menu. This is how you compile a single file.
+            </li>
+            <li>Click the <b>Compile</b> button on the toolbar. This
+                compiles <b>all</b> open files.
+            </li>
+        </ul>
+        <p> Both of these commands are also available from the <b>Tools</b>
+            menu and by using the hot-keys <b>F5</b> and <b>Shift-F5</b><br>
+            <img src='images/compile02.gif' class='inlineCenter' alt='Compiling from the Tools menu.'>
+            If you have no typos in your code (called <b>syntax errors</b> or
+            <b>compile-time errors</b> in programmer-speak), you'll see a message
+            from DrJava that looks like this:<br>
+            <img src='images/compile03.gif' class='inlineCenter' alt='No compiler errors.'>
+        </p>
+        <p> <img src='images/compile04.png' class='right' style='width:350px;' alt='The compiled class file.'>
+            If you look in the directory where you saved your file, (using
+            Windows Explorer or the Mac Finder), your folder now has
+            two files: <b>MyFirstConsoleProgram.java</b> and the compiled
+            bytecode file, <b>MyFirstConsoleProgram.class</b>.
+        </p>
+    <h4> Fixing Errors</h4>
+        <p> If you make a mistake when writing your program,
+            then DrJava will display an error message when you try to compile
+            your code. For instance, if you misspell the word <code>static</code>
+            as <code>statix</code>, you'll see something that looks like
+            this:<br>
+            <img src='images/compile05.gif' class='inlineCenter' alt='Compiler errors.'>
+            As you select the different errors in the <b>Compiler Output Pane</b>,
+            DrJava will do its best to place the cursor near or at the error
+            in the editor.
+        </p>
+        <div class='alert'>
+        <p> Remember, you must <b>compile</b> your code (without errors), before
+            you can <b>run</b> your program.
+        </div>
+    <h3>Step 3: Run Your Program</h3>
+        <p> Compared to what you've gone through so far, running your
+            program is kind of simple:
+            <img src='images/run03.gif' class='inlineCenter' alt='Running a Java application.'>
+            You can:
+        </p>
+        <ul>
+            <li>use the menu command <b>Tools->Run Document's Main Method</b>.</li>
+            <li>press the <b>F2</b> key.</li>
+            <li>click the <b>Run</b> button on the toolbar.</li>
+        </ul>
+        <p> If all goes well, your output will appear in the DrJava
+            <b>Interactions Pane</b> like this:<br>
+            <img src='images/run04.gif' class='inlineCenter' alt='Running MyFirstConsoleProgram.java'>
+            Notice that the Interactions Pane shows (1) the command used to
+            launch your program (just as if you typed it at the shell window),
+            and (2) the <b>output</b> of your program.
+        </p>
+        <p> DrJava also has a <b>Console Pane</b> where you can see the
+            output without seeing the command used to run your program:<br>
+            <img src='images/run05.gif' class='inlineCenter' alt='Running MyFirstConsoleProgram.java'>
+        </p>
+    <h4>Other Errors</h4>
+        <p> Of course, even if your program compiles and runs, that doesn't
+            mean it's correct! When you run your program, it may contain
+            <b>runtime errors</b> that cause it to crash or hang, like this:<br>
+            <img src='images/runtime.gif' class='inlineCenter' alt='A runtime error.'>
+        </p>
+        <p> Even if your program doesn't crash, it still may not produce the
+            output that you expect. This time of error is called a <b>logic
+            error</b>. Here's an example:<br>
+            <img src='images/logicerror.gif' class='inlineCenter' alt='A logic error.'>
+        </p>
+    <h3>Step 4: Test Your Program</h3>
+        <p> As you just saw, even though your program produces output, that
+            output may not be "correct". What do we mean by correct output?
+            Well, correct output is when your program does "what it is
+            supposed to do". Let me give you an example:
+        </p>
+        <p> In this case, your program is supposed to:</p>
+        <ul>
+            <li>Produce two lines of output</li>
+            <li>Contain your name, not mine, on the second line</li>
+        </ul>
+        <p> You can <b>test</b> your program by running it and then
+            manually looking at the output to see that it meets those
+            requirements. For a simple program like this, that's fairly
+            easy. For more complex programs, though, that can get pretty
+            tedious, and error-prone.
+        </p>
+        <p> A better solution is to run a <b>unit test</b>. A unit test is
+            simply a program that runs <i>your</i> program, and then
+            compares its <b>actual output</b> to the output it would
+            produce if it ran correctly. Later on, you'll learn to write
+            your own unit test programs, (that's what the DrJava "Test"
+            buttons do), but for the first portion of the course, you'll
+            just use unit test programs that I've written.
+        </p>
+    <h4>Running CheckResults</h4>
+        <p> To run the unit tests for your exercises or homework assignments,
+            you'll use the <b>CheckResults</b> program that I've supplied:<br>
+            <img src='images/check.png' class='inlineCenter' alt='Checking your code.'>
+            To test your code:
+        </p>
+        <ol>
+            <li class='d'>Click the <b>Check</b> button on the DrJava tool bar.</li>
+            <li class='d'>When the Check Your Assignments dialog window appears,
+                locate the prewritten unit test program that I've supplied.
+                Since I've supplied you with a test program for
+                <b>MyFirstConsoleProgram</b>, you'll choose that.
+                </li>
+            <li class='d'>Finally, just click <b>OK</b> and the unit tests
+                for you program will be run in the DrJava Interactions Pane
+                window.
+            </li>
+        </ol>
+        <p> When the tests are run, each test will be listed, along with "weight"
+            assigned to that test. As you can see, some tests count more than others.<br>
+            <img src='images/check-results.png' class='inlineCenter' alt='Running the Tests.'>
+            Passing tests are printed in green, and failing tests are printed in
+            red. As you can see, my program passed all of the tests <b>except</b> for
+            the one that checked to see if you replaced my name with yours.
+            (Of course, my name <i>really is</i> Stephen Gilbert,
+            so I guess that doesn't count.) At the very bottom, you'll see the
+            weighted average of the number of tests that pass.
+        </p>
+    <h4>Checking Style</h4>
+        <p> Although the majority of your programming problems will be evaluated based
+            on <b>correctness</b>, as reported by the Check program, about
+            ten percent of each program will be graded on <b>style</b>: your adherence
+            to a specific set of layout and naming conventions.
+        </p>
+        <p> We'll get started learning
+            the CS 170 style rules in the next section. For right now, though, you can
+            check the program you've just written by clicking the <b>Style</b>
+            button on the toolbar:
+            <img src='images/cs01.png' class='inlineCenter' alt='Running the Check Style program.'>
+            When you click the button, you'll be able to see the number of
+            style errors along with a short error message about each problem.
+            In my case, there are two errors, since I haven't added
+            my name or date to the beginning of the file in the form that
+            it was required.
+        </p>
+        <div class='info'>
+        <p> If you run Style and see any errors that talk about indentation,
+            simply select all the lines in the file (with Control + A) and then
+            choose <b>Indent Lines</b> from DrJava's <b>Edit</b> menu.
+        </p>
+        </div>
+    <h2>More Hands On: Your First GUI Application</h2>
+        <p> Console programs display their output inside a plain
+            text window. This plain text window can be a "shell", like
+            the Windows command-prompt, or a graphical console window
+            such as that provided by DrJava.
+            Java can also create different kinds of
+            <b>GUI</b> or graphical programs. Some of these programs, called
+            applets, run "inside" a Web page. Others, like DrJava, are
+            called GUI <b>applications</b> and these programs
+            create their own stand-alone windows for input and output.
+        </p>
+        <p> The simplest kind of GUI application uses predefined dialog windows
+            from the <code>JOptionPane</code> class. Below, you'll find the
+            source code for such a simple GUI application. Notice that even though the code is
+            a little different, the <b>mechanics</b> of creating the program are
+            exactly the same.
+        </p>
+        <p> Go ahead and use DrJava to create your first Java GUI program, just
+            like you did with your first console program. In the editor window,
+            type the code I've provided here:<br>
+            <img src='images/gui01.gif' class='inlineCenter' alt='Your first GUI Program.'>
+            As before, replace the placeholders with your name (in both the
+            heading and the message) and the date (in the heading).
+        </p>
+        <p> After you've compiled your code, you can <b>run</b> it just like you
+            would a console program. Here's the output on my machine.<br>
+            <img src='images/gui02.gif' class='inlineCenter' alt='Running your first GUI Program.'>
+            GUI programs like this are more difficult to test, so you'll see
+            there are no predefined unit tests written for
+            <b>MyFirstGUIProgram</b> when you click the <b>Check</b> button.
+            In general, while you're first learning the language, sticking with
+            simpler console programs makes things easier.
+        </p>
+        <p> In a few weeks, though, you'll learn how to write much
+            more sophisticated GUI applets and applications that make use
+            of images, sounds and animation.
+        </p>
+    <h2>Even More Hands On: Your First Java Applet</h2>
+        <p> Java applets, you remember, are Java programs that run
+            "inside" a Web page. But, while Java applets are <b>run</b>
+            differently than Java applications, the mechanical process
+            of creating an applet is identical.
+        </p>
+        <p> To create your first Java applet, just click the <b>New</b> button
+            to create an untitled definitions document. Then, type in the code
+            I've provided here:<br>
+            <img src='images/first-applet06.png' class='inlineCenter' alt='Your first Java applet.'>
+            As before, replace the placeholders with your name (in both the
+            heading and the message) and the date (in the heading).
+        </p>
+        <div class='alert'>
+        <p> Although we won't cover graphical output in this chapter, you should
+            know that it's a little bit more difficult than console output, since
+            the sizes of the individual characters that make up your message are
+            different on each platform your program runs on. You may need to
+            adjust the "horizontal" numbers (shown with arrows in the
+            screenshot), to get the output to appear as you want it,
+            especially because your name <b>will</b> be a different
+            size than mine is.
+        </p>
+        </div>
+    <h3>Save, Compile and Run</h3>
+        <p> Click the <b>Save</b> button to save your applet. DrJava will automatically
+            give it a name (<b>MyFirstJavaApplet.java</b>). Save the file in your
+            <b>Chapter01</b> folder. Then, <b>compile</b> it just as you did the
+            previous two programs. If you have any syntax errors, correct your
+            code and recompile.
+        </p>
+        <p> <b>Running</b> an applet is a little different than running an application.
+        </p>
+        <ul>
+            <li>First, an applet can't be run directly. Since it is designed to
+                be viewed inside your Web browser, it has to be <b>loaded</b>
+                by being referencing in an HTML page, using an applet tag.
+            </li>
+            <li>
+                Second, an applet doesn't create its own window, but needs
+                another program, like a Web browser, to supply its display
+                window.
+                <img src='images/first-applet05.png' class='right' style='width:350px;' alt='Running an applet'>
+            </li>
+        </ul>
+        <p>
+        Fortunately, (as you might have guessed), DrJava takes care of both
+            of those details for you. When you click the <b>Run</b> button,
+            DrJava notices that you are trying to run a Java applet and it
+            opens a special <b>Applet Viewer</b> program, and loads your
+            new applet into it, like this.
+
+        </p>
+
+    <h2>Practice, Practice, Practice</h2>
+        <p> As you know, a good portion of your grade in this class is
+            based on your performance on several practical programming
+            proficiency quizzes. Since these are skill-based quizzes, there's really no
+            way to "cram" for them; the only practical strategy is to get
+            lots of practice.
+        </p>
+        <p> Your instructor will give you several exercises that
+            are similar to the problems (or a portion of the problems)
+            on the programming quizzes that you'll take. The first quiz
+            requires you to write simple, console-mode <b>output</b>
+            programs. The first step to doing that is to follow the steps <b>in
+            this section</b> to create, compile and test a program.
+        </p>
+        <p> Since the quizzes are closed book, you'll need to
+            <b>memorize</b> the steps you need to follow. Go ahead and
+            study the steps in this lesson, and then try to complete the
+            practice exercises your instructor has supplied.
+            I expect that you'll need to refer to
+            your notes for the first one, but you should be able to get
+            a little farther on each problem.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Java Mechanics Summary
+        </p>
+        <ul>
+            <li>To create a Java program, you <b>edit</b> your source code,
+                <b>compile</b> it to produce bytecode, and then <b>run</b>
+                the program using a Java Virtual Machine.
+            </li>
+            <li>You can use the command-line tools in the Java Development
+                Kit (JDK) to compile and run your code, but it is easier to use
+                a specialized Integrated Development Environment or IDE. We will
+                use DrJava in this book.
+            </li>
+            <li> Mistakes discovered when you compile your programs are
+                called <b>syntax</b> errors. You must correct your syntax
+                errors and recompile your programs before you can run them.
+            </li>
+            <li> Runtime and logic errors occur when your program
+                "crashes" the JVM, or when your program produces incorrect
+                output when it is run.
+            </li>
+            <li>Testing is used to check for logic errors. Unit tests compare
+                the <b>expected output</b> of your program, (often under several different
+                input conditions), with the <b>actual output</b> produced when it
+                runs.
+            </li>
+            <li>Style checking is used to make sure that your program follows
+                the conventions required for this course.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

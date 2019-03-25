@@ -1,0 +1,473 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>6.3&mdash;Introducing Selection</title>
+
+    <style type='text/css'>
+        .pcode {
+            width: 90%;
+            border: 1px solid forestgreen;
+            border-right: 3px solid forestgreen;
+            border-bottom:3px solid forestgreen;
+            font-family: Consolas, "andale mono", "courier new", courier, monospace;
+            font-size: 1.25em;
+            font-weight: bold;
+            color:navy;
+            padding: 1em;
+            background-color: honeydew;
+        }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner14">
+        <img id='lessonLogo' src='../images/l.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 6.3</p>
+        <p id='lessonTitle'>Introducing Selection</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/a08.gif" class="right" alt="Image shows a highway division with the left branch going to Roswell">
+            <b><span class="cap2">T</span>he relational operators</b>,
+            and the <code>boolean</code> values that they produce, are
+            important because they allow us to implement <b><i>selection</i></b>.
+            Selection acts like a "highway divider" in your code; one minute
+            you're on a trip to Boy Scout Mountain, the next you're knee deep
+            in smoking men, and running around the desert with Gillian Anderson.
+        </p>
+        <p> With selection, a relational operator is normally used
+            to test two values. This test is called a <b><i>
+            condition</i></b>. If the result of the test
+            is <b>true</b>, then a particular section of code is
+            executed; if the condition is <b>false</b>, then that
+            section of code is skipped, and, perhaps, an alternative
+            section of code is executed.
+        </p>
+        <p> Here is an example of a selection statement using
+            English like <i>pseudocode</i>:
+        </p>
+        <p class='pcode'>
+            If your salary is less than $ 25,000 then <br>
+            &nbsp;&nbsp;&nbsp; Calculate tax based on 15% marginal rate&nbsp; <br>
+            otherwise&nbsp; <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; Calculate tax based on 15% base rate <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; and a 28% marginal rate
+        </p>
+        <p> Selection is also called <i><b>branching</b></i>, because any
+            time you run the program you <b>may</b> take a different path through
+            the code. Java has five different kinds of branching or
+            selection statements that you will learn about in
+            the next few chapters:
+            <img src='images/branching.png' class='right' alt='Different fractal branching examples.'>
+        </p>
+        <ul>
+            <li> The <code>if</code> statement</li>
+            <li> The if-<code>else</code> statement</li>
+            <li> Nested <code>if</code> and <code>if</code>-<code>else</code>-<code>if</code> statements</li>
+            <li> The <code>switch</code> statement</li>
+            <li> The conditional operator (<code>?:</code>)</li>
+        </ul>
+        <p> Let's get started by meeting your first <b>selection
+            statement</b>, the <code>if</code> statement. Once you
+            learn how to use <code>if</code>, your programs will be
+            able to make <b>decisions</b>.
+        </p>
+    <h2>The if Statement</h2>
+        <p>The <code>if</code> statement is the
+            first, and simplest, branching instruction that we'll cover. Like
+            classes and methods, the <code>if</code> statement consists of
+            two parts: a header and a body.
+            <img src='images/if01.png' class='right' alt='The if statement flow chart.'>
+        </p>
+        <p> With the <code>if</code> statement, the "header" is a
+            <code>boolean</code> condition to be tested. The body of the
+            <code>if</code> statement contains code to be executed.
+            Each <code>if</code> executes a single section of code
+            after testing its <code>boolean</code> condition. If the condition
+            is <b>true</b>, then the code is executed; if the condition
+            is <b>false</b>, the code is skipped.
+        </p>
+        <p> Unlike a method body, the code contained in the body of
+            an <code>if</code> statement does not need to be enclosed in
+            braces. If you do not use braces, however, only a single
+            statement will be executed.
+        </p>
+    <h3>Syntax</h3>
+        <p> This illustration shows the syntax of the <code>if</code>
+            statement.
+        </p>
+        <p><img src="images/zz09a.gif" alt="The syntax of the if statement." class="right">
+            Here are the important points to understand about the
+            <code>if</code> statement syntax:<br>
+        </p>
+        <ul>
+            <li>The <code>if</code> statement begins with the keyword
+                <code>if</code>. It must be in  lowercase; you cannot
+                use <i>If</i> or <i>IF</i>.
+            </li>
+            <li>The condition following the <code>if</code> keyword
+                must&mdash;when evaluated&mdash;produce a <code>boolean</code> value. That
+                means you can use <code>boolean</code> literals, (although
+                you really shouldn't), predicate functions,
+                <code>boolean</code> variables, or,
+                (most often), a relational expression.
+            </li>
+            <li>Make sure you don't put a semicolon after the
+                condition. When you do this, the body of the
+                statement becomes what is known as a "<b>null</b>"
+                statement. It is perfectly legal, but meaningless. If
+                you put a semicolon after the condition, you are
+                saying, "In the event that this condition is true,
+                don't do anything."
+            </li>
+            <li>The parentheses are required, unlike in Pascal or
+                Visual Basic.
+            </li>
+            <li> The body of an <code>if</code> statement is a single
+                statement, ending with a semicolon. The statement will
+                    be executed if the condition is <b>true</b>.
+            </li>
+        </ul>
+        <p> Let's look at a simple example, to see how the if
+            statement works in practice.
+        </p>
+    <h3>Calculating Wages</h3>
+        <p> Open the <b>WageCalculator</b> console program which you'll
+            find in this chapter's code folder, and type along.
+            After printing a heading, the program
+            asks the user to enter the number of
+            hours worked and the hourly wage:<br>
+            <img src="images/wagecalc01.gif" class="inlineCenter" alt="A Wage Calculator using the if statement.">
+            Let's look at each of the pieces:
+        </p>
+        <ol>
+            <li class="d">Rather than using magic numbers for the overtime
+                limit and the overtime rate, I created two constants. Then,
+                when the USA joins the civilized world with a 35 hour work
+                week and double-pay for overtime, I'll only have to change
+                these two constants and my program will continue working.
+            </li>
+            <li class='d'>As usual, I create the <code>Scanner</code>
+                object I'll use for input at the beginning of the
+                <code>main()</code> method.
+            </li>
+            <li class="d">The program begins by printing a heading and
+                then asking the user for the hours worked and the
+                hourly wage. These are stored in the <code>double</code>
+                variables <code>hours</code> and <code>rate</code>.
+            </li>
+            <li class="d">Next, a variable is created for <code>grossPay</code>
+                and a comment indicates where we'll need to insert
+                our <code>if</code> statements to calculate the
+                correct amount.
+            </li>
+
+            <li class="d">Finally, the program prints the results using
+                <code>printf()</code>.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when run with
+            normal hours and when calculating wages with
+            some overtime:<br>
+            <img src="images/if02.png" class="inlineCenter" alt="Running the Wage Calculator program.">
+            Note that in the run on the left, the worker puts in 40 hours
+            at $10 per, for $400 and no overtime. In the run on the right,
+            the worker toils for 50 hours or 10 hours of overtime. She
+            gets paid $400 in regular wages and another $150 in overtime.
+        </p>
+    <h4>Normal Wages</h4>
+        <p> To calculate the normal wages you need to insert an
+            <code>if</code> statement to calculate the user's
+            gross pay if no overtime is due. To do this, use
+            the <code>boolean</code> condition
+            <code>hours &lt;= LIMIT</code> to make sure you include
+            the case when the user works <b>exactly</b> 40 hours.
+        </p>
+        <p> Inside the body of the <code>if</code> statement,
+            multiply the rate of pay by the number of hours worked
+            and store the result in your gross pay variable.
+        </p>
+    <h4>Handling Overtime</h4>
+        <p> To calculate the pay if the user works overtime,
+            you must add <b>another</b> <code>if</code> statement
+            following the original. This section calculates the
+            overtime pay.
+        </p>
+        <p> For overtime, the worker earns the regular rate for
+            the original 40 hours. To that you add the overtime pay,
+            which is calculated by first finding the amount of
+            overtime hours (<code>hours - LIMIT</code>) and then
+            multiplying that by the overtime rate (<code>rate *
+            OVERTIME_RATE</code>). Add this amount to the
+            regular wages earned for working the first 40 hours.
+        </p>
+    <h3>Using if-else</h3>
+        <p>One problem with <b>WageCalculator.java</b>
+            is that even when there <b>is</b> no overtime, (that is,
+            when <code>hours</code> is less-than-or-equal to 40),
+            your code <b>still</b> checks to see if <code>hours</code> is
+            <b>greater</b> than 40.
+            <img src='images/if-else01.png' class='right' alt='Flowchart for if-else.'>
+            This really makes no sense at all
+            because the two choices are obviously <b><u>mutually</u>
+            <u>exclusive</u></b>:
+        </p>
+        <ul>
+            <li>If <code>hours &lt;= LIMIT</code> is <code>true</code> then
+                <code>hours &gt; LIMIT</code> <b><i>cannot</i></b> be
+                <code>true</code>.
+            </li>
+            <li>If <code>hours &gt; LIMIT</code> is <code>true</code>
+                then <code>hours &lt;= LIMIT</code> <b><i>cannot</i></b>
+                also be <code>true</code>.
+            </li>
+            <li>There are <b>no</b> possible values for
+                <code>hours</code> where one of these two conditions
+                is <b>not</b> <code>true</code>. Every possible value
+                fits into one or the other.
+            </li>
+        </ul>
+        <p> Since it is inefficient to test a condition that we
+            already know is <b>false</b>, Java provides a second portion
+            for the <code>if</code> statement, called the <code>else</code>
+            clause. You can see the syntax for the
+            <code>if</code>-<code>else</code> statement in the
+            illustration.<br>
+            <img src="images/zz16.gif" class='inlineCenter' alt="Image illustrates the if-else code construct.">
+        </p>
+        <p> When you use the <code>else</code> keyword, the <code>if</code>
+            statement takes one action when a test is <b>true</b>, and a
+            <b>different action</b> when the test is <b>false</b>. This is much
+            more efficient because the original comparison is made only once.
+        </p>
+        <p> If we modify <b>WageCalculator.java</b> like this:<br>
+            <img src="images/if03.gif" class="inline" alt="Using if-else.">
+            the program works the same, is a little clearer and is less
+            susceptible to inadvertent errors.
+        </p>
+    <h3>Blocks, Indentation, Style, and Pitfalls</h3>
+        <p> Often, you need to execute more that one statement whenever a
+            logical condition is <b>true</b>. In such cases, you enclose the
+            <code>if</code>-<code>else</code> statement body in braces,
+            (called a <i>block</i>), just
+            like you would for the body of a class or method.
+        </p>
+        <p> When you write an <code>if</code> statement, you should
+            indent the statements inside the body of the <code>if</code>
+            and the <code>else</code> portions. Each line should be indented
+            at least two spaces and no more than five spaces.
+        </p>
+        <p> I've configured DrJava to use 4 spaces for each tab and
+            that's what the style guide checks.
+        </p>
+    <h3>Indenting Style</h3>
+        <p> There are three common indentation styles you'll see in code,
+            but for this class, I'd like you to use the "ANSI" style braces.
+            (See <b>Section 5.4&mdash;Style Rules</b> for more information).
+        </p>
+        <p> With "ANSI" style braces, the opening brace is placed immediately
+            below the keyword <code>if</code>. Each line inside the body is
+            indented one tab, and the closing brace is lined up with the
+            opening brace. The advantage of this style is that it makes
+            it easy to match your braces without looking back and forth
+            at the right and left margins.
+        </p>
+        <p> Here's a code section indented correctly according to these rules:<br>
+            <img src='images/braces01.gif' class='inlineCenter' alt='ANSI style brace placement.'>
+            Many books uses the traditional C "K&amp;R" style (which the Sun
+            source code also uses). With K&amp;R style layout, the opening brace
+            of each control structure appears on the same line as the Boolean
+            condition. The advantage of this style is that your code is
+            slightly more compact, so you can fit more on a single screen.
+        </p>
+    <h3>Why Use Braces?</h3>
+        <p> Braces are not required when the body of an <code>if</code>
+            statement consists of a single line of code. Nevertheless,
+            it is a good idea to put them in. Here's why.
+        </p>
+        <p> Suppose that you wrote the original code, listed below, so
+            that a salesperson with sales above $35,000 received a
+            7½% bonus, and salespersons earning less than that
+            received a 3½% bonus. Your original code might look
+            like this:<br>
+            <img src='images/braces02.gif' class='inlineCenter' alt='If-else with no braces.'>
+            After this original program was delivered, however, your
+            company decides that the high-performing salesfolk should
+            each get an additional bonus of $100 as well, so you add
+            the following lines of code:<br>
+            <img src='images/braces03.gif' class='inlineCenter' alt='Logic error because of missing braces.'>
+            Despite your best intentions, and despite the fact that the
+            program compiles, <b class='ry'>it does not do what you want it to do</b>.
+        </p>
+        <p> Because the body of the <code>else</code> portion of the
+            <code>if</code> statement does not use braces, it consists of
+            the <b>single statement</b> assigning a <code>bonusPct</code>
+            of 7½ %. The following statement, adding the $100 performance
+            bonus, (which you intended to apply
+            only to high-performing salespeople), is, despite the indentation,
+            applied to everyone.
+        </p>
+        <div class='alert'>
+        <p>My personal rule of thumb to avoid this kind of
+            problem is to <b>always</b> use braces for an <code>if</code>
+            statement, unless the <b>entire statement</b> can fit on one line, like
+            this:<br><br>
+            <code><b>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (amt &lt; 100) cost = .23;</b>
+            </code>
+            <br><br>
+            Some languages actually make a syntactical distinction
+            between single and multi-line <code>if</code> statements,
+            but Java does not; it's up to you to enforce this style
+            rule if you feel it's valuable.
+
+        </p>
+        </div>
+    <h3>The Phantom Semicolon</h3>
+        <p> Another common mistake when writing an <code>if</code> statement
+            is to insert a <b>semicolon</b> after the <code>if</code>
+            statement condition, like this:<br>
+            <img src='images/phantom-semicolon.png' class='inlineCenter' alt='A phantom semicolon.'>
+            Despite the admirable safety-check applied in this example,
+            the hard-drive is still formatted, no matter whether the
+            files are backed up or not. This <b>null</b> body
+            says, in effect:
+        </p>
+        <ol>
+            <li class='d'>Check to see if <code>filesAreAllBackedUp</code> is <b>true</b>.</li>
+            <li class='d'>If it is <b>true</b> then do nothing (the <b>null statement</b>)</li>
+            <li class='d'>After checking to see if files are backed up,
+                call the <code>formatDrive()</code> method.
+            </li>
+        </ol>
+        <p> Note that <code>formatDrive()</code> does not depend upon the
+            state of <code>filesAreAllBackedUp</code>.
+        </p>
+    <h2>The Conditional Operator</h2>
+        <p>One problem with using
+            <code>if</code>-<code>else</code> is that you <b><u>can't</u></b> use an
+            <code>if</code>-<code>else</code> in a <b><u>formula</u></b> or
+            <b><u>expression</u></b>;
+            <code>if</code>-<code>else</code> is a <b>statement;</b> it does
+            not produce a value. That means, you must create an additional
+            variable, like <code>bonusPcnt</code> in the earlier example.
+        </p>
+        <p> Java's, <b>conditional operator</b> provides a way to use an
+            <code>if</code>-<code>else</code> condition inside an expression.
+            The conditional operator is sometime called the <b>ternary</b>,
+            or <b>teriary</b> operator, because it is the only operator
+            to require three operands.<br>
+            <img src="images/conditional-operator.png" class='inlineCenter' style='margin-bottom:-1em;' alt="The syntax of the conditional operator">
+            The operands of the conditional operator are:
+        </p>
+        <ol>
+            <li class='d'><b>The condition or test expression</b>: This must be
+                some expression that evaluates to a <code>boolean</code>
+                value.
+            </li>
+            <li class='d'><b>The true result</b>: If the condition portion is
+                <b>true</b>, then the <b><i>whole expression</i></b>
+                takes on the value listed in this clause. This value
+                can be of any type.
+            </li>
+            <li class='d'><b>The false result</b>: If the condition portion is
+                <b>false</b>, then the <i><b>whole expression</b></i>
+                takes on the value listed here. This value can also
+                be of any type, but should match the type of
+                the <b>true</b> result.
+            </li>
+        </ol>
+        <p> The condition is separated from the results portion by a
+            question mark ( <code>?</code> ). The results are separated from each
+            other by a colon ( <code>:</code> ).
+        </p>
+        <p> Using the conditional operator, we could calculate
+            <code>bonusAmt</code>, used in the previous examples, like
+            this:<br>
+            <img src='images/conditional-operator.gif' class='inlineCenter' alt='A conditional operator example.'>
+            This example has been formatted so that each operand used
+            by the conditional operator appears on a separate line, but
+            that's not required.
+        </p>
+        <p> Here's the <b>WageCalculator</b> example once again,
+            this time using the conditional operator to calculate
+            the value for <code>grossPay</code>:
+            <img src="images/if04.gif" class="inline" alt="The conditional operator.">
+            You'll have to decide whether you find this clearer or
+            not. I think that I prefer the <code>if-else</code> instead.
+        </p>
+        <p> You can also <b><i>nest</i></b> another conditional expression
+            (using the conditional operator) inside the true or false
+            portions of a first conditional expression. This quickly becomes
+            unreadable, however, and, despite what you might think, may
+            even execute more slowly. You should attempt to write source
+            code that is clear and to-the-point, not code that uses the
+            fewest possible lines.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Introducing Selection Summary
+        </p>
+        <ul>
+            <li><b>Selection</b> statements are <b>flow of control</b> statements
+                that allow you to execute a portion of code <b>based on a
+                logical condition</b>. These portions of code are known as
+                <b>branches</b>.
+            </li>
+            <li> The <b>simple <code>if</code> statement</b> tests a condition
+                and executes another statement if the condition is
+                <code>true</code>. The statement executed is known as the
+                <b>body</b> of the <code>if</code> statement.
+            </li>
+            <li> The condition tested is often a relational expression, but
+                may be a <code>boolean</code> variable or a predicate function.
+                The body must be enclosed in braces (to create a <b>block</b>),
+                if you wish to execute more than one simple statement.
+            </li>
+            <li> If you wish to perform an alternative action <b>when your
+                test condition is <code>false</code></b>, then you should use
+                the <code>else</code> clause with the <code>if</code> statement,
+                instead of adding a second <code>if</code> statement. Think of
+                this as an <b>either-or</b> condition.
+            </li>
+            <li> In CS 170, you should <b>line up the opening and closing braces</b>
+                around the body of your <code>if</code> statement. <b>Indent</b> the
+                code inside the body of the statement by a single tab stop.
+                This is known as ANSI-style brace placement.
+            </li>
+            <li> While <b>braces are not required</b> if the body of the <code>if</code>
+                statement contains only a single line, adding them can help
+                prevent errors that occur as your code is modified. If you
+                have a single line of code and you don't want to use braces,
+                then <b>place the code on the same line</b> as the condition.
+            </li>
+            <li> Do <b>not</b> place a semicolon after the <code>if</code> condition.
+                This is not a syntax error, but a logic error. It causes the code
+                you intended to be conditionally executed to <b>always</b> run,
+                regardless of the condition.
+            </li>
+            <li> The <b>conditional operator</b> (sometimes called the
+                <i>selection operator</i>) allows you to create an
+                <b>expression</b> that employs <code>if-else</code> logic.
+                The conditional operator has three operands: the condition
+                to test, the value to use if the condition is <code>true</code> and
+                the value to use if the condition is <code>false</code>.
+                The two conditions are separated with a colon, and the
+                condition is followed by a question mark.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

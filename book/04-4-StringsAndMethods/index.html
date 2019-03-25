@@ -1,0 +1,529 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>4.4&mdash;Strings and Methods</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner13">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 4.4</p>
+        <p id='lessonTitle'>Strings and Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/fishing02.gif" class="right" alt="A fisherman.">
+            <b><span class="cap">T</span>here's an old saying</b> that you have
+            probably heard about a hundred times:
+        </p>
+        <p class="pullquote">
+            Give a man a fish and you feed
+            him for a day. Teach a man to fish,
+            and you feed him for his life.
+        </p>
+        <p> Programming is a lot like that. Learning <b>about</b>
+            the <code>Math</code> and <code>String</code> classes is
+            not <b>nearly</b> as important as learning <b>how to learn about</b>
+            the <code>Math</code> and <code>String</code> classes.
+        </p>
+        <p> In Java, you can learn about all the Java classes by using the
+            online Java Documentation, often called the <b>Javadocs</b>
+            after the program which generates the HTML help files from
+            comments embedded in the Java source code.
+        </p>
+        <p> To start this section, you'll learn how to get to the docs from
+            the Web, how to search for the class you want to find, and
+            how to interpret the documentation that you find there.
+        </p>
+
+    <h3>Locating the Documentation</h3>
+        <p> To find the documentation for any of the Java classes, you can use
+            your Web browser to access the online version at <b>Oracle</b>.
+            The online docs are always available at:
+        </p>
+        <p class="screen">
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html" target="_blank">
+
+            <b>http://download.oracle.com/javase/6/docs/api/index.html</b></a>
+        </p>
+        <p> Of course, sometimes it's hard to remember something like that,
+            (and sometimes, the link actually changes!), so
+            I've placed a link to the Java API docs on the class syllabus page.
+            You'll find the link in the upper-right corner; it should look
+            <b class='ry'>something</b> like this.<br>
+            <img src="images/syllabus.gif" class="inlineCenter" alt="The syllabus link to the Java Docs.">
+        </p>
+        <p> Now, let's try to make some sense of the Javadocs
+            themselves.
+        </p>
+    <h2>The Javadoc API Window</h2>
+        <p> Once you open the API documentation in your Web browser,
+            you'll start at the main
+            <b>Javadoc</b> window, which you can see below. The
+            <b>Javadoc</b> interface consists of three frames:<br>
+            <img src="images/g15.gif" alt="The Javadocs window in Firefox." class="inline">
+        </p>
+        <ol>
+            <li class="d">The <b>Package Browser</b> in the upper left-hand
+                corner allows you to select individual packages, so that only
+                the classes in that package appear inside the <b>class browser</b> window
+                below it. You can also click individual packages by selecting
+                the links in the center frame.
+                <div class='alert'>
+                <p>
+                I usually close this frame by
+                sliding the bottom bar up to the top, since I don't find it
+                very useful to restrict my searching to a single package.
+                When you first arrive, the package browser is set to display all classes.
+                </p>
+                </div>
+            </li>
+            <li class="d">The <b>Class Browser</b> in the lower-left corner consists
+                of hyperlinks to all of the classes and interfaces in the currently
+                selected package. Since these are in alphabetical order, it's a
+                simple matter to scroll down and find the class you want.
+            </li>
+            <li class="d">The <b>Content Pane</b> in the center is where you'll
+                find the documentation for the class you're interested in.
+            </li>
+        </ol>
+        <p>Let's look at the documentation for a class we've already met, the
+            <code>String</code> class.
+            Scroll through the class list (in the lower-left frame) until you
+            find the link, as shown here (1), and <b>click it</b>:<br>
+            <img src="images/finding-string.gif" alt="The String class docs online." class="inlineCenter">
+            The class documentation is displayed in the
+            right-hand (larger) frame (marked 2). Let's take a look
+            at what you'll find there.
+        </p>
+    <h3>The Contents Window</h3>
+        <p><b>Finally</b>, some meaningful information!
+        The <b>Javadoc</b> for each class is broken up into several
+        sections. Most of these won't make a lot of sense to you until
+        you've learned a little more about Java. For right now,
+        we're only concerned about three sections:
+        </p><ol>
+            <li class="d">Introduction and Class Summary</li>
+            <li class="d">Method Summary</li>
+            <li class="d">Method Details</li>
+        </ol>
+        <p>Let's start with the introduction.</p>
+    <h3>Introduction and Class Summary</h3>
+        <p> At the very top of every class documentation page, there is an
+            introduction to help you get oriented. The introduction starts
+            with the class name (class <code>String</code>. in the picture)
+            and is followed by a visual "ladder" of inheritance.
+            <img src="images/stringdocs.gif" alt="The String class introduction." class="inline">
+            This is important because some methods may be inherited from a "parent"
+            or "super" class, so this gives you a place to start looking.
+        </p>
+        <p> Right <i>above</i> the class name is the name of the <b>package</b>
+            that contains the class; in the case of the <code>String</code> class,
+            that's the <code>java.lang</code> package. Remember that the <code>java.lang</code>
+            package is <i>automatically</i> imported into every Java program.
+            For most other classes, though, you'll use the package name you find here
+            when you write your <code>import</code> statements.
+        </p>
+        <p> Right below the inheritance hierarchy, you'll normally find more introductory
+            information. In the picture, you'll see the very beginning of the introductory
+            section for the <code>String</code> class. For most classes you'll find:
+        </p>
+        <ul>
+            <li>A simple <b>explanation</b> that tells you what the class does and,
+                often more important, why it exists.
+            </li>
+            <li> A simple code <b>example</b>. For some of the more complex classes,
+                the explanation is not enough; a code example is "worth its weight in
+                gold", (to worry an old cliche).
+            </li>
+            <li> A <b>picture</b> of the component for the basic visual classes.</li>
+        </ul>
+        <p> It never hurts to revisit this introductory material from time
+            to time, especially when new versions of the SDK are released.
+        </p>
+    <h3>The Method Summary</h3>
+        <p> Scroll down through the documentation until you come to the
+            section titled <b>Method Summary</b> as shown here:
+            <img src="images/f02c.gif" alt="Method Summary for the String class." class="inline">
+            Methods, (you'll remember from our discussion of the <code>System.out</code>
+            object), correspond to the <b>messages</b> that an <b>object</b> responds to.
+            In that sense, they are <i>similar</i> to the functions you've been using.
+            The big difference, is that the methods in the <code>String</code> class
+            are each "attached" to a particular <code>String</code> object, and so
+            the code you use to call the method is slightly different than the
+            code you'd use to call a function.
+        </p>
+        <p> The Java documentation provides the tools you'll need to make yourself
+            understood by any Java object. The "dictionary" of commands that any
+            given object understands is listed in its method summary. These are the
+            things that you can tell a <code>String</code> object to do or to calculate.
+        </p>
+        <p> As you can see here, a <code>String</code>
+            object "knows how to do" more than sixty different things; that is, the
+            <code>String</code> class contains more than sixty methods.
+        </p>
+        <div class='info'>
+        <p>In fact, the <code>String</code>
+            class also inherits eight methods from its parent class,
+            <code>Object</code>, so the actual number of things it can do
+            is closer to seventy.
+        </p>
+        </div>
+    <h2>Deciphering the Docs</h2>
+        <p> <b>Making sense</b> of the <b>Javadocs</b> is one of the <b>most important
+            things you can do</b> at this point, so
+            scroll on down through the method summary and let's take a closer look
+            at two different <code>String</code> examples: the <code>toUpperCase()</code>
+            method and the <code>lastIndexOf()</code> method. When you've found them,
+            and let's get to decoding:<br>
+            <img src="images/stringmethods.gif" class="inlineCenter" alt="Summary of two String methods.">
+        </p>
+        <p>
+            The left-hand column (1) shows the <b>return type</b> of the method.
+            If you see the word <code>void</code> here, then the method just
+            carries out an action, it doesn't calculate and return a value. If anything
+            else appears, the method is a <i>function</i> that calculates and returns
+            a value.
+        </p>
+        <p> As you can see, the <code>toUpperCase()</code> method returns a new <code>String</code>,
+            while the <code>lastIndexOf()</code> method returns an <code>int</code>.
+            Ignore, for now, the words
+            <code>abstract</code> or <code>static</code> that appear
+            in many places in this column. These are advanced features
+            that we'll cover later in the semester.
+        </p>
+
+    <h3>The Signature</h3>
+        <p>In the right-hand column, the lines that reads:<br>
+        </p><p class="code">
+            toUpperCase()<br>
+            lastIndexOf(String str, int fromIndex)
+        </p>
+        <p> is called the <b>method signature</b>. It consists of
+            two parts: (2) the <b>name</b> of the method, and (3) the
+            <b>argument or parameter list</b>.
+        </p>
+        <div class='info'>
+        <p>In the computer science world,
+            the words <b>argument</b> and <b>parameter</b> are often interchanged.
+            Some textbooks use the term parameter, and some use the
+            term argument. I've tried to be consistent and use <i>parameter</i>
+            or both, but sometimes you'll see the word argument slip through
+            alone.
+        </p>
+        </div>
+        <p> If you're paying attention, you've probably noticed that the
+            <b>signature</b> looks very much like the <b>method header</b>
+            used when the method is defined. The method signature is
+            important, because it tells you how to invoke or call the
+            method, mostly by letting you know the kinds of
+            additional information you need to supply.
+        </p>
+    <h4>Actual Parameters</h4>
+        <p> In the <b>parameter list</b>, the type and name of each piece
+            of information is listed; each parameter is separated from its
+            neighbors by a comma.
+            As you can see in the picture, there are no parameters defined for
+            the <code>toUpperCase()</code> method, so you don't need to supply
+            any additional information when you call it. The <code>lastIndexOf()</code>
+            method, though, has two parameters defined.
+        </p>
+        <p> The first is a <code>String</code> named <code>str</code> and the second
+            is an <code>int</code> named <code>fromIndex</code>.
+            That means that when you call the <code>lastIndexOf()</code> method,
+            inside of the parentheses you have to supply a <code>String</code> value,
+            (either a variable or text between double quotes), followed by an integer
+            value, (either a variable or a literal whole number like 17). You'll
+            separate the two values (which are called <b>actual parameters</b>), with a comma.
+        </p>
+        <p> Just to recap:</p>
+        <ul>
+            <li>If you see a parameter with a type of <code>String</code>,
+                put "text between double quotes" in that position.
+            </li>
+            <li>If you see a parameter with a type of <code>int</code>,
+                put a whole number in that position.
+            </li>
+            <li>If you see a parameter with a type of <code>double</code>,
+                put a real number (that is, a number with a decimal point) in that position
+            </li>
+        </ul>
+        <p> The last portion of the method summary documentation is a simple, one-line
+            explanation of the method's behavior. You can get a
+            more complete explanation by clicking the name of the method.
+        </p>
+    <h3>Using the Documentation</h3>
+        <p>To use the method, you simply follow the instructions found in
+            Chapters 1 and 2 when we discussed <b>sending messages</b> to the
+            <code>System.out</code> object. For each of the
+            arguments listed in the signature, replace it with a
+            value of that type.
+        </p>
+        <p> Given the documentation of the two methods above,
+            here's how you'd use these two methods (along with the <code>nextLine()</code>
+            method in the <code>Scanner</code> class:
+        </p>
+        <p class="code">
+            cout.println("Enter your name like this (Last, First MI.):";<br>
+            String yourName = cin.nextLine();<br>
+            String upperName = yourName.toUpperCase(); <span class="cmt">// No parameters</span><br>
+            int lastSpace = yourName.lastIndexOf(" ", 0); <span class="cmt">// Start looking at character 0</span>
+        </p>
+    <h3>Using the Java API Javadoc in DrJava</h3>
+        <p> DrJava allows you to quickly open a Javadoc page for a specific
+            class by using the <b>Open Java API Javadoc</b> item in the
+            <b>Tools</b> menu. (You can also use the Shift+F6 hotkey, but
+            that doesn't seem very intuitive to me.) When you do that, you'll
+            see a dialog that looks like this:<br>
+            <img src='images/javadoc-drjava01.gif' class='inlineCenter' alt='Open Java API.'>
+            Type the class you want to look up (1) and then click the <b>OK</b> button
+            to open the specific class file in your Web browser.
+        </p>
+        <p> You can also use the <b>Open Java API Javadoc for Word Under Cursor</b>
+            feature, which you'll also find in the Tools menu. The hotkey for
+            this is Ctrl+Shift+F6. If I put my cursor on the word <code>String</code>
+            in the Definitions or Interaction pane, DrJava looks at the
+            word the cursor is on and uses it as a starting point for
+            the search. If there is a unique match, then DrJava will
+            open the Javadoc page immediately; otherwise the same dialog
+            box will open as before and you'll have to pick from the list.
+        </p>
+        <p> Well, that's the Javadoc basics. Now let's use that knowledge to
+            look at some of the <code>String</code> methods you'll use most often.
+        </p>
+    <h2>Introducing String Functions</h2>
+        <p> <img src='images/string-functions.png' class='right' alt='Illustrates String functions.'>
+            When you first met the <code>String</code> class, you
+            saw that <code>Strings</code> had some of the characteristics of
+            primitives and some characteristics of objects. One of the ways
+            in which <code>Strings</code> are like objects is that the
+            <code>String</code> class has a rich set of methods you can use
+            to manipulate <code>String</code> objects.
+        </p>
+    <h3>Implicit and Explicit Parameters</h3>
+        <p> While some of these methods are <code>static</code> functions, like
+            the methods in the <code>Math</code> class, most of them are a little
+            different; they don't operate only on the <b>explicit parameters</b> passed
+            into the function, but operate instead in the context of the <b>implicit
+            object</b> that has been used to invoke the method. These kinds of functions
+            are called <b>instance methods</b>.
+        </p>
+        <p> Let me give you an example. When you call the function <code>Math.sqrt(2.0)</code>,
+            the <b>explicit</b> parameter value, <code>2.0</code> is supplied to the
+            function in a variable which is then used to perform the calculation. When
+            you call the <code>String</code> function <code>s.length()</code>, though,
+            there is no <b>explicit</b> parameter being passed, but <b>implicitly</b>
+            the <code>String</code> object named <code>s</code> is being passed as
+            an "invisible" first parameter. Inside the <code>length()</code> method,
+            this object is referred to as <code>this</code>.
+        </p>
+        <p> Now, let's look at a just a few of these <code>String</code>
+            instance methods. I'll try to arrange things so you only
+            have to look at a few methods each week, so that you don't
+            get overwhelmed.</p>
+    <h3>String Length</h3>
+        <p> If a <code>String</code> is a sequence of 0 to <i>n</i>
+            characters, <b>how</b> do you find out what <i>n</i> is?
+            It's actually pretty easy; you just ask the <code>String</code>
+            object how <b>long</b> it is, by calling its <code>length()</code>
+            method.
+        </p>
+        <p> You don't have to supply any parameters when you call the
+            <code>length()</code> method. As mentioned earlier, the
+            <code>String</code> object itself, used to call the method,
+            is passed as the <i>implicit</i> parameter. The returned value is an <code>
+            int</code>. Here are a couple examples:<br>
+            <img src='images/string02.gif' class='inlineCenter' alt='Using the length() method.'>
+        <div class="box" style="padding-top: 0pt;">
+        <ol>
+            <li class='d'>Line 1 creates four <code>String</code> variables,
+                <code>s1</code>, <code>s2</code>, <code>s3</code>, and
+                <code>s4</code>. The first three are initialized using
+                literals. The last is uninitialized.
+            </li>
+            <li class='d'>Line 2 sends the <code>length()</code> message to <code>s1</code>
+                and stores the "answer" in the <code>int</code> variable
+                <code>len1</code>. After this line runs, <code>len1</code>
+                will contain <b>5</b>, because "Conch" contains 5 characters.
+                In DrJava, we can evaluate the value in a variable, just by typing
+                its name, and leaving off the semicolon, as I've done here.
+            </li>
+            <li class='d'>Line 3 calls the <code>length()</code> method using the
+                variable <code>s2</code>. This time, instead of storing the
+                result in a variable, the <code>int</code> value <b>7</b>
+                (the number of characters in "fritter") is converted to
+                a <code>String</code> and combined with several literals,
+                using <i>concatenation</i>. Instead of <b>saving</b> the returned
+                value, we just <b>use it directly</b>.
+            </li>
+            <li class='d'>Line 4 calls the <code>length()</code> method, using the
+                variable <code>s3</code>. The <code>String s2</code> contains
+                0 characters; it's <b>the empty string</b>. While this line
+                compiles and runs, it actually contains a <b>logic error</b>.
+                The <code>length()</code> method returns a value, but in
+                Line 4, we simply ignore that value, using it like a simple
+                action-producing method. The line, effectively, does
+                nothing.
+            </li>
+            <li class='d'>Line 5 attempts to send the <code>length()</code> message
+                to the <code>String</code> object referenced by the
+                variable <code>s4</code>. In DrJava, this produces a runtime
+                error. Since <code>s4</code> was
+                never intialized, though, Java won't compile your code,
+                if <code>s1</code> is a local variable in a regular
+                Java program.
+            </li>
+        </ol>
+        </div>
+    <h3>Builder Methods</h3>
+        <p> Because <code>Strings</code> are <b>immutable</b>, the Java
+            <code>String</code> class has <b>no</b> mutator methods. In
+            place of these, however, there are a number of <b>"builder"</b>
+            methods that <b>produce a new <code>String</code></b> by
+            <i>transforming</i> an existing <code>String</code>.
+        </p>
+        <p> When you use any of these transforming builder methods, you have
+            to remember to <b>save the results</b> using a <code>String</code>
+            variable.
+        </p>
+        <p> Here are some of the methods you'll use most often.</p>
+    <h4>toUpperCase(), toLowerCase()</h4>
+        <p> Returns the <code>String</code> on the left, (the one calling
+            the method), translated into either upper or lower case:<br>
+            <img src='images/string06.gif' class='inlineCenter' alt='Upper and lowercase.'>
+        </p>
+        <div class="box" style="padding-top: 0pt;">
+        <ol>
+            <li class='d'>The first example calls the <code>toUpperCase</code> function,
+                using the <code>String</code> literal "pet" as the implicit function
+                parameter. The result is stored in the <code>String</code> variable
+                <code>upperPet</code> and its value is displayed.
+            </li>
+            <li class='d'>The second example calls the <code>toLowerCase</code> function,
+                using the mixed-case <code>String</code> literal "PeT" as the implicit function
+                parameter. The result is stored in the <code>String</code> variable
+                <code>lowerPet</code> and <b>its</b> value is displayed.
+            </li>
+            <li class='d'>Finally, the last example shows
+                a common logic error; the programmer <b>thought</b> the code was converting
+                <code>upperPet</code> to lowercase, but instead it creates a
+                new <code>String</code> object and then simply abandons the
+                new object altogether. The variable <code>upperPet</code> is
+                <b>not</b> modified, as you can see when it is displayed.
+            </li>
+        </ol>
+        </div>
+    <h4>replace(char a, char b), replace(String a, String b)</h4>
+        <p> Returns a <code>String</code> with <b>all</b> occurrences of the
+            character of <code>String</code> <b>a</b> replaced by the
+            character or <code>String</code> <b>b</b>, not just the first
+            occurrence.
+        </p>
+        <p>Here are a few examples:<br>
+            <img src='images/string07.gif' class='inlineCenter' alt='Some String replace examples.'>
+        <div class="box" style="padding-top: 0pt;">
+        <ol>
+            <li class='d'>The first example stores an inspirational message in
+                a <code>String</code> variable <code>s</code>. (You have nothing
+                to lose but your chains!)
+            </li>
+            <li class='d'>The second example uses the <code>char</code> version of
+                <code>replace()</code> to capitalize all of the lower-case 't'
+                characters with upper-case 'T' characters in an effort to flout convention.
+                Notice that when you use <code>replace()</code>, you must store the
+                results into another (or the same) variable. Calling <code>replace()</code>
+                <b>does not change <code>s</code> at all</b>.
+            </li>
+            <li class='d'>The third example uses the <code>String</code> version of
+                <code>replace()</code> to update the phrase to the 20<sup>th</sup>, if
+                not the 21<sup>st</sup> century.
+            </li>
+            <li class='d'>Not to be outdone, the fourth example updates the sentiment
+                even further by removing the human-centric term altogether. From a
+                programming perspective, this shows you how to use the <code>String</code>
+                version of <code>replace()</code> to <b>remove</b> a word.
+            </li>
+            <li class='d'>The fifth and final example is both non-specist and non-spacist,
+                removing all of the time-consuming spaces that clogged up the previous
+                examples. Much more efficient, right? Again, from a programmer's perspective,
+                you need to remember that <code>replace()</code> replaces <b>all occurrences</b>
+                in a <code>String</code>, not just selective ones.
+            </li>
+        </ol>
+        </div>
+        <div class='alert'>
+        <p> Note that prior to Java 5 there was no
+            <code>replace</code> method for <code>String</code> parameters.
+            Java 5 contains a version of <code>replace()</code> that works on
+            classes implementing the <code>CharSequence</code> interface,
+            which the <b>String</b> class does. The bottom line? You can
+            use <code>replace</code> with <code>String</code> arguments
+            in Java 5, but if you want your code to work in 1.4, use
+            <code>replaceAll()</code>. There is also a <code>replaceFirst()</code>
+            method.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Strings and Methods Summary
+        </p>
+        <ul>
+            <li>Use the <b>online Javadoc</b> documentation to find out
+                what messages that an object responds to.
+            </li>
+            <li>The first step is to <b>locate the class you want</b>. Use
+                the <b>class browser</b> pane to look up the name alphabetically,
+                or use DrJava's hot keys to look up the class for you.
+            </li>
+            <li> The <b>class summary</b> provides information you need for
+                your <code>import</code> statements, as well as a general
+                explanation and examples.
+            </li>
+            <li> The <b>method summary</b> provides an alphabetical list of
+                all of the classes methods, including the <b>return type</b>
+                and the <b>types of all parameters</b>.
+            </li>
+            <li> Use the <b>method signature</b> shown in the documentation to
+                determine <b>what kind of values</b> to supply when calling the method.
+            </li>
+            <li> Instance methods, like those in the <code>String</code> class,
+                operate on an <b>implicit parameter</b> as well as <b>explicit
+                parameters</b>. The implicit parameter is the object used as
+                the <b>receiver</b> when calling the method.
+            </li>
+            <li> The <code>String length()</code> function takes no (explicit)
+                parameters. It returns the number of characters contained in
+                its implicit parameter.
+            </li>
+            <li> The <b>builder methods</b>, <code>toUpperCase()</code> and
+                <code>toLowerCase()</code> return a new <code>String</code> object
+                with each of the individual characters in the implicit parameter
+                transformed appropriately.
+            </li>
+            <li> The builder methods, <code>replace()</code> and <code>replaceAll()</code>
+                employ both implicit <b>and</b> explicit parameters. Each copy of the
+                <b>first</b> explicit parameter appearing in the implicit <code>String</code>
+                object is replaced by the <b>section</b> explicit parameter. Once all of
+                these replacements are made, the new <code>String</code> is returned.
+            </li>
+            <li> When using <code>replace()</code>, using the empty <code>String</code>
+                as the second parameter creates a new <code>String</code> with all
+                occurrences of the first parameter <b>deleted</b> or <b>removed</b>.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

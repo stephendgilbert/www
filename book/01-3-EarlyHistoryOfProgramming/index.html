@@ -1,0 +1,521 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>1.3&mdash;An Early History of Programming</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/c.png' alt='Decorative logo.'>
+        <p id='lessonSubtitle'>Section 1.3</p>
+        <p id='lessonTitle'>An Early History of Programming</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/history.png" class="right" style='margin-top:-4em;' alt="A history book.">
+            <b><span class="cap">B</span>efore
+            we dive into the Java programming language itself</b>,
+            let's take a look at where Java came from, on the theory that
+            George Santayana was right when he wrote, "Those who ignore
+            history are doomed to repeat it."
+        </p>
+        <p> It's almost impossible to understand <i>why</i> Java works
+            the way it does without understanding a little bit about
+            <i>other</i> computer programming languages&#8212;both modern
+            and "ancient"&#8212;and how and why they were developed. In this section,
+            you'll learn a little about the history of computers, and
+            computer programming.
+        </p>
+        <p>As you saw previously, modern computer
+            systems (in general) consist of at least four pieces:
+        </p>
+        <ul>
+            <li>A processing unit (<b>CPU</b>) that performs simple
+                arithmetic and comparisons.
+            </li>
+            <li><b>Memory</b> that can store information: both
+                <b>data</b> and <b>instructions</b> used by the processing unit.
+            </li>
+            <li><b>Input/Output</b> devices that allow you to
+                load information into memory and to see the
+                results of your calculations.
+            </li>
+            <li><b>Storage</b> devices that allow you to keep
+                your calculations and your programs for
+                later reuse.
+            </li>
+        </ul>
+        <p> The instructions that tell the processing unit which
+            calculations to perform, and which information to use
+            in those calculations, is called a <b>program</b>.
+            Programming is the art (<i>or science, or even
+            black-magic, if you prefer</i>) of creating programs.
+        </p>
+        <p> Let's see where programming came from. We'll look at the
+            dawn of the digital era in this lesson, and cover the
+            development of structured and object-oriented programming
+            later.
+        </p>
+    <h2>Programming Generations</h2>
+        <p> <img class="right" src="images/eniac.gif" alt="The Eniac computer">
+            <b><span class="cap2">M</span>odern digital computers</b> were developed in the
+            late 1940s in Germany, England, and the US. These
+            first computers had a processing unit, memory, and
+            input/output devices, just like the computers we use
+            today, but, surprisingly, they didn't have
+            <b>programs</b>. Instead, these machines were
+            "wired" to perform a specific function , just like the
+            inexpensive 4-function calculator you can purchase at
+            K-Mart.
+        </p>
+        <p> Memory, in these early computers, was used <b>only</b> to store
+            the data required for a calculation. To change the calculation
+            performed on a computer like the Eniac, shown here, a team
+            of several people worked for about a week "rewiring" the
+            machine so that it carried out a new set of instructions.
+        </p>
+
+        <p><img src="images/John_von_Neumann.gif" class="left" style="margin-right: 20px;" alt="John von Neumann postage stamp.">
+            The first real
+            breakthrough in programming, (as we know it], came
+            when <a href="http://www.indwes.edu/Faculty/bcupp/lookback/hist-05.htm" target="_blank"><b>
+            John von Neumann</b></a> realized that memory could be
+            used to store computer instructions along with data
+            processed by the computer. This idea, called the
+            <b>stored program concept</b>, means that you can use
+            the same computer to play Pacman and to balance your
+            checkbook&#8212;you simply change its program.
+        </p>
+        <br style='clear:both;'>
+    <h3>Machine Language</h3>
+        <p>The key to understanding these early stored-program
+            computers&#8212;as well as the computers we still use
+            today&#8212;is to realize that every CPU understands
+            <b>only one language</b>. This language is called
+            <b>machine language</b>.
+        </p>
+    <div class="box">
+        Here is an Intel Pentium machine language program.
+        The rows of numbers on the left are the memory locations
+        (called <b>addresses</b>) where each instruction is
+        stored. The columns of numbers and letters on the
+        right are the actual machine language instructions.
+        The instructions stored in memory are actually
+        <b>binary</b> numbers, but here they are displayed in
+        <b>hexadecimal</b> (base 16) notation to make them
+        easier to read.<br>
+        <img src="images/machine_lang.jpg" alt="An Intel Pentium machine language program." class='inlineCenter'>
+    </div>
+        <p> As you can see by looking at the illustration, machine
+            language is not very much like human language, for
+            two reasons: </p>
+        <ul>
+            <li>First, all machine language is a <b>numeric language</b>,
+                because the memory inside your computer can only store
+                numeric data. Even when you work with text (such as
+                viewing this web page), the computer is working
+                with binary numbers. Because of this, writing machine
+                language programs is very slow, tedious, and
+                error-prone, as illustrated here:<br>
+                <img src="images/fig1-2b-sm.gif" alt="The process of writing machine language programs." class='inlineCenter'>
+                Notice that the process involves <b>three translation steps</b>:
+                <ol>
+                    <li class="d">From <b>problem</b> to the <b>logical</b> solution.
+                        This solution is called an <b>algorithm</b>. An algorithm
+                        represents the detailed, unambiguous, logical steps needed to
+                        carry out a particular task. (In this case, the solution in the
+                        left-hand balloon represents the algorithm to calculate the total
+                        price of a taxable item.)
+                    </li>
+                    <li class="d">From algorithm to the <b>instruction set</b>. The solution
+                        must be translated into the specific low-level operations
+                        that the CPU knows how to perform, such as fetching a number
+                        or performing addition.
+                    </li>
+                    <li class="d">From instruction set to the numeric <b>op-code</b> that
+                        makes up the machine language program, and that comprises the only
+                        kind of program that the CPU actually understands.
+                    </li>
+                </ol>
+            <br style='clear:both;'>
+            </li>
+
+            <li>Second, <b>every different CPU family uses a
+                different machine language</b>. The machine language
+                for the Intel 80x series chips is entirely different from
+                the Sun SPARC, IBM Z-Series or the new low-power ARM
+                chip you have in your Netbook, or the 6502 chip used in
+                the Apple II and the first T-series of Terminators:<br>
+                <img src='images/terminator.png' class='inlineCenter' alt='6502 code from the terminator movie.'>
+                Because of this, machine language programs
+                are inherently <b>non-portable</b>; you can't run
+                your copy of Word for Windows, for example, on your
+                iPad or iMac.
+            </li>
+        </ul>
+    <h3>The Second Generation</h3>
+        <p> Despite the difficulties of using machine language,
+            the number and size of the programs written expanded
+            dramatically in the late 1940s and early 1950s.
+            Machine-language programming were difficult to write, but
+            creating them was a whole lot easier, and certainly less expensive,
+            than building new "hard-wired" computing machines or employing
+            thousands of "human computers" performing calculations
+            the hard way.
+        </p>
+        <div class='figure'>
+          <img src="images/humancomputers.png" class='inlineCenter' alt='Human computers at work.' />
+          <p class='figcaption'>
+          Early "computers" at work, summer 1949. In the terminology of
+          that period, computers were employees&mdash;typically female&mdash;who
+          performed the arduous task of transcribing raw data from rolls of
+          celluloid film and strips of oscillograph paper and then, using
+          slide rules and electric calculators, reducing it to standard
+          engineering units.<br>
+          &nbsp;&nbsp;&mdash;Dryden Flight Research Center Photo Collection
+          </p>
+        </div>
+        <p> These early "lean-and-mean" machine language programs
+            quickly became very large. Soon, they were too large to easily
+            understand and maintain.
+        </p>
+        <p> <img src="images/coredump.gif" class="right" alt="A core dump printout.">
+            If something goes wrong in one part of a machine language program,
+            then the programmers have to create a print-out
+            showing the values in each memory cell when the error
+            occurred&#8212;(this is called a "core dump"); it
+            looks very similar to what you see with the MemoryView program.
+        </p>
+        <p>Core dump in hand, the programmer then must translate the
+            values stored in memory into the basic instructions that the
+            computer can perform: adding two numbers, perhaps,
+            or storing a value at a particular location. Only
+            after the the raw machine values are translated into
+            their corresponding computer instructions, is the
+            programmer ready to unravel the problem.
+        </p>
+        <p> Programmers soon discovered that the computer itself
+            could be put to work performing the painstaking but
+            tedious task of translating memory values into
+            the corresponding mnemonic "operation code"
+            (or <b>op code</b>), so that one part of the debugging
+            chore was lightened. Those discoveries lead to the
+            next generation of ancient computers.
+        </p>
+    <h4>Assembly Language</h4>
+        <p> Assembly language, invented at the dawn of the 1950s, was
+            the first big step up from machine language; but, it
+            wasn't really all that big of a step. Assembly language
+            is simply a one-for-one mnemonic replacement for
+            machine language. Instead of entering the numbers
+            <b>54 24 66 9C FE C2 84 92</b> into memory, the
+            assembly language programmer can write something
+            like this: <b>LDX 24, [669C]</b>.
+        </p>
+    <div class="box">
+        <p> Here's a portion of the same Intel machine language
+            program I showed you earlier, this time in
+            assembly language, as well as machine language.
+            As you can see, the location where each instruction
+            is stored in memory is still displayed on the left.
+            The machine language instructions are now displayed
+            one instruction (or op code) per line. (Note that
+            some instructions are very short&#8212;a single byte&#8212;while
+            others can take several bytes).<br>
+            <img src="images/assembly.jpg" alt="An assemply language program" class='inlineCenter'>
+            The third column from the left displays the assembly
+            language mnemonic instructions that the assembly
+            language programmer uses in place of the machine
+            language instructions. To subtract 1 from the memory
+            location named <b>CX</b>, for instance, the programmer
+            writes <b>DEC CX</b>, instead of the actual numeric
+            code (49) understood by the CPU.
+        </p>
+    </div>
+        <p>There two important points to understand about assembly language: </p>
+        <ul>
+            <li>Even though assembly language makes programmers more
+                productive, they still have to write one line of
+                assembly language code for every machine instruction.
+                Here's an illustration that shows the process of
+                programming in assembly language:<br>
+                <img src="images/fig1-2b-sm.gif" alt="The process of writing machine language programs."
+                    class='inlineCenter'>
+                Notice that the programmer <b>still</b> needs to perform
+                the same two translations as were required with machine-language
+                programming: from problem statement to algorithm, and
+                from algorithm to the CPU's instruction set.
+            </li>
+            <li>The second point is to remember that computers <b>don't
+                understand</b> assembly language at all, <b>only</b> machine
+                language. After writing an assembly language program,
+                the programmer has to  convert it into machine code before
+                the program will run it. This is done using a program
+                called an <b>assembler</b>.
+            </li>
+        </ul>
+    <h4>Libraries and Interpreters</h4>
+        <p> Computers follow their programmed instructions in a
+            literal-minded, mechanical way. You can't just
+            tell your computer to "print the budget report"; you
+            have to explain <b>every</b> single tiny step.<br>
+            <img src='images/brains.png' class='inlineCenter' alt='Still from Rain Man movie.'>
+            While powerful, your computer is much more like Dustin
+            Hoffman in the film Rain Man, than the Giant Brains
+            predicted in the 1950s.
+        </p>
+        <p> When you program in machine or assembly language,
+            though, things seem even worse. Something as simple
+            as printing a sentence on the screen can take half a
+            page of code; and often, it's the same half page of
+            code that you've written a dozen times already.
+        </p>
+        <p> Can't the computer be put to work remembering all of
+            those thousands of tiny details, so you, the programmer,
+            don't have to? You bet; that's exactly what the early
+            assembly-language programmers did.
+        </p>
+        <p> <img src='images/library.png' class='right' alt='A library icon.'>
+            To lessen the burden of repetition, and to
+            increase productivity, programmers started to create
+            <b>libraries</b> of code that performed common tasks.
+            Along with these libraries, they also started inventing
+            "higher-level" versions of assembly language. In these
+            higher level languages you could:
+        </p>
+        <ul>
+            <li>Combine many lines of assembly code into a single
+                instruction, called a <b>macro</b>. Instead of
+                writing 50 lines of code to print a single line
+                of output, you'd use only one.
+            </li>
+            <li>
+                Avoid having to manually translate your program
+                into assembly or machine language; instead, you
+                used something called an <b>interpreter</b>.
+            </li>
+        </ul>
+        <p>
+            Instead of using an assembler, these systems used a second
+            program running on the computer to read each "high-level
+            instruction" and produce machine code. This second
+            program, (the interpreter), only generated
+            machine code when the program actually ran.
+        </p>
+        <h4>Virtual Assembly Languages</h4>
+        <p> These high-level interpreters not only made programmers
+            more productive, but they also addressed another problem
+            that afflicted machine and assembly-language programs:
+            <b>portability</b>.
+        </p>
+        <p> Early computers were very expensive and individually
+            built&#8212;they were definitely "one of a kind" machines.
+            Because of this, when a new computer was developed,
+            companies often found that the programs they'd written
+            for their previous machines would not run on new models.
+        </p>
+        <p> The interpreter provided a clever solution
+            to this problem: create an "ideal" machine language,
+            along with a matching assembly language,
+            and then simply write an interpreter for the ideal
+            language when a new machine was released.<br>
+            <img src='images/virtual.png' class='inlineCenter' alt='Using virtual machine languages.'>
+            The most popular of these 1950s <b>virtual machine languages</b> were
+            <b>Speedcode</b> (developed by John Backus at IBM),
+            <b>Shortcode</b> (developed by John Mauchley of
+            Eniac fame), and <b>FlowMatic</b> (developed by
+            Grace Hopper).
+        </p>
+        <p> Today, Java and Microsoft's new .NET platform both use
+            a similar concept. With Java, the virtual machine language
+            is called <b>bytecode</b>, and you
+            run by using a <b>Java Virtual Machine</b> or
+            <b>JVM</b>. Microsoft .NET's virtual machine language is
+            called MSIL (Microsoft Intermediate Language), and its
+            interpreter is called the CLR or Common Language
+            Runtime.
+        </p>
+    <h4>Compilers</h4>
+        <p> By the end of the 1950s, both computers and interpreters
+            had become widely entrenched in the business community.
+            Interpreters and virtual assembly languages such as
+            Speedcode, and Shortcode, allowed programmers to become
+            much more productive. These much more productive
+            programmers did what all productive people do&#8212;they
+            <b>produced more stuff</b>; in the programmers' case
+            they produced bigger and better programs.
+        </p>
+        <p>Well, <b>bigger</b> anyway. </p>
+        <p>
+            As programs got bigger, the weaknesses of
+            the interpreter approach became obvious. Because so
+            much of the interpreter's time was spent translating
+            from "virtual instructions" into the native machine language,
+            interpreted programs ran much slower than hand written
+            machine language programs. And, in those days, people
+            were cheap, but computers were expensive.
+        </p>
+        <p><img src="images/fig1-4.gif" style="margin-right: 20px;" alt="Grace Hopper." class="left">
+            A programmer named Grace Hopper, (who also popularized the
+            word "bug" in the programming world), is credited with an
+            insight that seems obvious in retrospect. Instead of
+            translating virtual machine code into native machine code every time
+            you run the program, just do the translation once.
+            Save the translated code on disk or tape, and reuse
+            it every time you need to run your program. This
+            invention was called the <b>compiler</b>. Today,
+            most programming languages use some form of compiler.
+        </p>
+        <p>Hopper wrote the first compiler for the A-0 programming language
+            in 1952.
+        </p>
+        <p class="note">
+            <img src="images/interpreter.gif" class="right" alt="UN Interpreters.">
+            One way to understand the difference between
+            an interpreter and a compiler is to think about the
+            different ways we convert between human languages. The
+            interpreter is kind of like the interpreters at the
+            United Nations. The speakers' words are translated as
+            they occur.<br><br>
+            A compiler is more like the translator of a book. The translator
+            produces a new manuscript that is independent of the original.
+        </p>
+        <br style='clear:both;'>
+    <h3>The Third Generation</h3>
+        <p><b>Once people realized</b> that computers could
+            translate virtual assembly languages like Speedcode
+            and Flowmatic into machine code, they began to wonder
+            if, perhaps, computers could do the same for more
+            "natural" languages. (Natural for human beings, that
+            is.) This marked the beginning of the <b>third generation</b>
+            of computer languages, called <b>High Level Languages</b>,
+            or <b>HHL</b>.
+        </p>
+        <p>The basic idea behind a high-level language is
+            straightforward: instead of writing a computer program
+            in terms that the computer uses, write it in terms of
+            the problem to be solved like this:<br>
+            <img src="images/fig1-5-sm.gif" class='inlineCenter' alt="The high-level-programming language process.">
+            Note that with high-level languages, the programmer only has to
+            do <b>one</b> translation: from the problem to the logical steps
+            needed to carry out the task. These steps, you'll recall, are
+            called an <b>algorithm</b>, and for this reason, high-level languages
+            are often called <b>algorithmic</b> languages.
+        </p>
+        <p> Since different people want to solve different kinds
+            of problems, different high-level languages were
+            developed. Let's look quickly at the <b>"big four"</b>.
+        </p>
+    <h4>FORTRAN</h4>
+        <p>Developed by John Backus at IBM in the mid-to-late
+        1950s, the <b>FOR</b>mula <b>TRAN</b>slator language
+        let engineers write programs using familiar notation.
+        Beginning in 1954, <b>FORTRAN</b> also set the standard for
+        estimating the length of a programming project, when
+        Backus predicted it would be finished in six months.
+        The first version was delivered in 1958.
+        </p>
+    <h4>COBOL</h4>
+        <p>In the same way that FORTRAN turned engineers into
+        programmers, <b>COBOL</b>, the <b>C</b>ommon <b>B</b>usiness
+        <b>O</b>riented <b>L</b>anguage, attempted to recruit
+        accountants and other business professionals into the
+        programming fold. And, it was wildly successful.
+        More programs have been written in COBOL (in the last
+        40 years) than in any other language.
+        </p>
+        <p>COBOL was created by a committee called
+        the Conference on Data System Languages (CODASYL).
+        It was let by led by Joe Wegstein of NBS (now NIST), who
+        was an early computer pioneer. The driving force behind
+        COBOL, though, was Grace Hopper.
+        </p>
+    <h4>Algol</h4>
+        <p> In the 1950s, if you wanted to program in FORTRAN,
+            you had to purchase an IBM mainframe computer, and,
+            out of the goodness of their hearts, IBM threw in a
+            FORTRAN compiler for free. (Well, maybe not for free.)
+            If you wanted to run FORTRAN on another system, however,
+            you were out of luck.
+        </p>
+        <p> Like COBOL, <b>Algol</b> (the <b>Algo</b>rithmic
+            <b>L</b>anguage) was the product of a committee of the
+            "best-and-the-brightest" intent on producing a common numeric
+            and scientific programming language that would not be tied
+            to a particular vendor like FORTRAN.
+        </p>
+        <div class='figure'>
+            <img src="images/ALGOL.gif" class='inlineCenter' alt="Six members of the Algol Committee at the 1974 ACM conference on programming languages.">
+
+            <p class='figcaption'>
+            This photo, taken at the 1974 ACM Conference on the History of Programming
+            Languages, shows six of the original participants who attended the 1960
+            Algol Conference in Paris. Top row: John McCarthy (LISP), Fritz Bauer,
+            Joe Wegstein (COBOL). Bottom row: John Backus (FORTRAN), Peter Naur,
+            Alan Perlis.
+            </p>
+        </div>
+        <p> While not as commercially successful
+            as COBOL, it was, none-the-less, a primary influence on the
+            structured programming languages which would follow it in
+            the 1960s and 1970s.
+        </p>
+        <h4>LISP</h4>
+        <p> The last of the "Big-4" high-level languages begun
+            during the 1950s was LISP. Begun by John McCarthy at MIT
+            in 1958, <b>LISP</b> (the <b>LIS</b>t <b>P</b>rocessing
+            language) is quite a bit different than the other three
+            languages, and requires a bit of mathematical sophistication
+            to learn. Instead of using algebraic notation, for instance,
+            LISP uses notation derived from Lambda Calculus, and was the
+            first of a family known as <i>functional programming languages</i>.
+            (If you take CS 250 here at OCC, you'll spend a little bit
+            of time exploring a similar functional language known as <i>Scheme</i>.)
+            LISP is still commonly used in the Computer Science specialization
+            known as Artificial Intelligence.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Early History of Programming Summary
+        </p>
+        <ul>
+            <li>Prior to 1950, electronic computers were hard-wired to perform
+                calculations. Mathematician John von Neumann proposed the
+                <b>stored program</b> concept where numeric machine instructions
+                were stored in memory along with a program's data.
+            </li>
+            <li>Machine language programs use numeric instructions that the
+                CPU can interpret. Every CPU family has its own specific
+                <b>native</b> instruction set which will not work on a different
+                type of CPU.
+            </li>
+            <li> Second-generation computer language advances consisted of
+                <b>assembly language</b>, macros, libraries, interpreters,
+                virtual assembly languages and compilers.
+            </li>
+            <li> Third-generation, or <b>high-level</b> programming languages
+                (HHL), use a compiler or interpreter to convert algorithmic,
+                natural-language-like programming code into machine-language
+                that the computer can execute.
+            </li>
+            <li> In the 1950s, different languages were developed to allow
+                programmers to write programs using their existing skill sets.
+                The "big four" languages were <b>FORTRAN</b> for scientific
+                programs, <b>COBOL</b> for business programs, <b>Algol</b>
+                for general-purpose computing and <b>LISP</b> for artificial
+                intelligence.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

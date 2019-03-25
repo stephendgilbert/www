@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>1.6&mdash;Introducing Strings</title>
+    <style type='text/css'>
+        td,th {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/i.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 1.6</p>
+        <p id='lessonTitle'>Introducing Strings</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">I</span>n Java, there are two types that
+            represent human-readable text</b>:
+            the <code>char</code> type, for individual characters, and the
+            <code>String</code> class for phrases, sentences, and paragraphs.
+            We'll talk more about the <code>char</code> type later in the
+            text. I'll also put off many of the details of the <code>String</code>
+            class until a later chapter.
+            Because we'll been making so much use of the strings in these
+            first few chapters, though we'll cover the basics here.<br>
+            <img src='images/conch.gif' class='inlineCenter' alt='A Java String.'>
+        </p>
+        <p> A string is a <b>sequence</b> of characters, like those
+            in this sentence. In Java, the sequence can include <b>any number</b>
+            of characters, including 0. Unlike some other programming languages,
+            Java's strings are <b>immutable</b>. This just means that a
+            <code>String</code> object, once created, can <b>never</b> be
+            changed; it will always be composed of <b>exactly</b> the same
+            sequence of characters.
+        </p>
+    <h3>String Literals</h3>
+        <p> <code>String</code> <b>literals</b> are formed using regular
+            characters, enclosed in <b>double quotes</b>, like the parameters passed
+            to the <code>println()</code> method in your console program:<br>
+            <img src='images/string-literals.gif' class='inlineCenter' alt='String literals.'>
+        </p>
+        <p> You can initialize a <code>String</code> variable using a <b>literal</b>,
+            just form your <code>String</code> using regular characters,
+            and enclose the whole thing in double quotes, like this:
+        </p>
+        <p class="code">
+            String greeting = "G'day Mate!";
+        </p>
+        <p> Because <code>String</code>s are <i>actually</i> objects,
+            you can also use a <code>String</code> constructor, like
+            you would for <code>Fraction</code> objects from the last
+            section:
+        </p>
+        <p class="code">
+            String anotherGreeting = new String("Aloha!");
+        </p>
+    <h4>The null String and the Empty String</h4>
+        <p> A <code>String</code> variable that points to "nothing" is
+            called the <b>null</b> <code>String</code>. You cannot send
+            any messages to a <b>null</b> <code>String</code> or apply
+            any operations to a <b>null</b> <code>String</code>, <b>except</b>
+            for the assignment operator.
+        </p>
+        <p> Here is a variable definition that illustrates the <b>null</b>
+            <code>String</code>:
+        </p>
+        <p class="code">
+            String s1; <span class="cmt">// Not initialized; value is null</span><br>
+            System.out.println(s1); // Java won't compile your code
+        </p>
+        <p> A <b>null</b> <code>String</code> does not refer to anything.
+            The <b>empty</b> <code>String</code>, in contrast, refers to
+            a valid <code>String</code> object, one that contains <b>zero</b>
+            characters. Unlike the <b>null</b> <code>String</code>, the
+            empty <code>String</code> responds to messages and may be used
+            in <code>String</code> expressions.
+        </p>
+        <p> To create an empty <code>String</code> you use a pair of
+            adjacent double-quotes with no intervening spaces like this:
+        </p>
+        <p class="code">
+            String emptyString = "";
+        </p>
+    <h3>String Concatenation</h3>
+        <p> When used with <code>Strings</code>, the plus sign (+) acts to
+            "paste" two <code>Strings</code> together to form a new
+            <code>String</code>, a process called <b>concatenation</b>.
+            This can be useful when you want to print a very long
+            <code>String</code> that won't fit inside the code window
+            without scrolling, like this example, (which won't compile
+            as it is):<br>
+            <img src='images/broken-string.gif' class='inlineCenter' alt='A broken String.'>
+            To get this to work, you just create two <code>String</code>
+            literals, and combine them into one with the concatenation
+            operator like this:<br>
+            <img src='images/concatenate.gif' class='inlineCenter' alt='Concatenated Strings.'>
+            When you do this, <b>make sure</b> that you leave a space
+            character separating the words when they're recombined, like I've
+            done here following the period in the first sentence.
+        </p>
+    <h4>Numbers and Concatenation</h4>
+        <p> You can also use the plus-sign to "paste together" numbers
+            and <code>String</code> values. When you do this, Java
+            automatically converts the number type to a <code>String</code>
+            so that the number can be displayed.
+        </p>
+        <p> Here's an example that combines a number (my age) with a
+            pair of <code>String</code> literals:<br>
+            <img src='images/concat-numbers.gif' class='inlineCenter' alt='Concatenate Strings and numbers.'>
+            Note that the number <b>does not</b> have quotes around it.
+            Sometimes, this automatic conversion interferes with what
+            you really want to do, however. If you were to write this:<br>
+            <img src='images/concat-numbers2.gif' class='inlineCenter' alt='Concatenate Strings and "add" numbers.'>
+            you might expect to see my age printed out as before. Instead,
+            however, you'll see "I am 2534 years old" printed on your display,
+            which is <b>really not</b> correct, no matter how gray my hair.
+        </p>
+        <p> When you use the plus-sign in this way, you'll need to use
+            parenthesis to let Java know you want to <b>add</b> the two
+            numbers, while <b>concatenating</b> the <code>String</code>s,
+            like this:<br>
+            <img src='images/concat-numbers3.gif' class='inlineCenter' alt='Concatenate Strings and "add" numbers.'>
+        </p>
+
+    <h3>Escape Sequences</h3>
+        <p> Suppose that you want to put quotes-marks around this
+            famous, (yet anonymous) quotation. You might try this:<br>
+            <img src='images/quotes01.gif' class='inlineCenter' alt='Embedding quotes in a String.'>
+            Unfortunately, this <b>won't</b> compile, because Java treats
+            the first quote that appears <i>inside</i> your string as the
+            <b>end</b> of the string itself. Java has a solution.
+        </p>
+        <p> An <b>escape sequence</b> is a method of writing "difficult"
+            characters, that is, characters that are invisible or that
+            are used, normally to delimit other characters.
+            The first part of an escape sequence is to designate one
+            character as the "<b>escape character</b>". When that character
+            is encountered&#8212;in a character literal or in a group of
+            characters, called a <code>String</code>&#8212;the compiler treats
+            it as a flag that means:
+        </p>
+        <p class="pullquote">
+            "Look out! The next character is special."
+        </p>
+        <p> In Java, the escape character is the <b>backslash</b>.
+            Whenever a backslash appears in a character constant, the
+            following character is set aside for special treatment.
+        </p>
+        <p> Java maintains "special notation" for several of the
+            common control characters, as escape sequences.
+            These include:
+        </p>
+        <table border='1' style="width:500px;margin:auto;">
+        <tbody>
+            <tr>
+                <th class="tcode">\n</th>
+                <td class="tdata">The newline character (Unicode 10)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\r</th>
+                <td class="tdata">The carriage-return (ENTER) (Unicode 13)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\t</th>
+                <td class="tdata">The horizontal tab character (Unicode 9)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\f</th>
+                <td class="tdata">The form-feed character (Unicode 12)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\b</th>
+                <td class="tdata">The backspace character (Unicode 8)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\'</th>
+                <td class="tdata">The single quote</td>
+            </tr>
+            <tr>
+                <th class="tcode">\"</th>
+                <td class="tdata">The double quote</td>
+            </tr>
+            <tr>
+                <th class="tcode">\\</th>
+                <td class="tdata">The backslash itself</td>
+            </tr>
+        </tbody>
+        </table>
+        <p> With this information, you can see that you could write your
+            inspirational quote like this:<br>
+            <img src='images/quotes02.gif' class='inlineCenter' alt='Embedding quotes in a String.'>
+        </p>
+        <p> Here's the output, both from embedding a pair of quotes using
+            escape sequences, and using concatenation to combine a number
+            with a <code>String</code>:<br>
+            <img src='images/concat-output.gif' class='inlineCenter' alt='Concatenation results.'>
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Introducing Strings Summary
+        </p>
+        <ul>
+            <li>Java has two types that represent <b>characters</b>: the
+                <code>char</code> primitive type and the <code>String</code>
+                class from the standard Java library. <code>String</code> is
+                used to represent sequences of characters.
+            </li>
+            <li>DrJava's <b>Interactions Pane</b> allows you to "try out"
+                fragments of Java code, without first writing a program.
+            </li>
+            <li>To create a <b><code>String</code> literal</b>, enclose
+                your text between double quotes.
+            </li>
+            <li>You can <b>initialize</b> a <code>String</code> variable using
+                a literal or the <code>String</code> constructor.
+            </li>
+            <li>If you don't initialize a <code>String</code> variable, it is
+                called the <b>null</b> <code>String</code> and you can't use
+                the variable. You <b>may</b> initialize a <code>String</code> containing
+                no characters; this is called the <b>empty</b> <code>String</code>.
+            </li>
+            <li><b>Concatenation</b> uses the <b>plus sign</b> to paste together
+                <code>String</code> fragments to produce a new <code>String</code>
+                object. You may concatenate <code>String</code> literals as
+                well as variables. (<i>Remember to add any necessary spaces.</i>)
+            </li>
+            <li> Concatenation <b>also works with numbers</b>, allowing you to
+                combine the results of a calculation with a label that describes
+                the value. If you wish to use addition along with concatenation,
+                enclose your calculation inside parentheses.
+            </li>
+            <li> Because <code>String</code>s are enclosed inside double-quotes,
+                you cannot include a double quote or a literal newline inside
+                a <code>String</code>. To embed such a literal character, use
+                an <b>escape sequence</b>.
+            </li>
+            <li> An escape sequence is an alternative way of indicating a single
+                character value in your source code. The sequence starts with the
+                escape character (<b>the backslash</b>) and is followed by one of the
+                predefined symbols.
+            </li>
+            <li> Common escape sequences that you should be able to use
+                (without looking them up) are the <b>newline</b>, the <b>tab</b>,
+                the <b>double quote</b> and the <b>backslash</b> itself.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

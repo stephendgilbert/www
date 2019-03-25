@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>14.4&mdash;Inner Classes</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 14.4</p>
+        <p id='lessonTitle'>Inner Classes</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><b><span class='cap'>Y</span>ou've now seen several different styles</b>
+            of event-handling in the programs we've looked at so far. For
+            instance:
+        </p>
+        <ul>
+            <li><img src='images/mouse-event-demo.png' class='right' alt='A Mouse Event demo.'>
+                In your ACM programs, you added a single <code>addMouseListeners()</code>
+                call to your <code>init()</code> method and then added your event-handler
+                methods <b>inside your program</b> itself. You didn't have to explicitly
+                implement an interface or connect your components to your event-handler
+                methods, since the ACM superclass did that for you, behind the
+                scenes.
+            </li>
+            <li>In your Java applets, you've seen how to <b>implement an interface</b>
+                in the applet itself. When you do that, you add the necessary <code>implements</code>
+                clause to the applet's header, "hook up" the event handling in its
+                <code>init()</code> method, and finally, you override <b>all</b> of
+                the event-handler methods declared in the interface, inside your
+                applet code.
+            </li>
+            <li>When you create discrete components, though, like you
+                did with the <code>Dot</code> class, the component itself can
+                implement the interface. In this case, the event handling methods
+                all appear inside the component (<code>Dot</code>) class, while
+                the "wiring up" code appears inside the applets that use the
+                component (<code>TestDots</code> in this case).
+            </li>
+            <li>Finally, you saw how you could create a new, top-level
+                event-handler class that <b>extends one of Java's event
+                adapter</b> classes. When you do this, the component that fires
+                the events, the program class that uses the components, and
+                the event-handler class that responds to events are all
+                discrete, decoupled individual components.
+            </li>
+        </ul>
+        <p> There is one, additional way of handling events that you should
+            know how to use, mainly because it is <b>the most common way
+            in the real world</b>: through the use of
+            <b>inner classes</b>.
+        </p>
+    <h2>What are Inner Classes?</h2>
+        <p> <b><span class='cap2'>I</span>nner classes are nested classes</b> that you define "inside"
+            other classes. When you compile your program, Java combines the
+            name of your outer (containing) class with the name of your
+            inner class to create the actual "real" name of the class.
+        </p>
+        <p> Here's an example:<br>
+            <img src='images/outer-class.gif' class='inlineCenter' alt='An inner and outer class'>
+            The outer class, here imaginatively named <code>Outer</code>
+            contains only a single <code>private int</code> field named
+            <code>a</code>, as well as the definition for an inner class
+            named <code>Inner</code>. There are two important things to
+            note about this example:
+            <img src='images/inner-class2.gif' class='right' alt='The inner classes in Eclipse.'>
+        </p>
+        <ol>
+            <li class="d">The method <code>changeIt()</code>, defined in the class
+                <code>Inner</code>, has access to the <code>private</code>
+                data field <code>a</code>, while a subclass of the
+                <code>Outer</code> class would not. In this sense, inner
+                classes act more like body parts than like relatives.
+            </li>
+            <li class="d">The example program creates no <code>Inner</code> object,
+                it only contains a definition. To actually use the inner
+                class you must also create an <code>Inner</code> object.
+            </li>
+        </ol>
+        <p>
+            When you compile this, as you can see here, you don't end up
+            with files named <b>Outer.class</b> and <b>Inner.class</b>.
+            Instead you have <b>Outer.class</b> and <b>Outer$Inner.class</b>.
+            The <b>main</b> reason for using inner classes is to <b>respond to
+            events</b>. By creating a separate inner class for each event you
+            want to handle, your code is more modular.
+        </p>
+        <p>To see how this is useful, let's return to our
+            <b>BeginnersBlackjack</b> example, and hook up each of the
+            buttons to respond to different clicks. As we do this,
+            I'll show you <b>three different styles</b> of inner
+            classes.
+        </p>
+    <h2>Hands-on ActionListeners</h2>
+        <p> To create an <b>event-handler</b> class that responds to
+            button clicks, you need to:
+        </p>
+        <ol>
+            <li class='d'>Define an <b>inner class</b> inside the class
+                that contains your buttons.
+            </li>
+            <li class='d'>Add <code>implements ActionListener</code> to
+                the inner-class header.
+            </li>
+            <li class='d'>Supply the methods that satisfy the <code>ActionListener</code>
+                <b>interface contract</b>. To do that you only need to supply
+                a <b>single method</b> named <code>actionPerformed()</code> that
+                takes a single <code>ActionEvent</code> parameter.
+            </li>
+        </ol>
+        <p> Of course, if you haven't already imported the <code>java.awt.event</code>
+            package, you'll need to do that as well.
+        </p>
+    <h3>The DealHand Event Handler</h3>
+        <p> To see how this should work, let's add an event-handler class
+            to the <b>BeginnersBlackjack</b> program. Find the <b>Exercise 8</b>
+            marker (just before the <code>main()</code> method) and add the
+            skeleton for the <code>DealHand</code> event handler <b>class</b>, like
+            this:<br>
+            <img src='images/dealHand01.gif' class='inlineCenter' alt='The DealHand class skeleton.'>
+            Of course, since we've <b>promised</b> that our class implements
+            all of the methods in the <code>ActionListener</code> interface,
+            but we actually <b>haven't</b> done that, DrJava complains when we compile.
+        </p>
+        <p> Fortunately, along with the complaint, it also tells you exactly what
+            method you need to write. Just add the
+            <code>actionPerformed()</code> method to the inner-class,
+            passing it an <code>ActionEvent</code> parameter as the
+            error message suggests:<br>
+            <img src='images/dealHand02.gif' class='inlineCenter' alt='The DealHand class skeleton.'>
+        </p>
+    <h4>Step 2: Subscribing</h4>
+        <p> Having an event-handler doesn't do a lot of good if it is
+            <b>never called</b>. To get it to work, we have to
+            <b>hook-up</b> the <code>dealHand JButton</code> so that
+            it calls the <code>actionPerformed()</code> method.
+        </p>
+        <p> To do that, you have to:</p>
+        <ol>
+            <li class='d'>Create an <b>instance</b> of the <code>DealHand</code>
+                class.
+            </li>
+            <li class='d'>Then, call the <code>dealHandBtn</code>'s
+                <code>addActionListener()</code> method, passing in the
+                new <code>DealHand</code> object.
+            </li>
+        </ol>
+        <p> Scroll back down to <b>BeginnersBlackjack</b>'s <code>init()</code>
+            method (where you were testing your code) and locate the
+            <b>Exercise 9</b> placeholder. Hook-up your button there.
+            Your finished code should look like this:<br>
+            <img src='images/dealHand03.gif' class='inlineCenter' alt='Hooking up the dealHandBtn.'>
+            Now, whenever you click the <code>dealHandBtn</code> button,
+            it will call the <code>actionPerformed()</code> method inside
+            the object named <code>listener</code> that you've created here.
+        </p>
+    <h4>Step 3: Responding to the Event</h4>
+        <p> Of course, the <code>DealHand</code> class doesn't actually
+            <b>do</b> anything inside its <code>actionPerformed()</code>
+            method. That's easy to fix, though.
+        </p>
+        <ul>
+            <li><b class='ry'>Cut</b> (not Copy) this "test" code from your <code>init()</code>
+                method, and <b>paste</b> it inside the <code>actionPerformed()</code>
+                method:<br>
+                <img src='images/actionPerformed01.gif' class='inlineCenter' alt='Code to move.'>
+            </li>
+            <li>Then, add an <code>if</code> statement, so that you only
+                create a new deck whenever there are fewer than two cards
+                remaining, like this:<br>
+                <img src='images/actionPerformed02.gif' class='inlineCenter' alt='Code to move.'>
+            </li>
+        </ul>
+        <p> Now, you when your program runs, click the <b>New Deal</b> button,
+            and it will deal you a pair of cards and let you know your score.<br>
+            <img src='images/dealHand04.gif' class='inlineCenter' alt='Dealing a hand.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Deal a couple different hands. Make sure the score is correct
+            each time.
+        </p>
+        </div>
+    <h3>Interlude: JButton Event Enabling</h3>
+        <p> We're going to return to the topic of inner classes in a second,
+            but before we do that, let's talk briefly about <b>enabling</b>
+            and <b>disabling</b> buttons. By disabling a button when a
+            particular event occurs, you can ensure that things happen
+            in a certain order.
+        </p>
+        <p> For instance, after you deal a hand of Blackjack:</p>
+        <ul>
+            <li> If the score is 21, then the player has won. There is
+                no reason for the <b>Hit</b> or <b>Stand</b> buttons
+                to be active. The only enabled button should be the
+                <b>Deal</b> button for the next game.
+            </li>
+            <li>If the score is greater than 21, then the player has
+                lost (busted) and hit and stand should also be off.
+            </li>
+            <li>If the score is less than 21, though, the player may
+                want the dealer to supply more cards (<b>Hit</b>),
+                or they may want to stick with the cards that they've
+                been dealt (<b>Stand</b>). Both of those buttons
+                should be active. The <b>Deal</b> button should
+                be disabled, though, since the current hand isn't
+                finished.
+            </li>
+        </ul>
+        <p> Let's implement this strategy by modifying the <code>showScore()</code>
+            method.
+        </p>
+    <h4>Step 1: Add Three Branches</h4>
+        <p> We have three possibilities, so begin by using sequential
+            <code>if</code> statements like this:<br>
+            <img src='images/showScore03.gif' class='inlineCenter' alt='The showScore skeleton.'>
+        </p>
+    <h4>Step 2: The Buttons</h4>
+        <p> Inside the first branch (where <code>score == 21</code>),
+            add the code to <b>disable</b> <code>hitBtn</code> and <code>standBtn</code>,
+            while <b>enabling</b> the <code>dealHandBtn</code>. Here's what
+            your code should look like:<br>
+            <img src='images/showScore04.gif' class='inlineCenter' alt='Enabling and disabling buttons.'>
+            Once you've finished this block of code, copy it exactly into
+            the other two blocks, but in the <code>else</code> block,
+            <b>reverse</b> each of the three <code>boolean</code> parameters.
+        </p>
+    <h4>Step 3: The Messages</h4>
+        <p> The message displayed in the label is changed at the bottom of
+            the method. Cut that remaining line, and paste it three times
+            into each of the blocks. Then, modify the message that is
+            displayed so that it tells the user when they've won, lost,
+            or can continue playing. Here's what mine looks like:<br>
+            <img src='images/showScore05.gif' class='inlineCenter' alt='Displaying the Messages.'>
+            Run the program to make sure it works. Of course, since the
+            <b>Hit</b> and <b>Stand</b> buttons aren't yet hooked up,
+            you can't test that part of the code.<br>
+            <img src='images/showScore06.gif' class='inlineCenter' alt='Running with buttons enabled.'>
+            We'll take care of that shortly. But first, let's look at a
+            couple of common <b>variations</b> on inner classes.
+        </p>
+    <h2>Inner-Class Variations</h2>
+        <p> <img src='images/apples.png' class='right' style='margin-top:-5em;' alt='Varieties of apples.'>
+            There are two different variations on this basic inner-class
+            arrangement that are commonly used. It's important that you
+            recognize them, but remember that each of them does exactly the
+            same thing as the <code>DealHand</code> class you've just
+            seen; the inner classes are just arranged a little differently.
+        </p>
+    <h3>Variation 1: Anonymous Objects</h3>
+        <p> Think about this for a second. Why do we "name" things like
+            variables and methods in our programs? Well, really there
+            are two reasons:
+        </p>
+        <ul>
+            <li>Naming can make your program <b>easier to understand</b>.
+                That's why named constants are always preferable to
+                "magic numbers" in your code.
+            </li>
+            <li>Usually, though, we name things so that we can
+                <b>reuse</b> the item in our program. For this
+                purpose, methods are reusable snippets of code and
+                variables are reusable data elements.
+            </li>
+        </ul>
+        <p> When you <b>don't</b> need to reuse an object in a
+            different place in your program, you can avoid naming that
+            object and simply create and use an <b>anonymous</b> object.
+            This is really not much more efficient, but it does help
+            you to avoid creating unneeded variable names.
+        </p>
+        <p> Since we only use one <code>DealHand</code> object in our
+            program, instead of creating the variable named <code>listener</code>
+            and then passing it to the <code>addActionListener()</code> method,
+            you could simply create an anonymous <code>DealHand()</code>
+            object and pass that, instead:<br>
+            <img src='images/anonymous01.gif' class='inlineCenter' alt='An anonymous object.'>
+        </p>
+    <h3>Variation 2: Anonymous Classes</h3>
+        <p> This one is a little harder to grasp, because it's easy to get
+            the syntax confused. The <b>concept</b>, though, is pretty
+            straightforward.
+        </p>
+        <p> In <b>BeginnersBlackjack</b>, the <code>DealHand</code> class
+            is only used to create <b>a single object</b>&#8212;the object passed to
+            <code>addActionListener()</code>. As you just saw, we really don't
+            need a variable name; an anonymous object works just fine.
+        </p>
+        <p> If we take that logic a step further, though, you'll see that
+            you really don't <b>need the class definition</b> in any other
+            context either. When this is the case, Java allows you to
+            create an <b>anonymous class</b> at the same place you
+            created the <b>anonymous object</b> in the last example:
+            when you call <code>addActionListener()</code>.
+        </p>
+        <p> To understand this syntax, think of the original class definition
+            for the <code>DealHand</code> class shown here, with the
+            <b>identifying information</b> stripped out:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            <del>class DealHand implements</del> ActionListener<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent ae)<br>
+            &nbsp;&nbsp;&nbsp; {<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span class='cmt'>// action code here </span><br>
+            &nbsp;&nbsp;&nbsp; }<br>
+            }
+        </p>
+        <p> Now, imagine that this definition is used to replace the
+            <code>new DealHand()</code> constructor in the anonymous variables
+            variation like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            dealHandBtn.addActionListener(new <del>DealHand</del>/* insert here */());
+        </p>
+        <p>The result is an anonymous class object that looks like this:</p>
+        <p class="code" style='font-size:11pt;'>
+            dealHandBtn.addActionListener(new ActionListener()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent ae)<br>
+            &nbsp;&nbsp;&nbsp; {<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span class='cmt'>// action code here </span><br>
+            &nbsp;&nbsp;&nbsp; }<br>
+            });
+        </p>
+        <div class='alert'>
+        <p> <b>Note :</b> Pay special attention to the last line.
+            Note that it ends in a closing brace, followed by a closing
+            parenthesis and a semicolon.
+        </p>
+        </div>
+    <h3>Hands-On: Anonymous Inner Class</h3>
+        <p> To give you some practice, let's hook up an anonymous
+            inner-class event handler for the <code>hitBtn</code>.
+            Here's what you should do:
+        </p>
+        <ol>
+            <li class='d'>In the <code>init()</code> method, where you see
+                the marker for Exercise 10, call <code>hitBtn.addActionListener(l);</code>,
+                where the parameter "l" stands for "listener":
+                <img src='images/listener01.gif' class='inlineCenter' alt='Starting an anonymous inner class.'>
+            </li>
+            <li class='d'>Of course, this doesn't even <b>compile</b>, since
+                we haven't defined the listener object. Replace the "l"
+                with an <code>ActionListener()</code>
+                anonymous class with <code>actionPerformed()</code>:<br>
+                <img src='images/listener02.gif' class='inlineCenter' alt='ActionListener skeleton.'>
+            </li>
+        </ol>
+        <p> For the code inside the <code>actionPerformed()</code> method,
+            you can just copy the code from the <code>DealHand</code> class
+            and then modify it like this:
+        </p>
+        <ul>
+            <li>If the deck has <b>less than 1 card</b>, call <code>newDeck()</code></li>
+            <li>Add the top card to the player's hand</li>
+            <li>Pass <code>player</code> and <code>playerPile</code> to
+                <code>showCards()</code>, and the <code>player</code>
+                to <code>showScore()</code>.
+            </li>
+        </ul>
+        <p> Here's what the finished code should look like. When you've done
+            this, run and make sure you can hit on a hand less than 21:<br>
+            <img src='images/listener03.gif' class='inlineCenter' alt='Finished Hit Button.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Out</h5>
+        <p> Deal a couple different hands. Make sure the score is correct
+            each time and that you can now "hit" when the score is less
+            than 21.
+        </p>
+        </div>
+    <h3>Should You?</h3>
+        <p> Should you use anonymous inner classes? Many programmers like them
+            because using anonymous classes makes their code slightly
+            shorter, plus they don't have to think up "dummy" class names.
+            Others feel that it makes it harder to follow the outline of
+            the original program.
+        </p>
+        <p> You'll have to decide for yourself. There's no doubt, however,
+            that anonymous classes, unless used in moderation, make a
+            program harder to read and understand.
+        </p>
+
+    <h3>Your Turn: Finishing the Game</h3>
+        <p> Our <b>BeginnersBlackjack</b> game is almost finished. I'll let
+            you do the final steps on your own. All you have to do is to
+            hook up the <b>Stand</b> button.
+        </p>
+        <p> Add an anonymous inner class event adapter where you
+            see the marker for Exercise 11. Inside it's
+            <code>actionPerformed()</code> method you'll add some code
+            that is very similar to the code in the other event handlers.
+            This time, though, you'll be working with the dealer's hand,
+            not the player's:
+        </p>
+        <ul>
+            <li>Call <code>newDeck()</code> if there are fewer than 2 cards.
+                You don't have to check for a <code>null</code> deck.
+            </li>
+            <li>Create a new hand for the <code>dealer</code> (instead of
+                the <code>player</code>) and add two cards.
+            </li>
+            <li> Use a loop to keep adding one card to the dealer's
+                hand while the dealer's score is less than or equal to
+                17. Make sure you call <code>newDeck()</code> inside the
+                loop if you run out of cards.
+            </li>
+            <li> Display the dealers cards in the <code>dealerPile</code>,
+                just like you did with the <code>player</code> and
+                <code>playerPile</code>.
+            </li>
+            <li>Call the <code>scoreGame()</code> method, (which has already
+                been written), passing <code>dealer</code> and
+                <code>player</code> as arguments. (<b>NOTE</b> you
+                will need to <b>uncomment</b> the method before you
+                call it.)
+            </li>
+        </ul>
+        <p> Run the program and try it out. It should work fine except that
+            when you start a new game, you'll find the dealer's previous
+            hand still on the table. You can fix that little glitch by
+            adding this line to your <code>DealHand</code> event handler:
+            <img src='images/listener04.gif' class='inlineCenter' alt='Removing the dealers old hand.'>
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Inner Classes Summary
+        </p>
+        <ul>
+            <li>Inner classes are <b>defined inside</b> of another class. An
+                inner class can access the instance variables (<b>including</b>
+                <code>private</code> instance variables) of its enclosing
+                class.
+            </li>
+            <li>When you compile a program with inner classes, the compiler
+                <b>automatically names</b> the resulting class. A named inner
+                class is given the name <code>Outer$Inner.class</code>,
+                (where Outer and Inner are replaced with the respective
+                names). Anonymous inner classes are named <code>Outer$1.class</code>,
+                <code>Outer$2.class</code> and so on.
+            </li>
+            <li>To <b>use inner classes to respond to events</b>, just create a class
+                that implements one of the event-handling interfaces, (<b>or</b>,
+                more commonly, that extends one of the event adapters),
+                create an instance of your event-handler class and then
+                connect the appropriate component (a <code>JButton</code> for
+                instance) to the event-handler object.
+            </li>
+            <li>Since you will often have only once copy of an event-handler
+                class, you may skip creating an instance variable for the
+                class and simply create an <b>anonymous object</b> when you
+                hook up your class.
+            </li>
+            <li>If you like, instead of defining a named class, you can
+                place the <b>anonymous class definition</b> inline when
+                you call the method that connects your component to its
+                event handler.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

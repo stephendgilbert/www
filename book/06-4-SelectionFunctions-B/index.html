@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>6.4&mdash;Predicate Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 6.4</p>
+        <p id='lessonTitle'>Predicate Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n the last chapter you learned how to write
+            procedures and functions</b>. In this chapter you learned how to
+            use the <code>if</code> statement and how to make more
+            complex desicions using the logical operators and nested
+            conditions.
+        </p>
+        <p> In this section, we want to <b>marry</b> those two concepts together,
+            and learn how to write <b>predicate</b> (or logical) functions.
+            These are similar to the problems
+            you'll see on your CS 170 programming proficiency quizzes.
+        </p>
+        <p> We'll start by looking at the concept of selection in
+            the context of writing your own functions. Then, we'll look at
+            a shortcut Java operator, called the <b>conditional</b> or
+            <b>selection</b> operator, that can be used to write
+            <b>predicate expressions</b>, without first writing a
+            predicate function.
+        </p>
+    <h2>Functions and Selection</h2>
+        <p><b><span class='cap2'>W</span>ith procedures</b>, it really doesn't matter (syntactically) if you
+            always have two alternatives. If you use a simple <code>if</code>
+            statement, then when the condition is <code>true</code>, the
+            actions in the body of the statement are executed; when the
+            condition is <code>false</code> then <b>nothing</b> happens.
+        </p>
+        <p> With a function, though, it's possible to have a <code>return</code>
+            statement inside of an <code>if</code> statement. If you do that,
+            though, you have to return a value in each and every case:
+            when your condition is <code>true</code> <b>and</b> when
+            your condition is <code>false</code>. That means that functions
+            using <code>if</code> can have <b>several</b> different
+            <code>return</code> statements, as long as every single
+            branch leads to a <code>return</code>.
+        </p>
+        <p> Let's look at a simple example. </p>
+    <h3>The isOdd() Function</h3>
+        <p> You can tell if an integer is odd by using the remainder
+            operator. If the remainder of the number divided by 2 is 1,
+            then the number is odd. We can put that algorithm
+            into a function like this:
+            <img src="images/functions10.gif" class="inline" alt="An isOdd() function.">
+            Notice that:
+        </p>
+        <ul>
+            <li><code>isOdd()</code> is a <b>predicate</b> function. That is,
+                it has a <code>boolean</code> return type.
+            </li>
+            <li>The function has one parameter, <code>n</code> which is
+                the number to test.
+            </li>
+            <li>If the remainder of the number divided by 2 is 1, we
+                return <code>true</code>, just like we said.
+            </li>
+        </ul>
+        <p><b class='ry'>So why is the compiler complaining?</b></p>
+        <p> The answer is very simple, yet it is one that students frequently
+            struggle with. A function must return a value for <b>each and
+            every path</b> through the code. This function returns a value
+            when the number <code>n</code> is odd. What does it do when the number is
+            even?
+        </p>
+        <p><b class='ry'>Nothing!</b></p>
+    <h4>Three Solutions</h4>
+        <p> There are several different ways to fix this problem. The
+            way that we've been doing it in class (and the classical
+            solution), is to create a <code>result</code> variable
+            at the top of your function, modify <code>result</code>
+            as necessary inside your <code>if</code> statement,
+            and then <code>return result</code> at the very
+            end of your function. That way you only have <b>one exit</b>
+            from your function.
+        </p>
+        <p> If you want to skip the <code>result</code> variable and
+            use the multiple-return style, then here are three
+            solutions that will work:
+        </p>
+        <ol>
+            <li class="d"> You can add an <code>else</code> clause for
+                the case when the number is <b>even</b> like this:<br>
+                <img src="images/functions11.gif" class="inline" alt="Using else in a function.">
+            </li>
+            <li class="d"> Since the <code>return</code> statement <b>ends
+                the function</b> when the number is odd (inside the
+                <code>if</code> statement body), any code following it
+                is <b>only executed when the number is even</b>. That
+                means you really don't need an <code>else</code>; you
+                can just write this:<br>
+                <img src="images/functions12.gif" class="inline" alt="The &quot;alternative&quot; return.">
+            </li>
+        </ol>
+    <h4>Boolean Return Values</h4>
+        <p> The third alternative is a little harder to explain, but you
+            should make the effort to understand it. Often, the <b>best</b>
+            way to implement a predicate function is to avoid using
+            <code>if</code> statements at all, and simply return the
+            result of the Boolean expression. Let me explain how that
+            works.
+        </p>
+        <p> Assume that we take the test expression inside the <code>if</code>
+            statement, and store it inside a <code>boolean</code> variable.
+            Once we do that, the variable (<code>result</code>) will
+            contain <code>true</code> if the number is odd and <code>false</code>
+            if the number is even.
+        </p>
+        <p> Then, we can simply <b>return</b> that <code>boolean</code> variable,
+            instead of the literal values, <code>true</code> or <code>false</code>,
+            like this:<br>
+            <img src="images/functions13.gif" class="inline" alt="Returning a boolean variable.">
+        </p>
+        <p> Of course, we really don't <b>need</b> the variable <code>result</code>,
+            do we? Instead, we can just return the Boolean expression
+            result like this:<br>
+            <img src="images/functions14.gif" class="inline" alt="Returning a boolean variable.">
+            This is a fairly standard way to write a predicate function.
+        </p>
+    <h2>The Conditional Operator</h2>
+        <p><b><span class='cap2'>O</span>ne problem with using</b>
+            <code>if</code>&mdash;<code>else</code> is that you <b><u>can't</u></b> use an
+            <code>if</code>&mdash;<code>else</code> in a <b><u>formula</u></b> or
+            <b><u>expression</u></b>;
+            <code>if</code>&mdash;<code>else</code> is a <b>statement;</b> it does
+            not produce a value. That means, you must create an additional
+            variable, like <code>bonusPcnt</code> in the earlier example.
+        </p>
+        <p> Java's, <b>conditional operator</b> provides a way to use an
+            <code>if</code>-<code>else</code> condition inside an expression.
+            The conditional operator is sometime called the <b>ternary</b>,
+            or <b>teriary</b> operator, because it is the only operator
+            to require three operands. It's also sometimes known as the
+            <b>selection operator</b>, since it selects from two values:<br>
+            <img src="images/conditional-operator.png" class='inlineCenter' style='margin-bottom:-1em;' alt="The syntax of the conditional operator">
+            The operands of the conditional operator are:
+        </p>
+        <ol>
+            <li class='d'><b>The condition or test expression</b>: This must be
+                some expression that evaluates to a <code>boolean</code>
+                value.
+            </li>
+            <li class='d'><b>The true result</b>: If the condition portion is
+                <b><code>true</code></b>, then the <b><i>whole expression</i></b>
+                takes on the value listed in this clause. This value
+                can be of any type.
+            </li>
+            <li class='d'><b>The false result</b>: If the condition portion is
+                <b><code>false</code></b>, then the <i><b>whole expression</b></i>
+                takes on the value listed here. This value can also
+                be of any type, but should match the type of
+                the <b><code>true</code></b> result.
+            </li>
+        </ol>
+        <p> The condition is separated from the results portion by a
+            question mark ( <code>?</code> ). The results are separated from each
+            other by a colon ( <code>:</code> ).
+        </p>
+        <p> Using the conditional operator, we could calculate
+            <code>bonusAmt</code>, used in the example from the end of
+            <i>Section 6.3&mdash;Introducing Selection</i>, like
+            this:<br>
+            <img src='images/conditional-operator.gif' class='inlineCenter' alt='A conditional operator example.'>
+            This example has been formatted so that each operand used
+            by the conditional operator appears on a separate line, but
+            that's not required.
+        </p>
+        <p> Here's the <b>WageCalculator</b> example once again,
+            this time using the conditional operator to calculate
+            the value for <code>grossPay</code>:
+            <img src="images/if04.gif" class="inline" alt="The conditional operator.">
+            You'll have to decide whether you find this clearer or
+            not. I think that I prefer the <code>if-else</code> instead.
+        </p>
+        <p> You can also <b><i>nest</i></b> another conditional expression
+            (using the conditional operator) inside the true or false
+            portions of a first conditional expression. This quickly becomes
+            unreadable, however, and, despite what you might think, may
+            even execute more slowly. You should attempt to write source
+            code that is clear and to-the-point, not code that uses the
+            fewest possible lines.
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Predicate Functions Summary
+        </p>
+        <ul>
+            <li><b>Predicate</b> functions are functions that return a
+                <code><i>boolean</i></code> or <code>true</code>/<code>false</code>
+                value. You can call predicate functions to supply the
+                condition portion of an <code>if</code> statement, or use
+                them to initialize a <code>boolean</code> variable.
+            </li>
+            <li> When you write a function, remember that <b>all execution paths
+                must return a value</b>. That means if you <code>return true</code>
+                or <code>return false</code> inside an <code>if</code> statement,
+                then you <b>must be sure</b> to return somethind when the
+                condition is <b>not</b> true.
+            </li>
+            <li> The <b>conditional operator</b> (sometimes called the
+                <i>selection operator</i>) allows you to create an
+                <b>expression</b> that employs <code>if-else</code> logic.
+                The conditional operator has three operands: the condition
+                to test, the value to use if the condition is <code>true</code> and
+                the value to use if the condition is <code>false</code>.
+                The two conditions are separated with a colon, and the
+                condition is followed by a question mark.
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

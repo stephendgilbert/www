@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>5.3&mdash;Writing Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner06">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 5.3</p>
+        <p id='lessonTitle'>Writing Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/writing.png' class='right' alt='Calvin complaining about writing.'>
+            <b><span class='cap'>W</span>hat do you do when you want to
+                calculate a value</b>, and Java just doesn't have the
+                function that you need? Well, you <b>write your own</b>
+                of course. That's the skill you'll now.
+        </p>
+        <p> As you probably remember from earlier, that many methods produce,
+            or <b>return</b>, a value instead of, or in addition to,
+            performing an action. For instance, the all of the
+            <code>Math</code> methods <b>return</b> information to
+            your program, rather than doing something <b>to</b> your
+            program, like the <code>println()</code> method does.
+        </p>
+        <p> We informally or generically can call these kinds of
+            "value-producing" methods <b>functions</b>,
+            and we call the "perform an action" methods <b>procedures</b>.
+            The most important difference between these two kinds of
+            methods is:
+        </p>
+        <p class="pullquote">
+            A procedure represents a series of statements<br>
+            A function represents a value
+        </p>
+    <h2>Defining Functions</h2>
+        <p> You've already learned how to <b>use</b> or <b>call</b> such
+            value-producing methods, but how do you define them? Fortunately,
+            it's not difficult. Functions vary in only two
+            particulars from their action-oriented procedural cousins:
+        </p>
+        <ul>
+            <li>functions have a <b>return type</b> other than
+                <code>void</code></li>
+            <li>functions must terminate by using a <b>return
+                expression</b></li>
+        </ul>
+        <p>The basic structure for defining a function looks like this:<br>
+            <img src='images/funcdef.png' class='inlineCenter' alt='Function definition.'>
+            Notice that the basic definition is almost identical to the
+            procedure definitions you wrote previously, except
+            for two things:
+        </p>
+        <ol>
+            <li class='d'>Instead of using the keyword <code>void</code> as the return type,
+                functions <b>always</b> have a specific type listed as the
+                return type. This can be <code>int</code>, <code>double</code>,
+                <code>boolean</code>, <code>String</code>, or, really, any
+                type at all, as long as it is not <code>void</code>.
+            </li>
+            <li class='d'>The second difference is the <b>return expression</b>.
+                Every function <b>must end</b> with a <code>return</code> statement
+                that includes an expression of the same type as the return type
+                specified in the heading. If the function returns a <code>double</code>,
+                then you could end it with <code>return 2.0;</code>. If a function
+                returned an <code>int</code>, though, the value following the
+                return expression would have to be an <code>int</code> expression.
+        </ol>
+        <p><b>Remember:</b> the return type specified in the function header,
+                and the return expression that ends the function, both <b>must</b>
+                be the same type of values.
+        </p>
+        <div class='alert'>
+            <p> The <code>static</code> modifier in the procedure or
+                function heading is <b>only</b> needed if you want to
+                call your method from the <code>main()</code> function.
+            </p>
+        </div>
+    <h3>The monthlyPayment() Function</h3>
+        <p> To help you understand how the <code>return</code> statement works,
+            let's rewrite our
+            example from the last section as a <b>function</b> named
+            <code>monthlyPayment()</code>.
+        </p>
+        <p> To create the function, just follow these two steps:</p>
+        <ol>
+            <li class="d">
+                <b>Write the Heading:</b>
+                You first have to decide what <b>kind</b> of
+                value the method will return, and what kind of parameters
+                it will need. Like the <code>printLoanData()</code> procedure,
+                the <code>monthlyPayment()</code> function will need three
+                formal parameters. Unlike the procedure, though, the
+                function will return a <code>double</code>, instead of
+                using the word <code>void</code>. Here's the difference
+                in the two headers:<br>
+                <img src="images/functions01.png" class="inlineCenter" alt="Writing the function header.">
+            </li>
+            <li class="d">
+                <b>Return the Value: </b>
+                Inside the method, perform any calculations that are needed to
+                determine "the answer", and then use a <code>return</code>
+                expression to end the method. For <code>monthlyPayment()</code>, the code
+                is <b>exactly</b> like <code>printLoanData()</code>, <b>except</b>
+                that instead of <i>printing</i> the value, it is <b>returned</b>
+                instead:<br>
+                <img src="images/functions02.png" class="inlineCenter" alt="The function body.">
+            </li>
+        </ol>
+    <h4>Alternative Return Syntax</h4>
+        <p> Since we make no further use of the variable <code>payment</code> returned
+            from the <code>monthlyPayment()</code> function, it's common to
+            simply make the calculation part of the <b>return expression</b> and
+            shorted the method like this:<br>
+            <img src="images/functions03.gif" class="inlineCenter" alt="Returning an expression.">
+        </p>
+    <h4>Return Caveats</h4>
+        <p> There are two things you have to watch out for when using the
+            <code>return</code> statement. (These examples are shown in
+            the Eclipse IDE. In DrJava, you'll see these errors when you compile.)
+        </p>
+        <ul>
+            <li> First, the expression that you return, <b>must</b> be the same type
+                (or convertible to that type) as the return type listed in the function
+                header. This, for instance, would be an error:<br>
+                <img src="images/functions04.gif" class="inlineCenter" alt="Returning the wrong type.">
+                because the method header <b>says</b> that it returns a <code>double</code>,
+                but the <b>actual</b> value returned is a <code>String</code>.
+            </li>
+            <li> Second, a <code>return</code> statement is a special <b>flow of control</b>
+                that immediately <b>ends</b> the function. That means you <b>can't</b>
+                have any other statements <b>after</b> a <code>return</code> statement.
+                This, for instance produces an error:<br>
+                <img src="images/functions05b.gif" class="inlineCenter" alt="Unreachable code.">
+                because the <code>println()</code> statements can never be reached;
+                the function <b>has already returned</b>.
+            </li>
+        </ul>
+        <div class='info'>
+        <p>Actually, when we learn about the <code>if</code> statement,
+            you'll see that a function <b>can</b> have several
+            <code>return</code> statements, as long as each and every path through
+            the code leads to exactly one <code>return</code>. Even then, your
+            code will be clearer if you have only <b>one</b> <code>return</code>
+            statement.
+        </p>
+        </div>
+    <h3>Calling the Function</h3>
+        <p>To <b>call</b> the <code>monthlyPayment()</code> function, we have
+            four options:<br>
+            <img src="images/functions07b.gif" class="inlineCenter" alt="Calling a function.">
+        </p>
+        <ol>
+            <li class="d">You can pass <b>variables</b> to the function and then
+                <i>immediately</i> pass the returned value, produced by calling the
+                function, to <i>another</i> procedure or function. In the example
+                shown here, I'm passing the returned value to the
+                <code>printf()</code> procedure.
+            </li>
+            <li class="d">You can pass <b>literals</b> as the actual parameters when you call
+                the function. The second example is almost identical to the first,
+                except that literals are passed instead of variables.
+            </li>
+            <li class="d">You can call the function and <b>save the value</b> you get back in a
+                variable for later use, by using the assignment statement.
+            </li>
+            <li class="d">Finally, you can call the function just like you would call a
+                procedure, that is, as a <b>statement</b>. While this is <b>not</b>
+                a syntax error, it is <b class='ry'>always a logic error</b>, since the code
+                has <b>no effect</b> in your program.
+            </li>
+        </ol>
+    <h3>Documenting Procedures and Functions</h3>
+        <p> Whenever you write a procedure or function, you should provide
+            <b>documentation</b>, so that those who <i>call</i> your method know what
+            each formal parameter stands for, and what the returned value of
+            any function represents.
+        </p>
+        <p> To do this, you'll use Java <b>documentation comments</b> that begin
+            with the sequence <code>/**</code> (slash-star-star) and end with a
+            <code>*/</code> (star-slash) just like a plain multi-line comment.
+            In between, you'll use special <b>documentation tags</b> that can
+            be interpreted by the Javadoc utility.
+        </p>
+        <p> You can look up the syntax for these
+            <a href="http://java.sun.com/javase/6/docs/technotes/tools/windows/javadoc.html#javadoctags" target="_blank"><b>special JavaDoc tags</b></a> online.
+            In DrJava, start a Javadoc function or procedure comment
+            by typing the starting code(<code>/**</code>), putting in a couple of blank lines
+            and then hitting the ending code (<code>*/</code>). You can then
+            go back and add new lines and DrJava will
+            automatically put a <code>*</code> at the beginning of each line.
+        </p>
+        <div class='drjava-note'>
+        <p> Make sure, though, when you end the comment block, you backspace
+            so there isn't a space between the <code>*</code> and the <code>/</code>.
+            If the code following your comment is colored green, that means your
+            closing comment symbol isn't typed correctly.<br>
+            <img src='images/comment-error.gif' class='inline' alt='Unclosed comment.'>
+        </p>
+        </div>
+        <p> To finish the documentation comment for a method, just:
+        </p>
+        <ol>
+            <li class='d'>Provide a single sentence that describes what the function does. After this
+                sentence (which must end in a period) you have supply more information
+                on how the function or procedure would be used if you like.
+            </li>
+            <li class='d'>For every formal parameter, add an <code>@param</code> tag which
+                describes what the parameter represents.
+            </li>
+            <li class='d'>Finally, if you are writing a function, add a <b>@return</b>
+                tag describing what the value returned by the function
+                represents.
+            </li>
+        </ol>
+        <img src="images/javadoc02b.gif" class="inlineCenter" alt="The completed documentation.">
+    <h2>A String Function Interlude</h2>
+        <p> <img src='images/interlude.png' class='right' style='margin-top:-4em;' alt='The painting Interlude.'>
+            Before you start working on your own user-defined functions,
+            I want to revisit the <code>String</code> class, and the
+            functions found there. In the last chapter, you learned how
+            to use the <code>length()</code> function to find out how
+            many characters were in a <code>String</code>, and how to
+            use some <b>builder</b> methods, like
+            <code>toUpperCase()</code> and <code>replace()</code>.
+        </p>
+        <p> Now, I want you to learn how to use a <b>searching</b>
+            function, named <code>indexOf()</code> and two more
+            builder methods: <code>charAt()</code> which
+            retrieves individual characters from a <code>String</code>
+            based on their position, and <code>substring()</code>, which makes
+            a new, smaller <code>String</code> out of an existing
+            <code>String</code>.
+        </p>
+        <div class='info'>
+        <p> I like to think of <code>substring()</code>
+            as an <i>enhanced</i> version of <code>charAt()</code>, since
+            it allows me to retrieve a portion of an existing <code>String</code>,
+            and use that to create a new variable.
+        </p>
+        </div>
+    <h3>Retrieving Characters</h3>
+        <p> <img src="images/zz07.gif" class="right" alt="The String Conch in memory.">
+            If you were to "peer inside" the <code>String</code> object
+            referred to by the variable <code>s1</code>, you'd see that
+            the individual characters were stored right next to each
+            other in memory. Because of this, Java lets you access
+            the individual characters using an <b>index</b> value.
+        </p>
+
+        <p> Most other languages use a similar scheme, but some languages
+            start their counting at <b>1</b>, (VB and Pascal), and others
+            start their counting at <b>0</b>, (Java and C++).
+            As you can see from the picture shown here, the first
+            character in a Java <code>String</code>, like the capital
+            "C" in "Conch", is associated with the index position 0.
+        </p>
+        <p> To retrieve the individual characters that make up a
+            <code>String</code>, use the <code>charAt(int position)</code>
+            method. Pass your variable the index position of the character
+            you want, and the <code>charAt()</code> method return the
+            character itself.
+        </p>
+        <div class='info'>
+        <p>There are two things you should note. First,
+            the value returned from <code>charAt()</code> is a <code>char</code>,
+            not a 1-character <code>String</code>. If you want to use the
+            returned value with other strings, you'll have to use concatenation
+            to convert it back into a <code>String</code> object.
+            <br><br>
+            Second, the <b>last</b> character in any Java <code>String</code> will
+            always be at position <code>length() - 1</code>. It is up to you to
+            make sure you don't try to use an index value larger than that.
+        </p>
+        </div>
+        <p> Here are a couple examples. Assume that <code>s1</code> and
+            <code>s2</code> from the previous example are still in scope:<br>
+
+            <img src='images/string04.gif' class='inlineCenter' alt='Using charAt().'>
+        </p>
+        <div class="box" style="padding-top: 0pt;">
+        <ol>
+            <li class='d'>Line 1 stores the character 'C' in the variable <code>firstChar</code>.</li>
+            <li class='d'>Line 2 uses <code>charAt()</code> to retrieve the last character in "fritters",
+                and then stores it in the <code>char</code> variable <code>lastChar</code>. Note
+                that <code>length()-1</code> is used as the index value passed to <code>charAt()</code>.
+            </li>
+
+            <li class='d'>Line 3 causes a <b>runtime error</b> since the empty <code>String</code> does not
+                have a character at position 0.
+            </li>
+            <li class='d'>Line 4 stores the character 'W' in the variable <code>thatChar</code>. Note that
+                you can <b>call methods using <code>String</code> literals as the receiver</b>.
+                In this case, the <code>String</code> literal <code>"What"</code> is passed
+                as the invisible, implicit parameter to the <code>charAt()</code> method.
+            </li>
+
+        </ol>
+        </div>
+    <h3>Searching Methods: indexOf, lastIndexOf</h3>
+        <p> The <code>charAt()</code> method is useful when you <b>know
+            the position</b> of a particular value. Often, though, with
+            user-supplied data, you'll need to search through the
+            string to <b>find the position</b> of the value you want.
+        </p>
+        <p> The <code>String</code> class has several methods that will
+            let you <b>search</b> for the positions of specific values.
+            There are several versions of each of these
+            methods, which search the <code>String</code> on the left,
+            (the one calling the method), for the value on the right,
+            (the parameter passed to the method). The parameter can
+            be either a character <b>or</b> a <code>String</code>.
+        </p>
+        <p> The <code>indexOf()</code> methods start searching at the
+            <b>beginning</b> of the <code>String</code>, and the
+            <code>lastIndexOf()</code> methods start searching at the
+            <b>end </b>
+            of the <code>String</code>. Both methods return the <b>index
+            position</b>, measured from the beginning of the string,
+            where the searched-for value was found. Both methods also
+            return -1 if the character or <code>String</code> searched for is
+            not found.
+        </p>
+        <p> Here are some examples, along with the analysis:<br>
+            <img src='images/string01.gif' class='inlineCenter' alt='Searching Strings.'>
+        </p>
+        <div class="box" style="padding-top: 0pt;">
+
+        <ol>
+            <li class='d'>Stores the address of the literal "Abadabadoo" in the variable
+                <code>s</code>.</li>
+            <li class='d'>Uses <code>indexOf()</code> to retrieve the index position of the
+                word <code>"daba"</code> contained inside <code>s</code>. Since the
+                first character is at position 0, you can see that the phrase
+                starts at position <b>3</b> which is displayed in the DrJava
+                console.
+            </li>
+
+            <li class='d'>Uses the <code>indexOf()</code> method, only this time the
+                method searches for a <code>char</code> parameter, <b>not</b> a
+                <code>String</code>. "Abadabadoo" contains the character 'o' twice,
+                in positions 8 and 9. The <code>indexOf()</code> method returns the
+                position of the <i>first</i> match it finds, searching from the
+                front of the <code>String</code>.
+                <div class='info'>
+
+                <p>
+                This is actually a <b>different version</b> of the <code>indexOf()</code> method
+                than that used in Line 2, since each method has to specify what kind of parameters
+                it requires. That means a method cannot be written so that a user can provide
+                either a <code>String</code> <b>or</b> a <code>char</code>. To get the same effect,
+                programmers can write <i>different versions</i> of the same method, using the
+                same name. Different versions of a method, using the same name but requiring
+                different parameters, are known as <i>overloaded</i> methods.
+                </p>
+
+                </div>
+            </li>
+            <li class='d'>Searches for the character 'o', but this time a
+                version of the <code>lastIndexOf()</code> method is used. As its name
+                suggests, this method starts searching from the end of the <code>String</code>
+                until it finds a match. Since it finds the character 'o' immediately at
+                the end of the string, it returns its position, <b>9</b>, which is stored
+                in the variable <code>p3</code>.
+                <div class='alert'>
+
+                <p>Note that even though the searching starts at the back or end of the
+                    <code>String</code>, the value returned when the item is located is
+                    its position <b>from the beginning</b> of the <code>String</code>.
+                </p>
+                </div>
+            </li>
+            <li class='d'>Searches the <code>Abadabadoo</code> for the word "doom".
+                Since doom occurs nowhere in the string, the value returned
+                from the function is <b>-1</b>.
+            </li>
+
+        </ol>
+        </div>
+    <h3>substring(start), substring(start, end)</h3>
+        <p> The last method we're going to look at is one that you'll use
+            often in your assignments in the upcoming weeks, and one
+            you'll find useful in a variety of situations (including exams).
+            The <code>substring()</code> method, which has two overloaded versions,
+            <b>returns a portion</b> of the <code>String</code> used to call the
+            method.
+            The returned <code>String</code> starts with the element
+            passed as <b>start</b>, with the first element being 0.
+        </p>
+
+        <p> The second version returns the portion of the <code>String</code>
+            starting (and including) position <b>start</b>, up to, <b>and
+            excluding</b>, position <b>end</b>.
+        </p>
+        <p> Here's an example:<br>
+
+            <img src='images/string08.gif' class='inlineCenter' alt='Using the substring() method.'>
+        </p>
+        <div class="box" style="padding-top: 0pt;">
+         <ol>
+            <li class='d'><img src="images/zz08.gif" class="right" alt="Hello World! in memory.">
+                The snippet creates the <code>String</code> variable <code>s</code> and
+                assigns it to the literal "Hello World!".
+            </li>
+
+            <li class='d'>Section 2 uses the <code>substring()</code> method to extract the
+                portion of <code>1</code> <i>starting with</i> the character at
+                position 7, and continuing up to the end of the original <code>String</code>
+                <code>s</code>.
+            </li>
+            <li class='d'>Section 3 uses the second, overloaded version of <code>substring()</code> to
+                extract the portion of <code>s</code> starting at position 7,
+                and going up to, <b>but not including</b>, the character at position 12.
+            </li>
+
+        </ol>
+        </div>
+        <p> The fact that you need to supply two index values (instead of an
+            initial index and then a length), is a little
+            awkward. One nice thing, though, is that you can easily use the
+            two index values to compute the length of the substring, by subtracting
+            the starting index from the ending index. If you want to extract
+            a substring of a particular size, just do it like this:
+        </p>
+        <p class="code" style='font-size:larger;'>
+            String s4 = s1.substring(7, 7+5); <span class="cmt">// World</span><br>
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Writing Functions Summary
+        </p>
+        <ul>
+            <li>When you need to repeatedly calculate a value in your
+                program, you should write a <b>user-defined function</b>.
+            </li>
+            <li> A <b>procedure</b> is a named series of statements or
+                actions, while a <b>function</b> is a named set of calculations
+                that can be used as a value.
+            </li>
+            <li>When defining a function, you must specify it's <b>return type</b>,
+                which can be <i>any</i> type other than <code>void</code>.
+            </li>
+            <li>Every function <b>must contain</b> a <code>return</code> statement
+                which returns the "answer" of the calculation to the caller. The
+                returned value must be compatible with the type of the function.
+            </li>
+            <li>Most functions have one <code>return</code> statement, and it
+                is typically the final statement in a function. Because it is a "flow
+                of control" statement that terminates the function at that point,
+                you cannot have any other statements following a <code>return</code>
+                statement; such statements represent <b>unreachable code</b> that
+                cannot be executed.
+            </li>
+            <li>When calling a function, you may <b>use the returned value</b> as part of
+                an expression, or pass it immediately to another function. You may
+                also <b>save</b> the returned value in a variable to use later in
+                your program. Java does not prevent you from calling a function as
+                if it were a statement, but <b>doing so is almost always a logic error</b>.
+            </li>
+            <li> Every procedure or function should be <b>preceded</b> by a Javadoc
+                <b>documentation comment</b>. Doc comments start with <code>/**</code>
+                and end with <code>*/</code>. The first line should be a complete
+                sentence, ending in a period, that describes what the code does. Every
+                parameter should have an <code>@param</code> tag, and every function
+                should include the <code>@return</code> tag.
+            </li>
+            <li>To <b>retrieve a character</b> from a <code>String</code>, use the
+                <code>charAt()</code> function, along with the position of the character
+                you wish to retrieve. The position of the first character is 0, and the
+                position of the last is <code>str.length() - 1</code>.
+            </li>
+            <li>To <b>locate the position</b> of a character or a substring, use the
+                searching functions <code>indexOf()</code> and <code>lastIndexOf()</code>.
+                Both functions return the starting position of the character or substring,
+                or <code>-1</code> if it is not contained inside the <code>String</code>
+                you are searching.
+            </li>
+            <li>To <b>retrieve a substring</b> from an existing <code>String</code>, use
+                one version of the <code>substring()</code> method. You must supply at least
+                one <code>int</code> parameter, which is <b>the position to use</b> as
+                the beginning of the new <code>String</code>. If you supply a second
+                parameter, it represents <b>the excluded index</b> or ending boundary
+                of the substring. If you do not supply a second parameter, everything
+                from the start position to the end of the <code>String</code> is used.
+            </li>
+            <li> When writing your own <code>String</code> functions, <b>always start
+                by writing a skeleton</b>, so that your function will compile and can
+                be tested. The skeleton includes the return type, each of the parameters,
+                a body and the <code>return</code> statement.
+            </li>
+        </ul>
+    </div>
+
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

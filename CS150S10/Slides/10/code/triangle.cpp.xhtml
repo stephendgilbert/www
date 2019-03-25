@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>triangle.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span>
+<span class="line">  3 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="com">/**</span>
+<span class="line">  6 </span><span class="com">   A class that describes triangle shapes like this:</span>
+<span class="line">  7 </span><span class="com">   []</span>
+<span class="line">  8 </span><span class="com">   [][]</span>
+<span class="line">  9 </span><span class="com">   [][][]</span>
+<span class="line"> 10 </span><span class="com">   . . .</span>
+<span class="line"> 11 </span><span class="com">*/</span>
+<span class="line"> 12 </span><span class="kwc">class</span> Triangle
+<span class="line"> 13 </span><span class="sym">{</span>
+<span class="line"> 14 </span><span class="kwc">public</span><span class="sym">:</span>
+<span class="line"> 15 </span>   <span class="kwd">Triangle</span><span class="sym">(</span><span class="kwb">int</span> w<span class="sym">);</span>
+<span class="line"> 16 </span>   <span class="kwb">int</span> <span class="kwd">get_area</span><span class="sym">()</span> <span class="kwb">const</span><span class="sym">;</span>
+<span class="line"> 17 </span><span class="kwc">private</span><span class="sym">:</span>
+<span class="line"> 18 </span>   <span class="kwb">int</span> width<span class="sym">;</span>
+<span class="line"> 19 </span><span class="sym">};</span>
+<span class="line"> 20 </span>
+<span class="line"> 21 </span><span class="com">/**</span>
+<span class="line"> 22 </span><span class="com">   Constructs a triangle with a given width.</span>
+<span class="line"> 23 </span><span class="com">   &#64;param w the width of the triangle base</span>
+<span class="line"> 24 </span><span class="com">*/</span>
+<span class="line"> 25 </span>Triangle<span class="sym">::</span><span class="kwd">Triangle</span><span class="sym">(</span><span class="kwb">int</span> w<span class="sym">)</span>
+<span class="line"> 26 </span><span class="sym">{</span>
+<span class="line"> 27 </span>   width <span class="sym">=</span> w<span class="sym">;</span>
+<span class="line"> 28 </span><span class="sym">}</span>
+<span class="line"> 29 </span>
+<span class="line"> 30 </span><span class="com">/**</span>
+<span class="line"> 31 </span><span class="com">   Computes the area of the triangle shape.</span>
+<span class="line"> 32 </span><span class="com">   &#64;return the area</span>
+<span class="line"> 33 </span><span class="com">*/</span>
+<span class="line"> 34 </span><span class="kwb">int</span> Triangle<span class="sym">::</span><span class="kwd">get_area</span><span class="sym">()</span> <span class="kwb">const</span>
+<span class="line"> 35 </span><span class="sym">{</span>
+<span class="line"> 36 </span>   <span class="kwa">if</span> <span class="sym">(</span>width <span class="sym">&lt;=</span> <span class="num">0</span><span class="sym">)</span> <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 37 </span>   <span class="kwa">if</span> <span class="sym">(</span>width <span class="sym">==</span> <span class="num">1</span><span class="sym">)</span> <span class="kwa">return</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 38 </span>   Triangle <span class="kwd">smaller_triangle</span><span class="sym">(</span>width <span class="sym">-</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 39 </span>   <span class="kwb">int</span> smaller_area <span class="sym">=</span> smaller_triangle<span class="sym">.</span><span class="kwd">get_area</span><span class="sym">();</span>
+<span class="line"> 40 </span>   <span class="kwa">return</span> smaller_area <span class="sym">+</span> width<span class="sym">;</span>
+<span class="line"> 41 </span><span class="sym">}</span>
+<span class="line"> 42 </span>
+<span class="line"> 43 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 44 </span><span class="sym">{</span>
+<span class="line"> 45 </span>   Triangle <span class="kwd">t</span><span class="sym">(</span><span class="num">4</span><span class="sym">);</span>
+<span class="line"> 46 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Area: &quot;</span> <span class="sym">&lt;&lt;</span> t<span class="sym">.</span><span class="kwd">get_area</span><span class="sym">() &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 47 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 48 </span><span class="sym">}</span>
+<span class="line"> 49 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

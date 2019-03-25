@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>11.3&mdash;2D Arrays</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/d.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.3</p>
+        <p id='lessonTitle'>2D Arrays</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/f10.gif" class="right" alt="The Tic Tac Toe Game.">
+            <b><span class="cap">H</span>ow about some <i>more</i>
+            arrays!</b> Now that you know how to create arrays containing
+            objects, let's learn how to create
+            and process <b>multi-dimensional</b> arrays, like
+            those you'd use in the game of TicTacToe, or those
+            that represent the pixels in a photographic image.
+        </p>
+        <p>When you declare an array,
+            the elements can be of <b><u>any</u></b> type. You can create an array of
+            <code>GImage</code> references like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>GImage[] pictures = new GImage[5];</p>
+        <p>and, you can create an array of <code>int</code> variables like this:</p>
+        <p class="code" style='font-size:1.25em;'>int[] pieces = new int[10];</p>
+        <p>The variables <code>pictures</code> and <code>pieces</code> are
+            both <b>array variables</b> that refer to a collection of
+            <code>GImage</code> references or to a collection of
+            <code>int</code> values.
+        </p>
+        <p><img src="images/f02.gif" class="right" alt="An Excel worksheet.">
+            Java also allows you to create array variables that refer, not
+            to <code>Button</code> objects or <code>int</code> values, but
+            to <b>other arrays</b>. These are called <b>multidimensional
+            arrays</b>. Since we'll only be working with two dimensions in
+            this class, I'll refer to these as <b>2D arrays</b>, although
+            you <i>can</i> have as many dimensions as you like.
+        </p>
+        <p> The easiest way to think of a 2D array is to think of rows and
+            columns. A grid or a spreadsheet is a useful mental model. In
+            reality, though, a 2D array is composed of <b>arrays of
+            arrays</b>. You'll see what that <b>really</b> looks
+            like shortly.
+        </p>
+        <p> To create a 2D array, just extend the syntax you've already
+            learned for 1D arrays. For instance, in the example shown
+            here:
+        </p>
+        <p class="code" style='font-size:1.25em;'>int[] d1 = new int[5];</p>
+        <p> the variable <code>d1</code> is an <code>int[]</code>
+            (<code>int</code> array) that refers to 5 <code>int</code>
+            values.
+        </p>
+        <p> Since that's true, perhaps you can figure out what
+            the code shown here means:
+        </p>
+        <p class="code" style='font-size:1.25em;'>int[][] grid;</p>
+        <p> The variable <code>grid</code> <b>is</b> an array variable,
+            just the like the variable <code>d1</code> in the earlier
+            example. But, each of the elements contained in the
+            <code>grid</code> array is <b>not</b> an <code>int</code>, but an
+            <code>int[]</code>&#8212; that is, an <code>int</code> array variable.
+        </p>
+    <h3>Allocating Memory</h3>
+        <p> Of course, just like with 1D arrays, an <b>array variable</b> doesn't
+            actually "point to" anything, until you allocate some memory
+            by using <code>new</code> and an array constructor. The
+            syntax for doing this with a 2D array is very similar to that
+            used for a single-dimension array:
+        </p>
+        <p class="code" style='font-size:1.25em;'>int[][] grid = new int[2][4];</p>
+        <p> This piece of code creates a variable (<code>grid</code>), that
+            refers to a two-element array. Each element in that two-element
+            array (<code>grid[0]</code> and <code>grid[1]</code>) is
+            an <code>int[]</code>, that is, an <b><code>int</code> array
+            variable</b>, as shown here:<br>
+            <img src="images/f03.gif" alt="The memory layout of a 2D array" class="inlineCenter">
+            In this case, both <code>grid[0]</code> and <code>grid[1]</code>
+            refer to separate four-element <code>int</code> arrays.
+            The illustration should help you to visualize
+            the relationships between the various pieces.
+        </p>
+    <h3>Using 2-D Elements</h3>
+        <p> Rather than thinking of 2-D arrays as shown in the previous
+            illustration, (even though that is how the arrays are
+            <i>actually</i> implemented in memory), it is usually
+            easier to think of them as an actual grid composed of rows and
+            columns, labeled starting at 0, like this:
+            <img src="images/x02.gif" alt="The logical layout of an array in memory" class="inlineCenter">
+            Thinking of 2-D arrays in this way makes it easy to
+            remember where the individual elements are located.
+        </p>
+        <p> To access an individual element, instead of providing <b>one</b>
+            subscript enclosed in brackets, you supply <b>two subscripts</b>, each
+            enclosed in its own set of brackets. (You cannot put both
+            subscripts in the same set of brackets, as you can do in Pascal).
+        </p>
+        <ul>
+            <li>The first subscript represents the <b>row</b> in the array.</li>
+            <li>The second subscript represents the <b>column</b> of the
+            element you want.
+            </li>
+        </ul>
+        <p> Remember that both subscripts are <b>zero based</b>.
+        </p>
+        <div class='info'>
+        <p><b>C/C++ Note</b> : In Java, subscripts <b>do
+            not</b> "wrap around" as they do in some other languages such
+            as C. You cannot access <code>scores[1][0]</code> by using the
+            notation <code>scores[0][3]</code>. That's because, in reality,
+            you are accessing an individual array variable, as shown in the
+            earlier illustration.
+        </p>
+        </div>
+    <h3>Initializing 2D Arrays</h3>
+        <p> You can <b>initialize</b> 2D arrays by using loops and storing values
+            in each element, just as you can with a  one-dimensional array.
+            Of course, when accessing 2D arrays, you'll usually use a
+            <b>pair</b> of nested <code>for</code> loops with indexes for
+            the row and column.
+        </p>
+        <p> Just as with 1D arrays, you can create and initialize a 2D array
+            in one statement by providing a list of initial values in an
+            <b>initializer list</b>. When you do this, you supply a separate
+            initializer list for each of the sub-arrays. Each of these
+            sub-array initializers is enclosed in its own set of braces, and
+            separated from the others by commas.
+            <img src="images/f08b.gif" class="right" alt="Creating a 2D array of keyCaps.">
+        </p>
+        <p>
+            Here's an example that creates a 4 x 3 array of <code>String</code>
+            that imitates the layout of a standard numeric keypad. You'll find this
+            example in <b>NumPad.java</b>, which is in this chapter's
+            code folder.
+        </p>
+        <p> When you use automatic initialization like this, you must
+            remember to match the number of brackets and initializers.
+            If you have only a single bracket after <code>String[]</code>
+            your program won't compile.
+        </p>
+    <h3>Processing 2D Arrays</h3>
+        <p> As I previously mentioned, you'll normally process a 2D array by
+            using a pair of <b>nested</b> <code>for</code> loops with
+            indices for the rows and columns. This is pretty straightforward.
+        </p>
+        <p> Here's some code that processes the array <code>keyCaps</code>,
+            from <b>NumPad.java</b>, to create a set of
+            AWT <code>Button</code> objects:<br>
+            <img src='images/f08c.gif' class='inlineCenter' alt='Processing the array of key-caps.'>
+            Of course, if you want to avoid hard-coding the sizes of the
+            rows and columns, Java allows you to make a perfectly generic
+            traversal loop by using each sub-array's <code>length</code>
+            field like this (assuming an array named a):
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            for (int r = 0; r &lt; a.length; r++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int c = 0; c &lt; <span class="red">a[r].length</span>; c++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Process a[r][c] here</span>
+        </p>
+        <p> Notice that each row in a 2D array can be treated as a
+            1D array in its own right. Thus, for the inner loop in this
+            example, (when processing the columns), we could test against
+            <code>a[r].length</code>, because each sub-array has its <b>own</b>
+            <code>length</code> field.
+        </p>
+        <p> The <b>NumPad</b> applet is available in this chapter's code folder.
+            <!-- You can also
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/NumPad.html","2D Arrays","width=500,height=550,scrollbars=yes");'>
+            <b>run the applet</b></a> by clicking the link
+            in this sentence. --> Or, you can just take my word for it, and
+            look at the nice picture shown here:
+            <img src="images/f09.gif" alt="Running the NumPad applet" class="inlineCenter">
+        </p>
+    <h3>Using the Enhanced for Loop</h3>
+        <p> If you want to process <b>every element</b> in a 2D array (named <code>twoD</code>
+            in my example below), you can use the <b>enhanced
+            <code>for</code> loop</b> like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            for (int[] oneD : twoD) <span class='cmt'>// for each 1D array in 2D</span><br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int n : oneD) <span class="cmt">// for each int n in oneD</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.printf("%5d", n);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(); <span class="cmt">// new line after each row<br>
+            }
+        </p>
+    <h2>2D Arrays and Methods</h2>
+        <p> The way that Java 2D arrays are implemented in Java
+            makes it very easy to write methods which <b>take 2D arrays as
+            arguments</b> (or <i>parameters</i>).
+            You just have to remember to declare the parameter variable using <b>two
+            brackets</b> instead of one.
+        </p>
+        <p> Here's the header for a method that takes a 2D array of
+            <code>double</code> and returns the sum of all the numbers.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public double sum2D(<b class='ry'>double[][] ar</b>) { }
+        </p>
+        <p> Since each 2D array is actually a 1D array containing other 1D
+            array elements, you can pass those elements, which
+            represent the individual rows of the array, to a method that
+            processes 1D arrays, like <code>sum1D()</code> shown here:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public double sum1D(<b class='ry'>double[] ar</b>) { }
+        </p>
+    <h3>Parameter Passing Examples</h3>
+        <p> If you had a two-dimensional array of <code>doubles</code> named
+            <code>nums</code>, you could pass one
+            row of the array to the <code>sum1D()</code> method like this.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            double sum = sum1D(<b class='ry'>nums[0]</b>); <span class='cmt'>// Pass 1st row of nums to method</span>
+        </p>
+        <p> If you want to pass the <b>entire array</b>, you wouldn't use a subscript.
+            Here's how you'd pass <code>nums</code> to the <code>sum2D()</code> array:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            double sum = sum2D(<b class='ry'>nums</b>); <span class='cmt'>// Pass all rows of nums to method</span>
+        </p>
+        <p> To pass a single <code>int</code> value from the array to a method
+            that takes an <code>int</code> parameter, you'd use a pair
+            of subscripts, like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            someMethod(<b class='ry'>nums[0][1]</b>); <span class='cmt'>// Pass single element to method</span>
+        </p>
+        <p> Of course, since each one of these methods takes a different <b>kind</b> of
+            parameter, we could actually <b>use the same name</b> for all of them.
+            This, you recall, is known as method overloading.
+        </p>
+    <h3>Returning 2D Arrays</h3>
+        <p> Just as with 1D arrays, you can <b>return</b> 2D arrays
+            from your methods. If, for instance, you're certain that every
+            row in your 2D array has the same number of elements, you could
+            return a 2D array containing the sum of each row and column like
+            this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            <span class="red">//The sum2DAR() Method</span><br>
+            <br>
+            double[][] sum2DAR(double[][] ar)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double[][] ans;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ans[0] = new double[ar.length]; <span class="cmt">// rows</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ans[1] = new double[ar[0].length];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int r=0; r &lt; ar.length; r++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int c=0; c &lt; ar[r].length; c++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ans[0][r] += ar[r][c]; <span class="cmt">// Add each row total;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ans[1][c] += ar[r][c]; <span class="cmt">// Sum of each column</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ans;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// ans[0] contains sum of each row</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// ans[1] contains sum of each col</span><br>
+            }
+        </p>
+    <h4>Ragged Arrays</h4>
+        <p> The array returned from <code>sum2DAR()</code> is called a
+            <b>ragged array</b>, because the two 1D arrays
+            <code>ans[0]</code> and <code>ans[1]</code> normally will
+            have different lengths. If you pass a 2D array that has
+            20 columns and only 5 rows, then the returned array will
+            have 5 elements in the the first array <code>ans[0]</code>
+            and 20 elements in the second array <code>ans[1]</code>.
+        </p>
+        <p> To create a ragged array, you have to allocate space for
+            each row of the 2D array independently, as is done inside
+            <code>sum2DAR() </code>with this code:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            double[][] ans;<br>
+            ans[0] = new double[ar.length]; <br>
+            ans[1] = new double[ar[0].length];
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            2D Arrays Summary
+        </p>
+        <ul>
+            <li>A <b>two-dimensional (2D) array</b> is simply an
+                array where every element is also an array. However,
+                it is usually easier to think of it as a matrix or
+                grid, with rows and columns.
+            </li>
+            <li>You <b>define a 2D array variable</b> by supplying a pair of
+                brackets following the variable name: <code>int[][] grid;</code>
+            </li>
+            <li>You <b>instantiate a 2D array</b> by supplying values for both
+                the rows, followed by the columns, each in its own
+                brackets: <code>int[][] grid = new int[3][4];</code>
+            </li>
+            <li>The <b>number of rows</b> in a 2D array is represented by
+                the <code>length</code> field, just like a single-dimension
+                array. It's possible for each row to have a different number
+                of columns; to find the number of columns in a particular
+                row (<code>r</code>), use <code>grid[r].length</code>.
+            </li>
+            <li><b>Access individual elements</b> by supplying the row, then
+                the column, each in its own bracket:
+                <code>int first = grid[r][c];</code>
+            </li>
+            <li>Use <b>nested loops</b> to process all of the elements in
+                a 2D array.
+            </li>
+            <li>You can <b>pass a 2D array variable</b> to a method by
+                creating a formal parameter with two brackets:
+                <code>double average(double[][] entries)</code>.
+            </li>
+            <li>If you want to <b>pass a single row</b> of a 2D array
+                to a method, the method must have a 1D formal parameter,
+                and you use only one subscript when passing the
+                actual argument.
+            </li>
+            <li><b>Ragged arrays</b> are 2D arrays where each row can have
+                a different number of columns. <b>Rectangular arrays</b>
+                have the same number of columns for every row.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,795 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To understand the activity of programming </li>
+  <li> To learn about the architecture of computers </li>
+  <li> To learn about machine languages and higher-level programming 
+    languages </li>
+  <li> To become familiar with your compiler </li>
+  <li> To compile and run your first C++ program </li>
+  <li> To recognize syntax and logic errors </li>
+	<li> To understand the notion of an algorithm </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		 section( "1" )
+	//]]>
+	</script>
+	What Is a Computer? </h1>
+<ul>
+  <li> Good at <i>repetitive</i> tasks </li>
+	<li> Faster than humans; <em>not</em> smarter </li>
+	<li> Stores data </li>
+	<li> Interacts with devices </li>
+	<li> Runs programs to handle different tasks: 
+    <ul>
+      <li> Balance checkbooks </li>
+      <li> Process words, display documents </li>
+      <li> Play games </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> What Is a Computer? </h1>
+<ul>
+	<li> Executes a <em>huge</em> number of <i>primitive</i> operations </li>
+	<li> Gives the <em>illusion</em> of smooth interaction because it executes
+		these operations at <em>great speed</em> </li>
+	<li> <i>Flexible</i>: can handle a wide range of tasks </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	What is Programming? </h1>
+<ul>
+	<li> A <i>program</i> tells computer the sequence of steps needed to
+		fulfill a task </li>
+	<li> <i>Programming</i> &mdash; act of designing and implementing programs
+		</li>
+  <li> Most <i>users</i> are <strong>not</strong> programmers </li>
+  <li> Programming is an <em>essential skill</em> for a computer 
+    scientist </li>
+	<li> <em>Not</em> the only skill required to be a successful computer
+		scientist </li>
+	<li> Early experiences are mundane, will not rival sophisticated software
+		</li>
+  <li> Once certain skills are developed, even simple programs 
+    can be thrilling </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	The Anatomy of a Computer </h1>
+<h3> CPU </h3>
+<ul>
+	<li> Central Processing Unit </li>
+	<li> Performs program control, arithmetic, and data movement </li>
+	<li> <em>One operation at a time</em> </li>
+	<li> Locates and executes program instructions </li>
+	<li> Consists of a single, or small number of, chip(s) made of plastic, metal and mostly silicon </li>
+	<li> Composed of several million transistors </li>
+	<li> Enormously complicated wiring </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer </h1>
+<div class='center'>
+<script type='text/javascript'>
+	//<![CDATA[
+   image( "fig2.png" )
+//]]>
+	</script>
+<p> <span class='blue'>Figure 2</span> CPU Chip Detail </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer </h1>
+<h3> Memory </h3>
+<ul>
+	<li> RAM (Random Access Memory): read-write memory </li>
+	<li> ROM (Read Only Memory): contains certain programs that 
+		must always be present </li>
+	<li> Secondary storage (e.g., a hard drive) provides <em>persistent</em>
+		storage </li>
+</ul>
+
+<h3> Bus </h3>
+<ul>
+  <li> <i>Bus</i>: a set of electrical lines that connect 
+    the CPU, RAM, slots and other connectors </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer </h1>
+<h3> Motherboard </h3>
+  <p> The <i>motherboard</i> holds the CPU, memory, and bus, as 
+    well as card slots and other connectors </p>
+<div class='center'>
+<script type='text/javascript'>
+	//<![CDATA[
+   image( "fig4.png" )
+//]]>
+	</script>
+<p> <span class='blue'>Figure 4</span> A Motherboard </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer </h1>
+<h3> Peripherals </h3>
+<p> Allow the computer to interact with user and other computers: </p>
+<ul>
+	<li> Display </li>
+	<li> Printer </li>
+	<li> Mouse </li>
+	<li> Keyboard </li>
+	<li> Speakers </li>
+	<li> Network card </li>
+	<li> Modem </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer </h1>
+<h3> Networks </h3>
+<p> Allow a computer to talk to other devices: </p>
+<ul>
+	<li> Other computers </li>
+  <li> Central data storage </li>
+	<li> Shared printer </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Anatomy of a Computer (Schematic) </h1>
+<div class='center'>
+<script type='text/javascript'>
+	//<![CDATA[
+	image( "fig5.png" )
+//]]>
+	</script>
+<p> <span class='blue'>Figure 5</span> Schematic Design of a Personal
+Computer </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+<script type='text/javascript'>
+	//<![CDATA[
+   taxonomy( "1" )
+//]]>
+	</script> </h1>
+<h3> The ENIAC and the Dawn of Computing </h3>
+<ul>
+	<li> <span style='text-decoration:underline'>e</span>lectronic <span
+		style='text-decoration:underline'>n</span>umerical <span
+		style='text-decoration:underline'>i</span>ntegrator <span
+		style='text-decoration:underline'>a</span>nd <span
+		style='text-decoration:underline'>c</span>omputer </li>
+	<li> First usable electronic computer </li>
+	<li> Designed by J. Presper Eckert &amp; John Mauchly, at UPenn </li>
+	<li> Completed in 1946 &ndash; 2 years before transistors </li>
+	<li> Many cabinets, in a large room </li>
+	<li> 18,000 vacuum tubes </li>
+	<li> Programmed by connecting wires on panels (<i>patch panels</i>) </li>
+	<li> Supported by Navy, for ballistic calculations </li>
+	<li> Before ENIAC, people who did these calculations were called
+		"computers" </li>
+	<li> Later used for tabulating US Census data, etc. </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Translating Human-Readable Programs to Machine Code </h1>
+<h3> Machine instructions: </h3>
+<ul>
+	<li> Extremely primitive:
+		<ul>
+			<li> Move memory contents to a register </li>
+			<li> Subtract 100 from a register </li>
+			<li> If result is positive, go (jump) to another instruction </li>
+		</ul>
+	</li>
+	<li> Encoded as numbers:<br/>
+		<tt>161 40000 45 100 127 11280</tt> </li>
+	<li> Thousands of instructions for a simple program </li>
+	<li> Each processor has its own set of machine instructions </li>
+	<li> Adding numeric codes manually is tedious and error prone</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Translating Programs to Machine Code </h1>
+<h3> Assembler </h3>
+<ul>
+	<li> Use computer to translate </li>
+	<li> Assigns short names to commands:  
+<pre>mov 40000, %eax
+sub 100, %eax
+jg 11280</pre>
+	</li>
+	<li> Makes reading easier for humans </li>
+	<li> Translated into machine instructions by the <i>assembler</i> </li>
+	<li> Can give names to memory locations </li>
+	<li> Still processor dependent </li>
+	<li> Still a great many instructions </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Translating Programs to Machine Code </h1>
+<h3> Higher-level languages: </h3>
+<ul>
+	<li> Easiest for humans to read and write:
+		<pre>if( int_rate &gt; 100 ) cout &lt;&lt; "Interest rate error";</pre>
+	</li>
+	<li> Translated by <i>compilers</i> into machine instructions
+		<ul>
+			<li> Very sophisticated programs </li>
+			<li> Translate logical statements into sequences of computations
+				<pre> 161 4000 45 100 127 11280 </pre>
+			</li>
+			<li> Find memory locations for all variable names </li>
+		</ul>
+	</li>
+	<li> Independent of the underlying hardware </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Programming Languages </h1>
+<ul>
+	<li> Designed for a variety of purposes </li>
+	<li> Machine independent (generally) </li>
+	<li> Much easier to read, but... </li>
+  <li> Much stricter than spoken languages (see Chomsky)
+		<ul>
+			<li> Compilers don't like to <em>guess</em> </li>
+		</ul>
+	</li>
+  <li> There are hundreds </li>
+  <li> Differences in programming languages are sometimes slight, 
+    other times substantial </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	The Evolution of C++ </h1>
+<ul>
+	<li> Many languages are created with a specific purpose
+		<ul>
+			<li> database processing </li>
+			<li> &quot;artificial intelligence&quot; </li>
+			<li> multimedia processing </li>
+		</ul>
+	</li>
+  <li> General purpose languages can be used for any task
+    <ul>
+      <li> C: developed to be translated efficiently into fast 
+        machine code, with minimal housekeeping overhead </li>
+      <li> C++: adds &quot;object oriented programming&quot; aspects 
+        to C </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Programming Language Design and Evolution </h1>
+<h3> History of C </h3>
+<ul>
+  <li> Initially designed in 1972 (Kernighan &amp; Ritchie) </li>
+	<li> Features were added in response to perceived shortcomings </li>
+	<li> Resulted in different dialects
+		<ul><li> Bad for portability </li></ul>
+	</li>
+	<li> 1989 &mdash; ANSI standard of C completed </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Programming Language Design and Evolution </h1>
+<h3> C++ </h3>
+<ul>
+	<li> 1979 &mdash; Bjarne Stroustrup of AT&amp;T adds object oriented
+		features to C, called <i>C with Classes</i> </li>
+	<li> 1985 &mdash; rename to <i>C++</i> </li>
+	<li> Other features added over the years </li>
+	<li> 1998 &mdash; ISO C++ standard published </li>
+	<li> 2003 &mdash; minor revision to the ISO standard </li>
+	<li> 2009 &mdash; major revision expected </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Programming Language Design and Evolution </h1>
+<h3> C++ </h3>
+<ul>
+	<li> Most commonly used language for systems such as:
+		<ul>
+			<li> Database </li>
+			<li> OS </li>
+		</ul>
+	</li>
+	<li> Growing popularity in embedded systems </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact
+<script type='text/javascript'>
+	//<![CDATA[
+   taxonomy( "2" )
+//]]>
+	</script> </h1>
+<h3> Standards Organizations </h3>
+
+<ul>
+	<li> 2 groups have jointly developed the C++ standard:
+		<ul>
+			<li> ISO &mdash; Int'l Organization for Standardization </li>
+			<li> ANSI &mdash; American National Standards Institute </li>
+		</ul>
+	</li>
+	<li> Associations of industry professionals </li>
+	<li> Many standards:
+		<ul>
+			<li> Car tires </li>
+			<li> Shape of credit cards </li>
+			<li> Programming languages </li>
+			<li> etc. </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+	Becoming Familiar with Your Computer </h1>
+<ul>
+  <li> Log In </li>
+  <li> Locate the C++ compiler </li>
+  <li> Understand files and folders </li>
+  <li> Write a simple program </li>
+  <li> Save your work </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+<script type='text/javascript'>
+	//<![CDATA[
+   taxonomy( "1" )
+//]]>
+	</script> </h1>
+<h3> Backup Copies </h3>
+
+<p> Use a memory stick, external drive, or Internet Storage </p>
+
+<ul>
+	<li> Back up often </li>
+	<li> Rotate backups </li>
+	<li> Back up source files only </li>
+	<li> Pay attention to the backup direction </li>
+	<li> Check your backups once in a while </li>
+	<li> Relax, then restore </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "8" )
+	//]]>
+	</script>
+	Compiling a Simple Program </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+  wrapCode( "hello.cpp" )
+//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Compiling a Simple Program </h1>
+<ul>
+  <li> C++ is case <em>sensitive</em> </li>
+  <li> C++ has free-form layout  
+    <ul>
+      <li> Good taste dictates that you use readable program layout </li>
+    </ul>
+  </li>
+	<li> When run, yields:
+		<pre> Hello, World! </pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Compiling a Simple Program </h1>
+<ul>
+  <li> <tt>#include&lt;iostream&gt;</tt> 
+		&mdash; read the <tt>iostream</tt> header file </li>
+  <li> <tt>using namespace std;</tt> &mdash; all names in the program 
+    belong to the &quot;standard namespace&quot; </li>
+	<li> <tt>int main () { ... }</tt> defines the <tt>main</tt>
+		<i>function</i> 
+		<ul>
+			<li> <strong>All</strong> C/C++ programs have a <tt>main()</tt>
+				function </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Compiling a Simple Program </h1>
+<ul>
+  <li> <i>statements</i> (instructions) inside the <i>body</i> 
+		of the main function:
+		<ul>
+			<li> executed one by one, in order </li>
+			<li> Each statement ends with a semicolon <tt>;</tt> </li>
+		</ul>
+	</li>
+  <li> <tt>return</tt> is the end of the main function
+		<ul>
+    	<li> <tt>0</tt> value signals that the program ran successfully </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Compiling a Simple Program </h1>
+<ul>
+	<li> Characters enclosed in double quotes (<tt>&quot;Hello,
+		World\n&quot;</tt>) called a <i>string</i> </li>
+	<li> <tt>\</tt> is the escape character:
+    <ul>
+      <li> Escape sequence <tt>\n</tt> indicates a <i>newline</i> </li>
+      <li> Some others:
+	</ul>
+</ul>		<ul>
+		    	<li> <tt>\r</tt> </li>
+				<li> <tt>\&quot;</tt> </li>
+				<li> <tt>\\</tt> </li>
+				<li> <tt>\t</tt> </li>
+				<li> <tt>\a</tt> </li>
+		
+
+    </ul>
+
+</div>
+
+<div class='slide'>
+<h1> Compiling a Simple Program </h1>
+<h3> Output </h3>
+<ul>
+	<li> <tt>cout</tt> &mdash; the <tt>stdout</tt> object (the screen) </li>
+	<li> <tt>&lt;&lt;</tt> &mdash; the "send to" operator (stream insertion)
+		<ul>
+			<li> Understands all built-in types </li>
+			<li> E.g., to print an integer:
+				<pre> cout &lt;&lt; 3 + 4 ; </pre>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+  <script type='text/javascript'>
+	//<![CDATA[
+     taxonomy( "1" )
+  //]]>
+	</script>
+ : Simple Program </h1>
+<div class='syntax'>
+<pre><i>header files</i>
+using namespace std;
+int main()
+{
+   <i>statements</i>
+   return 0;
+}</pre>
+
+		<h3> Example: </h3>
+<pre>#include &lt;iostream&gt;
+using namespace std;
+int main()
+{
+   cout &lt;&lt; &quot;Hello, World!\n&quot;;
+   return 0;
+}</pre>
+
+		<h3> Purpose: </h3>
+		<p> A simple program, with all program instructions in a <tt>main</tt>
+			function. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+  <script type='text/javascript'>
+	//<![CDATA[
+     taxonomy( "1" )
+  //]]>
+	</script> </h1>
+<h3> Omitting Semicolons </h3>
+<ul>
+	<li> Compiler ignores newlines </li>
+	<li> Uses semicolons to separate statements </li>
+	<li> Compiler sees this:
+<pre>cout &lt;&lt; "Hello, World!\n"
+return 0;</pre>
+		as a single statement:
+<pre>cout &lt;&lt; "Hello, World!\n" return 0;</pre>
+	</li>
+	<li> Make sure all your statements end in a semicolon
+		<ul>
+			<li> Even the last statement before a closing brace </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "9" )
+	//]]>
+	</script>
+	Errors </h1>
+<h3> <i>Syntax</i> (or <i>compile-time</i>) errors </h3>
+<ul>
+	<li> are faulty input, not quite legal C++.  E.g., 
+<pre>cot &lt;&lt; &quot;Hello, World!\n&quot;;
+cout &lt;&lt; &quot;Hello, World!\&quot;;</pre>
+	</li>
+	<li> Something violates the language rules </li>
+	<li> Compiler finds the errors, reports them:
+<pre>hello.cpp:7: error: 'cot' was not declared in this scope
+hello.cpp:7: error: missing terminating &quot; character </pre>
+	</li>
+	<li> Cascade:  <strong>always</strong> start fixing errors from the top
+		</li>
+	<li> Do <strong>not</strong> ignore warnings </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Errors </h1>
+<h3> <i>Logic</i> or <i>run-time</i> error </h3>
+<ul>
+	<li> Program compiles fine (input is legal) </li>
+	<li> Program doesn't do what it's supposed to do </li>
+	<li> Much harder to find </li>
+	<li> Program author must test and find the error
+		<pre>cout &lt;&lt; &quot;Hell, World\n&quot;;</pre>
+	</li>
+</ul>
+<h4> <i>Overflow</i> and <i>roundoff</i> errors </h4>
+<ul>
+	<li> Result is outside computer's
+		numeric range (i.e., too big or too small) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Errors </h1>
+<dl>
+	<dt> Testing </dt>
+		<dd> Validating program correctness </dd>
+		<dd> Very important; discussed often in this text </dd>
+	<dt> Debugging </dt>
+		<dd> Finding the source of an error </dd>
+		<dd> A <i>debugger</i> is a handy tool </dd>
+	<dt> <i>Defensive Programming</i> </dt>
+		<dd> Crafting programs to limit, minimize, localize errors if they do
+			occur </dd>
+</dl>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script> </h1>
+<h3> Misspelling Words </h3>  
+<ul>
+	<li> Misspelled words aren't obvious </li>
+	<li> Error messages ambiguous </li>
+	<li> Link errors are often spelling mistakes </li>
+	<li> C++ is <em>case-sensitive</em>
+		<ul>
+			<li> All keywords and most library functions are lower-case </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "10" )
+	//]]>
+	</script>
+	The Compilation Process </h1>  
+<p> <dfn>Integrated desktop environments</dfn> (<dfn>IDEs</dfn>) shield user
+	from compilation details: </p>
+<ul>
+	<li> Enter code in a window </li>
+	<li> Click a button to "compile" </li>
+	<li> Click another to run </li>
+</ul>
+<p> So what is actually going on? </p>
+</div>
+
+<div class='slide'>
+<h1> The Compilation Process </h1>
+<div class='center'>
+<script type='text/javascript'>
+	//<![CDATA[
+	image( "fig9.png" )
+//]]>
+	</script>
+<p> <span class='blue'>Figure 9</span> From Source Code to Executable
+Program </p>
+</div>
+
+<ul>
+	<li> The compiler translates your C++ source into <i>object code</i> </li>
+  <li> The <i>linker</i> takes your object files and code from various
+		libraries, outputs an <i>executable file</i> </li>
+	<li> <i>Libraries</i> contain (already translated) code, such as
+		<tt>iostream</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Compilation Process </h1>
+<table style='width:100%'><tbody>
+	<tr>
+		<td style='width:70%; valign=top'>
+			<p> The process: </p>
+			<ul>
+				<li> Compile </li>
+				<li> Errors?  Edit file.  Compile </li>
+				<li> Run </li>
+				<li> Errors?  Edit file.  Compile </li>
+				<li> Test </li>
+				<li> Errors?  Edit file.  Compile </li>
+			</ul>
+		</td>
+		<td rowspan='2'>
+			<script type='text/javascript'>
+	//<![CDATA[
+				image( "fig10.png" )
+			//]]>
+	</script>
+		</td>
+	</tr>
+	<tr>
+		<td valign='top'>
+			<p> <span class='blue'>Figure 10</span> Edit-Compile-Debug loop </p>
+		</td>
+	</tr>
+</tbody></table>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "11" )
+	//]]>
+	</script>
+	Algorithms </h1>  
+<ul>
+  <li> Planning <strong>precedes</strong> implementing a computer 
+    program </li>
+  <li> The computer needs a systematic approach for finding solutions: 
+    a series of steps that involves no guesswork </li>
+	<li> An <i>algorithm</i> is <i>unambiguous</i>, <i>executable</i>, and
+		<i>terminating</i>
+    <ul>
+      <li> Unambiguous - no room for guesswork or creativity </li>
+      <li> Executable - each step can be carried out in practice </li>
+      <li> Terminating - the process will eventually come to an 
+        end </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+</body>
+</html>

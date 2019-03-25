@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>11.5&mdash;Array Review Sheet</title>
+    <style type="text/css">
+        li div[class=code] {
+            font-size:1.2em;
+            margin:1em;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.5</p>
+        <p id='lessonTitle'>Array Review Sheet</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/review.png' class='right' style='margin-top:-7em;' alt='Classroom review.'>
+            <b><span class="cap">N</span>ow that we've covered most of the
+            basic array topics</b>, let's review what you've learned.
+        </p>
+    <h3>Array Basics</h3>
+        <p> An array is a collection of variables, all of which have the
+            same type (<code>int</code>, <code>double</code>, <code>String</code> and
+            so forth). The individual variables in the collection are accessed
+            by using an <b>array variable</b> along with a <b>subscript</b> or
+            <b>index</b> number, indicating the variable's position inside the
+            collection.
+        </p>
+        <p> Here is the basic syntax you should know:</p>
+        <ul>
+            <li>Create an array variable: <code>double[] a;</code></li>
+            <li>Instantiate array elements: <code>a = new double[5];</code></li>
+            <li>Define <i>and</i> instantiate: <code>int[] b = new int[7];</code></li>
+            <li>Instantiate and initialize an array: <code>String[] words = {"one", "two", "three"};</code></li>
+            <li>Access first element of an array: <code>String first = words[0];</code></li>
+            <li>Access last element of an array: <code>String last = words[words.length - 1];</code></li>
+            <li>See if array has any elements: <code>if (b.length == 0) ... // empty array</code></li>
+        </ul>
+    <h3>Arrays and Methods</h3>
+        <p> You cannot pass an array to a method or return an array from a method.
+            You <b>can</b>, however, pass and return <b>array variables</b>. When you
+            pass an array variable to a method, the method can change the elements in
+            the original array that the variable refers to. To avoid this, you can
+            copy the elements in the array.
+        </p>
+        <p> Here is the basic syntax you should know:</p>
+        <ul>
+            <li>Define an array formal parameter: <code>void printArray(int[] a) ... </code></li>
+            <li>Define an array return type: <code>int[] makeArray(int n) ... </code></li>
+            <li>Pass an array to a method: <code>int[] a = {1, 2, 3}; printArray(a);</code></li>
+        </ul>
+    <h3>Arrays and Loops</h3>
+        <p> Normally you will use the <code>for</code> loop, (or, the <i>enhanced, for-each</i>
+            version of the <code>for</code> loop), to process the elements in an array. Because
+            arrays are fixed-length, you can use the <code>length</code> field (not the
+            <code>length()</code> method, as with <code>String</code>s) to act as the
+            loop bounds.
+        </p>
+        <p> Here are the common <b>modifying</b> loops you should know how to write:</p>
+        <ul>
+            <li><b>Initialize</b> the elements in an array. (Assume <code>a</code> is an array
+                and that <code>value</code> has been defined.):
+                <div class='code'>
+                for (int i = 0; i &lt; a.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;a[i] = value;
+                </div>
+            </li>
+            <li><b>Modify</b> the elements in an array. (Assumes <code>b</code> is an array
+                of <code>double</code> and that <code>percent</code> is the
+                percentage to change each element by.):
+                <div class='code'>
+                for (int i = 0; i &lt; b.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;b[i] *= (1 + percent);  <span class='cmt'>// or: b[i] = b[i] * (1 + percent)</span>
+                </div>
+            </li>
+            <li><b>Move or shift</b> the elements in an array. (Assumes <code>words</code> is an array
+                of <code>String</code>. Shifts each string to the left. Notice loop goes to
+                <code>words.length - 1</code>, <b>not</b> <code>words.length</code>):
+                <div class='code'>
+                String temp = words[0]; <span class='cmt'>// save first word</span><br>
+                for (int i = 0; i &lt; words.length - 1; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;words[i] = words[i + 1];  <span class='cmt'>// copy next word into current</span><br>
+                words[words.length - 1] = temp; <span class='cmt'>// copy first word to end</span><br>
+                </div>
+            </li>
+        </ul>
+    <h3>Non-Modifying Loop Algorithms</h3>
+        <p> Some algorithms don't need to change the elements in the array. For these
+            algorithms, you can use either the <code>for</code> loop, or the <i>enhanced</i>
+            version of the <code>for</code> loop. I'll show you both.
+        </p>
+        <p> There are the three things you should know how to do: <b>count</b>,
+            <b>sum</b> (or average), and find the <b>extreme values</b> in the
+            array. Let's look at those.
+        </p>
+    <h4>Counting Elements</h4>
+        <p> For counting elements, you'll normally
+            need to count <b>based on some condition</b>. For instance, you'll count
+            all of the even numbers, or all of the odd numbers, or all of the 2s
+            that are not followed by a 3.
+        </p>
+        <p> Here are two examples of the <b>basic skeleton</b> for this kind of loop.
+            This example uses an <code>int</code> array named <code>a</code> and
+            it counts the <b>odd</b> numbers.
+        </p>
+        <ul>
+            <li>Using a regular <code>for</code> loop, the code looks like this:
+                <div class='code'>
+                int counter = 0; <span class='cmt'>// always an int, always set to 0</span><br>
+                for (int i = 0; i &lt; a.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (a[i] % 2 == 1)  <span class='cmt'>// whatever condition you want to count</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter++; <span class='cmt'>// add 1 to the counter</span><br>
+                </div>
+                Using the <b>enhanced</b> <code>for</code> loop, the same problem would look like this:
+                <div class='code'>
+                int counter = 0; <span class='cmt'>// always an int, always set to 0</span><br>
+                for (int num: a) <span class='cmt'>// no index. num is current element</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (num % 2 == 1)  <span class='cmt'>// whatever condition you want to count</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter++; <span class='cmt'>// add 1 to the counter</span><br>
+                </div>
+            </li>
+        </ul>
+    <h4>Summing or Averaging Elements</h4>
+        <p> The code for <b>summing</b> elements is almost the same as counting
+            them. When you are summing, you'll use an <b>accumulator</b> instead of
+            a counter, and inside your loop, you'll <b>add the value of the element</b>
+            to the accumulator, instead of adding one to the counter. As with counting,
+            problems will normally ask you to sum values based on some condition.
+            An example would be summing all purchases less than ten dollars.
+        </p>
+        <p> Let's try that. Here are two examples of the <b>basic skeleton</b> for this kind of loop.
+            This example uses an <code>double</code> array named <code>purchase</code> and
+            it sums the purchases less than ten dollars.
+        </p>
+        <ul>
+            <li>Using a regular <code>for</code> loop, the code looks like this:
+                <div class='code'>
+                double amount = 0.0; <span class='cmt'>// type is same as element type</span><br>
+                for (int i = 0; i &lt; purchases.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (purchases[i] &lt; 10.0)  <span class='cmt'>// whatever condition you want to count</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount += purchases[i]; <span class='cmt'>// or amount = amount + purchases[i]</span><br>
+                </div>
+                Using the <b>enhanced</b> <code>for</code> loop, the same problem would look like this:
+                <div class='code'>
+                double amount = 0.0; <span class='cmt'>// type is same as element type</span><br>
+                for (double num: purchases) <span class='cmt'>// no index. num is current element</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (num &lt; 10.0)  <span class='cmt'>// whatever condition you want to count</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount += num; <span class='cmt'>// or amount = amount + num</span><br>
+                </div>
+            </li>
+        </ul>
+    <h4>Extreme Values</h4>
+        <p> Extreme values just means finding the largest or smallest element. The algorithm
+            for this is fairly straightforward, and you should memorize it:
+        </p>
+        <ol>
+            <li class='d'>Store the <b>first</b> element in the array in a variable (<code>largest</code>
+                or <code>smallest</code> or both).
+            </li>
+            <li class='d'>Loop through the remaining elements in the array. (You can actually visit the
+                first element once again, if you want to use the enhanced <code>for</code> loop.)
+                At each position in the loop:
+                <ol>
+                    <li>Compare the current array element to your saved value.</li>
+                    <li>If the current element is smaller than your (<code>smallest</code>) variable, save
+                        the current element in <code>smallest</code>.
+                    </li>
+                    <li>If the current element is larger than your (<code>largest</code>) variable,
+                        save the current element in <code>largest</code>.
+                    </li>
+                </ol>
+            </li>
+        </ol>
+        <p> At the end of your loop, the <code>largest</code> or <code>smallest</code> variable
+            will contain the appropriate value.
+        </p>
+        <p> Here's an example that finds the smallest word in an array of <code>String</code>
+            named words:
+        </p>
+        <ul>
+            <li>Using a regular <code>for</code> loop, the code looks like this:
+                <div class='code'>
+                String smallest = words[0]; <span class='cmt'>// smallest so far</span><br>
+                for (int i = 1; i &lt; words.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (words[i].length() &lt; smallest.length())<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smallest = words[i]; <span class='cmt'>// new smallest word</span><br>
+                </div>
+                Using the <b>enhanced</b> <code>for</code> loop, the same problem would look like this.
+                (Actually looks at <code>words[0]</code> twice, so is not quite as efficient.)
+                <div class='code'>
+                String smallest = words[0]; <span class='cmt'>// smallest so far</span><br>
+                for (word: words)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if (word.length() &lt; smallest.length())<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smallest = word; <span class='cmt'>// new smallest word</span><br>
+                </div>
+            </li>
+        </ul>
+    <h3>Object and 2D Arrays</h3>
+        <p> The only difference between primitive (<code>int</code>, <code>double</code>, etc.)
+            arrays and <i>object</i> arrays, is that you need to remember to separately instantiate
+            the array elements; the elements are not automatically instantiated like
+            the primitive array values are.
+        </p>
+        <p> Here are some examples using <code>String</code>s and <code>GImage</code> objects:</p>
+        <ul>
+            <li>Create a <code>String</code> array: <code>String[] words = new String[10];</code><br>
+                Now elements contain <code>null</code>, <b>not</b> <code>String</code> objects.
+            </li>
+            <li>Instantiate array elements using a <code>Scanner</code>:<br>
+                <code>for (int i = 0; i &lt; words.length; i++) words[i] = cin.nextLine();</code>
+            </li>
+            <li>Instantiate array elements using a literal (empty <code>String</code>):<br>
+                <code>for (int i = 0; i &lt; words.length; i++) words[i] = "";</code>
+            </li>
+            <li>Create an array of <code>GImage</code> references, and then initialize using
+                a loop and the same file for each image:
+                <div class='code'>
+                GImage[] images = new GImage[5];<br>
+                for (int i = 0; i &lt; images.length; i++)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;images[i] = new GImage("clown.jpg");
+                </div>
+            </li>
+        </ul>
+    <h3>2D Arrays</h3>
+        <p> 2D arrays represent a grid or matrix, like a spreadsheet. With a 2D array,
+            you have a separate bracket for the row, followed by a bracket for the
+            column. As with 1D arrays, both row and column start with 0.
+        </p>
+        <p> With a 2D array variable, the <code>length</code> field represents the
+            number of rows in the array. To get the number of columns in any individual
+            row, you need to use the <code>length</code> field for that specific column,
+            by adding a single subscript to the 2D array variable name.
+        </p>
+        <p> Here's the basic syntax:</p>
+        <ul>
+            <li>Define a 2D array variable, <code>grid</code>: <code>int[][] grid;</code></li>
+            <li>Instantiate the array with 3 rows, 4 columns: <code>grid = new int[3][4];</code></li>
+            <li>Find the number of rows in the array: <code>int rows = grid.length;</code></li>
+            <li>Find the number of columns (in first row): <code>int cols = grid[0].length;</code></li>
+            <li>Access first element in first row: <code>int first = grid[0][0];</code></li>
+            <li>Access last element in last row (assume that <code>rows</code> and <code>cols</code> already defined.)<br>
+                <code>int last = grid[rows - 1][cols - 1];</code>
+            </li>
+        </ul>
+    <h4>2D Arrays and Loops</h4>
+        <p> Normally, you'll use a <b>nested loop</b> to process the elements in
+            a 2D array. The basic skeleton for this loop, (which works for all
+            <i>rectangular</i> 2D arrays),
+            looks like this:
+        </p>
+        <p class='code'>
+            final int ROWS = grid.length; <span class='cmt'>// get the rows</span><br>
+            final int COLS = grid[0].length; <span class='cmt'>// get the rows</span><br>
+            for (int row = 0; row &lt; ROWS; row++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int col = 0; col &lt; COLS; col++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// process grid[row][col] here</span>
+        </p>
+    <h4>2D Arrays and Methods</h4>
+        <p> With a 2D array, you can write methods that process the entire array, or
+            methods that process a single row. Here are the most common kinds of methods,
+            (using a <code>double</code> array named <code>prices</code>):
+        </p>
+        <ul>
+            <li>Process the entire array (using a nested loop): <code>double averageAll(double[][] prices) {}</code></li>
+            <li>Process one row in the array: <code>double averageRow(double[] row) { }</code>.<br>
+                Call the method (using <code>prices</code>) like this: <code>double ra = averageRow(prices[0]);</code>
+            </li>
+            <li>To process an array column, you must pass the array and a column number:<br>
+                <code>double averageCol(double[] prices, double colNum) { }</code>
+            </li>
+        </ul>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>1.4&mdash;What About Java?</title>
+    <script type="text/javascript" src="swfobject.js"></script>
+    <script type="text/javascript">
+        swfobject.registerObject("csSWF", "9.0.115", "expressInstall.swf");
+    </script>
+</head>
+<body>
+    <div id='lessonBanner' class="banner04">
+        <img id='lessonLogo' src='../images/d.png' alt='Decorative logo.'>
+        <p id='lessonSubtitle'>Section 1.4</p>
+        <p id='lessonTitle'>What About Java?</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">A</span>fter looking at computer memory,
+        the CPU, and a little computing history, we</b>
+      <i><u>finally</u></i>, (I hear some of you say), come to <b>Java</b>.
+      Java is a sometimes controversial topic in the computing world;
+      Sun Microsystems and Microsoft have exchanged lawsuits over Java, and
+      Java figured prominently in the government's Microsoft antitrust trial.
+      Currently, Oracle (the new owner of Java) is suing Google over their
+      use of Java.
+    </p>
+    <p> If you're like most people, you've probably asked
+        yourself, <strong>"Why?"</strong>
+    </p>
+    <div id="media" style='text-align:center;'>
+        <embed src="Java4ever-short_controller.swf"
+            quality="best"
+            type="application/x-shockwave-flash"
+            width="540"
+            height="420"
+            bgcolor="#1a1a1a"
+            allowfullscreen="true"
+            scale="showall"
+            allowscriptaccess="always"
+            flashvars="autostart=false&amp;thumb=FirstFrame.png&amp;thumbscale=45&amp;color=0x1A1A1A,0x1A1A1A"
+            />
+    </div>
+
+  <h2>Just What IS Java?</h2>
+      <p>
+      <img src="images/duke-sm.gif" class="right" alt="The Java mascot, Duke, takes off.">
+      Let's start by taking a "high-level" look at Java. Part of the controversy
+      surrounding Java occurs because different people mean different things when they
+      talk about Java.
+      </p>
+      <p>Let's start by asking:</p>
+
+      <ul>
+        <li>what we mean when we talk about "<b>the Java platform</b>"</li>
+
+        <li>why Java is important in the wider computing world?</li>
+
+        <li>why should Computer Science students learn Java?</li>
+      </ul>
+
+      <p>Let's start by answering the question, "What is Java?"</p>
+
+      <p>Java is an often confused <i>and</i> misused term in the
+      field of computing. Sun Microsystems, the developers of Java, hoping
+      to alleviate some of this confusion, have provided a simple
+      definition; according to Sun, Java is:</p>
+
+      <div class="pullquote">
+        &#8220;A Simple, Object-oriented, Distributed, Interpreted, Robust, Secure,
+        Architecture-neutral, Portable, High-performance, Multithreaded, Dynamic
+        Programming Language&#8221;
+      </div>
+
+      <p>Certainly nothing controversial there! (I'm sure that all of you find
+      Sun's explanation just as
+      illuminating as I do&nbsp; :)!) Instead of walking through each of these
+      "buzzwords", let's step back and take a look at what I call <strong>the three faces
+      of Java</strong>.</p>
+
+      <h3>The "Three Faces" of Java</h3>
+        <img src="images/blind.gif" class="right" alt="Blind Men and the Elephant">
+      <p>
+      A well-known Indian legend tells the story of seven blind men describing an
+      elephant. The one who felt the trunk thought the elephant was like a snake, the one
+      who felt the legs thought the elephant was like a tree, and so on.</p>
+
+      <p>Java is a little bit like that; you'll often hear:</p>
+
+      <ul>
+        <li>"Java is slow" or, while someone else will chime in,
+            "No, no! For my programs, Java is even faster than C++"</li>
+        <li>Many people will tell you that "Java programs look strange"</li>
+        <li>Some will tell you that "Java is better for building Web
+            applications than Microsoft .NET", while others will say
+            the opposite</li>
+        <li>You may hear, "Microsoft .NET supports Java along with other
+            programming languages"</li>
+        <li>Most often, though, you'll hear that, "Java is the cross-platform
+            scripting language that works inside your Web browser"
+        </li>
+      </ul>
+
+      <p>
+        Each of these statements (except for the last) contains a kernel of truth; each
+      also suffers from confusion between the three parts of the <strong>Java
+      platform</strong>. In reality, Java is:<br>
+
+    </p>
+    <img src="images/java3a.gif" class="left" style="margin-left: -4em; margin-right: 3em;" alt="The three faces of Java">
+      <ul>
+        <li>
+            an object-oriented <strong>programming language</strong>. The Java language,
+        like C++ or Smalltalk, can be supported on different runtime systems, like the
+        Sun Virtual Machine, or even on Microsoft's .NET.<br>
+        <br>
+        </li>
+
+        <li>a cross-platform runtime system called the <strong>Java Virtual
+        Machine</strong> or <strong>JVM</strong>. Modern JVMs almost all use
+        a <b>JIT</b> or <b>Just-In-Time</b> compiler to convert Java's
+        platform-neutral machine language (called <b class='ry'>bytecode</b>)
+        into native, high-performance machine code your specific hardware.
+        </li>
+
+        <li>a set of universally distributed classes called the <strong>Java Class
+        Libraries</strong>. These extensive class libraries provide support for GUI programming,
+        network and file I/O, Web applications and a host of other features. You can think of
+        these as pre-built parts that you can use to build your own programs.
+        </li>
+      </ul>
+    <br style='clear:both;'>
+      <p>The combination of <strong>all three of these</strong> is called a <strong>Java
+      platform</strong>. The most commonly used Java Platform (called the JRE) is supplied
+      by Oracle, (now that Sun Microsystems has been purchased and absorbed),
+      but there are also versions supplied by Apple, Microsoft, IBM, HP, and so
+      on.</p><p> <img src='images/openjdk-small.png' class='left' alt='The OpenJDK license.'>
+      Java itself is open-source software so (theoretically) no one company can control it.
+      You can find out more about open-source Java at
+      <a href='http://openjdk.java.net/' target='_blank'><b>http://openjdk.java.net/</b></a>.
+      </p>
+      <p> Since Oracle purchased Sun Microsystems, Oracle has been
+        attempting to exert more control over the language, especially
+        when it comes to the open-source community. Read
+        <a href='http://journal.paul.querna.org/articles/2010/10/12/java-trap-2010-edition/'
+            target='_blank'><b>Java Trap, 2010 Edition</b></a> for more information
+        and some useful links to other articles about Java and open source.
+    </p>
+
+
+      <h4>What about JavaScript?</h4>
+       <p><img src='images/java-javascript-sm.png' class='right' style='margin-top:-3em;' alt='Java versus JavaScript.'>
+       <strong>JavaScript</strong> is often confused with Java, but
+      the two are really not related at all. JavaScript is a programming language
+      designed by Netscape, used to manipulate Web documents and Web browsers.
+      JavaScript was originally named LiveWire, but was renamed by Netscape
+      when Java became popular.
+      <!--<br>
+      <img src='images/java-javascript.png' class='inlineCenter' alt='Java versus JavaScript.'>
+      -->
+      <p>JavaScript <b>source code</b> is downloaded to your Web browser, often embedded inside an
+        HTML program, and the instructions are <b>interpreted</b> and
+        <b>executed</b> by your Web browser. JavaScript and Java are
+        two entirely different languages, used for entirely different
+        purposes, (although both of them share a
+        similar source-code syntax, borrowed from the C++ language).
+         JavaScript is often used to control
+        your Web browser and the contents of individual Web pages while
+        Java is a general-purpose programming language.
+      </p>
+      <div class='info'>
+      <p>As a side note, I should mention that the Rhino JavaScript
+        interpreter from the Firefox Web browser is included as part
+        the Java 6 class libraries, so it is possible to use JavaScript
+        from inside your Java 6 (and later) programs. JavaScript is also incredibly
+        useful to know if you want to work on Web applications, even
+        if those Web apps are built with some other programming
+        language.
+    </p>
+      </div>
+
+      <p>So, if Java isn't the same as JavaScript, then what is
+        Java used for? What kinds of programs are written in
+        Java? </p>
+      <h2>Types of Java Programs</h2>
+
+      <p>There are four major types of Java programs: <b>applets</b>,
+         <b>applications</b>, <b>server-side programs</b>, and
+         <b>mobile applications</b>. Let's take a look at each of these,
+         starting with Java applets.
+    </p>
+
+
+      <h3>Applets</h3>
+
+      <p>Java applets are graphical Java programs that are "hosted" inside a Web page,
+        like Mark Wesley's Goldfish applet shown here.
+        Here's how Java applets work:</p>
+
+    <div style='width:340px; border:1px solid navy; padding:1em; margin:1em;float:right;background:white;'>
+        <object type="application/x-java-applet" width='320' height='240'>
+            <param name="code" value="c" />
+            <param name="codebase" value='http://csjava.occ.cccd.edu/~gilberts/applets/fish' />
+            <param name="archive" value='obf_goldfish.jar' />
+            <param name="bowlcentre_x" value ="160.0">
+            <param name="bowlcentre_y" value ="145.0">
+            <param name="bowlradius" value ="124.0">
+            <param name="watertop" value = "60.0">
+
+            <param name="waterbottom" value ="205.0">
+            <param name="leftlip" value = "65.0">
+            <param name="rightlip" value ="255.0">
+
+            <param name="round" value ="true">
+        </object>
+    </div>
+
+
+      <ul>
+        <li>The <b>compiled</b> Java machine code (known as a <b>.class</b> file)
+        for your program is stored on a Web server, much like an .gif or .jpg
+        image file, or like a Flash animation file.
+        </li>
+
+        <li>The code is automatically downloaded to the viewer's machine when a user
+        visits a Web page that contains a reference to the applet (called an
+        <strong>applet</strong> tag).
+        </li>
+
+        <li>The user's Web browser starts running a <b>Java Virtual Machine</b> when it
+        encounters a Java applet, and the JVM runs the applet inside the
+        browser's JVM. This is similar to the way Flash/Shockwave animation,
+        or other browser plug-ins, like QuickTime, are handled. The JVM
+        browser plug-in is installed when you install the Java JRE (Java
+        Runtime Environment). If you can see this applet, you already have
+        a JRE installed, but if you don't, installing a JRE only takes a few minutes.
+        </li>
+    </ul>
+    <p>For safety sake, Java applets are run inside a restricted "sandbox", and are
+        <b>prohibited</b> from performing actions that
+        might damage your computer or compromise your privacy, if used maliciously.
+        For instance, applets cannot read and write
+        files on your local hard-drive; applets are also prevented from
+        contacting other servers on the Internet to send your credit-card
+        information to China or Nigeria.
+    </p>
+      <p>Sometimes, you'll hear applets referred to as "client-side" Java. That's
+      because all three parts of the computing process: input, output, and
+      processing, occur on your local machine, even though the executable
+      class files are stored on the Web server. In this class,
+      you'll learn to create both applets, and the second kind of Java program,
+      called an application. </p>
+
+      <h3>Applications</h3>
+
+      <p>Java can also create <strong>applications</strong>, which are programs that are
+      <b>installed and run on the user's local machine</b>, in the same way you would install
+      and run a program written in Visual Basic or C++. There are two kinds of Java
+      applications:</p>
+
+      <ul>
+        <li><b><u>Console-mode applications</u></b> are the traditional "teletype-style"
+        programs similar to those you'd write in a Pascal or C++ class.<br>
+        <img src="images/console-app.gif" class='inlineCenter' alt="A console application.">
+        Many of the programs you'll write in this class will be console applications.
+        Console programs are useful when you're learning to program because
+        they reduce the amount of detail that can "clutter up" what you're
+        trying to focus on. Console programs are also often used "in the
+        real world" for utility and server-based applications.
+        </li>
+
+        <li><b><u>GUI (Graphical User Interface) applications</u></b>. These programs use windows,
+        buttons, checkboxes and graphics to create the kind of interactive programs
+        you're used to in the Windows &amp; Mac worlds. Here's a Currency Converter
+        Java application, running on the Mac:<br>
+        <img src="images/gui-app.gif" class='inlineCenter' alt="A console application.">
+        </li>
+      </ul>
+      <p>The JRE actually comes with two different GUI libraries built-in: the original AWT
+        (Abstract Window Toolkit), and the newer JFC (Java Foundation Classes&#8212;AKA Swing),
+        which provide a set of more advanced components. In addition, to the built-in
+        libraries, you can also add different GUI tool-kits and libraries.
+        During a portion of the class, we'll
+        be using a library of graphical shapes developed by the <b>Association of
+        Computing Machinery</b>, in addition to a set of classes for manipulating sounds
+        and images developed by Mark Guzdial and the Media Computation project at
+        Georgia Tech.
+      </p>
+
+      <h3>Server-Side Java</h3>
+
+      <p>A third kind of Java program is called a <strong>server-side
+      application</strong>. These programs use an <b>additional</b> set of Java
+      classes, in addition to the classes contained in the Java 2 Standard
+      Edition (J2SE). Collectively, these additional classes are called
+      the <b>Java 2 Enterprise Edition</b> or <b>J2EE</b>. J2EE does not
+      <b>replace</b> standard Java, which you'll learn in this class, but adds
+      new features to it.</p>
+
+      <p>Server-side applications are not downloaded or installed on
+      the user's computer. Instead, the Java program runs on an <b>Application Server</b>,
+      (such as BEA WebLogic, IBM WebSphere, or Apache's Tomcat), and only the input or
+      output is sent to the user's machine, as regular HTML.</p>
+
+      <p>Server-side applications are most often accessed through a Web browser, and are
+      used for ecommerce and other interactive Web sites. The Web-CAT program
+      grader that we'll use to grade the programming portion of your exams
+      and homework is a server-side Java program.  Here's an image I put together
+      from a sampling of some research done by Marty Hall on different Web sites
+      that are primarily based on server-side Java.
+      <img src="images/javasites.gif" class='inlineCenter' alt="Web sites based on Java server-side technologies.">
+      We won't do any server-side
+      Java in this class. <!--OCC's Java Programming 2 course, CS 272,
+      includes server-side Java programming along with advanced GUI and
+      database programming. -->
+    </p>
+      <h3>Mobile Java</h3>
+        <img src='images/android.png' class='right' style='margin-top:-2em;' alt='An Android phone.'>
+        <p> You can also write Java programs that will run on Palm Pilots,
+            cell phones, and other "low resource" devices. These programs
+            use the same Java language, but an entirely different set of
+            class libraries. The class libraries used for mobile devices
+            are called the <b>Java 2 Micro Edition</b> or <b>J2ME</b>.
+        </p>
+        <p> Other variations of the Java Platform, such as the one used in
+        Google's Android phones, also use the same Java language, but even different
+        class libraries and a different runtime environment.
+        </p>
+
+      <h2>Why is Java Important?</h2>
+
+      <p>How is Java different from other programming languages you might use, like
+      Visual Basic, Pascal, or C++? The biggest difference is the idea of
+      <strong>cross-platform binary portability</strong>.</p>
+
+      <p>A portable language is one that is designed to run on different computer
+      operating systems or different computer hardware. The C language is portable, for
+      instance, because you can run the same program on both your Windows computer and
+      your Macintosh, by taking your C-language <b>source code</b> and recompiling it
+      with a different C compiler on each machine. JavaScript is also a portable
+      language, because you can download the same program to a Mac user, a Windows
+      user, or a Unix user, and the Web browser will <b>interpret</b> the source
+      code, turning it into the correct machine code for the individual machine.</p>
+
+      <p>This is called <strong>source code portability</strong>, and it only works
+      if:</p>
+
+      <ul>
+        <li>there is a compiler or interpreter available on each platform</li>
+
+        <li>the program uses no platform-dependent facilities</li>
+      </ul>
+      <p>C and C++ were designed to be portable. Languages like Visual Basic,
+      AppleScript, or Intel assembly language, are non-portable languages.</p>
+
+      <h3>WORE</h3>
+
+      <p>Java programs are designed to offer <strong>more</strong> than source-code
+      portability; Sun's goal for the Java Platform is summed up in the "Pure Java"
+      motto called <b>WORE</b>, or:</p>
+
+      <div class="pullquote"><strong>
+        &#8220;Write Once: Run Everywhere&#8221;</strong>
+      </div>
+
+      <p>With WORE, you should be able to compile your Java program on a Mac and then run
+      it, with no changes at all, on a Windows or Unix computer. This is possible because
+      the JVM installed on each platform understands the same bytecode, and because
+      every Java platform has the same classes available.
+      </p>
+      <p>This might not seem like a big deal to you, but it means that businesses
+      can develop their programs on inexpensive Windows and Mac computers, and
+      then deploy them on very expensive servers and mainframes, all without
+      making any changes. WORE means that software is no longer "locked into"
+      the hardware platform it was developed on.
+      </p>
+
+      <h4>Problems with WORE</h4>
+
+      <p>The major problem with Java is that WORE really isn't perfect;
+      each implementation of the Java platform has subtle differences, and so developers
+      often end up with:</p>
+
+      <div class="pullquote"><strong>
+        &#8220;Write Once: <b>Test</b> Everywhere&#8221;</strong>
+      </div>
+
+      <p>There are several reasons for this:</p>
+
+      <ul>
+        <li>There are several different versions of the Java platform. New
+            versions of Java are backwards compatible, (that is, you can run your
+            old Java programs with a newer version of Java), but you can't run
+            programs written using the latest features on older versions of the JVM.
+            So, if users don't have a version of Java at least as recent as the
+            version you've used for your program, they won't be able to run it.
+            (That's why you need to have Java 5 or 6 installed for this class.)
+        </li>
+        <li>GUI performance depends on <strong>native peers</strong>. In other words,
+            <code>Button</code> objects on the Mac act differently from
+            <code>Button</code> objects on Windows or Unix.
+        </li>
+
+       <li>Vendors of expensive Java application servers, like Oracle (BEA)
+            and IBM (Websphere), add extra features to their app servers,
+            (known as "vendor lock-in"), which makes it difficult to move a
+            potentially portable Java server-side application to a competitor's environment.
+        </li>
+      </ul>
+
+      <p>In addition to the WORE failings, Java <b>speed</b> is still an issue. Java
+          GUI apps use more memory and often perform more slowly than equivalent C++ programs.
+          For this reason, the most really high-performance GUI apps (such as Photoshop or
+          some video games) are still written in C or C++ or even in assembly language.
+          For general use,
+          server-side applications, and mobile apps, though, Java is certainly "fast enough".
+      </p>
+
+      <h3>Why CS Students Should Learn Java</h3>
+        <p> If Java programs are less capable than C++ programs, and
+            they run slower, then why not just learn C++ to start with,
+            instead of messing with Java? There are several reasons:
+        </p>
+        <ol>
+            <li class="d">First, Java is a more modern, object-
+                oriented language. One of the major goals of CS education is
+                to teach you to use abstraction. Abstraction is the ability to
+                mentally "strip away" the non-essential details in a problem,
+                and concentrate on the core elements to craft your solution,
+                and Java lets you work at a higher level of abstraction than C
+                or C++, or even C#. While there are still a lot of details you
+                have to get exactly right, compared to C++ the amount of
+                extraneous minutia has been considerably reduced.
+            </li>
+            <li class="d">Java is used extensively in Computer Science classes at
+                Universities across the country, not only for the introductory
+                programming classes (like this one) but for your upper-division
+                coursework as well. If you plan on transferring, your life will be
+                a lot easier if you know Java well.
+            </li>
+            <li class="d">Another nice bonus for CS students is that you can easily
+                write graphical applications. By contrast, writing
+                graphical applications in C++ is much more complex, much
+                too complex for an introductory programming class. Writing
+                the "Hello World" application for Microsoft Windows in C++,
+                for instance, takes a full page of code and involves pointers,
+                structures static variables and callbacks. As a bonus, with
+                Java you can do your work on the Mac, Linux or Windows; the
+                choice is yours.
+            </li>
+            <li class="d">Finally, the tools that we'll use in this course are ideal for
+                teaching programming. The tools you'll use are simple,
+                open source, cross-platform and completely free (which I'm sure
+                you'll agree is important).
+            </li>
+        </ol>
+    <h3>Which Version of Java?</h3>
+        <p> There are several different versions of Java. Unfortunately, the
+            version  numbering scheme used is a little strange, and the
+            terminology has changed over the years. Mostly, you'll be
+            concerned with is the <b>major</b>, or <b>Java platform version</b>.
+            The platform version tells you
+            what classes and methods are available when you write your Java
+            programs and applets. There are seven of these:
+        </p>
+        <ul>
+            <li><b><u>Java 1.0</u></b> and <b><u>Java 1.1</u></b> are of mostly
+                historical interest. Introduced in 1995 and 1996 these early versions
+                of Java more than 5,000 methods in about 500 classes.
+                With these early versions of Java, each browser developer
+                created their own JVM. There was a Netscape JVM, a Microsoft
+                JVM and so on, which created a lot of compatibility problems.
+            </li>
+            <li><b><u>Java 1.2, 1.3 and 1.4</u></b>: represent a complete
+                re-write of Java, and these versions were named
+                the <b>Java 2 Platform</b>. With the introduction of Java 2,
+                Web browsers used the Java Runtime plug-in, instead of creating
+                their own versions of Java. The Java 1.4 platform had about
+                3,000 different classes with about 30,000 methods, so they
+                were much larger than the earlier versions.
+            </li>
+            <li><b><u>Java 5 and Java 6</u></b> are the most recent major
+                versions of Java. Java 5 added support for <b>generic collection classes</b>
+                as well as for iterators, like the <b>Scanner</b>
+                class for processing input. <b>In this class, you should use Java 6</b>
+                (unless you are using a much older Mac that doesn't have Java 6 available).
+                <b>You cannot use any of the earlier versions of Java.</b>
+            </li>
+        </ul>
+    <h4>SDK, JDK, JRE and IDE</h4>
+        <p> Traditionally, the <b>JDK</b> or <b>Java Development Kit</b> (also sometimes called
+            the SDK), is the software from Sun Microsystems used to
+            <b>write</b> Java programs, while the <b>JRE</b> or <b>Java Runtime
+            Environment</b> is the software used to <b>run</b> Java programs. The JDK
+            includes a command-line compiler, a debugger and other useful tools, such as
+            the Java Archive utility. (The JDK doesn't include a text editor for
+            creating your source code, however.)
+        </p>
+        <p> For the class this semester, you do not need the JDK (although you can download
+            it and install it if you like.) Instead, we'll be using an <b>IDE</b>, or
+            <b>Integrated Development Environment</b>, named <b>DrJava</b>. While many
+            IDEs, such as the popular BlueJ require you to download the JDK as well,
+            both Eclipse and DrJava will work with <b>only</b> the JRE or Java Runtime
+            installed.
+        </p>
+        <p>You will, however, need the latest JRE for your platform. If you are using a Mac,
+            just run Software Update. For everyone else, just point your Web browser to
+            <a href='http://www.java.com' target='_blank'><b>http://www.java.com</b></a>,
+            click download, ant then just follow the instructions. It will take you about
+            15 minutes to download and install the software.<br>
+            <img src='images/jre.png' class='inlineCenter' alt='The www.java.com download site.'>
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            What About Java Summary
+        </p>
+        <ul>
+            <li>The <b>Java platform</b> consists of a programming language,
+                a set of common class libraries, and a runtime execution
+                environment called the Java Virtual Machine or JVM.
+            </li>
+            <li>Java and Javascript are different languages, used for
+                different purposes.
+            </li>
+            <li>Java <b>applets</b> are programs that run inside the context
+                of a Web browser, usually downloaded from the Web. Applets
+                run inside a "sandbox" that limits harmful side effects.
+            </li>
+            <li> Java <b>applications</b> run on your local computer, using
+                its JVM. Console applications use text input and output, while
+                graphical (GUI) applications use windows, buttons and other
+                interactor widgets.
+            </li>
+            <li> <b>Server-side</b> Java programs process data on a remote server
+                and use your computer's Web browser for input and output.
+                Programs like Blackboard and MyOCC are examples of server-side
+                Java programs.
+            </li>
+            <li> <b>Micro-Java</b> programs run on mobile phones and PDAs. The
+                mobile Java platform, so creating applications is not as
+                easy as creating desktop Java programs. Other platforms,
+                notably Android, use the Java language, but different libraries
+                and runtime systems.
+            </li>
+            <li> Java's major feature is that it supports <b>binary portablility</b>;
+                programs compiled on one platform, like Windows, should run,
+                unchanged on any platform, such as the Mac or Linux. This is
+                called <b>WORE</b>, or write once, run everywhere.
+            </li>
+            <li> Learning Java is important for CS students, because it is
+                one of the major teaching languages used when you transfer.
+            </li>
+            <li> To run Java programs, your computer needs a <b>Java Runtime
+                Environment</b>. There have been many different versions since
+                1995. We will be using Java 5 or 6.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

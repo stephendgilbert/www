@@ -1,0 +1,538 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>9.4&mdash;Array Copy &amp; Compare</title>
+
+</head>
+<body>
+    <div id='lessonBanner' class="banner11">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.4</p>
+        <p id='lessonTitle'>Array Copy &amp; Compare</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/grades01.gif" class="right" alt="An array variable.">
+            <b><span class="cap2">A</span>n array variable and the actual
+            array where the array elements are stored</b> are two different things,
+            as this picture, which illustrates the memory layout of the code fragment
+            below, shows. In this example,
+            the <i>array variable</i>, <code>grades</code>, <i>refers to</i> the
+            <b><u>actual</u></b> array elements 'A', 'B' and 'C', located "somewhere else"
+            in memory.
+        </p>
+        <p> This "somewhere else" is an area known as the <b>heap</b>,
+            and it's the same memory area used to store objects. The array <b>variable</b>
+            <code>grades</code> is stored in a different area of memory, and contains
+            a <b>reference</b> to the actual array.
+            When you use <code>grades</code> as part of a subscripted variable name,
+            like this:<br>
+            <img src="images/grades02.gif" class="inline" alt="A fragement of code manipulating an array.">
+            you are <b>not</b> modifying the variable <code>grades</code>, but <b>are</b>
+            changing the value in the second element of the <b>actual array</b>
+            elements that <code>grades</code> "points to", or, more technically,
+            <b>refers to</b>.
+        </p>
+        <p> Although high-level languages are designed to hide many of the
+            lower-level details like this, you can't really escape knowing
+            about this difference between <b>value</b> types and <b>reference</b>
+            types, and the implications that this language-design decision has
+            for you as a programmer.
+        </p>
+        <p> We've touched on these concepts earlier in the course,
+            (back in <i>Section 3.5&mdash;Objects and Color</i>), but
+            let's review some of that material once again with a focus
+            on <b>array</b> types. Having a clear
+            idea about how data is stored in memory will help you when
+            you start working with array-handling methods.
+        </p>
+    <h2>Value and Reference Types</h2>
+        <p> Back in Chapter 1, you learned a little bit about
+            how computers use <i>memory</i>. As we studied the history
+            of computing, for instance, you learned about John von Neumann's
+            development of the <b>stored program concept</b>: that memory
+            could be partitioned, with one part storing data, and another
+            part storing program instructions.
+        </p>
+        <p> Modern computers take this idea even further. When a program
+            is running, we can divide its data section up into three
+            <b>general categories</b>:
+        </p>
+        <ul>
+            <li>The <b><u>static storage area</u></b>. When a program
+                runs, there are some data elements that can be created
+                and stored in memory for the entire time that the program
+                is running. Constant data elements, such as string literals
+                are one example of this kind of data. Variables shared throughout
+                the entire program are another.
+            </li>
+
+            <li><img src="images/b08.gif" class="right" alt="The stack">
+                The <b><u>stack-based storage area</u></b>. When you create
+                a local variable inside a method, the memory used to store that
+                variable isn't set aside <b>until</b> the method is called
+                and the local variable declaration is encountered. That means
+                that if a particular method isn't called when you run your
+                program, no memory is set aside for those variables.<br><br>
+                Stack-based variables are stored right next to each other
+                in memory. This is called <b>contiguous</b> storage. One
+                way to think of contiguous storage is to picture a stack of
+                dinner plates in a restaurant like the Souplanation. (This
+                is where the name <i>stack</i> came from.)<br><br>
+
+                When you create a local variable inside a method, the
+                memory for the variable is set aside on "the top" of the
+                stack. When the method is finished, all of the variables
+                placed on the stack are automatically removed, so the
+                memory can be used for other purposes.
+            </li>
+            <li>The <b><u>heap or "free-store"-based storage area</u></b>.
+                Stack-based storage is very efficient, but it has some real
+                limitations. Because elements are "stacked" on top of each
+                other, all of the elements need to be pretty much the same
+                size, (or some multiple of that size). Also, since memory
+                used for local variables is automatically reclaimed whenever
+                a method ends, stack-based variables don't work very well
+                for sharing information between methods.<br><br>
+                The third area of memory, <b>the heap</b>, is used to
+                get around these limitations. The heap is used to
+                store the "data part" of <b>reference types</b>, including
+                objects and arrays.
+            </li>
+        </ul>
+
+        <img src="images/heap-stack.gif" class="inlineCenter" alt="The stack and heap.">
+    <h3>Reference Types</h3>
+        <p> Reference type variables, (which include everything in Java <b>except</b>
+            for the primitive numeric types along with <code>char</code> and
+            <code>boolean</code> types),
+            are divided into <b>two pieces</b>:
+        </p>
+        <ul>
+
+            <li>the reference (object or array) <b>variable</b></li>
+            <li>the actual object or array itself</li>
+        </ul>
+        <p> The <b>object or array variable</b> is the variable that you deal with
+            in your program; this is the part that you provide an
+            identifier for. The variable (such as the array variable <code>a</code>
+            shown below) may be stored on the stack or in the static storage area:
+            <img src="images/stack-heap02.gif" class="inlineCenter" alt="Variables on the heap">
+            The actual object or the array itself is <b>unnamed</b>, and is
+            <b>stored on the heap</b>. Heap based variables are created
+            by using the <b><code>new</code></b> operator, which allocates
+            the necessary memory from the heap. In the case of an <b>object</b>
+            type, the <b>constructor</b> is then run to initialize that
+            particular instance. In the case of an <b>array</b> the array
+            constructor is used to determine the number of elements to
+            <b>allocate</b> on the heap; it doesn't initialize those elements.
+            <img src='images/claim-check.png' class='right' alt='A valet claim-check.'>
+        </p>
+
+        <p> When the <code>new</code> operator and the constructor are
+            <i>finished</i>, they store the <i>address in memory</i> where the
+            new object is located in a hidden variable, and then return a
+            special code, called a <b>reference</b> that can be used to
+            locate the item in memory. You can think of a reference as
+            the <b>valet claim-check</b> you receive in a parking garage.
+            You use the claim-check to get your car when needed, but you
+            might not know where it's parked. The valet, however, knows
+            from the claim-check where your car is located.
+        </p>
+        <p> It's this reference value that is
+            stored in the array variable. If the object couldn't be
+            created, for some reason, the special value <b><code>null</code></b>
+            is stored in the array variable instead.
+        </p>
+
+    <h3>Assignment</h3>
+
+        <p> <img src="images/b02c.gif" class="right" alt="Two independent value types.">
+            Primitive types, (like <code>int</code> and <code>char</code>),
+            are called <b>value types</b>, (as opposed to <b>reference</b>
+
+            types, like objects). This just means that a primitive variable
+            is a "bucket" in memory that contains an actual value.
+        </p>
+        <p> When you create two primitive variables, like this:</p>
+        <p class="code">
+            int a = 32, b;  	<span class="cmt">// Two independent variables</span>
+        </p>
+        <p> then each variable is an <b>independent</b> storage area; the
+            variables <code>a</code> and <code>b</code> are not "linked"
+            in any way.
+        </p>
+
+    <h4>Value Assignment</h4>
+        <p> When you use <i>assignment</i> with value types, the result is
+            duplicate, independent copies of the values that the variables
+            contain. Consider this example:
+        </p>
+        <p class="code">
+            b = a;		<span class="cmt">// Two independent values</span>
+        </p>
+
+        <p> When this code is executed, it first makes a copy of the value
+            stored in the variable <code>a</code>, and then places that
+            copy in the variable named <code>b</code>:
+            <img src="images/b03c.gif" class="inline" alt="Copying two value types.">
+            This is called a <b>deep copy</b>, and we say that
+                <code>a</code> and <code>b</code> exhibit <b>value semantics</b>.
+        </p>
+        <div class='info'>
+        <p>In Java, <b>only</b> primitive types exhibit value semantics.
+            That's not true of all object-oriented languages. C++, for instance,
+            is designed to allow user-defined types, (classes), to act in the
+            same way by defining a copy constructor and an assignment operator.
+            You'll study this in CS 250, C++ Programming II.
+        </p>
+        </div>
+    <h4>Reference Assignment</h4>
+        <p> As you saw earlier, an object variable, (sometimes called a
+            <i>handle</i>), contains the <b>address</b> of an object, but
+            not the actual object itself.
+        </p>
+
+        <p> If you have some code that looks like this:</p>
+        <p class="code">
+            int[] a = {3, 15, 0, -2, 7};<br>
+            int[] b = a;
+        </p>
+        <p> the assignment copies <b>only the address</b>, not the object or
+            actual array.
+            The result is that the array variable <code>b</code> refers
+            to the same array elements as the variable <code>a</code>; the two
+            variables are <b>aliases</b>, not independent variables:
+            <img src="images/assignment.gif" class="inlineCenter" alt="Reference assignment.">
+            This kind of assignment, where only the address is copied, but
+            not the underlying object or array, is called a <b>shallow copy</b>, and
+            we say that types that exhibit this behavior have <b>reference
+            semantics</b>. In Java, <b>all</b> types other than primitives
+            have reference semantics.
+        </p>
+        <p> With that understanding of the difference between reference
+            and primitive types, let's look at the problem of copying
+            and comparing arrays. We'll look at copying other object types
+            later in the semester.
+        </p>
+    <h2>Making Array Copies</h2>
+        <p> Many times, a shallow copy of an array is good enough; it's certainly
+            more efficient than making a complete copy of all of the array
+            elements every time you need to use the array in a different
+            context.
+        </p>
+        <p> Sometimes, though, you may want to modify the elements of your
+            array copy, while leaving the original elements unchanged. To
+            do that, you need to make a deep copy. (Note that you don't need
+            to worry about this with <code>String</code> variables, since
+            the <code>String</code> class is <i>immutable</i>; you <b>can't</b>
+            change the elements in a <code>String</code> so this sharing
+            behavior is perfectly safe.
+        </p>
+        <p> Since the assignment operator only makes a shallow copy,
+            or alias, how do you go about making a deep copy? There are several
+            different ways to do it. (You'll find each of these examples
+            in <b>ArrayExamples.java</b> in this chapter's code folder.)
+        </p>
+    <h3>Method 1: Use a Loop</h3>
+        <p> To copy an array using a loop, actually takes two steps. Before you
+            can apply the loop, you first have to <b>allocate</b> enough room
+            to hold the copy's elements, like this:<br>
+            <img src="images/loop-copy01.gif" class="inlineCenter" alt="Allocating an array copy.">
+            Use the <code>length</code> of the first array to decide how
+            many elements the second array should contain.
+        </p>
+        <p> Once the copy exists, you can use the regular <b>array traversal
+            algorithm</b> to copy each element from the original to the copy
+            like this:<br>
+            <img src="images/loop-copy02.gif" class="inlineCenter" alt="Copying the array elements.">
+        </p>
+    <h3>Method 2: Clone the Array</h3>
+        <p> Many reference types, including arrays, have a <code>clone()</code>
+            method that allows you to both <b>allocate and copy</b> the elements
+            in one simple step. Here's how you could make a copy of the array using
+            the <code>clone()</code> method:<br>
+            <img src="images/copy02.gif" class="inlineCenter" alt="Copying an array with clone().">
+            The cloned array will be the same size and contain the same
+            elements in the same order as the original.
+        </p>
+    <h3>Method 3: Use System.arraycopy()</h3>
+        <p> The <code>clone()</code> method only works when you want an
+            exact duplicate of an array. If you want only <b>part</b> of
+            an array, you can use a loop. This is common when manipulating
+            portions of images in memory, for instance. Unfortunately, for
+            large arrays, like those used in multimedia, using a loop is
+            relatively slow.
+        </p>
+        <p> The best way to do
+            this is to use the <code>System.arraycopy()</code> method, which is
+            written in highly optimized native code as part of the JVM for your
+            platform. Using <code>System.arraycopy()</code> will almost always
+            be faster than writing your own loop. (No, I don't know why it's
+            not called <code>System.arrayCopy()</code>.)
+        </p>
+        <p> Unfortunately, a first look at the method's documentation can
+            be daunting. <code>System.arraycopy()</code> takes five arguments:
+        </p>
+        <ol>
+            <li>The name of the <b>source</b> array (copy <b>from</b> here)</li>
+            <li>The source element to start with (use 0 to start at the beginning)</li>
+            <li>The name of the <b>destination</b> array (copy <b>to</b> here)</li>
+            <li>The destination element to start with (use 0 to start at the beginning)</li>
+            <li>The number of elements to copy</li>
+        </ol>
+        <p> If you make a mistake in
+            these arguments (if, for instance, the destination array is not large
+            enough to receive the elements you want to copy), then the JVM
+            <b>will throw an exception</b>. Fortunately, when copying an entire array, it's not
+            hard to get them right. Simply do this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            double[] copy = new double[nums.length];<br>
+            System.arraycopy(nums, 0,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            copy, 0,&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            nums.length);
+        </p>
+        <p> That wasn't too hard, was it?
+        </p>
+    <h3>Method 4: Using the Arrays Class</h3>
+        <p> <img src="images/c02.gif" class="right" alt="The heading for the Arrays class.">
+            The <b>Arrays</b> class in the <code>java.util</code> package is a
+            class that "contains various methods for manipulating arrays,
+            (such as sorting and searching)", according to the introductory
+            heading in the JavaDocs.
+        </p>
+        <div class='alert'>
+        <p> It's easy to miss this class, because there's also an <code>Array</code>
+            interface that deals with SQL, and an <code>Array</code> class that
+            deals with <i>reflection</i>. The one that we want has an "s" on the
+            end. The copying methods in this class only work with Java 6. You should only
+            use these methods when you can be sure that your code will only
+            run on a Java 6 platform. (If you are running <b>ArrayExamples.java</b>
+            on a pre-Java 6 machine, like some Macs, you'll need to comment-out
+            the code in this section: from lines 62-80).
+        </p>
+        </div>
+        <p> The <code>Arrays.copyOf()</code> method is useful, because it allows you to
+            easily make a copy <b>that is a different size</b> than the original.
+            If you make the copy larger, then the extra elements are initialized
+            to 0. If you make the copy smaller, then the extra elements are simply
+            discarded.
+
+        </p>
+        <p> <img src="images/copy03.gif" class="inline" alt="Copying an array with Arrays.copyOf().">
+            <img src="images/copy04.gif" class="right" alt="Two Arrays.copyOf() arrays.">
+            Here's an example that makes two more array copies, <code>d</code> and
+            <code>e</code>, using the <code>Arrays.copyOf()</code> method. The array
+            that <code>d</code> refers to is twice the size of <code>a</code>, while
+            the array that <code>e</code> refers to is half the size.
+        </p>
+        <p> If we were to display the contents of each of these arrays
+            (which you'll see how to do shortly), they would look like this.
+            Note how <code>d</code> is padded with 0s, and how <code>e</code> is
+            <i>truncated</i> to two elements (half of 5).
+        </p>
+    <h4>The copyOfRange() Method</h4>
+        <p> The <code>Arrays.copyOf()</code> method allows you to grow or
+            shrink an existing array, but it doesn't allow you to extract
+            just a portion in the middle. That's where the <code>copyOfRange()</code>
+            method comes in. The method takes three parameters:
+        </p>
+        <ul>
+            <li>The <b>source array</b> that contains the elements you want to copy.</li>
+            <li>An <b>initial index</b>. This is the location of the first element to
+                be copied. You can specify the length of the original array (in which
+                case no elements will be copied), but other wise, the starting element
+                must be between 0 and the length.
+            </li>
+            <li>An <b>ending index</b>. This works a little like the <code>substring()</code>
+                method. The ending index is <b>not copied</b> into the output. Unlike
+                <code>substring()</code> though, you <b>can</b> specify an ending index
+                larger than the size of the original array. The ending index <b>must</b>
+                be at least as large as the starting index.
+            </li>
+        </ul>
+        <p> There are several ways you can use <code>copyOfRange()</code>. Here
+            are three examples: <br>
+            <img src="images/copy06.gif" class="inline" alt="Copying an array with Arrays.copyOfRange().">
+            As you can see:
+            <img src="images/copy05.gif" class="right" alt="Copying an array with Arrays.copyOfRange().">
+        </p>
+        <ul>
+            <li>The first example uses 0 for the starting index and <code>a.length</code> as
+                the ending index, thus copying the entire array.
+            </li>
+            <li>The second example (<code>g</code>) uses <code>a.length / 2</code> as the
+                starting index and <code>a.length - 1</code> as the ending index, thus copying
+                two elements from the original array.
+            </li>
+            <li>The final example uses <code>a.length / 2</code> as the starting index
+                once again, but sets the second index past the end of the original
+                array. When the new array is created, these additional elements will
+                be filled with 0.
+            </li>
+        </ul>
+        <div class='alert'>
+        <p> Let me reiterate my earlier warning. This code <b>won't</b> work on pre-Java6
+            runtimes. That means some Macs, as well as a lot of other machines
+            out in the "real world", especially those running "server-side"
+            code.
+        </p>
+        </div>
+    <h2>Comparing Arrays</h2>
+        <p> How do you tell if two arrays are equal. Let's see. What do you think
+            this program prints out?<br>
+            <img src="images/compare01.gif" class="inline" alt="Comparing three arrays.">
+            You should notice:
+        </p>
+        <ul>
+            <li>The contents of all three arrays (were we to print them) would
+                be identical.
+            </li>
+            <li>We can use both <code>==</code> and <code>!=</code> with
+                array variables.
+            </li>
+        </ul>
+        <p> <img src="images/compare02.gif" class="right" alt="Comparing three arrays.">
+            If we run the program, though, the results might not be what you
+            expected. Arrays work the same way that <code>String</code> variables
+            do when it comes to comparison. When we print the results, you see
+            that <code>first</code> is <b>not</b> equals to <code>second</code>,
+            because the value of the reference (that is, the <b>address of the
+            actual array elements</b>) is different in each case.
+        </p>
+        <p> When we compare <code>second</code> and <code>third</code>, though,
+            we find that they <b>are</b> equal. This is <b>not</b> because
+            they have the same values in the array elements, but because
+            <b>both array variables refer to exactly the same actual array</b>.
+            (Of course, that <b>also means</b> that they both have the same
+            contents, since they are exactly the same array.)
+        </p>
+        <p> As with <code>String</code>s, we are <i>rarely</i> interested in
+            this kind of "identity" comparison. Most of the time we are interested
+            in comparing the actual values stored in the array. There are
+            two ways to do that.
+        </p>
+    <h3>Method 1: Use a Loop</h3>
+        <p> You can use Boolean expressions, <code>if</code> statements and loops
+            to compare two arrays to see if they are equal. Here's the code to compare
+            <code>first</code> and <code>second</code> to see if they have
+            the same values:<br>
+            <img src="images/compare03.gif" class="inline" alt="Comparing arrays for values.">
+            Note that:
+        </p>
+        <ol>
+            <li class="d">First, we need to determine if the two arrays have
+                the same length. If they don't, then they aren't equal.
+            </li>
+            <li class="d">Next, we need to <b>traverse</b> the entire array.
+                At each element, we compare the corresponding elements in
+                the two arrays.
+            </li>
+        </ol>
+        <p> Now, what should we do if they match? Well if that's the case, we
+            check the next one. If they <b>don't</b> match, though, we don't
+            have to go any further: the two arrays are <i>not</i> equal.
+        </p>
+        <p> When this occurs, we set the Boolean flag to <code>false</code>.
+            Since nothing ever sets it to true again, that's all we really
+            need. However, since there's no <b>point</b> in comparing any
+            of the remaining elements, you can use the <code>break</code>
+            statement to exit the loop when that's determined.
+        </p>
+    <h3>Method 2: Use Arrays.equals()</h3>
+        <p> This code is not difficult, but it is kind of annoying to have
+            to do this each time you want to compare two arrays. Isn't there
+            an easier way?
+        </p>
+        <p> Yes, there is!</p>
+        <p> The <code>Arrays</code> class has an <code>equals()</code> method
+            that works pretty much like <code>String.equals()</code>. Here's
+            the same comparison using this method:<br>
+            <img src="images/compare04.gif" class="inline" alt="Using Arrays.equals().">
+        </p>
+        <div class='alert'>
+        <p> Unlike the <code>copyOf()</code> method, the <code>equals()</code> method
+            will work on earlier versions of Java.
+        </p>
+        </div>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Array Copy and Compare Summary
+        </p>
+        <ul>
+            <li>Arrays, like objects, are <b>reference types</b>. That means
+                that the array variable is used to retrieve the actual
+                array elements, which are stored on the <b>runtime heap</b>.
+            </li>
+            <li>When you assign one array variable to another,
+                <b>only the reference</b> is copied, not the actual array
+                elements. This is called a <b>shallow copy</b> and both
+                array variables refer to exactly the same array. We can say
+                that they are <b>aliases</b> for each other.
+            </li>
+            <li> A <b>deep copy</b> is a copy of an array that includes
+                copies of each of the array elements, not a copy of the
+                array reference.
+            </li>
+            <li>When you need to make a deep copy of an array, you can first
+                allocate a second array that is exactly the same size and
+                then <b>use a loop to copy each element</b> from the original
+                array to the copy. This can be a little slow.
+            </li>
+            <li>The <code>System.arraycopy()</code> method will <b>perform
+                an optimized copy</b> of the elements from one array to
+                another. You must first allocate the destination (copy)
+                array, but then the duplication of elements goes very
+                quickly. You may also copy a portion of an array, so
+                both arrays do not need to be the same size.
+            </li>
+            <li>All arrays have a <code>clone()</code> method which will
+                <b>make an exact duplicate</b> of the entire array. When
+                you use <code>clone()</code> you do not need to allocate
+                the destination array first. You cannot use <code>clone()</code>
+                to copy a portion of an array.
+            </li>
+            <li>Starting in Java 6, the <code>java.util.Arrays</code> class
+                added several convenience methods for quickly and efficiently
+                performing deep array copies. The <code>copyOf()</code> methods
+                will allow you to <b>copy, grow and shrink</b> an existing
+                array, while the <code>copyOfRange()</code> methods allow you
+                to create a new array <b>from a portion</b> of an existing
+                array. Neither of these work in Java previous to version 6.
+            </li>
+            <li>To <b>compare two arrays</b> you should not use <code>==</code>
+                because that compares the <b>reference values</b>; in other words
+                it tells you if two array variables refer to the same
+                <b>actual array</b>.
+            </li>
+            <li>To see if <b>two arrays have the same contents</b> you can use
+                a loop, comparing each individual element, or you can use
+                the <code>java.util.Arrays.equals()</code> method. Unlike
+                <code>String equals()</code>, this is a <code>static</code>
+                method that requires you to pass both arrays as arguments
+                to the method.
+            </li>
+
+
+        </ul>
+    </div>
+    </div>
+
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

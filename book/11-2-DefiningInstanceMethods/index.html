@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>11.2&mdash;Defining Instance Methods</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner12">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.2</p>
+        <p id='lessonTitle'>Defining Instance Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/girls.jpg" class="right" alt="Surprised girls.">
+            <b><span class="cap">A</span>t this point</b>, many of you are
+            probably thinking that adding
+            a new class like <code>SimpleBall</code> to your program doesn't
+            have a lot to recommend it; it adds another task to complete,
+            and, let's face it, the <b>AppletBounce2</b> program wasn't any
+            more understandable or elegant than its predecessor. In fact,
+            maybe the opposite.
+        </p>
+        <p> You might be surprised to find that I agree with you. For simple
+            programs, you don't necessarily gain anything by creating a class;
+            often just a straightforward program with a few variables is the
+            best way to go.
+        </p>
+        <p> However, once your programs start to move out of the toy-example
+            realm, classes really can make your code clearer, easier to
+            understand, and more efficient. In fact, I think that you'll find
+            that even with the little programs we're writing here, you'll
+            prefer the version that we finish up with.
+        </p>
+    <h2>AppletBounce3 &amp; MethodBall</h2>
+        <p> While <code>SimpleBall</code> may be one of the simplest classes
+            possible, but it's <b>not really typical</b> of Java classes;
+            most Java classes contain <i>both</i> <b>fields</b> <i>and</i>
+            <b>methods</b>.
+        </p>
+        <p> Let's continue working with our
+            bouncing-ball examples and you'll learn to define different
+            kinds of behaviors to your class. You'll do that by writing
+            the <code>MethodBall</code> class, which we'll use in a new
+            test program named <b>AppletBounce3</b>.
+        </p>
+        <p> To create the <b>AppletBounce3</b> program, just use <b>Save As...</b>
+            in DrJava. Once you've saved the program under a new name,
+            make the three changes to the source code shown:<br>
+            <img src="images/ab3a.png" class="inline" alt="The AppletBounce3 program.">
+            Other than these changes, the rest of
+            <b>AppletBounce3</b> is still the same as <b>AppletBounce2</b>. As
+            we add new methods to the <code>MethodBall</code> class,
+            <b class='ry'>you'll modify AppletBounce3</b>, moving code from the
+            applet to your new class.
+        </p>
+
+    <h3>The MethodBall Class</h3>
+        <p> If you try to compile your program at this point, you
+            end up with a whole slew of compiler errors, because the
+            <code>MethodBall</code> class hasn't been defined yet. Let's
+            take care of that now.
+        </p>
+        <p>To create the new <code>MethodBall</code> class, just:
+            <img src="images/mb00.gif" class="inlineCenter" alt="MethodBall file.">
+        </p>
+        <ol>
+            <li class="d">open the <b>SimpleBall</b> source
+                code, and then do <b>Save As...</b> in DrJava. Save your
+                new file as <b>MethodBall.java</b>.
+            </li>
+            <li class="d">change <b>the name of the class</b> so that it matches the file name.
+            </li>
+        </ol>
+        <p> Once that's done, you can <b>compile and run AppletBounce3</b>.
+            Once you've done that, you can start adding new methods (and making
+            the appropriate changes to both <b>MethodBall.java</b> and to
+            <b>AppletBounce3.java</b>).
+        </p>
+    <h2>Adding New Methods</h2>
+        <p> Let's start by giving our ball the ability to draw itself.
+            After all, when you work with <code>GOval</code> objects,
+            you don't have to do the painting yourself, do you?
+        </p>
+        <p> To do that, we just need to add a method&mdash;I'll call it
+            <code>draw()</code>&mdash;inside the <code>MethodBall</code> class.
+            Now, of course, the new method <i>can't</i> do any drawing
+            without a <b>pen</b>, so define the method so that it
+            has a <code>Graphics</code> parameter variable, like this:<br>
+            <img src="images/mb01.gif" class="inlineCenter" alt="The MethodBall draw() method skeleton.">
+            To actually <b>do</b> the drawing, just move the <i>painting</i>
+            code from <b>AppletBall3</b>'s <code>advanceOneFrame()</code> method and
+            paste it into your new <code>MethodBall</code>'s <code>draw()</code>.
+        </p>
+        <div class='alert'>
+        <p> Only move the two lines that actually have to do with <i>painting</i>,
+            <b>not</b> the lines that move the ball or that check for collisions.
+        </p>
+        </div>
+        <p>Then, to get it to compile, just <b>remove</b> all
+            references to the variable <code>ball</code> like this:<br>
+            <img src="images/mb02.gif" class="inlineCenter" alt="The MethodBall draw() method.">
+            We don't need the reference to the <code>ball</code> object,
+            because now, <b class='ry'>the method is inside the class itself</b>. When we
+            write <code>pen.setColor(color)</code> it means to use the
+            <code>color</code> field inside the <b>current object</b> used
+            to call the method. You don't need to use the "dot" to access
+            instance variables from methods in the same class.
+        </p>
+        <p class="pullquote">
+            Instance methods have direct access to instance variables.
+        </p>
+        <p> Then, compile the code to make sure that your new
+            <code>draw()</code> method is syntactically correct.
+        </p>
+    <h3>Calling the draw() Method</h3>
+        <p> To <b>call</b> the <code>draw()</code> method, we need to
+            change the code in the <b>AppletBounce3</b> program's
+            <code>advanceOnceFrame()</code> method like this:<br>
+            <img src="images/ab3b.gif" class="inlineCenter" alt="Using the MethodBall draw() method.">
+            <b>Well!</b> That certainly looks simpler.
+        </p>
+        <p> Notice, to <b>call</b> the <code>ball</code>'s
+            <code>draw()</code> method, you have to <i>pass</i> it a
+            <code>Graphics</code> object that it can use to do the
+            actual painting.
+        </p>
+    <h3>A Small Problem</h3>
+        <p> Although the <code>draw()</code> method works find for our
+            example, it does have <b>one little flaw</b>. Since the method
+            <b>changes</b> the color used to draw the circle to
+            the color stored inside the <code>MethodBall</code> object,
+            any painting that appears <b>after</b> calling
+            <code>ball.draw(pen)</code> will use the <b>new</b>
+            color.
+        </p>
+        <p> Obviously, that's an <b>undesirable side effect</b>. When
+            you have methods that need to change the state of some
+            global resource to carry out their work, you should always
+            save the initial state and then restore it when your method
+            is done.
+        </p>
+        <p> Here's a final version of the <code>draw()</code> method that
+            does that:<br>
+            <img src="images/mb03.gif" class="inlineCenter" alt="The revised MethodBall draw() method.">
+        </p>
+    <h2>Mutator Methods</h2>
+        <p> The <code>draw()</code> method <b>uses</b> the fields inside
+            the <code>MethodBall</code> class to know where to draw and
+            what color to use for drawing, but it doesn't <b>change</b>
+            those fields, or <b>return</b> those fields to the caller.
+        </p>
+        <p> Methods that <b>change the state of an object</b>, by modifying
+            the values stored in the object's fields, are called
+            <b>mutator</b> methods. Simple mutators are sometimes known as
+            <b>setter</b> methods, since they often start with the
+            word <b>set</b>; I'll use the term mutator, though, which
+            is more accurate.
+        </p>
+        <p> <img src="images/ab3c.gif" class="right" alt="Changing the state of the ball.">
+            If you examine the applet's <code>advanceOneFrame()</code> method,
+            you'll see that there are three places where the <code>ball</code>
+            object fields are modified:
+        </p>
+        <ul>
+            <li>The <code>location</code> is modified before the
+                ball is drawn, and
+            </li>
+            <li>The horizontal (<code>dx</code>) direction field is
+                modified when the ball hits the side walls.
+            </li>
+            <li> The vertical (<code>dy</code>) direction field
+                is modified when the ball hits either the ceiling
+                or the floor, as shown in
+                the screenshot on the right.
+            </li>
+        </ul>
+        <p> Let's go ahead and add <b>mutator</b> methods to the
+            <code>MethodBall</code> class, that the applet can use
+            in each of these cases. I'll call the methods <code>move()</code>,
+            <code>bounceHorizontal()</code> (for changing <code>dx</code>) and
+            <code>bounceVertical()</code> (for changing <code>dy</code>).
+        </p>
+    <h3>Moving the Ball</h3>
+        <p> To move the ball, we have to modify (or <i>mutate</i>) the
+            <code>location</code> variable, adding <code>dx</code> to
+            <code>location.x</code> and <code>dy</code> to
+            <code>location.y</code>. <b>However</b>, since <code>location</code>
+            is an <b>object</b> variable, of type <code>Point</code>, it
+            has its own set of methods. We can use the <code>Point</code>
+            method, <code>translate</code>, to move the point to the
+            new location.
+        </p>
+        <p> Just wrap that up in a <code>void</code> method named
+            <code>move()</code> and you're ready to go. Here's what
+            that looks like:<br>
+            <img src="images/mb04.gif" class="inlineCenter" alt="The MethodBall move() method.">
+        </p>
+        <div class='alert'>
+        <p> Make sure that you put the <code>move()</code> method inside the
+            <code>MethodBall</code> class (as shown here), and <b class='ry'>not</b>
+            inside the <b>AppletBounce3</b> program.
+        </div>
+    <h3>Bouncing the Ball</h3>
+        <p> Bouncing the ball is even simpler. If the ball hits the side
+            walls, just change <code>dx</code>. Suppose the horizontal
+            velocity (<code>dx</code>) was 4 pixels per frame. That means
+            the ball must be moving right across the screen, since every
+            frame will <b>increase</b> <code>location.x</code> by 4 pixels.
+        </p>
+        <p> When the ball hits the right wall, we want to start moving,
+            at the same speed, to the left. We do that just by changing
+            the sign of the horizontal velocity, so on the next frame,
+            instead of adding 4 pixels to x, we <b>subtract</b> them.
+        </p>
+        <p> The code for bouncing vertically is the same, except that
+            we will <i>mutate</i> the value for the vertical velocity
+            (<code>dy</code>). Here's what these two methods look like:<br>
+            <img src="images/mb05.gif" class="inlineCenter" alt="The MethodBall bounce...() method.">
+        </p>
+    <h3>Changing AppletBounce3</h3>
+        <p> Even though we've added the new methods to the <code>MethodBall</code>
+            class, our applet (<code>AppletBounce3</code>) is still doing things
+            the hard way. Just replace the old code with the new methods, like
+            this:<br>
+            <img src="images/ab3d.gif" class="inlineCenter" alt="Modifying AppletBounce3.">
+        </p>
+    <h2>An Improved Move</h2>
+        <p> While the <code>move()</code> and <code>bounce()</code> methods
+            help a little, our applet's <code>advanceOneFrame()</code> method is
+            <b>still too complex</b>. That's because of the code used to
+            determine if the ball has hit one of the edges.
+        </p>
+        <p> Here's the problem:</p>
+        <ul>
+            <li>To see if the ball has hit the edge, the applet has to
+                grab the radius, and the location from the ball. It has
+                to "look inside" the ball itself to know where its edges are.
+            </li>
+            <li>If we were to try to move the code from the applet to a
+                method inside the <code>MethodBall</code> class, the
+                ball would have to know where the edges are.
+            </li>
+        </ul>
+        <p> We have a situation where each class (the applet and the ball)
+            knows <b>part</b> of the information needed, but not all of it.
+            The solution that we're using now is really not that great,
+            because it requires both classes to "know about" the internal
+            details of the other class.
+        </p>
+    <h3>A Better Way</h3>
+        <p> Here's a better solution. Instead of having the applet "peer
+            inside" the ball, let's have the applet <b>pass</b> the information
+            that the ball needs, <b>as a parameter</b>. Whenever the applet
+            asks the ball to <code>move()</code>:
+        </p>
+        <ul>
+            <li>it supplies it with the boundaries that the ball must
+                stay inside. The applet can do this, by calling it's
+                <code>getBounds()</code> method, a method that is built
+                into all AWT components.
+            </li>
+            <li>the ball itself is responsible for changing its velocity
+                whenever its trajectory would move it off screen.
+            </li>
+        </ul>
+        <p> Here's the new, modified version of the <code>MethodBall.move()</code>
+            method:<br>
+            <img src="images/mb06.gif" class="inlineCenter" alt="The MethodBall improved move() method.">
+            Notice that:
+        </p>
+        <ul>
+            <li> The method now has a <code>Rectangle</code> parameter variable,
+                named <code>box</code>. This will let the ball "know"
+                when it goes out of bounds.
+            </li>
+            <li> The "bouncing" code from the applet's <code>advanceOneFrame()</code>
+                method has been copied into the <code>move()</code> method.
+                All of the <code>ball.</code> prefixes have been removed,
+                since we are now "inside" the <code>MethodBall</code> object
+                itself, and our methods have <b>direct access</b> to the
+                <b>fields</b> of the class.
+            </li>
+            <li> Instead of calling the <code>getWidth()</code> and
+                <code>getHeight()</code> applet methods, we use the
+                <code>width</code> and <code>height</code> <b>fields</b>
+                in the <code>box</code> parameter.
+            </li>
+        </ul>
+    <h3>Incorporating the Improvement</h3>
+        <p> To use the new <code>move()</code> method, we need to change
+            the code inside the <code>AppletBounce3 advanceOneFrame()</code> method.
+            Simply remove all of the "bouncing" code, and pass the
+            <code>Rectangle</code> returned from calling <code>getBounds()</code>
+            to the <code>move()</code> method, like this:<br>
+            <img src="images/ab3e.gif" class="inlineCenter" alt="Finished AppletBounce3 paint() method.">
+        </p>
+    <h3>Looking Back</h3>
+        <p> At the beginning of this lesson, I wrote:</p>
+        <p class="pullquote">
+          "..classes really can make your code clearer, easier
+          to understand, and more efficient. In fact, I think
+          that you'll find that even with the little programs
+          we're writing here, you'll prefer the version that
+          we finish up with."
+        </p>
+        <p> <img src="images/girls2.gif" class="right" alt="Two smiling girls.">
+            So, what do you think? Looking only at the <code>advanceOneFrame()</code>
+            method, notice that our new applet <b>only</b>:
+        </p>
+        <ul>
+            <li>has to tell the ball to move itself</li>
+            <li>has to tell the ball to paint itself</li>
+        </ul>
+        <p> <b>HOW</b> the ball carries out both of those actions is
+            entirely <b>encapsulated</b> inside the <code>MethodBall</code>
+            class itself.
+        </p>
+        <p> We aren't entirely finished yet, though. It's still possible for
+            our program to reach inside the ball object, and mess things
+            up by accidentally directly modifying the object's fields.
+        </p>
+        <p> In fact, directly modifying the object's fields is the
+            <b>only way</b> that we currently have for initializing
+            our objects. We'll fix that in the next lesson, when you
+            meet the super <b>EncapsulatedBall</b> class.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Once you've finished these changes to <b>MethodBall</b> and
+            <b>AppletBounce3</b>, compile and run the applet.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Defining Instance Methods Summary
+        </p>
+        <ul>
+            <li> To <b>define</b> an instance method, specify the
+                <b>access specifier</b> (usually <code>public</code>),
+                the <b>return type</b>, the <b>name</b> of the method
+                and any <b>formal parameters</b>.
+            </li>
+            <li> When accessing instance variables from an instance method
+                in the same class, you <i>may</i> preface the variable name
+                with the keyword <code>this</code>, but most often you'll
+                omit it and just <b>directly access the field</b>. You
+                don't need to use object-dot-field notation with fields
+                in the same class.
+            </li>
+            <li> Methods that modify instance variables may have
+                <b>undesirable side effects</b>. Such methods should
+                <b>save the state</b> of the field on entry and then
+                <b>restore</b> it on leaving.
+            </li>
+            <li> Methods that <b>change the state of an object</b>, by modifying
+                the values stored in the object's fields, are called
+                <b>mutator</b> methods. Mutators are often called
+                <b>setter</b> methods.
+            </li>
+            <li> When methods in two different classes "know only part of the
+                answer", you should have one method <b>pass the needed information</b>
+                to the other method, as a <b>parameter</b>.
+            </li>
+            <li> Using classes with methods really can make your code clearer, easier to
+                understand, and more efficient.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

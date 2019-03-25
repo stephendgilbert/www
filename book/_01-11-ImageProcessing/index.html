@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>2D Image Processing</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner06">
+        <img id='lessonLogo' src='../images/g.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 122 Handout</p>
+        <p id='lessonTitle'>2D Image Processing</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src='images/photo-filter03.gif' class='right' alt='Photoshop filter.'>
+        <b><span class='cap'>I</span>nstead of writing some more 2D array functions
+            or procedures</b>, and checking them with the <b>Check</b> program, let's
+            finish up this chapter by learning how to do something practical and fun.
+        </p>
+        <p> So you can get a feel for how 2D arrays are actually used in the real
+            world, we'll write a few little <b>image filter programs</b>,
+            similar, (in principle) to the filters found in programs
+            like Photoshop.
+        </p>
+        <p> Although the program we'll write won't be as sophisticated or
+            as fast as the commercial filters you can purchase, it
+            will give you an idea about how such programs are written.
+            (Plus, you'll get some exercise using 2D arrays!) Let's start
+            by looking at how images are stored as data.
+        </p>
+        <p> If you look inside a photographic image from a digital camera,
+            what you'll find is a 2D array of integers, just like the 2D arrays
+            you met earlier in the chapter. Each integer represents a single
+            RGB color, like those shown here:<br>
+            <img src='images/pixels.png' class='inlineCenter' alt='Pixels in an image.'>
+            With the <code>GImage</code> class in the ACM libraries, we can
+            <b>extract</b> those pixels as a 2D <code>int[][]</code> array,
+            using the <code>getPixelArray()</code> method like this.<br>
+            <img src='images/getPixelArray.gif' class='inlineCenter' alt='Getting the pixels in an image.'>
+            Then, we can use a loop to <b>modify</b> or <b>move</b> the pixels
+            that we are interested in. Once we've modified the array, we can
+            turn it back into a new image using one of the GImage constructors,
+            like this.<br>
+            <img src='images/gimage-array-constructor.gif' class='inlineCenter' alt='Constructing a GImage object from an array.'>
+        </p>
+        <div class='info'>
+            <p> The internal storage format used for images inside your computer is
+                actually a bit more complex than I've shown here. Specifically, the
+                <code>Image</code> class often uses a <b>flattened 1D int-array
+                representation</b> instead of the 2D arrays provided by the
+                ACM libraries and the <code>Picture</code> class.
+                Of course, that shouldn't bother you, because you
+                know how to convert between those two representations, right?
+                <img src='../images/smiley.gif' style='vertical-align:top;' alt='A smiley icon.'>
+            </p>
+        </div>
+        <p> That's all the background you need. To get started, open <b>ImageManipulation.java</b>
+            (from this chapter's code folder) in DrJava. When the program starts up
+            it asks you to pick a file. Place your pictures in DrJava's media folder.
+            If you don't have
+            an image, I've placed two of my vacation pictures in your media folder
+            that you can work on.
+        </p>
+        <div class='alert'>
+            <p>
+            You may want to hard-code the file name on
+            line 20, and comment out the line that asks you to pick a file,
+            if you want to process the same image each time.
+            </p>
+        </div>
+    <h2>Task 1: Darkening an Image</h2>
+        <p> Inside <b>ImageManipulation.java</b> locate the section that handles the
+            code for the <b>darken button</b>. (I've added a #1 comment).
+            <img src='images/darken01.gif' class='inlineCenter' alt='The Darken button.'>
+            The code in this section will be called when the user clicks the
+            program's <b>Darken</b> button. Your job is to replace the
+            comments I've added with code that makes the program work.
+        </p>
+        <p> Here are the steps to follow:</p>
+        <ol>
+            <li class='d'>Use <b>nested loops</b> to visit every element in the array:<br>
+                <img src='images/darken02.gif' class='inlineCenter' alt='Looping through the pixels.'>
+            </li>
+            <li class='d'>Use the one-parameter <code>Color</code> constructor to create an
+                object using the integer color values from <code>pixels</code> like this:<br>
+                <img src='images/darken03.gif' class='inlineCenter' alt='Extracting the color.'>
+            </li>
+            <li class='d'>Use the <code>Color darker()</code> method to darken the pixel
+                and then use the <code>Color</code> class <code>getRGB()</code> method
+                to convert the <code>Color</code> object back into an integer RGB
+                color value. You can then put the modified integer
+                value back into the current <code>pixels</code> array element like this:<br>
+                <img src='images/darken04.gif' class='inlineCenter' alt='Darkening the pixel.'>
+            </li>
+        </ol>
+    <h2>Task 2: Mirror Image</h2>
+        <p> You can modify the pixels in other ways. You don't have to just put the
+            same pixel back in the same location. If you take the pixels on the left
+            side of the picture, and exchange them one by one to the right side of the
+            picture, you can <b>flip</b> the original image horizontally. If you
+            copy the pixels, instead of exchanging them, you can create a
+            <b>mirror image</b> effect.
+        </p>
+        <p> Let's try that. Find the section for the <b>Mirror</b> button, and
+            then follow the instructions here.
+        </p>
+        <ol>
+            <li class='d'>Start using <b>nested loops</b>. However, for the inner
+                (column) loop, stop when you get to the middle, since we really only
+                want the elements on the left-hand side of the picture. Here's
+                what your loops should look like:<br>
+                <img src='images/mirror01.gif' class='inlineCenter' alt='Looping through the pixels.'>
+            </li>
+            <li class='d'>We don't need to create a <code>Color</code> object, since all we
+                are doing is moving the pixel values. Just copy the current pixel element
+                over to the corresponding position on the right side of the picture:<br>
+                <img src='images/mirror02.gif' class='inlineCenter' alt='Moving the pixels.'>
+                Notice when <code>col</code> is 0 on any given row, that the pixel will be
+                copied to the pixel on the very end of that same row. When <code>col</code>
+                is 1, then that pixel will be copied to the corresponding pixel that is
+                one-in from the far right, and so on.
+            </li>
+        </ol>
+        <div class='exercise'>
+        <h5>Try It Out</h5>
+        <p> When you're finished, run the program and click the <b>Mirror</b> button.
+            If you've done it correctly, you should see something like this:<br>
+            <img src='images/mirror03.gif' class='inlineCenter' alt='Results of mirror.'>
+        </p>
+        </div>
+    <h2>Task 3: Image Rotation</h2>
+        <p> The two filters we've written so far have left the <code>pixels</code> array
+            the same size as it began. When you rotate or change the size of the image,
+            though, you need to <b>create a new array</b>. Let's do that by completing
+            the code connected to the <b>Rotate</b> button.
+        </p>
+    <h3>Rotating Matrices</h3>
+        <p> "Rotating" a 2D array (or <b>matrix</b>) is a little more difficult than
+            simply moving elements around. Here's a simple example that explains
+            what needs to be done. In the picture on the left is a simple
+            2D, 3x2 array:<br>
+            <img src='images/rotateRight.png' class='inlineCenter' alt='Rotating an array.'>
+            If you picture the array in your mind, you can see the
+            first row containing 2 and 5. Underneath the two and five are
+            the second row 6 and 7, and underneath that, in the third
+            row are 3 and 9 like this.
+        </p>
+
+        <p> Now, imagine that we push this "block" over on it's side,
+            like the picture in the center, so that if finally comes to rest
+            like the picture on the right. The first column in the original array
+            becomes the first row of the new array.
+        </p>
+        <div class='alert'>
+        <p> Notice that we <b>can't</b> just move elements around, since
+            the <b>shape</b> of the finished array changes from 3 x 2 to 2 x 3.
+        </p>
+        </div>
+
+        <p> To to rotate this array (let's call it <code>values</code>) array,
+            we need to:
+        <ol>
+            <li class='d'>Create a <code>temp</code> array to hold the new elements.
+                Use the length of the original array (<code>values</code>)
+                as the number of columns for the temp array. Use the length of the
+                <b>first row</b> in the original array (that is, the <b>number of
+                columns</b> from <code>values</code>) as the
+                <b>number of rows</b> in the <code>temp</code> array.
+                <p class='note'>In other words, your new array should have the
+                    same number of columns as the original had rows, and the
+                    same number of rows as the original had columns.
+                </p>
+            </li>
+            <li class='d'>Now, write a nested loop that processes the first
+                array and copies the values into the second array. Notice
+                that if you process the first array column by column, starting
+                at the bottom row (the element containing 3), you can copy
+                the values across to the first row in the new array.
+            </li>
+        </ol>
+    <h3>Rotating Pixels</h3>
+        <p> We can apply this same logic to the <code>pixels</code> array in
+            <b>ImageManipipulation</b>. Here are the step-by-step instructions:
+        </p>
+        <ol>
+            <li class='d'>We need a temporary array to hold the pixels in their
+                new locations. When we create the temporary array, we need to
+                <b>reverse</b> the row and column dimensions. Here's some
+                code that does this:
+                <img src='images/rotate01.gif' class='inlineCenter' alt='The temporary array.'>
+            </li>
+            <li class='d'>Now, we need a nested loop that goes through the
+                temporary array. At each element, we grab the corresponding
+                element from the original <code>pixels</code> array like this:
+                <img src='images/rotate02.gif' class='inlineCenter' alt='Rotating the elements.'>
+                I find that looking at the matrix rotation picture from earlier in
+                the lesson (or just drawing its equivalent on the back of an
+                envelope) helps me to figure out exactly which pixel I need to
+                grab from the <code>pixels</code> array.
+            </li>
+            <li class='d'> Lastly, we need to make sure that the array variable <code>pixels</code>
+                now points to our new modified array. You do that with a simple
+                <b>assignment statement</b> like this:<br>
+                <img src='images/rotate03.gif' class='inlineCenter' alt='Assigning pixels.'>
+            </li>
+        </ol>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

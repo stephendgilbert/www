@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>database.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;iomanip&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;fstream&gt;</span>
+<span class="line">  4 </span><span class="dir">#include &lt;sstream&gt;</span>
+<span class="line">  5 </span>
+<span class="line">  6 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  7 </span>
+<span class="line">  8 </span><span class="dir">#include</span> <span class="dstr">&quot;ccc_empl.h&quot;</span><span class="dir"></span>
+<span class="line">  9 </span>
+<span class="line"> 10 </span><span class="kwb">const int</span> NEWLINE_LENGTH <span class="sym">=</span> <span class="num">2</span><span class="sym">;</span>
+<span class="line"> 11 </span><span class="kwb">const int</span> RECORD_SIZE <span class="sym">=</span> <span class="num">30</span> <span class="sym">+</span> <span class="num">10</span> <span class="sym">+</span> NEWLINE_LENGTH<span class="sym">;</span>
+<span class="line"> 12 </span>
+<span class="line"> 13 </span><span class="com">/**</span>
+<span class="line"> 14 </span><span class="com">   Converts a string to a floating-point value, e.g.</span>
+<span class="line"> 15 </span><span class="com">   &quot;3.14&quot; -&gt; 3.14.</span>
+<span class="line"> 16 </span><span class="com">   &#64;param s a string representing a floating-point value</span>
+<span class="line"> 17 </span><span class="com">   &#64;return the equivalent floating-point value</span>
+<span class="line"> 18 </span><span class="com">*/</span>
+<span class="line"> 19 </span><span class="kwb">double</span> <span class="kwd">string_to_double</span><span class="sym">(</span>string s<span class="sym">)</span>
+<span class="line"> 20 </span><span class="sym">{</span>
+<span class="line"> 21 </span>   istringstream <span class="kwd">instr</span><span class="sym">(</span>s<span class="sym">);</span>
+<span class="line"> 22 </span>   <span class="kwb">double</span> x<span class="sym">;</span>
+<span class="line"> 23 </span>   instr <span class="sym">&gt;&gt;</span> x<span class="sym">;</span>
+<span class="line"> 24 </span>   <span class="kwa">return</span> x<span class="sym">;</span>
+<span class="line"> 25 </span><span class="sym">}</span>
+<span class="line"> 26 </span>
+<span class="line"> 27 </span><span class="com">/**</span>
+<span class="line"> 28 </span><span class="com">   Raises an employee salary.</span>
+<span class="line"> 29 </span><span class="com">   &#64;param e employee receiving raise</span>
+<span class="line"> 30 </span><span class="com">   &#64;param percent the percentage of the raise</span>
+<span class="line"> 31 </span><span class="com">*/</span>
+<span class="line"> 32 </span><span class="kwb">void</span> <span class="kwd">raise_salary</span><span class="sym">(</span>Employee<span class="sym">&amp;</span> e<span class="sym">,</span> <span class="kwb">double</span> percent<span class="sym">)</span>
+<span class="line"> 33 </span><span class="sym">{</span>
+<span class="line"> 34 </span>   <span class="kwb">double</span> new_salary <span class="sym">=</span> e<span class="sym">.</span><span class="kwd">get_salary</span><span class="sym">() * (</span><span class="num">1</span> <span class="sym">+</span> percent <span class="sym">/</span> <span class="num">100</span><span class="sym">);</span>
+<span class="line"> 35 </span>   e<span class="sym">.</span><span class="kwd">set_salary</span><span class="sym">(</span>new_salary<span class="sym">);</span>
+<span class="line"> 36 </span><span class="sym">}</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span><span class="com">/**</span>
+<span class="line"> 39 </span><span class="com">   Reads an employee record from a file.</span>
+<span class="line"> 40 </span><span class="com">   &#64;param e filled with the employee</span>
+<span class="line"> 41 </span><span class="com">   &#64;param in the stream to read from</span>
+<span class="line"> 42 </span><span class="com">*/</span>
+<span class="line"> 43 </span><span class="kwb">void</span> <span class="kwd">read_employee</span><span class="sym">(</span>Employee<span class="sym">&amp;</span> e<span class="sym">,</span> istream<span class="sym">&amp;</span> in<span class="sym">)</span>
+<span class="line"> 44 </span><span class="sym">{</span>
+<span class="line"> 45 </span>   string line<span class="sym">;</span>
+<span class="line"> 46 </span>   <span class="kwd">getline</span><span class="sym">(</span>in<span class="sym">,</span> line<span class="sym">);</span>
+<span class="line"> 47 </span>   <span class="kwa">if</span> <span class="sym">(</span>in<span class="sym">.</span><span class="kwd">fail</span><span class="sym">())</span> <span class="kwa">return</span><span class="sym">;</span>
+<span class="line"> 48 </span>   string name <span class="sym">=</span> line<span class="sym">.</span><span class="kwd">substr</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> <span class="num">30</span><span class="sym">);</span>
+<span class="line"> 49 </span>   <span class="kwb">double</span> salary <span class="sym">=</span> <span class="kwd">string_to_double</span><span class="sym">(</span>line<span class="sym">.</span><span class="kwd">substr</span><span class="sym">(</span><span class="num">30</span><span class="sym">,</span> <span class="num">10</span><span class="sym">));</span>
+<span class="line"> 50 </span>   e <span class="sym">=</span> <span class="kwd">Employee</span><span class="sym">(</span>name<span class="sym">,</span> salary<span class="sym">);</span>
+<span class="line"> 51 </span><span class="sym">}</span>
+<span class="line"> 52 </span>
+<span class="line"> 53 </span><span class="com">/**</span>
+<span class="line"> 54 </span><span class="com">   Writes an employee record to a stream.</span>
+<span class="line"> 55 </span><span class="com">   &#64;param e the employee record to write</span>
+<span class="line"> 56 </span><span class="com">   &#64;param out the stream to write to</span>
+<span class="line"> 57 </span><span class="com">*/</span>
+<span class="line"> 58 </span><span class="kwb">void</span> <span class="kwd">write_employee</span><span class="sym">(</span>Employee e<span class="sym">,</span> ostream<span class="sym">&amp;</span> out<span class="sym">)</span>
+<span class="line"> 59 </span><span class="sym">{</span>
+<span class="line"> 60 </span>   out <span class="sym">&lt;&lt;</span> e<span class="sym">.</span><span class="kwd">get_name</span><span class="sym">()</span>
+<span class="line"> 61 </span>      <span class="sym">&lt;&lt;</span> <span class="kwd">setw</span><span class="sym">(</span><span class="num">10</span> <span class="sym">+ (</span><span class="num">30</span> <span class="sym">-</span> e<span class="sym">.</span><span class="kwd">get_name</span><span class="sym">().</span><span class="kwd">length</span><span class="sym">()))</span>
+<span class="line"> 62 </span>      <span class="sym">&lt;&lt;</span> fixed <span class="sym">&lt;&lt;</span> <span class="kwd">setprecision</span><span class="sym">(</span><span class="num">2</span><span class="sym">)</span>
+<span class="line"> 63 </span>      <span class="sym">&lt;&lt;</span> e<span class="sym">.</span><span class="kwd">get_salary</span><span class="sym">();</span>
+<span class="line"> 64 </span><span class="sym">}</span>
+<span class="line"> 65 </span>
+<span class="line"> 66 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 67 </span><span class="sym">{</span>
+<span class="line"> 68 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the data file name: &quot;</span><span class="sym">;</span>
+<span class="line"> 69 </span>   string filename<span class="sym">;</span>
+<span class="line"> 70 </span>   cin <span class="sym">&gt;&gt;</span> filename<span class="sym">;</span>
+<span class="line"> 71 </span>   fstream fs<span class="sym">;</span>
+<span class="line"> 72 </span>   fs<span class="sym">.</span><span class="kwd">open</span><span class="sym">(</span>filename<span class="sym">.</span><span class="kwd">c_str</span><span class="sym">());</span>
+<span class="line"> 73 </span>   fs<span class="sym">.</span><span class="kwd">seekg</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> ios<span class="sym">::</span>end<span class="sym">);</span> <span class="slc">// Go to end of file</span>
+<span class="line"> 74 </span>   <span class="kwb">int</span> nrecord <span class="sym">=</span> fs<span class="sym">.</span><span class="kwd">tellg</span><span class="sym">() /</span> RECORD_SIZE<span class="sym">;</span>
+<span class="line"> 75 </span>
+<span class="line"> 76 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the record to update: (0 - &quot;</span>
+<span class="line"> 77 </span>      <span class="sym">&lt;&lt;</span> nrecord <span class="sym">-</span> <span class="num">1</span> <span class="sym">&lt;&lt;</span> <span class="str">&quot;) &quot;</span><span class="sym">;</span>
+<span class="line"> 78 </span>   <span class="kwb">int</span> pos<span class="sym">;</span>
+<span class="line"> 79 </span>   cin <span class="sym">&gt;&gt;</span> pos<span class="sym">;</span>
+<span class="line"> 80 </span>
+<span class="line"> 81 </span>   <span class="kwb">const double</span> SALARY_CHANGE <span class="sym">=</span> <span class="num">5.0</span><span class="sym">;</span>
+<span class="line"> 82 </span>
+<span class="line"> 83 </span>   Employee e<span class="sym">;</span>
+<span class="line"> 84 </span>   fs<span class="sym">.</span><span class="kwd">seekg</span><span class="sym">(</span>pos <span class="sym">*</span> RECORD_SIZE<span class="sym">,</span> ios<span class="sym">::</span>beg<span class="sym">);</span>
+<span class="line"> 85 </span>   <span class="kwd">read_employee</span><span class="sym">(</span>e<span class="sym">,</span> fs<span class="sym">);</span>
+<span class="line"> 86 </span>   <span class="kwd">raise_salary</span><span class="sym">(</span>e<span class="sym">,</span> SALARY_CHANGE<span class="sym">);</span>
+<span class="line"> 87 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;New salary: &quot;</span> <span class="sym">&lt;&lt;</span> e<span class="sym">.</span><span class="kwd">get_salary</span><span class="sym">();</span>
+<span class="line"> 88 </span>   fs<span class="sym">.</span><span class="kwd">seekp</span><span class="sym">(</span>pos <span class="sym">*</span> RECORD_SIZE<span class="sym">,</span> ios<span class="sym">::</span>beg<span class="sym">);</span>
+<span class="line"> 89 </span>   <span class="kwd">write_employee</span><span class="sym">(</span>e<span class="sym">,</span> fs<span class="sym">);</span>
+<span class="line"> 90 </span>
+<span class="line"> 91 </span>   fs<span class="sym">.</span><span class="kwd">close</span><span class="sym">();</span>
+<span class="line"> 92 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 93 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

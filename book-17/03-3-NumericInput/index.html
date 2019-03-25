@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Numeric Input</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Numeric Input</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'><b><span class='cap'>W</span>hen a user types the number <code>123</code> from the keyboard</b>, what is
+            <b>actually</b> stored in memory are the three binary values
+        </p>
+        <div class="box shadow round">
+                <b>
+                <code>0000-0000 0011-0001</code><br>
+                <code>0000-0000 0011-0010</code><br>
+                <code>0000-0000 0011-0011</code>
+                </b>
+        </div>
+        <p> representing the three Java character values
+            <code class='b'>'1'</code>, <code class='b'>'2'</code>, and <code class='b'>'3'</code>, stored in a Java
+            <code>String</code> object.
+        </p>
+
+        <p> If the user is entering values intended to be used in a
+            calculation, (and not a street address, for instance), those
+            three <code>char</code> values will have to be converted from
+            text to the binary 32-bit integer <code class='b'>123</code>, shown here:
+        </p>
+        <div class="box shadow round">
+            <b>
+            <code>0000-0000 0000-0000 0000-0000 0111-1011</code>
+            </b>
+        </div>
+        <p> This process&#8212;turning human-readable text, input from the keyboard
+            or a file, into binary numbers, (and its alter-ego, turning
+            binary numbers into human-readable text), is the job of
+            <b>parsing</b> or <b>conversion</b>. 
+        </p>
+        <p> Later, you'll learn how to use Java's <b>wrapper</b> classes to
+            parse <code>String</code> user input
+            and convert that input into integers, real numbers, and
+            even dates and times. For right now, though, we'll let
+            the <code>Scanner</code> class do the work for us.
+        </p>
+
+    <h3>Scanner Numeric Input</h3>
+        <p> Previously you learned how to use the
+            <code>Scanner</code> class to read a line of text from
+            the user, (calling its <code>nextLine()</code> method),
+            and then store the line of text in a <code>String</code>
+            variable.
+        </p>
+
+        <p> The process for retrieving an <code>int</code>
+            or <code>double</code> is almost identical:
+        </p>
+        <ol>
+            <li class="d">Construct a <code>Scanner</code> variable,
+                using the <code>Scanner</code> constructor, passing
+                <code>System.in</code> as a parameter to the constructor.
+            </li>
+
+            <li class="d">Call the appropriate numeric input method,
+                <code>nextInt()</code> or <code>nextDouble()</code>,
+                and store the returned value in your variable.
+            </li>
+        </ol>
+    <h4>Scanner Example</h4>
+        <p> Let's use the Interactions Pane. I'll assume you've created a <code>Scanner</code>
+            variable as in Lecture 1B. Now we'll try reading some
+            numeric values as well as text:<br>
+            <img src="images/scanner09a.gif" class='inlineCenter' alt='Reading numeric input.'>
+        </p>
+        <ul>
+            <li class="d">The user is prompted to enter their age and
+                gpa. I'm assuming the user will enter a whole number
+                for their age, and a real number for gpa.
+            </li>
+            <li class='d'> Next, the <code>int</code> variable
+                <code>age</code> is defined and the <code>Scanner
+                nextInt()</code> method is called to read an integer from
+                the keyboard. The characters that the user types in are
+                <b>automatically</b> converted from <code>String</code> to
+                an <code>int</code>, and the result is placed in the
+                variable <code>age</code>.
+            </li>
+            <li class="d">On the next line, the same process is repeated, except
+                a <code>double</code> variable, <code>gpa</code> is defined
+                and the <code>Scanner nextDouble()</code> method is used to
+                read a real number from the keyboard. This time, the
+                characters typed by the user are converted to a
+                <code>double</code>, and placed in the variable
+                <code>gpa</code>.
+            </li>
+            <li class="d">Finally, in the last statement, (spanning two lines),
+                the user's input is concatenated along with the program's output message.
+            </li>
+        </ul>
+        <p> If you run this code fragment you'll see some
+            output that looks a little like this:<br>
+            <img src="images/scanner10a.gif" class='inlineCenter' alt='Reading numeric input.'>
+            Notice that you can enter the two numbers on the same line, separated
+            by tabs or spaces. You can also press Enter after each number. Both
+            styles of input are processed correctly.
+        </p>
+    <h3>How Numeric Input Works</h3>
+        <p> Here's a picture that shows the characters I entered when I
+            ran the program. Notice that the first character is a space,
+            followed by a six and a zero. That is followed by another
+            space, a three, a period, a two and the Enter key or newline:<br>
+            <img src='images/input.png' class='inlineCenter' alt='My input.'>
+            When <code>cin.nextInt()</code> is encountered at runtime, the <code>Scanner</code>
+            object starts reading characters, looking for a character that
+            could be part of an integer (a digit or a sign character). Any
+            <i>whitespace</i> characters (spaces, tabs, newlines) are simply
+            discarded. In my example here, the first space character would be
+            read and then ignored. If any other characters are encountered,
+            an error occurs. (You can read about the errors in the next section.)
+        </p>
+        <p> When a character that makes up an integer is encountered,
+            (like the 6 in my input), <b>then</b> the <code>nextInt()</code>
+            method <b>keeps reading</b> characters, until a non-integer
+            character is found. In this case, it will read the 6 and the 0,
+            but because the space following the zero is <b>not</b> part of
+            an integer, <code>nextInt()</code> stops reading from
+            <code>System.in</code>. The characters read up to this point
+            are "marshaled" or collected in the <code>String</code>
+            "60", which is then converted
+            to an <code>int</code> value, and that is the value returned
+            and stored in the variable <code>age</code>.
+        </p>
+        <p> When the <code>cin.nextDouble()</code> on the following line
+            is encountered, the <code>Scanner</code> picks up
+            <b>exactly where the previous scan ended</b>, processing the
+            space character following the 0 in 60:<br>
+            <img src='images/input02.png' class='inlineCenter' alt='My input.'>
+            This was the non-integer
+            character that caused <code>nextInt()</code> to <b>stop</b>
+            reading. Like <code>nextInt()</code>, the <code>nextDouble()</code>
+            method skips or discards leading whitespace characters, looking
+            for a character that matches the pattern for a valid <code>double</code>
+        </p>
+        <p> When it encounters the 3, it starts assembling the characters into
+            a <code>String</code>. The decimal point is legal inside a double,
+            so that is added to the collection; likewise the 2 is legal as
+            part of a double following a decimal point. The newline character
+            that is encountered following that, though, <b>is not</b> a legal
+            <code>double</code> character and so reading stops.
+        </p>
+        <p> The characters that are assembled so far are converted to a
+            <code>double</code> by the <code>Scanner</code> method, and then
+            returned and stored in the <code>gpa</code> variable.
+        </p>
+        <p> The next input method that is called will pick up with the newline
+            character as its first input.<br>
+            <img src='images/input03.png' class='inlineCenter' alt='My input.'>
+        </p>
+    <h2>Input Errors</h2>
+        <p> What happens, if the user types in an unexpected
+            input value, say 60.5 for age, or perhaps "sixty",
+            or even just adds an extra comma separating the values
+            like this:<br>
+            <img src='images/scanner11a.gif' class='inlineCenter' alt='Bad user input.'>
+            In Java, numbers read by a <code>Scanner</code> must be separated by spaces. In this case,
+            the <code>Scanner</code> attempts to convert the <code>String</code> <code>60,</code> 
+            to an integer, and fails.
+        </p>
+        <p> When this error is noticed by the <code>Scanner</code> object,
+            it prints an error message on the console, and terminates
+            the program.
+            This is called a <b>runtime error</b>, because it's detected when
+            your program runs, rather than when you compile it. (After all, the
+            compiler has no way of telling what the user will type in when
+            the program runs.)
+        </p>
+
+        <p> Because of the mechanism used to generate runtime errors in Java,
+            this kind of event is also called <b>throwing an exception</b>.
+            You'll learn about Java's different kinds of exceptions
+            later in the semester. At that time, you'll also learn how to
+            <b>catch</b> an exception, and perhaps give the user a second
+            chance to correct their input.
+        </p>
+        <p> For right now, though, your
+            best defense is to make your instructions (prompts) as explicit
+            as possible. Instead of saying something like "Enter the
+            number of miles:", you could write "Enter miles as a whole
+            number (25) :" or something similar.
+        </p>
+    <h3>String Input Errors</h3>
+        <p> You won't have an <b>input-mismatch</b> exception with
+            <code>String</code> variables, but you can still get some
+            unexpected input, especially when you mix <code>String</code>
+            and numeric input.
+        </p>
+        <p> Here's an example. Let's add one more prompt to ask the user
+            where they live, following the previous input, like this:<br>
+            <img src='images/scanner12a.gif' class='inlineCenter' alt='Reading another String following numeric input.'>
+            As before:
+        </p>
+        <ol>
+            <li class='d'>We <b>prompt</b> the user for some input, in this
+                case asking for the city that they live in.
+            </li>
+            <li class='d'>We the <b>read</b> the input, using the <code>Scanner</code>
+                <code>nextLine()</code> method, and store the user's response in
+                a <code>String</code> variable named <code>city</code>.
+            </li>
+            <li class='d'>Finally, we combine the user's input with some
+                concatenation to display an <b>output</b> message with
+                something complimentary about their home-town.
+            </li>
+        </ol>
+        <p> Doesn't look like there's any room for error, does it. Well,
+            go ahead and run it, and here's the output you should see:<br>
+            <img src='images/scanner12b.gif' class='inlineCenter' alt='Errors from mixed input.'>
+            <b class='ry'>Hmmmm. That seems to be a problem</b>. What's happening? Why doesn't
+            it stop when I call <code>nextLine()</code>?
+            Well, you remember the schematic I showed you, <b>after</b> the
+            GPA value was read?<br>
+            <img src='images/input03.png' class='inlineCenter' alt='My input.'>
+            When you do a <code>nextLine()</code> immediately following
+            numeric input, the newline character is the first character
+            that is read. Unfortunately, that's also the character that
+            "tells" <code>nextLine()</code> that <b>input is finished</b>
+            for this line of text.
+        </p>
+        <p> Because of that, the variable <code>city</code> is assigned the
+            <b>empty</b> <code>String</code>. To fix it, just add an extra
+            <code>nextLine()</code> immediately between numeric and
+            line-oriented text input like this:<br>
+            <img src='images/scanner13a.gif' class='inlineCenter' alt='Errors from mixed input.'>
+        </p>
+        <div class='alert'>
+        <p> If you mix text and numeric input using the <code>Scanner</code>
+            class, you'll need to remember to add extra <code>nextLine()</code>
+            statements to remove the newline characters following numeric
+            input. You <b>don't</b> need to do this between numeric
+            input statements.
+        </p>
+        </div>
+        <div class='info'> 
+        <p>
+            Just because your code has no syntax errors or no runtime errors,
+            that <b>doesn't</b> mean it is correct. Your program can still
+            contain <b>logic</b> errors, as my code fragment does here.
+            A logic error occurs when the <b>actual</b> output don't match
+            the <b>expected</b> output of your program.
+        </p>
+        </div>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

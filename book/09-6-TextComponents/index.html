@@ -1,0 +1,671 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>9.6&mdash;Text Components and Layout</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner13">
+        <img id='lessonLogo' src='../images/l.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.6</p>
+        <p id='lessonTitle'>Text Components and Layout</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/TextField.gif" class="right" alt="An application that uses TextFields.">
+        <b><span class='cap'>A</span> <code>JButton</code> object is useful when you
+            want to carry out an action</b> and a <code>JLabel</code> object
+            is useful when you want to impart some information to your user.
+            When you need to <b><u>get</u></b> some information, however, nothing
+            beats a <code>JTextField</code>, and its sibling, the
+            <code>JTextArea</code>.
+        </p>
+
+        <p> The <code>JTextField</code> is our first GUI <b>input component</b>.
+            A <code>JTextField</code> object is a single-line
+            input area that allows your users to supply
+            data to your program as it runs, such as the mileage,
+            and number of gallons used in the gas-mileage calculator
+            shown here. The <code>JTextArea</code> allows you to enter
+            (or display) <b>several lines of text</b> at once.
+        </p>
+        <p> That means you can start
+            writing programs that are actually useful.
+        </p>
+    <h2>JTextField Objects</h2>
+
+       <p> Let's start by looking at a simple <code>GraphicsProgram</code> named
+            <b>AddTwoNumbers</b> which you'll find in this chapter's code folder.
+            Here's what the program looks like when it runs:<br>
+            <img src='images/atn01.png' class='inlineCenter' alt='Running AddTwoNumbers.'>
+            As you can see, the program has:
+        </p>
+        <ol>
+            <li class='d'>A <code>JLabel</code> telling the user to enter two numbers
+                in the northern border.
+            </li>
+            <li class='d'>Two <code>JTextField</code> components where the user can
+                enter numbers.
+            </li>
+            <li class='d'>A <code>JButton</code> widget that the user can click to
+                add the two numbers together.
+            </li>
+            <li class='d'>A <code>GLabel</code> to display the results of your
+                calculation.
+            </li>
+        </ol>
+        <p> Open and run the program, and then we'll see how it
+            works, and how you might improve it.
+        </p>
+    <h3>Constructing JTextField Widgets</h3>
+        <p> Creating a <code>JTextField</code> widget is similar to creating
+            a button or label. Since you'll normally need to interact with
+            the widget later in your program, (to get the text that the
+            user types when the program runs), you'll almost always use
+            <b>an instance variable</b> for your text field.
+        </p>
+        <p> In <b>AddTwoNumbers</b>, I've created two <code>JTextField</code>
+            instance variables, <code>aTF</code> and <code>bTF</code>, and
+            then used one of the constructors to set the number of columns
+            to 10, since I don't expect any numbers larger than that:<br>
+            <img src='images/atn02.png' class='inlineCenter' alt='Constructing JTextField objects.'>
+            The <code>JTextField(int numChars)</code> constructor, creates a
+            field big enough to hold <code>numChars</code>, <b>average-width</b>
+            characters. This is the constructor that you'll normally use.
+        </p>
+        <p> There is also a constructor <code>JTextField(String initialString, int numChars)</code>
+            that is useful if you want to supply a default initial value to
+            appear inside the text field that the user can edit when
+            the program runs.
+        </p>
+    <h4>Initialization</h4>
+        <p> There are several things you can do to your text field before
+            you add it to your program.
+        </p>
+        <ul>
+            <li>You can change the <b>background or foreground color</b> with
+                <code>setBackground()</code> or <code>setForeground()</code>.
+            </li>
+            <li>You can <b>change the font</b> used with <code>setFont()</code>,
+                although, like other Swing widgets, you must pass a <code>Font</code>
+                object, not a <code>String</code>. Remember too, that you can
+                get a <code>Font</code> object from a <code>String</code> by
+                calling the <code>Font.decode(Family-style-size)</code> method.
+            </li>
+            <li>You can change the <b>text alignment</b> by using the
+                <code>setHorizontalAlignment()</code> method, passing the
+                constant <code>JTextField.RIGHT</code> to
+                <b>right-align</b> the text inside the text-field. Often, users
+                will find this much more natural, when they have to input
+                numeric data, since the input fields will line up just like
+                the output fields.
+            </li>
+        </ul>
+        <p>Once you have the text field customized, you can add it to the
+            borders of your program, just like you would a <code>JLabel</code>
+            or <code>JButton</code>. Here's the code from <b>AddTwoNumbers</b>
+            that adds each of the Swing widgets:<br>
+            <img src='images/atn03.png' class='inlineCenter' alt='Adding JTextField objects.'>
+            After this, the program finishes up its <code>init()</code> method
+            by adding the <code>GLabel</code> to the program's central
+            <code>GCanvas</code> and then activating the button by calling
+            <code>addActionListeners</code>:<br>
+            <img src='images/atn04.png' class='inlineCenter' alt='Finishing init method.'>
+        </p>
+
+    <h3>Data In &amp; Data Out</h3>
+        <p> The most oft-used method in the <code>JTextField</code> class is
+            the one that <b><u>retrieves the information entered by the user</u></b>.
+            Normally, a user types information into a <code>JTextField</code>,
+            and you use the <code>getText()</code> method to retrieve the
+            information, and to store it in a <code>String</code>, like
+            this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            String aStr = aTF.getText();
+        </p>
+        <p> You can also use the <code>setText()</code> method to change
+            the text contained in a text field. If you wanted to "empty out"
+            the <code>JTextField</code> where the user entered a value,
+            you could use this code:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            aTF.setText("");
+        </p>
+        <p> The pair of double-quotes, without any space or characters
+            inside, is called the <b>empty string</b>. Setting
+            the text of a component to the empty string is how you say
+            "remove all of characters in this component".
+        </p>
+
+    <h4>Numeric Input</h4>
+        <p> It is important to note that <b>all</b> <code>JTextField</code>
+            input is <b>textual</b> input. If you want to let your users enter
+            <b>numeric</b> data, as in our program, then you have to:
+        </p>
+        <ul>
+            <li>grab the input as a <code>String</code> and store it
+                in a variable.
+            </li>
+            <li>then using the various <b>parsing</b> methods
+                such as <code>Integer.parseInt()</code> or
+                <code>Double.parseDouble()</code> to convert
+                the <code>String</code> to the numeric value
+                you need.
+            </li>
+        </ul>
+        <p> Here's the code that does that in our program when the
+            user presses the <b>Add</b> button:<br>
+            <img src='images/atn05.png' class='inlineCenter' alt='Retrieving and converting the values.'>
+            The only problem with doing this (other than the
+            extra work, of course), is that if the user types something
+            that <b>isn't</b> "parseable" (like the word "cat"),
+            then your program "crashes" with a runtime error:<br>
+            <img src='images/atn06.png' class='inlineCenter' alt='Crashing with bad input.'>
+            There are two possible solutions to this problem:
+        </p>
+        <ul>
+            <li><b>Check the input data</b> before you convert it to make
+                sure that it is valid.
+            </li>
+            <li>Use an <b>error-checking widget</b> like the ACM
+                <code>IntField</code> and <code>DoubleField</code> widgets
+                found in the <code>acm.gui</code> package.
+            </li>
+        </ul>
+        <p> Let's look briefly at both of these.</p>
+    <h4>Checking Valid Input</h4>
+        <p> The easiest way to check for valid input is to first
+            parse the input, and then <b>catch the exception</b> if it
+            is invalid. Unlike some other languages, (Visual Basic for example),
+            Java doesn't have an <code>isNumeric()</code> method.
+        </p>
+        <p> Since we don't yet know how to catch an exception, we
+            can use a <b>regular expression</b> with the <code>matches()</code>
+            method, like this, instead:<br>
+            <img src='images/atn07.png' class='inlineCenter' alt='Checking input values.'>
+            The <code>matches()</code> method shown here returns <code>true</code> if
+            the <code>String</code> matches the regular expression
+            <code>"-?\\d+(.\\d+)?"</code>.
+            Regular expressions implement a <b>pattern matching meta-language</b>
+            that is embedded in many different programming languages, including
+            Java. This particular regular expression means to examine the string for:
+        </p>
+        <ul>
+            <li>an optional negative sign (<code>-?</code>)</li>
+            <li>followed by any number of digit characters
+                (<code>\\d+</code>)
+            </li>
+            <li>followed by a single optional decimal point,
+                followed by any number of digits
+                (<code>(.\\d+)?</code>)
+            </li>
+        </ul>
+        <p> The <code>if</code> statement used here checks to see
+            if both of the text field's contents match this expression. If
+            either does not, then the code prints an error message on the display
+            and leaves the event handler, like this:<br>
+            <img src='images/atn08.png' class='inlineCenter' alt='Input error message.'>
+        </p>
+    <h4>Error-Checking Widgets</h4>
+        <p> The ACM error-checking widgets are specialized versions of
+            <code>JTextField</code> that have the normal <code>setText()</code>
+            and <code>getText()</code> methods. In addition, these classes also
+            have <code>setValue()</code> and <code>getValue()</code> methods that
+            automatically convert the input value for you.
+        </p>
+        <p> Here's what the program looks like when we replace both
+            <code>JTextField</code> objects with <code>DoubleField</code>
+            objects and then use <code>getValue()</code> instead of
+            <code>Double.parseDouble()</code>:<br>
+            <img src='images/atn09.png' class='inlineCenter' alt='ACM input widgets.'>
+            In general, I think I prefer checking the code, since I'm not too
+            fond of the ACM error handling.
+        </p>
+    <h3>Other Helpful Methods</h3>
+        <p> After the answer is displayed (at the end of your
+            <code>actionPerformed()</code> method), you might want to erase the
+            previous answers and then set the text cursor (known as the
+            <b>caret</b>) back in the first text field.
+        </p>
+        <p> Here's some optional code that selects the text in the first
+            field and then sends the cursor there:<br>
+            <img src='images/atn10.png' class='inlineCenter' alt='Cleaning up the focus.'>
+            You'll learn later how to add more sophisticated <b>focus behavior</b>,
+            including validation, to your programs.
+        </p>
+
+    <h2>Introducing Layout</h2>
+        <img src='images/unimpressed.png' class='right' style='margin-top:-5em;width:125px;' alt='An illustrative icon.'>
+        <p> If you find yourself unimpressed with the example program I've
+            shown you here, I don't blame you. Adding a <code>JTextField</code> to
+            to the border of your program looks, well, a little bit
+            amateurish; the results leave just a bit
+            to be desired.
+        </p>
+        <p> Fortunately, it's easy to make programs using JFC widgets look good
+            by making use of a <b>layout manager</b>. The <code>java.awt</code>
+            contains the "built-in" layout managers for Swing, but ACM programs
+            using buttons and text fields can make use of an easier-to-user
+            layout manager named <b>TableLayout</b>.
+        </p>
+        <p> To use the <code>TableLayout</code> class, you must:</p>
+        <ul>
+            <li><code>import</code> the <code>acm.gui</code> package.</li>
+            <li>normally, extend the <code>Program</code> class (not <code>GraphicsProgram</code>)</li>
+            <li>call the <code>setLayout()</code> method on the first line of
+                your program's <code>init()</code> method, passing a new
+                <code>TableLayout</code> object.
+            </li>
+        </ul>
+        <p> The <code>TableLayout</code> constructor takes two <code>int</code>
+            parameters: the number of <b>rows</b> and the number of <b>columns</b>
+            to use in the layout.
+        </p>
+    <h3>An Example with TableLayout</h3>
+        <p> Here's a modified version of my previous example,
+            <b>AddTwoNumbersAgain</b>, which you can find in this chapter's
+            code folder. This is a rough translation, using a layout manager,
+            which I think looks a lot more professional:<br>
+            <img src='images/atna01.png' class='inlineCenter' alt='AddTwoNumbersAgain running.'>
+            Here are the basic changes that I made to the program:
+        </p>
+        <ol>
+            <li class='d'>Instead of importing the <code>acm.graphics</code>
+                package, I've imported <code>acm.gui</code> instead. And,
+                instead of extending the <code>GraphicsProgram</code>
+                class, I've extended the <code>Program</code> class.<br>
+                <img src='images/atna02.png' class='inlineCenter' alt='AddTwoNumbersAgain source code.'>
+            </li>
+            <li class='d'>The first line in the <code>init()</code> method
+                "installs" a <code>TableLayout</code> layout manager with
+                three rows and two columns, while the next line sets the
+                background of the main window to white:<br>
+                <img src='images/atna03.png' class='inlineCenter' alt='AddTwoNumbersAgain source code.'>
+            </li>
+            <li class='d'>For each row, I first add a descriptive label to
+                identify the item and then the <code>JTextField</code> object
+                itself. On the last row, I add a "dummy" label to fill in the
+                slot in the first column before adding the <code>JButton</code>
+                in the last position:<br>
+                <img src='images/atna04.png' class='inlineCenter' alt='AddTwoNumbersAgain source code.'>
+            </li>
+        </ol>
+        <p> When the program runs, the layout manager places each component
+            in position and then sizes them. Since the text fields were both
+            20 columns wide, the <code>JButton</code> is set to the same width.
+            <b>All components in a column</b> will be the same width, while
+            all components in a row will be the same height.
+        </p>
+        <div class='info'>
+        <p> When you use a layout manager, it only affects the center of the
+            program area; you can still add widgets to the borders like you
+            did with <code>GraphicsProgram</code>. That's what I've done here
+            with the <code>JLabel</code> used to display the prompt at the
+            top and the answer on the bottom.
+        </p>
+        </div>
+    <h2>Text Areas</h2>
+        <img src="images/f42.gif" alt="Running the WordCounter applet" class="right" style='margin-top:-4em;'>
+        <p>
+            <b><span class="cap">T</span>he Swing <code>JTextField</code>
+            class allows your users to enter a single line of text</b>, so
+            you can write GUI programs that process text input, just like
+            the console programs you met earlier.
+            Swing also has a <b>multi-line</b> text component, the
+            <code>JTextArea</code> and its associated <code>JScrollPane</code>
+            class.
+        </p>
+        <p> The <code>JTextArea</code> class is useful when
+            you need to create a more extensive "dialog" with the user
+            than a single line of text allows. You can also use a
+            text area to display instructions, and to keep
+            the user informed concerning the progress of your application.
+        </p>
+    <h3>JTextArea Constructors</h3>
+        <p>To create a <code>JTextArea</code> object, you can use any
+            of the following four constructors:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JTextArea()<br>
+            JTextArea(int rows, int columns)<br>
+            JTextArea(String text)<br>
+            JTextArea(String text, int rows, int columns)<br>
+        </p>
+        <p> As you can see, each additional constructor allows you to
+            supply more information, which the <code>JTextArea</code>
+            constructor uses to customize its appearance and behavior.
+        </p>
+        <div class='info'>
+        <p>There are actually two <i>additional</i> <code>JTextArea</code>
+            constructors that make use of <code>Document</code> parameters.
+            These constructors are used with very sophisticated applications
+            like DrJava, but are beyond what we'll cover in this class.
+        </p>
+        </div>
+        <p> Here's an example, the ACM program
+            <b>JTextAreaWorld.java</b> (which you can find in this
+            chapter's code folder), that creates an object using each of
+            the four constructors and places two in the <code>NORTH</code>
+            and two in the <code>SOUTH</code> borders of an
+            ACM <code>GraphicsProgram</code>:<br>
+            <img src="images/jta01.png"
+                alt="Source code for JTextAreaWorld.java"
+                class='inlineCenter'>
+        </p>
+        <h4>Analysis</h4>
+        <ol>
+            <li>The first constructor, <code>oneTA</code>, creates a "default"
+                text area with zero columns and zero rows. When it is
+                added, you can't see it at all. If you use this constructor
+                you'll need to size the constructor later.
+            </li>
+            <li>The second constructor creates an empty text area that is
+                3 rows high and 20 columns wide. As you type in more
+                characters, the size of the text area expands to enclose
+                the text.
+            </li>
+            <li> The third example shows a "default" size with an initial
+                text value. The rows and columns are expanded to fit the
+                size of the text.
+            </li>
+            <li> The fourth is a combination of example 2 and 3; an explicit
+                size along with an initial value.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when it runs on my XP
+            machine, after I've typed in a little text:<br>
+            <img src="images/jta02.png"
+                alt="Running the JTextAreaWorld program."
+                class='inlineCenter'>
+            You'll want to compile and run it on your own machine
+            to get a better feel for how the program works.
+        </p>
+    <h3>Scrolling and Wrapping Operation</h3>
+        <p> The default behavior of a <code>JTextArea</code> widget actually
+            doesn't act like you'd expect, because the text doesn't
+            <b>scroll</b> or <b>wrap</b>. To add the scrolling behavior that
+            you expect, you'll <b>almost always</b> place your text areas
+            inside a separate <code>JScrollPane</code> object.
+        </p>
+        <p>For instance, if you modify <b>JTextAreaWorld</b> like this,
+            so that each text area is "wrapped up" inside a scroll pane:<br>
+            <img src='images/jta03.png' class='inlineCenter' alt='Adding a JScrollPane.'>
+            Then the size of each <code>JTextArea</code> will no longer
+            expand when you type in more data than it can hold. Instead,
+            scrollbars will appear when you exceed the column position or
+            the row position as you can see here:<br>
+            <img src='images/jta04.png' class='inlineCenter' alt='Scrollbars at work.'>
+            Notice that the second area has added horizontal scrollbars, since
+            the text I've entered exceeds the column, (but not the row) specified
+            for the text area. Not also that wrapping the text area in a
+            <code>JScrollPane</code> also has the effect of adding
+            a boundary to the <code>JTextArea</code> that wasn't apparent
+            in the original.
+        </p>
+    <h4>Adding Wrapping</h4>
+        <p>If you would rather have the text area <b>wrap</b> instead of
+            scroll, then you can do that too. The <code>JTextArea</code>
+            has two methods that control text wrapping:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            ta.setLineWrap(true);<br>
+            ta.setWrapStyleWord(true);
+        </p>
+        <p> The first method turns line wrapping one and off, while the
+            second method tells the wrapping algorithm to break on word
+            boundaries instead of character boundaries.
+        </p>
+        <p> With automatic wrapping, horizontal scrollbars never appear,
+            but vertical scrollbars will show up if you exceed the
+            defined number of rows in the text area.
+        </p>
+
+    <h3>Other Text Area Operations</h3>
+        <p> Once you've created a <code>JTextArea</code> object, you
+            can tell it to do several things. You can replace <b>all</b> of
+            the text it contains by using the method
+            <code>setText()</code>, just like with <code>JTextField</code>.
+            If you want to <b>clear</b> the <code>JTextArea</code> of all text,
+            you write:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            ta.setText( "" );
+        </p>
+        <p>This assumes your <code>JTextArea</code> object is named
+            <code>ta</code>. The argument to <code>setText()</code>
+            is the <b>empty string</b>. (Two adjacent double-quotes, with
+            no intervening spaces.)
+        </p>
+        <p>To <b>add</b> text to the <b>end</b> of a <code>JTextArea</code>,
+            use the <code>append()</code> method like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            ta.append("Some text\n");
+        </p>
+    <h4>Inserting Text</h4>
+        <p> When you want to add text to a <code>JTextArea</code>, but
+            you want to add it in the middle, rather than at the end
+            of the existing text, you can use the <code>insert()</code>
+            method.
+        </p>
+        <p>This method takes two arguments:
+        </p>
+        <ol>
+            <li>the new text to insert</li>
+            <li>the position, in the <code>JTextArea</code>, at which to
+                insert the text
+            </li>
+        </ol>
+        <p>The <code>position</code> argument should be an integer, and
+            it represents the number of the character that you wish to
+            insert your new text before. The <code>JTextArea</code> characters
+            are numbered starting with zero (not one), like most numbering
+            done in the Computer Science arena.
+        </p>
+        <p>Here's an example that inserts the a message at the beginning
+            of the <code>JTextArea</code>, pushing any existing text down:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            ta.insert("Here's a new message\n", 0);
+        </p>
+    <h4>Replacing Text</h4>
+        <p>Finally, you may want to <b>replace</b> some existing text
+            with some new text. To do this, you use the <code>JTextArea</code>
+            method <code>replaceRange()</code> which takes three arguments:
+        </p>
+        <ol>
+            <li class="d">the new text to be inserted</li>
+            <li class="d">the starting position of the text to be replaced</li>
+            <li class="d">the ending position, <b>plus one</b>, of the text to be replaced</li>
+        </ol>
+        <p> As with <code>insert()</code>, this method counts starting at zero.
+        </p>
+    <h4>Dealing With Lines</h4>
+        <p> As you've just seen, both <code>insert()</code> and
+            <code>replaceRange()</code> need to know the <b>character position</b>
+            inside the <code>JTextArea</code> before you can call the methods.
+            Most of the time, though, I find it easier to deal with
+            <b>line position</b> instead.
+        </p>
+        <p> Here are the methods you can use to "translate" between
+            the two measurement systems:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            int numLines = ta.getLineCount(); <span class='cmt'>// number of lines</span><br>
+            int start = ta.getLineStartOffset(2); <span class='cmt'>// <b class='ry'>start</b> of third line</span><br>
+            int end = ta.getLineEndOffset(2); <span class='cmt'>// <b class='ry'>end</b> of third line</span><br>
+            int lineNo = ta.getLineOfOffset(275);  <span class='cmt'>// line at pos 275</span><br>
+        </p>
+        <p> The only "downside" of using these methods is that they
+            <b>throw exceptions</b> when given invalid arguments, and so
+            you have to put them in a <code>try-catch</code> block. You'll
+            learn how to do that later in the course.
+        </p>
+
+    <h3>BorderLayout and GridLayout</h3>
+        <p> The <code>TableLayout</code> manager is great for text fields
+            and buttons. It's not that good for <code>JTextArea</code>.
+            That's because with text areas, you want the widget to
+            "swell up" to fill all of the needed space as the window
+            expands.
+        </p>
+        <p> Two of the "regular" Java layout managers fill
+            this bill: <code>BorderLayout</code> and <code>GridLayout</code>.
+            To add either of these layout managers, first import the
+            <code>java.awt</code> package, and then just pass one of
+            the appropriate objects to the <code>setLayout</code> method
+            as you did before.
+        </p>
+        <p> Here is an <code>init()</code> method that adds a single text
+            area to the center of an example program you can find in this
+            chapter's code folder, <b>JTextAreaBorderLayout.java</b>:<br>
+            <img src='images/jtabl.png' class='inlineCenter' alt='JTextAreaBorderLayout code.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>The layout of the center section is set to
+                <code>BorderLayout</code>. (Of course, to get this to work,
+                I imported the <code>java.awt</code> package.)
+            </li>
+            <li class='d'>The <code>JTextArea</code> is created and
+                initialized. Normally if I needed to access this widget
+                from elsewhere in the method, I'd make the widget an
+                instance variable instead of a local variable.
+            </li>
+            <li class='d'>I add the text area to a scroll pane and also
+                add a <code>JLabel</code> to one of the borders.
+            </li>
+        </ol>
+        <p>Here is what the program looks like when it runs:<br>
+            <img src='images/jtabl02.png' class='inlineCenter' alt='JTextAreaBorderLayout running.'>
+        </p>
+        <p> And here is another sample program, <b>JTextAreaGridLayout.java</b>,
+            that adds <b>two</b> <code>JTextArea</code> objects, one on top of
+            another:<br>
+            <img src='images/jtagl.png' class='inlineCenter' alt='JTextAreaGridLayout code.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>The two text areas are created as instance
+                variables so that they can be accessed in the event
+                handler.
+            </li>
+            <li class='d'>A <code>GridLayout</code> is installed with
+                two rows and 1 column. Unlike <code>TableLayout</code>,
+                the components in <code>GridLayout</code> will "swell up"
+                to take all of the available space. That's what we want.
+            </li>
+            <li class='d'>Since we have two text areas, I initialize each
+                of them separately. Notice that they have different fonts
+                and the bottom one is made "read only".
+            </li>
+            <li class='d'>The two text areas are added, one after another,
+                so that the first is on top and the other appears below
+                it.
+            </li>
+            <li class='d'>In addition to the <code>JLabel</code> in the north,
+                I've added a <code>JButton</code> to the south and activated
+                the <code>ActionListeners</code>. In the <code>actionPerformed()</code>
+                method (not shown here), I just copy the text from one text area
+                to the other.
+            </li>
+        </ol>
+        <p>Here is what the program looks like when it runs:<br>
+            <img src='images/jtagl02.png' class='inlineCenter' alt='JTextAreaGridLayout running.'>
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Text Components and Layout Summary
+        </p>
+        <ul>
+            <li>Swing's <b>single-line text-input widget</b> is named
+                <code>JTextField</code>. Construct a text field by specifying
+                the number of columns or an optional starting contents along
+                with the number of columns. The widget is sized to hold
+                average-width characters.
+            </li>
+            <li>Once constructed you can customize the text field by
+                changing the font, background color, foreground color and
+                text alignment using the appropriate methods.
+            </li>
+            <li>You <b>retrieve the contents</b> of a <code>JTextField</code> by
+                using it's <code>getText()</code> method. You <b>set the contents</b>
+                using <code>setText()</code>. To <b>clear</b> a text field,
+                pass the empty string to <code>setText()</code>.
+            </li>
+            <li>All text field input/output is <b>text</b>. To retrieve <b>numeric
+                input</b>, you have to call <code>getText()</code> and then
+                <b>parse</b> the result. You should try to make sure the
+                text field contains valid numeric data before parsing the
+                input.
+            </li>
+            <li>You can <b>select</b> all of the text inside your text field
+                by calling the <code>selectAll()</code> method. You can place
+                the text cursor (<b>caret</b>) inside a particular field by
+                calling its <code>requestFocus()</code> method.
+            </li>
+            <li>To add text fields and buttons to the central region of your
+                ACM programs you should:
+                <ul>
+                    <li>import the <code>acm.gui</code> package</li>
+                    <li>extend the <code>Program</code> class</li>
+                    <li>call <code>setLayout()</code> to install a
+                        <b>layout manager</b> in your <code>init()</code>
+                        method.
+                    </li>
+                </ul>
+            </li>
+            <li>The ACM <code>TableLayout</code> manager allows you to specify
+                the number of <b>rows and columns</b> that should be used for
+                your components. The width of each column and the height of
+                each row will be based on the natural width and height of the
+                largest component in that column or row. Cells <b>will not
+                swell up</b> with <code>TableLayout</code>.
+            </li>
+            <li>The Swing <b>multi-line text component</b> is named the
+                <code>JTextArea</code>. The text area is almost always placed
+                inside a <code>JScrollPane</code> which supplies scrollbars
+                when necessary.
+            </li>
+            <li>When constructing a <code>JTextArea</code> you can specify the
+                number of lines and the number of columns, and then place the
+                component inside a <code>TableLayout</code>.
+            </li>
+            <li>If you want the text area to expand and contract as the window
+                is resized, you should use the <code>BorderLayout</code> or
+                <code>GridLayout</code> layout managers from the <code>java.awt</code>
+                package instead of <code>TableLayout</code>. Using these layout
+                managers, the component will swell to fill the space available
+                as the frame is resized.
+            </li>
+            <li>Text areas normally <b>do not wrap</b> the text that the user
+                enters. If you want to enable wrapping behavior, then call the
+                <code>setLineWrap()</code> method. If you want <b>word wrapping</b>
+                (instead of just character wrapping), then call
+                <code>setWrapStyleWord()</code> as well.
+            </li>
+            <li>In addition to <code>setText()</code> and <code>getText()</code>,
+                the text area also supports an <code>append()</code> method for
+                adding text <b>to the end of the existing text</b>,
+                an <code>insert()</code> method for adding new text <b>at an
+                arbitrary location</b>, and a <code>replaceRange()</code>
+                method for <b>replacing an existing fragment</b> with another.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>2.1&mdash;Console Output</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner09">
+        <img id='lessonLogo' src='../images/h.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 2.1</p>
+        <p id='lessonTitle'>Console Output</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src='images/tr01.png' class='right' alt='Ken Thompson and Dennis Ritchie.'>
+        <b><span class="cap">I</span>n 1970, a pair of young researchers</b> at
+        Bell Labs in New Jersey&mdash;Ken Thompson and Dennis
+        Ritchie&mdash;developed a portable operating system for a new
+        generation of mini-computers just coming on the market.
+        To help simplify the development of Unix, Ritchie created a new
+        programming language named <b>C</b> (so named because its predecessor was
+        <i>B</i>).
+        </p>
+        <p> Both Unix and C have had enormous impact on the field of
+            computing.  Many of today's most important language are based
+            on C, including Java, which still uses the original syntax
+            designed by Ritchie.
+        </p>
+        <p> Ritchie and Thompson jointly received the ACM Turing Award&mdash;the
+            computing profession’s highest honor&mdash;in 1983. In 1999,
+            they jointly received the National Medal of Technology of 1998
+            from President Bill Clinton for co-inventing the UNIX operating
+            system and the C programming language, "...which together have
+            led to enormous advances in computer hardware, software, and
+            networking systems and stimulated growth of an entire industry,
+            thereby enhancing American leadership in the Information Age."<br>
+            <img src='images/tr02.jpg' class='inlineCenter' alt='Thompson and Ritchie Award.'>
+            In his book, <i>The C Programming Language</i>, Richie offers
+            this advice on the first page.
+        </p>
+        <div class='quote'>
+        <p>
+            The only way to learn a new programming language is by writing programs
+            in it.  The first program to write is the same for all languages:
+        </p>
+        <p style='margin-left:2em;'>
+            Print the words<br>
+            <code>hello, world</code>
+        </p>
+        <p>This is the big hurdle; to leap over it you have to be able to create the program
+            text somewhere, compile it successfully, load it, run it, and find out where the
+            output went.  With these mechanical details mastered, everything else is
+            comparatively easy.
+        </p>
+        </div>
+        <p> That advice was followed by the "hello world" program,
+            which all C programmers learned. While Java is different than C,
+            the underlying advice still holds: your first programs should be as simple as
+            possible to become fluent in the language.
+        </p>
+        <p> Let's pick up where we left off in the last chapter
+            by looking at the <code>PrintStream</code>
+            class which is used for output in traditional console
+            programs.  Then, we'll look at most common type of statement,
+            the <b>output</b> statement, focusing on those inside the
+            <code>main()</code> method of <code>MyFirstConsoleProgram</code>.
+        </p>
+    <h2>Traditional Input and Output</h2>
+        <p> Today, most programs use a Graphical User Interface (GUI) and
+            "widgets" like text-fields, labels, checkboxes and buttons
+            to communicate with the user, like the Preferences dialog used in DrJava:<br>
+            <img src='images/gui-io.gif' class='inlineCenter' alt='A GUI form.'>
+            In an object-oriented program, those widgets are usually
+            represented by different kinds of <b>objects</b>.
+            Programs haven't always been organized like this, however.
+        </p>
+    <h3>Traditional Programs</h3>
+        <p><img src='images/console-app04.png' style='margin-top:-3em;' class='right' alt='A console program.'>
+            Instead of being arranged around creating an object and sending
+            it messages, <b>traditional programs</b>, like those you'd write
+            in Pascal, Basic, FORTRAN or C, are arranged around following
+            a <b>sequential set of instructions</b> that produce the desired output.
+        </p>
+        <p> To display output in a traditional language you: </p>
+        <ul>
+            <li>first find the particular <b>command</b> that your programming
+                system language uses (like <code><b>Write</b></code> in Pascal,
+                <code><b>PRINT</b></code> in BASIC, or <code>printf</code>
+                in C)
+            </li>
+            <li>then, you type that command into your source code, along with the
+            information you want the computer to display.
+            </li>
+        </ul>
+        <p> When you run a traditional console program, the computer
+            then "prints" the desired information on your computer's
+            screen, usually in a "text-mode" window.
+        </p>
+        <p> <img src='images/teletype03.gif' class='left' alt='A Teletype machine.'>
+            In these traditional programs, the <b>console</b> or
+            <b>terminal</b> acts almost exactly as if you were printing on
+            an old-fashioned <b>Teletype terminal</b>, the sort that prints on
+            fan-fold perforated paper, like the one shown in this advertisement.
+        </p>
+        <p> On such a printer, when a line of
+            output is finished, the paper <b>scrolls up</b> to allow the printing
+            mechanism to print on a fresh line. When using this sort of
+            input and output (dubbed "console I/O") on a video monitor,
+            each line of text automatically starts to display on the
+            following line after each line is finished printing.
+        </p>
+        <p> When a line of output is displayed
+            on the <b>last</b> line of the terminal window, the entire image
+            "scrolls" up to provide a clean line to print the next output.
+            In practice, this looks kind of like a printing teletype terminals,
+            so this scrolling output has been dubbed the "<b>glass teletype</b>."
+        </p>
+    <h3>Java's Glass Teletype Object: System.out</h3>
+        <p> <img src='images/glass-teletype.png' class='right' style='margin-top:-5em;' alt='An early terminal.'>
+            As I mentioned earlier, Java is an <b>object-oriented</b> language, and, as such, it has no
+            "commands" for doing input and output at all.
+            Object-oriented languages are languages that support the bundling
+            of data and instructions into a single entity&mdash;called an
+            <i>object</i>&mdash;and then sending <i>messages</i> to that
+            object asking it to perform certain operations.
+        </p>
+        <p> Object-oriented programs are organized like a <b>community of
+            objects</b>; each object has various abilities, and each object
+            can interact with the user and with each other somewhat independently.
+        </p>
+        <p> As luck (and foresight)
+            would have it, the Java class libraries come complete with a
+            <b>predefined object</b> that mimics this old-fashioned glass teletype. The name of this
+            object is <code><b>out</b></code>.
+        </p>
+        <p> That’s right, <b>out</b>. But
+            seeing as it's a traditionalist sort of object, to
+            get it to respond, you'll need to use its <b>fully-qualified name</b>:
+        </p>
+        <div class='consoleDisplay' style='width:80%'>
+            System.out
+        </div>
+        <p> To ask the <code>System.out</code> object to carry out an
+            action, you need to <b>call one of its methods</b>.
+            Its two most important methods (<i>at least to us</i>) are <code>print</code>
+            and <code>println</code>, both of which
+            are used in your <b>MyFirstConsoleProgram</b>:<br>
+            <img src='images/system-out-methods.gif' class='inlineCenter' alt='print() and println() in an application.'>
+    <h4>print and println</h4>
+        <p> These two methods are used to display output on the <b>system
+            console</b>. To use either <code>print</code> or
+            <code>println</code>, you type the information that you
+            want to be printed inside parentheses, following the
+            method name. This is called <b>passing the method a parameter</b>
+            (or <i>argument</i>). The information can be a number, like
+            3 or 5.7, or it can be text (provided you put double-quotes
+            around the text, like we've done in our program).
+        </p>
+        <p> The parameter or argument that you pass is converted to a "human-readable"
+            text format, called a <b>String</b>, and then displayed on the program's
+            <b>console</b> window by the <code>System.out</code> object.
+        </p>
+        <p> As you can see, <code>print</code> is called on lines 15 and 17, while
+            <code>println</code> is called on lines 16 and 18.
+            The difference between <code>print</code> and <code>println</code>,
+            (usually pronounced <i>print-line</i>),
+            is that <code>println</code> adds a <b>newline</b> to the
+            end of its output, so that the next time you use
+            <code>print</code> or <code>println</code>, the new output
+            appears at the beginning of the <b>following</b> line.
+            <img src='images/print-println.gif' class='inlineCenter' alt='Print and println.'>
+        </p>
+        <p> This means that the output produced by line 16 <b>appears on
+            the same line</b>, but <b>following</b> the output from line
+            15, while the output on line 17 <b>starts on a completely
+            new line</b>, since line 16 uses the <code>println</code>
+            method, which adds a newline <b>after</b> printing its
+            parameter:<br>
+        </p>
+        <div class='info'>
+        <p>You can also call
+            <code>println()</code> with no arguments, if you just want to
+            add a "blank" line on the console.
+        </p>
+        </div>
+    <h4>The System Console Window</h4>
+        <p> When you use the Java's standard console object, instead of using a graphical
+            console window, both input an output appear inside your operating
+            system's console window, or the window that your IDE uses for
+            console input and output.
+        </p>
+        <p> Your operating system's console is the command shell or terminal window
+            that you used to start the program from the command line. Here's what that
+            looks like in Windows, using the Windows shell:<br>
+            <img src='images/windows-shell.gif' class='inlineCenter' alt='Output in the Windows shell.'>
+            In DrJava, the standard operating system input and ouput appears in a special console
+            pane that appears below the definitions pane. If you like, you can "detach"
+            all of the "tabbed panes" into their own, free-standing window, by using
+            the <b>Tabbed Panes</b> option on the <b>Edit</b> menu. If you do that,
+            then the DrJava console looks like this:
+            <img src="images/drjava-console.gif" class='inlineCenter' alt="The DrJava console window.">
+        </p>
+    <h2>Talking to Objects</h2>
+    <p class='firstLine'>
+        <b><span class="cap">W</span>hile it might not seem that you've
+            accomplished a lot</b>, printing
+            a couple of lines of text to a console window, what you've really
+            done is <b>learned how to talk to objects</b>.
+        </p>
+        <p>  <img src="images/g01.gif" class="right" alt="Hi Mom!">
+            You'll follow <b>exactly the same pattern</b> with every object
+            you encounter from here on out, no matter <i>how</i> complex
+            your programs get. By starting with the simplest possible programs,
+            you'll gain fluency so you'll be comfortable using the Java language
+            to create more sophisticate programs later.
+        </p>
+        <p> You communicate with objects, like <code>System.out</code>
+            by <b>sending them messages</b>, which is simply another way of
+            saying <b>calling (or invoking) a method</b>.
+        </p>
+        <p>
+            To see how this works, let's examine a hypothetical program,
+            named <b>HiMom</b>, and see how it sends the
+            <code>println</code> message to the <code>PrintStream</code> object
+            named <code>out</code>, which is automatically created when your
+            program starts.
+        </p>
+        <p> Just like <b>MyFirstConsoleProgram</b>, <b>HiMom</b> uses its,
+            <code>main</code> method to perform its output, and, since
+            actions can <b>only occur inside a method</b>,
+            we'll have to send our message <b>inside</b> the
+            <code>main</code> method.
+        </p>
+        <div class='info'>
+        <p> The <code>main</code> method is <b>called</b>
+            automatically whenever you "run" a Java class file using the
+            Java interpreter.
+        </p>
+        </div>
+    <h3>Step 1: Who? (The Receiver)</h3>
+        <p> When your program first starts up, the Java Virtual Machine that
+            loads your program <b><u>automatically</u></b> loads a group of
+            classes, (called the <code>java.lang</code> package). This package
+            includes classes that you'll commonly use in <b>every</b> program,
+            with names like <code>String</code> and <code>System</code>.
+        </p>
+        <p> Once it's loaded, the <code>System</code> class automatically
+            <b>creates several objects</b> that you can use for input and output.
+            One of these objects, which can be used to print information
+            on the console window, is named <code>out</code>. Because
+            this object is <b>inside</b> the <code>System</code> class,
+            we have include the class name when we refer to it as
+            <code>System.out</code>.
+        </p>
+        <p> Even though the <code>out</code> object is physically stored
+            inside the <code>System</code> class, it actually is an <b>instance</b>
+            of a different class, the class named <code>PrintStream</code>. Later
+            on you'll learn more about the <code>PrintStream</code>
+            class and what it can do. For right now, just notice that you have
+            an object, <code>System.out</code>, that you can send messages to.
+        </p>
+        <p> When you send a message to an object, that object is called the
+            <b>receiver</b> of the message. Whenever you send a message,
+            you start by specifying the receiver, like this:
+            <img src="images/g05.gif" class="inlineCenter" alt="Specifying the receiver">
+            Always start by asking "what object is going to carry out
+            the action?"
+        </p>
+    <h3>Step 2: What? (The Request)</h3>
+        <p>After you've specified the receiver of the message, you have
+            to tell the object <b>what</b> you want it to do. You do that
+            by using the name of the method, (this is called the
+            <b>request</b>), followed by parentheses.
+            <img src="images/g06.gif" class="inlineCenter" alt="Specifying the message receiver">
+            Separate the message name from the receiver with a dot (.),
+            just like we used the dot to separate the class name from
+            the object name.
+        </p>
+        <p> To find out what messages you can send to an object, you'll
+            have to look up the online <b>Javadoc</b> documentation online.
+            You'll learn how to find and use the online Javadocs a little later.
+            For right now, here is the documentation for the <code>PrintStream
+            println</code> method.<br>
+            <img src="images/g07.gif" class="inlineCenter" alt="The documentation for the println() method">
+        </p>
+    <h3>Step 3: Parameters or Arguments</h3>
+        <p> When you send a message to an object, the object may
+            require additional information before it can carry out your
+            request. This additional information is specified in the Java
+            documentation as the method's <b>parameter</b>(s) or
+            <b>argument</b>(s).
+        </p>
+        <p> If you look at the documentation for the <code>println</code>
+            method, you'll see that it requires a single <code>String</code>
+            parameter. We haven't yet formally met the <code>String</code>
+            class yet. For right now, think of a <code>String</code> as
+            "text between double-quotes".
+        </p>
+        <p> Simply change your code like this, and everything will compile
+            and work as expected. (Don't forget the closing quotes, and
+            the semicolon as well).
+            <img src="images/g08.gif" class="inlineCenter" alt="The finished main() method">
+        </p>
+    <h4>Other Parameter Types</h4>
+        <p> In addition to text parameters, methods often require you to pass
+            <b>numbers</b> as well. If the documentation for a parameter uses
+            the word <code>int</code>, then you need to supply a plain
+            <code>whole number</code>, without quotes or a decimal point,
+            like this:.
+        </p>
+        <p class='code'>
+            System.out.println(123);
+        </p>
+        <p> Notice that there are <b>no quotation marks</b> around the
+            literal numeric value 123.
+        </p>
+        <p>If the documentation for a parameter uses
+            the word <code>double</code>, then you can use a whole number,
+            (like you did for <code>int</code>), but you can also supply a
+            number that has a decimal point, like this:
+        </p>
+        <p class='code'>
+            System.out.println(123.75);
+        </p>
+        <div class='info'>
+        <p> As mentioned earlier, the <code>print</code> and <code>println</code>
+            methods are a little unusual in that you can pass <b>any type</b>
+            of parameter, <code>String</code> or numeric. Most methods you'll
+            use will specify a particular type of parameter.
+        </p>
+        </div>
+    <h3>Adding a Static Import Statement</h3>
+        <p> Writing <code>System.out.println()</code> each time you want
+            to print a line of text to the console is kind of tedious,
+            if for no other reason than that it requires no much typing.
+            You can reduce that extra typing considerably by adding a <b>static
+            import</b> to the top of your class, (along with the
+            any other imports).
+        </p>
+        <p> If you add this line:</p>
+        <div class='consoleDisplay' style='width:80%;font-size:1.5em;'>
+            import static java.lang.System.out;
+        </div>
+        <p> then you can write <code>out.println()</code> instead of
+            <code>System.out.println()</code>. If you have only a single line
+            that's not a great savings, but it does add up when the print
+            statements multiply.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Console Output Summary
+        </p>
+        <ul>
+            <li>Dennis Ritchie invented the C language to simply the development
+                of Unix. Java (and many other important languages) still use
+                the C-style syntax that Ritchie developed.
+            </li>
+            <li>Following Dennis Ritchie's advice, while learning a new language,
+                we want to write the simplest possible programs to help us
+                <b>concentrate on the fundamentals</b>. Ritchie's first program
+                simply printed "hello, world" on the screen.
+            </li>
+            <li>Traditional console programs use a <b>sequence of commands</b> to
+                display output and do other operations.
+            </li>
+            <li> Object-oriented languages consist of a <b>community of objects</b>
+                interacting with each other. To display output in an object-oriented
+                program, you make a request to an <b>output object</b>.
+            </li>
+            <li> The Java class library contains an output object named
+                <code>System.out</code> that is automatically created when
+                your program is run.
+            </li>
+            <li>You can ask <code>System.out</code> to display data by
+                sending it the <code>print</code> and <code>println</code>
+                <b>messages</b>.
+            </li>
+            <li> When interacting with objects, the <b>receiver</b> is the object
+                that carries out your request, the <b>request</b> is the name
+                of the method that you want it to perform, and the <b>parameters</b>
+                or <b>arguments</b> are additional pieces of data that you supply
+                to customize the way that the object carries out your request.
+            </li>
+            <li>The <code>print</code> method displays its parameter on the
+                console, while the <code>println</code> method adds a <b>newline</b>
+                following its output, so the next output appears on the next line.
+            </li>
+            <li> You can shorten the name of the <code>System.out</code> object
+                when writing your code to simply <code>out</code> by adding
+                a <code>static import</code> statement at the beginning of
+                your file.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,949 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		'2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Author' content='Kurt Schmidt' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To be able to use and define template classes and functions </li>
+	<li> To learn how to use template parameters </li>
+	<li> To distinguish between polymorphic mechanisms of templates and
+		inheritance </li>
+	<li> To learn how to supply policies to templates </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Templates </h1>
+<ul>
+	<li> Provides another level of abstraction </li>
+	<li> A template class or function can work with many different
+		<em>types</em> </li>
+	<li> Handled at compile time (efficient) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Template Functions </h1>
+<ul>
+	<li> E.g., a function to print an array of <tt>int</tt>s:
+		<code>
+void print(ostream&amp; out, int data[], int count)
+{
+   out &lt;&lt; "[";
+   for (int i = 0; i &lt; count; i++)
+   {
+      if (i &gt; 0)
+         out &lt;&lt; ",";
+      out &lt;&lt; data[i];
+   }
+   out &lt;&lt; "]";
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Template Functions </h1>
+<p> Your next project requires the same for an array of doubles: </p>
+<ul>
+	<li> Cut and paste? </li>
+	<li> Search and replace? </li>
+</ul>
+<p> Both error-prone.  Every <tt>int</tt>?  Use a function template </p>
+<ul>
+	<li> Function parameterized by type </li>
+	<li> Abstract away the differences (argument types) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Template Functions </h1>
+<ul><li> Use the template prefix, <tt>template</tt> followed by a list of
+	<dfn>type parameters</dfn>: 
+<code>
+<span class='hl'>template&lt;typename T&gt;</span>
+void print(ostream&amp; out, <span class='hl'>T</span> data[], int count)
+{
+   out &lt;&lt; "[";
+   for (int i = 0; i &lt; count; i++)
+   {
+      if (i &gt; 0)
+         out &lt;&lt; ",";
+      out &lt;&lt; data[i];
+   }
+   out &lt;&lt; "]";
+}</code></li></ul>
+</div>
+
+<div class='slide'>
+<h1> Template Functions </h1>
+<ul>
+	<li> <tt>T</tt> is arbitrary; any legal C identifier </li>
+	<li> <tt>typename</tt> (or <tt>class</tt>) indicates that the value of
+		<tt>T</tt> will be a type </li>
+	<li> <tt>T</tt> could represent any type </li>
+	<li> Its type is inferred from the arguments of the call:
+		<code>
+int a[] = {2, 4, 5};
+print(cout, a, 3); // Will use int print
+double b[] = {3.14159, 2.7};
+print(cout, b, 2); // Will use double print
+string c[] = {"Fred", "Sally", "Alice"};
+print(cout, c, 3); // Will use string print</code>
+	</li>	
+	<li> Within the function body <tt>T</tt> can be used wherever that type
+		would be appropriate </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : Template Functions </h1>
+<div class='syntax'>
+<code>template&lt;typename <i>type_var</i><sub>1</sub>, ..., typename <i>type_var<sub>n</sub></i>&gt;
+<i>return_type function_name</i>(<i>parameters</i>)
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>template&lt;typename T&gt;
+void print(ostream&amp; out, T data[], int count)
+{
+   out &lt;&lt; "[";
+   for (int i = 0; i &lt; count; i++)
+   {
+      out &lt;&lt; data[i];
+      if (i + 1 &lt; count)
+         out &lt;&lt; ",";
+   }
+   out &lt;&lt; "]";
+}
+</code>
+	<h3> Purpose: </h3>
+		<p> Define a function that can be reused for different types of
+			arguments. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Invalid Type Parameters </h3>
+<p> A type argument is characterized implicitly, by its use in the function.
+<ul>
+	<li> The typical <tt>max</tt> function:
+		<code>
+template&lt;typename T&gt;
+T max(const T&amp; left, const T&amp; right)
+{
+   if (left &lt; right)
+      return right;
+   return left;
+}</code>
+	</li>
+	<li> Can't mix types; compiler can't guess programmer's intent
+		<code>
+double e = max(2, 3.13); // Error &mdash; cannot infer type parameter</code>
+	</li>
+	<li> Parameters may be explicitly provided:
+		<code>
+double e = max&lt;double&gt;(2, 3.13); // OK &mdash; integer will be converted into double</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<ul>
+	<li> The <tt>&lt;</tt> operator must be defined for <tt>T</tt> </li>
+	<li> This won't work:
+		<code>
+Employee mary("Mary Smith", 25000);
+Employee fred("Fred Jones", 37500);
+Employee big = max(mary, fred);
+   // Error - invalid types</code>
+	</li>
+	<li> Compiler must see the entire definition of a function template </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Compile-Time Polymorphism </h1>
+<ul>
+	<li> Templates are instantiated in many different ways </li>
+	<li> Does its work at compile time
+		<ul>
+			<li> Compiler creates <i>template functions</i> from
+				the <i>function template</i>, as needed </li>
+			<li> Few run-time costs </li>
+			<li> A function template prototype is meaningless </li>
+		</ul>
+	</li>
+	<li> inheritance and overriding occur at runtime </li>
+	<li> Templates are commonly stored in included files </li>
+	<li> Not compiled separately </li>
+	<li> Compiler looks for non-templates first </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Templates and Overloading </h3>
+<p> Compiler will always choose a non-template function over a template
+	function </p>
+<ul>
+	<li> <dfn>Specialization</dfn> </li>
+	<li> Allows special behavior to be supplied </li>
+	<li> &lt;&lt; not defined on <tt>Product</tt> </li>
+	<li> But, <tt>Product</tt> has a <tt>print()</tt>
+		<code>
+void print(ostream&amp; out, <span class='hl'>Product</span> data[], int count)
+{
+   out &lt;&lt; "[";
+   for (int i = 0; i &lt; count; i++)
+   {
+      if (i &gt; 0)
+         out &lt;&lt; ",";
+         <span class='hl'>data[i].print(out);</span>
+   }
+   out &lt;&lt; "]";
+}</code>
+	</li>
+	<li> When the second argument is a <tt>Product</tt> array, this will be
+		chosen over the template that could be instantiated </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+Template Classes </h1>
+<ul>
+	<li> Container classes are most common examples   </li>
+	<li> Consider a function that finds the max and min values of a vector
+		<code>
+Pair minmax(vector&lt;int&gt; v)
+{
+   int min = v[0];
+   int max = v[0];
+   for (int i = 1; i &lt; v.size(); i++)
+   {
+      if (v[i] &lt; min) min = v[i];
+      if (v[i] &gt; max) max = v[i];
+   }
+   return Pair(min, max);
+}</code>
+	</li>
+	<li> Make a <tt>Pair</tt> class to return both values </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Template Classes </h1>
+<code>class Pair
+{
+public:
+   Pair(int a, int b);
+   int get_first() const;
+   int get_second() const;
+private:
+   int first;
+   int second;
+};
+
+inline Pair::Pair(int a, int b)
+{
+   first = a;
+   second = b;
+}
+
+inline int Pair::get_first() const
+{
+   return first;
+}
+
+inline int Pair::get_second() const
+{
+   return second;
+}</code>
+</div>
+
+<div class='slide'>
+<h1> Template Classes </h1>
+<ul>
+	<li> To use:
+		<code>
+Pair p = minmax(data);
+cout &lt;&lt; p.get_first() &lt;&lt; "&nbsp;" &lt;&lt; p.get_second() &lt;&lt; "\n";</code>
+	</li>
+	<li> <tt>Pair</tt> is not very flexible
+		<ul>
+			<li> We'd like a generic pair </li>
+			<li> One that can hold disparate types </li>
+		</ul>
+	</li>
+	<li> Type arguments can not be inferred </li>
+	<li> Types are explicitly named at declaration:
+		<code>
+Pair&lt;int, int&gt;
+Pair&lt;string, int&gt;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Template Classes </h1>
+<ul>
+	<li> Replace types with <tt>F</tt> and <tt>S</tt>
+		<code>
+template&lt;typename F, typename S&gt;
+class Pair
+{
+public:
+   Pair(const F&amp; a, const S&amp; b);
+   F get_first() const;
+   S get_second() const;
+private:
+   F first;
+   S second;
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Template Classes </h1>
+<ul><li> Turn <i>each</i> member function into a template: 
+<code>
+template&lt;typename F, typename S&gt;
+inline Pair&lt;F, S&gt;::Pair(const F&amp; a, const S&amp; b)
+{
+   first = a;
+   second = b;
+}
+
+template&lt;typename F, typename S&gt;
+inline F Pair&lt;F, S&gt;::get_first() const
+{
+   return first;
+}
+
+template&lt;typename F, typename S&gt;
+inline S Pair&lt;F, S&gt;::get_second() const
+{
+   return second;
+}</code></li></ul>
+</div>
+
+<div class='slide'>
+<h1> Template Classes </h1>
+<ul>
+	<li> <tt>Pair</tt> is a template, not a class </li>
+	<li> <tt>Pair&lt;int, string&gt;</tt>, e.g., <em>is</em> a class </li>
+	<li> Compare to the STL <tt>pair</tt> class </li>
+	<li> These are templates, not functions </li>
+	<li> Template class definition <em>and</em> function definitions must be
+		included in each compilation module </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Class Template Definition </h1>
+<div class='syntax'>
+<code>template&lt;typename <i>type_var</i><sub>1</sub>, ..., typename <i>type_var<sub>n</sub></i>&gt;
+class <i>ClassName</i>
+{
+   <i>features</i>
+};</code>
+	<h3> Example: </h3>
+<code>template&lt;typename F, typename S&gt;
+class Pair
+{
+public:
+   Pair(const F&amp; a, const S&amp; b);
+   F get_first() const;
+   S get_second() const;
+private:
+   F first;
+   S second;
+};</code>
+	<h3> Purpose: </h3>
+		<p> Define a class template with a type parameter. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : Template Classes </h1>
+<div class='syntax'>
+<code>template&lt;typename <i>type_variable</i>&gt;
+<i>modifiers</i> <i>return_type</i> 
+   <i>ClassName</i>&lt;<i>type_variable</i>&gt;::<i>function_name</i>(<i>parameters</i>) const<sub>opt</sub>
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>template&lt;typename T&gt;
+inline T Pair&lt;T&gt;::get_first() const
+{
+   return first;
+}
+</code>
+	<h3> Purpose: </h3>
+		<p> Supply the implementation of a member function for a class template.
+			</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Turning a Class into a Template </h1>
+<ul>
+	<li> Recall the linked list from Chapter 12 </li>
+	<li> <tt>List</tt> stored strings </li>
+	<li> Used the <tt>Node</tt> and <tt>Iterator</tt> classes </li>
+	<li> Let's make them into templates </li>
+	<li> Start with <tt>Node</tt>:
+		<ul>
+			<li> Replace each <tt>string</tt> with a <tt>T</tt> </li>
+			<li> Insert preamble </li>
+			<li> Change each <tt>Node</tt> to a <tt>Node&lt;T&gt;</tt> (except
+			constructor names) </li>
+		</ul>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Turning a Class into a Template &mdash; <tt>Node</tt> </h1>
+<code><span class='hl'>template&lt;typename T&gt;</span>
+class Node
+{
+public:
+   Node(<span class='hl'>T</span> s);
+private:
+   <span class='hl'>T</span> data;
+   Node<span class='hl'>&lt;T&gt;</span>* previous;
+   Node<span class='hl'>&lt;T&gt;</span>* next;
+};</code>
+</div>
+
+<div class='slide'>
+<h1> Turning a Class into a Template &mdash; <tt>List</tt> </h1>
+<code>template&lt;typename T&gt;
+class List
+{
+public:
+   List();
+   void push_back(T s);
+   void insert(Iterator&lt;T&gt; pos, T s);
+   Iterator&lt;T&gt; erase(Iterator&lt;T&gt; pos);
+   Iterator&lt;T&gt; begin();
+   Iterator&lt;T&gt; end();
+private:
+   Node&lt;T&gt;* first;
+   Node&lt;T&gt;* last;
+};</code>
+</div>
+
+<div class='slide'>
+<h1> Turning a Class into a Template </h1>
+<ul><li> Turn <em>each</em> member function definition into a template: 
+<code>
+template&lt;typename T&gt;
+Iterator&lt;T&gt; List&lt;T&gt;::begin()
+{
+   Iterator&lt;T&gt; iter;
+   iter.position = first;
+   iter.last = last;
+   return iter;
+}</code></li></ul>
+<ul>
+	<li> Remember, these all go into a header file </li>
+	<li> There is no <tt>list.cpp</tt> file </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Templates Don't Preserve Inheritance </h3>
+<ul>
+	<li> A relationship between 2 type arguments does not imply a
+		relationship between the corresponding template classes </li>
+	<li> E.g. <tt>Manager</tt> inherits from <tt>Employee</tt> </li>
+	<li> <tt>vector&lt;Manager&gt;</tt> is <strong>not</strong> related to
+		<tt>vector&lt;Employee&gt;</tt></li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Document Template Parameter Requirements </h3>
+<ul>
+	<li> Requirements that type arguments must satisfy are implicitly defined
+		by the operations on them </li>
+	<li> Do not force a client of your template to read through the code </li>
+	<li> Code for member functions is only generated if that function is
+		called
+		<ul>
+			<li> E.g., Product doesn't define <tt>operator==</tt> </li>
+			<li> <tt>vector&lt;Product&gt;</tt> is okay, so long as
+				<tt>find()</tt>, etc., aren't called </li>
+		</ul>
+	</li>
+	<li> Place a minimal set of necessary operations in the class header
+		comments </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Document Template Parameter Requirements </h3>
+<code>/**
+   A class to hold a collection of values
+   Type T must define a copy constructor
+   To use the find generic algorithm you must define the equality operator ==
+*/
+template&lt;typename T&gt;
+class vector
+{
+   ...
+};
+
+/**
+   A collection of type value pairs.
+   type K must have a copy constructor and the less than operator.
+   type V must have a copy constructor and the equality operator.
+*/
+template&lt;typename K, typename V&gt;
+class map
+{
+   ...
+};</code>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Nontype Template Arguments </h1>
+<h2> Template parameters can be type names, or constants </h2>
+<p> Consider our matrix case study </p>
+<ul>
+	<li> 3 x 3, at first </li>
+	<li> Managed heap memory to remove this restriction </li>
+	<li> Template arguments provide a third alternative </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Nontype Template Arguments </h1>
+<ul>
+	<li> Size could be specified by integer template arguments:
+		<code>
+template&lt;typename T, int ROWS, int COLUMNS&gt;
+class Matrix
+{
+   . . .
+private:
+   T data[ROWS][COLUMNS];
+};</code>
+	</li>
+	<li> Note, the integer values must be known at compile time </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Nontype Template Arguments </h1>
+<ul>
+	<li> Supply the type and the size:
+		<code>
+Matrix&lt;double, 3, 4&gt; a; // A 3 x 4 matrix of double values
+Matrix&lt;string, 2, 2&gt; b;</code>
+	</li>
+	<li> The bounds become part of the type </li>
+	<li> Compatibility checked at compile time
+		<code>
+Matrix&lt;int, 3, 4&gt; a;
+Matrix&lt;double, 3, 4&gt; b;
+Matrix&lt;int, 5, 7&gt; c;
+Matrix&lt;int, 3, 4&gt; d;
+b = a; // Error, element types don't match.
+c = a; // Error, sizes dont match, so types differ.
+d = a; // OK. Element types and sizes match.</code>
+	</li>
+	<li> Requirements for matrix multiplication are more difficult to specify </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> Template parameters can specify behavior (set <dfn>policy</dfn>) </li>
+	<li> Generalize the <tt>max</tt> function to support types that:
+		<ul>
+			<li> Don't define <tt>operator&lt;</tt> </li>
+			<li> Have more than one way of ordering </li>
+		</ul>
+	</li>
+	<li> Make comparison a template argument:
+		<code>
+template&lt;typename T, typename CMP&gt;
+T max(const T&amp; left, const T&amp; right, CMP cmp)
+{
+   if (cmp(left, right))
+      return right;
+   return left;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> <tt>&lt;</tt> has been replaced by a function call </li>
+	<li> <tt>cmp</tt> may be either
+		<ol>
+			<li> An actual function </li>
+			<li> A function object </li>
+		</ol>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments
+	</h1>
+<ul>
+	<li> E.g., use function objects to compare <tt>Employee</tt>s by salary or
+		name </li>
+	<li> Develop these two classes:
+		<code>
+class CompareBySalary
+{
+public:
+   bool operator()(const Employee&amp; a,
+      const Employee&amp; b) const;
+};
+
+bool CompareBySalary::operator()(const Employee&amp; a,
+   const Employee&amp; b) const
+{
+   return a.get_salary() &lt; b.get_salary();
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<code>class CompareByName
+{
+public:
+   bool operator()(const Employee&amp; a,
+      const Employee&amp; b) const;
+};
+
+bool CompareByName::operator()(const Employee&amp; a,
+   const Employee&amp; b) const
+{
+   return a.get_name() &lt; b.get_name();
+}</code>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> <tt>CompareByName</tt> and <tt>CompareBySalary</tt> are types </li>
+	<li> Represent two different orderings </li>
+	<li> We can use the <tt>max</tt> function in either sense:
+		<code>
+Employee alice("Alice Smith", 45000);
+Employee fred("Fred Jones", 38500);
+
+Employee one = max(alice, fred, CompareBySalary());
+Employee two = max(alice, fred, CompareByName());
+		</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> Same idea applies to template class arguments </li>
+	<li> Consider maintaining a collection in sorted order:
+		<ul>
+			<li> Specify the rules for comparing two elements </li>
+			<li> Do not specify criteria in the container itself </li>
+		</ul>
+		<code>
+template&lt;typename T, typename CMP&gt;
+class OrderedCollection
+{
+public:
+   typedef Iterator&lt;T&gt; iterator;
+   void add(T value);
+   iterator begin();
+   iterator end();
+private:
+   List&lt;T&gt; data;
+   CMP comparator;
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> The comparator is an attribute
+		<code>
+template&lt;typename T, typename CMP&gt;
+void OrderedCollection&lt;T, CMP&gt;::insert(T value)
+{
+   iterator ptr = begin();
+   while (ptr != end())
+   {
+      if (comparator(value, *ptr))
+      {
+         // Found place to insert
+         data.insert(ptr, value);
+         return;
+      }
+      ++ptr;
+   }
+   // Insert at end
+   data.insert(ptr, value);
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments
+	</h1>
+<ul>
+	<li> Collection is defined by the type it stores, and by the type
+		of its comparator
+		<code>
+void f(OrderedCollection&lt;Employee, CompareByName&gt;&amp; c)
+{
+&nbsp;&nbsp;&nbsp;...
+}
+
+OrderedCollection&lt;Employee, CompareBySalary&gt; a;
+a.add(...);
+OrderedCollection&lt;Employee, CompareByName&gt; b;
+b.add(...);
+f(a); // Error - types don't match
+f(b); // OK - type is OK</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments </h1>
+<ul>
+	<li> Identify a default policy </li>
+	<li> Associated with a template parameter </li>
+	<li> STL algorithms use the <tt>less&lt;T&gt;</tt>, in
+		the <tt>&lt;functional&gt;</tt> header file
+		<code>
+template&lt;typename T&gt;
+class less
+{
+   bool operator()(const T&amp; x, const T&amp; y) const;
+}
+
+template&lt;typename T&gt;
+bool less&lt;T&gt;::operator()(const T&amp; x, const T&amp; y) const
+{
+   return x &lt; y;
+}</code>
+		
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Setting Behavior Using Template Arguments
+	</h1>
+<ul>
+	<li> The <tt>less</tt> defines a function object </li>
+	<li> Invokes <tt>operator&lt;</tt> </li>
+	<li> Specify <i>trait</i> as the default template argument
+		<code>
+template&lt;typename T, typename CMP = less&lt;T&gt; &gt;
+class OrderedCollection
+{
+   &nbsp;&nbsp;&nbsp;...
+}</code>
+	</li>
+	<li> To use the default:
+		<code>
+OrderedCollection&lt;int&gt; data; 
+   // Will use the less than operator</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+Case Study: Matrices, Continued </h1>
+<ul>
+	<li> Create a template version of the <tt>Matrix</tt> class 
+		<ul>
+			<li>Avoid explaining interactions between templates and nested classes</li>
+			<li> No reason to make the exception classes into templates </li>
+		</ul></li>
+
+	<li> Parameterize the element type only 
+	<ul>
+	   <li> Not the row and column bounds; simplifies overloading the arithmetic
+		operators </li>
+		</ul></li>
+	<li> Zero is no longer appropriate value for all types; remove initializer loop in the constructor </li>
+	<li> Move member function definitions into the header file </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices &mdash; <tt>matrix3.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrix3.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices &mdash; <tt>matrixtest3.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrixtest3.cpp" )
+	//]]>
+</script>
+</div>
+
+</body>
+</html>

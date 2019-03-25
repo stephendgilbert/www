@@ -1,0 +1,1327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		'2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Author' content='Kurt Schmidt' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To learn the different categories of memory </li>
+	<li> To learn to write and use constructors and destructors </li>
+	<li> To be able to create classes that manage their own memory
+		allocation and deallocation </li>
+	<li> To understand how to avoid common memory management errors </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Categories of Memory </h1>
+<p> Memory is divided into four categories: </p>
+<ol>
+	<li> <dfn>Code</dfn> - instructions for all global and member functions </li>
+	<li> <dfn>Static Data</dfn> - global variables, and all local and member
+		variables declared <tt>static</tt> </li>
+	<li> <dfn>Run-time Stack</dfn> - automatics (local non-static) </li>
+	<li> <dfn>Free Store (Heap)</dfn> - dynamically allocated (<tt>new</tt>) </li>
+</ol>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.1" )
+	//]]>
+	</script>
+	Code Memory </h1>
+<ul>
+	<li> Contains all machine instructions for functions and methods </li>
+	<li> May be referenced through pointers </li>
+	<li> Function pointers discussed in Section 7.6 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.2" )
+	//]]>
+	</script>
+	Static Data Memory </h1>
+<p> Globals, static locals and static member variables </p>
+<ul>
+	<li> Only one value attached to a name </li>
+	<li> Size of statics can be known prior to execution </li>
+	<li> Created <em>only once</em>, before <tt>main()</tt> </li>
+	<li> Initialized <em>only once</em> </li>
+	<li> Exists until the end of execution </li>
+	<li> These 2 functions do the same thing: 
+
+<code>
+int counter = 0;
+int counting_fun()
+{
+   // Increments at each call
+   counter++;
+   return counter;
+}</code>
+
+<code>int counting_fun()
+{
+   static int counter = 0; // Will be initialized only once
+   counter++;
+   return counter;
+}</code></li></ul>
+
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.3" )
+	//]]>
+	</script>
+	The Run-time Stack </h1>
+<ul>
+	<li> Used for functions </li>
+	<li> Every call is a new block of memory, or <dfn>activation record</dfn>, on stack </li>
+	<li> Activation record contains:
+		<ul>
+			<li> Parameters </li>
+			<li> Return pointer </li>
+			<li> Local variables </li>
+			<li> Other machine-specific stuff </li>
+		</ul>
+	</li>
+	<li> Block for current function on top of stack </li>
+	<li> Return from function decrements stack pointer </li>
+	<li> Drawbacks:
+		<ul>
+			<li> Local variables cease to exist when function exits </li>
+			<li> Size of locals must be known at compile time </li>
+		</ul>
+	 </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> The Run-time Stack </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> Setup:  <var>f</var> invokes <var>g</var>, which, in turn,
+				invokes <var>h</var> </li>
+			<li> <var>h</var> is on top of the stack </li>
+			<li> <var>g</var> is next on the stack </li>
+			<li> <var>h</var> must terminate before <var>g</var> can continue
+			</li>
+			<li> Same function may be on the stack multiple times (recursion)
+			</li>
+			<li> Same variable name is bound to several different values </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig1.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> Activation Records on
+			the Stack </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.4" )
+	//]]>
+	</script>
+	Heap Memory </h1>
+<h2> The <dfn>heap</dfn>, or <dfn>free store</dfn>: </h2>
+<ul>
+	<li> Neither the number of values, nor the size of a particular value
+		need be known at compile time </li>
+	<li> Lifetime of a value is not tied to a function </li>
+	<li> Values may persist after program ends </li>
+</ul>
+<h2> <dfn>Dynamic memory allocation</dfn> </h2>
+<ul>
+	<li> A <dfn>memory allocator</dfn> (<tt>new</tt>) finds storage on the
+		heap, returns a pointer </li>
+	<li> Values accessed through a pointer
+		<ul>
+			<li> Pointer itself might be on the heap, or on the stack </li>
+		</ul>
+	</li>
+	<li> To notify the memory allocator that memory can be returned to heap:
+		<code>
+delete boss;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Heap Memory </h1>
+<ul><li> Request storage area with <tt>new</tt> 
+<code>
+Employee* boss = new Employee("Lin, Lisa", 68000);</code></li><br>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig2.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 2</span> Values on the Stack
+		and on the Heap </p>
+	</div>
+
+		<li> Allocation and deallocation of arrays requires slightly different
+			syntax 
+<code>   
+   // Allocate an array of 7 double cells
+double* data = new double[7];
+...
+delete[] data; // Free the array</code></li><br>
+
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig3.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 3</span> A Pointer to an
+			Array </p>
+		</ul>
+		</div>
+
+
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Common Memory Errors </h1>
+<ul>
+	<li> The programmer is responsible for memory management in C++ </li>
+	<li> Pointers can refer to memory in any of the four areas (above) </li>
+	<li> Possible errors include:
+		<ul>
+			<li> Using a value that has not been initialized </li>
+			<li> Using a pointer to reference a memory location that is no longer
+				valid (dangling pointer) </li>
+			<li> Forgetting to delete a dynamically allocated section of memory
+				(memory leak) </li>
+			<li> Deleting a memory value that was never allocated </li>
+			<li> Deleting a dynamically allocated section of memory more than
+				once </li>
+		</ul>
+	 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.1" )
+	//]]>
+	</script>
+	Initialization Errors </h1>
+<ul>
+	<li> Can occur for variables in any section </li>
+	<li> Use of constructors helps </li>
+	<li> Pointers compound this problem </li>
+	<li> Pointer might be uninitialized:
+		<code>
+Employee* boss;
+cout &lt;&lt; "My boss earns " &lt;&lt; boss-&gt;salary();
+// Error&mdash;almost certain crash, because pointer is undefined</code>
+		<em>If you're lucky</em>, this will crash
+	</li>
+	<li> Or, a valid pointer might point to uninitialized memory
+		<code>
+int* coins = new int[3];
+   // Array for counts of pennies, nickels, and dimes
+   // Error.coins uninitialized
+double total = coins[0] + coins[1] * 0.05 + coins[2] * 0.10;</code>
+		The pointer is good, but the array is not initialized
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.2" )
+	//]]>
+	</script>
+	Lifetime Errors </h1>
+<ul>
+	<li> When a function exits, local variables are no longer valid </li>
+	<li> Referring to a local variable after the function exits is a subtle
+		error
+		<ul>
+			<li> Until overwritten (new function call), the value appears to be
+				there </li>
+		</ul>
+		<code>
+// Error.this function returns a reference to an invalid memory location
+char* read_a_line()
+{
+   char buffer[200]; // Declare a buffer to hold the text
+   cin &gt;&gt; buffer; // Read a line of text
+   return buffer; // Return the text
+ }
+...
+char* p = read_a_line();</code>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig4.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 4</span> Creation of a
+Dangling Pointer </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.3" )
+	//]]>
+	</script>
+	Array Bounds Errors </h1>
+<ul>
+	<li> Assumptions about the size of statically-allocated arrays are
+		dangerous:
+		<code>
+char buffer[200]; // Declare a buffer to hold the text</code>
+		<ul>
+			<li> A line of input will not exceed 200 characters </li>
+			<li> Really? </li>
+		</ul>
+	</li>
+	<li> Array bounds are <strong>not</strong> checked by the compiler </li>
+	<li> Any use of arrays (reading and writing) must by carefully guarded
+	</li>
+	<li> Use smarter containers (vectors) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.4" )
+	//]]>
+	</script>
+	Object Slicing </h1>
+<ul>
+	<li> A pointer to an object might be pointing at an object of a child
+		class </li>
+	<li> The behavior of pointers and nonpointers is subtly different:
+		<code>
+TravelClock* p = new TravelClock(true, "Rome", 9);
+Clock* cp = p;
+Clock c = *p;
+cout &lt;&lt; cp-&gt;get_location() &lt;&lt; " time is " &lt;&lt; cp-&gt;get_hours() &lt;&lt; "\n";
+cout &lt;&lt; c.get_location() &lt;&lt; " time is " &lt;&lt; c.get_hours() &lt;&lt; "\n";</code>
+	</li>
+</ul>
+<table>
+<tr>
+	<td><p> The output is:
+<code>Rome time is 6
+Local time is 21</code>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig5.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 5</span> Data Fields Being
+			Sliced by an Assignment </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.5" )
+	//]]>
+	</script>
+	Memory Leaks </h1>
+<ul>
+	<li> Failure to return memory </li>
+	<li> Not fatal, but will choke a computer over time </li>
+	<li> Often the result of successive assignments:
+		<code>
+Clock* a_clock;
+...
+a_clock = new TravelClock(true, "Rome", 9);
+...
+a_clock = new TravelClock(true, "Tokyo", -7); // Leak, old memory is now lost</code>
+	</li>
+	<li> Older objects need to be returned to the heap before a subsequent
+		assignment </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.6" )
+	//]]>
+	</script>
+	Using Invalid Memory References </h1>
+<ul>
+	<li> Multiple references to a heap object will always cause problems </li>
+	<li> When the object is freed through one pointer, the other pointers
+		become invalid </li>
+	<li> Reading from these locations <em>might</em> yield erroneous results
+	</li>
+	<li> Writing to the locations might well foul up the memory manager </li>
+	<li> If that location is re-allocated, you'll foul up somebody else </li>
+	<li> This insidious error is <em>extremely</em> common:
+		<code>
+for (Node* p = ptr; p != NULL; p = p-&gt;next)
+{
+   delete p; // Error&mdash;p-&gt;next is referenced after p is deleted
+ }</code>
+		<p> It appears to work.  But, for a long list, it is probable that your
+		program is sliced out; that memory might well be reallocated. </p>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.7" )
+	//]]>
+	</script>
+	Deleting a Value More Than Once </h1>
+<ul>
+	<li> Calling <tt>delete</tt> twice on the same location might corrupt the heap </li>
+	<li> Always set a pointer to <tt>NULL</tt> after call <tt>delete</tt>
+	</li>
+	<li> Multiply-referenced values compound this problem:
+		<code>
+Clock* my_clock = new TravelClock(true, "Rome", 9);
+Clock* your_clock = my_clock;
+...
+delete my_clock;
+my_clock = NULL;
+delete your_clock; // Same value being deleted twice</code>
+	</li>
+	<li> No easy way to avoid this </li>
+	<li> Be diligent </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.8" )
+	//]]>
+	</script>
+	Deleting a Value That Was Never Allocated </h1>
+<ul>
+	<li> Calling <tt>delete</tt> on a pointer that was never initialized will
+		cause trouble </li>
+	<li> Deleting the <tt>NULL</tt> pointer is always safe:
+		<code>
+TravelClock* tc = NULL;
+...
+delete tc; // This time OK, delete does nothing</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Constructors </h1>
+
+<ul>
+	<li> Same name as the class </li>
+	<li> No return type </li>
+	<li> Used to initialize class' attributes </li>
+	<li> May be overloaded </li>
+	<li> Only one constructor is invoked at creation </li>
+	<li> Implicitly invoked:
+		<ul>
+			<li> Each time a block is entered where an object is declared </li>
+			<li> For static objects - before <tt>main</tt> starts </li>
+			<li> When an object is created on the heap with <tt>new</tt> </li>
+			<li> When an object is passed <i>by value</i> </li>
+			<li> For member objects, when aggregate is created </li>
+			<li> When child is instantiated </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constructors </h1>
+<ul>
+	<li> All constructors perform necessary initialization </li>
+	<li> Constructors tie together memory allocation and object initialization
+	</li>
+	<li> Ensure that every value created is properly initialized </li>
+	<li> Encapsulate the management of the internal state of an object, along
+		with destructors </li>
+	<li> Consider the <tt>string</tt> class:
+		<ul>
+			<li> Contents not stored in the string object </li>
+			<li> Stores a pointer to a character array on the heap </li>
+			<li> String object manages the memory itself </li>
+			<li> Constructors make sure pointers and memory are properly
+				initialized </li>
+			<li> Destructor deallocates heap memory </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constructors - String Example </h1>
+<code>class String
+{
+public:
+   String(); // Default constructor
+   String(const char p[]); // Simple constructor
+   String(const String&amp; right); // Copy constructor
+   ~String(); // Destructor
+   String&amp; operator=(const String&amp; right); // Assignment operator
+   String&amp; operator+=(const String&amp; right);
+   int length() const;
+   char&amp; operator[](int index);
+   char operator[](int index) const;
+private:
+   char* buffer;
+   int len;
+};</code>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.1" )
+	//]]>
+	</script>
+	Constructors with Arguments </h1>
+<ul>
+	<li> Example:  Our constructor must allocate space from heap and initialize:
+<code>
+String::String(const char p[])
+{
+   // Determine number of characters in string (strlen(p))
+   len = 0;
+   while (p[len] != '\0')
+      len++;
+   // Allocate buffer array, remember to make space for NULL character
+   buffer = new char[len + 1];
+   // Copy new characters (strcpy( buffer, p ))
+   for (int i = 0; i &lt; len; i++)
+      buffer[i] = p[i];
+   buffer[len] ='\0';
+}</code>
+	</li>
+	<li> Probably uses <tt>strlen</tt> and <tt>strcpy</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Forgetting the Dual Use of Single Argument Constructors </h3>
+<ul>
+	<li> Used when explicitly creating a new object </li>
+	<li> Also used to convert one type into another </li>
+</ul>
+<p> Consider a constructor that converts an integer into a string
+representation </p>
+<ul> 
+	<li> Consider passing a string argument:
+		<code>
+print_name( 'a' );</code>
+	</li>
+	<li> <tt>'a'</tt> is a number; ASCII 97 </li>
+	<li> The resulting string is the "97" (not "a") </li>
+</ul>
+<p> Use <tt>explicit</tt> keyword to inhibit implicit type conversion </p>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.2" )
+	//]]>
+	</script>
+	Default Constructors </h1>
+<ul>
+	<li> The constructor that takes no arguments </li>
+	<li> Invoked <i>without</i> parenthesis, (except for unnamed temporaries </li>
+	<li> Invoked:
+		<ul>
+			<li> When a variable is declared (or created from the heap) with no
+				arguments </li>
+			<li> The <i>only</i> initializer for elements in an array </li>
+			<li> When object is member data of another class, and no initializer
+				is provided </li>
+		</ul>
+	 </li>
+	<li> Example: a <tt>String</tt> is, by default, an empty string
+<code>
+String::String()
+{
+   len = 0;
+   buffer = NULL; // No need to allocate array to hold zero characters
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Default Constructor and Parentheses </h3>
+<ul>
+	<li> Omit parentheses to explicitly call the default constructor:
+		<code>
+String new_name;</code>
+	</li>
+	<li> Using parentheses is syntactically correct, but is actually a
+		function declaration:
+		<code>
+String new_name();</code>
+	</li>
+	<li> We use parentheses to create an unnamed object using the default
+		constructor:
+		<code>
+print_time(Time());  // Pass current time to print_time</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.3" )
+	//]]>
+	</script>
+	Copy Constructors </h1>
+<ul>
+	<li> Used internally to make copies, or clones, of objects </li>
+	<li> Invoked:
+		<ul>
+			<li> Explicitly
+				<code>
+String first("Fred");
+String second(first);
+// second is initialized from first using copy constructor
+String third = first; // Also uses copy constructor</code>
+			</li>
+			<li> During initialization using <tt>=</tt>
+				<code>
+String third = first;
+// Also uses copy constructor</code>
+			</li>
+			<li> When an object is passed or returned <i>by value</i> </li>
+		</ul>
+	<li> <b>Note:</b> Use <tt>const</tt> when passing a reference to avoid
+		copy overhead </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Copy Constructors </h1>
+<ul>
+	<li> Automatically supplied by compiler &mdash; memberwise (shallow) copy
+		by default
+		<ul>
+			<li> Calls copy constructor of all member data </li>
+		</ul>
+	</li>
+	<li> Example:  each <tt>String</tt> has its own dynamically allocated
+		buffer, so default behavior is insufficient.  We extend this behavior:
+		<code>
+String::String(const String&amp; right)
+{
+   len = right.length();
+   buffer = new char[len + 1];
+   for (int i = 0; i &lt; len; i++)
+      buffer[i] = right[i];
+   buffer[len] = '\0';
+}</code>
+	</li>
+	<li> Sole parameter is a reference to an object of the
+		same class </li>
+	<li> Parameter really should be <tt>const</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> When to Use the System-Defined Copy Constructor </h3>
+<ul>
+	<li> Copy constructor is supplied </li>
+	<li> Default behavior is to perform a <dfn>member-wise</dfn> (or
+		<dfn>shallow</dfn>) copy </li>
+	<li> Typically, an explicit copy constructor is needed when an object
+		stores references to external resources (such as heap memory) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.4" )
+	//]]>
+	</script>
+	Field Initializer Lists </h1>
+<p> Member data may be assigned in a field initializer list </p>
+<ul>
+	<li> Syntax only valid for constructors </li>
+	<li> Used to avoid modifying an attribute twice (default constructor,
+		then in the body of the outer constructor)
+		<code>
+Employee::Employee(String employee_name, double initial_salary)
+   : <span class='hl'>name(employee_name), salary(initial_salary)</span>
+{
+}</code>
+	</li>
+	<li> Is the <strong>only</strong> way to invoke a non-default constructor
+		of a base class
+		<code>
+TeachingAssistant::TeachingAssistant(String student_name)
+   // Teaching assistants all get same starting salary
+	 : <span class='hl'>Employee(student_name, 5000)</span>
+{
+}</code>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 18.3.4 Field Initializer Lists </h1>
+<p> Initializer lists must be used for: </p>
+<ul>
+	<li> Data fields declared as non-static <tt>const</tt> </li>
+	<li> References </li>
+	<li> To invoke a base class' constructor (other than default) </li>
+	<li> Assigning a size to a vector member:
+		<code>
+PartDescription::PartDescription(String part_name,
+      int inventory_number)
+   : name(part_name), part_number(inventory_number),
+      subcomponents(3) {}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.5" )
+	//]]>
+	</script>
+	Assignment Operators </h1>
+<ul>
+	<li> Tasks performed are similar to copy constructor </li>
+	<li> Must do cleanup first </li>
+	<li> Check for auto-assignment </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Assignment Operators </h1>
+<ul>
+	<li> Example:  <tt>String</tt> class:
+<code>
+String&amp; String::operator=(const String&amp; right)
+{
+   if (this != &amp;right)
+   {
+      delete[] buffer; // Get rid of old buffer
+      len = right.length();
+      buffer = new char[len + 1];
+      for (int i = 0; i &lt; len; i++)
+         buffer[i] = right[i];
+      buffer[len] = '\0';
+   }
+   return *this;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Destructors </h1>
+<ul>
+	<li> Perform necessary housekeeping tasks </li>
+	<li> Named ~<i>ClassName</i>, no arguments, no return type </li>
+	<li> Implicitly called on:
+		<ul>
+			<li> Local variables, at end of block </li>
+			<li> Parameters, at end of function </li>
+			<li> Temporary variables, at end of statement </li>
+			<li> Heap values, when <tt>delete</tt> is called </li>
+			<li> Static values, when <tt>main</tt> terminates </li>
+			<li> Member data, when object is deallocated </li>
+			<li> Base class object, when derived class object is deallocated </li>
+			<li> Local variables, when an exception is thrown and execution leaves
+				the block </li>
+		</ul>
+	 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+	Destructor Definition </h1>
+<div class='syntax'>
+<code><i>ClassName</i>::~<i>ClassName</i>()
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>String::~String()
+{
+   delete[] buffer;
+}</code>
+	<h3> Purpose: </h3>
+		<p> Perform any housekeeping tasks that should be
+			performed before an object is deleted. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> Confusing Destruction and Deletion </h3>
+<p> Related, but distinct concepts </p>
+<ul>
+	<li> Deletion occurs when a pointer is passed to <tt>delete</tt> </li>
+	<li> Destruction occurs when a class' destructor is invoked </li>
+</ul>
+<p> Pointers are deleted, and objects are destroyed </p>
+<ul>
+	<li> <tt>delete</tt> will invoke an object's destructor
+		<code>
+String* p = new String("Alice");
+...
+delete p; // p-&gt;~String() automatically invoked here</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Include Virtual Destructors </h3>
+<ul>
+	<li> Any class that has a virtual method should define a virtual
+		destructor (even if it does nothing) </li>
+	<li> E.g.:  Consider the following declarations
+		<code>
+class Person
+{
+   ...
+   // No destructor
+private:
+   int id;
+   };
+
+class Employee : public Person
+{
+   ...
+private:
+   string name;
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+ </h1>
+<h3> Include Virtual Destructors </h3>
+<ul>
+	<li> Now imagine that you create and delete a polymorphic variable, as
+		follows:
+		<code>
+Person* a = new Employee();
+delete a;</code>
+	<li> <tt>Employee</tt>'s destructor is never called </li>
+	<li> <tt>name</tt> string is never destroyed </li>
+	<li> Memory leak </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+</h1>
+<h3> If Destructor, then Copy Constructor and Assignment </h3>
+<h2> The "Big Three" </h2>
+<ol>
+	<li> Copy constructor </li>
+	<li> Assignment operator </li>
+	<li> Destructor </li>
+</ol>
+<ul>
+	<li> All have default behavior, as does the default constructor </li>
+	<li> Behavior sometimes needs to be extended </li>
+	<li> Reason to define one &rarr; reason to define all three </li>
+	<li> Build all 3 on lower-level helper methods, so they behave the same </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+(cont.) </h1>
+<p> Consider our <tt>String</tt> class </p>
+<ul>
+	<li> Imagine we supplied a destructor, but no copy constructor 
+		<code>
+String a = "Fred"; // Internal buffer is allocated here
+{
+   String b = a; // Error.memberwise copy produces shared buffer
+} // Destructor b.~String() invoked, buffer is deleted
+cout &lt;&lt; a &lt;&lt; "\n"; // Sure to cause error, because buffer is now deleted</code>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> When <tt>b</tt> is
+	Deleted, Buffer for <tt>a</tt> Becomes Invalid </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+(cont.) </h1>
+<ul><li> Notice that the big three are built on two lower-level operations: 
+<code>
+X::X(const X&amp; right)
+{
+   copy(right);
+}
+
+X&amp; X::operator=(const X&amp; right)
+{
+   if (this != &amp;right)
+   {
+      free();
+      copy(right);
+   }
+   return *this;
+}
+
+X::~X()
+{
+   free();
+}</code></li></ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4.1" )
+	//]]>
+	</script>
+	The Class <tt>auto_ptr</tt> </h1>
+<ul>
+	<li> "Smart pointers" </li>
+	<li> Declared in <tt>&lt;memory&gt;</tt> </li>
+	<li> Good when the lifetime of the dynamic value is tied to another object </li>
+	<li> Dynamic memory <tt>auto_ptr</tt> references is automatically
+		recovered
+		<code>
+int f()
+{
+   auto_ptr&lt;Employee&gt; p = new Employee(...);
+   ...
+ } // Destructor of p will automatically delete Employee object</code>
+	</li>
+	<li> Very useful with exceptions </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Overloading Memory Management Operators </h3>
+<ul>
+	<li> It is possible to overload <tt>new</tt> and <tt>delete</tt> </li>
+	<li> E.g., supply allocators for the <tt>Node</tt> class </li>
+	<li> Deleted values would be stored in a global linked list </li>
+	<li> A request to <tt>new</tt> would first check this list 
+
+<code>
+class Node
+{
+public:
+   Node(string s);
+   void* operator new(size_t bytes);
+   void operator delete(void* value);
+private:
+   string data;
+   Node* previous;
+   Node* next;
+};</code></li></ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+(cont.) </h1>
+<h3> Overloading Memory Management Operators </h3>
+<code>
+Node* free_store_list = NULL; // Global list, initially empty
+
+void* Node::operator new(size_t types)
+{
+   if (free_store_list != NULL)
+   {
+      result = free_store_list;
+      free_store_list = free_store_list-&gt;next;
+   }
+   else result = ::new Node;
+   return result;
+}
+
+void Node::operator delete(void* value)
+{
+   Node* p = static_cast&lt;Node*&gt;(value);
+   p-&gt;next = free_store_list;
+   free_store_list = p;
+}</code>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+(cont.) </h1>
+<h3> Overloading Memory Management Operators </h3>
+<ul>
+	<li> Arguments and return types must be as shown </li>
+	<li> Note the global scoping (<tt>::</tt>) of <tt>new</tt> and
+		<tt>delete</tt> </li>
+	<li> Note that <tt>free_store_list</tt> will, in turn, need to be cleaned
+		up </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Reference Counting </h1>
+<ul>
+	<li> Simple rule:  objects that allocate memory should clean it up </li>
+	<li> Not usually that simple.  Consider sharing: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "img_5.1.png" )
+//]]>
+</script>
+</div>
+<ul>
+	<li> Two options:
+		<ol>
+			<li> Designate one as owner (not always possible) </li>
+			<li> Use <i>reference counting</i> </li>
+		</ol>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reference Counting </h1>
+<h3> Store reference count w/the shared resource </h3>
+<ul>
+	<li> New object has reference count of 1: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "img_5.2.png" )
+//]]>
+</script>
+</div>
+<ul>
+	<li> When data object is shared, reference count is incremented: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "img_5.3.png" )
+//]]>
+</script>
+</div>
+<ul>
+	<li> When a references is destroyed (or reassigned), ref count is decremented:
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "img_5.4.png" )
+		//]]>
+		</script>
+		</div>
+	</li>
+	<li> When the reference count is zero, the shared resource is deleted </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reference Counting </h1>
+<p> Consider our <tt>String</tt> class:  change the semantics for the assignment
+	of strings so that two strings would share a common internal data buffer:
+<ul>
+	<li> <tt>StringReference</tt> &mdash; nested class holding reference count
+		and the buffer </li>
+	<li> References are managed by <tt>reassign()</tt>
+		<ul>
+			<li> Takes ptr to a <tt>StringReference</tt> </li>
+			<li> If not NULL, reference to argument value is incremented </li>
+			<li> Reference to current value is decremented </li>
+			<li> If current reference is 0, object is deleted </li>
+			<li> Current object is set to refer to argument value </li>
+		</ul>
+	 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Example: Reference Counting &mdash; <tt>sharedstring.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "sharedstring.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "6" )
+	//]]>
+	</script>
+</h1>
+<h3> Reference Counting Fails in the Presence of Cycles </h3>
+<ul><li> Reference counting has some drawbacks: 
+<ul><li> Objects are slightly larger, increasing copying overhead (negligible) </li>
+	<li> It does not work for more complex data structures </li></ul>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig10.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 10</span> A Reference Count
+	Cycle </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Case Study: Matrices </h1>
+<h3> Extend <tt>Matrix</tt> to represent m x n matrix </h3>
+<ul>
+	<li> Need to allocate from heap </li>
+	<li> The "big three" done per Section 15.4 </li>
+	<li> Access methods replace constants for row/column information </li>
+	<li> Smaller member functions have been inlined </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices &mdash; <tt>matrix2.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrix2.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices &mdash; <tt>matrix2.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrix2.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices &mdash; <tt>matrixtest2.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrixtest2.cpp" )
+	//]]>
+</script>
+</div>
+
+</body>
+</html>
+

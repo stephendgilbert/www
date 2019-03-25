@@ -1,0 +1,840 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>4.5&mdash;Parsing and Formatting</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner14">
+        <img id='lessonLogo' src='../images/l.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 4.5</p>
+        <p id='lessonTitle'>Parsing and Formatting</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><img src='images/java65.jpg' class='right' alt='Someone typing at a keyboard.'>
+            <b><span class="cap">W</span>hen a user types the number 123 from
+            the keyboard</b>, into text field or using the console, what is
+            actually stored in memory are the three binary values
+        </p>
+            <div class="box" style='background-color:honeydew;'>
+                <b style='color:navy;'>
+                0000-0000 0011-0001<br>
+                0000-0000 0011-0010<br>
+                0000-0000 0011-0011
+                </b>
+            </div>
+        <p> representing the three Java <code>char</code> values
+            <b>'1'</b>, <b>'2'</b>, and <b>'3'</b>, stored in a Java
+            <code>String</code> object.
+        </p>
+        <p> If the user is entering values intended to be used in a
+            calculation, (and not a street address, for instance), those
+            three <code>char</code> values will have to be converted from
+            text to the binary 32-bit integer <b>123</b>, shown here:
+        </p>
+        <div class="box" style='background-color:lightyellow;'>
+            <b style='color:navy;'>
+            0000-0000 0000-0000 0000-0000 0111-1011
+            </b>
+        </div>
+        <p> This process&#8212;turning human-readable text, input from the keyboard
+            or a file&#8212;into binary numbers, (and its alter-ego, turning
+            binary numbers into human-readable text), is the job of
+            <b>parsing numeric strings</b>. Parsing is really just another
+            form of type conversion.
+        </p>
+        <p> In the first half of this section, we'll look at going from
+            <code>String</code>s to numbers, while the second half will
+            look at formatted output.
+        </p>
+    <h3>Strings to Integers</h3>
+        <p> The <code>Scanner</code> class, which you've been using to
+            read console input, does this conversion
+            for you, behind the scenes when you use the <code>nextInt()</code>
+            or <code>nextDouble()</code> methods. The ACM
+            <code>ConsoleProgram</code> class does something similar
+            with the <code>readInt()</code> and <code>readDouble()</code>
+            functions.
+            This is perfectly adequate for console-mode input, since it
+            allows you to concentrate on the more important parts of
+            your program, and not get bogged down in unnecessary details.
+        </p>
+        <p> It really isn't adequate for every situation, though.
+            Once we move into the GUI world, like the GUI mileage calculator
+            pictured below under <i>Output Formatting</i>, or, when we start
+            working with network and Web apps, <b>all input and output</b> must
+            be done as text and then <b>explicitly converted</b> to the type
+            you wish to use.
+        </p>
+    <h3>Explicit Conversion Example</h3>
+        <p> To show you how this explicit conversion works, start a new
+            program named <b>ParsingExample</b> in your Chapter04 folder. Then
+            add the code shown below to your <code>main()</code> method:<br>
+            <img src="images/parsing01.gif" alt="Reading a string." class="inlineCenter">
+            This console program fragment
+            asks the user to enter a whole number and then reads the number
+            (<b>as a String</b>), and stores it in the <code>String</code>
+            variable, <code>intString</code>. (The <code>Scanner next()</code>
+            method reads a <i>word</i> instead of a <i>line</i> of text.)
+        </p>
+    <h4>The Conversion</h4>
+        <p> But how do you turn the text input into a "real" number?
+            Well, once you've retrieved the <code>String</code> from
+            the user, you can convert it to an <code>int</code> value
+            by calling the <code>static parseInt()</code> method in the
+            <code>Integer</code> class, passing the <code>String</code>
+            containing the input retrieved from the user like this:
+            <img src="images/parsing02.gif" alt="Converting a string to an int." class="inlineCenter">
+            The <b>Integer</b> class is one of Java's "wrapper" classes
+            that provides methods useful for manipulating primitive
+            types. Its <code>parseInt()</code> method will process a
+            <code>String</code>, and return its <code>int</code>
+            representation, if possible.
+        </p>
+        <div class='info'>
+        <p>
+            Remember that primitive types don't have methods and are not
+            extensible. For each primitive type, though, Java has a
+            "wrapper" class that allows you to perform additional
+            operations on primitive types and to extend them by creating
+            a class whose single field is a primitive value.
+        </p>
+        </div>
+        <p> Since <code>parseInt()</code> is a <code>static</code> function,
+            you can add this line to the top of your program if you want to
+            skip the extra <code>Integer</code> prefix everytime you call the method:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            import static java.lang.Integer.*;
+        </p>
+    <h3>What is the Value of "Twelve"</h3>
+        <p> Sometimes, a user will enter a value which <b>cannot</b> be
+            successfully converted to an integer. Go ahead and run your
+            program and then enter the word "twelve" when asked to
+            enter a number. When Java tries to convert the word
+            "twelve" to an integer, it <b>throws an exception</b> and
+            the program halts, but the rest
+            of the program continues normally:<br>
+            <img src="images/parsing03.gif" class='inlineCenter' alt="Typing twelve into ParsingExample.java">
+            Later in the course, you'll see how you can trap such errors,
+            and perhaps give the user some help. For right now, just ignore
+            them (and try to prevent them by providing meaningful prompts).
+        </p>
+    <h4>"Scrubbing" Your Input</h4>
+        <p> Sometimes, you can <b>anticipate</b> invalid input, and <b>scrub</b> the
+            input data before converting it. Here, for instance is an example of
+            such scrubbing that allows users to enter either 12345 <b>or</b>
+            1,2345 in response to the prompt request:<br>
+            <img src='images/parsing04.gif' class='inlineCenter' alt='Scrubbing commas from data.'>
+            Notice that this uses the <code>String replace()</code> method
+            that you met in the last section.
+        </p>
+        <p> Here's what the program looks like when it runs:<br>
+            <img src='images/parsing05.gif' class='inlineCenter' alt='Scrubbing commas from data.'>
+            If you want to scrub several different characters (spaces, dollar signs,
+            percent symbols, for instance), just add a different <code>replace()</code>
+            line for each one.
+        </p>
+        <div class='alert'>
+        <p> Unlike the <code>Scanner nextInt()</code> method, when you
+            manually convert a <code>String</code> using one of the
+            <code>parse()</code> methods, you <b>must</b> make sure that
+            all leading and trailing spaces have been removed. This is
+            especially important if you use <code>nextLine()</code> to
+            get your input.
+            <br><br>You can
+            do that by using <code>replace()</code>, (which has the advantage
+            of removing any embedded spaces as well), or by using the
+            <code>trim()</code> method, which removes both leading and
+            trailing whitespace.
+        </p>
+        </div>
+    <h3>Floating-Point Input</h3>
+        <p> For floating-point input, the process is almost
+            identical to that used for integers:
+        </p>
+        <ul>
+            <li>get a text value from the user</li>
+            <li>change the value to a floating-point number</li>
+            <li>do some arithmetic</li>
+            <li>display the results as a <code>String</code></li>
+        </ul>
+        <p> To do the conversion for type <b>double</b>, let's add another
+            variable to the <b>ParsingExample</b> program, asking the user
+            to enter a "real" number like this:
+            <img src='images/parsing06.gif' class='inlineCenter' alt='Converting a real number.'>
+            As you can see, instead of an <code>int</code>
+            variable we have a <code>double</code>, and instead of using
+            <code>Integer.parseInt()</code> to do the conversion, we use
+            <code>Double.parseDouble()</code>. Those are the only
+            changes you have to make.
+        </p>
+        <p> Here's what the ouput looks like:<br>
+            <img src='images/parsing07.gif' class='inlineCenter' alt='Converting a real number.'>
+        </p>
+    <div class="box">
+        <img src='images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Parsing Summary
+        </p>
+        <p> Parsing just means converting text or <code>String</code>
+            values to their numeric equivalent. Parsing works kind of like
+            <i>casting</i> works between different numeric types. Here
+            are some of the things you have to remember about parsing.
+        </p>
+        <ul>
+            <li>The <code>String</code> to be converted <b>cannot</b> contain
+                any characters that would be invalid as part of a number. For
+                all numbers that includes spaces, either inside the number or
+                preceding or following the number. It also includes commas,
+                and, for integers, the decimal point. Of course, you cannot
+                have characters either.
+            </li>
+            <li>To convert a <code>String</code> to an integer, use the
+                function <code>Integer.parseInt(val)</code>, where <code>val</code>
+                is the <code>String</code> you wish to parse. Store the result
+                in an <code>int</code> variable.
+            </li>
+            <li>To convert a <code>String</code> to a <code>double</code>, use the
+                function <code>Double.parseDouble(val)</code>, where <code>val</code>
+                is the <code>String</code> you wish to parse. Store the result
+                in a <code>double</code> variable.
+            </li>
+        </ul>
+        <p> To <b>scrub</b> your <code>String</code> variable before you
+            parse it, you can use the <code>replace()</code> method (to remove
+            spaces, commas and other characters).
+        </p>
+        </div>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Here are some easy exercises. Using the Interactions Pane, initialize the
+            following variables and then use <code>Integer.parseInt()</code>
+            to (try to) convert them. Then, try to convert each
+            of the same variables to <code>double</code>.
+        </p>
+        <ul style='margin-left:-2em;'>
+            <li class='code5'>String one = "123";</li>
+            <li class='code5'>String two = " 456"; <span class='cmt'>// note space before</span></li>
+            <li class='code5'>String three = "789 "; <span class='cmt'>// note space after</span></li>
+            <li class='code5'>String four = "9.5";</li>
+            <li class='code5'>String five = " 9.5 "; <span class='cmt'>// leading and trailing space</span></li>
+            <li class='code5'>String six = "six";</li>
+        </ul>
+        <p> You'll notice that <code>Double.parseDouble()</code> is much more
+            forgiving of leading and trailing spaces, probably because it was
+            added to the Java class libraries a few years after the more pedantic
+            <code>Integer.parseInt()</code>.
+        </p>
+        </div>
+    <h2>Output Formatting</h2>
+        <p><img src="images/f03b.gif" class="right" alt="A gas-mileage calculator applet.">
+            <b><span class="cap">P</span>reviously</b>, you learned
+            how to convert between <i>numeric</i> types, like <code>int</code>
+            and <code>double</code>. But, how do you convert a <i>numeric</i>
+            values, like 1235, into a nicely formatted output <code>String</code>,
+            like "$ 1,235.00"?
+        </p>
+        <p> In this section, we'll learn about such <b>output formatting</b>
+            and you'll learn how to convert numeric values like
+            <code>.06252072968492085</code> and
+            <code>34.261363636357025</code> into much more readable
+            output, like <b>34.261</b> and <b>$.06</b>.
+        </p>
+        <p> To accomplish these tasks, we'll make use of the <code>String
+            format()</code> function, it's close cousin, the <code>PrintStream
+            printf()</code> method.
+        </p>
+    <h2>Concatenation and Conversion</h2>
+        <p> The easiest way to convert a number to a <code>String</code> is
+            to use <code>String</code> <b>concatenation</b>. Earlier,
+            you saw how <code>String</code> concatenation could be used to
+            "paste" two <code>Strings</code> together to form a third, like
+            this:<br>
+            <img src='images/concat03.gif' class='inlineCenter' alt='Concatenating strings together.'>
+        </p>
+    <h3>Conversion</h3>
+        <p> You also saw how <code>String</code> concatenation can also be used to
+            automatically <b>convert</b> numbers&#8212;of <b>any</b>
+            type&#8212;into <code>Strings</code> as well, like this:
+            <img src="images/concat01.gif" class="inlineCenter" alt="Concatenating variables of different types.">
+            To create the <code>String</code> variable named
+            <code>result</code> the program <b>concatenates</b> a
+            <code>float</code> variable (<code>num</code>), an <code>int</code>
+            variable (<code>i</code>) and a <code>double</code> variable
+            (<code>calc</code>) along with several <code>String</code> literals
+            that are used to label the resulting values.
+            When you put this
+            code into an application and run it using <code>println()</code> to
+            display the value of the variable <code>result</code>, you'll see
+            something like this:
+            <img src="images/concat02.gif" class="inlineCenter" alt="Concatenating variables of different types.">
+            When the concatenation in the previous example occurs, Java first
+            has to <b>convert</b>
+            each of the variables to a textual format. For instance, the
+            <code>int</code> variable num contains the binary value
+            <code>1001000</code> which must be converted to the character
+            sequence <code>00110111</code>-<code>00111001</code> which are
+            the Unicode values for the two characters <code>'7'</code> and
+            <code>'9'</code>.
+            That character sequence then must be converted
+            to a Java <code>String</code> object and that object must be
+            combined with the <code>String</code> labels.
+        </p>
+        <h4>Concatenation Drawbacks</h4>
+        <p> When you use <code>String</code> concatenation and allow
+            Java to automatically convert your variables, you have no
+            real control over the way in which the number is presented.
+            Notice that while <code>num</code> and <code>i</code> look
+            pretty much like you defined them, the variable <code>calc</code>
+            displays 15 digits past the decimal point, which may not
+            be what you'd like.
+        </p>
+        <p> If you want to control the number of decimal places, add
+            commas to separate thousands, or do other formatting tasks,
+            you can use the <code>format</code> method of the <code>String</code>
+            class, or the <code>printf()</code> method in the
+            <code>PrintStream</code> class. Both of them work almost
+            identically.
+        </p>
+    <h2>Output Formatting</h2>
+        <p> <img src="images/f09.gif" class="right" alt="The March of Progress, from printf to printf.">
+            When Java was first introduced, it "borrowed" much of its
+            syntax from the C and C++ programming languages. On thing that
+            was missing, though was the ability to precisely control
+            the formatting of textual output like the C standard library
+            function <code>printf()</code>.
+        </p>
+        <p> Part of this was because when C++ was introduced, its designers
+            attempted to make output formatting more "object-oriented",
+            although the resulting code was more complex. In Java 1.0, there
+            were <b>no</b> output formatting methods, but in 1996, Java 1.1
+            introduced the <b>java.text</b> package that took its inspiration
+            from the C++ object-oriented world.
+        </p>
+        <p> Of course, that just made the
+            code you had to write even more complex (as you can see
+            from this screenshot on Cay Horstmann's Web site, called
+            <i>The March of Progress</i>.)
+            One of the library additions that was introduced with Java 5
+            was the <code>java.util.Formatter</code> class that brought
+            C-printf-style formatting to the <code>System.out</code>
+            object and to the <code>String</code> class.
+        </p>
+        <p> Both the <code>System.out.printf()</code> method and the
+            <code>String.format() static</code> method use the same general
+            syntax and format specifiers. With <code>printf()</code>, though,
+            your code will <b>only</b> work in a standard console program.
+            If you use <code>String.format()</code> you can also display the
+            resulting <code>String</code> in a regular console program, a dialog-based
+            program or in a graphical applet or application. It's just much more
+            flexible.
+        </p>
+    <h3>The String format() Method</h3>
+        <p> The <code>format()</code> method is a <code>static</code> function
+            in the <code>String</code> class, similar to the <code>static</code>
+            functions in the <code>Math</code> class. That means, to <b>call</b>
+            the function you must add a <code>static import</code> to your
+            program, like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            import static java.lang.String.*;
+        </p>
+        <p> or call the function by using the class name, <code>String</code>,
+            in front of each function call.
+        </p>
+        <p> The <code>format()</code> method takes <b>at least one</b> parameter,
+            which is known as the <b>format String</b>, and then one additional
+            parameter for <b>each</b> variable or value that you want to
+            appear as part of the formatted output. The method <b>returns</b>
+            a formatted <code>String</code> which you can then display.
+        </p>
+        <p> For each additional parameter, you must supply a placeholder
+            inside the formatting string, called a <b>format specifier</b>
+            that gives the <code>format()</code> method instructions on
+            how to format that particular parameter.
+        </p>
+    <h3>How format() Works</h3>
+        <p> Here is a "block" diagram that shows generally how the
+            <code>String format()</code> method works:<br>
+            <img src="images/formatting-diagram.gif" class="inlineCenter" alt="A block diagram of the String format method.">
+            I find that having
+            a "high-level" overview of the function, before I use it
+            helps me avoid getting lost in the different syntax
+            details. Notice that:</p>
+        <ul>
+            <li>The first (and only <i>required</i>) parameter is the
+                <b>format string</b>.
+            </li>
+            <li>The format string may contain any number for
+                <b>formatting specifiers</b>. These are <b>placeholders</b>
+                for values which will be combined with the literal
+                portions of the formatting string. In my block
+                diagram, there are two placeholders, marked by the
+                blue donut symbols.
+            </li>
+            <li> For each placeholder, you must supply <b>exactly one
+                argument</b> or parameter. If you have two formatting
+                specifiers in your formatting string, then you must have
+                <b>two additional</b> arguments, not one or three. These
+                arguments must match the type specified when you added
+                the formatting specifier. (We'll look at the syntax
+                shortly.)
+            </li>
+            <li> Finally, after it formats each additional argument and
+                concatenates it with the literal portions of the
+                formatting string, a <b>formatted string</b> is returned
+                as the result.
+        </li></ul>
+    <h3>A Format Specifier Example</h3>
+        <p> Each placeholder or format specifier starts with a percent
+            symbol, followed by a special character that specifies what
+            <b>kind</b> of value you'll supply as an argument.
+        </p>
+        <p> To experiment with these different specifiers, I'll use
+            the DrJava Interactions Pane. Here is the same
+            example I used earlier when talking about
+            concatenation. Because I'm using the Interactions Pane,
+            I can leave off the semicolon to display the result of
+            formatting my variables using the <code>String.format()</code>
+            method. If this were in a real program, you'd need to save the
+            results to a variable and then use something like
+            <code>System.out.print()</code> to display the output:
+            <img src="images/format01a.gif" class="inlineCenter" alt="Formatting parameters.">
+            Notice the line commented as <b>format string</b>:
+        </p>
+        <ul>
+            <li>contains <b>literal</b> text, like the words "calc =" and
+                the commas. These literals are concatenated with the
+                formatted values, just like the <code>String</code>
+                literals in the original example.
+            </li>
+            <li>contains <b>three format specifiers</b>, two
+                instances of <code>%f</code> and one instance of
+                <code>%d</code>. The two <code>%f</code> specifiers
+                require floating-point arguments, while the <code>%d</code>
+                specifier requires an integer argument.
+            </li>
+        </ul>
+        <p> Finally, notice the line marked <b>parameters</b>. Since the
+            format string has three placeholders or specifiers, I have
+            to supply three additional parameters. Moreover, since the
+            middle parameter is specified as an integer, I have to pass
+            the variable <code>i</code> in that position.
+        </p>
+        <p> The final line of the screenshot shows the formatted <code>String</code>
+            returned by the <code>format()</code> method.
+            Notice that unlike the concatenation example, both the
+            <code>float</code> and <code>double</code> variables display
+            six digits after the decimal point.
+            Because this is being evaluated using the DrJava
+            Interactions Pane, the <b>type</b> of the returned expression
+            value (<code>String</code>) is indicated by the double-quotes
+            placed around the result. The <code>String</code> returned
+            by the <code>format()</code> method doesn't contain the quotes.
+        </p>
+    <h3>Formatting Conversion Codes</h3>
+        <p> So, what kind of things you you format? Mostly numbers and
+            <code>String</code>s, but you can also format dates and times
+            (although we won't do that in this class). Generally, you
+            should memorize the most common conversion types,
+            which are <b>integers</b>, <b>real numbers</b> and
+            <code>String</code>s. Here's a table of the common codes:
+        </p>
+        <table class='options'>
+            <tr><th>Code</th><th>Description</th><th>Usage</th><th>Output</th></tr>
+            <tr><td>d</td><td class='desc'>Integers in decimal</td><td>"%d", 10</td><td>"10"</tr>
+            <tr><td>x,o</td><td class='desc'>Integers in hex or octal</td><td>"%x, %o", 10, 10</td><td>"a, 12"</tr>
+            <tr><td>f</td><td class='desc'>Floating point in fixed-format</td><td>"%f", 2.5</td><td>"2.500000"</tr>
+            <tr><td>e</td><td class='desc'>Floating point exponential</td><td>"%e", .007935</td><td>"7.935000e-03"</tr>
+            <tr><td>s</td><td class='desc'>String</td><td>"Name: %s", "Federico"</td><td>"Federico"</tr>
+            <tr><td>%%</td><td class='desc'>Literal % in output (no parameter)</td><td>"8.25%%"</td><td>"8.25%"</tr>
+            <tr><td>%n</td><td class='desc'>Literal newline in output (like \n)</td><td>"Hi%nMom"</td><td>"Hi<br>Mom"</tr>
+        </table>
+        <ul>
+            <li><b>Integers</b>: if your number is an integer, you can
+                display it as a <i>decimal</i> number by using <code>%d</code>.
+                This is what you'll do most often. You can display the
+                output in a different <i>base</i> by using <code>%o</code>
+                for <i>octal</i> output and <code>%x</code> for
+                <i>hexadecimal</i> output. You'll probably use these two
+                alternatives very rarely. Here's an example:<br>
+                <img src='images/intformat01.gif' class='inline' alt='Formatting integers.'>
+            </li>
+            <li><b>Floating-point numbers</b>: both <code>doubles</code>
+                and <code>floats</code> use the same formatting specifier.
+                Use <code>%f</code> for <i>fixed-point</i> output; this is
+                what you'll use most often. However, if you have very
+                large or very small numbers, you can use <code>%e</code>
+                to specify <i>scientific</i> or <i>exponential</i> output.
+                The third specifier, <code>%g</code>, uses fixed point
+                for "normal" numbers and exponential for very large or
+                very small numbers. Usually, I think it's more convenient
+                to specify <i>exactly</i> which you want. Here's an
+                example:<br>
+                <img src='images/floatformat01.gif' class='inline' alt='Formatting floating-point numbers.'>
+                Notice that the plain <code>%f</code> type specifier shows exactly six digits
+                to the right of the decimal, so numbers smaller than that (like
+                <code>microbe</code> show up as zero. The variable does display
+                correctly when using <code>%g</code>. Note that <code>gpa</code>
+                is shown in scientific notation when you use <code>%e</code>, but
+                in fixed-point notation when you use <code>%g</code>.
+
+            </li>
+            <li><b>String values</b>: literal <code>String</code> output
+                is usually supplied as part of the formatting string
+                itself. Often, though, you'll need to combine values
+                from <code>String</code> <b>variables</b> as part of your formatted
+                output, as when printing a table of student names along
+                with their grades. In this case, you need to use the
+                <code>%s</code> format specifier. Here's an example:<br>
+                <img src='images/stringformat01.gif' class='inline' alt='Using the String placeholder.'>
+            </li>
+        </ul>
+        <p> If you want to format dates and times, (which is considerably more
+            complex), refer to the Javadoc for the
+            <a href='http://download.oracle.com/javase/6/docs/api/java/util/Formatter.html' target='_blank'>
+            <b>Formatter</b></a> class. You shouldn't bother trying to memorize
+            that information.
+        </p>
+    <h3>"Special" Placeholders</h3>
+        <p> There are also two other special-purpose <b>pseudo-specifiers</b>
+            that you should memorize, since you'll use them frequently:
+            <code>%n</code> and <code>%%</code>. Both of these are special
+            purpose specifiers, <b>because they are not placeholders</b>.
+            That is, you <b>do not</b> supply a parameter variable to
+            be formatted when you use these specifiers:<br>
+            <img src='images/specialformat.gif' class='inline' alt='Using special placeholders.'>
+        </p>
+        <ul>
+            <li><b>%n</b>: places a platform-independent
+                newline in the formatted output. You should use this
+                instead of inserting the literal escape sequence
+                <code>\n</code> in your strings.
+            </li>
+            <li><b>%%</b>: places a literal percent sign
+                in the formatted output string.
+            </li>
+        </ul>
+
+    <h3>Width, Precision and Flags</h3>
+        <p> So far, all we've looked at is the <i>conversion types</i>;
+            we haven't handled any formatting at all. To do the actual
+            formatting, to each specifier, you can add optional items
+            that appear between the <code>%</code> and the type
+            specifier. These are the:
+        </p>
+        <ul>
+            <li><b>Precision</b>: which is a period followed by an
+                integer, specifying the number of places that should
+                appear after the decimal point in a fixed-format
+                floating-point number. Precision cannot be used
+                for integer types.
+            </li>
+            <li><b>Width</b>:  which is a whole number specifying
+                the size of the <i>field</i> that the number should
+                be placed into. You use this to line up numbers and
+                strings into columns when printing tables with a
+                fixed width font.
+            </li>
+            <li><b>Flags</b>: are different symbols that appear
+                directly after the <code>%</code> symbol used to
+                further refine the way that the output appears when
+                formatted. There are flags to control the alignment,
+                padding, upper-case conversion and decimal separators.
+            </li>
+        </ul>
+        <p>Let's look at some example of each of these.</p>
+    <h3>Precision Examples</h3>
+        <p> Here are three variables defined in a console program:
+            two <code>doubles</code> and a <code>float</code>, that are
+            assigned values and then formatted and printed using the
+            <code>System.out.printf()</code> method (which, as I mentioned,
+            uses exactly the same format specifiers and scheme as
+            <code>String.format()</code>:<br>
+            <img src="images/precisionformat01.gif" class="inlineCenter" alt="The precision specifier.">
+            Here's what you should notice about this code:
+        </p>
+        <ul>
+            <li>Each of the three variables is printed using <code>%f</code>
+                or <i>fixed</i> formatting.
+            </li>
+            <li>Each variable is formatted using 2, 3 and 4 digits of
+                <b>precision</b>. The same variable is passed once for
+                each formatting placeholder.
+            </li>
+            <li>Each formatted string includes the line-independent
+                newline character.
+            </li>
+        </ul>
+        <p> When run the output appears like this:<br>
+            <img src='images/precisionformat02.gif' class='inlineCenter' alt='Running the precision specifier.'>
+            Notice that:
+        </p>
+
+        <ul>
+            <li>Even though the variable <code>a</code> has only one
+                significant digit after the decimal, zeros are added to
+                the end of the number to match the specified precision.
+            </li>
+            <li>Even though the numbers <code>b</code> and <code>c</code>
+                have many more actual digits of precision, the results
+                are <i>rounded</i> (not truncated) when displayed according
+                to the significant digits. Notice how <code>3652.9469</code>
+                becomes <code>3652.947</code> and then <code>3652.95</code>
+                at different precision values.
+            </li>
+        </ul>
+        <p> Notice how the columns of numbers don't line up because
+            we specified <b>precision</b> but didn't specify the
+            <b>width</b>.
+        </p>
+        <div class='alert'>
+        <p>Remember, you'll only use the <b>precision</b>
+            portion of the format specifier for <i>real</i> numbers,
+            not for integers. If you supply a precision for an integer
+            specifier, your code will compile, but fail with a runtime
+            error when it executes.<br>
+            <img src='images/precisionformat03.gif' class='inlineCenter' alt='No precision with integers.'>
+        </p>
+        </div>
+    <h3>Width Examples</h3>
+        <p> Here are the same three variables with a <b>width</b> added
+            to the specifier. Notice that the first column is 10 characters
+            wide, the second 11 and the third 12.<br>
+            <img src="images/widthformat01.gif" class="inlineCenter" alt="A width specifier.">
+            The width includes the characters to the right of the decimal,
+            so it should always be larger than any precision. You can
+            include a width specifier with integers and <code>Strings</code>
+            as well as with floating-point numbers.
+        </p>
+        <p> Here's what the results look like when this fragment of code
+            is run:<br>
+            <img src="images/widthformat02.gif" class="inlineCenter" alt="Running the width specifier.">
+            Notice that each column appears lined up, and the values are
+            <b>right-aligned</b> inside each column.
+        </p>
+        <div class='info'>
+        <p>If your width specifier is <i>too small</i> (or, to
+            put it another way, if one of your values is <i>too large</i>),
+            then the width specifier is just <b>ignored</b>. The formatted
+            value is <b>never</b> truncated to fit inside the specified
+            width. That means you <b>must</b> make sure that your
+            column widths are large enough to hold the largest
+            possible value.
+        </p>
+        </div>
+        <div class='alert'>
+        <p>The width specifier works by adding spaces,
+            called <b>padding</b>, in front of the characters in the
+            formatted output string. That means that if you intend to
+            display your formatted output using a <b>proportional font</b>,
+            like Times or Arial, then your columns <b>will not line up</b>.
+        </p>
+        </div>
+    <h3>The Flags Field</h3>
+        <p> Immediately following the format symbol (<code>%</code>) you
+            can supply various <b>flags</b> to further refine the
+            formatting results. Here are the most common ones
+            you'll use:
+        </p>
+        <table class='options'>
+            <tr><th>Flag</th><th>Description</th><th>Usage</th><th>Output</th></tr>
+            <tr><td>-</td><td class='desc'>Left-align in field</td><td>"%-10.2f", 1.25</td><td>"1.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</tr>
+            <tr><td>0</td><td class='desc'>Pad with 0s</td><td>"%010d", 125</td><td>"0000000125"</tr>
+            <tr><td>(</td><td class='desc'>Alternate negative number format</td><td>"%(.2f", -2.5</td><td>"(2.50)"</tr>
+            <tr><td>,</td><td class='desc'>Thousands separator</td><td>"%,.2f", 1795.535</td><td>"1,795.54"</tr>
+        </table>
+        <p> Here are some examples that use these formatting flags,
+            evaluated using the DrJava Interactions Pane.
+        </p>
+    <h4>Zero Pad</h4>
+        <p> Sometimes, you may want to <i>zero pad</i> a column of
+            numbers. Here's what that code would look like:<br>
+            <img src="images/zeroflag.gif" class="inlineCenter" alt="Zero padding.">
+            You might do this for a code listing, for instance,
+            when displaying the line numbers in front of each line.
+            Of course the zero flag <b>only makes sense</b> when combined with the
+            <b>width</b> modifier as I've done here.
+        </p>
+
+    <h4>Decimal Separators</h4>
+        <p> For large numbers, often you want to add a comma between
+            each group of thousands. You do that with the <code>,</code>
+            flag which looks like this:<br>
+            <img src="images/groupflag.gif" class="inlineCenter" alt="Decimal separator.">
+            In the example shown here, I've added to a decimal separator
+            to both an integer, (using the class constant
+            <code>Integer.MAX_VALUE</code> which represents that largest possible
+            <code>int</code>), and to a floating point number.
+        </p>
+        <p> In addition to the decimal separator,
+            I formatted the floating-point number by adding a dollar-sign
+            as a literal in the formatting string. There is no separate
+            currency format (that would adjust the symbol based on
+            the locale where the program was run), like there is for
+            the numeric formatting classes in the <code>java.text</code>
+            package.
+        </p>
+    <h4>Field Alignment</h4>
+        <p> When you add a width as part of a format specifier, the <i>contents</i>
+            of the field (either numeric or text) are <b>right-aligned</b> inside
+            the field. That's the correct way to align numeric values (so the
+            decimal points line up), but it doesn't work very well for <code>String</code>
+            parameters. Suppose you had this format specifier:
+        </p>
+        <p class="code" style='font-size:larger;'>
+            System.out.printf("%25s$%,12.2f%n", name, salary);
+        </p>
+        <p> <img src="images/format13.gif" class="right" alt="Right-aligned text in columns.">
+            where <code>name</code> is a <code>String</code> variable and <code>salary</code> is
+            a <code>double</code>. Here's what the output would look like if you used this
+            three times with different names and salaries.
+        </p>
+        <p> Note that the first field is 25 characters wide, but that each of
+            the names is right-justified inside that field. Normally, for text,
+            though, we want the words to start in the same column. (At least for
+            left-to-right-reading languages like English.)
+        </p>
+        <p> To get that effect, just use the <b>left-align</b> flag, (or <i>minus-sign</i>),
+            like this:
+        </p>
+        <p class="code" style='font-size:larger;'>
+            System.out.printf("%-25s$%,12.2f%n", name, salary);
+        </p>
+        <p>Here's the result:<br>
+            <img src="images/format14.gif" class="inline" alt="Left-aligned text in columns.">
+        </p>
+    <h3>Problems With the Formatting Methods</h3>
+        <p> There are two problems with using the Java <code>String.format()</code>
+            method and it's cousin, <code>System.out.printf()</code> for output
+            formatting.
+        </p>
+        <p>The first is that both <code>printf()</code> and <code>format()</code>
+            are Java 5 additions, so your program <b>won't run</b> on machines
+            that have an earlier Java runtime. There are still a lot of systems
+           out in the "real world" that are using Java 1.3 or Java 1.4.
+        </p>
+        <p> The second problem is a little more serious, and is illustrated
+            in the program pictured here:<br>
+            <img src="images/f10.gif" class="inlineCenter" alt="The TestPrintf program.">
+            This simple program contains only two statements. The first
+            uses <code>printf()</code> to display the number <b>23.2</b> with
+            four decimals to the right, and right-aligned in a field 10-spaces
+            wide. If you look in the output section, you'll see the nicely
+            formatted number.
+        </p>
+        <p> The second line, however, uses an <code>int</code> literal,
+            <code>23</code>, instead of the <code>double</code> used in
+            the previous line. The code compiles without error, but, when
+            you run it, the program "bombs" as you can see in the output.
+        </p>
+        <p> This is the <b>real</b> problem with using <code>format()</code>
+            or <code>printf()</code>. If you use these methods, you are
+            <b>entirely</b> responsible for making sure that the format
+            specifiers and the number and type of parameters <b>exactly
+            match</b>. The compiler <b><i>can't</i></b> tell you if you've
+            made an error; you don't find out until your program runs.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Use the Interactions Pane to create the following
+            variables initialized as shown:
+        </p>
+        <ul>
+            <li class='code5'>String six = "Midterm Score";</li>
+            <li class='code5'>int seven = 456;</li>
+            <li class='code5'>double eight = 9876543212345.678;</li>
+        </ul>
+        <p> Use <code>String.format()</code> to format each variable and
+            place the result in a single <code>String</code> variable:
+        </p>
+        <ul>
+            <li>Format <code>six</code> in a field 20 wide, left-aligned,
+                delimited by |. (That is, the vertical bar | should appear
+                before and after the field containing the <code>String</code>.)
+            </li>
+            <li>Format <code>seven</code> in a field 6 wide.</li>
+            <li>Format <code>eight</code> so it displays 5 decimals,
+                it is preceded by a dollar-sign, and commas are used
+                to separate each thousands-group.
+            </li>
+        </ul>
+        <p> Display the formatted <code>String</code> variable by typing
+            its name.
+        </p>
+        </div>
+    <div class="box">
+        <img src='images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Output Formatting Summary
+        </p>
+        <p> Output formatting gives you control over the way that
+            numbers and strings are displayed. There are two methods
+            that you can use for output formatting:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            System.out.printf(formatString, v1, v2, ... vN);<br>
+            String formatted = String.format(formatString, v1, v2, ..., vN);
+        </p>
+        <ul>
+            <li>Both methods <b>must</b> start with a format-string. In addition
+                they can have 0 to N additional parameters.
+            </li>
+            <li>The format-string can contain regular text which is included
+                in the output <i>verbatim</i> (as it is).
+            </li>
+            <li>The format-string can contain any number of <b>placeholders</b>,
+                each of which must begin with the <b>%</b> character:
+            <ol>
+                <li>Each placeholder is replaced by the converted value of
+                    one of the additional parameters in the parameter list.
+                </li>
+                <li>You must have <b>exactly one</b> placeholder for each parameter,
+                    and each parameter, <b>must have a matching placeholder</b>
+                    in the format-string. Variables
+                    and placeholders are matched by <b>position</b>.
+                </li>
+            </ol>
+            </li>
+            <li>Each placeholder must specify the <b>type</b> of the parameter
+                and the variable supplied must be of that type. Here are the
+                possible type codes you can use. The Usage column shows the parameters
+                passed to <code>String.format()</code>:<br>
+                <table class='options'>
+                    <tr><th>Code</th><th>Description</th><th>Usage</th><th>Output</th></tr>
+                    <tr><td>d</td><td class='desc'>Integers in decimal</td><td>"%d", 10</td><td>"10"</tr>
+                    <tr><td>x,o</td><td class='desc'>Integers in hex or octal</td><td>"%x, %o", 10, 10</td><td>"a, 12"</tr>
+                    <tr><td>f</td><td class='desc'>Floating point in fixed-format</td><td>"%f", 2.5</td><td>"2.500000"</tr>
+                    <tr><td>e</td><td class='desc'>Floating point exponential</td><td>"%e", .007935</td><td>"7.935000e-03"</tr>
+                    <tr><td>s</td><td class='desc'>String</td><td>"Name: %s", "Federico"</td><td>"Federico"</tr>
+                    <tr><td>%%</td><td class='desc'>Literal % in output (no parameter)</td><td>"8.25%%"</td><td>"8.25%"</tr>
+                    <tr><td>%n</td><td class='desc'>Literal newline in output (like \n)</td><td>"Hi%nMom"</td><td>"Hi<br>Mom"</tr>
+                </table>
+            </li>
+            <li> Placeholders can also supply formatting information in
+                the form of <i>flags</i>, <i>width</i> and <i>precision</i>
+                values. Here are the possible flags you can use:<br>
+                <table class='options'>
+                    <tr><th>Flag</th><th>Description</th><th>Usage</th><th>Output</th></tr>
+                    <tr><td>-</td><td class='desc'>Left-align in field</td><td>"%-10.2f", 1.25</td><td>"1.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</tr>
+                    <tr><td>0</td><td class='desc'>Pad with 0s</td><td>"%010d", 125</td><td>"0000000125"</tr>
+                    <tr><td>(</td><td class='desc'>Alternate negative number format</td><td>"%(.2f", -2.5</td><td>"(2.50)"</tr>
+                    <tr><td>,</td><td class='desc'>Thousands separator</td><td>"%,.2f", 1795.535</td><td>"1,795.54"</tr>
+                </table>
+            </li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

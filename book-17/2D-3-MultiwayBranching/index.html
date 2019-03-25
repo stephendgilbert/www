@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Multiple Choice</title>
+    <style type='text/css'>
+        th, td { padding: 3px; }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner07">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Multiple Choice</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">I</span>t would be wonderful if every decision</b>
+            could be reduced to a single "either-or" choice that could be solved
+            with a simple <code>if-else</code> statement; it would sure make
+            programming easier!
+        </p>
+        <p> <img src="images/f12.gif" class="right" alt="A decision from an IRS pamphlet.">
+            Most of the time, though, things are more complex, and you'll
+            need to write selection statements involving three, four, five
+            or more alternatives. Just writing a program to calculate your
+            income tax, for instance, using the tax tables, involves dealing
+            with literally <b><u>hundreds</u></b> of different alternatives.
+            <br>
+
+            <br>To solve these kinds of programs you'll need to learn how to
+            use one of Java's <b>multi-way branching</b> statements:
+        </p>
+        <ul>
+            <li><i>sequential</i> <code>if-else-if</code> statements</li>
+            <li><i>nested</i> <code>if</code> statements</li>
+            <li>the <code>switch</code> statement</li>
+        </ul>
+        <p> Let's start by looking at <b>sequential</b> <code>if</code> statements, which
+            are used when you have a sequence of <u><b>related</b></u>
+            comparisons.
+        </p>
+    <h2>Sequential If Statements</h2>
+        <p> <img src="images/f15a.gif" class="right" alt="CS 170 grading scale.">
+            One sequential comparison that you're all familiar with is the
+            "letter grading scale" used to assign marks in school, (including
+            in this course), similar to that shown in the table
+            to the right.
+        </p>
+        <p> Typically, your letter grade is based on a percentage
+            representing the weighted average for all of the work you've done
+            during the term. In the example shown here, for instance, those who
+            earn 90% or greater receive 'A's, those with percentages less than
+            90%, but at least 80% earn 'B's, and so on.
+        </p>
+        <p> <img src="images/gc01.gif" class="right" alt="Running GradeCalculator.">
+            To explore sequential comparisons I'll use a simple example program
+            named <code class='b'>GradeCalculator.java</code> which you'll find in this week's
+            code folder. Open it up and follow along in DrJava if you want
+            to experiment as we go.
+        </p>
+        <p> If you run the program, you'll see that it:</p>
+        <ul>
+            <li>asks for the student's name and the number of
+                scores to record.
+            </li>
+            <li>requests the possible points and the points
+                earned for each of the scores.
+            </li>
+            <li>calculates and prints the percentage score and the
+                letter grade for the student.
+            </li>
+        </ul>
+        <p> As you can see here, I've run the program for a student named
+            Fred. I entered two 100-point test scores and a 15-point quiz score
+            and the program correctly calculates Fred's percentage score (79.1%).
+            However, it doesn't yet handle the letter grade. That's our next stop.
+        </p>
+        <p> Before we get there, though, let's take a look at what we've got; we'll
+            read through the program together, and then we'll look at several
+            different ways we can implement the code for calculating the letter grade.
+        </p>
+    <h3>The GradeCalculator Program</h3>
+        <p> Here's how the program works. Some of the parts in this section (like loops)
+            have not been covered yet, but you should be able to understand the gist of it
+            by reading my explanation:
+        </p>
+        <ol>
+            <li class="d"> Lines 19 and 20 print a heading for the program,
+                and then lines 23 and 24 create a <code>String</code> variable named
+                <code>student</code> and has the user initialize it by
+                reading the student's name. Lines 25 and 26 create an <code>int</code>
+                variable named <code>numScores</code> and has the user initialize
+                it by reading the number of scores to record.<br>
+                <img src="images/gc02.gif" class="inline" alt="The GradeCalculator lines 17-22.">
+            </li>
+            <li class="d">Lines 29 and 30 define the <b>accumulators</b> for the
+                program. As each score is entered, that score will be added to
+                the <code>pointsPossible</code> and <code>pointsEarned</code>
+                variables. I made these variables <code>double</code> instead of
+                <code>int</code> so the teacher could assign half points.<br>
+                <img src="images/gc03.gif" class="inline" alt="The GradeCalculator lines 25-26.">
+            </li>
+            <li class="d">Next, we need to get the input for each exam,
+                quiz or lab, which we'll do by using the <code>for</code> loop.
+                Notice that we <b>repeat</b>
+                the input actions a fixed number of times, based on the
+                value of the variable <code>numScores</code>:<br>
+                <img src="images/gc04.gif" class="inline" alt="The GradeCalculator lines 29-38.">
+                After all of the input is done, the points earned and the possible
+                points are added up and the result printed.
+             </li>
+           <li class="d">After the loop, line 48 uses the possible points and
+                the points earned to calculate the student's percentage grade.
+                This is done by calling the <code>getPercentage()</code> function,
+                which we'll look at shortly.<br>
+                <img src="images/gc05.gif" class="inline" alt="The GradeCalculator lines 42-43.">
+                Then, line 49 defines the <code>String</code> variable
+                <code>letterGrade</code> and initializes it by calling the
+                function <code>getLetterGrade()</code> passing the <code>percent</code>
+                variable initialized in the previous line.
+            </li>
+            <li class="d">Finally, the <code>main()</code> method ends by printing
+                the formatted output in the statement that spans lines 52-53.
+                The output consists of the student's name,
+                left-aligned in a 40-character-wide field, the student's percentage
+                grade (formatted to 1 significant decimal), and
+                the letter grade.<br>
+                <img src="images/gc06.gif" class="inline" alt="The GradeCalculator line 46.">
+            </li>
+        </ol>
+        <p> Now, let's look at the two functions.</p>
+    <h3>The getPercentage() Function</h3>
+        <p> The <code>getPercentage()</code> method returns the
+            student's current <b>numeric grade</b>, as a percentage as the
+            name implies. There function takes two <code>double</code> parameters
+            representing the possible points and the points that the student has earned.
+            <img src="images/gc07.gif" class="inlineCenter" alt="The getPercentageFunction.">
+        </p>
+        <p> The method uses a simple <code>if-else</code>
+            statement to avoid the problem of returning the <b>NaN</b> value
+            when dividing by floating-point zero if a student
+            hasn't yet taken any exams and 0.0 is passed as the
+            <code>possible</code> parameter. (If the parameter were an
+            <code>int</code> instead of a <code>double</code>, you'd still
+            need the <code>if-else</code> statement do avoid the runtime
+            error that occurs with an integer divide-by-zero.)
+        </p>
+        <p> In the <code>else</code> clause, the percentage returned is
+            multiplied by 100.0 so that we'll deal with numbers like 79.0,
+            not .79.
+        </p>
+    <h3>The getLetterGrade() Function</h3>
+        <p> The final portion of code we want to look at is
+            <code>getLetterGrade()</code> which returns the letter grade based on
+            the student's current percentage score. As you can see here, the function
+            currently returns the phrase "NOT DEFINED":<br>
+            <img src="images/gc08.gif" class="inlineCenter" alt="The getLetterGrade() function.">
+        </p>
+    <p> Now let's look at several techniques for implementing the
+            <code>getLetterGrade()</code> function.
+    </p>
+    <h3>Method 1: Independent if Statements</h3>
+        <p> The first technique is to use the logical operators to <b>combine</b>
+            several conditions using independent <code>if</code> statements.
+            Here's what the code would look like in this version of
+            the function:<br>
+            <img src="images/gc10.gif" class="inline" alt="Independent if statements.">
+        </p>
+    <h4>Analysis</h4>
+        <p> Here's how the method works:</p>
+        <ol>
+            <li class="d">Since this is a <code>String</code> function,
+                a <code>String</code> <b>output</b> variable named
+                <code>result</code> is created and initialized to the
+                <b>empty</b> <code>String</code>. Then, the literal
+                "NOT DEFINED" in the <code>return</code> statement is
+                replaced with the variable <code>result</code>.
+            </li>
+            <li class="d">Next, the current numeric percentage is
+                compared against each range, using the <b>&amp;&amp;</b> operator
+                to check the lower and upper bound for the range. I've used the
+                percentage cutoffs for a common course. (Since each <code>if</code>
+                body contains only a single statement, I've also used the
+                single-line formatting technique that I mentioned in the
+                last unit.)
+            </li>
+            <li class="d">Finally, before returning the result,
+                the function makes sure that any invalid
+                input is reported as well.
+            </li>
+        </ol>
+        <p> While <b>this solution is correct</b>, it's also longer than it needs to be
+            and it's quite inefficient. Each time the function is called, <b>all
+            six</b> Boolean selection conditions are tested,
+            <b>even after the correct one has been found</b>.
+        </p>
+        <p> <img src="images/independent.gif" class="right" alt="Independent if statements.">
+            The problem is, the solution uses <b>independent</b>
+            <code>if</code> statements, while the conditions themselves are
+            actually <b>interdependent</b>. If someone gets an "A", then it is
+            not possible for them to also, and at the same time, get an "F".
+        </p>
+        <p> Independent <code>if</code> statements are designed for processing
+            conditions where each condition could be independently true,
+            and not really affect any other condition, like the code you'd use
+            to process the checkboxes on a form like that shown here.
+        </p>
+        <p> With a form like this, the user may select any number of options,
+            (or none at all), but each option doesn't affect the others. That
+            means you <b>must</b> check each one, and the only way to do
+            that is by using independent <code>if</code> statements.
+        </p>
+    <h3>Method 2: Using Multiple Selection</h3>
+        <p> <img src="images/f30a.gif" class="right" alt="The Multiple Selection algorithmic pattern.">
+            A better solution, when you need to select one course of action from many
+            possible alternatives (which is the case here), is to employ what
+            Rick Mercer at Arizona State calls the <b>"Multiple Selection Algorithmic
+            Pattern"</b>, shown here.
+            An "algorithmic pattern" is simply a <b>recipe</b> for solving a
+            particular category of problem.
+        </p>
+        <p> This particular pattern is also often called a <b>ladder style</b>
+            <code>if</code> statement, because each of the conditions are formatted
+            one under the other, like the rungs on a ladder. It is also sometimes
+            called an <code>if-else-if</code> statement. (Note though that the
+            <code>else if</code> keywords <b>are not</b> combined into a single
+            <code>elseif</code>, as in some other languages, such as
+            Visual Basic, or the <code>elif</code> keyword in Python.)
+        </p>
+        <p> Here's the code for this second version of <code>getLetterGrade()</code>,
+            using the multiple-selection (or <b>sequential</b> <code>if</code>) pattern :<br>
+            <img src="images/gc11.gif" class="inlineCenter" alt="Multiple-selection (or sequential) if statements.">
+        </p>
+        <h4>Analysis</h4>
+        <ol>
+            <li class="d">With the multiple-selection pattern, we need to move our error
+                checking to the beginning of the routine from the end, since each test
+                depends on the one that precedes it. If we left the error checking at
+                the end of the method, it would never be executed, and the method
+                would return an incorrect value. In the example shown here, I've used
+                concatenation to display the percent value that causes the problem,
+                along with the error message.
+            </li>
+            <li class="d">On the following lines, <b>only the lower bounds</b> of each
+                category is tested. By the time we reach line 86, we <b>already know</b>
+                that the percentage falls between 0% and 100%, so we <b>only</b> have
+                to check if it is at least 90% to assign the value for an "A".
+                <p> The same pattern continues on lines 87 through 89. On line 87, we
+                <b>know</b> that the percentage is less than 90, since we just
+                checked it on the previous lines. So, we don't need to check it
+                again, like we did with the independent <code>if</code> example.
+                </p>
+            </li>
+            <li class='d'> Finally, the <b>last</b> "rung" in the ladder doesn't need an <code>if</code>
+                portion. The only thing left is the range from 0 to 49, so you can use
+                a plain <code>else</code>.
+            </li>
+        </ol>
+
+    <h4>A Pitfall to Watch For</h4>
+        <p> While the multiple-selection pattern is <b>much more efficient</b> than
+            the independent <code>if</code> statements, each of the statements
+            is dependent on the one that comes before it. That means that <b>
+            the order of the statements is significant</b>.
+        </p>
+        <p> If you switch the order of the "A" and "B" tests, for instance,
+            like this:
+        </p>
+        <p class="code">
+            else if (percent &gt;= 80) result = "B";<br>
+            else if (percent &gt;= 90) result = "A";
+        </p>
+        <p> all of those students who <b><span style="color: red;">should</span></b>
+            have gotten "A"s, will get "B"s instead, since a score of 95 matches
+            the condition <code>(percent &gt;= 80)</code> and that condition is
+            now encountered <b>before</b> the condition that tests for an "A".
+            The test for an "A" will <b>never</b> be executed.
+        </p>
+
+    <h2>Nested If Statements</h2>
+        <p><img src="images/y05a.gif" class="right" alt="Russian nesting dolls.">
+            As you just saw,
+            you can code decisions involving multiple alternatives in two
+            different ways:
+        </p>
+        <ul>
+            <li> by writing <b>independent</b> <code>if</code>
+                statements that combine their different
+                <code>boolean</code> conditions using the <b>AND</b>
+                and the <b>OR</b> operators.
+            </li>
+            <li> by arranging your <code>if</code> statements in
+                a <i>ladder-like</i> <b>sequence</b> of
+                related, dependent <code>if</code> statements.
+            </li>
+        </ul>
+
+        <p> A third way to do the same thing
+            is through <b>nesting</b>.
+        </p>
+        <p> Nesting means that one <code>if</code> statement is
+            <b>embedded</b> or <b>nested</b> inside the body of another
+            <code>if</code> statement, much like the traditional Russian
+            nesting dolls, shown here.
+            The nested <code>if</code> statement
+            can appear in the body of the <code>if</code> portion of an
+            <code>if</code>-<code>else</code> statement, in the body of
+            the <code>else</code> portion, or inside both.
+        </p>
+    <h3>Calculating Taxes</h3>
+        <p> Nested <code>if</code> statements are used whenever you need to
+            test for different <b>levels</b> of decision making, rather than
+            a set of purely sequential tests. If you're one of those fortunate
+            folks making more than a hundred thousand dollars a year, for instance,
+            you'll need to calculate your taxes using the following formula,
+            instead of using the tax tables:
+        </p>
+        <table style="border: 1px solid silver; margin:auto;padding:5px;">
+        <tbody>
+        <tr style="background-color: navy; color: white;">
+            <th class="thead" colspan="2">Filing Status : Single</th>
+            <th class="thead" colspan="2">Filing Status: Married Filing Jointly</th>
+        </tr>
+        <tr>
+            <th class="thead">Taxable Income</th><th class="thead">Tax</th>
+            <th class="thead">Taxable Income</th><th class="thead">Tax</th>
+        </tr>
+        <tr style="background-color:#e6e6ff;">
+            <td class="tdata">$100,000 ... $146,750</td>
+            <td class="tdata">28% less $5,373</td>
+            <td class="tdata">$100,000 ... $117,250</td>
+            <td class="tdata">25% less $6,525</td>
+        </tr>
+        <tr>
+            <td class="tdata">$146,751 ... $319,100</td>
+            <td class="tdata">33% less $12,710.50</td>
+            <td class="tdata">$117,251 ... $178,650</td>
+            <td class="tdata">28% less $10,042.50</td>
+        </tr>
+        <tr style="background-color:#e6e6ff;">
+            <td class="tdata">Over $319,100</td>
+            <td class="tdata">35% less $19,092.50</td>
+            <td class="tdata">$178,651 ... $319,100</td>
+            <td class="tdata">33% less $18,975</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="tdata">Over $319,100</td>
+            <td class="tdata">35% less $25,357</td>
+        </tr>
+        <tr style="background-color: navy; color: white;">
+            <th class="thead" colspan="2">Filing Status : Married Filing Separately</th>
+            <th class="thead" colspan="2">Filing Status: Head of Household</th>
+        </tr>
+        <tr>
+            <th class="thead">Taxable Income</th><th class="thead">Tax</th>
+            <th class="thead">Taxable Income</th><th class="thead">Tax</th>
+        </tr>
+        <tr style="background-color:#e6e6ff;">
+            <td class="tdata">$100,000 ... $159,550</td>
+            <td class="tdata">33% less $9,487.50</td>
+            <td class="tdata">$100,000 ... $100,500</td>
+            <td class="tdata">25% less $4,400</td>
+        </tr>
+        <tr>
+            <td class="tdata">Over $159,550</td>
+            <td class="tdata">35% less $12,678.50</td>
+            <td class="tdata">$100,501 ... $162,700</td>
+            <td class="tdata">28% less $7,415</td>
+        </tr>
+        <tr style="background-color:#e6e6ff;">
+            <td class="tdata">&nbsp;</td>
+            <td class="tdata">&nbsp;</td>
+            <td class="tdata">$162,701 ... $319,100</td>
+            <td class="tdata">33% less $15,550</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="tdata">Over $319,100</td>
+            <td class="tdata">35% less $21,932</td>
+        </tr>
+        </tbody></table>
+        <p> Suppose that you were single, with a taxable income of $159,750.
+            To calculate your tax, you'd first locate the schedule for your
+            filing status (Single), and then locate the bracket you fall into
+            (the second). Your tax would be $159,750 x 33% less $12,710.50.
+        </p>
+        <p> If you wanted to write a program to perform this calculation,
+            you'd need to follow a similar set of steps. You'd first need to use a set
+            of <b>sequential</b> <code>if</code> statements to determine
+            <b>which set</b> of calculations to use, like this:
+        </p>
+        <p class="code">
+        if (status == SINGLE)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate the tax for a single taxpayer</span><br>
+        }<br>
+        else if (status == MARRIED_JOINT_FILE)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate for a joint-filing married taxpayer</span><br>
+        }<br>
+        else if (status == MARRIED_SINGLE_FILE)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate for a single-filing married taxpayer</span><br>
+        }<br>
+        else if (status == HEAD_OF_HOUSEHOLD)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate for a head-of-household taxpayer</span><br>
+        }
+        </p>
+        <p> Then, <b>nested inside</b> the body of each portion of each <code>if</code>
+            statement, you'd test the various income levels, like this:
+        </p>
+        <div class="code">
+        if (status == SINGLE)<br>
+        {<br>
+        <div class="redbox">
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate the tax for a single taxpayer</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if (taxableIncome &lt;= SINGLE_BRACKET1)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tax = taxableIncome * SINGLE_RATE1 - SINGLE_EX1;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;else if (taxableIncome &lt;= SINGLE_BRACKET2)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tax = taxableIncome * SINGLE_RATE2 - SINGLE_EX2;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;else<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tax = taxableIncome * SINGLE_RATE3 - SINGLE_EX3;<br>
+        </div>
+        }<br>
+        else if (status == MARRIED_JOINT_FILE)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// calculate the tax for a married taxpayer</span><br>
+        }
+        </div>
+    <h3>Nesting Pitfalls: The Dangling else</h3>
+        <p> When you nest one <code>if</code> statement inside of another,
+            the nested <code>if</code> statement won't always have an <code>else</code>
+            portion. When this occurs, it's possible for the <code>else</code> clause
+            of the enclosing block to inadvertently "attach itself" to the inner
+            <code>if</code> statement. This is known as the <b>dangling else</b>
+            problem.
+        </p>
+        <p> Here's an example. In the code shown in the screenshot, the programmer
+            intended to allow children 12 and under to "get in free" (the <code>else</code>
+            branch of the first <code>if</code> statement. A nested <code>if</code> statement
+            was intended to provide a "senior citizens" discount as well.
+            Everyone else was supposed to pay full price.<br>
+            <img src="images/f41.gif" alt="The dangling else problme." class='inlineCenter'>
+            When the code is run, though, the result is exactly the opposite. Because the
+            <code>else</code> clause automatically attaches itself to the closest unmatched
+            <code>if</code> statement, the young kids all pay full price, while all of
+            the pre-senior adults get in for free.
+        </p>
+        <p> Avoiding this problem is really pretty easy: whenever you use nested <code>if</code>
+            statements, always enclose the body of both the <code>if</code> and <code>else</code>
+            portions in braces. The braces act like a "fence" that keeps the <code>else</code>
+            portions where they belong.
+        </p>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

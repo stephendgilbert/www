@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>seltime.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;cstdlib&gt;</span>
+<span class="line">  4 </span><span class="dir">#include &lt;ctime&gt;</span>
+<span class="line">  5 </span>
+<span class="line">  6 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  7 </span>
+<span class="line">  8 </span><span class="dir">#include</span> <span class="dstr">&quot;ccc_time.h&quot;</span><span class="dir"></span>
+<span class="line">  9 </span>
+<span class="line"> 10 </span><span class="com">/**</span>
+<span class="line"> 11 </span><span class="com">   Swaps two integers.</span>
+<span class="line"> 12 </span><span class="com">   &#64;param x the first integer to swap</span>
+<span class="line"> 13 </span><span class="com">   &#64;param y the second integer to swap</span>
+<span class="line"> 14 </span><span class="com">*/</span>
+<span class="line"> 15 </span><span class="kwb">void</span> <span class="kwd">swap</span><span class="sym">(</span><span class="kwb">int</span><span class="sym">&amp;</span> x<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&amp;</span> y<span class="sym">)</span>
+<span class="line"> 16 </span><span class="sym">{</span>
+<span class="line"> 17 </span>   <span class="kwb">int</span> temp <span class="sym">=</span> x<span class="sym">;</span>
+<span class="line"> 18 </span>   x <span class="sym">=</span> y<span class="sym">;</span>
+<span class="line"> 19 </span>   y <span class="sym">=</span> temp<span class="sym">;</span>
+<span class="line"> 20 </span><span class="sym">}</span>
+<span class="line"> 21 </span>
+<span class="line"> 22 </span><span class="com">/**</span>
+<span class="line"> 23 </span><span class="com">    Gets the position of the smallest element in a vector range.</span>
+<span class="line"> 24 </span><span class="com">    &#64;param a the vector</span>
+<span class="line"> 25 </span><span class="com">    &#64;param from the beginning of the range</span>
+<span class="line"> 26 </span><span class="com">    &#64;param to the end of the range</span>
+<span class="line"> 27 </span><span class="com">    &#64;return the position of the smallest element in</span>
+<span class="line"> 28 </span><span class="com">    the range a[from]...a[to]</span>
+<span class="line"> 29 </span><span class="com">*/</span>
+<span class="line"> 30 </span><span class="kwb">int</span> <span class="kwd">min_position</span><span class="sym">(</span>vector<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">&gt;&amp;</span> a<span class="sym">,</span> <span class="kwb">int</span> from<span class="sym">,</span> <span class="kwb">int</span> to<span class="sym">)</span>
+<span class="line"> 31 </span><span class="sym">{</span>
+<span class="line"> 32 </span>   <span class="kwb">int</span> min_pos <span class="sym">=</span> from<span class="sym">;</span>
+<span class="line"> 33 </span>   <span class="kwb">int</span> i<span class="sym">;</span>
+<span class="line"> 34 </span>   <span class="kwa">for</span> <span class="sym">(</span>i <span class="sym">=</span> from <span class="sym">+</span> <span class="num">1</span><span class="sym">;</span> i <span class="sym">&lt;=</span> to<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 35 </span>      <span class="kwa">if</span> <span class="sym">(</span>a<span class="sym">[</span>i<span class="sym">] &lt;</span> a<span class="sym">[</span>min_pos<span class="sym">])</span> min_pos <span class="sym">=</span> i<span class="sym">;</span>
+<span class="line"> 36 </span>   <span class="kwa">return</span> min_pos<span class="sym">;</span>
+<span class="line"> 37 </span><span class="sym">}</span>
+<span class="line"> 38 </span>
+<span class="line"> 39 </span><span class="com">/**</span>
+<span class="line"> 40 </span><span class="com">   Sorts a vector using the selection sort algorithm</span>
+<span class="line"> 41 </span><span class="com">   &#64;param a the vector to sort</span>
+<span class="line"> 42 </span><span class="com">*/</span>
+<span class="line"> 43 </span><span class="kwb">void</span> <span class="kwd">selection_sort</span><span class="sym">(</span>vector<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">&gt;&amp;</span> a<span class="sym">)</span>
+<span class="line"> 44 </span><span class="sym">{</span>
+<span class="line"> 45 </span>   <span class="kwb">int</span> next<span class="sym">;</span> <span class="slc">// The next position to be set to the minimum</span>
+<span class="line"> 46 </span>
+<span class="line"> 47 </span>   <span class="kwa">for</span> <span class="sym">(</span>next <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> next <span class="sym">&lt;</span> a<span class="sym">.</span><span class="kwd">size</span><span class="sym">() -</span> <span class="num">1</span><span class="sym">;</span> next<span class="sym">++)</span>
+<span class="line"> 48 </span>   <span class="sym">{</span>
+<span class="line"> 49 </span>      <span class="slc">// Find the position of the minimum</span>
+<span class="line"> 50 </span>      <span class="kwb">int</span> min_pos <span class="sym">=</span> <span class="kwd">min_position</span><span class="sym">(</span>a<span class="sym">,</span> next<span class="sym">,</span> a<span class="sym">.</span><span class="kwd">size</span><span class="sym">() -</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 51 </span>      <span class="kwa">if</span> <span class="sym">(</span>min_pos <span class="sym">!=</span> next<span class="sym">)</span>
+<span class="line"> 52 </span>         <span class="kwd">swap</span><span class="sym">(</span>a<span class="sym">[</span>min_pos<span class="sym">],</span> a<span class="sym">[</span>next<span class="sym">]);</span>
+<span class="line"> 53 </span>   <span class="sym">}</span>
+<span class="line"> 54 </span><span class="sym">}</span>
+<span class="line"> 55 </span>
+<span class="line"> 56 </span><span class="com">/**</span>
+<span class="line"> 57 </span><span class="com">   Prints all elements in a vector</span>
+<span class="line"> 58 </span><span class="com">   &#64;param a the vector to print</span>
+<span class="line"> 59 </span><span class="com">*/</span>
+<span class="line"> 60 </span><span class="kwb">void</span> <span class="kwd">print</span><span class="sym">(</span>vector<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">&gt;</span> a<span class="sym">)</span>
+<span class="line"> 61 </span><span class="sym">{</span>
+<span class="line"> 62 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> a<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 63 </span>      cout <span class="sym">&lt;&lt;</span> a<span class="sym">[</span>i<span class="sym">] &lt;&lt;</span> <span class="str">&quot; &quot;</span><span class="sym">;</span>
+<span class="line"> 64 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 65 </span><span class="sym">}</span>
+<span class="line"> 66 </span>
+<span class="line"> 67 </span><span class="com">/**</span>
+<span class="line"> 68 </span><span class="com">   Sets the seed of the random number generator.</span>
+<span class="line"> 69 </span><span class="com">*/</span>
+<span class="line"> 70 </span><span class="kwb">void</span> <span class="kwd">rand_seed</span><span class="sym">()</span>
+<span class="line"> 71 </span><span class="sym">{</span>
+<span class="line"> 72 </span>   <span class="kwb">int</span> seed <span class="sym">=</span> <span class="kwa">static_cast</span><span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">&gt;(</span><span class="kwd">time</span><span class="sym">(</span><span class="num">0</span><span class="sym">));</span>
+<span class="line"> 73 </span>   <span class="kwd">srand</span><span class="sym">(</span>seed<span class="sym">);</span>
+<span class="line"> 74 </span><span class="sym">}</span>
+<span class="line"> 75 </span>
+<span class="line"> 76 </span><span class="com">/**</span>
+<span class="line"> 77 </span><span class="com">   Computes a random integer in a range.</span>
+<span class="line"> 78 </span><span class="com">   &#64;param a the bottom of the range</span>
+<span class="line"> 79 </span><span class="com">   &#64;param b the top of the range</span>
+<span class="line"> 80 </span><span class="com">   &#64;return a random integer x, a &lt;= x and x &lt;= b</span>
+<span class="line"> 81 </span><span class="com">*/</span>
+<span class="line"> 82 </span><span class="kwb">int</span> <span class="kwd">rand_int</span><span class="sym">(</span><span class="kwb">int</span> a<span class="sym">,</span> <span class="kwb">int</span> b<span class="sym">)</span>
+<span class="line"> 83 </span><span class="sym">{</span>
+<span class="line"> 84 </span>   <span class="kwa">return</span> a <span class="sym">+</span> <span class="kwd">rand</span><span class="sym">() % (</span>b <span class="sym">-</span> a <span class="sym">+</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 85 </span><span class="sym">}</span>
+<span class="line"> 86 </span>
+<span class="line"> 87 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 88 </span><span class="sym">{</span>
+<span class="line"> 89 </span>   <span class="kwd">rand_seed</span><span class="sym">();</span>
+<span class="line"> 90 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Enter vector size: &quot;</span><span class="sym">;</span>
+<span class="line"> 91 </span>   <span class="kwb">int</span> n<span class="sym">;</span>
+<span class="line"> 92 </span>   cin <span class="sym">&gt;&gt;</span> n<span class="sym">;</span>
+<span class="line"> 93 </span>   vector<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">&gt;</span> <span class="kwd">v</span><span class="sym">(</span>n<span class="sym">);</span>
+<span class="line"> 94 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> v<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 95 </span>      v<span class="sym">[</span>i<span class="sym">] =</span> <span class="kwd">rand_int</span><span class="sym">(</span><span class="num">1</span><span class="sym">,</span> <span class="num">100</span><span class="sym">);</span>
+<span class="line"> 96 </span>   Time before<span class="sym">;</span>
+<span class="line"> 97 </span>   <span class="kwd">selection_sort</span><span class="sym">(</span>v<span class="sym">);</span>
+<span class="line"> 98 </span>   Time after<span class="sym">;</span>
+<span class="line"> 99 </span>
+<span class="line">100 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Elapsed time = &quot;</span> <span class="sym">&lt;&lt;</span> after<span class="sym">.</span><span class="kwd">seconds_from</span><span class="sym">(</span>before<span class="sym">)</span>
+<span class="line">101 </span>      <span class="sym">&lt;&lt;</span> <span class="str">&quot; seconds</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">102 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">103 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

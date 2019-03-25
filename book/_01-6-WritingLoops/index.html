@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>7.4&mdash;Writing Loops</title>
+    <style type='text/css'>
+        div.cabox {
+        width:90%;
+        margin:.7em auto .7em auto;
+        font-size:2em;
+        font-weight:bold;
+        color:red;
+        text-align:center;
+        padding:.5em;
+        background-color:#FFE4B5;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 5px 5px 5px #888;
+        -webkit-box-shadow: 5px 5px 5px #888;
+        box-shadow: 5px 5px 5px #888;        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner09">
+        <img id='lessonLogo' src='../images/h.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS122 Handout</p>
+        <p id='lessonTitle'>Writing Loops</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><img src='images/grail.png' class='right' alt='Indiana Jones and the Last Crusade.'>
+            <span class="cap">W</span>riting perfect code the first time
+            is something of a "Holy Grail" among programmers</b>. By that I
+            mean that most programmers long to do it, but the vast majority
+            consider its attainment to be the stuff of legend.
+        </p>
+        <p><img src="images/z08.gif" class="left" style="margin-top: -1em;" alt="The cover of Oh Pascal.">
+            Writing loops is one area where programming errors
+            often crop up. Several years ago, however, I happened upon a
+            technique developed by Doug Cooper, the Berkeley professor of
+            "<b>Oh! Pascal</b>" fame, for building loops. This technique
+            really does increase your chances of building correct loops the
+            first time, and it's worth the effort it takes to learn it.
+        </p>
+    <h2>Bound, Goal, and Plan</h2>
+        <p> <img src='images/goal.png' class='right' alt='An illustration of a goal.'>
+            The first step in building a successful loop is to
+            be able to describe (and separate) the loop's <b>bound</b> from
+            the loop's <b>goal</b>, and then come up with a <b>plan</b> for
+            reaching your goal.
+        </p>
+        <p> The <b>bounds</b> is the portion of the loop
+            that makes it work "mechanically", while the <b>goal</b> of the
+            loop is the work that you want to accomplish. The <b>plan</b>
+            is the strategy you'll follow to both reach the bounds and,
+            if possible, meet your goal.
+        </p>
+        <p> Here's an example problem statement that we can use
+            to examine the difference:</p>
+        <p class="pullquote">
+        <!--"sidebar" style='background:aliceblue;font-family:serif;font-style:italic;font-size:1.5em;color:navy;'>-->
+            Count the characters in a string until a period is encountered.
+            Every string will contain at least one period.
+        </p>
+        <p>Using this problem statement, you'll find that </p>
+        <ul>
+            <li>the <b>goal</b> of the loop is to <b>count
+                the characters</b> that precede a period.
+            </li>
+            <li>the <b>bounds</b> of the loop are "a period
+                was encountered."
+            </li>
+            <li>the <b>plan</b> is to a) "read" a character, and
+                b) increment a counter
+            </li>
+        </ul>
+        <p> We can use the same bounds with a different goal:</p>
+        <p class="pullquote">Print each character in a string until a period is
+            encountered.
+        </p>
+        <p> Here, the bounds is the same, but the goal is different.
+            We're not counting, we're printing. Notice that our plan
+            would change as well. Instead of adding one to a character,
+            in step b), we'd simply print the character.
+        </p>
+        <div class="sidebar" style="background-color: ivory;">
+        <h6 style="border-bottom: 1px solid silver; margin-top: 0.2em; font-size: 1.1em;">Other Examples</h6>
+        <p> Here are some more examples from Cooper's book. See if you
+            can come up with a bound and a plan for each of these goals:
+        </p>
+        <ol>
+            <li class='d'>Goal: Skip fifty input characters.</li>
+            <li class='d'>Goal: Find the position of the letter F in input that includes an F.</li>
+            <li class='d'>Goal: Divide 35 by 6 using subtraction.</li>
+            <li class='d'>Goal: Count the number of F's in an input word.</li>
+            <li class='d'>Goal: Print an integer in reverse.</li>
+        </ol>
+        </div>
+    <h2>Implementing the Plan</h2>
+        <p> Now that you have a "plan", you might be wondering how to put that
+            into action; what <b>tactics</b> do you use to <b>implement</b>
+            your overall strategy? We'll start by looking at the overall
+            <i>topology</i> of a loop.
+        </p>
+        <p> <img src="images/z05.gif" alt="The four faces of a loop" class="right">
+            If you put a loop inside a program, as we've done with this
+            top-tested loop, you can see that there are
+        </p>
+        <ul>
+            <li>actions that occur before the loop is encountered</li>
+            <li>a test that determines the loop's bound</li>
+            <li>actions that occur inside the loop body</li>
+            <li>actions that occur after the loop is complete</li>
+        </ul>
+        <p> These four "faces" of a loop are called its <b>precondition</b>,
+            its <b>bound</b>, its <b>action</b> or <b>operation</b>, and its
+            <b>postcondition</b>.
+            Remember these terms, because we'll use them to determine
+            exactly <b>where</b> to start working on our loop.
+        </p>
+    <h3>Step 1: Determine the Bounds</h3>
+        <p> <img src='images/chainsaw.png' class='right'
+            style='margin-top:-5em;width:175px;'
+            alt='A beaver with a chainsaw.'>
+            If you've ever bought a new appliance (like a chain-saw maybe),
+            or a new software package, what's the first thing you need to learn?
+        </p>
+        <div class="cabox">
+            How to turn it off!!!
+        </div>
+        <p> That's where you should always start writing your
+            loops; ask yourself:
+        </p>
+        <div class="cabox">
+            What will make this loop quit?
+        </div>
+        <p> Making sure your loops can quit is the single most
+            important thing that you can do.
+        </p>
+        <p> Let's take our first example
+            in the previous section, and write the loop bounds in pseudocode.
+            (Pseudocode is simply writing a program using "English-like"
+            phrases instead of a particular programming language.)
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            // Step 1 : The bounds<br>
+            <br>
+            // Before the loop<br>
+            <br>
+            <span class="red">
+            While current-character is not a period<br>
+            </span>
+            {<br>
+            &nbsp;&nbsp;&nbsp; // Inside the loop<br>
+            }<br>
+            // After the loop
+        </p>
+
+    <h3>Step 2: The Preconditions</h3>
+        <p> Step 1, writing the bounds, makes sure that it is
+            possible to get <b>out</b> of the loop. When you write this portion
+            you'll have to make sure your Boolean condition is
+            not unavoidable or impossible, just as you did with selection
+            statements.
+        </p>
+        <p> Now that you've convinced yourself that it's possible
+            to <b>exit</b> the loop, you have to write the statements that
+            make it possible to <b>enter</b> the loop. Step 1 asks <b>"How
+            do I get out?"</b>, while Step 2 asks:
+        </p>
+        <div class='cabox'>
+            "How do I get in?"
+        </div>
+        <p> Take a look at your bounds condition:</p>
+        <p class="code" style='font-size:1.25em;'>
+        While current-character is not a period
+        </p>
+        <p>and ask yourself:</p>
+        <ol>
+            <li class='d'>what is <code>current-character</code>?</li>
+            <li class='d'>where did it come from?</li>
+            <li class='d'>how did it get a value that I can check?</li>
+        </ol>
+        <p> If you were to write your bounds condition in a Java program, it
+            would not compile because the variables it refers to don't yet
+            exist. Precondition statements usually involve <b>creating
+            variables</b> and <b>initializing them</b> to some reasonable
+            state. In our example, we have two variables implied by the
+            problem statement, <code>current-character</code>, which is a
+            character, and <code>sentence</code>, which is a string.
+        </p>
+        <p><b><u>Before</u></b> you encounter the loop bounds,
+            you must make sure that <code>current-character</code> holds one
+            of the characters in <code>sentence</code>, otherwise, you have
+            no assurance that you will ever enter the loop--the value in
+            <code>current-character</code> will be unknown.
+        </p>
+        <p>In pseudocode, we could write this as:</p>
+        <p class="code" style='font-size:1.25em;'>
+            // Step 2 : The bounds precondition<br>
+            <br>
+            <span class="red">
+            The variable sentence is a string<br>
+            The variable current-character is a character<br>
+            Place the first character in sentence into current-character<br>
+            </span>
+            <br>
+            While current-character is not a period<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; // Inside the loop<br>
+            }<br>
+            // After the loop
+        </p>
+    <h3>Step 3: Advance the Loop</h3>
+        <p> Now that you've written the bounds and preconditions,
+            it's time to <b>advance the loop</b>. Advancing the loop means
+            that you add statements to the <b>loop body</b> that move you
+            closer toward the loop bounds.
+            <img src="images/z09.gif" class="inlineCenter" alt="Advancing towards the enemy.">
+            Suppose, for instance that we didn't put any statements
+            inside the loop body used here. What would happen?
+        </p>
+        <ol>
+            <li class='d'>If the sentence began with a period, the loop would not
+                be entered and the program would perform correctly.
+            </li>
+            <li class='d'>Otherwise, when the loop body was entered, nothing
+                in the body would change the value of
+                <code>current-character</code>, so you would have no way
+                out of the loop; it would simply repeat over and over,
+                endlessly. Creating such <b>endless or infinite loops</b> is a
+                very, very common error.
+            </li>
+        </ol>
+        <p> To avoid an endless or "dead" loop, you must make
+            sure that the statements on the inside of the loop body <b>change
+            something</b> that is tested in the loop bounds.
+        </p>
+        <p> In this case, that's as simple as storing the
+            next character in the sentence in the current-character,
+            like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            // Step 3 : Advance the loop<br>
+            <br>
+            The variable sentence is a string<br>
+            The variable current-character is a character<br>
+            Place the first character in sentence into current-character<br>
+            <br>
+            While current-character is not a period<br>
+            {<br>
+            <span class="red">
+            &nbsp;&nbsp;&nbsp; Store the next character from sentence in current-character<br>
+            </span>
+            }<br>
+            // After the loop
+        </p>
+    <h2>Moving Toward the Goal</h2>
+        <p> At this point, the mechanical portion of your loop&#8212;the
+            part that makes it "work", so to speak&#8212;is finished. You should
+            be able to compile your code (once you "translated it" to a
+            programming language, of course), and it should run correctly.
+        </p>
+        <p> The whole purpose of a loop, however, is to get some real work
+            done, to accomplish the goal. Up until now, we've ignored
+            the goal portion entirely, because we want to make sure the loop
+            <span class="red"><b>works</b></span>, before we put it
+            <span class="red"><b>to work</b></span>.
+        </p>
+        <p> When writing the code to carry out the goal of the loop you
+            follow a <b>different</b> order than you did while working
+            on the loop bounds. When concentrating on the loop's goal,
+            you'll:
+        </p>
+        <ul>
+            <li>start in the precondition area,</li>
+            <li>move to the operations in the loop body,</li>
+            <li>and then deal with the postcondition.</li>
+        </ul>
+        <p> You didn't have to worry about the
+            postcondition region while programming the mechanical operation of the
+            loop, but it is often significant when it comes to the loop's
+            goal.
+        </p>
+        <p> Let's look at each of these steps in a little more detail.</p>
+    <h3>Step 4: The Goal Precondition</h3>
+        <p> The goal of every loop (like the goal of every program) is
+            to <b>produce information</b> of some sort or to carry out some
+            useful modification of a piece of data, such as increasing the
+            price of all of the products in your database. (I guess you could have
+            a loop that was designed just to take up some processor time, but
+            I won't consider those kinds of loops here).
+        </p>
+        <p> Many common loops involve two kinds of calculations: counting things
+            and adding up or otherwise processing different quantities. To do
+            that, you'll often create special kinds of variables called
+            <b>counters</b> and <b>accumulators</b>. An accumulator is just
+            a name used for a variable that stores a sum of some sort.
+        </p>
+        <p> In the precondition area of your loop, you'll create and initialize
+            the variables necessary to carry out the goal of the loop.
+            In our case, the goal is to count the characters in the
+            first sentence, so we need a counter variable initialized
+            to zero.
+        </p>
+        <p> Ask yourself:</p>
+        <div class="cabox">
+            What information is produced?
+        </div>
+        <p> Then, ask yourself <b>what variables</b> you'll need to
+            store that information.
+        </p>
+    <h3>Step 5: The Goal Operations</h3>
+        <p> Because a loop can have many different goals, its very hard
+            to generalize about this step. A good way to start, though,
+            is to look at the variables you created in Step 4, and
+            ask:
+        </p>
+        <div class="cabox">
+            How is the data processed?
+        </div>
+        <p> Are you calculating a sum, counting different occurrences,
+            or transforming existing values into new values?
+        </p>
+        <p> The statements inside the loop body will almost always update
+            the variables created in the precondition in some way.
+            For this example, we merely need to increment our counter every
+            time through the loop, since each time we read a character
+            (that isn't a period), we want to count it.
+        </p>
+    <h3>Step 6: The Postcondition</h3>
+        <p> In the postcondition, you often must check one of
+            the bounds conditions to see how to proceed, but that's
+            not always the case. Let me give you a short example.
+        </p>
+        <p> Suppose you were writing a loop to calculate the average
+            of all the positive numbers entered by the user. For your
+            bounds condition, you had the user enter 0 or a negative
+            number. When the loop terminates, you can't <b>immediately</b>
+            calculate an average; instead, you'll have to first check
+            to see if the user actually entered some positive numbers;
+            if the user immediately terminated the loop by entering
+            a negative number, attempting to calculate an average would
+            result in a "divide by zero" error.
+        </p>
+        <p> As I said, you don't <b>always</b> need to write code to deal
+            with the postcondition; however, you <b>still</b>
+            need to ask yourself this question <b>whenever</b> you're
+            loop is finished:
+        </p>
+        <div class="cabox">
+            Have I reached my goal?
+        </div>
+        <p> In our case, we don't <b>need</b> to check the postcondition
+            because, if we never enter the loop, our counter will be zero,
+            which is the correct answer.
+        </p>
+        <p>Here's the finished pseudocode for our loop:</p>
+        <p class="code" style='font-size:1.25em;'>
+            // Steps 4-6 : Implement our plan<br>
+            <br>
+            The variable sentence is a string<br>
+            The variable current-character is a character<br>
+            Place the first character in sentence into current-character<br>
+            <br>
+            <span class="red">
+            The variable number-of-characters is an integer, initial value zero<br>
+            <br>
+            </span>
+            While current-character is not a period<br>
+            {<br>
+            <span class="red">
+            &nbsp;&nbsp;&nbsp; Add one to the number-of-characters<br>
+            </span>
+            &nbsp;&nbsp;&nbsp; Store the next character from sentence in current-character<br>
+            }<br>
+            <span class="red">
+            Variable number-of-characters contains count of characters in sentence
+            </span>
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Writing Loops Summary
+        </p>
+        <ul>
+            <li>Loops are a common source of programming errors. To build correct
+                loops, it helps to <b>use a strategy</b> that provides step-by-step
+                guidance. The strategy presented here was developed by Doug
+                Cooper from Berkeley.
+            </li>
+            <li> The first step is to separate the <b>bounds</b> from the
+                <b>goal</b> and then develop a <b>plan</b>. The bounds is
+                the test that makes the loop work "mechanically";
+                the goal of the loop is the work that you accomplished.
+                The plan is the strategy you'll follow.
+            </li>
+            <li>The first three steps of the strategy involve the <b>loop
+                mechanics</b>. You should get the loop <b>working correctly</b>
+                before you put it <b>to work</b>.
+            </li>
+            <li> The first step of the strategy is to <b>determine the bounds</b>.
+                The most important step is making sure your loop <b>stops</b>
+                at the correct position.
+            </li>
+            <li>The second step is to add the <b>bounds preconditions</b>.
+                Add necessary variables and initialization <b>required to
+                meaningfully test the bounds</b> condition.
+            </li>
+            <li>Step three is to <b>advance the loop</b>. Add statements
+                necessary to make move you closer to the bounds on each
+                iteration.
+            </li>
+            <li>The next three steps involve the <b>loop goal</b>. Every
+                loop is designed to <b>produce some information</b>. This
+                is the loop's goal.
+            </li>
+            <li>Step four involves the <b>goal preconditions</b>. Determine
+                <b>what kind of information your loop is supposed to produce</b>;
+                then create and initialize the variables needed to hold the
+                information. Often this involves <b>accumulators</b> and
+                <b>counters</b>.
+            </li>
+            <li>Step five is <b>performing the goal operations</b>. This
+                is the <b>processing</b> step. If you know what information
+                you want after the loop is finished, just ask yourself
+                <b>"How should the data be processed?"</b>
+            </li>
+            <li>Finally, you must consider the <b>loop postcondition</b>.
+                It is possible to reach to loop bounds (and stop the
+                iteration) <b>without</b> reaching your <b>goal</b>. You
+                won't always have code for the post condition, but you
+                <b>must always consider it</b>.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

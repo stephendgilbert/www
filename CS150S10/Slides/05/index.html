@@ -1,0 +1,1227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To be able to implement your own classes </li>
+  <li> To master the separation of interface and implementation </li>
+  <li> To understand the concept of encapsulation </li>
+  <li> To design and implement accessor and mutator member functions </li>
+  <li> To understand object construction </li>
+  <li> To learn how to distribute a program over multiple source 
+    files  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "1" )
+		//]]>
+	</script>
+	Discovering Classes </h1>
+<ul>
+	<li> Code to a concept, rather than defining related variables that refer
+		to the same concept </li>
+	<li> Define a class that abstracts the concept and contains these
+		variables as data fields </li>
+  <li> E.g., suppose you are parsing information about various computers.
+		Each record contains (to find the best value):
+    <ul>
+      <li>Model Name</li>
+      <li>Price</li>
+      <li>Score between 0 and 100</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Discovering Classes &mdash; <tt>bestval.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+	wrapCode( "bestval.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Discovering Classes </h1>
+<ul>
+	<li> Consider the 2 sets of variables:  <tt>best_name</tt>,
+		<tt>best_price</tt>, <tt>best_score</tt>, and <tt>next_name</tt>,
+		<tt>next_price</tt>, <tt>next_score</tt> </li>
+	<li> Each describes a <em>product</em> </li>
+	<li> Common concept </li>
+	<li> We need to develop a <tt>Product</tt> class </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<p> Mixing <tt>&gt;&gt;</tt> and <tt>getline</tt> input </p>
+<ul>
+	<li> <tt>getline</tt> reads until the next newline, which it extracts
+		<ul>
+			<li> Stores all characters, but for the newline </li>
+		</ul>
+	</li>
+	<li> <tt>&gt;&gt;</tt>  :
+		<ul>
+			<li> Skips leading whitespace </li>
+			<li> Reads until next whitespace (or non-number) </li>
+			<li> Does <strong>not</strong> extract the trailing character, even
+				the newline </li>
+		</ul>
+	</li>
+	<li> After using <tt>&gt;&gt;</tt>  , but before a <tt>getline</tt> call,
+		insert:
+		<code>
+string remainder; // Read remainder of line 
+getline(cin, remainder);
+// Now you are ready to call getline again </code>
+		to consume the leading newline left by <tt>&gt;&gt;</tt>  
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "2" )
+		//]]>
+	</script>
+	Interfaces </h1>
+<ul>
+  <li> To define a class, first specify its public <i>interface</i> </li>
+  <li> The public interface consists of all member functions we want 
+    to apply to objects of that type </li>
+	<li> We are describing the object's <em>behavior</em> </li>
+  <li> Example: Product class member functions: 
+    <ul>
+      <li> Make a new product </li>
+      <li> Read in a product object </li>
+      <li> Compare two products and find out which one is better </li>
+      <li> Print a product </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Interfaces </h1>
+<h2><tt>Product</tt> class</h2>
+<ul>
+  <li> The interface is specified in the <i>class definition</i> </li>
+  <li> Product class header: 
+		<code>
+<span class=hl>class</span> Product
+<span class=hl>{
+public:</span>
+   Product();
+   
+   void read();
+   
+   bool is_better_than(Product b) const;
+   void print() const;
+<span class=hl>private:</span>
+   <i>implementation details</i>
+<span class=hl>};</span></code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Interfaces</h1>
+<h2>Parts</h2>
+<p> The public interface can be divided logically into 3 parts: </p>
+<dl>
+	<dt> Constructors </dt>
+		<dd> Initialize new objects </dd>
+		<dd> Same name as class </dd>
+		<dd> If no parameters, called the <em>default constructor</em> </dd>
+	<dt> Mutators </dt>
+		<dd> Modify an object (<tt>read()</tt>) </dd>
+	<dt> Accessors </dt>
+		<dd> Simply query an object, without modifying it
+			(<tt>is_better_than()</tt> and <tt>print()</tt>) </dd>
+		<dd> Tagged as a <tt>const</tt> method </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Interfaces </h1>
+<h2>Public</h2>
+<ul>
+	<li> These methods only tell <em>what</em> an object can do, not
+		<em>how</em> it does it </li>
+	<li> This is all that the rest of the program needs </li>
+	<li> Variables (and helper methods) are hidden in the <tt>private</tt>
+		section </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Revised <tt>bestval</tt> example &mdash; <tt>product1.cpp</tt> </h1>
+<p> Is this easier to read, to understand? </p>
+<script type='text/javascript'>
+	//<![CDATA[
+	wrapCode( "product1.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+ : Class Definition </h1>
+<div class='syntax'>
+<code>
+class <i>ClassName</i>
+{
+public:<i>
+   constructor declarations
+   member function declarations
+</i>private:<i>
+   data fields
+</i>};</code>
+
+<h3> Example: </h3>
+<code>class Point
+{
+public:
+   Point (double xval, double yval);
+   void move(double dx, double dy);
+   double get_x() const;
+   double get_y() const;
+private:
+   double x;
+   double y;
+};</code>
+		<h3> Purpose: </h3>
+		<p>Define the interface and data fields of a class.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Forgetting a Semicolon </h3>
+<ul>
+	<li> <strong>No</strong> semicolon after statement blocks </li>
+	<li> <strong>Always</strong> after a <em>type</em> definition, such as a
+		class:
+<code>
+class Product
+{
+public:
+   ...
+private:
+   ...
+}; // Don't forget semicolon </code>
+	</li>
+	<li> For compatibility reasons, compiler may report error several lines
+		later </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+  <script type='text/javascript'>
+		//<![CDATA[
+		section( "3" )
+		//]]>
+	</script> 
+	Encapsulation </h1>
+<p> Each <tt>Product</tt> object must store data (<i>attributes</i>) </p>
+<code>class Product
+{
+public:
+   Product();
+
+   void read();
+
+   bool is_better_than(Product b) const;
+   void print() const;
+private:
+   <span class='blue'>string name;
+   double price;
+   int score;</span>
+};</code>
+</div>
+
+<div class='slide'>
+<h1> Encapsulation </h1>
+<ul>
+	<li> Member data should be private </li>
+	<li> Only constructors and member functions of that class may
+		access/modify private data </li>
+	<li> These fields can <strong>not</strong> be accessed directly:
+<code>
+int main()
+{
+   ...
+   cout &lt;&lt; best.name; // Error &ndash; use print() instead 
+   ...
+}</code>
+	</li>
+	<li> All data access must occur through the public interface </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Encapsulation </h1>
+<ul>
+	<li> An object's data is effectively hidden from the programmer </li>
+	<li> Implementation details are of no concern to the user </li>
+	<li> User should only be concerned with <em>what</em> it does, not
+		<em>how</em> it does it </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Encapsulation</h1>
+<h2>Benefits</h2>
+<ul>
+	<li> An object is responsible for its own data </li>
+	<li> Implementation may change without affecting client code (important
+		with larger programs)
+		<ul>
+			<li> E.g., a system is hosted on a new platform </li>
+		</ul>
+	</li>
+	<li> Guarantees that object remains in a valid state </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Encapsulation</h1>
+<ul>
+	<li> Consider the <tt>Time</tt> class:
+<code>
+class Time
+{
+public:
+   Time();
+   Time(int hrs, int min, int sec);
+   
+   void add_seconds(long s);
+   
+   int get_seconds() const;
+   int get_minutes() const;
+   int get_hours() const;
+   long seconds_from() const;
+private:
+   ... // Hidden data representation 
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Encapsulation </h1>
+<ul>
+	<li> If the data fields were accessible, we might see this:
+<code>
+Time liftoff(19, 30, 0);
+...
+// Looks like the liftoff is getting delayed by another six hours
+liftoff.hours = liftoff.hours + 6;</code>
+	</li>
+	<li> But, 25:30:00 is not a valid time of day </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+  <script type='text/javascript'>
+		//<![CDATA[
+		section( "4" )
+		//]]>
+	</script>
+	Member Functions </h1>
+<ul>
+  <li> Each member function advertised in the class interface must 
+    be implemented separately </li>
+	<li> So, <tt>Product</tt>'s <tt>read</tt> method would be defined this way,
+		<em>outside</em> of the class definition:
+<code>
+<span class='blue'>void Product::read()</span>
+{
+   cout &lt;&lt; &quot;Please enter the model name: &quot;;
+   getline(cin, name);
+   cout &lt;&lt; &quot;Please enter the price: &quot;;
+   cin &gt;&gt; price;
+   cout &lt;&lt; &quot;Please enter the score: &quot;;
+   cin &gt;&gt; score;
+   string remainder; // Read the remainder of the line 
+   getline(cin, remainder);
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Member Functions </h1>
+<ul>
+	<li> The <tt>Product::</tt> prefix defines a
+		member function for that class </li>
+  <li> May be another class with a <tt>read()</tt> method </li>
+  <li> To call this method, given the object declaration:
+<code>
+Product next;
+next.read();</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Member Functions  </h1>
+<ul>
+  <li> If a member function does <strong>not</strong> modify any of <em>its
+		own</em> member data (like an <dfn>accessor</dfn>), then it should be
+		tagged as <tt>const</tt> </li>
+	<li> Part of the interface.  A promise not to modify the object </li>
+	<li> This is done for both the declaration and definition:
+		<code>
+void Product::print() <span class='blue'>const</span>
+{
+   cout &lt;&lt; name 
+      &lt;&lt; &quot; Price: &quot; &lt;&lt; price
+      &lt;&lt; &quot; Score: &quot; &lt;&lt; score &lt;&lt; &quot;\n&quot;;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Member Functions   </h1>
+<h2>Implicit Parameters</h2>
+<ul>
+	<li> A data field in a member function denotes the
+		data field <i>of the object for which the member function was called</i>
+		<code>
+best.print();</code>
+	</li>
+  <li> The object to which a member function is applied is called 
+    the <dfn>implicit parameter</dfn> </li>
+  <li> A parameter explicitly mentions in the function definition 
+    is called an <dfn>explicit parameter</dfn>
+<code>
+bool Product::is_better_than(Product b) const
+{
+   if (<i>implicit_parameter</i>.price == 0) return true;   
+   if (b.price == 0) return false;
+   return <i>implicit_parameter</i>.score / <i>implicit_parameter</i>.price 
+      &gt; b.score / b.price;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+  <script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+	: Member Function Definition </h1>
+<div class='syntax'>
+<code><i>return_type ClassName</i>::<i>function_name</i>(<i>parameter</i><sub>1</sub><i>, ..., parameter</i><sub><i>n</i></sub>)<i> 
+</i>   [const]<sub><i>opt</i></sub>
+{<i>
+   statements
+</i>}</code>
+
+		<h3> Example: </h3>
+<code>void Point::move(double dx, double dy)
+{
+   x = x + dx; 
+   y = y + dy;
+}
+double Point::get_x() const
+{
+   return x;
+}</code>
+		<h3> Purpose: </h3>
+		<p>Supply the implementation of a member function.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+  <script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> <tt>const</tt> Correctness </h3>
+<ul>
+	<li> Apply <tt>const</tt> for each accessor, as you write them </li>
+	<li> Failure to follow this rule yields classes that are not usable </li>
+	<li> If an object is <tt>const</tt>, then you may only call its
+		<tt>const</tt> methods </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+  <script type='text/javascript'>
+		//<![CDATA[
+		section( "5" )
+		//]]>
+	</script>
+
+	Default Constructors </h1>
+<ul>
+  <li> Constructors initialize <em>all</em> data fields of an object </li>
+  <li> A constructor always has the same name as the class </li>
+	<li> Each class needs at least 1 constructor </li>
+	<li> The <strong>default constructor</strong> is the constructor that doesn't
+		take any arguments </li>
+	<li> The <strong>default constructor</strong> generally set fields to a
+		default value (if one makes sense) </li>
+	<li> It is supplied, if you do not define it explicitly </li>
+	<li> All <i>primitive</i> data members should be initialized </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Default Constructors (examples) </h1>
+<code>Product::Product()
+{
+   price = 1;
+   score = 0;
+}</code>
+<ul>
+	<li> <tt>price</tt> is set to 1 to avoid division by 0 </li>
+	<li> <tt>score</tt> are set to 0 </li>
+	<li> <tt>name</tt> is automatically set to the empty string
+	(<tt>string</tt>'s default constructor) </li>
+	<li> The <tt>Time</tt> class initializes to current time </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Default Constructors &mdash; <tt>product2.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+wrapCode( "product2.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+	section( "6" )
+	//]]>
+</script>
+Constructors with Parameters </h1>
+<ul>
+	<li> Classes may have multiple constructors:
+		<code>
+class Employee
+{
+public:
+   <span class='blue'>Employee()
+   Employee(string employee_name, double initial_salary);</span>
+ 
+   void set_salary(double new_salary);
+
+   string get_name() const;
+   double get_salary() const;
+private:
+   string name;
+   double salary;
+};</code>
+	</li>
+	<li> All constructors have the same name as the class, but have 
+	different parameter lists
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constructors with Parameters </h1>
+<ul>
+	<li> When constructing, compiler chooses the constructor that matches the
+		arguments supplied:
+		<code>
+Employee joe; // Uses default construction 
+Employee Lisa('Lisa Lee', 105000); // Uses Employee(string, double) construction</code>
+	</li>
+	<li> Implementation of the 2nd constructor is straightforward:
+		<code>
+Employee::Employee(string employee_name, double initial_salary)
+{
+   name = employee_name;
+   salary = initial_salary;
+}</code>
+	</li>
+	<li> Could be much more complex </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constructors with Parameters </h1>
+<ul>
+	<li> Objects might have data fields that are, in turn, other objects </li>
+	<li> E.g., add scheduled work hours to <tt>Employee</tt>:
+		<code>
+class Employee
+{
+public:
+   Employee(string employee_name, double initial_salary,
+      int arrive_hour, int leave_hour);
+   ...
+private:
+   string name;
+   double salary;
+   <span class='blue'>Time arrive;
+   Time leave;</span>
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Constructors with Parameters </h1>
+<ul>
+	<li> The constructor must initialize the time fields using <tt>Time</tt>'s
+		constructors
+		<code>
+Employee::Employee(string employee_name, double initial_salary,
+   int arrive_hour, int leave_hour)
+{
+   name = employee_name;
+   salary = initial_salary;
+   <span class='blue'>arrive = Time(arrive_hour, 0, 0);
+   leave = Time(leave_hour, 0, 0);</span>
+}</code>
+	</li>
+	<li> If not initialized at construction, member objects created using
+		their default constructor (if provided) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "3" )
+	//]]>
+</script>
+: Constructor Definition </h1>
+<div class='syntax'>
+<code><i>ClassName</i>::<i>ClassName</i>(<i>parameter</i><sub>1</sub>, <i>parameter</i><sub>2</sub>, ..., <i>parameter<sub>n</sub></i>)
+{<i>
+   statements
+</i>}</code>
+	<h3> Example: </h3>
+<code>Point::Point(double xval, double yval)
+{
+   x = xval;  y = yval;
+}</code>
+	<h3> Purpose: </h3>
+	<p> Supply the implementation of a constructor. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "4" )
+	//]]>
+</script>
+</h1>
+<h3> Forgetting to Initialize All Fields in a Constructor </h3>
+<ul>
+	<li> Ensure each constructor provides useful initializations to
+		<strong>all</strong> fields </li>
+	<li> Consider this new constructor for <tt>Employee</tt>:
+		<code>
+Employee::Employee(string n)
+{
+   name = n;
+   // Oops &ndash; salary not initialized
+}</code>
+	</li>
+	<li> A call to <tt>get_salary()</tt> will return a random salary </li>
+	<li> Set <tt>salary</tt> to 0 </li>
+	<li> Document it </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='commonerror'> Common Error 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "5" )
+	//]]>
+</script>
+</h1>
+<h3> Trying to Reset an Object by Calling a Constructor </h3>
+<ul>
+	<li> Constructors <i>create</i> objects </li>
+	<li> Can not be called on an existing object:
+		<code>
+Time homework_due(19. 0, 0);
+...
+homework_due.Time(); // Error</code>
+	</li>
+	<li> Simple remedy:  overwrite existing object with a new one:
+		<code>
+homework_due = Time() ;  // OK </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "1" )
+	//]]>
+</script>
+</h1>
+<h3> Calling Constructors from Constructors </h3>
+<ul>
+	<li> By the opening brace of the constructor, all members are initialized </li>
+	<li> This is inefficient:
+		<code>
+Employee::Employee(string employee_name, double initial_salary,
+   int arrive_hour, int leave_hour)
+{
+   name = employee_name;
+   salary = initial_salary;
+   <span class='blue'>arrive = Time(arrive_hour, 0, 0);
+   leave = Time(leave_hour, 0, 0);</span>
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "1" )
+	//]]>
+</script>
+(cont) </h1>
+<ul>
+	<li> <tt>arrive</tt> and <tt>leave</tt> already built, using default
+	constructor </li>
+	<li> Use initialiser list:
+		<code>
+Employee::Employee(string employee_name, double initial_salary,
+   int arrive_hour, int leave_hour)
+   <span class='blue'>: arrive(arrive_hour, 0, 0),
+   leave(leave_hour, 0, 0)</span>
+{
+   name = employee_name;
+   salary = initial_salary;
+}</code>
+	</li>
+	<li> <strong>Only</strong> correct way to initialize objects with no
+	default constructor </li>
+	<li> Works for first-class attributes, too </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "4" )
+	//]]>
+</script>
+: Constructor with Field Initializer List </h1>
+<div class='syntax'>
+<code><i>ClassName</i>::<i>ClassName</i>(<i>parameters</i>)
+   : <i>field</i><sub>1</sub>(<i>expressions</i>), ..., <i>field</i><sub>n</sub>(<i>expressions</i>), 
+{<i>
+   statements
+</i>}</code>
+	<h3> Example: </h3>
+<code>Point::Point(double xval, double yval)
+   : x(xval), y(yval)
+{
+}</code>
+	<h3> Purpose: </h3>
+	<p> Supply the implementation of a constructor, initializing data fields
+		before the body of the constructor. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "2" )
+	//]]>
+</script>
+</h1>
+<h3> Overloading </h3>
+<ul>
+	<li> 2 or more functions having the same name </li>
+	<li> <strong>Must</strong> have different parameter lists </li>
+	<li> E.g., given these 2 definitions:
+   <code>
+void print(Employee e)  ... 
+   void print(Time t)  ...</code>
+	</li>
+	<li> When the compiler sees
+		<code>
+print(x);</code>
+it checks the type of <tt>x</tt>, calls the appropriate function </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+<script type='text/javascript'>
+	//<![CDATA[
+	taxonomy( "2" )
+	//]]>
+</script>
+(cont) </h1>
+<h3> Overloading Operators </h3>
+<ul>
+	<li> Most operators can be overloaded </li>
+	<li> One of the operands needs to be of some class type </li>
+	<li> E.g., replace <tt>Product::is_better_than()</tt> with <tt>&gt;</tt>:
+		<code>
+bool Product::operator&gt;(Product b) const
+{
+   if (price == 0) return true;
+   if (b.price == 0) return false;
+   return score / price &gt; b.score / b.price;
+}</code>
+	</li>
+	<li> So
+		<code>
+if(next.is_better_than(best)) ...</code>
+	becomes
+		<code>
+if(next &gt; best) ...</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+	section( "7" )
+	//]]>
+</script>
+Accessing Data Fields </h1> 
+<ul>
+	<li> Private data <strong>only</strong> accessible to members of that same
+	class </li>
+	<li> All other functions (and methods of other classes) must use the
+	public interface </li>
+	<li> E.g., <tt>raise_salary()</tt> cannot read nor set <tt>salary</tt>
+directly:
+		<code>
+void raise_salary(Employee&amp; e, double percent)
+{
+   <span class='blue'>e.salary = e.salary * (1 + percent / 100); </span>// Error 
+}</code>
+	</li>
+	<li> Must use <tt>Employee</tt> interface:
+		<code>
+void raise_salary(Employee&amp; e, double percent)
+{
+   double new_salary = e.get_salary() 
+      * (1 + percent / 100);
+   e.set_salary(new_salary);
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Accessing Data Fields </h1> 
+<ul>
+	<li> <tt>Employee</tt> <i>setters</i> and <i>getters</i> are simple:
+		<code>
+double Employee::get_salary() const
+{
+   return salary;
+}
+
+void Employee::set_salary(double new_salary)
+{
+   salary = new_salary;
+}</code>
+	</li>
+	<li> Do <em>not</em> automatically write setters/getters for <em>all</em>
+	fields </li>
+	<li> Avoid revealing implementation details; stay flexible
+	<ul>
+		<li> Consider <tt>Product</tt>; we didn't use <tt>get_score</tt> or
+			<tt>set_price</tt> </li>
+	</ul>
+	</li>
+	<li> Don't automatically supply a setter for each getter
+	<ul>
+		<li> <tt>Time</tt> has <tt>get_minutes()</tt>, but not
+			<tt>set_minutes()</tt> </li>
+	</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+<script type='text/javascript'>
+	//<![CDATA[
+	section( "8" )
+	//]]>
+</script>
+Comparing Member and Nonmember Functions </h1>
+<ul>
+	<li> Consider the nonmember function: 
+		<code>
+void raise_salary(Employee&amp; e, double percent)
+{
+   double new_salary = e.get_salary() 
+      * (1 + percent / 100);
+   e.set_salary(new_salary);
+}</code>
+
+	now as a method of <tt>Employee</tt>:
+
+		<code>
+class Employee
+{
+public:
+   <span class='blue'>void raise_salary(double_percent);</span>
+   ...
+};
+
+<span class='blue'>void Employee::raise_salary(double percent)
+{
+   salary = salary * (1 + percent / 100);
+}</span></code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Comparing Member and Nonmember Functions </h1>
+<ul>
+	<li> As a nonmember function, it is called with two explicit parameters: 
+		<code>
+raise_salary(harry, 7);</code>
+	</li>
+	<li> As a member function it is called using the dot notation:
+		<code>
+harry.raise_salary(7);</code>
+	</li>
+	<li> Which is better?
+	<ul>
+		<li> Depends on <em>ownership</em> </li>
+		<li> If you are the class author, write useful functions as members
+		</li>
+		<li> If you are a client, don't extend the class.  Write functions
+		</li>
+	</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Comparing Member and Nonmember Functions </h1>
+<ul>
+	<li> A member function can invoke another member function on 
+	its implicit parameter without using the dot notation </li>
+	<li> Adding a <tt>print()</tt> method to <tt>Employee</tt>:
+		<code>
+class Employee
+{
+public:
+   void print() const;
+   ...
+};
+
+void Employee::print() const
+{
+   cout &lt;&lt; &quot;Name: &quot; &lt;&lt; <span class='blue'>get_name()</span>
+      &lt;&lt; &quot;Salary: &quot; &lt;&lt; <span class='blue'>get_salary()</span>;
+      &lt;&lt; &quot;\n&quot;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Comparing Member and Nonmember Functions </h1>
+<ul>
+	<li> All functions pass explicit arguments by value (by default) </li>
+	<li> Member functions pass the implicit parameter by reference </li>
+</ul>
+<table class='book'>
+<tbody>
+<tr> 
+	<th></th>
+	<th><b>Value Parameter</b><br/>
+		(not changed)</th>
+	<th><b>Reference Parameter</b><br/>
+		(can be changed)</th>
+</tr>
+<tr> 
+	<th><b>Explicit Parameter</b></th>
+	<td>No modifer<br/>
+		<tt>void print(Employee)</tt></td>
+		<td> 
+			Use &amp; modifer<br/>
+				<tt>void raise_salary(Employee &amp; e, double
+			p)</tt>
+		</td>
+	</tr>
+	<tr> 
+		<th><b>Implicit Parameter</b></th>
+		<td>Use <tt>const</tt> modifer<br/>
+			<tt>void Employee::print()const</tt></td>
+		<td> 
+			No modifer<br/>
+			<tt>void Employee::raise_salary(double p)</tt>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='qualtip'> Quality Tip 
+  <script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+  	//]]>
+	</script>
+</h1>
+<h3> File Layout </h3>
+
+<p> Keep source files neat and organized: </p>
+
+<ul>
+	<li>Included header files</li>
+	<li>Constants</li>
+	<li>Classes</li>
+	<li>Global variables (if any)</li>
+	<li>Functions</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+  <script type='text/javascript'>
+		//<![CDATA[
+		section( "9" )
+  	//]]>
+	</script>
+	Separate Compilation </h1>
+<ul>
+	<li> For large programs, or multiple programmers,
+		split your code into separate source files
+		<ul>
+			<li> Only (re)compile the small bit that was changed </li>
+			<li> Multiple programmers working simultaneously, in separate files
+			</li>
+		</ul>
+	</li>
+	<li> Header file (e.g. <tt>product.h</tt>) contains: 
+		<ul>
+			<li> definitions of classes </li>
+			<li> declarations of constants </li>
+			<li> declarations of nonmember functions </li>
+			<li> declarations of global variables </li>
+		</ul>
+	</li>
+	<li> The source file (e.g. <tt>product.cpp</tt>) contains 
+		<ul>
+			<li> definitions of member functions </li>
+			<li> definitions of nonmember functions </li>
+			<li> definitions of global variables </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/product.h</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+	wrapCode( "prodtest/product.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/product.h</tt> </h1>
+<ul>
+	<li> Special code is needed in header files, 
+		to prevent multiple inclusion
+		<code>
+#ifndef PRODUCT_H
+#define PRODUCT_H
+...
+#endif</code>
+	</li>
+	<li> Otherwise, the compiler will complain about 2 classes with the same
+		name </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/product.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+	wrapCode( "prodtest/product.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/product.cpp</tt> </h1>
+<ul>
+	<li> The source (implementation) file contains definitions of member
+		functions (including constructors), and global variables </li>
+	<li> The source file includes its own header file
+		<ul>
+			<li> The compiler needs to see the definition of <tt>Product</tt> to
+				compile its member functions </li>
+		</ul>
+		<code>
+#include "Product.h"</code>
+	</li>
+	<li> Comments are in the header (interface) file </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/prodtest.cpp</tt> </h1>
+<ul>
+	<li> <tt>product.cpp</tt> does <em>not</em> contain a
+		<tt>main</tt> function </li>
+	<li> Other programs might use this class </li>
+	<li> Each will supply its own <tt>main()</tt> </li>
+	<li> A simple test program (<i>driver</i>) follows: </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+	wrapCode( "prodtest/prodtest.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Separate Compilation &mdash; <tt>prodtest/prodtest.cpp</tt> </h1>
+<h3> Compiling </h3>
+<p> <em>(Note:  details depend on your compiler.  We demonstrate Gnu's
+compiler)</em> </p>
+<ul>
+	<li> Both source files are compiled:
+		<code>
+g++ -c product.cpp
+g++ -c prodtest.cpp</code>
+		yielding <i>object files</i>
+	</li>
+	<li> Object files are then linked:
+		<code>
+g++ -o prodtest product.o prodtest.o</code>
+	producing an executable called <span class='file'>prodtest</span>
+	</li>
+	<li> <strong>Never explicitly compile header files!</strong> </li>
+</ul>
+</div>
+	
+<div class='slide'>
+<h1> Separate Compilation </h1>
+<ul>
+	<li> Shared constants are placed in the header file </li>
+	<li> To share nonmember functions:
+		<ul>
+			<li> Place prototype (declaration) in the header file </li>
+			<li> Place the function definition into a source file </li>
+		</ul>
+	</li>
+	<li> To share global variables:
+		<ul>
+			<li> Declare them in a header file as <tt>extern</tt>
+				<code>
+extern GraphicWindow cwin;</code>
+			</li>
+			<li> Define them in a source file:
+				<code>
+GraphicWindow cwin;</code>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+</body>
+</html>

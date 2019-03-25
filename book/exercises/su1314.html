@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>CS 170 - Chapter 14 Exercises &amp; Assignments</title>
+    <style type='text/css'>
+        li { line-height:1.45em; }
+        li div[class=code] {
+            font-size:1.2em;
+            margin:1em;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 170&mdash;Chapter 14</p>
+        <p id='lessonTitle'>Exercises &amp; Assignments</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n this chapter you should get some
+            practice writing classes with inheritance and composition</b>,
+            along with a chance to work with some <code>ArrayList</code>
+            problems.
+            Here's the list of things you should do:</p>
+    <ol>
+         <li class='d'>
+            <a href='../14-3-InheritanceAtWork-B/index.html'
+                target='_blank' class='hw-icon'>
+                <img src='images/html.png' alt='An HTML file icon.'>
+            </a>
+            <b class='grn'>ACM Inheritance&mdash;GBall</b>:
+                Read <i>Section 14.3&mdash;Inheritance at Work</i> and
+                complete the <b><code>GBall</code></b> class. This will
+                give you some practical experience <b>extending</b> the
+                ACM graphical classes.
+            </p>
+            <p>As you develop your class, you'll use the
+                <b>PolarBounce2</b> program to exercise it. To submit your
+                finished <b><code>GBall</code></b> class, though, use the
+                <b>Check</b> program, and the unit test that I've supplied.
+            </p>
+        </li>
+         <li class='d'>
+            <a href='../14-3-InheritanceAtWork-B/index.html'
+                target='_blank' class='hw-icon'>
+                <img src='images/html.png' alt='An HTML file icon.'>
+            </a>
+            <b class='grn'>Widgets and Iheritance&mdash;Dot</b>:
+                You don't need the ACM classes to do inheritance; you can
+                create new versions of the <b>standard Java widget classes</b>
+                just as easily. To see how, read the bottom section of
+                <i>Section 14.3&mdash;Inheritance at Work</i> and
+                complete the <b><code>Dot</code></b> class, which extends the
+                standard <b><code>Component</code></b> class from Java's
+                <code>java.awt</code> package.
+            </p>
+            <p> Create the <b>TestDots</b> test harness as you read along
+                with the lecture. To submit your assignment, though,
+                use the <b>Check</b> program.
+            </p>
+        </li>
+        <br clear='both'>
+         <li class='d'>
+            <a href='../14-4-CompositeObjects-B/index.html'
+                target='_blank' class='hw-icon'>
+                <img src='images/html.png' alt='An HTML file icon.'>
+            </a>
+            <b class='grn'>Applying Composition&mdash;GBall2</b>:
+                While inheritance allows you to <b>extend</b> existing classes,
+                providing new capabilities, or overriding existing features,
+                <b>composition</b> allows you to combine the capabilities of
+                simple unrelated classes in a new, more complex class.
+            </p>
+            <p> To see how, read <i>Section 14.4&mdash;Composite Objects</i> and
+                complete the <b><code>GBall2</code></b> class, which extends the
+                <code>GCompound</code> class, but <b>contains</b> a <code>GOval</code>
+                object. You should compare this version with the original
+                <code>GBall</code>, which <b>extended</b> <code>GOval</code>.
+            </p>
+            <p> For this assigment, you'll use the
+                <b>PolarBounce4</b> program to exercise it. To submit your
+                finished <b><code>GBall2</code></b> class, though, use the
+                <b>Check</b> program, and the unit test that I've supplied.
+            </p>
+        </li>
+        <br clear='both'>
+        <li class='d'>
+            <b class='grn'>Inheritance&mdash;the Triangle Class</b>:
+            The Chapter14 code folder contains a class named <b>GeometricObject</b>.
+            <b>Without modifying this class in any way</b>, <b>extend</b> it
+            to create a new class named <code>Triangle</code>. The
+            <code>Triangle</code> class contains:
+            <ul>
+                <li>a single field named <code>sides</code> that consists of
+                    an <b>array</b> of three <code>double</code> values,
+                    representing side1, side2, and side3. You must use an
+                    array; do not use individual instance variables. Each element
+                    should have default values of <code>1.0</code> to represent the
+                    three sides of the triangle.
+                </li>
+                <li>a <b>no-arg constructor</b> that creates a default <code>Triangle</code>:
+                    (<code>new Triangle()</code>).
+                </li>
+                <li>a constructor that creates a <code>Triangle</code> with the three
+                    sides specified: (<code>new Triangle(1.0, 2.0, 1.5)</code>).
+                </li>
+                <li>a third constructor that takes the three sides, the <code>Color</code>
+                    and whether or not the object should be filled:
+                    (<code>new Triangle(1.0, 2.0, 1.5, Color.RED, true)</code>).
+                </li>
+                <li>A method named <code>getArea()</code> that returns the area of
+                    the <code>Triangle</code>. (Look up the formula online.)
+                </li>
+                <li>A method named <code>getPerimeter()</code>.</li>
+                <li>A method named <code>toString()</code> that returns a <code>String</code>
+                    description of the Triangle. Here's what the description should
+                    look like for the default <code>Triangle</code>:<br>
+                    <img src='images/hw14_2.png' class='inline' alt='The toString() method.'>
+                    Note that your <code>Triangle</code> class will <b>only</b> supply the
+                    portion that begins with the word <code>Triangle</code>. Use the
+                    <b>inherited</b> <code>toString()</code> method to generate the
+                    first portion of the returned value.
+                </li>
+            </ul>
+            <p> To submit your
+                finished <b><code>Triangle</code></b> class, use the
+                <b>Check</b> program, and the unit test that I've supplied.
+            </p>
+        </li>
+        <li class='d'>
+           <a href='../../HWandLABS/H50-ArrayListProblems/index.html'
+                target='_blank' class='hw-icon'>
+                <img src='images/html.png' alt='An HTML file icon.'>
+            </a>
+            <b class='grn'>Working with ArrayList</b>:
+            Try your hand at two more difficult <code>ArrayList</code>
+            processing functions, the <b><code>copyEvens()</code></b> and
+            the <b><code>copyEndy()</code></b> problems.
+        </li>
+        <br clear='both'>
+    </ol>
+</div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

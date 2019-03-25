@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>bestval.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">    1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">    2 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">    3 </span>
+<span class="line">    4 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">    5 </span>
+<span class="line">    6 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line">    7 </span><span class="sym">{</span>
+<span class="line">    8 </span>   string best_name <span class="sym">=</span> <span class="str">&quot;&quot;</span><span class="sym">;</span>
+<span class="line">    9 </span>   <span class="kwb">double</span> best_price <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line">   10 </span>   <span class="kwb">int</span> best_score <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">   11 </span>
+<span class="line">   12 </span>   <span class="kwb">bool</span> more <span class="sym">=</span> <span class="kwa">true</span><span class="sym">;</span>
+<span class="line">   13 </span>   <span class="kwa">while</span> <span class="sym">(</span>more<span class="sym">)</span>
+<span class="line">   14 </span>   <span class="sym">{</span>
+<span class="line">   15 </span>      string next_name<span class="sym">;</span>
+<span class="line">   16 </span>      <span class="kwb">double</span> next_price<span class="sym">;</span>
+<span class="line">   17 </span>      <span class="kwb">int</span> next_score<span class="sym">;</span>
+<span class="line">   18 </span>
+<span class="line">   19 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the model name: &quot;</span><span class="sym">;</span>
+<span class="line">   20 </span>      <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> next_name<span class="sym">);</span>
+<span class="line">   21 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the price: &quot;</span><span class="sym">;</span>
+<span class="line">   22 </span>      cin <span class="sym">&gt;&gt;</span> next_price<span class="sym">;</span>
+<span class="line">   23 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the score: &quot;</span><span class="sym">;</span>
+<span class="line">   24 </span>      cin <span class="sym">&gt;&gt;</span> next_score<span class="sym">;</span>
+<span class="line">   25 </span>      string remainder<span class="sym">;</span> <span class="slc">// Read remainder of line</span>
+<span class="line">   26 </span>      <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> remainder<span class="sym">);</span>
+<span class="line">   27 </span>
+<span class="line">   28 </span>      <span class="kwa">if</span> <span class="sym">(</span>next_score <span class="sym">/</span> next_price <span class="sym">&gt;</span> best_score <span class="sym">/</span> best_price<span class="sym">)</span>
+<span class="line">   29 </span>      <span class="sym">{</span>
+<span class="line">   30 </span>         best_name <span class="sym">=</span> next_name<span class="sym">;</span>
+<span class="line">   31 </span>         best_score <span class="sym">=</span> next_score<span class="sym">;</span>
+<span class="line">   32 </span>         best_price <span class="sym">=</span> next_price<span class="sym">;</span>
+<span class="line">   33 </span>      <span class="sym">}</span>
+<span class="line">   34 </span>
+<span class="line">   35 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;More data? (y/n) &quot;</span><span class="sym">;</span>
+<span class="line">   36 </span>      string answer<span class="sym">;</span>
+<span class="line">   37 </span>      <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> answer<span class="sym">);</span>
+<span class="line">   38 </span>      <span class="kwa">if</span> <span class="sym">(</span>answer <span class="sym">!=</span> <span class="str">&quot;y&quot;</span><span class="sym">)</span> more <span class="sym">=</span> <span class="kwa">false</span><span class="sym">;</span>
+<span class="line">   39 </span>   <span class="sym">}</span>
+<span class="line">   40 </span>
+<span class="line">   41 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;The best value is &quot;</span> <span class="sym">&lt;&lt;</span> best_name
+<span class="line">   42 </span>      <span class="sym">&lt;&lt;</span> <span class="str">&quot; Price: &quot;</span> <span class="sym">&lt;&lt;</span> best_price
+<span class="line">   43 </span>      <span class="sym">&lt;&lt;</span> <span class="str">&quot; Score: &quot;</span> <span class="sym">&lt;&lt;</span> best_score <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">   44 </span>
+<span class="line">   45 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">   46 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

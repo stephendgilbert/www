@@ -1,0 +1,546 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>11.6&mdash;More Widgets</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.6</p>
+        <p id='lessonTitle'>More Widgets</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src='images/swing-widgets-sm.png' class='right' style='margin-top:-4em;' alt='Some of the Swing widgets.'>
+        <b><span class="cap">T</span>ext is only one type of input that
+            programs need to process</b>. Many programs work with numeric
+            input, or respond to differnt kinds of user actions.
+            The wealth of different "widgets" available in
+            Swing's JFC build to handle these different kinds of input
+            is truely staggering.
+        </p>
+        <p> Some of the Swing widgets&mdash;the text-editor kits, for
+            instance&mdash;are <b>massively</b> complex;
+            you could spend an almost infinte amount of time exploring all of
+            the ins and outs. Since this is likely more time than you have&mdash;<i>and
+            certainly more time than I have</i>&mdash;we're just going to take a
+            quick look at several new classes that you might find handy.
+        </p>
+        <p> We'll start this secion by learning about a few Swing
+            components allow you to <b>make selections</b> among different
+            alternative. These include:
+        </p>
+        <ul>
+            <li>the <b>checkbox</b> for processing true/false input</li>
+            <li>the <b>radio button</b> and <b>drop-down list</b>
+                for processing multiple-choice input
+            </li>
+        </ul>
+        <p> We'll be looking at the Swing versions of these components which
+            replaced the older and less capable AWT versions. We'll also take
+            a look at two components that <b>don't</b> replace existing AWT
+            widgets:
+        </p>
+        <ul>
+            <li><b>JSlider</b>, for simulating analog input</li>
+            <li><code>JProgressBar</code>, for giving users up-to-the-second feedback</li>
+        </ul>
+        <p> Let's start our exploration by examining the <code>JCheckbox</code>
+            class, which is used for both check boxes (as you'd expect) and
+            for radio buttons (which you might find surprising).
+        </p>
+        <div class='info'>
+        <p> One of the best places to learn about all of the <b>other</b> components is the <b>free
+            Java Tutorial</b> at <b><a href='http://download.oracle.com/javase/tutorial/' target='_blank'>
+            http://download.oracle.com/javase/tutorial/</a></b>. <br>
+            <img src='images/tutorial.png' class='inlineCenter' alt='The Java tutorials.'>
+            Look for the <b><a href='http://download.oracle.com/javase/tutorial/ui/features/compWin.html'
+            target='_blank'>Visual Guide to Swing Components</a></b> which contains an index, along
+            with short examples for each component. The example programs can all be run from
+            within your Web browser, using the Java Web-Start feature. The pictures above are all
+            taken from the Visual Guide.
+        </p>
+        </div>
+    <h3>Checkboxes, Radio Buttons and Drop-down Lists</h3>
+        <p><img src="images/f08b.gif" alt="Using Checkboxes to display non-exclusive options" class='right'>
+            <code>JCheckBox</code> objects are
+            user-interface (UI) components that
+            represent <b>boolean or true/false</b> values. Each
+            <code>JCheckBox</code> can be either <b>checked</b> or <b>unchecked</b>,
+            with each variation representing a true/false or on/off state.
+        </p>
+        <p>
+            Since each individual <code>JCheckBox</code> object can be on or off,
+            a group of checkboxes is often used to represent a set of
+            <b>non-exclusive</b> options. If your program has three checkboxes,
+            then <b>any, all, or none</b> of them may be selected.
+        </p>
+        <p>The actual shape of a checkbox depends on the platform you're
+            using. Typically it's a square box with an "x" inside if the
+            option is selected, and a hollow box if the option is unselected.
+        </p>
+        <p class="note">Some platforms, such as Windows, support a middle, "maybe" state for
+            checkboxes, but Java doesn't support this option.
+        </p>
+    <h3>Creating JCheckBoxes</h3>
+        <p> To create a <code>JCheckBox</code> object, you can use one of <b>six</b>
+            different constructors. The two simplest are these:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JCheckBox(String label)<br>
+            JCheckBox(String label, boolean checked)
+        </p>
+        <p> The first constructor creates an <b>unchecked</b>
+            checkbox, one whose <b>state</b> is
+            <code>false</code>.
+        </p>
+        <p> The second constructor creates a checkbox object
+            and uses the second argument to determine the object's
+            <b>checked state</b>, like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            private JCheckBox one = new JCheckBox("One (unchecked)");<br>
+            private JCheckBox two = new JCheckBox("Two (checked)", true);
+        </p>
+        <p> You can also pass <code>false</code> for the second argument, but
+            the effect is the same as using the first constructor, so
+            why go through the extra typing?
+        </p>
+        <p> Here's what these two checkboxes look like in an ACM graphics program
+            using the default (Java) look-and-feel:<br>
+            <img src='images/mw01.png' class='inlineCenter' alt='Two JCheckBox objects with the Java LAF.'>
+            Here are the same two checkboxes using the Windows look-and-feel, running
+            in Windows 7:<br>
+            <img src='images/mw02.png' class='inlineCenter' alt='Two JCheckBox objects with the Windows LAF.'>
+        </p>
+    <h3>Checkbox Methods</h3>
+        <p>While you <b>can</b> write code to respond immediately when someone clicks on
+            a checkbox in your program, most of the time, you really <b>don't
+            care</b> if someone checks or unchecks your checkbox.
+            Instead, you just want to find out if it is currently checked
+            when it comes time to use it.
+        </p>
+        <p> The <code>JCheckBox</code> class has two state-related methods
+            that allow this. If you want to find out if a <code>JCheckBox</code>
+            is currently checked, then use the <code>isSelected()</code>
+            method like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            boolean isOn = one.isSelected();
+        </p>
+        <p> If <code>isSelected()</code> returns <b>true</b>, then the
+            <code>JCheckBox</code> is checked; if it returns <b>false</b>,
+            then the checkbox is unchecked.
+        </p>
+        <p>You can also <b>set the selected state</b> programmatically using the
+            <code>setSelected()</code> method like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            one.setSelected(true); <span class="cmt">// Check it</span>
+        </p>
+        <p> You might do this if the checkbox needed to be
+            checked based upon some other condition in your program. You
+            wouldn't normally encounter this, however, when working
+            with <code>JCheckBox</code> objects.
+        </p>
+    <h3>Radio Buttons</h3>
+        <p><img src="images/f14a.gif" alt="Radio buttons" class="right">
+        <b>Radio buttons are close kin to
+            checkboxes</b>; both of them have the same immediate ancestors,
+            <code>AbstractButton</code> and <code>JToggleButton</code> from
+            which they <b>inherit</b> much of their behavior.
+            The main difference (logically) is that a checkbox
+            represents a non-exclusive choice: if you have ten checkboxes,
+            all of them may be checked, none of them may be checked,
+            or anything in between.
+        </p>
+        <p> Radio buttons represent the <b>exclusive</b> side of the family.
+            If you have four radio buttons in a group, one, <b>and only one</b>,
+            can be checked at any given time. (It is possible for <i>none</i>
+            of the radio buttons to be checked, but this would be a
+            design flaw in your program.)
+        </p>
+        <p> The actual widgets displayed when you create a set of radio
+            buttons depends on the platform on which you run your program.
+            If run under Motif (on Unix), you'll see the little diamonds
+            favored there. More commonly, on Windows and the Mac, you'll
+            see a group of small circles, with one of the circles filled.
+        </p>
+    <h4>JRadioButton and ButtonGroup</h4>
+        <p> The Swing <code>JRadioButton</code> works along with
+            the <code>ButtonGroup</code> class to create radio buttons.
+            The <code>ButtonGroup</code> object acts as a <b>logical</b>
+            (not physical) container, tying a group of
+            <code>RadioButton</code> objects together. The <code>ButtonGroup</code>
+            lets Java know that it is supposed to enforce the "only one selected"
+            rule when the radio buttons are selected.
+        </p>
+        <p>Here's how you start:</p>
+        <p class="code" style='font-size:1.25em;'>
+            private ButtonGroup group = new ButtonGroup();
+        </p>
+        <p> While there are eight different <code>JRadioButton</code> constructors,
+            allowing you to specify either icons, text, or both along with the
+            button itself, for simple buttons you'll use one of these two
+            <code>RadioButton</code> constructors.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            RadioButton red = new RadioButton("Red");<br>
+            RadioButton green = new RadioButton("Green", true);
+        </p>
+        <p> <b class='ry'>Make sure</b> that only one only one of your
+            radio buttons in a single group uses the second version of
+            the constructor. Passing <b>true</b> means that button will be
+            initially checked. Sometimes, though you don't want <b>any</b>
+            buttons to be checked (as with a quiz).
+        </p>
+        <div class='info'>
+            <p> While your <code>ButtonGroup</code> should be an instance variable,
+                you can create your radio buttons as <b>local variables</b>. When
+                you want to find out which button is selected, you'll query the
+                <code>ButtonGroup</code> object.
+            </p>
+        </div>
+    <h4>Making Connections</h4>
+        <p> Before you can use your buttons, you'll normally need to perform
+            at least these three steps:
+        </p>
+        <ul>
+            <li>Provide an <b>action command</b> for each button&mdash;a short string used to
+                identify the button when it is clicked.
+            </li>
+            <li>Add each button to the logical <code>ButtonGroup</code> that you
+                created.
+            </li>
+            <li>Physically add each button to the container that will
+                house it.
+            </li>
+        </ul>
+        <p> Here's some code that performs these three steps for the two
+            <code>JRadioButton</code> objects from the last section:<br>
+            <img src='images/mw03.png' class='inlineCenter' alt='Adding three radio buttons to an app.'>
+            In an ACM graphics program, you handle this like
+            any other widget, adding it to one of the borders. You may
+            also use the <code>JPanel</code> class along with a border to
+            provide some visual separation for your radio button, as I've
+            done here.
+        </p>
+        <p> In addition, you <b>may</b> want to add a keyboard mnemonic to each
+            button, so it can be selected directly, as well as activating event-listening
+            for the button, if you want to take immediate action when a radio button
+            is clicked. Normally, though, you <b>don't</b> want to do that.
+        </p>
+    <h3>Which Radio Button is Selected?</h3>
+        <p> Normally, the user should be able to select and deselect radio buttons
+            and checkboxes, and then, click some <b>other</b> button to apply
+            the changes, go to the next question, or submit the form. You normally
+            <b>don't</b> want every click firing an event.
+        </p>
+        <p> To find out which radio button is selected, you can visit each
+            button in the <code>ButtonGroup</code>, calling it's <code>getElements()</code>
+            method to return an <code>Enumeration</code> of <code>AbstractButton</code>
+            objects, <b class='ry'>or</b> take the easier route and call the
+            group's <code>getSelection()</code> method, which returns a <code>ButtonModel</code>
+            object.<br>
+            <img src='images/mw04.png' class='inlineCenter' alt='Selecting the buttons.'>
+            Then, call the <code>ButtonModel</code> method, <code>getActionCommand()</code>
+            and make your selection based on that. It actually sounds more difficult than
+            it is. This a fragment of code, located in a <code>JButton</code> event
+            handler, that queries the group created earlier and sets the background
+            color based on which radio button was selected.
+        </p>
+        <p> Here's the program running showing the radio buttons in their titled
+            <code>JPanel</code> using the Windows look-and-feel:<br>
+            <img src='images/mw05.png' class='inlineCenter' alt='JRadioButtons in an application: Windows LF.'>
+            Here's the same program using the default Java Swing widgets instead:<br>
+            <img src='images/mw06.png' class='inlineCenter' alt='JRadioButtons in an application: Swing LF.'>
+        </p>
+    <h3>Drop-down Lists</h3>
+        <p>If you have a whole lot of choices
+            to make, using <code>JRadioButton</code> isn't always practical.
+            Selecting the user's state, for instance, would take at least fifty of
+            them.
+        </p>
+        <p> When you have a large number of selections, the <code>JComboBox</code>
+            offers a better alternative. Although it can be used in more complex
+            configurations, the simplest version displays itself ast a
+            represents a drop-down (or pop-up) list containing <code>Strings</code>,
+            from which the user can choose exactly one.
+        </p>
+        <p> You have two basic ways to construct a simple <code>JComboBox</code>:</p>
+        <ul>
+            <li>Use the default constructor and then use the <code>add()</code>
+                method to <b>populate</b> the list one by one.
+            </li>
+            <li>Use the <b>array</b> contructor that supplies the the values
+                (or <i>model</i>) when the combo box is created.
+            </li>
+        </ul>
+        <p> If you are going to strore the values in a text file and read them
+            from disk, it might be practical to use the first method. Most of
+            the time, though, it's easier to use the second.
+        </p>
+        <p> Here's a fragment from an application,
+            <b><a href='AutoWit.java' target="_blank">AutoWit.java</a></b>, that
+            uses this technique to intialize several different drop-down lists:<br>
+            <img src='images/mw09.png' class='inlineCenter' alt='Initializing a JComboBox.'>
+        </p>
+    <h3>Working with JComboBox</h3>
+        <p> When you first populate a <code>JComboBox</code>, the first item
+            added will normally be the <b>selected item</b>. The selected
+            item is the item that is displayed in the <code>JComboBox</code>
+            when the drop-down portion of the list is "closed."
+        </p>
+        <p> You can change the selected item by <b>explicitly</b> selecting
+            an item using the <code>setSelectedIndex()</code> method.
+        </p>
+        <p> When you use the <code>setSelectedIndex()</code> method youspecify
+            the item's index (starting from zero) like this example,
+            where I've selected the third item from the <code>verbs</code>
+            list:<br>
+            <img src='images/mw10.png' class='inlineCenter' alt='Selecting an initial index.'>
+            There is also a <code>setSelectedItem()</code>
+            method that accepts a <code>String</code> like this:<br>
+            <img src='images/mw11.png' class='inlineCenter' alt='Selecting an initial item.'>
+            That way, if you add additional items to the list, you don't need to
+            remember to adjust the index value.
+            If several items have the same <code>String</code> value, only
+            the first is selected. If you try to select a <code>String</code>
+            that is not in the <code>JComboBox</code>, then the selected
+            item doesn't change.
+        </p>
+        <p> Here's what the three combo-boxes look like with the Windows
+            look-and-feel. Notice that the items I've selected are shown
+            in the drop-down:<br>
+            <img src='images/mw12.png' class='inlineCenter' alt='Displaying the list.'>
+            And here are the lists with the Java look-and-feel:<br>
+            <img src='images/mw13.png' class='inlineCenter' alt='Displaying the list.'>
+        </p>
+    <h3>Retrieving Values</h3>
+        <p>The <code>JComboBox</code> class has two methods that allow you
+            to <b>retrieve</b> the selected item from the list.
+        </p>
+        <ul>
+            <li>The <code>getSelectedIndex()</code> method returns the
+                <b>index</b> of the selected item; this is a number like 0, 1,
+                or 2.
+            </li>
+            <li>The <code>getSelectedItem()</code> method returns the actual
+                text description that appears in the combo box itself.
+            </li>
+        </ul>
+        <p> Here's the event-handler from <b>AutoWit</b> that displays the
+            message selected in the list boxes when the user presses
+            the Contruct Phrase button:<br>
+            <img src='images/mw14.png' class='inlineCenter' alt='Displaying the list.'>
+        </p>
+        <div class='alert'>
+        <p> The <code>JComboBox</code> class "fires" <code>ActionEvents</code> just
+            like the <code>JButton</code> class does. In an ACM program, where you
+            use <code>addActionListeners</code> to activate your <code>JButtons</code>,
+            all of the <code>JComboBoxes</code> will be activated as well. That's
+            why the code above checks to see if the <code>phrase</code> <code>JButton</code>
+            is firing the event before constructing and printing the final phrase
+            on the screen.
+        </p>
+        </div>
+        <p> Here's what the program looks like when it runs:<br>
+            <img src='images/mw15.png' class='inlineCenter' alt='Displaying a phrase.'>
+        </p>
+    <h2>New Swing Components</h2>
+        <p> There are several Swing components that <b>don't</b> have any matching AWT
+            components. Two simple ones you may want to use include:
+        </p>
+        <ul>
+            <li><b>JSlider</b>, for simulating analog input</li>
+            <li><code>JProgressBar</code>, for giving users up-to-the-second feedback</li>
+        </ul>
+        <p> These are fairly easy to use in ACM graphical applications. I'll
+            show you some simple examples. Once
+            you see how to get the basic functionality from the component,
+            you'll be better prepared to explore the nooks and crannys on your
+            own.
+        </p>
+        <p>Ready? Let's start with the <b>JSlider</b>.</p>
+        <h3>JSlider</h3>
+        <p><img src='images/JSliderApp.gif' class='right' alt='Running the JSliderApp program.'>
+            The <b>JSlider</b> control, shown here, is useful when you want to
+            <b>simulate analog input</b>. Of course, since you're computer is a
+            digital device, you can't <b>really</b> make use of analog input
+            without sampling (as is done for digital images and sounds).
+        </p>
+        <p> To <b>construct</b> a <b>JSlider</b> object, you specify the
+            orientation (<code>HORIZONTAL</code> or <code>VERTICAL</code>), along
+            with <b>minimum</b>, <b>maximum</b>, and <b>initial</b> values.
+            There are several constructors that allow you to
+            specify fewer arguments, providing default values for those you skip.
+        </p>
+    <h4>Constructing JSlider Objects</h4>
+        <p> Here's a line that constructs a <code>JSlider</code> named
+            <code>speed</code>, supplying <b>only</b> the minimum and
+            maximum values. The orientation will be set to horizontal
+            and the initial value will be set to the middle of the
+            slider's range:<br>
+            <img src='images/mw16.png' class='inlineCenter' alt='Construcing a 2-arg JSlider.'>
+            Here's a second <code>JSlider</code> named <code>direction</code> that
+            uses <b>three</b> arguments to set the initial value to a random
+            direction:<br>
+            <img src='images/mw17.png' class='inlineCenter' alt='Construcing a 3-arg JSlider.'>
+        </p>
+    <h4>Customizing JSliders</h4>
+        <p>A <code>JSlider</code> will automatically paint both
+            major and minor "tick-marks" and numeric labels at each major tick
+            mark (as you can see in the image above). By default, though,
+            the major and minor tick spacing is zero, and painting is off.
+        </p>
+        <p> To turn it on, use the <code>setMajorTickSpacing()</code>,
+            <code>setMinorTickSpacing()</code>, <code>setPaintTicks()</code>,
+            and <code>setPaintLabels()</code> methods together as shown in
+            this example:<br>
+            <img src='images/mw18.png' class='inlineCenter' alt='Customizing JSliders.'>
+            Here's what this slider looks like when displayed using the Java
+            look-and-feel:<br>
+            <img src='images/mw19.png' class='inlineCenter' alt='JSlider tick marks.'>
+        </p>
+    <h4>Placing JSliders</h4>
+        <p> Placing a <code>JSlider</code> in an ACM program is a little
+            more work than some of the other components. The default <b>layout
+            manager</b> used for the borders tends to resize them a little strangely,
+            and, normally, you'll want to supply a label that says what the
+            slider controls.
+        </p>
+        <p> Here are the steps that I've used for the sample program I've created
+            here:
+        </p>
+        <ul>
+            <li>First, since I wanted to add a label to each <code>JSlider</code>,
+                I needed to display two rows of components. You can do that by
+                installing a new <code>acm.TableLayout</code> layout manager into
+                the region you want to change. My code, shown here, installs a
+                2 x 2 layout manger into the south panel:<br>
+                <img src='images/mw20.png' class='inlineCenter' alt='Installing the layout manager.'>
+                Note that to do this, I had to add <code>acm.gui.*</code> to my
+                list of imports.
+            </li>
+            <li>Next, to fix the sizing problem, I had to set a <b>minimum size</b>
+                for each of my sliders. Here's the code that does that:<br>
+                <img src='images/mw21.png' class='inlineCenter' alt='Settin the minimum size.'>
+            </li>
+            <li>Finally, add the sliders and labels to the south panel, starting
+                in the upper-left corner. That's why the two labels are added first
+                and the two <code>JSliders</code> added last. Here's the code:<br>
+                <img src='images/mw22.png' class='inlineCenter' alt='Adding the components.'>
+            </li>
+        </ul>
+    <h4>JSlider Methods</h4>
+        <p>You can set and retrieve the current value of
+            the <code>JSlider</code> through the mutator and accessor methods
+            <code>setValue()</code> and <code>getValue()</code>.
+        </p>
+        <p> Here's some animation code that grabs the speed and direction
+            from the respective turtles to control the <code>GTurtle</code>
+            named <code>tim</code>:<br>
+            <img src='images/mw23.png' class='inlineCenter' alt='Calling accessor methods.'>
+            You can try it out on your machine by downloading
+            <b><a href='JSliderDemo.java' target='_blank'>JSliderDemo.java</a></b> and
+            running it on your own machine:<br>
+            <img src='images/mw24.png' class='inlineCenter' alt='Running JSliderDemo.'>
+        </p>
+
+    <h3>JProgressBar</h3>
+        <p> <img src="images/JProgressBarApp.gif" alt="Running the JProgressBar application"
+            class='right'>
+            The <code>JProgressBar</code> class, shown here with
+            the Java Metal look-and-feel, allows you to keep your users
+            informed about the progress of any lengthy operation.
+        </p>
+        <p>Here is what you need to know to use a <code>JProgressBar</code>.
+           You can download <b>
+           <a href='JProgressBarDemo.java' target='_blank'>
+           JProgressBarDemo</a></b> by clicking here.
+        </p>
+    <h4>Creating a Progress Bar</h4>
+        <p>To <b>construct</b> a <code>JProgressBar</code>, you supply
+                the orientation (which defaults to <code>HORIZONTAL</code>),
+                the minium and the maximum. Note that unlike a <code>JSlider</code>
+                you <b>don't</b> specify an initial value, since it is assumed
+                to be zero.
+        </p>
+        <p> Because the <code>JProgressBar</code> is usually
+            reinitialized at the beginning of any task, the default&mdash;no
+            argument&mdash;constructor is often used instead of
+            the normal <i>working</i> constructor.<br>
+            <img src='images/mw27.png' class='inline' alt='Constructing a JProgressBar.'>
+            You can change the <b>appearance</b> of the
+            <code>JProgressBar</code> by using the methods
+            <code>setBorderPainted()</code>, <code>setStringPainted()</code>,
+            and <code>setString()</code>, like this:<br>
+            <img src='images/mw28.png' class='inline' alt='Customizing JProgressBar.'>
+            The <code>progress</code> object is told to paint
+            both its border, with <code>setBorderPainted()</code>, and its
+            interior, with <code>setStringPainted()</code>.
+        </p>
+        <p> The progress bar is added to the borders just like any other
+            widget used in an ACM program.
+        </p>
+    <h4>Using a Progress Bar</h4>
+        <p> Inside the <code>run()</code> method of the demo program,
+            after waiting for the user to start the animation with a
+            click, the program starts running and displaying its
+            progress in the <code>JProgressBar</code>:<br>
+            <img src='images/mw29.png' class='inlineCenter' alt='Using the JProgressBar.'>
+        </p>
+        <ol>
+            <li class='d'>A simple variable is used to simulate the length of the
+                job. Since our animation happens at 30 frames per second,
+                I've arbitrarily selected a one-minute job length.
+                In real life, of course, you'd use the length of a file or
+                some other "real" job metric. Then the progress bar's
+                "maximum" value is set to the job length
+                (using <code>setMaximum()</code>) and
+                <code>setString(null)</code> is called to tell the
+                progress bar to paint the percent indicator as its
+                value changes.
+            </li>
+            <li class='d'>You can set and retrieve the current value of
+                the <code>JProgressBar</code> by using <code>setValue()</code>
+                and <code>getValue()</code>. Normally, however, you'll just use
+                <code>setValue()</code> to initialize the bar to
+                a <code>0</code> value before the job starts
+                (here represented by the variable <code>curVal</code>).
+            </li>
+            <li class='d'> As the job progresses, increment the value and then
+                call <code>setValue()</code> again.
+            </li>
+            <li class='d'>The job is finished when <code>getValue()</code>
+                reaches <code>jobLength</code>.
+            </li>
+            <li class='d'>After the loop, set the value to the maximum once
+                again and change the string displayed to indicate the
+                job is finished.
+            </li>
+        </ol>
+        <p>In real life, you probably wouldn't use a loop
+            like this, but would update the bar after each packet was received,
+            or each block was transferred, or each line-item was tallied, all
+            depending on the application.
+        </p>
+        <p> Here's what the results look like with the default (Java)
+            Look and Feel:<br>
+            <img src='images/mw25.png' class='inlineCenter' alt='Using the JProgressBar.'>
+            And here's the results with the Windows L&amp;F using Windows 7:<br>
+            <img src='images/mw26.png' class='inlineCenter' alt='Using the JProgressBar.'>
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

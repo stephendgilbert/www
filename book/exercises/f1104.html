@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>CS 170 - Week 4 Exercises and Assignments</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 170&mdash;Week 4</p>
+        <p id='lessonTitle'>Exercises and Assignments</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>T</span>his week you'll continue working with
+            IPO (input, processing and output) assignments</b>. <i>However</i>,
+            this week the processing will be more complex (since you'll be using
+            functions from the <code>Math</code> class), and the input and
+            output will also be more complex, since you'll be <b>parsing</b>
+            <code>String</code>
+            input and <b>formatting</b> the output. You'll also do
+            a little bit with applet graphics.
+        </p>
+        <p>Here's the list of things you should do this week.</p>
+    <ol>
+        <li class='d'>
+            <b class='grn'>Javadocs &amp; Parsing&mdash;IntegersAndStrings</b>:
+            Write a standard console program named <b>IntegersAndStrings</b>.
+            Place it in the Chapter04 folder, since that's where the test
+            programs are located. Here are the program's requirements:
+            <ol>
+            <li>Ask the user to enter an integer and then read and
+                store the results in a variable. Use the <code>Scanner</code>
+                <code>nextInt()</code> method.
+            </li>
+            <li>Use the methods in the <code>Integer</code> class to
+                print the value of the variable in binary, octal and hexadecimal.
+                <b>You'll need to look them up the appropriate methods in the
+                Javadocs</b>.
+            </li>
+            <li>Print the maximum and minimum integer values by using the
+                constants defined in the <code>Integer</code> class.
+            </li>
+            <li>Now, ask the user to enter two integers.
+                Read and store the input in a pair of <code>String</code> variables,
+                using the <code>next()</code> method. Then, convert the
+                <code>String</code>s to <code>int</code>s, add them together
+                and print the results. Use concatenation, but do not <i>format</i>
+                the output numbers.
+            </li>
+            </ol>
+            <p> Here's what your program should look like as it runs. Make
+                sure your program has exactly the same lines of output.
+                (The middle three lines begin with a TAB escape sequence.):<br>
+                <img src='images/IntegersAndStrings.gif' class='inlineCenter' alt='Output of the IntegersAndStrings program.'>
+                Once you have created the program, compile it and
+                then <b>Check</b> your results. Keep trying until you get a perfect
+                score. If you have difficulty, you'll find help on
+                the <b>Solutions</b> page.
+            </p>
+        </li>
+
+        <li class='d'>
+            <b class='grn'>Parsing &amp; Formatting&mdash;SalarySurvey</b>:
+            Write a standard console program named <b>SalarySurvey</b>.
+            Place it in the Chapter04 folder, since that's where the test
+            programs are located. Here are the program's requirements:
+            <ol>
+            <li>Ask the user to enter their first name and
+                desired yearly salary, separated by a space.
+            </li>
+            <li>Use the <code>Scanner</code>'s <code>next()</code>
+                method to read the input into two <code>String</code> variables.
+            </li>
+            <li>Use the appropriate parsing method to convert the salary
+                into a <code>double</code> and store it in a <code>double</code>
+                variable.
+            </li>
+            <li>Use <code>printf()</code> to display the result like this:
+<pre class='screen' style='width:550px;'>
+Name: Steve        Desired salary: $ 1,275,315.75
+----+----|----+----|----+----|----+----|----+----|
+</pre>
+            </li>
+            <li>You can assume that the user will only enter valid input
+            for the salary value. The spacing should be the same
+            for amounts up to 9 million. Here's another example:
+<pre class='screen' style='width:550px;'>
+Name: BillyG       Desired salary: $         1.00
+----+----|----+----|----+----|----+----|----+----|
+</pre></li></ol>
+
+            <p>    Once you have created the program, compile it and
+                then <b>Check</b> your results. Keep trying until you get a perfect
+                score.  If you have difficulty, you'll find help on
+                the <b>Solutions</b> page.
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Formatted Output&mdash;ProduceBill</b>:
+            Create a new standard console application named <b>ProduceBill</b>.
+            Place it in the Chapter04 folder, since that's where the test
+            programs are located.
+            <ol>
+                <li>Prompt the user to enter weight and price
+                    (in that order).
+                    Use a <code>Scanner</code> to initialize the variables.
+                </li>
+                <li>Calculate the <code>totalPrice</code> using
+                    <code>weight</code> and <code>price</code> as shown below.
+                </li>
+                <li>Use <b>output formatting</b> to produce results like this:
+<pre class='screen' style='width:500px;'>
+    Unit Price:     $4.25 per pound
+    Weight:          2.56 pounds
+    TOTAL:         $10.89
+</pre>
+            </ol>
+            Here are the specific things to watch out for:
+            <ul>
+                <li>There are 4 spaces at the beginning of each line
+                    of output. These are not TAB characters.
+                </li>
+                <li>The labels are left-aligned in a field 11 wide.</li>
+                <li>The values are right-aligned in a field 10 wide.</li>
+            </ul>
+            <div class='alert'>
+            <p>
+            The really tricky part here, though is the <i>floating</i>
+            dollar sign. To get the floating dollar sign, you have to
+            <b>first</b> format the amounts without the width specifier,
+            and <b>then</b> format the resulting <code>String</code>s
+            <b>with</b> a width specifier.
+            </p>
+            </div>
+            Here, for instance, is what the output should look like with
+            larger numbers:
+<pre class='screen' style='width:500px;'>
+    Unit Price:    $27.95 per pound
+    Weight:        123.00 pounds
+    TOTAL:      $3,437.85
+</pre>
+            <p>    Once you have created the program, compile it and
+                then <b>Check</b> your results. Keep trying until you get a perfect
+                score.  If you have difficulty, you'll find help on
+                the <b>Solutions</b> page.
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Comprehensive Parsing &amp; Formatting&mdash;FutureValue</b>:
+            Write a standard Java console program named
+            <b>FutureValue</b> that asks the user for an initial
+            investment, an annual interest rate and the number of years
+            to keep the money invested. Print the future value,
+            assuming that the interest is calculated monthly, as
+            shown below.<br>
+            <img src='images/FutureValue.png' class='inlineCenter' alt='The FutureValue program running.'>
+            Read the input as <code>String</code> variables (<b>using
+            <code>nextLine()</code>, not <code>next()</code></b>)
+            and convert to the correct type before doing a calculation. For the investment
+            amount, you should remove any "$", space or "," characters from
+            the input string, using the <code>String replace()</code> function
+            before converting to a <code>double</code> value. For the annual
+            percentage rate, you should remove any spaces and any percent signs.
+            <p> The test programs check your code using plain values (as on the
+                left) as well as values containing these special characters (as on
+                the right). That way, if you have difficulty with that portion,
+                you still get partial credit. (<b>Note:</b> that means you
+                cannot use the <code>nextDouble()</code> or <code>nextInt()</code>
+                methods in this program.)
+            </p>
+            <p> The formula to calculate the future value of the investment is:</p>
+            <div style='font-style:italic; font-family:times,times new roman,serif;font-size:larger;padding:1em;border:1px solid navy;'>
+                Future Value = Investment x (1 + Monthly Rate)<sup>Number of Years x 12</sup>
+            </div>
+            <p> For your output, use the <code>String format()</code> or <code>printf()</code>
+                method and
+                display three decimals for the rate, and a dollar sign and thousand
+                separators (commas) for both the amount invested and the future value.
+                Display only two decimal places for these amounts as shown in
+                the picture.
+            </p>
+            <p> Once you have created the program, compile it and
+                then <b>Check</b> your results. Keep trying until you get a perfect
+                score.   If you have difficulty, you'll find help on
+                the <b>Solutions</b> page.
+            </p>
+       </li>
+       <li class='d'>
+            <b class='grn'>Extra Credit&mdash;Assignment and Expressions</b>:
+            Get tutored for the exams and earn some extra-credit at the same
+            time. Complete the <b>Arithmetic</b> and the <b>Assignment</b> tutors
+            in the <b>Expression Evaluation</b> section, and earn <b>up to</b>
+            2 points of extra-credit for each. You must complete these before
+            7AM next week to get credit for these two tutors.
+            <p>Find the tutors at <b><a href='http://problets.org/user/f11/occ/java/'
+            target='_blank'>http://problets.org/user/f11/occ/java/</a></b>
+            </p>
+            <p>Use your OCC email address when signing up, so that you get
+                credit for the assignment.
+            </p>
+       </li>
+        <li class='d'>
+            <b class='grn'>Applet Graphics&mdash;PieChart</b>:
+            Complete the applet named <b>PieChart.java</b> that draws a
+            <b>pie chart</b> showing the percentage of household income
+            spent on various expenses. Use the percentages already defined as
+            instance variables in the starter code in the <b>Chapter04</b>
+            folder. These percentages will be randomly generated every time
+            you start your applet.<br>
+            <img src='images/pie-chart.gif' class='inlineCenter' alt='A Pie Chart example.'>
+            Here's an example that you can use as a guide. Yours may
+            look much differently of course, but the pie percentages
+            should be accurate.
+            <p> Each section of the pie should be in a different color,
+            of course. Label each section of the pie with the category
+            it represents—the labels should appear outside the pie itself.
+            An easy way to do this is to use <code>drawRect()</code> to
+            create a <i>legend</i> area on the applet, as in my example
+            here, but you can paint labels with leader lines, if you want.
+            My example here uses the <code>Graphics</code> methods,
+                <code>fillArc()</code>, <code>fillOval()</code>,
+                <code>drawRect()</code>, <code>drawString()</code>,
+                <code>fillOval()</code>, <code>setColor()</code>,
+                and <code>setFont()</code>.
+            </p>
+            <p>The starter code automatically sets the screen to 500 wide
+                by 350 high. Do all your painting inside these dimensions.
+                There is no <b>Check</b> program for this assignment.
+            </p>
+        </li>
+        <li class='d'>
+            <img src='images/sdgportrait.gif' class='right' alt='Stephen Gilberts Self Portrait.'>
+            <b class='grn'>Extra-Credit #1&mdash;Self Portrait</b>:
+            Here is an extra-credit assignment that you can
+            submit to earn some extra points.
+            Create an applet named <b>MyPortrait.java</b> that draws your
+            self-portrait. Use the starter code that I've provided in
+            your Chapter04 folder.
+            Here are the instructions:
+            <ul>
+                <li>The applet canvas should be 350 by 350. The starter
+                    code automatically does this for you. Center your
+                    picture in the applet. Don't make your head too small.
+                </li>
+                <li>Give your face eyes with pupils, ears, a nose and a mouth.</li>
+                <li>Use at least three different colors for your portrait and try to make
+                    it recognizable.
+                </li>
+            </ul>
+            <p>Use any of the <code>Graphics</code> methods for drawing ovals,
+            rectangles, lines, and arcs. <b>Do not use any image drawing
+            methods.</b>
+           The applet shown above is from my self-portrait. Here are some portraits
+                drawn from previous CS 170 classes.<br>
+                <img src='images/CS17008.gif' class='inlineCenter' alt='CS 170 Self Portraits.'>
+            </p>
+            <p>
+            To submit the assignment, upload <b>MyPortrait.java</b>
+            using the Blackboard Assignment DropBox.
+        </li>
+    </ol>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

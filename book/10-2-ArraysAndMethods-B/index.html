@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>10.2&mdash;Arrays and Methods</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner09">
+        <img id='lessonLogo' src='../images/h.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 10.2</p>
+        <p id='lessonTitle'>Arrays and Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/grades01.gif" class="right" alt="An array variable.">
+            <b><span class="cap2">A</span>n array variable and the actual
+            array where the array elements are stored</b> are two different things,
+            as this picture, which illustrates the memory layout of the code fragment
+            below, shows. In this example,
+            the <i>array variable</i>, <code>grades</code>, <i>refers to</i> the
+            <b><u>actual</u></b> array elements 'A', 'B' and 'C', located "somewhere else"
+            in memory.
+        </p>
+        <p> Although you <b>cannot</b> use an actual array as an actual parameter to a
+            method, you <b>can</b> pass array variables as parameters. You can
+            also write methods that <b>return</b> array variables.
+        </p>
+        <p>Let's see how that works.</p>
+    <h2>Array Parameters</h2>
+        <p> To pass an array variable as a parameter, you first have to know
+            how to write the <b>formal parameter</b>.
+        </p>
+        <p> Suppose, for instance that you write a method that sums the
+            values in a <code>double</code> array, (of any size), and
+            returns the result as a <code>double</code>.
+            Using the method, you can calculate the sum of the elements in
+            the <code>double</code> array named <code>nums</code> like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>double total = sum(nums);</p>
+        <p> When you write the method, the formal parameter <b>can't</b> be a
+            <code>double</code>; it <b>must</b> be an <b>array of double</b>.
+            You write the method   header like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public double sum(double[] list) { }
+        </p>
+        <p> Here's the entire method (which you can find in <b>ArrayExamples.java</b>
+            in this week's download files):<br>
+            <img src="images/function01.gif" class="inlineCenter" alt="A function to sum the elements in an array.">
+            Notice that:
+        </p>
+        <ul>
+            <li> You can pass any size array to this method. It uses the enhanced
+                <code>for</code> loop to traverse the array. (We'll cover the
+                syntax of the enhanced <code>for</code> loop in the next section.)
+            </li>
+            <li> If you wanted to use a traditional <code>for</code> loop, you
+                would use the the array parameter's <code>length</code> field
+                as the loop bounds.
+            </li>
+        </ul>
+    <div class='alert'>
+        <p>To get some practice passing arrays as input to your functions,
+            (something you'll be asked to do on the next PQ Exam),
+            Complete <b>H31&mdash;Array Parameters&mdash;Same First &amp; Last</b>.
+        </p>
+    </div>
+
+    <h2>Arrays and Procedures</h2>
+        <p> The <code>sum()</code> method I just showed you,
+            and the <code>sameFirstLast()</code> method you just
+            wrote, are both <i>functions</i>. But,
+            you can pass array parameters to <b>procedures</b> as well. For instance, to
+            print an array, you might be tempted to write code like this:<br>
+            <img src="images/function02.gif" class="inlineCenter" alt="Printing an array with concatenation.">
+            As you can see on the right, what gets printed is the notation that
+            Java uses to indicate that this is an integer array (<code>[I</code>) and
+            that it is located at address 291aff.
+        </p>
+        <p> That's certainly fascinating, but I'm sure you're more interested in
+            seeing the <b>contents</b> of the array that <code>a</code> refers to,
+            right? One, very easy way to do that is to use the <code>Arrays.toString()</code>
+            method, which displays the results like this:<br>
+            <img src="images/function03.gif" class="inline" alt="Printing an array with Arrays.toString().">
+            That's certainly an improvement, but if you want to change the
+            output display, it's easy enough by writing your own
+            <b>output procedure</b>.
+        </p>
+        <div class='alert'>
+        <p> <code>Arrays.toString()</code> will work in any version of Java 5 or greater.</p>
+        </div>
+    <h3>A printList() Procedure</h3>
+        <p> Here's a <code>printList()</code> procedure that uses the same format as
+            <code>Arrays.toString()</code>, but surrounds the array with braces instead
+            of brackets, so it looks similar to the Java initialization syntax:<br>
+            <img src="images/function04.gif" class="inlineCenter" alt="An array printing procedure.">
+            Notice that:
+        </p>
+        <ol>
+            <li class="d">A set of curly braces are printed surrounding the
+                array elements. If the array is empty, then this is all that is
+                printed.
+            </li>
+            <li class="d">If there is at least one element, then the first
+                element is printed following the opening brace.
+            </li>
+            <li class="d">All of the remaining elements (starting at index 1)
+                are printed preceded by a comma and a space.
+            </li>
+        </ol>
+        <p> Here's how you'd use a procedure like this. Notice that since it
+            is not a function, like <code>Arrays.toString()</code> you can't
+            use it as part of an expression. The call to the <code>printList()</code>
+            method has to stand alone like any other procedure call:<br>
+            <img src="images/function05.gif" class="inlineCenter" alt="Using printList().">
+        </p>
+        <p> You'll find this in <b>ArrayExamples.java</b> as well.</p>
+    <h2>Modifying Array Parameters</h2>
+        <p> When an array variable (named <code>nums</code> in the picture below)
+            is passed to a method, a copy of <b>the variable</b> <code>nums</code>
+            is made and that copy is placed into the formal parameter <code>ar</code>,
+            as you can see in this figure:<br>
+            <img src="images/z02.gif" alt="How arrays are passed to methods" class='inlineCenter'>
+            This is the same as with any variable. <b>All</b> method
+            parameters are passed by value in Java&#8212;a copy of the actual
+            parameter is made for use inside  the method.
+        </p>
+        <p> <b class='ry'>However</b>, with an array, <b>the effect might not be what you expect</b>.
+            Because both <code>nums</code> and <code>ar</code> (in this example),
+            refer to the <b>same actual array elements</b>, any changes made to the
+            elements of the array <code>ar</code> inside the method
+            will apply to the elements of the array variable <code>nums</code> as
+            well. To reiterate, both <code>nums</code> and <code>ar</code> refer to
+            the <b>same actual array</b>, even though <code>ar</code> is a copy
+            of the array variable <code>nums</code>.
+        </p>
+        <p> Here's a method that shows you how that works. The method
+            <code>doubleIt()</code> doubles every element in the array
+            passed to it:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            <span class="red"><b>// Modifying Array Elements in a Method</b></span><br>
+            <br>
+            public void doubleIt(double[] ar)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i &lt; ar.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ar[i] *= 2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+    <h3>Output Parameters</h3>
+        <p> This means that arrays <b>can</b> act as <b>output parameters</b>. In Java,
+            most parameters act as <b>inputs</b> to a function. The function calculates
+            a value, and then returns that value as the function <b>output</b>. Other
+            languages (such as Pascal, C++ and C#), allow you to specify whether a
+            parameter is used for input only, for input and output, or for output
+            only.
+        </p>
+        <p> Here is an example which gets a sequence of temperatures from the
+            user and then prints the number of days that are above average:<br>
+            <img src="images/output02.gif" class="inlineCenter" alt="A procedure that uses output parameters.">
+            Of course to calculate this, we need to first read all of the elements,
+            then calculate the average, and only then can we count the number of
+            days that are above average.
+        </p>
+        <p> Instead of putting all of that code into the <code>run()</code> method,
+            instead we call a procedure for intput and another procedure for
+            output. Notice that:
+        </p>
+        <ol>
+            <li class="d">We ask the user for the number of days to input. Later, we'll
+                see how to use a sentinel value and the <code>ArrayList</code> class to
+                avoid having to "pre-size" our array.
+            </li>
+            <li class="d">Next, we create the array variable. This is where the user
+                will place the answers.
+            </li>
+            <li class="d">Next, we call the two methods, <code>readData()</code> and
+                <code>printResults()</code>, passing the array variable
+                <code>temps</code> to each of them.
+            </li>
+        </ol>
+    <h3>The readData() Method</h3>
+        <p> Here's what the <code>readData()</code> method looks like:<br>
+            <img src="images/output03.gif" class="inlineCenter" alt="A procedure that uses output parameters.">
+            Notice that:
+        </p>
+        <ol>
+            <li class="d">We use the <code>length</code> field of the
+                array variable <code>a</code> to ask the user how many temperatures
+                to enter.
+            </li>
+            <li class="d">Then, we use a loop and read the values directly into the
+                elements of the formal array parameter <code>a</code>. Even though
+                our loop goes from 0 to <code>a.length - 1</code>, when we prompt
+                the user we want to print out #1, #2 and so on.
+            </li>
+        </ol>
+        <p> Since the array parameter <code>a</code> contains a reference that
+            points to exactly the same elements as the array variable
+            <code>temps</code> in the main <code>run()</code> method, filling
+            in the elements in <code>a</code> is <b>exactly</b> like reading
+            values into the elements in <code>temps</code>.
+        </p>
+        <p> When the procedure ends, the values you've entered will be
+            <b>returned through the parameter list</b>, not through a separate
+            <code>return</code> statement. Thus, we say that in the <code>readData()</code>
+            method, the formal parameter <code>a</code> is an <b>output</b> parameter:
+            that is, it is used only to hold data that is generated inside the procedure
+            and communicated back to the caller; any initial values inside the
+            parameter are ignored. Data only flows <b>out</b> of the procedure.
+        </p>
+    <h3>The printResults() Method</h3>
+        <p> Here's the code for the <code>printResults()</code> procedure:<br>
+            <img src="images/output04.gif" class="inline" alt="A procedure that uses input parameters.">
+            <img src="images/output01.gif" class="right" alt="A procedure that uses input parameters.">
+            In <code>printResults()</code>, the parameter <code>a</code> is an
+            <b>input</b> parameter; that is, with <code>a</code> the information flows <b>into</b>
+            the procedure and not <b>out</b> of it. (Unlike the parameter <code>a</code>
+            in the <code>readData()</code> method.)
+        </p>
+        <p> Here's what you should notice about this procedure:</p>
+        <ol>
+            <li class="d"> The first loop calculates the average of all of the
+                temperatures.
+            </li>
+            <li class="d">Now that we have the average, the second loop allows
+                us to count the number of days greater than the average. I've used
+                the enhanced for loop for each of these, since both only
+                require a forward, read-only traversal of the entire array.
+            </li>
+            <li class="d">Finally, a few <code>print()</code> statements display
+                the results of the calculations.
+            </li>
+        </ol>
+        <p> On the right you can see what the program looks like when it runs.
+            You can find this example in this chapter's code folder,
+            in the program <b>OutputParameters.java</b>.
+        </p>
+    <div class='alert'>
+        <p>To get some practice using arrays as <b>input</b> from your procedures,
+            (something you'll be asked to do on the next PQ Exam),
+            Complete <b>H32&mdash;Output Parameters&mdash;Swap Ends</b>.
+        </p>
+    </div>
+
+    <h2>Returning Array Variables</h2>
+        <p> Java allows you to easily write methods that <b>return array
+            variables</b>. As with passing array variables to a method, the
+            only "trick" is in knowing how to declare the return type.
+        </p>
+        <p> Suppose, for instance, you wanted to write a method that
+            returned an array of random <code>double</code> values. Your method header would
+            look like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public double[] makeRandom(int howMany) {}
+        </p>
+        <p> Notice that the return type is declared as <code>double[]</code>
+            and <b>not</b> <code>double</code>.
+        </p>
+    <h3>Creating the Returned Array</h3>
+        <p> Once you've figured out how to write the return type, the next
+            question that arises is "How do you get the array variable to
+            return?" The answer is simple&#8212;you create a <b>local</b> array
+            variable inside your method, and then return the local variable.
+        </p>
+        <p> Here's the rest of the <code>makeRandom()</code> method that
+            shows you how:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            <span class="red"><b>// Returning an Array Variable from a Method</b></span>
+            <br><br>
+            double[] makeRandom(int howMany)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 1. A local array variable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double[] ar = new double[ howMany ];<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 2. Fill it with random numbers</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(int i = 0; i &lt; ar.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ar[i] =  Math.random();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 3. Return a copy of the local ar</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ar;<br>
+            }
+        </p>
+        <div class="redbox">
+            <h5 style="margin-top: 5px;">A Note to C/C++ Programmers</h5>
+            <p> If you've ever programmed in C or C++, returning a local
+                array variable probably makes you a little woozy! Much of a
+                C/C++ course is spent teaching you to avoid doing this at
+                all possible cost.
+            </p>
+            <p> In C/C++, if you return a local array from a function, the
+                local array is "gone" by the time the function returns. In
+                Java, however, all you are returning is a variable that
+                refers to the array. The actual array is "out there"
+                somewhere.
+            </p>
+            <p> Of course, you could do the same thing in C/C++ by creating
+                an array on the heap and then returning a pointer to it, but
+                then you risk a memory leak. Because Java has automatic
+                memory management, that's not an issue  here.
+            </p>
+        </div>
+    <div class='alert'>
+        <p>To get some practice <b>returning</b> arrays from functions,
+            (something you'll be asked to do on the next PQ Exam),
+            Complete <b>H33&mdash;Returning Arrays</b>.
+        </p>
+    </div>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Arrays and Methods Summary
+        </p>
+        <ul>
+            <li>You cannot pass an actual array to a method, but you
+                <b>can pass an array variable</b>. Since the array variable
+                refers to the actual array, the effect is the same as
+                passing an array.
+            </li>
+            <li>When passing an array, the <b>formal parameter</b> must
+                be an <b>array variable</b> (with the <code>[]</code>). When
+                you <b>call</b> the method, a copy of the original array
+                reference is placed in the formal parameter.
+            </li>
+            <li>Because both the actual and formal parameters
+                refer to the same actual array elements, changes made to
+                those elements inside a method are reflected in the
+                actual argument passed to the method. This means that
+                array variables can act as <b>output parameters</b>
+                returning information calculated inside a function.
+            </li>
+            <li> In Java, a method may <b>return an array variable</b>.
+                The return type must include the brackets (<code>[]</code>).
+                Inside the function, create a local array variable,
+                modify it using the appropriate processing, and return
+                it with the <code>return</code> statement.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

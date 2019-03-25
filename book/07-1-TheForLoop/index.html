@@ -1,0 +1,573 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>7.1&mdash;The for Loop</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 7.1</p>
+        <p id='lessonTitle'>The for Loop</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <span class="cap"><b>I</b></span><b>n the last few sections, you've learned how to help your
+            objects make decisions</b>. You even taught your objects a little
+            philosophy, (how to tell truth from lies), with the introduction
+            of the <code>boolean</code> primitive type.
+        </p>
+
+        <p><img src="images/b01.jpg" class="right" alt="Why the Computer Scientist couldn't finish his shower.">
+            Now it's time to teach your objects to work
+            without constant supervision. Once you teach them the skill of
+            <b>iteration</b>, you can turn them loose with a set of
+            instructions, and not come back until the job is done.
+        </p>
+        <p> What is <b>iteration</b>? Iteration is a Computer
+            Science term that simply means <b>repeating</b> a set of actions.
+            Iteration is also called <b>repetition</b> or <b>looping</b>.
+            The statements that are used in iteration are called <b>loops</b>.
+        </p>
+
+        <p> Let's start by comparing iteration to something you're already
+            familiar with: the <code>if</code> statement.
+        </p>
+    <h2>Iteration and Selection</h2>
+        <p> Both iteration statements and selection statements
+            are called <b>flow-of-control</b> statements; they control
+            <b>which</b> code is executed inside your program. Like the
+            <code>if</code> statement, iteration is based upon evaluating a
+            <code>boolean</code>&mdash;<b>true/false</b>&mdash;condition, and then
+            performing a set of actions if the test is <b>true</b>, and
+            skipping them if the test is <b>false</b>.
+        </p>
+
+        <p> Thus a loop, like an <code>if</code> statement, has both a
+            <b>condition part</b>&mdash;the test that is performed&mdash;and a
+            <b>body part</b>&mdash;the actions that are taken.
+        </p>
+    <h3>Selection Illustrated</h3>
+        <p> <img src="images/z01b.gif" alt="Illustration of selection as a highway rest stop" class="right">
+
+            Iteration, however, is <b>not the same as selection</b>. Beginning
+            programmers often attempt to use a selection statement where they
+            should use a loop, and vice versa. It is important to be able to
+            distinguish the two, and equally important to be able to select
+            the right control structure for the job.
+        </p>
+        <p>
+            The selection structure works much like the illustration shown
+            here. Driving down a divided highway, you come to a rest
+            stop, and you pull off. When you leave the rest stop, you rejoin
+            the highway a little further down the road.
+        </p>
+        <p> Once you rejoin the highway, <b>you have no opportunity
+            to go back</b>, and revisit the rest stop again. Those who bypass the
+            turnoff, skip the rest stop altogether.
+        </p>
+
+    <h3>Iteration Illustrated</h3>
+        <p> A loop structure looks similar, <b>but not the same</b>. As you can see
+            in this illustration, there is still a <code>boolean</code> test,
+            as there is with selection. But, after you've had your break, the
+            rest stop exit road "loops back" (hence the name), and you rejoin
+            the highway right where you initially left it.<br>
+            <img src="images/z02b.gif" class='inlineCenter' alt="Illustration of iteration as a highway rest stop">
+        </p>
+
+        <p> If you like, you can choose to enter the rest
+            stop once again, even though the highway is one-way. In this
+            sense, a loop also works a little bit like a cloverleaf
+            interchange.
+        </p>
+    <h2>Java and Iteration</h2>
+        <p>Java has three loop statements,
+            the <code>while</code> loop,
+            the <code>do</code>-<code>while</code> loop, and the
+            <code>for</code> loop. As you might expect, each of these
+            loops is designed for a particular purpose; each loop has a
+            place where it is most effectively employed.
+        </p>
+
+    <h3>Where's the Test?</h3>
+        <p> <img src="images/z03b.gif" alt="Test at the bottom loop" class="right">
+            One difference between the loops is <b>where</b>
+            the <code>boolean</code> conditional test takes place&mdash;that is,
+            the relative position of the loop test, and the actions contained
+            in the loop body.
+        </p>
+        <p>
+
+            One loop, the <code>do</code>-<code>while</code> loop, doesn't
+            make its test until <b>after</b> it has performed the actions
+            in the loop body <b>at least once</b>.
+        </p>
+        <p> This is called a "test at the bottom" loop. It is also sometimes
+            called a <b>hasty</b> loop or an <b>unguarded</b> loop,
+            because it "leaps before it looks".
+        </p>
+
+    <h3>Test at the Top</h3>
+        <p> <img src="images/z04b.gif" alt="Test at the top loop" class="right">
+            The other two loops, the <code>for</code> loop and
+            the <code>while</code> loop, both make their <code>boolean</code>
+            test before performing the actions in the loop body.
+        </p>
+
+        <p> With these "test-at-the-top" loops, when the test condition is
+            <b>false</b>, then the actions inside the loop body are never
+            performed at all. Thus, they are both <b>guarded</b> loops.
+        </p>
+
+    <h3>Counted and Indefinite Loops</h3>
+        <p> Classifying loops according to where their condition
+            is tested helps keep the Java syntax straight in our minds, but
+            it's not really very useful when it comes to deciding which loop
+            to use when you are writing a program. As a practical matter,
+            it's much more useful to classify loops by the kind of
+            <b>bounds</b> that they employ.
+        </p>
+
+        <p> A loop's <b>bounds</b> are the conditions under
+            which it will repeat its actions. In a simple, counter controlled
+            loop, the bounds might be expressed as "the counter has a value
+            less than ten". In other, more complex loops, the bounds may be
+            a combination of conditions involving ANDs and ORs.
+        </p>
+        <p> There are two major <b>kinds</b> of loops that can be built
+            using the basic building blocks (<code>for</code>,
+            <code>while</code>, and <code>do</code>-<code>while</code>)
+            provided by Java. Let's look at them briefly, before we start
+            looking at the actual Java syntax.
+        </p>
+
+    <h4>Counting or Counted Loops</h4>
+        <p> <img src="images/z06b.gif" alt="A mechanical counter." class="right">
+            A <b>counting</b>, (or <b>counted</b>), loop is a
+            loop that repeats its actions a fixed number of times--a
+            "gimme fifty pushups" kind of loop.
+        </p>
+        <p> With a "pure" counting loop you can look at the
+            code and tell how many times it should execute. In real life,
+            however, things are not so clear-cut. You often won't know what
+            the <b>actual</b> number of repetitions is until your program
+            runs; the number of repetitions may be based upon the
+            number of characters in a <code>String</code>, for instance,
+            or some other number which is not computed until your program
+            runs.
+        </p>
+
+    <h4>Indefinite Loops</h4>
+        <p>
+            With an indefinite loop, you can <b>never</b> tell
+            how many times the loop will repeat by examining the code. An
+            indefinite loop is a loop that tests for the occurence of a
+            particular event, not a count of the number of repetitions.
+        </p>
+        <p> <img src="images/z07.gif" alt="The CS101 logo." class="right">
+            "Read characters until you encounter a period"
+            is an example of an indefinite loop. The condition may occur
+            after reading three characters, or it may occur after reading
+            three-thousand. It's also possible that the period might be the
+            first character read or, sometimes, that a period might not occur
+            at all.
+        </p>
+
+        <p> There are three commonly encountered types of indefinite loops
+            that you should be aware of. Each of these indefinite loops uses
+            a different sort of bounds:
+        </p>
+        <ul>
+            <li><span class="red"><b>Data loop</b></span>: A data loop is a loop that
+                keeps going until there is <b>no more data</b>. This is used
+                when reading files or sending Web pages over the Net.
+            </li>
+            <li><span class="red"><b>Sentinel loop</b></span>: A sentinel
+                loop is an indefinite loop that looks for the presence of a
+                special marker <b>contained within its input</b>. In the
+                "read characters until you encounter a period" example, the
+                period is the sentinel; this kind of loop is a <b>sentinel
+                loop</b>. Sentinel loops are often used in searching, but
+                have other uses as well.
+            </li>
+
+            <li><span class="red"><b>Limit loop</b></span>: Limit loops are
+                loops that end when another repetition of the loop won't get
+                you any closer to your goal. Limit loops are often used in
+                scientific calculations and other numeric algorithms, when
+                stating a precise termination condition is not possible.
+                Often this involves monitoring the difference between two
+                variables, and stopping the loop when the difference passes
+                a predetermined threshold.
+            </li>
+        </ul>
+        <p> Now that you know a little about the different kinds of loops,
+            let's make this a little less theoretical and learn how to
+            use one of Java's loop statements. We'll start by
+            taking a look at the <code>for</code> loop.
+        </p>
+    <h2>The for Loop</h2>
+        <p><img src="images/c01.gif" class="right" alt="The for loop syntax.">
+            <span class="cap"><b>T</b></span><b>he first Java loop we're
+            going to look at is the <code>for</code> loop</b>. Even though
+            its syntax has more "moving parts" than that the
+            <code>while</code> loop, I think that counted
+            <code>for</code> loops are a little easier to understand. Both Pascal
+            and Basic have <code>for</code> loops, as do C and C++. Like
+            those languages, the <code>for</code> loop in Java is designed
+            for writing counted loops&mdash;loops that repeat a specified number
+            of times.
+        </p>
+        <p> Unlike the Pascal or Basic <code>for</code> loop, however,
+            the <code>for</code> loop in Java can do much more than simple
+            counted loops. The <code>for</code> loop in Java works almost
+            exactly like the <code>for</code> loop in C++; it is a general
+            purpose, "test at the top" loop, that makes writing counted loops
+            very straightforward, but <b>can</b> be used for other purposes.
+        </p>
+    <h3>The for Loop Syntax</h3>
+        <p> As mentioned previously, the body of the <code>for</code> loop
+            follows the loop's test condition; you test first, then, if the
+            test evaluates to <code>true</code>, you enter the loop body, as you can see
+            in the illustration.<br>
+            <img src="images/z07b.gif" alt="For loop syntax" class='inlineCenter'>
+            The <code>for</code> loop's condition involves more
+            than a simple <code>boolean</code> test, however. In fact, it
+            involves three different expressions:
+        </p>
+        <ul>
+            <li>The <span class="red"><b>initialization</b></span> expression</li>
+            <li>The <span class="red"><b>test</b></span> expression</li>
+            <li>The <span class="red"><b>update</b></span> expression</li>
+        </ul>
+        <p> Each of these three expressions is separated from
+            the others by a <b>semicolon</b>. You can omit any&mdash;or all&mdash;of
+            the expressions, but the semicolons are required. (Make sure you
+            don't accidentally use commas instead of semicolons. When you do
+            so, the Java compiler is not particularly helpful with its error
+            messages.)
+        </p>
+        <p> The loop body following the loop condition is
+            usually enclosed in braces,
+            although, technically, braces are not required
+            if the loop body consists of a single statement. As a practical
+            matter, though, you'll almost always use braces, and, since they
+            don't hurt&mdash;even when not strictly required&mdash;you should always
+            put them in as a matter of course.
+        </p>
+        <p> Let's return to the <code>for</code> loop condition,
+            and take a closer look at each of its three expressions.
+        </p>
+    <h3>The Initialization Expression</h3>
+        <p> When a <code>for</code> loop is encountered, the first
+            part of the loop condition, the initialization expression, is
+            executed. It is <b>always</b> executed, regardless of the other
+            parts of the <code>for</code> statement, almost, (but not
+            quite), as if it occurred on the previous line.
+        </p>
+        <p> The initialization expression is evaluated only once, and is
+            usually used to define the counter variable that will control
+            your loop, like this:<br>
+            <img src='images/initializer.png' class='inlineCenter' alt='The initialization section.'>
+            Variables declared <b>inside</b> the <code>for</code>
+            loop initialization section, like <b>index</b>, shown here,
+            are <b>local</b> to the body of the <code>for</code> loop. Once
+            the loop is finished, the variable goes out of scope and can no
+            longer be used.
+        </p>
+    <h3>The boolean Test</h3>
+        <p> The second section of the <code>for</code> loop is called
+            the <b>test condition</b>. The test condition is a
+            <code>boolean</code> expression which is evaluated immediately
+            after the initialization expression.
+        </p>
+        <p> If the test condition is <b>true</b>, (when it is evaluated),
+            then execution begins with the first statement in the loop body.
+            If it is <b>false</b>, then the entire loop body is skipped,
+            and execution continues at the first statement <b>following</b>
+            the loop body.
+        </p>
+        <p> To continue our example, we can test the value
+            of <b>index</b>, checking to make sure it is less than ten,
+            like this:<br>
+            <img src='images/test-expr.png' class='inlineCenter' alt='The test expression.'>
+            Using <b>index</b> in this fashion insures that the loop will
+            execute ten times. This is a common <b>idiom</b> in Java
+            programming, called <b>zero-based counting</b>:
+        </p>
+        <ul>
+            <li>start <b>index</b> at 0</li>
+            <li>test that <b>index</b> is <b>less than</b> the upper bounds</li>
+        </ul>
+        <div class='info'>
+        <p> An idiom is just a common and widely accepted way
+            of "phrasing" a particular operation. This particular idiom works
+            well, because you can immediately tell how many times the loop
+            will execute just by glancing at the test condition.
+        </p>
+        </div>
+    <h3>The Update Expression</h3>
+        <p> Inside the body of the loop, you need to make sure that
+            every repetition of a loop moves closer to the loop bounds.
+            But, in the <code>for</code> loop shown here, there are
+            <b>no</b> statements that move toward the bounds; in fact, as
+            written, this example is an <b>endless loop</b>! Since
+            <b>index</b> is <b>never</b> updated, it <b>always</b> remains
+            at zero.
+        </p>
+        <p> Updating the loop counter is the responsibility of the third part
+            of the <code>for</code> loop condition&mdash;the <b>update
+            expression</b>. The update expression is evaluated <b>after</b>
+            the body of the loop is finished, but <b>before</b> the test
+            expression is evaluated for the next repetition.
+        </p>
+        <p> For a counted loop, you'll use the update expression
+            to increment your loop counter like this:<br>
+            <img src='images/update-expr.png' class='inlineCenter' alt='Updating the loop counter.'>
+            In this case I've used the prefix increment operator to update
+            the <code>index</code> variable, but postfix works just as well,
+            since the update expression acts like a standalone statement,
+            even though it doesn't end in a semicolon like the previous
+            two expressions.
+        </p>
+        <div class='info'>
+        <p> <img src='images/jk.png' class='right' alt='J and K.'>
+            In this example, I've used a variable named <code>index</code>
+            as the loop counter. By far the most commonly used name, though, is
+            the name <code>i</code> (with nested <code>for</code> loops employing
+            <code>j</code> and <code>k</code> when <code>i</code> is unavailable.)
+            Even though I generally discourage short, meaningless variable names,
+            this is such a universal convention, that there's really no point
+            in fighting it. This also is in no way related to any shadowy
+            government agency.<br><br>
+            Really.
+        </p>
+        </div>
+    <h3>Counting Variations</h3>
+        <p> You've probably noticed that this loop doesn't really <b>do</b>
+            anything; the portion that we've written simply repeats ten
+            times. However, you can use this basic skeleton for any loop
+            that needs to repeat a fixed number of times. Simply replace
+            10 with the number of times you want to repeat, and you're all
+            set.
+        </p>
+        <p> In addition to acting as a loop control, you can also use your
+            counter variable to process different pieces of information
+            during each repetition of the loop. Here, for instance, is a
+            loop that sums the Unicode values for all the characters in a
+            <code>String</code>:
+            <img src="images/c02.gif" class="inline" alt="Main loop of CodeSumer.java.">
+            The loop shown here is from <b>CodeSumer.java</b>, a
+            console program that sums up the value of
+            each Unicode character in a <code>String</code> entered
+            by the user, and tells you how much your <code>String</code>
+            "weighs". (You'll find it in this chapter's code folder.)
+        </p>
+        <p> The structure of the <code>for</code> loop <b>follows
+            six steps</b> that you'll meet in a later chapter when we discuss a
+            loop-building strategy:
+        </p>
+            <ol>
+                <li class="d">The first step is to determine what causes the loop
+                    to end. This is called the <b>loop bounds</b>. The bounds
+                    for our loop is when the loop counter reaches the number
+                    of characters in the string.
+                </li>
+                <li class="d">To test the counter and number of characters, we first
+                    have to create the loop counter <code>i</code> and the variables <code>nChars</code>,
+                    and <code>s</code>, so that they can be tested when we get to the
+                    bounds. We also have to initialize them, by first reading the text
+                    the user entered, using <code>nextLine()</code>, finding the length
+                    of the string, using the <code>length()</code> method, and initializing
+                    the counter in the <code>for</code> loop's initializer section.
+                    You'll do these as step 2 of building a loop.
+                </li>
+                <li class="d"><b>Step 3 is to advance the loop</b>. Advancing the loop
+                    means that it moves closer to the finish. In a counted <code>for</code>
+                    loop, you do that in the update expression.
+                </li>
+                <li class="d">This loop's <b>output</b> is the sum of all the individual
+                    code values, so Step 4 is to create
+                    and initialize the accumulator variable <code>sumOfCodes</code> that
+                    will hold the output of the loop.
+                </li>
+                <li class="d">Since we're adding up all of the Unicode values in the
+                    string, Step 5, the loop operation, is accomplished by extracting
+                    each individual character, using the <code>charAt()</code> method,
+                    and then adding that value to the accumulator.
+                </li>
+                <li class="d">For the last step we simply
+                    print out the loop's results. There's nothing extra we have to
+                    test in this case.
+                </li>
+            </ol>
+        <p> Here's what the output of the program looks like
+            with my name entered as input:
+            <img src="images/codesumer-output.gif" alt="Running the CodeSumer app." class="inlineCenter">
+        </p>
+    <h3>Counting Down</h3>
+        <p> When you create a counted loop using <code>for</code>, <b>you</b>
+            are responsible for initializing the counter in the
+            initialization expression, and for updating it in the update
+            expression; it doesn't happen "automatically" like it does
+            in BASIC or Pascal.
+        </p>
+        <p> However, there's no law that says you <b>have</b> to start at
+            zero, and there's nothing to stop you from counting down rather
+            than up.
+        </p>
+        <p> Here's a code fragment from a Java Applet named
+            <b>ReverseString</b> that displays the characters in a
+            <code>String</code> in reverse order. It works by walking
+            through the characters of the <code>String</code> from the end
+            to the beginning, using a <code>for</code> loop that:
+        </p>
+        <ol>
+                <li class="d">initializes <code>counter</code> to point to
+                    the <i>last</i> character, rather than the <i>first</i>
+                </li><li class="d">continues until <code>counter</code> reaches zero</li>
+                <li class="d">decrements the <code>counter</code>, so that the loop
+                    counts <b>down</b>, instead of counting <b>up</b>.
+            </li>
+        </ol>
+        <p><img src="images/c03.gif" class="inline" alt="Counting down with a for loop.">
+            You can
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/%7Egilberts/applets/ReverseString.html","","width=500,height=325,scrollbars=yes");'>
+            <b>run the applet</b></a> by clicking the link in this
+            sentence. If you don't want to run it, here's what it looks like
+            with my name entered into the input field:<br>
+            <img src="images/z09a.gif" alt="Running the ReverseString applet" class="inlineCenter">
+        </p>
+        <div class='info'>
+        <p><b>What's with the -1?</b><br>
+            You might wonder why the code shown here subtracts one from
+            the length of the <b>String</b> in the initialization expression.
+            In a <b>String</b>, the characters are numbered starting with
+            zero. Thus, if there are 10 characters in a particular
+            <b>String</b>, then the last character is in position 9.
+        </p>
+        </div>
+    <h3>Counting by Steps</h3>
+        <p> Not only can you count up and count down, you can
+            also count by values other than 1, simply by changing the value
+            in the update expression. The BASIC language allows you do
+            this via its STEP clause, but the Java <code>for</code> loop
+            allows you to use any expression you like, not just different
+            constant values.
+        </p>
+        <p> Here, for instance, is how you could calculate
+            the sum of all the even numbers less than 100:<br>
+            <img src='images/count-by-2s.gif' class='inlineCenter' alt='Counting by 2.'>
+            And, here's a loop that displays exponential growth. How many
+            numbers do you think that this will print?<br>
+            <img src='images/exponential-update.gif' class='inlineCenter' alt='Using *= to update.'>
+            Try it out and see if you're right.
+        </p>
+        <div class='drjava-note'>
+        <p> In the DrJava Interactions Pane, when you type the opening brace on
+            a <code>for</code> loop body, DrJava "notices" that you haven't completed
+            the statement, and waits for the closing brace before interpreting (and
+            executing) what you've typed. Sometimes, though, you want to type several
+            lines including initialization and so on before the loop. You can do that
+            in the Interactions Pane by simply ending your lines with a Shift+Enter
+            instead of a regular Enter.
+        </p>
+        </div>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Here's an exercise you can do in the DrJava Interactions Pane.
+        </p>
+        <ol>
+            <li>Create a <code>String</code> variable initialized to your
+                name and student ID#, and a second <code>String</code>
+                variable named <code>result</code>. Result will initially
+                be empty, but you'll add characters to it as you process
+                your name and ID.
+            </li>
+            <li>Write a <code>for</code> loop that loops through each character
+                in your name. If the character is a vowel, (a, e, i, o, or u),
+                replace it with an asterisk (*) in <code>result</code>. All
+                other characters should be passed through unchanged.
+            </li>
+        </ol>
+        <p> When the loop is finished, print both your original <code>String</code>
+            and the modified version.
+        </p>
+        </div>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            The for Loop Summary
+        </p>
+        <ul>
+            <li><b>Iteration</b> is a CS term that means <b>repeating a
+                group of actions</b>. Programming statements that
+                perform iteration are called <b>loops</b>.
+            </li>
+            <li>A loop is a <b>flow-of-control</b> statement similar to
+                an <code>if</code> statement. Like the <code>if</code>,
+                a loop tests a condition and then performs its actions
+                when the condition is true. Unlike an <code>if</code>
+                statement, a loop <b>returns to the test condition</b>
+                after performing its actions; thus a loop <b>repeats</b>
+                its actions until its test condition becomes <code>false</code>.
+            </li>
+            <li>One way to categorize loops is <b>where the test takes place</b>.
+                A <b>test-at-the-top, or entry-condition loop</b>, checks its
+                condition <b>before</b> carrying out the actions in its body.
+                This is sometimes called a <b>guarded</b> loop.
+            </li>
+            <li>A <b>test-at-the-bottom, or exit-condition loop</b>, performs
+                its actions first, and then checks its condition to see if
+                it should "do it again". This is sometimes called a
+                <b>hasty loop</b> because it "leaps before it looks".
+            </li>
+            <li>Another way to categorize loops is by <b>the kind of condition</b>
+                used to control them. The simplest are <b>counter-controlled</b>
+                loops that compare an index or loop counter to determine how
+                many repetitions to perform.
+            </li>
+            <li>More complex loops are known as <b>indefinite loops</b>. These
+                include <b>sentinel</b> loops that look for a particular value
+                in input, <b>data</b> loops that keep processing until a
+                data source is exhausted, and <b>limit</b> loops, which
+                monitor the results of a calculation.
+            </li>
+            <li>The <code>for</code> loop is designed for writing
+                counter-controlled loops.
+            </li>
+            <li> The <code>for</code> loop header consists of
+                three expressions: the <b>initialization</b> expression
+                where the loop counter is initialized, the <b>test</b>
+                expression where the counter is compared against an
+                ending value, and the <b>update</b> expression where
+                the counter is modified prior to the next iteration.
+            </li>
+            <li> To write a loop that <b>counts down</b>, initialize
+                the loop counter to the upper bounds, test that the
+                counter is greater than or equal to the lower bounds,
+                and make sure the update expression <b>decrements</b>
+                the counter, instead of incrementing it.
+            </li>
+            <li> To <b>count by steps</b>, use an update expression
+                that adds or subtracts the step value to the loop counter.
+            </li>
+
+        </ul>
+    </div>
+
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

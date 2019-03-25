@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>readtime.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;sstream&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="com">/**</span>
+<span class="line">  8 </span><span class="com">   Converts an integer value to a string, e.g. 3 -&gt; &quot;3&quot;.</span>
+<span class="line">  9 </span><span class="com">   &#64;param s an integer value</span>
+<span class="line"> 10 </span><span class="com">   &#64;return the equivalent string</span>
+<span class="line"> 11 </span><span class="com">*/</span>
+<span class="line"> 12 </span>string <span class="kwd">int_to_string</span><span class="sym">(</span><span class="kwb">int</span> n<span class="sym">)</span>
+<span class="line"> 13 </span><span class="sym">{</span>
+<span class="line"> 14 </span>   ostringstream outstr<span class="sym">;</span>
+<span class="line"> 15 </span>   outstr <span class="sym">&lt;&lt;</span> n<span class="sym">;</span>
+<span class="line"> 16 </span>   <span class="kwa">return</span> outstr<span class="sym">.</span><span class="kwd">str</span><span class="sym">();</span>
+<span class="line"> 17 </span><span class="sym">}</span>
+<span class="line"> 18 </span>
+<span class="line"> 19 </span><span class="com">/**</span>
+<span class="line"> 20 </span><span class="com">   Reads a time from standard input in the format hh:mm or</span>
+<span class="line"> 21 </span><span class="com">   hh:mm am or hh:mm pm.</span>
+<span class="line"> 22 </span><span class="com">   &#64;param hours filled with the hours</span>
+<span class="line"> 23 </span><span class="com">   &#64;param minutes filled with the minutes</span>
+<span class="line"> 24 </span><span class="com">*/</span>
+<span class="line"> 25 </span><span class="kwb">void</span> <span class="kwd">read_time</span><span class="sym">(</span><span class="kwb">int</span><span class="sym">&amp;</span> hours<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&amp;</span> minutes<span class="sym">)</span>
+<span class="line"> 26 </span><span class="sym">{</span>
+<span class="line"> 27 </span>   string line<span class="sym">;</span>
+<span class="line"> 28 </span>   <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> line<span class="sym">);</span>
+<span class="line"> 29 </span>   istringstream <span class="kwd">instr</span><span class="sym">(</span>line<span class="sym">);</span>
+<span class="line"> 30 </span>
+<span class="line"> 31 </span>   instr <span class="sym">&gt;&gt;</span> hours<span class="sym">;</span>
+<span class="line"> 32 </span>
+<span class="line"> 33 </span>   minutes <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 34 </span>
+<span class="line"> 35 </span>   <span class="kwb">char</span> ch<span class="sym">;</span>
+<span class="line"> 36 </span>   instr<span class="sym">.</span><span class="kwd">get</span><span class="sym">(</span>ch<span class="sym">);</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span>   <span class="kwa">if</span> <span class="sym">(</span>ch <span class="sym">==</span> <span class="str">':'</span><span class="sym">)</span>
+<span class="line"> 39 </span>      instr <span class="sym">&gt;&gt;</span> minutes<span class="sym">;</span>
+<span class="line"> 40 </span>   <span class="kwa">else</span>
+<span class="line"> 41 </span>      instr<span class="sym">.</span><span class="kwd">unget</span><span class="sym">();</span>
+<span class="line"> 42 </span>
+<span class="line"> 43 </span>   string suffix<span class="sym">;</span>
+<span class="line"> 44 </span>   instr <span class="sym">&gt;&gt;</span> suffix<span class="sym">;</span>
+<span class="line"> 45 </span>
+<span class="line"> 46 </span>   <span class="kwa">if</span> <span class="sym">(</span>suffix <span class="sym">==</span> <span class="str">&quot;pm&quot;</span><span class="sym">)</span>
+<span class="line"> 47 </span>      hours <span class="sym">=</span> hours <span class="sym">+</span> <span class="num">12</span><span class="sym">;</span>
+<span class="line"> 48 </span><span class="sym">}</span>
+<span class="line"> 49 </span>
+<span class="line"> 50 </span><span class="com">/**</span>
+<span class="line"> 51 </span><span class="com">   Computes a string representing a time.</span>
+<span class="line"> 52 </span><span class="com">   &#64;param hours the hours (0...23)</span>
+<span class="line"> 53 </span><span class="com">   &#64;param minutes the minutes (0...59)</span>
+<span class="line"> 54 </span><span class="com">   &#64;param military true for military format,</span>
+<span class="line"> 55 </span><span class="com">   false for am/pm format</span>
+<span class="line"> 56 </span><span class="com">*/</span>
+<span class="line"> 57 </span>string <span class="kwd">time_to_string</span><span class="sym">(</span><span class="kwb">int</span> hours<span class="sym">,</span> <span class="kwb">int</span> minutes<span class="sym">,</span> <span class="kwb">bool</span> military<span class="sym">)</span>
+<span class="line"> 58 </span><span class="sym">{</span>
+<span class="line"> 59 </span>   string suffix<span class="sym">;</span>
+<span class="line"> 60 </span>   <span class="kwa">if</span> <span class="sym">(!</span>military<span class="sym">)</span>
+<span class="line"> 61 </span>   <span class="sym">{</span>  <span class="kwa">if</span> <span class="sym">(</span>hours <span class="sym">&lt;</span> <span class="num">12</span><span class="sym">)</span>
+<span class="line"> 62 </span>         suffix <span class="sym">=</span> <span class="str">&quot;am&quot;</span><span class="sym">;</span>
+<span class="line"> 63 </span>      <span class="kwa">else</span>
+<span class="line"> 64 </span>      <span class="sym">{</span>  suffix <span class="sym">=</span> <span class="str">&quot;pm&quot;</span><span class="sym">;</span>
+<span class="line"> 65 </span>         hours <span class="sym">=</span> hours <span class="sym">-</span> <span class="num">12</span><span class="sym">;</span>
+<span class="line"> 66 </span>      <span class="sym">}</span>
+<span class="line"> 67 </span>      <span class="kwa">if</span> <span class="sym">(</span>hours <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span> hours <span class="sym">=</span> <span class="num">12</span><span class="sym">;</span>
+<span class="line"> 68 </span>   <span class="sym">}</span>
+<span class="line"> 69 </span>   string result <span class="sym">=</span> <span class="kwd">int_to_string</span><span class="sym">(</span>hours<span class="sym">) +</span> <span class="str">&quot;:&quot;</span><span class="sym">;</span>
+<span class="line"> 70 </span>   <span class="kwa">if</span> <span class="sym">(</span>minutes <span class="sym">&lt;</span> <span class="num">10</span><span class="sym">)</span> result <span class="sym">=</span> result <span class="sym">+</span> <span class="str">&quot;0&quot;</span><span class="sym">;</span>
+<span class="line"> 71 </span>   result <span class="sym">=</span> result <span class="sym">+</span> <span class="kwd">int_to_string</span><span class="sym">(</span>minutes<span class="sym">);</span>
+<span class="line"> 72 </span>   <span class="kwa">if</span> <span class="sym">(!</span>military<span class="sym">)</span>
+<span class="line"> 73 </span>      result <span class="sym">=</span> result <span class="sym">+</span> <span class="str">&quot; &quot;</span> <span class="sym">+</span> suffix<span class="sym">;</span>
+<span class="line"> 74 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 75 </span><span class="sym">}</span>
+<span class="line"> 76 </span>
+<span class="line"> 77 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 78 </span><span class="sym">{</span>
+<span class="line"> 79 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the time: &quot;</span><span class="sym">;</span>
+<span class="line"> 80 </span>
+<span class="line"> 81 </span>   <span class="kwb">int</span> hours<span class="sym">;</span>
+<span class="line"> 82 </span>   <span class="kwb">int</span> minutes<span class="sym">;</span>
+<span class="line"> 83 </span>
+<span class="line"> 84 </span>   <span class="kwd">read_time</span><span class="sym">(</span>hours<span class="sym">,</span> minutes<span class="sym">);</span>
+<span class="line"> 85 </span>
+<span class="line"> 86 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Military time: &quot;</span>
+<span class="line"> 87 </span>      <span class="sym">&lt;&lt;</span> <span class="kwd">time_to_string</span><span class="sym">(</span>hours<span class="sym">,</span> minutes<span class="sym">,</span> <span class="kwa">true</span><span class="sym">) &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 88 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Using am/pm: &quot;</span>
+<span class="line"> 89 </span>      <span class="sym">&lt;&lt;</span> <span class="kwd">time_to_string</span><span class="sym">(</span>hours<span class="sym">,</span> minutes<span class="sym">,</span> <span class="kwa">false</span><span class="sym">) &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 90 </span>
+<span class="line"> 91 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 92 </span><span class="sym">}</span>
+<span class="line"> 93 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

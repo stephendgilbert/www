@@ -1,0 +1,1832 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To learn about operator overloading </li>
+	<li> To learn the various categories of operators, and their uses </li>
+	<li> To learn how operator overloading is employed in the standard library
+	</li>
+	<li> To be able to implement overloaded operators in your own classes
+	</li>
+  <li> To learn how to avoid common errors in operator overloading </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Operator Overloading </h1>
+<ul>
+  <li> Convenient shorthand </li>
+  <li> More intuitive:
+    <code>a + b * c</code>
+			vs.
+		<code>plus(a, times(b, c))</code>
+  </li>
+	<li> Same technique can make code confusing (apply the <tt>/</tt> operator
+	to strings) </li>
+  <li> C++ supports a rich set of operators </li>
+	<li> If the intended meaning of an operator is not immediately clear (to,
+		e.g., your grandmother), then <strong>don't overload it</strong> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Operator Overloading </h1>
+<ul>
+  <li> Programmer may define his/her own, as a
+		<ul>
+			<li> Simple (non-member) function </li>
+			<li> Member function </li>
+		</ul>
+	</li>
+  <li> Powerful and subtle feature of C++ </li>
+  <li> Advantages:
+		<ul>
+			<li> Easier to remember </li>
+			<li> Reuse of existing code </li>
+			<li> Concise description of the task </li>
+		</ul>
+	 </li>
+  <li> Caveat:
+    <ul>
+      <li> Lack of context may disguise meaning </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Operator Overloading </h1>
+<h2> To define an operator: </h2>
+<ul>
+	<li> One argument (<dfn>operand</dfn>) must be a class type </li>
+  <li> I.e., can't redefine existing behavior </li>
+	<li> Can't change precedence, associativity, or arity </li>
+  <li> Can't invent new symbols </li>
+	<li> Not all operators may be overloaded </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Operator Overloading </h1>
+<table class='book'>
+<thead>
+	<tr>
+		<th colspan="7"> Table 1  Overloadable Operators </th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td><tt> + </tt></td>
+		<td><tt> - </tt></td>
+		<td><tt> * </tt></td>
+		<td><tt> / </tt></td>
+		<td><tt> % </tt></td>
+		<td><tt> ^ </tt></td>
+		<td><tt> &amp; </tt></td>
+	</tr>
+	<tr>
+		<td><tt> | </tt></td>
+		<td><tt> ~ </tt></td>
+		<td><tt> ! </tt></td>
+		<td><tt> = </tt></td>
+		<td><tt> &lt; </tt></td>
+		<td><tt> &gt; </tt></td>
+		<td><tt> += </tt></td>
+	</tr>
+	<tr>
+		<td><tt> -= </tt></td>
+		<td><tt> *= </tt></td>
+		<td><tt> /= </tt></td>
+		<td><tt> %= </tt></td>
+		<td><tt> ^= </tt></td>
+		<td><tt> &amp;= </tt></td>
+		<td><tt> |= </tt></td>
+	</tr>
+	<tr>
+		<td><tt> &lt;&lt; </tt></td>
+		<td><tt> &gt;&gt; </tt></td>
+		<td><tt> &lt;&lt;= </tt></td>
+		<td><tt> &gt;&gt;= </tt></td>
+		<td><tt> == </tt></td>
+		<td><tt> != </tt></td>
+		<td><tt> &lt;= </tt></td>
+	</tr>
+	<tr>
+		<td><tt> &gt;= </tt></td>
+		<td><tt> &amp;&amp; </tt></td>
+		<td><tt> || </tt></td>
+		<td><tt> ++ </tt></td>
+		<td><tt> -- </tt></td>
+		<td><tt> -&gt;* </tt></td>
+		<td><tt> . </tt></td>
+	</tr>
+	<tr>
+		<td><tt> -&gt; </tt></td>
+		<td><tt> [] </tt></td>
+		<td><tt> () </tt></td>
+		<td><tt> new </tt></td>
+		<td><tt> new[] </tt></td>
+		<td><tt> delete </tt></td>
+		<td><tt> delete[] </tt></td>
+	</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.1" )
+	//]]>
+	</script>
+Operator Functions </h1>
+<ul>
+	<li> To define the function: precede the operator symbol with
+		<tt>operator</tt> </li>
+</ul>
+E.g.:
+<ul>
+	<li> The <i>difference</i> between two <tt>Time</tt> objects is the
+		number of seconds between them
+<code>
+int operator-(const Time& a, const Time& b)
+{
+   return a.seconds_from(b);
+}</code>
+	</li>
+	<li> Use the <tt>-</tt> operator instead of calling <tt>seconds_from()</tt>:
+<code>
+Time now;
+Time morning(9, 0, 0);
+int seconds_elapsed = now - morning;</code>
+	</li>
+	<li> <tt>operator-</tt> is a <em>non</em>member function with two
+	parameters </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : Overloading Operator Definition </h1>
+<div class='syntax'>
+<code><i>return_type</i> operator<i>operator_symbol</i>(<i>parameters</i>)
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>int operator-(const Time& a, const Time& b)
+{
+   return a.seconds_from(b)
+}</code>
+
+	<h3> Purpose: </h3>
+		<p> Supply the implementation of an overloaded operator. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Operator Functions </h1>
+<p> Avoid ambiguous behavior: </p>
+<code><i>some_return_type</i> operator+(Time a, Time b);</code>
+<ul>
+  <li> <tt>Time</tt> objects represent a point in time, not a
+		duration
+		<ul>
+			<li> what does 1 P.M. + 3 A.M. mean? </li>
+		</ul>
+	</li>
+	<li> Adding seconds to a <tt>Time</tt> <i>does</i> make sense:
+		<code>
+Time operator+(const Time& a, int sec)
+{
+   Time r = a;
+   r.add_seconds(sec);
+   return r;
+}</code>
+	</li>
+</ul>
+<p>Caveat:  Units are not implied by the context.  Add minutes? Seconds?</p>
+<ul>
+	<li> A function named <tt>add_seconds()</tt> is clear </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1.2" )
+	//]]>
+	</script>
+Operator Member Functions </h1>
+<ul>
+	<li> First interpreted as a member function of the left-most operand </li>
+	<li> Subsequent arguments are passed to the member function:
+		<code>
+Time later = now + 60;</code>
+		<p> becomes </p>
+		<code>Time later = now.operator+(60);</code>
+	 </li>
+	<li> So, a binary operator has only one argument </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Operator Member Functions </h1>
+<p> The addition operator as a member function of the <tt>Time</tt> class:
+</p>
+<code>class Time
+{
+   ...
+   Time operator+( int sec ) const;
+};
+
+Time Time::operator+( int sec ) const
+{
+   Time r = *this;  // Copy the implicit parameter
+   r.add_seconds( sec );
+   return r;
+}</code>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Overloading Operator Member Function Definition </h1>
+<div class='syntax'>
+<code><i>return_type</i> <i>ClassName</i>::operator<i>operator_symbol</i>(<i>parameters</i>)
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>Time Time::operator+(int sec)
+{
+   Time r = *this;
+   r.add_seconds(sec);
+   return r;
+}</code>
+	<h3> Purpose: </h3>
+		<p> Supply the implementation of an overloaded
+			operator member function. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Operator Overloading (member vs. global) </h1>
+<ul>
+	<li> Some operators (e.g., assignment) are required to be members </li>
+</ul>
+<p> When choosing, keep in mind:
+<ol>
+	<li> Non-members have only public access
+		<ul>
+			<li> Or, make it a friend (see Chapter 18) </li>
+		</ul>
+	</li>
+	<li> No implicit conversion for implicit parameters </li>
+</ol>
+<p> Member function is preferable </p>
+<ul>
+	<li> if the left argument is modified (<tt>+=</tt>) </li>
+	<li> if the data fields are not easily accessible </li>
+</ul>
+<p> Global function is preferable </p>
+<ul>
+	<li> to allow type conversions on the left operand </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Case Study: Fractional Numbers </h1>
+<ul>
+	<li> New type to represent a ratio of 2 integers:
+	<code>
+Fraction a(3, 4); // Represents 3/4
+Fraction b(7); // Represents 7/1 </code>
+	</li>
+	<li> Fractions should behave as other numbers:
+		<code>
+Fraction c; // Represents 0/1
+if(a &lt; b)
+   c = b - a;
+else
+   c = a - b;
+cout &lt;&lt; &quot;Value is &quot; &lt;&lt; c &lt;&lt; &quot;\n&quot;;</code>
+	</li>
+	<li> Should be able to mix w/other numbers:
+		<code>
+c = a + 3; // Should mean same as addition of 3/1</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Fractional Numbers  </h1>
+<ul>
+	<li> <tt>normalize()</tt> (<tt>fraction.h</tt>, line 70):
+		<ul>
+			<li> fraction is in lowest terms </li>
+			<li> denominator is not negative </li>
+		</ul>
+	 </li>
+	<li> Default constructor (line 14) sets value to 0 </li>
+	<li> Constructor (line 20) sets value to t/1 </li>
+	<li> Constructor (line 27) sets value to t/b, calls <tt>normalize()</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Fractional Numbers &mdash; <tt>fraction.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fraction.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Fractional Numbers &mdash; <tt>fraction.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fraction.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Fractional Numbers &mdash; <tt>fractiontest.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fractiontest.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	</h1>
+<h3> The First Algorithm </h3>
+<h4> GCD &mdash; Greatest Common Divisor </h4>
+<ul>
+	<li> By Euclid, 3rd century BCE </li>
+	<li> In <cite>The Elements</cite> </li>
+	<li> (Considered to be) among the first formally developed algorithms
+	</li>
+	<li> If <var>d</var> is the gcd of <var>m</var> and <var>n</var> (assume
+		<var>m</var> &lt; <var>n</var>) :
+		<ul>
+			<li> <var>d</var> divides <var>m</var> and <var>n</var> </li>
+			<li> <var>n</var>/<var>d</var> and <var>m</var>/<var>d</var> are
+				integers, so </li>
+			<li> <var>n</var>/<var>d</var> &minus; <var>m</var>/<var>d</var> is an
+				integer, so </li>
+			<li> (<var>n</var> &minus; <var>m</var>)/<var>d</var> is an integer,
+				which means </li>
+			<li> <var>d</var> divides (<var>n</var> &minus; <var>m</var> ) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	 </h1>
+<h3> The First Algorithm </h3>
+<h4> The word <dfn>algorithm</dfn> </h4>
+<p> Abu Ja'far Mohammed ibn M&ucirc;s&acirc; al-Khow&acirc;rizm&icirc; </p>
+<ul>
+	<li> Mathematician and textbook author </li>
+	<li> The word <dfn>algorithm</dfn> actually derived from his name
+		(al-Khow&acirc;rizm&icirc;) </li>
+	<li> Wrote <cite>Kitab al-jabr wa'l-muqabala</cite> (Rules of restoration
+		and reduction), around 825 CE </li>
+	<li> The word <dfn>algebra</dfn> is derived from the title </li>
+	<li> Much of the mathematical knowledge of medieval Europe was discovered
+		from Latin translations of this work </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Overloading Simple Arithmetic Operators </h1>
+<ul>
+	<li> <tt> = + - * / %</tt> </li>
+	<li> Can be written as a two-argument global function, or a one-argument
+		member function
+		<code>
+Fraction operator+(const Fraction&amp; left, const Fraction&amp; right)
+{
+   Fraction result(left.numerator() * right.denominator()
+      + right.numerator() * left.denominator(),
+      left.denominator() * right.denominator());
+   return result;
+}</code>
+	</li>
+	<li> Remaining operations defined similarly </li>
+	<li> Supply behavior that is analogous to the arithmetic operators;
+		intuitive </li>
+	<li> Parameter types need <b>not</b> match (<tt>Time::operator+</tt>)
+	</li>
+</ul>
+</div>
+
+<!-- TODO : discuss coercion, if not later -->
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Returning local objects </h3>
+<ul>
+	<li> In 14.3, object <tt>result</tt> created, then immediately returned </li>
+	<li> Just return an unnamed object
+		<code>
+Fraction operator+(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return Fraction(left.numerator() * right.denominator()
+      + right.numerator() * left.denominator(),
+      left.denominator() * right.denominator());
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	</h1>
+<h3> Overload Operators Only to Make Programs Easier to Read </h3>
+<ul>
+	<li> Overloading operators is fun </li>
+	<li> Resist the urge! </li>
+	<li> Don't be clever! </li>
+	<li> Use only obvious, intuitive meanings </li>
+	<li> Operators should mimic existing behavior </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3.1" )
+	//]]>
+	</script>
+	Overloading Unary Arithmetic Operators </h1>
+<ul>
+	<li> <tt>+ - * &amp;</tt> have both binary and unary forms </li>
+	<li> To overload unary form, reduce the number of parameters by one </li>
+	<li> E.g.:
+		<code>
+Fraction operator-(const Fraction&amp; value)
+{
+   Fraction result(-value.numerator(), value.denominator());
+   return result;
+}</code>
+	</li>
+	<li> A unary operator defined as a member function takes no arguments
+		(example in Section 14.6) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Overloading Comparison Operators </h1>
+<ul>
+	<li> Similar to the arithmetic operators </li>
+	<li> <i>Not</i> supplied automatically </li>
+	<li> Typically return a <tt>bool</tt>
+	<li> E.g.:  <tt>Time</tt>s are equal &lt;=&gt; difference is 0
+		<code>
+bool operator==(const Time&amp; a, const Time&amp; b)
+{
+   return a.seconds_from(b) == 0;
+}</code>
+	</li>
+	<li> Less-than for <tt>Fraction</tt>s:
+		<code>
+bool operator&lt;(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return numerator() * right.denominator()
+      &lt; denominator() * right.numerator();
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	</h1>
+<h3> Define Comparisons in Terms of Each Other </h3>
+<ul>
+	<li> Write 1 or 2 member functions; equality, and strict inequality (less
+		than) </li>
+	<li> Or, a single <tt>compare()</tt> method:
+		<ul>
+			<li> Returns 0 if args are equal </li>
+			<li> Negative if left arg is less than the right arg </li>
+			<li> Positive otherwise </li>
+		</ul>
+		<code>
+int Fraction::compare(const Fraction&amp; right) const
+{
+   return numerator() * right.denominator()
+      - denominator * right.numerator();
+   // Return the numerator of the difference
+}</code>
+	</li> 
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	 </h1>
+<h3> Define Comparisons in Terms of Each Other </h3>
+<ul>
+	<li> Define all comparisons in terms of these functions </li>
+</ul>
+<code>
+bool operator&lt;(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return left.compare(right) &lt; 0;
+}
+
+bool operator==(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return left.compare(right) == 0;
+}
+
+bool operator&lt;=(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return left.compare(right) &lt;= 0;
+}</code>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Symmetry and Conversion </h3>
+<ul>
+	<li> Arithmetic and comparison operators are generally nonmember
+		functions </li>
+	<li> No implicit conversions of left operand for member functions:
+		<p>Consider <tt>Fraction a;</tt></p>
+		<ul>
+			<li> <tt>(a == 2)</tt> works fine (given the constructors) </li>
+			<li> <tt>(2 == a)</tt> will <b>not</b> work if equality is a member
+				function.
+			</li>
+		</ul>
+	</li>
+	<li> These both work fine if <tt>==</tt> is a nonmember function </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Overloading Input and Output </h1>
+<p> <tt>&lt;&lt;</tt> and <tt>&gt;&gt;</tt> operators </p>
+<ul>
+	<li> Bit-shift operators (if operands are integers types) </li>
+	<li> In C++, commonly used to define stream insertion and extraction
+		operations </li>
+	<li> Overloaded just like the binary arithmetic operators </li>
+	<li> Should be non-member functions </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.1" )
+	//]]>
+	</script>
+Stream Output </h1>
+<ul>
+	<li> <tt>ostream</tt> class allows a character to be written to a stream
+	</li>
+	<li> <tt>&lt;&lt;</tt> already overloaded for all the built-in types:
+		<code>
+ostream&amp; operator&lt;&lt;(ostream&amp; out, char value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, int value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, float value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, double value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, bool value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, const char* value);
+ostream&amp; operator&lt;&lt;(ostream&amp; out, string value);</code>
+	</li>
+	<li> Left operand is a stream </li>
+	<li> Right operand is some value to be written </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Stream Output <tt>&lt;&lt;</tt> </h1>
+<ul>
+	<li> <tt>&lt;&lt;</tt> associates left-to-right </li>
+	<li> The stream itself is returned </li>
+	<li> This allows more complex expressions:
+		<code>
+int i = 34;
+cout &lt;&lt; i &lt;&lt; "\n";</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Stream Output <tt>&lt;&lt;</tt> </h1>
+<ul>
+	<li> E.g.: Overload <tt>&lt;&lt;</tt> for <tt>Fraction</tt>
+		<code>
+ostream&amp; operator&lt;&lt;(ostream&amp; out, const Fraction&amp; value)
+{
+   out &lt;&lt; value.numerator() &lt;&lt; "/" &lt;&lt; value.denominator();
+   return out;
+}</code>
+	</li>
+	<li> So we can now:
+		<code>
+Fraction n(3, 4);
+cout &lt;&lt; "The value of n is " &lt;&lt; n &lt;&lt; "\n";</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.2" )
+	//]]>
+	</script>
+Stream Input </h1>
+<ul>
+	<li> Stream library provides for all built-in types </li>
+	<li> Can be overloaded, much like the output operator </li>
+	<li> 2nd parameter is a <i>non-const</i> reference
+	<li> E.g.: Input operator for <tt>Time</tt>
+		<br> Assume <tt>Time</tt> is input as 3 separate integers:
+		<code>
+		9 15 00</code>
+		to represent 9:15:00 a.m.
+		<code>
+istream&amp; operator&gt;&gt;(istream&amp; in, Time&amp; a)
+{
+   int hours;
+   int minutes;
+   int seconds;
+   in &gt;&gt; hours &gt;&gt; minutes &gt;&gt; seconds;
+   a = Time(hours, minutes, seconds);
+   return in;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> Peeking at the Input </h3>
+<p> You may put a single character back into certain streams </p>
+<p> E.g.: We want to allow a user to input a <tt>Fraction</tt> as
+	a single integer (<tt>7</tt>), or as an integer, slash, integer
+	(<tt>3/4</tt>) </p>
+<ul>
+	<li> Read numerator </li>
+	<li> If next character is <tt>/</tt>, discard it, read denominator </li>
+	<li> Else, put that char back </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+ </h1>
+<h3> Peeking at the Input </h3>
+<code>istream&amp; operator&gt;&gt;(istream&amp; in, Fraction&amp; r)
+{
+   int t, b;
+   // Read the top
+   in &gt;&gt; t;
+   // If there is a slash, read the next number
+   char c;
+   in &gt;&gt; c;
+   if (c == '/')
+      in &gt;&gt; b;
+   else
+   {
+      in.unget();
+      b = 1;
+   }
+   r = Fraction(t, b);
+   return in;
+}</code>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Overloading Increment and Decrement Operators </h1>
+<ul>
+	<li> Typically alter the operand (argument) </li>
+	<li> Generally defined as member functions </li>
+	<li> Two versions of each:
+		<ol>
+			<li> prefix version:&nbsp;&nbsp;<tt>++x</tt> </li>
+			<li> postfix version:&nbsp;&nbsp;<tt>x++</tt> </li>
+		</ol>
+	 </li>
+	<li> C++ uses an extra argument to distinguish the postfix form
+		<code>
+class Fraction
+{
+   ...
+   Fraction&amp; operator++();&nbsp;&nbsp;// Prefix form
+   Fraction operator++(int unused);&nbsp;&nbsp;// Postfix form
+   ...
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Increment and Decrement Operators </h1>
+<code>Fraction&amp; Fraction::operator++()
+{
+   top += bottom;
+   return *this;
+}
+
+Fraction Fraction::operator++(int unused)
+{
+   Fraction clone(top, bottom);
+   top += bottom;
+   return clone;
+}</code>
+<ul>
+	<li> Prefix returns a reference </li>
+	<li> Postfix does more work </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Avoid Dependencies on Order of Evaluation </h3>
+<ul>
+	<li> <tt>++x</tt> &mdash; increments x, then evaluates </li>
+	<li> <tt>x++</tt> &mdash; evaluates x, then increments </li>
+	<li> Statements like these are a common source of errors:
+		<code>
+int i = 0;
+int j = 0;
+vector&lt;double&gt; s(10);
+double a = s[i++]; // a is s[0], i is 1
+double b = s[++j]; // b is s[1], j is 1</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Avoid Dependencies on Order of Evaluation </h3>
+<ul>
+	<li> C++ does not define the order that operands are evaluated for most
+	operators </li>
+	<li> This code is not only confusing, it is <strong>ambiguous</strong>:
+		<code>
+int i = 5;
+int x = i + ++i;</code>
+	</li>
+	<li> <var>x</var> is either 10 or 11 </li>
+	<li> The compiler will do whatever it feels is most efficient</li>
+	<li> Subtle error; it may appear to work, but it is unreliable </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Inconsistent Operations </h3>
+<ul>
+	<li> Make sure meaning of operators is consistent </li>
+	<li> Examples of equivalences a good programmer would expect:
+		<table width='100%'>
+			<tr>
+				<td><code>
+i++
+++i
+i += c
+i -= c
+i - j
+- (-i)</code>
+				</td>
+				<td><code>
+i = i + 1
+i = i + 1
+i = i + c
+i = i - c
+i + (-j)
+i</code>
+				</td>
+			</tr>
+		</table>
+	</li>
+	<li> A copy made by a constructor should be identical to the object
+		created by assignment </li>
+	<li> There are many others </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "6.1" )
+	//]]>
+	</script>
+Iterators and Overloaded Operators </h1>
+<ul>
+	<li> Pointers can be used to step through an array:
+		<code>
+double sum(const double data[], int size)
+{
+   double* p = data;
+   double* q = p + size;
+   double sum = 0.0;
+   while (p != q)
+   {
+      sum += *p;
+      ++p;
+   }
+   return sum;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Iterators and Overloaded Operators </h1>
+<ul>
+	<li> Operations used:
+		<ul>
+			<li> Start at the beginning </li>
+			<li> Integer addition on pointers </li>
+			<li> Compare pointers </li>
+			<li> Dereferencing </li>
+			<li> Increment </li>
+		</ul>
+	</li>
+	<li> STL classes overload operators </li>
+	<li> Containers return iterators to the beginning </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Iterators and Overloaded Operators </h1>
+<ul>
+	<li> Compare to the same function that acts on a <tt>list</tt>:
+		<code>
+double sum(const list&lt;int&gt;& data)
+{
+   list&lt;int&gt;::iterator p = data.begin();
+   list&lt;int&gt;::iterator q = data.end();
+   double sum = 0;
+   while (p != q)
+   {
+      sum += *p;
+      ++p;
+   }
+   return sum;
+}</code>
+	</li>
+	<li> Only the definitions of <tt>p</tt> and <tt>q</tt> have changed </li>
+	<li> <tt>!=  ++  *</tt> keep the same meaning </li>
+</ul>	
+</div>
+
+<div class='slide'>
+<h1> Implementing Iterator Operators </h1>
+<ul>
+	<li> In 12.2 we implemented our own <tt>Iterator</tt>, defined on a
+		<tt>List</tt> of strings  </li>
+	<li> We can rewrite those functions as operators:
+		<code>
+Iterator&amp; Iterator::operator++(int)
+{
+   assert(position != NULL);
+   position = position-&gt;next;
+   return *this;
+}
+
+string Iterator::operator*() const
+{
+   assert(position != NULL);
+   return position-&gt;data;
+}</code>
+</ul>	
+</div>
+
+<div class='slide'>
+<h1> Implementing Iterator Operators </h1>
+<code>
+bool Iterator::operator==(const Iterator&amp; b) const
+{
+   return position == b.position;
+}
+
+bool Iterator::operator!=(const Iterator&amp; b) const
+{
+   return position != b.position;
+}</code>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+	Overloading the Assignment Operators </h1>
+<ul>
+	<li> Must be a member function </li>
+	<li> Is <i>automatically generated</i>
+		<ul>
+			<li> Member-wise copy (<dfn>shallow</dfn> copy) </li>
+			<li> Default and copy constructors and destructor also supplied by
+				compiler </li>
+		</ul>
+	 </li>
+	<li> Default behavior sufficient for many classes (including our
+		<tt>Fraction</tt> class) </li>
+	<li> Explicitly supply if class has outside references (see Chapter 15)
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "7.1" )
+	//]]>
+	</script>
+Overloading Compound Assignment Operators </h1>
+<p> <tt>+= -= *=</tt> , etc., combine operations of arithmetic and
+	assignment </p>
+<ul>
+	<li> <i>Never</i> supplied automatically </li>
+	<li> If, e.g., <tt>+</tt> is defined, and assignment makes sense, then
+		<tt>+=</tt> should be supplied
+		<code>
+Fraction&amp; Fraction::operator+=(const Fraction&amp; right)
+{
+   top = top * right.denominator() + bottom * right.numerator();
+   bottom *= right.denominator();
+   normalize();
+   return *this;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+	</h1>
+<h3> Define One Operator in Terms of Another </h3>
+<ul>
+	<li> Ensures consistent behavior </li>
+	<li> Given <tt>Fraction::operator+=</tt>, define <tt>+</tt>:
+		<code>
+Fraction operator+(const Fraction&amp; left, const Fraction&amp; right)
+{
+   Fraction clone(left); // Copy the left argument
+   clone += right; // Add the right argument to it
+   return clone; // Return the updated value
+}</code>
+	</li>
+	<li> Note, a copy of a local object is returned </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+	 </h1>
+<h3> Define One Operator in Terms of Another </h3>
+<p>	Or, given <tt>Fraction::operator+</tt>, define <tt>+=</tt> this way: </p>
+<code>Fraction&amp; operator+=(Fraction&amp; left, const Fraction&amp; right)
+{
+   Fraction sum = left + right;
+   left = sum;
+   return left;
+}</code>
+<ul>
+	<li> Note, a reference to an existing object is returned </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "8" )
+	//]]>
+	</script>
+Overloading Conversion Operators </h1>
+<ul>
+	<li> C++ performs a wide variety of <dfn>implicit</dfn> conversions
+		(<dfn>coercions</dfn>) </li>
+	<li> E.g., float multiplication is performed here:
+		<code>
+6 * 3.1415926</code>
+	</li>
+	<li> For user-defined classes, there are 2 categories of conversions to
+		consider:
+		<dl>
+			<dt> <em>From</em> a type <em>to</em> the new user-defined type
+			</dt>
+			<dd> Accomplished with constructors </dd>
+
+			<dt> <i>From</i> the new user-defined type <em>to</em> another type </dt>
+			<dd> Uses a <dfn>conversion operator</dfn> </dd>
+		</dl>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators </h1>
+<h2> Constructors</h2>
+	<ul><li> Conversion <em>to</em> a user-defined type is handled by a
+		constructor </li>
+	<li> E.g., <tt>Fraction</tt> has a constructor that takes a single integer </li>
+	<li> Addition is defined on 2 <tt>Fraction</tt>s </li>
+	<li> C++ will use this to convert an integer to a <tt>Fraction</tt> </li>
+	<li> So, addition between a <tt>Fraction</tt> and an integer will be
+		performed </li>
+	<li> <strong>Note:</strong>  The compiler performs at most one level of
+		user-defined type conversion when matching an overloaded function </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators </h1>
+<ul>
+	<li> To add:
+		<code>
+Fraction a(3, 4);
+a = a + 2;&nbsp;&nbsp;// Addition of Fraction and integer</code>
+	</li>
+	<li> Two choices will be explored:
+		<ul>
+			<li> Convert <tt>Fraction</tt> to <tt>int</tt> ?  Can't </li>
+			<li> <em>Can</em> convert an <tt>int</tt> to a <tt>Fraction</tt> </li>
+		</ul>
+	</li>
+	<li> Uses the constructor to convert the integer into an unnamed
+		<tt>Fraction</tt> object </li>
+	<li> Then does normal <tt>Fraction</tt> addition
+		<code>
+a = a + Fraction(2);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators </h1>
+<ul>
+  <li> If addition is <em>not</em> a member function, this works too:
+    <code>
+b = 2 + a;</code>
+  </li>
+  <li> Use <tt>explicit</tt> keyword to inhibit implicit conversions
+    (<i>coercion</i>s)
+		<code>
+class Fraction {
+   explicit Fraction( int );
+   ...
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators </h1>
+<h2>Conversion Operators</h2>
+	<ul><li> Convert <i>from</i> a user-defined type </li>
+	<li> An operator must be supplied for each type to convert to </li>
+	<li> Definition:
+		<ul>
+			<li> Must be a member function </li>
+			<li> Has a type as its name </li>
+			<li> Takes no arguments </li>
+			<li> Has no return type </li>
+		</ul>
+	<li> May be used implicitly, or called explicitly (<dfn>cast</dfn>) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators  </h1>
+<p> To convert a <tt>Fraction</tt> to a <tt>double</tt>: </p>
+<code>Fraction::operator double() const
+{
+   // Convert numerator to double, then do division
+   return static_cast&lt;double&gt;(top) / bottom;
+}</code>
+<p> Used implicitly here: </p>
+<code>Fraction a(1, 2);
+double d = 7.0;
+double halfd = d * a; // a is converted to double to do multiplication
+cout &lt;&lt; "one-half seven is " &lt;&lt; halfd &lt;&lt; "\n";</code>
+</div>
+
+<div class='slide'>
+<h1> Overloading Conversion Operators</h1>
+<p> Can be called explicitly: </p>
+<code>cout &lt;&lt; double(a) &lt;&lt; "\n";</code>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8.1" )
+	//]]>
+	</script>
+Stream Loops and Conversion Operators </h1>
+<p> <tt>istream</tt> makes interesting and unorthodox use of operators: </p>
+<code>while (cin &gt;&gt; x)
+   ...</code>
+<ul>
+	<li> The <tt>&gt;&gt;</tt> operator returns <tt>istream</tt> </li>
+	<li> Not a valid boolean expression </li>
+	<li> <tt>istream</tt> provides a conversion operator that returns
+		<tt>false</tt> on end of input or on error </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Conversion, Coercion, and Casts </h3>
+<dl>
+	<dt> <dfn>conversion</dfn> </dt>
+	<dd> Any change in type </dd>
+
+	<dt> <dfn>coercion</dfn> </dt>
+	<dd> Automatic (implicit) change of type
+		<code>
+Fraction f = 10;</code>
+	</dd>
+	<dd> Done by the compiler </dd>
+
+	<dt> <dfn>cast</dfn> </dt>
+	<dd> Explicitly requested by the programmer
+		<code>
+int n = static_cast&lt;int&gt;(x + 0.5);</code>
+	</dd>
+</dl>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Only One Level of Conversion </h3>
+<p> E.g., consider a <tt>Complex</tt> class: </p>
+<ul>
+	<li> Allows you to add <tt>Complex</tt> numbers </li>
+	<li> Allows you to add <tt>Complex</tt> to <tt>double</tt>s </li>
+</ul>
+<p> This won't work: </p>
+<code>Complex c(2, 3);
+Fraction a(1, 3);
+c = c + a; // Compiler reports an error</code>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Only One Level of Conversion </h3>
+<p> Must either: </p>
+<ul>
+	<li> Explicitly cast <tt>a</tt> to a double </li>
+	<li> Define a <tt>Complex</tt> operator in <tt>Fraction</tt> , or </li>
+	<li> Add a coonstructor to <tt>Complex</tt> that takes a <tt>Fraction</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "9" )
+	//]]>
+	</script>
+	Overloading the Subscript Operator </h1>
+<ul>
+	<li> Often defined on an indexable container (<tt>vector</tt> or
+		<tt>map</tt>) </li>
+	<li> Explicit argument is the index </li>
+	<li> Result is the value stored at the given position </li>
+	<li> Return a reference to the value to get an L-value </li>
+	<li> Must be a member function </li>
+	<li> operator<tt>[][]</tt> does <strong>not</strong> exist </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading the Subscript Operator &mdash; <tt>SafeArray</tt>
+</h1>
+<ul>
+	<li> The subscript operator checks that index is valid </li>
+	<li> Dumps program if not (see chapter on Exceptions) </li>
+	<li> First (non-const) version returns a reference, an L-value </li>
+	<li> The second version is <tt>const</tt>, returns a copy
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overloading the Subscript Operator 
+</h1>
+<code>class SafeArray
+{
+public:
+   SafeArray(int s);
+   SafeArray(const int v[], int s);
+   int&amp; operator[](int i);
+   int operator[](int i) const;
+private:
+   int size;
+   int* values;
+};
+
+SafeArray::SafeArray(int s) : size(s), values(new int[size]) {}</code>
+</div>
+
+<div class='slide'>
+<h1> Overloading the Subscript Operator 
+</h1>
+<code>SafeArray::SafeArray(const int v[], int s) : size(s)
+{
+   values = new int[size];
+   for (int i = 0; i &lt; size; i++)
+   values[i] = v[i];
+}
+
+int&amp; SafeArray::operator[](int index)
+{
+   assert((index &gt;= 0) &amp;&amp; (index &lt; size));
+   return values[i];
+}
+
+int SafeArray::operator[](int index) const;
+{
+   assert((index &gt;= 0) &amp;&amp; (index &lt; size));
+   return values[i];
+}</code>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "10" )
+	//]]>
+	</script>
+	Overloading the Function Call Operator </h1>
+<ul>
+	<li> Objects can be used as functions (<i>function object</i>) </li>
+	<li> Must be defined as a member function </li>
+	<li> Can carry (and change) its own data values </li>
+	<li> <em>Only</em> operator where the number of arguments is <em>not</em>
+		fixed </li>
+	<li> Can be passed where template functions can't </li>
+	<li> Used extensively by various generic algorithms in the STL </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> The Function Call Operator </h1>
+<ul>
+	<li> Simple to write a function that takes no arguments and returns a random
+		number on [1, 100]
+		<code>
+int rand_100()
+{
+   return 1 + rand() % 100;
+}</code>
+	</li>
+	<li> More difficult to write a similar function (no args) that returns
+		a value on [a, b], where a and b aren't known until run time </li>
+	<li> A function object makes it simple: </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Function Call Operator &mdash; <tt>RandomInt</tt> </h1>
+<code>class RandomInt
+{
+public:
+   RandomInt(int ia, int ib);
+   int operator()();
+private:
+   int a, b;
+};
+
+RandomInt::RandomInt(int ia, int ib) : a(ia), b(ib) {}
+
+int RandomInt::operator()()
+{
+   return a + rand() % (b - a + 1);
+}</code>
+</div>
+
+<div class='slide'>
+<h1> The Function Call Operator</h1>
+<p> Declare an instance, then use it as a function: </p>
+<code>RandomInt a(7, 15); // Return random values from 7 to 15
+cout &lt;&lt; "one random value " &lt;&lt; a() &lt;&lt; "\n";
+cout &lt;&lt; "and another " &lt;&lt; a() &lt;&lt; "\n";</code>
+</div>
+
+<div class='slide'>
+<h1> The Function Call Operator</h1>
+<h2>Variable arguments</h2>
+<p> The only operator where the number of arguments is not fixed </p>
+<code>class RandomInt
+{
+public:
+   RandomInt(int ia, int ib);
+   int operator()();
+   int operator()(int nb);
+   int operator()(int na, nb);
+private:
+   int a, b;
+};</code>
+</div>
+
+<div class='slide'>
+<h1> The Function Call Operator </h1>
+
+<code>RandomInt::RandomInt(int ia, int ib) : a(ia), b(ib) {}
+
+int RandomInt::operator()()
+{ return a + rand() % (b - a + 1); }
+
+int RandomInt::operator()(int nb)
+{ return a + rand() % (nb - a + 1); }
+
+int RandomInt::operator()(int na, int nb)
+{ return na + rand() % (nb - na + 1); }</code>
+</div>
+
+<div class='slide'>
+<h1> The Function Call Operator </h1>
+<p>The function selected will be determined by the number of arguments
+provided: </p>
+<code>RandomInt r(3, 7);
+cout &lt;&lt; "random value between 3 and 7 " &lt;&lt; r() &lt;&lt; "\n";
+cout &lt;&lt; "random value between 3 and 10 " &lt;&lt; r(10) &lt;&lt; "\n";
+cout &lt;&lt; "random value between 23 and 30 " &lt;&lt; r(23, 30) &lt;&lt; "\n";</code>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "5" )
+		//]]>
+	</script>
+</h1>
+<h3> Other Operators </h3>
+<p> Operators not commonly used, hence, not commonly overloaded: </p>
+<dl>
+	<dt> Comma operator </dt>
+		<dd> Evaluates operands left-to-right </dd>
+		<dd> Returns right-most value </dd>
+		<dd> Has lower precedence than assignment </dd>
+	<dt> <tt>&amp;</tt> , <tt>|</tt> and <tt>^</tt> </dt>
+		<dd> <tt>^</tt> has lower precedence than addition </dd>
+		<dd> <tt>a ^ 3 + 1</tt> is really <tt>a ^ (3 + 1)</tt> </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "5" )
+		//]]>
+	</script>
+	
+</h1>
+<h3> Other Operators </h3>
+<dl>
+	<dt> <tt>&amp;&amp;</tt> and <tt>||</tt> </dt>
+		<dd> Lose their short-circuit logic when overloaded </dd>
+	<dt> <tt>~</tt> and <tt>!</tt> </dt>
+		<dd> bit-wise and logical negation </dd>
+		<dd> <tt>!</tt> more commonly overriden </dd>
+	<dt> <tt>-&gt;</tt> </dt>
+		<dd> Can make <i>smart pointers</i> </dd>
+	<dt> <tt>new</tt> and <tt>delete</tt> </dt>
+		<dd> Also operators </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "6" )
+		//]]>
+	</script>
+</h1>
+<h3> Inline Functions </h3>
+<ul>
+	<li> Avoid overhead of function calls
+		<ul>
+			<li> pushing arguments on to the activation record stack, transfer of
+				control, return from function, popping arguments off the stack </li>
+			</ul>
+	</li>
+	<li> Body expanded in place of each call
+		<ul>
+			<li> So, the program gets larger </li>
+			</ul>
+	</li>
+	<li> Only for very short functions:
+		<ul>
+			<li> three or fewer assignment statements, </li>
+			<li> a single conditional (if) statement, and/or </li>
+			<li> a return statement </li>
+		</ul>
+	<li> Compiler will inline what it wants to </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "6" )
+		//]]>
+	</script>
+	
+</h1>
+<h3> Inline Functions </h3>
+<ul>
+	<li> Precede definition w/ <tt>inline</tt> </li>
+	<li> Place in interface file
+		<code>
+inline bool operator&lt;(const Fraction&amp; left, const Fraction&amp; right)
+{
+   return left.compare(right) &lt; 0;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "6" )
+		//]]>
+	</script>
+
+</h1>
+<h3> Inline Functions </h3>
+<ul>
+	<li> Same for member function (placed outside the class, but in the
+	interface file)
+		<code>
+inline Fraction&amp; Fraction::operator++()
+{
+   top += bottom;
+   return *this;
+}</code>
+	</li>
+	<li> Alternatively, define member function inside class definition
+		<ul>
+			<li> <tt>inline</tt> keyword not needed </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "11" )
+	//]]>
+	</script>
+	Case Study: Matrices </h1>
+<ul>
+	<li> Tabular collection of numbers:
+	
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "mat1.png" )
+		//]]>
+		</script>
+		</div>
+	</li>
+	<li> Important tools in mathematics </li>
+	<li> Take a course in Linear Algebra </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices </h1>
+<p> Operations on matrices: </p>
+<dl>
+	<dt> Addition </dt>
+		<dd>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "mat_add.png" )
+		//]]>
+		</script>
+		</div>
+		</dd>
+	<dt> Scalar multiplication </dt>
+		<dd>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "mat_scalar_mult.png" )
+		//]]>
+		</script>
+		</div>
+		</dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices </h1>
+<dl>
+	<dt> Matrix multiplication </dt>
+		<dd> The (<var>i</var>, <var>j</var>) element of the product is formed
+			by multiplying the <var>i</var><sup>th</sup> row of the left operand
+			by the <var>j</var><sup>th</sup> column of the second:
+			<div class='center'>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "mat_row_mult.png" )
+			//]]>
+			</script>
+			</div>
+		<dd> Apply algorithm to all rows of first by all columns in second
+			<div class='center'>
+		<script type='text/javascript'>
+			//<![CDATA[
+				image( "mat_mult.png" )
+			//]]>
+			</script>
+			</div>
+		</dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices </h1>
+<p> Data type: </p>
+<ul>
+	<li> 2D array:
+		<ul>
+			<li> Indices not checked </li>
+			<li> Need helper functions to copy </li>
+			<li> Can't use standard arithmetic operators </li>
+		</ul>
+	 </li>
+	<li> Create <tt>Matrix</tt>:
+		<ul>
+			<li> Number of ROWS and COLUMNS variable; can't use a 2D array
+				underneath </li>
+			<li> Use a 1D array.  So, element<i>i,j</i> will be
+				found at
+					<code>i * COLUMNS + j</code>
+			 </li>
+		</ul>
+	 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Case Study: Matrices </h1>
+<ul>
+	<li> Subscripting:
+		<ol>
+			<li> Overload function-call operator, OR </li>
+			<li> Subscript (<tt>[]</tt>) returns <tt>MatrixRow</tt>, which
+				provides its own (<tt>[]</tt>) operator </li>
+		</ol>
+	<li> We'll do both </li>
+	<li> We also need:
+		<ul>
+			<li> const vs. non-const =&gt; also provide a
+				<tt>ConstMatrixRow</tt> </li>
+		</ul>
+	</li>
+	<li> Small functions will be <tt>inline</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 14.11 Case Study: Matrices &mdash; <tt>matrix1.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrix1.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> 14.11 Case Study: Matrices
+	&mdash; <tt>matrix1.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrix1.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> 14.11 Case Study: Matrices
+	&mdash; <tt>matrixtest1.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "matrixtest1.cpp" )
+	//]]>
+</script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Predicate Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Predicate Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>S</span>o far you've learned how to write
+            procedures and functions</b>, and how to 
+            use the <code>if</code> statement to make decisions. In this section, we want 
+            to <b>marry</b> those two concepts together,
+            and learn how to write <b>predicate</b> (or logical) functions.
+        </p>
+        <p>
+        These are similar to the problems you'll see on your CS 170 programming proficiency quizzes.
+        We'll start by looking at the concept of selection in
+            the context of writing your own functions.
+        </p>
+    <h2>Functions and Selection</h2>
+        <p><b><span class='cap2'>W</span>ith procedures</b>, it really doesn't matter (syntactically) if you
+            always have two alternatives. If you use a simple <code>if</code>
+            statement, then when the condition is <code>true</code>, the
+            actions in the body of the statement are executed; when the
+            condition is <code>false</code> then <b>nothing</b> happens.
+        </p>
+        <p> With a function, though, it's possible to have a <code>return</code>
+            statement inside of an <code>if</code> statement. If you do that,
+            though, you have to return a value in each and every case:
+            when your condition is <code>true</code> <b>and</b> when
+            your condition is <code>false</code>. That means that functions
+            using <code>if</code> can have <b>several</b> different
+            <code>return</code> statements, as long as every single
+            branch leads to a <code>return</code>.
+        </p>
+        <p> Let's look at a simple example. </p>
+    <h3>The <code>isOdd()</code> Function</h3>
+        <p> You can tell if an integer is odd by using the remainder
+            operator. If the remainder of the number divided by 2 is 1,
+            then the number is odd. We can put that algorithm
+            into a function like this:
+            <img src="images/functions10.gif" class="inline" alt="An isOdd() function.">
+            Notice that:
+        </p>
+        <ul>
+            <li><code>isOdd()</code> is a <b>predicate</b> function. That is,
+                it has a <code>boolean</code> return type.
+            </li>
+            <li>The function has one parameter, <code>n</code> which is
+                the number to test.
+            </li>
+            <li>If the remainder of the number divided by 2 is 1, we
+                return <code>true</code>, just like we said.
+            </li>
+        </ul>
+        <p><b class='ry'>So why is the compiler complaining?</b></p>
+        <p> The answer is very simple, yet it is one that students frequently
+            struggle with. A function must return a value for <b>each and
+            every path</b> through the code. This function returns a value
+            when the number <code>n</code> is odd. What does it do when the number is
+            even?
+        </p>
+        <p><b class='ry'>Nothing!</b></p>
+    <h4>Four Solutions</h4>
+        <p> There are several different ways to fix this problem. The
+            first way is how we've been doing it in class (and the classical
+            solution). Simpley create a <code>result</code> variable
+            at the top of your function, modify <code>result</code>
+            as necessary inside your <code>if</code> statement,
+            and then <code>return result</code> at the very
+            end of your function. That way you only have <b>one exit</b>
+            from your function.
+        </p>
+        <p> If you want to skip the <code>result</code> variable and
+            use the multiple-return style, then here are two additional
+            solutions that will work:
+        </p>
+        <ol>
+            <li class="d"> You can add an <code>else</code> clause for
+                the case when the number is <b>even</b> like this:<br>
+                <img src="images/functions11.gif" class="inline" alt="Using else in a function.">
+            </li>
+            <li class="d"> Since the <code>return</code> statement <b>ends
+                the function</b> when the number is odd (inside the
+                <code>if</code> statement body), any code following it
+                is <b>only executed when the number is even</b>. That
+                means you really don't need an <code>else</code>; you
+                can just write this:<br>
+                <img src="images/functions12.gif" class="inline" alt="The &quot;alternative&quot; return.">
+            </li>
+        </ol>
+    <h4>Boolean Return Values</h4>
+        <p> The fourth alternative is a little harder to explain, but you
+            should make the effort to understand it. Often, the <b>best</b>
+            way to implement a predicate function is to avoid using
+            <code>if</code> statements at all, and simply return the
+            result of the Boolean expression. Let me explain how that
+            works.
+        </p>
+        <p> Assume that we take the test expression inside the <code>if</code>
+            statement, and store it inside a <code>boolean</code> variable.
+            Once we do that, the variable (<code>result</code>) will
+            contain <code>true</code> if the number is odd and <code>false</code>
+            if the number is even.
+        </p>
+        <p> Then, we can simply <b>return</b> that <code>boolean</code> variable,
+            instead of the literal values, <code>true</code> or <code>false</code>,
+            like this:<br>
+            <img src="images/functions13.gif" class="inline" alt="Returning a boolean variable.">
+        </p>
+        <p> Of course, we really don't <b>need</b> the variable <code>result</code>,
+            do we? Instead, we can just return the Boolean expression
+            result like this:<br>
+            <img src="images/functions14.gif" class="inline" alt="Returning a boolean variable.">
+            This is a fairly standard way to write a predicate function.
+        </p>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>2.3&mdash;Java Applets</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner12">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 2.3</p>
+        <p id='lessonTitle'>Java Applets</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/applet01.gif" class="right" alt="A Java applet on a Web page.">
+        <b><span class="cap">J</span>ava <i>applets</i> are programs that
+            are intended to run inside of your Web browser</b>, like  Ben Permadi's
+            <a href="http://www.permadi.com/java/spaint/index.html" target="_blank">
+            <b>Kaleidoscope Painter</b></a> shown on the right.
+        </p>
+    <div class='alert'>
+        <p>Even though Java applets run inside a "sandbox" inside your Web browser,
+            it's possible that bugs in the JVM may allow malicious programs to "break out"
+            and take over you computer. That happened on the Mac in Summer 2012, when Apple
+            failed to keep their JVM updated with the latest fixes and with Oracle over
+            Christmas, with all versions of the Java 7 JVM.<br /><br />In January, the Department of
+            Homeland Security recommended that all users disble the Java plugin, that
+            allows Java applets to run in your Web Browser. While I will show you
+            how to write Java applets in this class (as a way to create graphical
+            programs), we'll run them using the Java IDE, which doesn't carry the
+            same risks as running the code in your Web browser.
+        </p>
+    </div>
+        <p> Java programs come in two basic flavors: <b>applications</b>
+            that are written to be run as standalone programs on your local machine,
+            and <b>applets</b>, which are graphical programs that may be embedded inside a
+            Web page, provided the viewer is using a Browser plugin that can run them.
+        </p>
+        <p> In one of your homework assignments, you created
+            your first Java applet: <b>MyFirstJavaApplet</b>;
+            now, let's see what makes it work. In this section, you'll learn:
+        </p>
+        <ul>
+            <li> about the difference between JavaScript and Java applets</li>
+            <li> about the differences between Java applets and Java applications</li>
+            <li> how to display text output in a Java applet</li>
+            <li> about the different applet methods that you can override</li>
+        </ul>
+        <p> Let's start by looking at the difference between
+            JavaScript and Java applets.
+        </p>
+    <h2>Applets and JavaScript</h2>
+        <p> Web pages created using HTML are <b><u>static</u></b> pages.
+            You can make your Web pages <b>interactive</b> or <b>dynamic</b>
+            by embedding programs written in JavaScript (or VBScript on
+            Internet Explorer). When you use a <b>scripting
+            language</b> like JavaScript, the actual human-readable
+            source code for your program is embedded along with the
+            HTML in your Web page.
+            <img src="images/b01.gif" class="right" alt="a JavaScript fragment.">
+            When your browser downloads a page
+            containing JavaScript, your browser itself interprets the
+            JavaScript code and then executes it, much the same way
+            it interprets and then displays the HTML code.
+        </p>
+        <p> Clicking <a href='javascript:alert("A%20JavaScript%20program.");'>
+            <b>this link</b></a>, for instance, runs a JavaScript program, that
+            displays a little popup dialog box. To see the <b>code</b>
+            for this program, you can right-click on the page, and choose
+            View Source in your browser. Scroll down to the third paragraph
+            of the content section, and you'll find the actual source
+            instructions that are interpreted by your Web browser when
+            you click the link.
+        </p>
+    <h3>Java Applets</h3>
+        <p> <b>Java applets</b>, on the other hand, work differently.
+            An <b>applet</b> is a <b>compiled</b> Java program that
+            is stored on a Web server. The code for the applet itself
+            <b>isn't</b> contained inside your Web page.
+            Instead, you add a special tag to your HTML, (originally the
+            <b>applet</b> tag, but with HTML5 the <b>object</b> tag is
+            used instead), that tells the Web browser where to
+            find the compiled code, and how to display it.
+        </p>
+        <p> When your Web browser encounters a reference to a Java
+            applet in a Web page, it sends another, separate
+            request to the server, asking for the compiled applet code.
+            This is the same way that images or other types of
+            "embedded" content, such as Flash movies, work.
+        </p>
+        <p> A Java applet is a special kind of Java program, because it
+            can't run on its own: it needs a Web browser to give it a
+            "home". When your Web browser receives the compiled Java
+            program from the Web server, it launches a <b>Java Virtual
+             Machine</b> (this is the interpreter that will run the
+             Java program), provides a bit of screen real estate for
+             the applet to use, and then lets the applet start running.
+        </p>
+        <div class='alert'>
+        <p><b><span style="color: red;">Note:</span></b>
+            Java applets <b>do not</b> have a <code>main()</code> method,
+            like the applications you've written. That means
+            that <b>another Java program</b>, (one having a <code>main()</code>
+            method), must be used to display them. This "display-my-applet"
+            program is built-in to your Web browser, or, you can run it
+            as an external program called <b>appletviewer</b>. If you attempt
+            to "run" your applet class by itself, you'll get an error message
+            that complains about the missing <code>main()</code> method.
+        </p>
+        </div>
+        <p>You won't actually need
+            to use any HTML to create your applets using DrJava. DrJava
+            contains a built-in applet viewer so you can run
+            your applet on your local machine.
+        </p>
+    <h2>Applets and Applications</h2>
+        <p> Now that you know what a Java applet is, and you've
+            created and run your first applet, let's see how it is different
+            from the applications you've written up to now. To do that,
+            we'll compare <b>MyFirstJavaApplet</b> to <b>MyFirstConsoleProgram</b>,
+            two of the programs you typed in and ran in the last chapter.
+        </p>
+        <p> If you look closely at <b>MyFirstJavaApplet</b> you'll see that
+            most of it looks familiar, but it also
+            looks a little <b>strange</b> as well. That's because
+            while it's <b>similar</b> to a console program,
+            it's not <b>exactly</b> the same.
+        </p>
+    <h3>The Class Header</h3>
+        <p> Let's take a look at a few of the syntax issues
+            that arise because of the differences between
+            applets and applications.<br>
+            <img src="images/class-header.png" class="inlineCenter" alt="The class headers.">
+            The class header for the applet <b>MyFirstJavaApplet</b>, on line 9, is
+            almost identical to the header for <b>MyFirstConsoleProgram</b> on line 7.
+            As you can see, the <b>only</b> difference is that the
+            applet contains an <b>extra phrase</b>, <code>extends Applet</code>
+            following the class name. Let's look at what that means.
+        </p>
+        <h3>What is "extends Applet"?</h3>
+        <p> The word <code><b>extends</b></code> following the class name is one
+            of Java's keywords like <code>public</code> and <code>class</code>.
+            The <code>extends</code> keyword means that what
+            precedes it (in this case the <code>public class MyFirstJavaApplet</code>),
+            <b>adds</b> something to, or <b>builds upon</b>, what follows it (in this
+            case, something called <code><b>Applet</b></code>).
+        </p>
+        <p> The ACM console
+            program you created in this chapter did the same thing, <b>except</b>
+            that your ACM program extended <code>ConsoleProgram</code>.
+            This invokes the object-oriented feature called <b>inheritance</b>.
+            We'll study more about inheritance later in the text.
+        </p>
+        <div class='info'>
+        <p>You might wonder why <b>MyFirstConsoleProgram.java</b> doesn't
+            have a similar <code>extends</code> clause tacked onto the end of
+            <i>its</i> header line. Surprisingly, <b>it does</b>, (in a way). If you
+            don't explicitly specify a superclass when you write a class
+            definition, Java <b>implicitly</b> tacks on the phrase
+            <code>extends Object</code> to the end. You can, if you like,
+            add this code yourself to <code>MyFirstConsoleProgram</code>
+            just to see that it works, (but you don't have to).
+        </p>
+        </div>
+        <p> <img src="images/herald.gif" class="right" alt="Herald of the Queen of Hearts.">
+            That makes sense. If a header is supposed to introduce a class,
+            this part of the header is <b>describing its family lineage</b>.
+            Sort of like a medieval herald at a ball:
+        </p>
+        <p> Remember that a header <b>introduces</b> a class and that
+            this part of the header describes its lineage. Sort of like
+            a medieval herald at a ball:
+        </p>
+        <p class="pullquote">
+            Announcing Fred, Duke of URL, heir of Oingarten
+        </p>
+        <p>The real question here is:</p>
+        <ul>
+            <li>"What's an <code>Applet</code>,</li>
+
+            <li>and where does <code>Applet</code> come from?"</li>
+        </ul>
+        <p> We can tell right away that <code>Applet</code> isn't a keyword like
+            <code>public</code> or <code>class</code> or <code>extends</code>,
+            because we know that all of the keywords are lowercase, and
+            <code>Applet</code> is capitalized.
+        </p>
+        <p> Perhaps, our knowledge of <b>convention</b> might help; and,
+            indeed it does. If you look back at the convention for
+            identifiers, you'll see that <b>only</b> classes begin with a
+            capital (like <code>Applet</code>) followed by lowercase characters.
+            In fact, <code>Applet</code> <b>is</b> a class, one of the classes
+            supplied as part of the standard class libraries that are
+            part of the "Java Platform".
+        </p>
+    <h4>Applet Ancestors</h4>
+        <p> <img src="images/g01.gif" class="right" alt="The applet class in the Java Docs">
+            The <code>Applet</code> class actually has quite a pedigree, which
+            you can discover by looking at the
+            <a href="http://download.oracle.com/javase/6/docs/api/java/applet/Applet.html" target="_blank">
+            <b>Java documentation (JavaDocs) for the <code>Applet</code> class</b></a>.<br>
+        </p>
+        <p> As you can see, the <b>Applet</b> class is descended from
+            the <code>Panel</code> class, which is a child of the
+            <code>Container</code> class, which is a subclass of
+            <code>Component</code>, which comes from <code>Object</code>,
+            the <b>root</b> or <b>base</b> class for <b>all</b>
+            Java classes, both the "built-in" classes, and the user-defined
+            classes that you'll create on your own.
+        </p>
+    <h4>Fully Qualified Names and Packages</h4>
+        <p>You might also notice in the documentation that the
+            full (or <i>fully-qualified</i>) name of the <code>Applet</code>
+            class is <code>java.applet.Applet</code>. The first part of the
+            fully-qualified name is the <b>package</b> that contains that class.
+            A <b>package</b> is just a way of describing to the Java compiler
+            and to the Java Virtual Machine the location where a specific class
+            we want to use is stored. In this case, the <code>Applet</code> class
+            is in the package, <code>java.applet</code>.
+        </p>
+        <div class='info'>
+        <p> Package names that begin
+            with <code>java</code> are part of the core Java packages, included
+            with the Java Platform.) This means that the actual class file
+            is stored in a folder named <b>applet</b>, which is, itself stored in
+            a folder named <b>java</b>. Usually <b>all</b> of these folders
+            and classes are stored in a Java archive file that the JVM
+            automatically searches every time it is launched.
+        </p>
+        </div>
+        <p> When you use a class inside a Java package, you <b>can always</b> write
+            out the fully-qualified name of the class. That means, our
+            original header <b>could</b> have been written like this:
+        </p>
+
+        <p class="code">
+            public class MyFirstJavaApplet extends java.applet.Applet
+        </p>
+        <p> Of course <b>that's a lot more work!</b> It's much easier simply to
+            use the name <code>Applet</code>. To do so, however, requires
+            that you add an <code>import</code> statement to the
+            program, just like we've done previously for the <code>acm.program</code>
+            package:<br>
+            <img src='images/applet-imports.png' class='inlineCenter' alt='Applet import statements.'>
+            In our case, since we said that our applet <code>extends Applet</code>,
+            we need to tell the compiler <b>where to find</b> the
+            <code>Applet</code> class. The <code>Applet</code> class
+            is in the package, <code>java.applet</code>.
+        </p>
+        <p> In addition to the <code>java.applet</code> package, your applets
+            will almost always import the classes in the <code>java.awt</code>
+            package. This package includes the <code>Graphics</code> class which
+            you'll use for drawing your output, and the <code>Color</code> and
+            <code>Font</code> classes which you'll meet later.
+        </p>
+    <h4>Review: Wildcard and Specific Imports</h4>
+        <p> Remember that you can also import <b>specific classes</b> from a package, by
+            writing something like:
+        </p>
+        <p class='code'>
+            &nbsp;&nbsp;&nbsp;import java.applet.Applet;<br>
+            &nbsp;&nbsp;&nbsp;import java.awt.Graphics;
+        </p>
+        <p> When you do this, you cannot then use another class in the
+            <code>Graphics</code> package, (say <code>Color</code> for
+            instance), without explicitly importing that class as well.
+            Some programmers prefer to explicitly import individual
+            classes because they feel it makes their code clearer. It
+            does not, however, make your programs any smaller to do so.
+        </p>
+        <div class='info'>
+        <p> Note that your console program, <b>MyFirstConsoleProgram</b>,
+            <b><u>doesn't</u></b> use the <code>import</code> statement because
+            it doesn't make use of any classes outside of the library named
+            <code>java.lang</code>. This package is <b>automatically</b> loaded
+            by every Java program, and it includes the <code>String</code>
+            class and the <code>System</code> class that we used in
+            our program.
+        </p>
+        </div>
+    <h2>The paint() Method</h2>
+        <p> Finally, both <b>MyFirstConsoleProgram</b> and
+            <b>MyFirstJavaApplet</b> contain a method that displays exactly
+            the same message:<br>
+            <img src="images/methods.png" class="inlineCenter" alt="The paint and run methods.">
+        </p>
+        <ul>
+        <li>In a console program, the <code>main()</code>
+            method is called automatically by the Java runtime when you
+            run your program. Inside that method you put <code>print()</code>
+            and <code>println()</code> statements to display your output.
+        </li>
+        <li> In an applet, there are actually <b>several</b> predefined
+            methods that are called whenever your applet
+            is run (either by your IDE or by your Web browser). These
+            <i>lifecycle</i> methods are <b>automatically</b>
+            invoked (or called) in a specific order. If you want to
+            do <code>output</code> in your applet, though, you'll put your code
+            inside the <code>paint()</code> method.
+        </li>
+        </ul>
+    <h3>The Method Header</h3>
+        <p> Remember that a method definition, like a class definition,
+            consists of both a <b>header</b>, and a <b>body</b>, and
+            that the method definition is placed <b>inside</b> the class
+            definition.
+        </p>
+        <p>The <code>paint()</code> method header consists of these four pieces:</p>
+        <ul>
+            <li><code>public</code>: This is the same <b>access specifier</b> you
+                used in your <code>main()</code> method or your ACM console
+                program's <code>run()</code> method. This
+                allows objects from different classes (like the
+                <code>Appletviewer</code> class or your Web browser)
+                to ask a <code>MyFirstJavaApplet</code> object to display itself.
+            </li>
+            <li><code>void</code>: Like the <code>run()</code> and <code>main()</code>
+                methods,  <code>paint()</code> performs an action, rather than
+                calculating a value. These kinds of methods have a
+                <code>void</code> <b>method return type</b>.
+            </li>
+            <li> <code>paint</code>: Just as you must spell <code>run()</code>
+                and <code>main()</code> correctly, or the Java runtime won't
+                <i>call</i> them, you must be careful to spell <code>paint</code>
+                exactly as shown. Writing <code>Paint()</code> or <code>PAINT()</code>
+                will not create an error, but your method won't be called
+                either. Your Web browser will <b>only</b> call the
+                <code>paint()</code> method, and it's very particular
+                about the spelling.
+            </li>
+            <li> <code>(Graphics pen)</code> : The <code>paint()</code> method
+                takes one, single parameter, a <code>Graphics</code> object,
+                that we've named <code>pen</code>. We could have named this
+                object anything we like, because "pen" is just an identifier.
+                Using <code>picasso</code> instead of <code>pen</code> would
+                have worked just as well.
+                <p class="note">Very often, this parameter is named "g",
+                    since it's very short and easy to type, kind of like
+                    using "i" for an array index. I prefer the name "pen"
+                    since it reminds me what the <code>Graphics</code>
+                    object actually does.
+                </p>
+            </li>
+        </ul>
+        <div class='alert'>
+            <p>Note, that unlike the <code>main</code> method in your console
+                program, applet methods <b>never</b> use the
+                <code>static</code> modifier.
+            </p>
+        </div>
+    <h3>Drawing Text</h3>
+        <p> Instead of using <code>System.out.println()</code>
+            to print a message on the <b>console window</b>, applets
+            <b>draw</b> your text on the surface of your applet by using the
+            <code>Graphics drawString()</code> method.
+        </p>
+        <p> With <code>println()</code>, you only need to supply
+            the text you want to display, since each line of output
+            appears immediately following the previous output. With
+            the <code>drawString()</code> method, though, you need to
+            provide three parameters:
+        </p>
+        <ul>
+            <li>the text you want to display</li>
+            <li>the horizontal position to start drawing</li>
+            <li>the vertical position to start drawing</li>
+        </ul>
+        <p> In this example, the words "Won't you tell me your name?" are
+            displayed 25 pixels in from the left-hand edge of the applet
+            and 40 pixels down from its top:<br>
+            <img src="images/drawstring.gif" class="inline" alt="The drawString coordinates.">
+            When drawing text, the horizontal (<b>x</b>), and vertical
+            (<b>y</b>) positions where the text appears are measured from
+            the upper-left corner of your applet, (not from the upper-left
+            corner of your screen or of your browser window).
+        </p>
+        <ul>
+            <li>The unit used for measurement is the <b>pixel</b></li>
+            <li>The x,y arguments represent the <b>baseline</b> of the
+                text&#8212;an imaginary line where the text "sits".
+            </li>
+        </ul>
+        <img src="images/g03.gif" alt="The Graphics coordinate system." class="inline">
+        <p class="note">Since the coordinates used by <code>drawString()</code>
+            represent the baseline of the text, if you use the coordinates 0,0,
+            all of your text will be positioned <b>outside</b> of your applet,
+            because it will be sitting "on top of" the top border. Java
+            (wisely) prohibits you from painting all over screen real estate
+            that you don't own, so you won't be able to see your text at all.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Java Applet Summary
+        </p>
+        <ul>
+            <li> Java applets have the same basic structure as a console program,
+                except that you need to add <code>extends Applet</code> to the
+                class header.
+            </li>
+            <li> The <code>Applet</code> class is contained in the standard Java
+                class libraries. To use it, you need to <code>import</code> the
+                <code>java.applet</code> package. Most features you'll use
+                also require you to import the <code>java.awt</code> package.
+            </li>
+            <li> Instead of a <code>main()</code> method, you'll display
+                output in your applet's <code>paint()</code> method. The
+                <code>paint()</code> method must have a single <code>Graphics</code>
+                parameter, which will automatically be supplied by the
+                runtime system.
+            </li>
+            <li>To display text, call the <code>Graphics drawString()</code> method inside
+                your <code>paint()</code> method. The method takes three
+                arguments or parameters: the <code>String</code> to display and
+                the position to display it as an x-y pair of integers.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

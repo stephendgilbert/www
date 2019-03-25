@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>15.3&mdash;Events and Interfaces</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner09">
+        <img id='lessonLogo' src='../images/d.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 15.3</p>
+        <p id='lessonTitle'>Events and Interfaces</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'><b><span class="cap">E</span>arlier in
+            the semester</b>,
+            you learned to write code to perform an action when a user clicked
+            a button on your ACM programs. To do that, you invoked
+            the magic incantation <code>addActionListener()s</code>
+            at the end of your <code>init()</code> method, and
+            then wrote an <code>actionPerformed()</code> method
+            which was automatically notified any time one of your
+            buttons was clicked.
+        </p>
+        <p> <img src='images/events.png' class='right' alt='World and clock.'>
+        Now that you've been formally introduced to interfaces, let's take
+            a closer look at what all that "mumbo jumbo" means.
+            We'll start by a little about Java's AWT event hierarchy.
+            I won't cover each of the classes in detail here; instead I'll try
+            to give you a high-level, practical overview.
+        </p>
+    <h2>Events</h2>
+        <p> <b><span class='cap2'>W</span>hile messages allow you to communicate with
+            your objects</b>, they don't allow your objects to "talk back."
+            Events change that.
+        </p>
+        <p> Events are external occurrences that let you know something has
+            happened in your program. Usually an event is triggered by a
+            user interacting with your program. When the user clicks on a
+            button, for instance, events allow the <code>Button</code> object
+            to notify you that this has occurred.
+        </p>
+        <p> In the Java's event model, objects have to <i>subscribe</i> to a
+            component's events. For instance, if I want my applet to do
+            something when a particular button is pressed, I have to <b>explicitly</b>
+            tell that button to "Notify me when something happens."
+            In ACM programs, the <code>Program</code> class does this for
+            you when you call <code>addActionListeners()</code>.
+        </p>
+        <p> This is just like subscribing to a magazine or an RSS feed on
+            the Web. If I don't ask the
+            button to notify me, it will keep the information to itself. Here
+            are the basic features of this scheme:
+            <img src='images/subscribe.png' class='right' alt='The RSS subscription button.'>
+        </p>
+        <ol>
+            <li class="d">Any component can generate events.</li>
+            <li class="d">Different components generate different kinds of events.</li>
+            <li class="d">Any class (not just components) can receive, or respond to, an event</li>
+            <li class="d">Responding classes must:
+            <ul>
+                <li><b>implement</b> the correct <b>interface</b></li>
+                <li><b>register</b> or <b>subscribe</b> to a components events</li>
+            </ul>
+            </li>
+        </ol>
+        <p> Let's see how this works by having our <code>Dot</code> objects,
+            from the last chapter, "move themselves" when the user drags them
+            with the mouse.
+            You'll find a copy of <b>Dot.java</b> and <b>TestDots.java</b>
+            in this chapter's code folder. Follow along as you read.
+        </p>
+    <h3>Step 1: Preparation</h3>
+        <p>
+            There are two things we have to change to <b>Dot.java</b> before
+            we can use Java's events.
+        </p>
+        <p>First, we have to begin by <b>importing</b>
+            the package that contains the event code: <code>java.awt.event</code>.
+            Once we've done that, we can use any of the classes and interfaces
+            in the <code>awt.event</code> package.<br>
+            <img src="images/e07.gif" class="inlineCenter" alt="Adding the implements phrase.">
+            Second, we have to add a new phrase, <code>implements MouseMotionListener</code>,
+            to the class header.
+            When we're done, the top of <b>Dot.java</b> should look like
+            the screenshot shown here.
+        </p>
+        <p> As soon as you add these statements and then
+            try to compile, DrJava "sends up a yellow flag", telling you
+            that you haven't implemented a particular abstract method.
+            We'll fix that error in a minute.
+        </p>
+    <h3>Step 2: Subscribing</h3>
+        <p> You subscribe to a particular event by telling the object that
+            generates events (in this case, our <code>Dot</code> objects),
+            that you want it to add you to its "list of subscribers." This
+            list of subscribers is called a <b>"listener list"</b>, and
+            there's a special method  to sign up for each of the events
+            that a component can generate.
+        </p>
+        <p> The method to sign up for events that occur when the mouse
+            is moved or dragged over a component is called
+            <code>addMouseMotionListener()</code>. Since we're going to have our
+            <code>Dot</code> objects "move themselves", we'll place this code
+            in the constructor:
+            <img src="images/e11.gif" alt="Subscribing to events RedDot01" class="inlineCenter">
+            When you subscribe to an event, you also have to pass along an
+            argument telling the component <b>who to notify</b> when the
+            event occurs. Again, this is like subscribing to a magazine;
+            you can have the magazines sent to yourself, or you can have
+            them sent to your in-laws as a gift.
+        </p>
+        <p> In our case, instead of a magazine subscription, our <code>Dot</code>
+            object will deliver a <code>MouseEvent</code> object whenever it notifies
+            its listener. We want our <code>Dot</code> object to send its notification
+            <b>back to itself</b>, and so we'll pass <code><b>this</b></code> as the
+            argument to <code>addMouseMotionListener()</code>. Passing
+            <code>this</code> as an argument tells the class to
+        </p>
+        <p class="pullquote">
+            Deliver the MouseEvent object to <b><i><u>me.</u></i></b>
+        </p>
+    <h3>Step 3: Responding to Events</h3>
+        <p> Now that our <code>Dot</code> is prepared to notify you, (or <b>itself</b>,
+            actually), whenever a <code>MouseEvent</code> occurs in its
+            neighborhood, you need to be prepared to respond. You respond
+            to events by writing methods.
+        </p>
+        <p> What methods should you write? Different "event packages" require
+            you to write different methods. If you were to look at the
+            <b>source code</b> for the <code>MouseMotionListener</code>
+            class itself you'd see:
+            <img src="images/e08.gif" class="inlineCenter" alt="The MouseMotionListener class.">
+            Notice that the definition of the interface includes two <i>abstract</i>
+            methods: <code>mouseMoved()</code> and <code>mouseDragged()</code>. By
+            adding the line <code>implements MouseMotionListener</code> to our
+            class header, we <b>promised</b> to define these two methods in our
+            class. Since we haven't yet done so, DrJava displays an error when
+            we try to compile.
+        </p>
+        <div class='drjava-info'>
+        <p> Finding and looking up the source code for an interface is
+            not the easiest thing to do. It's far easier to put your cursor
+            on the word <code>MouseMotionListener</code> in the class header,
+            and then use the <b>Javadoc->Look up word under cursor</b>
+            command on DrJava's <b>Tools</b> menu:<br>
+            <img src='images/drjava-lookup.gif' class='inlineCenter' alt='Looking up an interface in DrJava.'>
+        </p>
+        </div>
+        <p> Just add <b>both</b> of these methods to <b>Dot.java</b> and
+            your code will compile. Unfortunately, when you go to run
+            the applet, <b class='ry'>nothing happens</b>!
+        </p>
+    <h4>Nothing Happens????</h4>
+        <p> That's right! We haven't actually put any code into
+            the <code>mouseMoved()</code> or <code>mouseDragged()</code>
+            methods, but, when the user moves the mouse over <code>Dots</code>
+            on the applet, the <code>mouseMoved()</code> method <b>is</b> called.
+            Similarly, if the user drags the mouse (moving and holding
+            down the primary mouse button) over the applet, it
+            calls the <code>mouseDragged()</code> method.
+        </p>
+        <p> What happens if the user <b>clicks</b> the mouse while
+            over your applet? Nothing. The applet is "aware" that the
+            event has occurred, but because no one has subscribed to the
+            <code>MouseListener</code> (different than
+            <code>MouseMotionListener</code>), it keeps the information to
+            itself.
+        </p>
+    <h4>Using the MouseEvent</h4>
+        <p> When a <code>Dot</code> object calls the <code>mouseMoved()</code> or
+            <code>MouseDragged()</code> method, it passes along a reference
+            to the <code>MouseEvent</code> object that triggered all the
+            fuss. You can send messages to the <code>MouseEvent</code> object,
+            (here I've named it <code>e</code>, for event), to find
+            out what it's up to.
+        </p>
+        <p> Three of the <code>MouseEvent</code> messages you might find most
+            useful are <code>getX()</code>, <code>getY()</code>, and
+            <code>getPoint()</code>, which return the horizontal and
+            vertical mouse coordinates (starting at 0,0 in the upper-left corner
+            of the component generating the event, and increasing right and down)
+            when the <code>MouseEvent</code> occurred.
+        </p>
+        <p> We can use this information to reposition the <code>Dot</code> object
+            so that its center is positioned at the location of the mouse
+            drag event, like this:
+            <img src="images/e12.gif" class="inlineCenter" alt="Overriding the mouseDragged() method.">
+            Here's how the code works:
+        </p>
+        <ol>
+            <li class="d">On line 56 we retrieve the location of the mouse using
+                the <code>getPoint()</code> method, and store it in a local
+                <code>Point</code> variable named <code>mouseLoc</code>.
+            </li>
+            <li class="d">The location of the mouse returned by <code>getPoint()</code>
+                is relative to the <code>Dot</code> object itself, not to the
+                applet. To compare the coordinates to the actual center of the
+                object, we need to "add in" the current location of the <code>Dot</code>
+                object itself. We do this on lines 57 and 58 by using the
+                <code>translate()</code> method, (from the <code>Point</code> class),
+                and the <code>getX()</code> and <code>getY()</code> methods from
+                the <code>Dot</code> class itself. As part of our calculation,
+                we subtract the <code>radius</code> values, to get the
+                <i>center</i> of the <code>Dot</code>.
+            </li>
+            <li class="d">Finally, once the new point has been calculated, we
+                use the inherited <code>setLocation()</code> method to move the
+                center of the dot to the location of the mouse pointer.
+            </li>
+        </ol>
+        <p> You can
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/TestDots.html","The TestDots Applet","width=575,height=420,scrollbars=yes");'>
+            <b>run the applet</b></a> by clicking the hyperlink
+            in this sentence. Here's the applet after I've used the mouse to
+            rearrange some of the dots:
+            <img src="images/e13.gif" class="inlineCenter" alt="Running the TestDots applet.">
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Make these changes to <b>Dot.java</b> and then run <b>TestDots</b> and
+            arrange the dots on the program in a nice pattern.
+        </p>
+        </div>
+
+    <h2>Event Adapters</h2>
+        <p><b><span class='cap2'>N</span>otice that when you implemented</b> the
+            <code>MouseMotionListener</code> interface, you <b>only</b>
+            responded to the <code>mouseDragged()</code> event in the
+            <b>Dot</b> class.
+        </p>
+        <p> <img src='images/adapter01.png' class='right' alt='An electrical adapter.'>
+            However, even though you didn't do <b>anything</b> when the mouse
+            was moved without dragging, implementing the
+            <code>MouseMotionListener</code> interface <b>required</b> you to write <b>two</b> methods, but one
+            of those methods, (<code>mouseMoved()</code>), didn't do anything;
+            nevertheless, you still had to write the empty method; otherwise
+            your code would not compile.
+        </p>
+        <p> For many of the other event-listener classes, the situation is
+            even worse.
+        </p>
+        <ul>
+            <li>For <code>KeyListener</code> you have to write three methods</li>
+            <li>For <code>MouseListener</code> you have to write five</li>
+            <li>For <code>WindowListener</code> you have to write seven</li>
+        </ul>
+        <p> And, in many cases, such as <code>WindowListener</code>, <b>all</b> of
+            those methods will be empty, "dummy" methods, which seems kind
+            of a waste.
+        </p>
+        <p> Instead of writing all seven methods, why not simply create a
+            superclass <b>that has dummy methods for all seven</b>? Then, instead
+            of writing out the same dummy methods over and over, you can
+            just create a subclass, and override only the methods you want.
+        </p>
+        <p> That's a really good idea. So good, in fact, that the designers
+            of Java have already done this with the <b>event adapter
+            classes</b>. An adapter class is simply a class which implements
+            a specific event interface and then provides dummy methods for
+            each of the required methods.
+        </p>
+    <h3>What Adapters are Available?</h3>
+        <p> Java provides seven different adapter classes&#8212;one for each of
+            the event interfaces that contain multiple methods.
+        </p>
+        <div class='info'>
+        <p class>No adapter classes are provided for interfaces such
+            as <code>ItemListener</code> or <code>ActionListener</code>,
+            which contain only a single method, because there would be no
+            advantage to using the adapter class over the interface.
+             <img src="images/adapter03.png" class="right" alt="An ethernet adapter.">
+        </p>
+        </div>
+        <p>The seven adapter classes provided by Java include:</p>
+        <ul>
+            <li><code>ComponentAdapter</code></li>
+            <li><code>ContainerAdapter</code></li>
+            <li><code>FocusAdapter</code></li>
+            <li><code>KeyAdapter</code></li>
+            <li><code>MouseAdapter</code></li>
+            <li><code>MouseMotionAdapter</code></li>
+            <li><code>WindowAdapter</code></li>
+        </ul>
+    <h3>Using Adapters</h3>
+        <p> To use an adapter class you follow these steps:</p>
+        <ol>
+            <li class="d">Create an class that extends one of the existing
+                adapter classes.
+            </li>
+            <li class="d">Override the methods of interest in your inner class.</li>
+            <li class="d">Create an object of your inner class and send event
+                notifications to the new object.
+            </li>
+        </ol>
+    <div class='alert'>
+        <p> Normally, you'll use event adapters with <b>inner classes</b>, not
+            external classes as I'm doing in this example.
+            You'll see how to create an <b>inner class</b> in the next section.</p>
+    </div>
+        <p> Here's what that looks like for the <code>MouseAdapter</code>
+            class:<br>
+            <img src="images/adapter_lg.gif" class='inlineCenter' alt="Using the MouseAdapter class">
+        </p>
+    <h2>A MouseAdapter Example</h2>
+        <p> <b><span class='cap2'>L</span>et's look at a simple applet</b> that uses <code>MouseAdapter</code>
+            to change the background of the applet. The program,
+            <b>LabelClick.java</b>, which you can find in this chapter's
+            code folder, contains four <code>JLabel</code> objects,
+            captioned "Red", "Green", "Blue", and "Yellow", as shown here<br>
+            <img src="images/c04.png" class="inlineCenter" alt="Running the LabelClick applet">
+        </p>
+    <h3>The init() Method</h3>
+        <p> The applet itself doesn't implement <b>any</b> interface.
+            Instead the <code>init()</code> method calls a non-static factory
+            method named <code>makeLabel()</code>, and adds the <code>JLabel</code>
+            objects that the method creates to the surface of the applet:<br>
+            <img src="images/c05.png" class="inlineCenter" alt="Adding labels to the LabelClick applet">
+        </p>
+    <h3>The makeLabel() Factory Method</h3>
+        <p> The <b>factory method</b> <code>makeLabel()</code> takes two
+            parameters: the text that should appear on each label and the
+            color to use for the text. The method uses the color and the
+            text to initialize a <code>JLabel</code> (1), setting the background
+            and font along the way.<br>
+            <img src="images/c07.png" class="inlineCenter" alt="Adding labels to the LabelClick applet">
+            Before the label is returned, though, the <code>addMouseListener()</code>
+            method is called (2), and it is passed a variable named <code>changer</code>
+            which is an instance variable of the type <code>BackgroundChanger</code>.
+            You can see the instance variable definition marked at (3).
+        </p>
+    <h3>The BackgroundChanger</h3>
+        <p> The <code>BackgroundChanger</code> class is defined as a class
+            that <code>extends MouseAdapter</code>. Inside the class, only
+            the <code>mouseClicked()</code> method is overridden:<br>
+            <img src="images/c08.png" class="inlineCenter" alt="The BackgroundChanger class">
+            The method retrieves the foreground color from the component that was
+            clicked and uses it to set the background color of the component
+            that contains the clicked component. In this case, that means that
+            the applet's background color is changed as each label is clicked.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Events and Interfaces Summary
+        </p>
+        <ul>
+            <li>Events are <b>external occurrence</b> that your program can respond
+                to. Any component can generate or "fire" an event. Different types of
+                components fire different events.
+            </li>
+            <li>Any class can <b>respond to events</b>. To do so, the class must
+                <b>implement the correct interface</b>. Then, an instance of the
+                class must <b>register</b> with the individual component
+                firing the event.
+            </li>
+            <li>To respond to <code>MouseMotion</code> events, you must write
+                a class that <code>implements MouseMotionListener</code>. Your
+                class <b>must provide implementations</b> for <b>both methods</b>
+                defined in the interface.
+            </li>
+            <li>To <b>activate mouse motion listening</b> you must create an
+                instance of your listener class and <b>subscribe to a particular
+                component's event notifications</b> by calling it's
+                <code>addMouseMotionListener()</code> method, passing your
+                listener instance as an argument.
+            </li>
+            <li>Instead of implementing all of the methods in an interface, leaving
+                the undesired events as stubs, you may <b>extend an event adapter</b>
+                class and then just override the methods that you desire. To use
+                your new adapter class, create an instance and pass it to one
+                of the event registration functions.
+            </li>
+            <li>The Java libraries provide event adapters for <b>all of the
+                multi-method event-handling interfaces</b>.
+            </li>
+
+
+
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

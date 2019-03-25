@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Object and String Relations</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner13">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>Object and String Relations</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n addition to comparing
+            numbers</b>, you can
+            also use the equality operators to compare objects and
+            <code>Strings</code>. We're not really concerned with
+            comparing objects at this point, but learning how to
+            correctly compare <code>Strings</code> is <b>really</b>
+            important: <br>
+            <img src="images/zz03a.gif" class='inlineCenter' alt="Using the relational operators with objects and strings">
+            Unlike numeric comparisons, where you can mix your types with
+            abandon, you can <b>only</b> compare a <code>String</code> with another
+            <code>String</code>, a <code>Rectangle</code> with another
+            <code>Rectangle</code>, and so forth.
+        </p>
+        <div class='info'>
+        <p> You <b>may</b>, however, use the equality operators
+            to compare a variable of type <code>Object</code> with <b>any</b>
+            object type. You'll see how that works later in the course,
+            when we look at object-oriented graphics and attempt to
+            determine which item on the screen was clicked with the
+            mouse.
+        </p>
+        </div>
+        <p> You <b>cannot</b> compare <code>String</code> variables
+            or any other object type using the <i>other</i>
+            (inequality) relational operators. While these are legal expressions ...
+        </p>
+        <p class="code">
+            "Hi" != "Mom"; <span class="cmt">// result is true</span><br>
+            "dad" == "Dad"; <span class="cmt">// result is false</span>
+        </p>
+        <p><i>these</i>, are <b><i>illegal</i></b> expressions:</p>
+        <p class="code">
+            "Mom" &lt; "Dad"; <span class="cmt">// can't use inequality operator</span><br>
+            Fraction b = new Fraction(1, 2);<br>
+            b == "Mom";&nbsp;&nbsp;&nbsp; <span class="cmt">// can't compare String &amp; Fraction</span>
+        </p>
+        <p> So, if you can't compare <code>String</code>s using the
+            relational operators, how <b>do</b> you see if <i>Aardvark</i>
+            comes before <i>Zebra</i>?
+        </p>
+        <p> Glad you asked. </p>
+        <p> To answer your question, we need to start
+            by looking at <b>Boolean methods</b>.
+        </p>
+   <h2>Boolean Methods</h2>
+        <p> Most students easily understand methods like <code>Math.Random()</code>,
+            or <code>Math.pow()</code> which return the results of a numeric calculation.
+            We can also have methods that return <i>Boolean</i>, that is, <b>true</b> or
+            <b>false</b>, values. These <i>Boolean</i> methods are
+            also known as <b>predicate</b> methods.<br>
+            <img src="images/boolean01.gif" class="inline" alt="Some boolean String methods.">
+        </p>
+        <p> When you call a <i>Boolean</i> method you'll often use a
+            <code>boolean</code> variable to store the result that the method
+            returns. Here are some examples using a few Boolean
+            methods in the <code>String</code> class (taken from the
+            <code class='b'>StringRelations</code> program in this week's code folder):<br>
+            <img src="images/boolean02a.gif" class="inline" alt="Using boolean methods.">
+            Here's what this code does:</p>
+        <ol>
+            <li class="d">The code asks the
+                user to enter a file name, and the answer is stored in
+                the <code>String</code> variable <code>fileName</code>.
+            </li>
+            <li class="d">The <code>String</code> predicate
+                <code>endsWith()</code> method is used to see if the
+                variable <code>fileName</code> ends with ".java". If
+                it does, the method returns <code>true</code>; if not,
+                the method returns <code>false</code>. The returned
+                value is stored in the <code>boolean</code> variable
+                <code>isSourceCode</code>.
+            </li>
+            <li class="d">The user is again asked to respond if
+                they wish to continue by typing "Yes" or "No" and
+                their answer is stored in the <code>String</code>
+                variable named <code>answer</code>.
+            </li>
+            <li class="d">The <code>boolean</code> variable
+                <code>isDone</code> is initialized by calling the
+                <code>String equalsIgnoreCase()</code> method,
+                checking against the value "No". If the user types
+                "no", "NO", or "No", then <code>isDone</code> will
+                be set to <code>true</code> while anything else
+                will set it to <code>false</code>.
+            </li>
+        </ol>
+        <div class='alert'>
+        <p>Even though this last example allows for
+            the user to type their response in any case, it's not
+            really an example of good programming. For instance, if
+            the user types "nope" or "N", <code>isDone</code> will
+            be set to <code>false</code> and the user will continue.
+            A better design would be to check against the <code>String</code>
+            "Yes", and then use the <b>logical NOT operator</b> to
+            reverse the sense of the condition. You'll learn how
+            to do that in the next lesson.
+        </p>
+        </div>
+        <p> We'll look at some more predicate functions in the
+            <code>String</code> and <code>Character</code> wrapper
+            class shortly. Before we do that, though, let's
+            take a look at what it <b>means</b> when we say
+            that two <b>objects</b> (or <code>String</code>s)
+            are <b>equal</b>.
+        </p>
+    <h2>Equality vs Identity</h2>
+        <p> When you use the equality operators
+            with objects or <code>Strings</code>, you are comparing the
+            <b>identity</b> of the two objects, <b>not their contents</b>.
+            Specifically, you are asking, "do both object references refer
+            to the same object?"
+        </p>
+        <p> Here's an example using <code>Fraction</code> objects.
+            (<code>Fraction</code> is a user-defined class that contains
+            a numerator and denominator. This is the same example that
+            I showed you in an earlier lesson. I've put a simplistic version
+            of the class in this week's code folder):<br>
+            <img src='images/fraction01.gif' class='inlineCenter' alt='Creating three fraction objects.'>
+        <p> <img src="images/a04.gif" class="right" alt="Creating three Fractions.">
+            Remember that <b>object</b> variables contain a
+            <b>reference to</b> the object they refer to, not the
+            actual object itself. In the example pictured here,
+            two <code>Fraction</code> objects are created, (using
+            <code>new</code>), and the reference stored in the variables
+            <b>a</b> and <b>b</b>. A third object variable, <b>c</b>,
+            is the created, and the value stored in <b>b</b> is copied
+            to <b>c</b>, using the assignment operator.
+        </p>
+        <p>
+            All three variables refer to <code>Fraction</code> objects that
+            <b>contain the same value</b>, &frac12;. If these were primitive
+            types such as <code>int</code> or <code>double</code>, all
+            three variables would be equal. Things are different for
+            object variables though.
+            Here's what memory looks like after the variables are created.
+        </p>
+        <p> Now, let's use these <code>Fraction</code> variables in
+            some relational expressions, (using <b>only</b> the
+            equality operators, remember), and look at the results:<br>
+            <img src='images/fraction02.gif' class='inlineCenter' alt='Creating three fraction objects.'>
+            Obviously, when it comes to objects, the <b><code>==</code></b> operator
+            tests the <b>identity</b> of the object referred to by the two variables,
+            <b>not the value</b> contained in the objects themselves.
+        </p>
+    <h3>Using equals()</h3>
+        <p> So, how <b>do</b> we see if two <code>Fraction</code> objects
+            contain the same <b>value</b>? The answer to that is kind
+            of complicated, but really makes sense when you think about
+            it.
+        </p>
+        <p> First, <b>all</b> classes <i>inherit</i> a method named
+            <code>equals()</code> that allows you to compare that
+            object with any other object. This is a <i>predicate</i>
+            method (which is why we looked at those kinds of methods
+            first). Given any two object variables <code>a</code> and
+            <code>b</code> (of <b>any</b> type), you can write:
+        </p>
+        <p class='code'>
+            boolean isEqual = a.equals(b); <span class='cmt'>// Compare two objects</span>
+        </p>
+        <p> What that actually <b>means</b> though, depends on
+            the class definition itself. For instance, in the
+            <code>Fraction</code> class that I've placed in the
+            code folder, I've added a really simplistic
+            <code>equals()</code> method that returns
+            <code>true</code> when two <code>Fraction</code>s
+            have <b>exactly</b> the same numerator and denominator:<br>
+            <img src='images/fraction03.gif' class='inlineCenter' alt='Comparing Fractions.'>
+            As you can see here, using <code>equals()</code> compares
+            the <b>value</b> of the <code>Fraction</code> objects,
+            <b>not</b> their identity.
+            Of course, a more sophisticated and robust <code>equals()</code>
+            method would note that the <code>Fraction d</code> with a
+            value of 2/4 is <i>really</i> mathematically equal to
+            1/2 and would return <code>true</code> in that case as well.
+            However, you don't <b>ever</b> want different types, like
+            the <code>Fraction</code> and <code>String</code> values
+            shown in the last line, to be equal.
+        </p>
+        <p> Later in the semester, when you start defining your own
+            classes, you'll learn how to write a better <code>equals()</code>
+            method. For right now, let's focus on <code>String</code>
+            variables and the different ways you can compare them.
+        </p>
+
+    <h2>String Relations</h2>
+        <p><code class='b'>String</code> objects, <b>work just like <code>Fraction</code></b>:
+            if you use the equality operator, you are asking whether these
+            two <code>String</code> variables <b>refer to the same
+            <code>String</code> object</b>.
+        </p>
+        <p>  Let's take this to heart and perform the same test we did for
+            <code>Fraction</code> objects. We'll create three <code>String</code>
+            variables, <b>a</b>, <b>b</b>, and <b>c</b>, and we'll assign
+            the same <code>String</code> value to the first two. Here's
+            the code:<br>
+            <img src='images/comparing-strings.gif' class='inlineCenter' alt='Comparing strings.'>
+            <img src="images/a05.gif" alt="String objects and assignment." style='margin-top:-5em;position:relative;z-index:100;' class="right">
+            If we draw a picture like we did for <code>Fraction</code>
+            objects, we expect to end up with something like this.
+        </p>
+        <p> And, in the Interactions Pane, when we write and run <b>exactly the same relational
+            tests</b> we used with our <code>Fraction</code> variables (as you can
+            see in the screen-shot here),
+            we find that we get exactly the same result.
+        </p>
+    <h3>Interned Strings</h3>
+        <p> If we put <b>exactly the same lines of code inside a program</b>,
+            like I've done in the <b>StringRelations</b> program shown here:<br>
+            <img src='images/comparing-strings02.gif' class='inlineCenter' alt='Comparing strings in a program.'>
+            <b class='ry'>all three
+            expressions come back true!</b>
+        </p>
+        <p> What's going on here?
+            Why the difference.
+        </p>
+        <p> Well, at first it may <b>look</b> like Java is treating <code>String</code>
+            objects specially, <b>comparing the contents</b> of each <code>String</code>,
+            like Pascal, Visual Basic, and C++ do. <b class='ry'>
+            Don't be deceived, however;
+            that's not what's happening at all!</b>
+        </p>
+        <p> Our test program reports such unexpected results because
+            our <i>mental picture</i> of what
+            happened in memory is faulty. Since <code>String</code>
+            objects are <b>immutable</b>, when you put <code>String</code>
+            literals into a program, Java automatically <b>shares</b> the
+            same actual <code>String</code> between several references.
+        </p>
+        <p class="pullquote"> This <b>only</b> occurs with <b>literal</b>
+            <code>String</code> objects, not with any other object types
+            and not with <code>String</code> variables.
+        </p>
+        <p> <img src="images/a06.gif" class="right" alt="The actual representation of String objects in memory.">
+            When we put our code inside the <b>StringRelations</b> program,
+            Java actually stores the characters "Hi Mom"
+            only once. The line where the <code>String</code> variable
+            <b>b</b> is created <b>does not</b> create a second copy of
+            the words "Hi Mom". Thus, all three <code>String</code> variables,
+            <b>a</b>, <b>b</b>, and <b>c</b>, refer to exactly the same
+            characters in memory as shown in the picture here.
+        </p>
+        <p> These shared <code>String</code> literals are known as
+            <b>interned</b> <code>String</code>s.
+        </p>
+        <div class='drjava-note'>
+            <p> By now you might be really confused, <b>especially</b> if you've
+                been following closely. Why <b>doesn't</b> the DrJava Interactions
+                Pane give the same results as the <b>StringRelations</b> program.
+                <br><br>
+                The answer is fairly simple. To get the Interactions Pane to work
+                without a surrounding program, DrJava creates an "unnamed" class
+                and treats all of the variables you create there as <i>instance</i>
+                variables, <b>not</b> <i>local</i> variables. That's why your
+                Interactions Pane variables are automatically initialized, when
+                the variables you create inside your <code>main()</code> method
+                are not.
+                <br><br>
+                When you use <code>String</code> literals in the Interactions Pane,
+                instead of interning the contents of the <code>String</code>, DrJava
+                treats your statement like this:
+                <br><br>
+                <span class='code'>
+                    String a = new String("Hi Mom");
+                </span>
+                <br><br>
+                This code creates a new version of the character sequence, instead
+                of interning the characters for use by all <code>String</code>
+                variables inside the program.
+            </p>
+        </div>
+    <h2>Comparing Strings</h2>
+        <p> The bottom line is that you <b>should never</b> use the
+            relational (or equality) operators to compare <code>Strings</code>.
+            The answer you get back is <b>almost always wrong!</b> Instead,
+            you should <b>always</b> compare <code>String</code> objects
+            using the methods in the <code>String</code> class. Let's
+            look at several of them.
+        </p>
+    <h3>equals()</h3>
+        <p> The <code>equals()</code> method returns <b>true</b>
+            if the contents of two <code>Strings</code> <b>exactly match</b>,
+            and <code>false</code> otherwise.
+            Two <code>String</code>s match if they are exactly the same
+            length, and they contain exactly the same sequence of characters.
+            Here are some examples:
+        </p>
+        <p class="code">
+            "cat".equals("cat"); <span class="cmt">// true</span><br>
+            "cat".equals("Cat");  <span class="cmt">// false</span>
+        </p>
+        <p>
+            This is called <b>lexical</b> ordering. This
+            is <b>not</b> the same as <b>dictionary</b> ordering. In the
+            dictionary, the words "Cat" and "cat" are the same. With lexical
+            ordering, because the Unicode value 'c' is much larger (99) than
+            the Unicode value for the capital 'C' (67), the two words are
+            <b>not</b> the same.
+        </p>
+        <div class='info'>
+        <p>Notice that you can call <code>String</code> methods
+            using <i>literals</i> like "cat" as well as variables, because
+            <code>String</code> literals are actually objects.
+        </p>
+        </div>
+    <h3>equalsIgnoreCase()</h3>
+        <p> Often, you want to make a comparison without taking case
+            into account. As you saw in the previous section, the
+            <code>equals()</code> method uses the underlying Unicode value to
+            make its comparisons, so that "Bob" is not equal to "bob".
+        </p>
+        <p> The <code>equalsIgnoreCase()</code> method works differently.
+            It returns <code>true</code> if the contents of
+            two <code>Strings</code> match when case <b>is not considered</b>,
+            and <code>false</code> otherwise. Here's an example:
+        </p>
+        <p class="code">
+            "cat".equalsIgnoreCase("cat"); <span class="cmt">// true</span><br>
+            "cat".equalsIgnoreCase("Cat"); <span class="cmt">// true</span><br>
+            "cat".equalsIgnoreCase("dog"); <span class="cmt">// false</span><br>
+        </p>
+        <p> This method is really useful when you want to check user input
+            against a <code>String</code> literal in your program, such as a
+            username or email address.
+        </p>
+    <h3>endsWith(suffix), startsWith(prefix)</h3>
+        <p> Both of these methods return <code>true</code> if the
+            <code>String</code> on the left, (the <code>String</code>
+            calling the method), ends with or starts with the
+            <code>String</code> on the right, (the <code>String</code>
+            passed as an argument).
+        </p>
+        <p class="code">
+            "Junk.java".endsWith(".java"); <span class="cmt">// true</span><br>
+            "testFile.txt".startsWith("test"); <span class="cmt">// true</span>
+        </p>
+        <p> Both of these methods are case-sensitive (like the <code>equals()</code>
+            method. To get a case-insensitive comparison, you can combine these
+            with the <code>toUpperCase()</code> or <code>toLowerCase()</code>
+            methods, using <b>method chaining</b>, like this:
+        </p>
+        <p class="code">
+            String fileName = cin.nextLine();<br>
+            boolean isWorksheet = fileName.toLowerCase().endsWith("xls");
+        </p>
+
+
+     <h3>compareTo() or compareToIgnoreCase()</h3>
+        <p> The two <code>equals()</code> methods only allow you to
+            see if two <code>Strings</code> contain the same words. They
+            don't allow you to check if one is <i>lexigraphically</i>
+            larger or greater. (In other words, you can't tell if it
+            appears before or after in the phone book or dictionary.)
+        </p>
+        <p> To do this, you need to use one of the <code>compare()</code>
+            methods. Instead of returning a <code>boolean</code> value,
+            these methods return three different possibilities:
+        </p>
+        <ul>
+            <li>If both strings are <b>equal</b> then the methods
+                return <b>0</b>.
+            </li>
+            <li> If the <code>String</code> on the <b>left</b> appears
+                <b>before</b> the one on the right, then the methods
+                return a negative number.
+            </li>
+            <li> If the <code>String</code> on the <b>left</b> appears
+                <b>after</b> the one on the right (that is, the method
+                parameter), then the methods both return a positive number.
+            </li>
+        </ul>
+        <p> Here are a couple of examples:</p>
+        <p class="code">
+            "cat".compareTo("cat"); <span class="cmt">// 0 - equal</span><br>
+            <br>
+             <span class="cmt">// "cat" &gt; "Cat" (Unicode case-sensitive ordering)</span><br>
+            "cat".compareTo("Cat");  <span class="cmt">// Positive</span><br>
+            "cat".compareToIgnoreCase("Cat");  <span class="cmt">// 0</span><br>
+            <br>
+            <span class="cmt">// "cat" &lt; "dog"</span><br>
+            "cat".compareTo("dog"); <span class="cmt">// Negative</span><br>
+        </p>
+        <p class="pullquote">
+            Always compare Strings using String methods!
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

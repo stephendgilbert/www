@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' >
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.'>
+	<meta name='Publisher' content='John Wiley & Sons, Inc.'>
+	<meta http-equiv='Content-Language' content='en-us'>
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+	<meta name='Date' content='2008'>
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'>
+	//<![CDATA[
+		title()
+		//]]>
+	</script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To become familiar with the list, queue, and stack data types </li>
+	<li> To understand the implementation of linked lists </li>
+	<li> To understand the efficiency of vector and list operations </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Linked Lists </h1>
+<ul>
+	<li> A data structure for collecting a sequence of objects </li>
+	<li> Addition and removal of elements in the middle is efficient </li>
+  <li> Consider maintaining a vector of sorted objects (such 
+    as employees) 
+    <ul>
+      <li> Many elements will need to be shifted <i>back</i> if a new 
+        object is inserted in the middle </li>
+      <li> Many elements will need to be shifted <i>forward</i> if a 
+        object is deleted from the middle </li>
+    </ul>
+  </li>
+  <li> Moving a large number of records can involve a substantial 
+    amount of computer time </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<ul>
+	<li> A linked list stores each value in its own memory block, together
+		with the locations of the neighboring blocks in the sequence </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig1.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 1</span> A Linked List </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<ul>
+	<li> Inserting an element requires no shifting, merely reassigning new
+		locations to adjacent objects </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig2.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 2</span> Adding a Node to a
+Linked List </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<ul>
+	<li> Removing an element involves only constant work: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 3</span> Removing a Node from
+a Linked List </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<ul>
+	<li> However, elements are <strong>not</strong> indexed (efficiently)
+	</li>
+	<li> Element access is slow </li>
+	<li> Must walk the list to get a particular element </li>
+	<li> Iterating through the list is no more costly </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists</h1>
+<h2><tt>std::list</tt></h2>
+<ul>
+	<li> C++ STL has a <i>doubly-linked</i> list
+		<ul>
+			<li> <i>Singly-linked</i> lists lack the predecessor links </li>
+		</ul>
+	</li>
+	<li> Like <tt>vector</tt>, <tt>list</tt> is a <i>template</i>
+		<ul>
+			<li> Stores any type </li>
+		</ul>
+<code>
+#include &lt;list&gt;
+using namespace std;
+
+list&lt;string&gt; names;</code>
+	</li>
+	<li> Adding elements to the end of a list is straight-forward:
+<code>
+names.push_back("Tom");
+names.push_back("Dick");
+names.push_back("Harry");</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<h2>Iterators</h2>
+ <ul>
+  <li> Cannot directly access elements using subscript access 
+    (e.g. <tt>names[2]</tt>) </li>
+	<li> Instead, start at the beginning, then visit each element in turn
+	</li>
+	<li> <i>list-iterator</i> &#8211; marks a <i>position</i> in a
+	list
+<code>
+list&lt;string&gt;::iterator pos;
+pos = names.begin();</code>
+	</li>
+	<li> The <tt>++ operator</tt> moves to the next element:
+<code>
+pos++; </code>
+	</li>
+  <li> The <tt>-- operator</tt> moves an iterator backward:
+<code>
+pos--;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists</h1>
+<ul>
+	<li> Use the <tt>* operator</tt> to find the value that is stored at that
+		position 
+		<ul>
+			<li> Remember, if <tt>pos</tt> "points to" an element, then
+				<tt>*pos</tt> <em>is</em> that element </li>
+		</ul>
+	</li>
+	<li> To read or change an element:
+<code>
+string value = *pos;
+*pos = &quot;Romeo&quot;;
+   // The list value at the position is changed</code>
+	</li>
+	<li> Changing <tt>pos</tt> merely changes the current position:
+<code>
+pos = names.begin();
+   // The list value at the position is changed</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<h2>Insertion</h2>
+<ul>
+  <li> To insert an element <i>before</i> the iterator position, use 
+    the <tt>insert</tt> function:
+<code>
+names.insert(pos, "Romeo");</code>
+	</li>
+	<li> To insert at the beginning of the list:
+<code>
+pos = names.begin();
+names.insert(pos, "Romeo");</code>
+	</li>
+	<li> To insert at the end:
+<code>
+pos = names.end();  // Points "one past" the end
+names.insert(pos, "Juliet");</code>
+	</li>
+	<li> The <tt>end()</tt> iterator does not point at a valid object </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists </h1>
+<h2>Traversal </h2>
+<ul>
+  <li> <tt>end()</tt> is useful for stopping a traversal:
+<code>
+pos = names.begin();
+while (pos != names.end())
+{
+   cout &lt;&lt; *pos &lt;&lt; &quot;\n&quot;;
+   pos++;
+}
+    </code> </li>
+  <li> More concisely with a <tt>for</tt> loop: 
+<code>
+for (pos = names.begin(); pos != names.end(); pos++)
+   cout &lt;&lt; *pos &lt;&lt; &quot;\n&quot;;</code>
+	 </li>
+  <li> Very similar to a vector:
+<code>
+for (i = 0; i &lt; s.size(); i++)
+   cout &lt;&lt; s[i] &lt;&lt; &quot;\n&quot;;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists</h1>
+<h2> Removal</h2>
+<ul>
+  <li> To remove an element, move an iterator to the element:
+<code>
+pos = names.begin();
+pos++;</code>
+	</li>
+	<li> Call the <tt>erase()</tt> method:
+<code>
+names.erase(pos);</code>
+	</li>
+	<li> <tt>pos</tt> now points to what was the 3<sup>rd</sup> element
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Linked Lists &#8211; <tt>list1.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "list1.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Implementing Linked Lists </h1>
+<ul>
+
+	<li> Useful member functions for implementing a linked list:
+		<ul>
+			<li> <tt>push_back</tt> </li>
+			<li> <tt>insert</tt> </li>
+			<li> <tt>erase</tt> </li>
+			<li> The iterator operations </li>
+		</ul>
+	</li>
+	<li> A linked list stores each value in a separate object called 
+    a <i>node</i> </li>
+	<li> A <tt>Node</tt> contains pointers to previous and next nodes </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Linked Lists </h1>
+
+<code>class Node
+{
+public:
+   Node(string s);
+private:
+   string data;
+   Node* previous;
+   Node* next;
+friend class List;
+friend class Iterator;
+};</code>
+<ul>
+	<li> The <tt>friend</tt> declarations indicate the <tt>List</tt> 
+		and <tt>Iterator</tt> member functions are allowed to inspect and modify
+		the data members of <tt>Node</tt> </li>
+	<li> A class should not grant friendship to another class lightly, 
+    because it breaks the privacy protection </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Implementing Linked Lists  </h1>
+<ul>
+	<li> A <tt>List</tt> holds the locations of the first and last 
+    nodes:
+<code>
+class List
+{
+public:
+   List();
+   void push_back(string data);
+   void insert(Iterator pos, string s);
+   Iterator erase(Iterator pos);
+   Iterator begin();
+   Iterator end();
+private:
+   Node* first;
+   Node* last;
+};</code>
+	</li>
+	<li> When the list is empty the first and last pointers are <tt>NULL</tt>
+	</li>
+	<li> Stores no data; just knows where to find the node objects that store
+		the list contents </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Linked Lists </h1>
+<ul>
+	<li> An <i>iterator</i> denotes a position in the list:
+<code>
+class Iterator
+{
+public:
+   Iterator();
+   string get() const;     // Use instead of * 
+   void next();            // Use instead of ++ 
+   void previous();        // Use instead of -- 
+   bool equals(Iterator b) const; // Use instead of ==
+private:
+   Node* position;
+   List* container;
+friend class List;
+};</code>
+	</li>
+	<li> We will enable the operators <tt>++</tt>, <tt>--</tt>, <tt>*</tt> 
+    and <tt>==</tt> in the next chapter </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Linked Lists </h1>
+<ul>
+	<li> If the iterator points past the end of the list, then 
+    <tt>position</tt> is <tt>NULL</tt> </li>
+	<li> If <tt>position</tt> is <tt>NULL</tt>, <tt>previous</tt> uses
+		<tt>container</tt> to find the last element </li>
+	<li> Optionally, <tt>List</tt> could create and maintain a dummy node at
+		the end of the list </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.2" )
+	//]]>
+	</script>
+Implementing Iterators </h1>
+<ul>
+	<li> Iterators are created by <tt>begin</tt> and <tt>end</tt> methods of 
+    the <tt>List</tt>:
+<code>
+Iterator List::begin()
+{
+   Iterator iter;
+   iter.position = first;
+   iter.container = this;
+   return iter;
+}
+
+Iterator List::end()
+{
+   Iterator iter;
+   iter.position = NULL;
+   iter.container = this;
+   return iter;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Iterators </h1>
+<ul>
+	<li> <tt>next()</tt> advances the iterator to the next position </li>
+	<li> Just like the <tt>++ operator</tt> </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig4.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 4</span> Advancing an Iterator
+</p>
+</div>
+</div>
+
+
+<div class='slide'>
+<h1> Implementing Iterators  </h1>
+<code>void Iterator::next()
+{
+   assert(position != NULL)
+   position = position-&gt;next;
+}</code>
+<ul>
+	<li> Illegal to advance the iterator once it 
+    is in the past-the-end position </li>
+	<li> Semantically, has no meaning </li>
+	<li> The <tt>NULL</tt> pointer can't be dereferenced </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Iterators</h1>
+<ul>
+	<li> The previous function is similar </li>
+	<li> Just like the -- operator
+<code>
+void Iterator::previous()
+{
+   assert(position != container-&gt;first);
+   if (position == NULL)
+      position = container-&gt;last;
+   else
+      position = position-&gt;previous;
+}</code>
+	</li>
+	<li> When the iterator points to the first element in the list, 
+    it is illegal to move it further backward  </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Implementing Iterators</h1>
+<ul>
+	<li> <tt>get()</tt> returns the data value of the node </li>
+	<li> Just like the * operator:
+<code>
+string Iterator::get() const
+{
+   assert(position != NULL);
+   return position-&gt;data;
+}</code>
+	</li>
+	<li> <tt>equals()</tt> compares two position pointers </li>
+	<li> Just like the <tt>== operator</tt>
+<code>
+bool Iterator::equals(Iterator b) const
+{
+   return position == b.position;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2.3" )
+	//]]>
+	</script>
+Implementing Insertion and Removal </h1>
+<h2> <tt>push_back()</tt> </h2>
+<p> Adds the new value to the end of the list </p>
+<ul>
+	<li> First, make a new node:
+<code>
+Node* new_node = new Node(s);</code>
+	</li>
+	<li> Add to end of list:
+		<ul>
+			<li> Point <tt>next</tt> of last node to new node </li>
+			<li> Set <tt>previous</tt> of new node to last node </li>
+			<li> Update <tt>last</tt> to point to new node </li>
+		</ul>
+	</li>
+	<li> Special case when list is empty:
+		<ul>
+			<li> New node is only node </li>
+			<li> Point both <tt>first</tt> and <tt>last</tt> to new node </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal  </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig5.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 5</span> Appending a Node to
+the End of a Linked List </p>
+</div>
+<code>void List::push_back(string data)
+{
+   Node* new_node = new Node(data);
+   if (last == NULL) // List is empty
+   {
+      first = new_node;
+      last = new_node;
+   }
+   else
+   {
+      new_node-&gt;previous = last;
+      last-&gt;next = new_node;
+      last = new_node;
+   }
+}</code>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal </h1>
+<p> Inserting into the middle of a list </p>
+<ul>
+	<li> 2 neighbors (maybe) </li>
+	<li> More pointers to fix up </li>
+	<li> Name the neighbors:
+<code>
+Node* after = iter.position;
+Node* before = after-&gt;previous;</code>
+	</li>
+	<li> Insert new node:
+<code>
+new_node-&gt;previous = before;
+new_node-&gt;next = after;</code>
+	</li>
+	<li> Update <tt>before</tt> and <tt>after</tt>:
+<code>
+after-&gt;previous = new_node;
+before-&gt;next = new_node; // If before != NULL</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal  </h1>
+<p> Special cases: </p>
+<ul>
+	<li> <tt>after</tt> is <tt>NULL</tt> &#8211; call <tt>push_back()</tt>
+	</li>
+	<li> <tt>before</tt> is <tt>NULL</tt> &#8211; check before updating:
+<code>
+if (before = NULL) // Insert at beginning
+   first = new_node;
+else
+   before-&gt;next = new_node;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig6.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 6</span> Inserting a Node into
+a Linked List </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal  </h1>
+<ul>
+	<li> We will need to work with <tt>before</tt> and <tt>after</tt>
+<code>Node* remove = iter.position;
+Node* before = remove-&gt;previous;
+Node* after = remove-&gt;next;</code>
+	</li>
+	<li> Of course we cannot remove a node that is not there
+<code>
+assert(iter.position != NULL)</code>
+	</li>
+	<li> Update <tt>before</tt> and <tt>after</tt>
+	<ul>
+  	<li> Note the special case when either is <tt>NULL</tt> </li>
+	</ul>
+	</li>
+</ul>
+<code>if (remove == first)
+   first = after;
+else
+   before-&gt;next = after;
+if (remove == last)
+   last = before;
+else
+   after-&gt;previous = before;</code>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig7.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 7</span> Removing a Node from
+a Linked List </p>
+</div>
+<ul>
+	<li> Fix up the iterator to point to the next element </li>
+	<li> Delete the removed node! </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Insertion and Removal &#8211; <tt>list2.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "list2.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	The Efficiency of List and Vector Operations </h1>
+<p> We will analyze and compare the efficiency of fundamental operations on
+linked lists and vectors </p>
+
+<p> These operations are: </p>
+<ul>
+	<li> Getting the <var>k</var><sup>th</sup> element </li>
+	<li> Adding and removing an element at a given position </li>
+	<li> Adding and removing an element at the end </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<p> To find the <var>k</var><sup>th</sup> element of a linked list: </p>
+<ul>
+	<li> Start at the beginning </li>
+	<li> Advance <var>k</var> times </li>
+	<li> Advancing the iterator is a constant-time operation, so </li>
+	<li> Finding the <var>k</var><sup>th</sup> element is an O(<var>k</var>)
+		operation </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+
+<p> <tt>vector</tt> has the following attributes: </p>
+<ul>
+	<li> <var>buffer</var> &#8211; pointer to an array of elements </li>
+	<li> <var>capacity</var> &#8211; max size of current buffer (buffer can be
+		resized) </li>
+	<li> <var>size</var> &#8211; # of elements actually being stored
+		<ul>
+			<li> <var>size</var> is also the next available location </li>
+		</ul>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig8.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 8</span> Internal Data Fields
+Maintained by Vector </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<ul>
+	<li> When the <var>k</var><sup>th</sup> element is accessed, the vector
+		simply uses <tt>buffer[k]</tt> </li>
+	<li> Arrays have <dfn>constant-time access</dfn> </li>
+	<li> Lookup time is independent of <var>k</var> </li>
+	<li> So, accessing a vector element takes <var>O</var>(1) time </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<h2>Modifying the Middle</h2>
+<p> To add an element in the middle of a <strong>list</strong> (the cost of
+finding the location is considered separately): </p>
+<ul>
+	<li> An element is added by modifying the <tt>previous</tt> and
+		<tt>next</tt> pointers of the new and surrounding nodes (see Fig. 6)
+		</li>
+	<li> Constant work done, regardless of position </li>
+	<li> Same holds for removing an element </li>
+	<li> So, insertion and removal are <var>O</var>(1) operations </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<p> To insert an element at position <var>k</var> of a
+	<strong>vector</strong> (if relative order matters): </p>
+<ul>
+	<li> The elements with higher index values need to move down one spot
+	</li>
+	<li> On average, we move <var>n</var>/2 elements with each insertion </li>
+	<li> When an element is removed, the "hole" must be filled in </li>
+	<li> Vector insertion and removal are <var>O</var>(<var>n</var>) operations </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> Inserting and
+Removing Vector Elements </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<ul>
+	<li> If <var>size</var> &lt; <var>capacity</var>, adding to end is <var>O</var>(1)
+	</li>
+	<li> Otherwise, the vector must be resized first:
+		<ul>
+			<li> Allocate a new buffer (typically, twice the size of the current
+				one) </li>
+			<li> Copy all <var>size</var> (<var>n</var>) elements </li>
+			<li> Delete old buffer </li>
+			<li> Insert new element at end </li>
+			<li> Resize is an <var>O</var>(<var>n</var>) operation </li>
+		</ul>
+	</li>
+	<li> But, not every insertion requires a resize </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations </h1>
+<p> The cost of 1280 <tt>push_back()</tt> operations: </p>
+<ul>
+	<li> Initial buffer size is 10 </li>
+	<li> Each reallocation doubles the size </li>
+	<li> A single insertion costs <var>T</var><sub>1</sub>
+		<ul>
+			<li> So, we'll pay 1280 <var>x</var><var>T</var><sub>1</sub> for the insertions
+			</li>
+		</ul>
+	</li>
+	<li> Reallocating a vector with <var>k</var> elements costs <var>k</var>
+		<var>T</var><sub>2</sub> </li>
+	<li> Cost for all the reallocations:
+<code>
+10<var>T</var><sub>2</sub> + 20<var>T</var><sub>2</sub> + 40<var>T</var><sub>2</sub> + ... + 1280<var>T</var><sub>2</sub> = (1+2+4+...+128) x 10 x <var>T</var><sub>2</sub>
+                                  = 255 x 10 x <var>T</var><sub>2</sub>
+                                  &lt; 256 x 10 x <var>T</var><sub>2</sub>
+                                  = 1280 x 2 x <var>T</var><sub>2</sub>
+</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations</h1>
+<ul>
+	<li> So, the total cost is a bit less than
+		<code> 
+		1280 x (<var>T</var><sub>1</sub> + 2 <var>T</var><sub>2</sub>)
+		</code>
+	</li>
+	<li> More generally, the cost of <var>n</var> <tt>push_back</tt>s is less
+		than
+		<pre> <var>n</var> x (<var>T</var><sub>1</sub> + 2 <var>T</var><sub>2</sub>) </pre>
+	</li>
+	<li> <var>T</var><sub>1</sub> + 2 <var>T</var><sub>2</sub> is a constant,
+		so </li>
+	<li> <var>n</var> <tt>push_back</tt>s is <var>O</var>(<var>n</var>) </li>
+	<li> The <em>average</em> cost of a single <tt>push_back</tt> does not
+	increase </li>
+	<li> A <em>particular</em> <tt>push_back</tt> might be noticed </li>
+	<li> We write <var>O</var>(1)+ or <var>O</var>(1<sup>*</sup>), for <i>amortized</i> analysis </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Efficiency of List and Vector Operations  </h1>
+<table class='book'>
+<caption><span class='blue'>Table 1</span> Execution Times for Container
+		Operations </caption>
+		
+		<thead>
+		<tr>
+			<th> Operation </th>
+			<th> Vector </th>
+			<th> Linked List </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td> Add/remove element at end </td>
+			<td> <var>O</var>(1)<sup>+</sup> </td>
+			<td> <var>O</var>(1)<sup>&diams;</sup> </td>
+		</tr>
+		<tr>
+			<td> Add/remove element in the middle </td>
+			<td> <var>O</var>(<var>n</var>) </td>
+			<td> <var>O</var>(1) </td>
+		</tr>
+		<tr>
+			<td> Get <var>k</var><sup>th</sup> element </td>
+			<td> <var>O</var>(1) </td>
+			<td> <var>O</var>(<var>k</var>) </td>
+		</tr>
+	</tbody>
+</table>
+<p><sup>&diams;</sup>  If a pointer to the last element is maintained </p>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Queues and Stacks </h1>
+<ul>
+	<li> Special data types, allow insertion and removal of items at the ends
+		only </li>
+</ul>
+<h2> Queue </h2>
+<ul>
+  <li> <dfn>FIFO</dfn> &#8211; First in, first out </li>
+	<li> Items inserted at the back, removed from the front </li>
+  <li> To visualize a queue, consider people lining up in a store </li>
+
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig14.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 14</span> Stack and Queue
+Behavior </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Queues and Stacks</h1>
+<h2>STL <tt>queue</tt></h2>
+<ul>
+	<li> The STL has a <tt>queue</tt> template class </li>
+	<li> To insert and remove, use <tt>push()</tt> and <tt>pop()</tt>
+<code>
+#include &lt;queue&gt;;
+using namespace std;
+
+queue&lt;string&gt; q;
+q.push(&quot;Tom&quot;);
+q.push(&quot;Dick&quot;);
+q.push(&quot;Harry&quot;);
+while (q.size() &gt; 0)
+{
+   cout &lt;&lt; q.front() &lt;&lt; &quot;\n&quot;;
+   q.pop();
+}</code>
+	</li>
+	<li> <tt>front()</tt> doesn't modify the queue </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Queues and Stacks</h1>
+<h2> Stacks </h2>
+<ul>
+  <li> <dfn>LIFO</dfn> &#8211; Last in, first out </li>
+	<li> Items inserted and removed at one end, the <dfn>top</dfn> </li>
+	<li> Items removed in reverse order of insertion </li>
+  <li> Many uses in computers:
+		<ul>
+			<li> Call stack </li>
+			<li> Undo/redo stacks in your word processor </li>
+			<li> Operator and operand stacks in your (infix) calculator </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Queues and Stacks </h1>
+<h2>STL <tt>stack</tt> </h2>
+<ul>
+	<li> The STL has a <tt>stack</tt> template class </li>
+	<li> To insert and remove, use <tt>push()</tt> and <tt>pop()</tt>
+    <code>
+#include &lt;stack&gt;;
+using namespace std;
+
+stack&lt;string&gt; s;
+s.push(&quot;Tom&quot;);
+s.push(&quot;Dick&quot;);
+s.push(&quot;Harry&quot;);
+while (s.size() &gt; 0)
+{
+   cout &lt;&lt; s.top() &lt;&lt; &quot;\n&quot;;
+   s.pop();
+}</code>
+	</li>
+	<li> <tt>top()</tt> doesn't modify the stack </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>Stacks and Queues &#8211; <tt>fifolifo.cpp</tt> </h1>
+<p> Compares and contrasts the 2 containers </p>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "fifolifo.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>Stacks and Queues</h1>
+
+	<h2><i>Reverse Polish Notation</i> (<dfn>RPN</dfn>)
+	(postfix) calculator </h2>
+	<ul>
+	<li> Operands are written before the operators </li>
+	<li> <tt>3 + 4 * 7</tt> becomes <tt>3 4 7 * +</tt> </li>
+	<li> Postfix expressions are easy to evaluate
+		<ul>
+			<li> Numbers are pushed onto a stack </li>
+			<li> When a (binary) operator is encountered, 2 numbers are popped,
+			operation is performed, result is pushed back on the stack </li>
+			<li> At end of expression, result is at the top of the stack </li>
+		</ul>
+	</li>
+	<li> "Commands":  <tt>p</tt> (to print), and <tt>q</tt> (to quit)
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>Stacks and Queues &#8211; <tt>calc.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "calc.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	</h1>
+<h3> Polish Notation </h3>
+<ul>
+	<li><dfn>Infix notation</dfn> &#8211; the way you've been looking at
+		expressions since you learned to add 
+		<ul> <li>Ambiguous </li>
+		<li> Rules for precedence and associativity required </li>
+		<li> Parenthesis required to force evaluation </li></ul></ul>
+<ul>
+	<li><dfn>Prefix notation</dfn> &#8211; operator appears first
+		<ul><li> Eliminates need for parenthesis and precedence rules </li>
+		<li> By Jan &#321;ukasiewicz, in the 1920s </li>
+		<li> Easily evaluated using a recursive algorithm </li>
+		<li> Dubbed <i>Polish Notation</i> </li></ul></ul>
+
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	(cont.) </h1>
+<h3> Polish Notation </h3>
+<ul>
+	<li><dfn>Postfix notation</dfn> (or <dfn>Reverse Polish Notation</dfn>,
+	RPN) &#8211; operator appears last
+	<li>Evaluation with a single stack is straightforward:
+		<ul>
+			<li> Push operands onto the stack </li>
+			<li> Each operator pops the appropriate # of values from the stack,
+			performs the operation, pushes the result back on the stack </li>
+		</ul>
+
+	<li>By Charles Hamblin, in the 1950s</li></ul>
+
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	(cont.) </h1>
+<h3> Polish Notation </h3>
+<table class='book'>
+<thead>
+	<tr>
+		<th> Standard Notation </th>
+		<th> &#321;ukasiewicz Notation </th>
+		<th> RPN </th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td> 3 + 4 </td>
+		<td> + 3 4 </td>
+		<td> 3 4 + </td>
+	</tr>
+	<tr>
+		<td> 3 + 4 &times; 5 </td>
+		<td> + 3 * 4 5 </td>
+		<td> 3 4 5 * + </td>
+	</tr>
+	<tr>
+		<td> 3 &times; (4 + 5) </td>
+		<td> * 3 + 4 5 </td>
+		<td> 3 4 5 + * </td>
+	</tr>
+	<tr>
+		<td> (3 + 4) &times; 5 </td>
+		<td> * + 3 4 5 </td>
+		<td> 3 4 + 5 * </td>
+	</tr>
+	<tr>
+		<td> 3 + 4 + 5 </td>
+		<td> + + 3 4 5 </td>
+		<td> 3 4 + 5 + </td>
+	</tr>
+</tbody>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	(cont.) </h1>
+<h3> Polish Notation </h3>
+<p> In 1972 Hewlett-Packard introduced the HP35 </p>
+<ul>
+	<li> World's first scientific calculator </li>
+	<li> First calculator to use RPN
+		<ul>
+			<li> <em>Still</em> uses RPN </li>
+		</ul>
+	</li>
+	<li> Had trig and exponential functions, and used scientific notation
+	</li>
+	<li> Did <strong>not</strong> have parenthesis, nor an equal sign </li>
+	<li> Pocket calculator finally replaced the slide rule </li>
+	<li> Sold for US $395 (roughly equivalent to $1700 in 2005) </li>
+</ul>
+<p> RPN users tend to be fanatical proponents of the system. </p>
+</div>
+
+</body>
+</html>

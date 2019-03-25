@@ -1,0 +1,758 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.'>
+	<meta name='Publisher' content='John Wiley & Sons, Inc.'>
+	<meta http-equiv='Content-Language' content='en-us'>
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+	<meta name='Date' content='2008'>
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print'
+		href= '../Slidy/print.css' />
+	<script type='text/javascript'>
+	//<![CDATA[
+		title()
+		//]]>
+	</script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To compare the selection sort and merge sort algorithms </li>
+  <li> To study the linear search and binary search algorithms </li>
+	<li> To appreciate that algorithms for the same task can differ widely in
+		performance </li>
+  <li> To understand the big-Oh notation </li>
+  <li> To learn how to estimate and compare the performance of algorithms
+  <li> To learn how to measure the running time of a program </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Intro</h1>
+<ul>
+	<li> <dfn>sorting</dfn> - puts data in sequence </li>
+	<li> <dfn>binary search</dfn> - locates individual records in the sorted
+		sequence	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "1" )
+		//]]>
+	</script>
+	Selection Sort </h1>
+<ul>
+	<li> <dfn> Selection Sort </dfn> - sorting algorithm, rearranges elements
+		of a sequence </li>
+	<li> Consider the vector <tt>a</tt>:
+		<table class='array'>
+		<tr class='data'>
+			<td> <tt>11</tt> </td>
+			<td> <tt>9</tt> </td>
+			<td> <tt>17</tt> </td>
+			<td> <tt>5</tt> </td>
+			<td> <tt>12</tt> </td>
+		</tr>
+		</table>
+	</li>
+	<li> The smallest element 5 is stored in <tt>a[3]</tt>. Swap it with 11,
+		stored in <tt>a[0]</tt>
+		<table class='array'>
+		<tr class='data'>
+			<td class='hl'> <tt>5</tt> </td>
+			<td> <tt>9</tt> </td>
+			<td> <tt>17</tt> </td>  
+			<td> <tt>11</tt> </td>   
+			<td> <tt>12</tt> </td>
+		</tr>
+	</table>
+	</li>
+	<li> 5 is now in the right spot </li>
+	<li> Now swap the minimum on <tt>a[1]...a[4]</tt> with index 1:
+		<table class='array'>
+		<tr class='data'>
+			<td class='hl'> <tt>5</tt> </td>
+			<td class='hl'> <tt>9</tt> </td>
+			<td> <tt>17</tt> </td>  
+			<td> <tt>11</tt> </td>   
+			<td> <tt>12</tt> </td>
+		</tr>
+	</table>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Selection Sort </h1>
+<p> Repeating the process for the third time swaps 17 with 11 </p>
+<table class='array'>
+<tr class='data'>
+	<td class='hl'> <tt>5</tt> </td>
+	<td class='hl'> <tt>9</tt> </td>
+	<td class='hl'> <tt>11</tt> </td>
+	<td> <tt>17</tt> </td>
+	<td> <tt>12</tt> </td>
+</tr>   
+</table>
+<p> Unsorted region is 2 elements long; swap 12 with 17 </p>
+<table class='array'>
+<tr class='data'>
+	<td class='hl'> <tt>5</tt> </td>
+	<td class='hl'> <tt>9</tt> </td>
+	<td class='hl'> <tt>11</tt> </td>
+	<td class='hl'> <tt>12</tt> </td>
+	<td> <tt>17</tt> </td>
+</tr>   
+</table>
+<p> Unprocessed region of length 1 is sorted </p>
+</div>
+
+<div class='slide'>
+<h1>Selection Sort &mdash; <tt>selsort.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "selsort/selsort.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+section( "2" )
+//]]>
+</script>
+Profiling the Selection Sort Algorithm </h1>
+<ul>
+	<li> Timing a program with a stopwatch is inaccurate </li>
+	<li> Use the <tt>Time</tt> class (see <a href=
+		'code/seltime/seltime.cpp'><tt>seltime.cpp</tt></a>)
+		<code>
+int main()
+{
+   rand_seed();
+   cout &lt;&lt; "Enter vector size: ";
+   int n;
+   cin &gt;&gt; n;
+   vector&lt;int&gt; v(n);
+   for (int i = 0; i &lt; v.size(); i++)
+      v[i] = rand_int(1, 100);
+   <span class='hl'>Time before;</span>
+   selection_sort(v);
+   <span class='hl'>Time after;</span>
+
+   cout &lt;&lt; "Elapsed time - " &lt;&lt; after.seconds_from(before)
+      &lt;&lt; " seconds\n";
+   return 0;
+}</code>
+	</li>
+</ul>
+</div>
+				
+<div class='slide'>
+<h1> Profiling the Selection Sort Algorithm </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> Obtained on a Pentium processor with a clock speed of 1.67 GHz
+				running Linux </li>
+			<li> Actual numbers will vary, computer to computer </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+			//<![CDATA[
+			image( "tab1.png" )
+			//]]>
+		</script>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+				
+<div class='slide'>
+<h1> Profiling the Selection Sort Algorithm </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> Across computers the relationship remains the same </li>
+			<li> Doubling <var>n</var> more than doubles the time </li>
+			<li> Roughly quadruples </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+			//<![CDATA[
+			image( "fig1.png" )
+			//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> Time Taken by
+		Selection Sort </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+	//<![CDATA[
+				section( "3" )
+	//]]>
+</script>
+Analyzing the Performance of the Selection Sort Algorithm </h1>
+<ul>
+	<li> Number of operations is tough, and differs across computers </li>
+	<li> Count the number of times an element is visited </li>
+	<li> Consider an vector of length <var>n</var> 
+	<li> Find the smallest of <var>n</var> elements
+		<ul> 
+			<li> Requires <var>n</var> visits </li>
+		</ul>
+	</li>
+	<li> Swap smallest into place
+		<ul>
+			<li> Requires 2 more visits </li>
+		</ul>
+	</li>
+	<li> Repeat for <var>n</var>-1 elements </li>
+	<li> Again, for <var>n</var>-2, etc., until array is sorted </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Analyzing the Performance of the Selection Sort Algorithm </h1>
+<p> the maximum number of visits required for the sorting is </p>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+	image( "eqn1.png" )
+	//]]>
+	</script>
+	</div>
+<p> because </p>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+	image( "eqn2.png" )
+	//]]>
+	</script>
+	</div>
+<p> So, total number of visits is </p>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "eqn3.png" )
+	//]]>
+	</script>
+	</div>
+<p> Which explains why the graph looks like a parabola </p>
+</div>
+
+<div class='slide'>
+<h1> Analyzing the Performance of the Selection Sort Algorithm </h1>
+<ul>
+	<li> We're interested in ratios; how the function grows </li>
+	<li> As <var>n</var> gets large, the lower-order terms don't contribute
+		much </li>
+	<li> The leading coefficient divides out.  Ignore it </li>
+	<li> We say, "The number of visits is of order
+		<var>n</var><sup>2</sup>" </li>
+	<li> <dfn>big-oh notation:</dfn>  The number of visits
+		O(<var>n</var><sup>2</sup>) </li>
+	<li> Doubling the size of the vector quadruples the time required to sort
+		(roughly) </li>
+	<li> An increase of inputs by a factor of 100 raises the runtime by a
+		factor of 10,000 </li>
+	<li> Luckily, there are faster sorting algorithms </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Analyzing the Performance of the Selection Sort Algorithm </h1>
+<h2> Big-O </h2>
+<ul>
+	<li> If <var>f</var>(<var>n</var>) is O(<var>g</var>(<var>n</var>)), then
+		<var>f</var> grows <strong>no faster</strong> than <var>g</var>
+		<ul>
+			<li> It might grow the same (roughly) </li>
+			<li> It might grow much more slowly </li>
+			<li> <var>g</var> dominates <var>f</var> </li>
+		</ul>
+	</li>
+	<li> <var>f</var>(<var>n</var>)/<var>g</var>(<var>n</var>) is less than
+		some constant <var>C</var>, as n gets arbitrarily large </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "4" )
+//]]>
+</script>
+Merge Sort </h1>
+<ul>
+	<li> <dfn>Divide and conquer</dfn> algorithm
+		<ul>
+			<li> Split array into 2 halves </li>
+			<li> Get somebody to sort each half </li>
+			<li> Halves can be merged into a single, sorted array, in linear time
+			</li>
+		</ul>
+	</li>
+	<li> Recursively use the mergesort to sort each half
+		<ul>
+			<li> As a base case, a subarray with 0 or 1 elements is sorted </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Merge Sort </h1>
+<ul>
+	<li> Consider this vector, each half magically sorted: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "img_11.4.1.png" )
+//]]>
+</script>
+</div>
+<ul>
+	<li> Merge the 2 sorted sub-vectors by taking the smaller element each
+	time from the sub-vectors </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "img_11.4.2.png" )
+//]]>
+</script>
+</div>
+</div>
+
+<div class='slide'>
+	<h1> Merge sort &mdash; <tt>mergesort.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "mergesort/mergesort.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+section( "5" )
+//]]>
+</script>
+Analyzing the Merge Sort Algorithm </h1>
+<p> Comparing merge to selection sort </p>
+<table class='book'>
+	<tr>
+		<th class='hl'>n</th>
+		<th class='hl'>Merge Sort (seconds)</th>
+		<th class='hl'>Selection Sort (seconds)</th>
+	</tr>
+	<tr>
+		<td>10,000</td>
+		<td>0.012</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>20,000</td>
+		<td>0.025</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>30,000</td>
+		<td>0.038</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>40,000</td>
+		<td>0.052</td>
+		<td>11</td>
+	</tr>
+	<tr>
+		<td>50,000</td>
+		<td>0.066</td>
+		<td>17</td>
+	</tr>
+	<tr>
+		<td>60,000</td>
+		<td>0.081</td>
+		<td>25</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+	<h1> Analyzing the Merge Sort Algorithm </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig2.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 2</span> Merge Sort Timing
+(blue) versus Selection Sort (red) </p>
+</div>
+<ul>
+	<li> Merge sort (blue) not a parabola </li>
+	<li> Looks like a line </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Analyzing the Merge Sort Algorithm </h1>
+<ul>
+	<li> The merge sort seems to be  a tremendous improvement </li>
+	<li> To understand why, estimate the number of element visits </li>
+	<li> Consider the merge portion of the algorithm
+		<ul>
+			<li> Each step adds another element to <tt>b</tt> 
+			<li> Compare the first two elements of the halves and decide which is
+				smaller (2 visits) </li>
+			<li> Copy the smaller element to its place in the sorted vector (1
+				visit) </li>
+			<li> Copy the sorted vector back into the original vector (2
+			visits) </li>
+		</ul>
+	</li>
+	<li> 5 visits for each of the <var>n</var> elements </li>
+	<li> 5<var>n</var> visits for a single merge </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Analyzing the Merge Sort Algorithm </h1>
+<ul>
+	<li> If <var>T</var>(<var>n</var>) is the time required to sort
+		<var>n</var> elements, then
+		<code> T(n) = 2T(n/2) + 5n </code>
+	</li>
+	<li> evaluate T(n/2)
+		<code> T(n/2) = 2T(n/4) + 5n/2 </code>
+	</li>
+	<li> Substitute in:
+		<code> T(n) = 2&times;2T(n/4) + 5n + 5n </code>
+	</li>
+	<li> Again:
+		<code> T(n/4) = 2T(n/8) + 5(n/4) </code>
+		<code> T(n) = 2&times;2&times;2T(n/8) + 5n + 5n + 5n </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>	Analyzing the Merge Sort Algorithm </h1>
+<ul>
+	<li> Generalizing:
+		<code>	T(n) = 2<sup>k</sup>T(n/s<sup>k</sup>) + 5nk</code>
+	</li>
+	<li> Assume <tt>n = 2<sup>m</sup></tt>, let <tt>k=m</tt> :
+		<code>	T(n) = 2<sup>m</sup>T(n/s<sup>m</sup>) + 5nm</code>
+		<code>	     = nT(1) + 5nm </code>
+		<code>	     = n + 5n&times;log<sub>2</sub>(n)</code>
+	</li>
+	<li> Hence merge sort is an O(<var>n</var>log(<var>n</var>)) algorithm
+		<ul>
+			<li> Drop the lower-order terms </li>
+			<li> Drop the leading coefficient </li>
+			<li> Drop the base of the logarithm </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "6" )
+//]]>
+</script>
+ Searching</h1>
+ <h2>Linear search</h2>
+<ul>
+	<li> <dfn>Linear/sequential search:</dfn> searching through the elements of
+		an arbitrary sequence until the match is found or until the end of the
+		sequence
+		<code>
+   for (int i = 0; i &lt; v.size(); i++)
+   { 
+     if (v[i] == value)
+       return i;
+   }</code>
+	</li>
+	<li> Visit each element at most 1 time </li>
+	<li> Visit all <var>n</var> to verify failure </li>
+	<li> Visit <var>n</var>/2 elements on average (if element exists once)
+	</li>
+	<li> It is an O(<var>n</var>) algorithm </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Searching </h1>
+<h2>Binary search</h2>
+<p> Search for <tt>123</tt> in the data set below</p>
+<table class='array'>
+	<tr class='index'>
+		<td> 0 </td>
+		<td> 1 </td>
+		<td> 2 </td>
+		<td> 3 </td>
+		<td> 4 </td>
+		<td> 5 </td>
+		<td> 6 </td>
+		<td> 7 </td>
+	</tr>
+	<tr class='data'>
+		<td class='hl'> 14 </td>
+		<td class='hl'> 43 </td>
+		<td class='hl'> 76 </td>
+		<td class='hl'> 100 </td>
+		<td class='hl'> 115 </td>
+		<td class='hl'> 290 </td>
+		<td class='hl'> 400 </td>
+		<td class='hl'> 511 </td>
+	</tr>
+</table>
+<p> The last number in the first half (100) is smaller than 123, so, look in
+the second half: </p>
+<table class='array'>
+	<tr class='index'>
+		<td> 0 </td>
+		<td> 1 </td>
+		<td> 2 </td>
+		<td> 3 </td>
+		<td> 4 </td>
+		<td> 5 </td>
+		<td> 6 </td>
+		<td> 7 </td>
+	</tr>
+	<tr class='data'>
+    <td> 14 </td>
+    <td> 43 </td>
+    <td> 76 </td>
+    <td> 100 </td>
+    <td class='hl'> 115 </td>
+    <td class='hl'> 290 </td>
+    <td class='hl'> 400 </td>
+		<td class='hl'> 511 </td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Searching </h1>
+<p> The last number in the first half of this sequence (290) is larger than
+	123, so, 123 must be in the sequence: </p>
+<table class='array'>
+  <tr class='index'>
+	  <td> 0 </td>
+    <td> 1 </td>
+    <td> 2 </td>
+    <td> 3 </td>
+    <td> 4 </td>
+    <td> 5 </td>
+    <td> 6 </td>
+    <td> 7 </td>
+  </tr>
+  <tr class='data'>
+    <td> 14 </td>
+    <td> 43 </td>
+    <td> 76 </td>
+    <td> 100 </td>
+    <td	class='hl'>	115 </td>
+		<td	class='hl'> 290 </td>
+		<td> 400 </td>
+		<td> 511 </td>
+   </tr>
+</table>
+<p> The first and the second half of the remaining sequence contains one
+element each and the first half is 115, which is smaller than the required
+number </p>
+<table class='array'>
+	 <tr class='index'>
+		 <td> 0 </td>
+		 <td> 1 </td>
+		 <td> 2 </td>
+		 <td> 3 </td>
+		 <td> 4 </td>
+		 <td> 5 </td>
+		 <td> 6 </td>
+		 <td> 7 </td>
+	 </tr>
+	 <tr class='data'>
+	   <td> 14 </td>
+	   <td> 43 </td>
+	   <td> 76 </td>
+	   <td> 100 </td>
+	   <td> 115 </td>
+		 <td class='hl'>	290 </td>
+		 <td>	400 </td>
+		 <td>	511 </td>
+	 </tr>
+</table>
+<p> The remaining candidate (290) is not 123.  Failed. </p>
+</div>
+
+<div class='slide'>
+<h1> Searching </h1>
+<ul> 
+	<li> The <tt>binary search</tt> cuts the search space in half at each step
+	</li>
+	<li> A recursive binary search (see <a href=
+		'bsearch/bsearch.cpp'><tt>bsearch.cpp</tt></a>)
+	<code>
+int binary_search(vector&lt;int&gt; v, int from, int to, int value)
+{
+   if (from &gt; to)
+      return -1;
+   int mid = (from + to) / 2;
+   if (v[mid] == value)
+      return mid;
+   else if (v[mid] &lt; value)
+      return binary_search(v, mid + 1, to, value);
+   else
+      return binary_search(v, form, mid - 1, value);
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Searching</h1>
+<ul>
+	<li> O(log(<var>n</var>)) run-time </li>
+	<li> Look at middle, then search 1/2 the array:
+		<code>T(n) = T(n/2) + 1</code>
+		<code>T(n/2) = T(n/4) + 1</code>
+	</li>
+	<li> So
+		<code>T(n) = T(n/4) + 2</code>
+	</li>
+	<li> Generally,
+		<code>T(n) = T(n/2<sup>k</sup>) + k</code>
+	</li>
+	<li> Let
+		<code>n = 2<sup>k</sup></code>
+	</li>
+	<li> So
+		<code> T(n) = 1 + log<sub>2</sub>(n)</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Searching</h1>
+<ul>
+	<li> Binary search is faster than linear search </li>
+	<li> <strong>Only works</strong> on sorted arrays/vectors </li>
+	<li> In instances where the search is made only once, it is not worthwhile
+		to sort the data first just to use the binary search </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+	Library Functions for Sorting and Binary Search </h1>
+<ul>
+	<li> C++ provides functions in the C++ library for sorting and 
+		searching </li>
+	<li> In the <tt>&lt;algorithm&gt;</tt> header </li>
+	<li> To sort vector <tt>v</tt> call
+		<code>
+sort(v.begin(), v.end());</code>
+	</li>
+	<li> To sort array <tt>a</tt>
+		<code>
+sort(a, a + <i>size</i>)</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Library Functions for Sorting and Binary Search </h1>
+<h2> <tt>binary_search()</tt> </h2>
+<ul>
+	<li> Returns <tt>true</tt> or <tt>false</tt>, not the index </li>
+	<li> Searching a sorted vector:
+		<code>
+binary_search(v.begin(), v.end(), value)</code>
+	</li>
+	<li> Searching a sorted array:
+		<code>
+binary_search(a, a + <var>size</var>, value)</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Defining an Ordering for Sorting Objects </h3>
+<ul>
+	<li> Sort uses <tt>&lt; operator</tt> to compare objects, by default </li>
+	<li> Define <tt>&lt; operator</tt> on the container objects
+		<code>
+bool operator&lt;(const Employee& a, const Employee& b)
+{
+return a.get_salary() &lt; b.get_salary();
+}</code>
+	</li>
+	<li> (Example from <a target='big' href=
+		'code/stlsort.cpp'><tt>code/stlsort.cpp</tt></a>) </li>
+	<li> See Chapter 14 for defining operators </li>
+	<li> See Chapter 20 for other ways of defining ordering for sorts </li>
+</ul>
+</div>
+
+</body>
+</html>

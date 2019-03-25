@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>bestval2.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  8 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  9 </span>
+<span class="line"> 10 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line"> 11 </span>
+<span class="line"> 12 </span><span class="kwc">class</span> Product
+<span class="line"> 13 </span><span class="sym">{</span>
+<span class="line"> 14 </span><span class="kwc">public</span><span class="sym">:</span>
+<span class="line"> 15 </span>   <span class="com">/**</span>
+<span class="line"> 16 </span><span class="com">      Constructs a product with score 0 and price 1.</span>
+<span class="line"> 17 </span><span class="com">   */</span>
+<span class="line"> 18 </span>   <span class="kwd">Product</span><span class="sym">();</span>
+<span class="line"> 19 </span>
+<span class="line"> 20 </span>   <span class="com">/**</span>
+<span class="line"> 21 </span><span class="com">      Reads in this product object.</span>
+<span class="line"> 22 </span><span class="com">   */</span>
+<span class="line"> 23 </span>   <span class="kwb">void</span> <span class="kwd">read</span><span class="sym">();</span>
+<span class="line"> 24 </span>
+<span class="line"> 25 </span>   <span class="com">/**</span>
+<span class="line"> 26 </span><span class="com">      Compares two product objects.</span>
+<span class="line"> 27 </span><span class="com">      &#64;param b the object to compare with this object</span>
+<span class="line"> 28 </span><span class="com">      &#64;return true if this object is better than b</span>
+<span class="line"> 29 </span><span class="com">   */</span>
+<span class="line"> 30 </span>   <span class="kwb">bool</span> <span class="kwd">is_better_than</span><span class="sym">(</span>Product b<span class="sym">)</span> <span class="kwb">const</span><span class="sym">;</span>
+<span class="line"> 31 </span>
+<span class="line"> 32 </span>   <span class="com">/**</span>
+<span class="line"> 33 </span><span class="com">      Print this product object</span>
+<span class="line"> 34 </span><span class="com">   */</span>
+<span class="line"> 35 </span>   <span class="kwb">void</span> <span class="kwd">print</span><span class="sym">()</span> <span class="kwb">const</span><span class="sym">;</span>
+<span class="line"> 36 </span><span class="kwc">private</span><span class="sym">:</span>
+<span class="line"> 37 </span>   string name<span class="sym">;</span>
+<span class="line"> 38 </span>   <span class="kwb">double</span> price<span class="sym">;</span>
+<span class="line"> 39 </span>   <span class="kwb">int</span> score<span class="sym">;</span>
+<span class="line"> 40 </span><span class="sym">};</span>
+<span class="line"> 41 </span>
+<span class="line"> 42 </span>Product<span class="sym">::</span><span class="kwd">Product</span><span class="sym">()</span>
+<span class="line"> 43 </span><span class="sym">{</span>
+<span class="line"> 44 </span>   price <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 45 </span>   score <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 46 </span><span class="sym">}</span>
+<span class="line"> 47 </span>
+<span class="line"> 48 </span><span class="kwb">void</span> Product<span class="sym">::</span><span class="kwd">read</span><span class="sym">()</span>
+<span class="line"> 49 </span><span class="sym">{</span>
+<span class="line"> 50 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the model name: &quot;</span><span class="sym">;</span>
+<span class="line"> 51 </span>   <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> name<span class="sym">);</span>
+<span class="line"> 52 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the price: &quot;</span><span class="sym">;</span>
+<span class="line"> 53 </span>   cin <span class="sym">&gt;&gt;</span> price<span class="sym">;</span>
+<span class="line"> 54 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter the score: &quot;</span><span class="sym">;</span>
+<span class="line"> 55 </span>   cin <span class="sym">&gt;&gt;</span> score<span class="sym">;</span>
+<span class="line"> 56 </span>   string remainder<span class="sym">;</span> <span class="slc">// Read remainder of line</span>
+<span class="line"> 57 </span>   <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> remainder<span class="sym">);</span>
+<span class="line"> 58 </span><span class="sym">}</span>
+<span class="line"> 59 </span>
+<span class="line"> 60 </span><span class="kwb">bool</span> Product<span class="sym">::</span><span class="kwd">is_better_than</span><span class="sym">(</span>Product b<span class="sym">)</span> <span class="kwb">const</span>
+<span class="line"> 61 </span><span class="sym">{</span>
+<span class="line"> 62 </span>   <span class="kwa">if</span> <span class="sym">(</span>price <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span> <span class="kwa">return true</span><span class="sym">;</span>
+<span class="line"> 63 </span>   <span class="kwa">if</span> <span class="sym">(</span>b<span class="sym">.</span>price <span class="sym">==</span> <span class="num">0</span><span class="sym">)</span> <span class="kwa">return false</span><span class="sym">;</span>
+<span class="line"> 64 </span>   <span class="kwa">return</span> score <span class="sym">/</span> price <span class="sym">&gt;</span> b<span class="sym">.</span>score <span class="sym">/</span> b<span class="sym">.</span>price<span class="sym">;</span>
+<span class="line"> 65 </span><span class="sym">}</span>
+<span class="line"> 66 </span>
+<span class="line"> 67 </span><span class="kwb">void</span> Product<span class="sym">::</span><span class="kwd">print</span><span class="sym">()</span> <span class="kwb">const</span>
+<span class="line"> 68 </span><span class="sym">{</span>
+<span class="line"> 69 </span>   cout <span class="sym">&lt;&lt;</span> name
+<span class="line"> 70 </span>      <span class="sym">&lt;&lt;</span> <span class="str">&quot; Price: &quot;</span> <span class="sym">&lt;&lt;</span> price
+<span class="line"> 71 </span>      <span class="sym">&lt;&lt;</span> <span class="str">&quot; Score: &quot;</span> <span class="sym">&lt;&lt;</span> score<span class="sym">;</span>
+<span class="line"> 72 </span><span class="sym">}</span>
+<span class="line"> 73 </span>
+<span class="line"> 74 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 75 </span><span class="sym">{</span>
+<span class="line"> 76 </span>   vector<span class="sym">&lt;</span>Product<span class="sym">&gt;</span> products<span class="sym">;</span>
+<span class="line"> 77 </span>
+<span class="line"> 78 </span>   Product best_product<span class="sym">;</span>
+<span class="line"> 79 </span>   <span class="kwb">int</span> best_index <span class="sym">= -</span><span class="num">1</span><span class="sym">;</span>
+<span class="line"> 80 </span>
+<span class="line"> 81 </span>   <span class="kwb">bool</span> more <span class="sym">=</span> <span class="kwa">true</span><span class="sym">;</span>
+<span class="line"> 82 </span>   <span class="kwa">while</span> <span class="sym">(</span>more<span class="sym">)</span>
+<span class="line"> 83 </span>   <span class="sym">{</span>
+<span class="line"> 84 </span>      Product next_product<span class="sym">;</span>
+<span class="line"> 85 </span>      next_product<span class="sym">.</span><span class="kwd">read</span><span class="sym">();</span>
+<span class="line"> 86 </span>      products<span class="sym">.</span><span class="kwd">push_back</span><span class="sym">(</span>next_product<span class="sym">);</span>
+<span class="line"> 87 </span>
+<span class="line"> 88 </span>      <span class="kwa">if</span> <span class="sym">(</span>next_product<span class="sym">.</span><span class="kwd">is_better_than</span><span class="sym">(</span>best_product<span class="sym">))</span>
+<span class="line"> 89 </span>      <span class="sym">{</span>
+<span class="line"> 90 </span>         best_index <span class="sym">=</span> products<span class="sym">.</span><span class="kwd">size</span><span class="sym">() -</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 91 </span>         best_product <span class="sym">=</span> next_product<span class="sym">;</span>
+<span class="line"> 92 </span>      <span class="sym">}</span>
+<span class="line"> 93 </span>
+<span class="line"> 94 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;More data? (y/n) &quot;</span><span class="sym">;</span>
+<span class="line"> 95 </span>      string answer<span class="sym">;</span>
+<span class="line"> 96 </span>      <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> answer<span class="sym">);</span>
+<span class="line"> 97 </span>      <span class="kwa">if</span> <span class="sym">(</span>answer <span class="sym">!=</span> <span class="str">&quot;y&quot;</span><span class="sym">)</span> more <span class="sym">=</span> <span class="kwa">false</span><span class="sym">;</span>
+<span class="line"> 98 </span>   <span class="sym">}</span>
+<span class="line"> 99 </span>
+<span class="line">100 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> products<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line">101 </span>   <span class="sym">{</span>
+<span class="line">102 </span>      products<span class="sym">[</span>i<span class="sym">].</span><span class="kwd">print</span><span class="sym">();</span>
+<span class="line">103 </span>      <span class="kwa">if</span> <span class="sym">(</span>i <span class="sym">==</span> best_index<span class="sym">)</span> cout <span class="sym">&lt;&lt;</span> <span class="str">&quot; &lt;= best value &quot;</span><span class="sym">;</span>
+<span class="line">104 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">105 </span>   <span class="sym">}</span>
+<span class="line">106 </span>
+<span class="line">107 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">108 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

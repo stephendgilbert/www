@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>3.2&mdash;Processing Data</title>
+    <style type='text/css'>
+        th, td { padding: 5px; }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 3.2</p>
+        <p id='lessonTitle'>Processing Data</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>I</span>n Chapter 1, you learned that a
+        computer system</b> consists of hardware, (the physical parts of
+        your computer), and software (the programs used by the hardware),
+        both working together to carry out the different steps of
+        the <b>information processing cycle</b>.
+    </p>
+    <p> These are the steps that your computer goes through to <b>turn
+        data into information</b>. We can abbreviate these steps as
+        <b>I</b> (input), <b>P</b> (processing), and <b>O</b> (output)<br>
+        <img src='images/ipo2.gif' class='inlineCenter' alt='Input, Processing and Output.'>
+    </p>
+    <ul>
+        <li><b>Input</b> is retrieving the data to work on. You just learned
+            how to do that with the <code>Scanner</code> class, and the
+            ACM input methods.
+        </li>
+        <li><b>Output</b> is displaying the results of your program's
+            calculations. You learned to do that with the <code>System.out</code>
+            object, with the <code>ConsoleProgram</code>'s printing
+            methods, and with the <code>Applet</code>'s <code>drawString()</code>
+            method.
+        </li>
+    </ul>
+    <p> That leaves us with the last step&#8212;<b>Processing</b>&#8212;organizing,
+        analyzing, modifying and manipulating the input to produce
+        the desired output.
+    </p>
+
+    <p> We'll start by tackling the simplest kind of processing:
+        using <b>arithmetic expressions</b> to perform numerical
+        calculations. Later, you'll work with more
+        sophisticated mathematical expressions as well as processing
+        involving <code>String</code>s, <code>Picture</code>s,
+        <code>Turtle</code>s, <code>PongBall</code>s,
+        <code>PlayingCard</code>s, and many other objects.
+    </p>
+    <h2>Arithmetic Expressions</h2>
+        <p> <b>In Chapter 2 you learned how to create
+            numeric variables</b>. Now, it's time to turn your
+            attention to the second part of the "primitive puzzle".
+            Recall that primitives, unlike objects, are manipulated via
+            <b>operators</b>, instead of methods. Such manipulations are
+            called <b>expressions</b>.<br>
+            <img src="images/expressions.gif" class="inline" alt="Some varied expressions.">
+            While expressions like those shown in this picture are cute,
+            that's not exactly what we'll be talking about. What, <b>exactly</b>, do
+            we mean by "an expression" in the context of a Java
+            program? Here's a formal definition:
+        </p>
+        <p class="pullquote">
+            An expression is any combination of operators and
+            operands which, when evaluated, yields a value.
+        </p>
+        <p> Well, that's not very helpful; what is an operand?
+            What is an operator? What is evaluation? What do those
+            words mean? Let's look.
+        </p>
+    <h3>Operands</h3>
+        <p> An <b>operand</b> is simply a symbol that indicates a <b>value</b>
+            or <b>storage location in memory</b>. Operands include:
+        </p>
+        <ul>
+            <li><b><u>Literals</u> : </b> which <i>represent</i> a value</li>
+            <li><b><u>Variables</u> : </b> a storage location <i>containing</i> a value</li>
+            <li><b><u>Method invocations</u> : </b> which can <i>produce</i> a value</li>
+            <li><b><u>Sub-expressions</u> : </b> which <i>compute</i> a value</li>
+        </ul>
+        <p> Here are some examples:<br>
+            <img src='images/operands.png' class='inlineCenter' alt='Different operands.'>
+            The important thing to see is that <b>all</b> operands are just
+            different ways of specifying <b>values</b> or <b>data</b>.
+        </p>
+    <h3>Operators</h3>
+        <p> An <b>operator</b> is a symbol that is used to perform
+            a calculation on one or more operands and, subsequently,
+            produce a value. Operators have three important
+            characteristics:
+        </p>
+        <ul>
+            <li><b><u>Arity</u> : </b> the number of operands required.
+                Some operators require only a single operand; we call
+                these <b>unary</b> operators. Most operators require two
+                operands; we call these <b>binary</b> operators.
+                Finally, one Java operator requires three operands;
+                the <b>ternary</b>, (or <b>tertiary</b>),
+                conditional operator.
+            </li>
+            <li><b><u>Precedence</u> : </b> this characteristic
+                helps determines the order in which operations involving
+                multiple operators are performed. Operations that have
+                higher precedence are performed before operations that
+                have lower precedence. (This is a slightly different
+                definition than that used in C and C++.)
+            </li>
+            <li><b><u>Associativity</u> : </b> this characteristic
+                determines whether operations involving multiple
+                operators <b>at the same level of precedence</b> should
+                proceed from right-to-left, (called <i>right-associative</i>),
+                or from left-to-right, (called <i>left-associative</i>).
+            </li>
+        </ul>
+    <h3>Arithmetic Operators</h3>
+        <p> Here are the five most used basic <b>arithmetic operators</b> that can
+            be applied to any numeric type. Each of these is a
+            binary operator:
+        </p>
+        <table style="width:600px;margin:auto;" border="1">
+        <tbody>
+            <tr style="background: navy none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">
+                <th class="thead">Operator</th>
+                <th class="thead">Meaning</th>
+            </tr>
+            <tr>
+                <th class="tcode">+</th>
+                <td class="tdata">Addition (or unary plus)</td>
+            </tr>
+            <tr>
+                <th class="tcode">-</th>
+                <td class="tdata">Subtraction (or unary minus)</td>
+            </tr>
+            <tr>
+                <th class="tcode">*</th>
+                <td class="tdata">Multiplication</td>
+            </tr>
+            <tr>
+                <th class="tcode">/</th>
+                <td class="tdata">Division (both integer and floating-point)</td>
+            </tr>
+            <tr>
+                <th class="tcode">%</th>
+                <td class="tdata">Remainder or modulus (both integer and floating-point)</td>
+            </tr>
+        </tbody>
+        </table>
+    <h3>The Results</h3>
+        <p> When operators and operands are combined, each operator
+            is applied to its operands, and a temporary value is
+            calculated and stored in memory. Here's an example expression:<br>
+            <img src='images/exp01.gif' class='inlineCenter' alt='The expression 10 + 1.'>
+            This expression uses two literal operands as well as the
+            addition (or binary plus) operator. This expression
+            <b>produces</b> or <b>creates</b> the temporary value 13.
+            The value produced by the expression can be used wherever a
+            literal value can be used.
+        </p>
+        <p> For instance, both of these declarations store identical
+            values into their respective variables:<br>
+            <img src='images/exp02.gif' class='inlineCenter' alt='Using expressions and literals.'>
+        </p>
+        <p> Much of the time, a temporary value is all you need. If you
+            need to store the result of an expression, however, you
+            can use Java's assignment operator to copy the temporary
+            value into a variable.
+        </p>
+    <h2>Numeric Operations</h2>
+        <p> As you saw earlier, Java has the five arithmetic operators that
+            work on both integers and floating point numbers (or a
+            combination of the two).
+            Most of five operators are self-explanatory, although you might
+            find the <b>remainder</b> and <b>division</b> operators a little
+            tricky if you've never programmed before.
+        </p>
+        <p> Here are some integer variables and numeric expressions.
+            What values do you suppose each of the following variables
+            will hold after each expression is evaluated?
+        </p>
+        <p class="code">
+            int a = 7, b = 12; <span class="cmt">// Initial values</span><br>
+            <br>
+            int diff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = b - a;<br>
+            int product&nbsp;&nbsp; = b * a;<br>
+            int quotient&nbsp; = b / a;<br>
+            int remainder = b % a;
+        </p>
+        <p> As you might expect, the variable <code>diff</code> will contain
+            the value 5, the variable <code>product</code> will contain the
+            value 84. How about the last two?
+        </p>
+    <h3>Integer Division</h3>
+        <p> You might be surprised to find that the variable
+            <code>quotient</code> ends up containing the value <b>1</b>,
+            and <b>not</b> the fractional number 1.74. Because both
+            <code>a</code> and <code>b</code> are integers, Java performs
+            <b>integer division</b> when it encounters the / operator.
+        </p>
+        <p> In some computer languages, different symbols are used for
+            different kinds of division (integer or real). In Java,
+            the same symbol is used for both. If one of the operands is
+            a floating-point number, then real division is performed.
+            If both are integers, then integer division is carried out.
+        </p>
+        <p> Integer division works like the division you learned in grade
+            school. You draw a little house on the board and put the
+            number you want to divide (called the dividend) inside the
+            house.
+            <img src="images/intdivision.gif" class="inline" alt="Integer division.">
+            You draw the number you want to divide by (the divisor),
+            standing at the front door of the house like a visitor.
+            You then ask yourself, "how many visitors" could fit inside
+            the house and place that number on the roof. This is the
+            quotient. You multiply the quotient by the divisor, place the
+            result underneath the dividend and subtract. The remainder
+            is anything left over down in the basement, 8 in the example
+            on the left and 3 in the example on the right.
+        </p>
+        <p> When you perform integer division in Java, the quotient is
+            calculated, but the remainder is <b>discarded</b>. It's
+            important that you understand that when you divide two integers,
+            the result is <b>truncated</b>, not rounded. With real division,
+            15/4 would be 3.75 but with integer division, it's just 3,
+            not 4 as it would be if the 3.75 was rounded.
+        </p>
+    <h3>The Remainder Operator</h3>
+        <p> The <b>%</b> or <b>remainder</b> operator (also sometimes called
+            the <b>modulus</b> operator) does exactly the same thing, except,
+            instead of returning the quotient portion from the roof, it
+            returns the remainder from the basement. If you were to
+            divide 12 by 7, the quotient would be 1, since there is one 7
+            in 12. 12 % 7, though, is 5 because that's what's left over
+            after dividing 12 by 7.
+        </p>
+        <p> The only tricky part about this is
+            what happens if either the divisor or the dividend, (or both)
+            are negative. Some languages prohibit the operation in that
+            case, but in Java you just ignore the sign while calculating
+            the result, and then the result is given the same sign as
+            the numerator (that is, the dividend).
+        </p>
+        <p> The remainder operator is useful in a couple of different
+            situations. If you were writing an electronic cash register
+            program for children, you might use the remainder operator
+            to show them how to make change. If, for instance, the
+            change was 87 cents, the remainder operator could calculate
+            how many quarters, dimes, nickels, and pennies were
+            required, like this:
+        </p>
+        <p class="code">
+        int quarters, dimes, nickels, pennies, change = 87;<br>
+        quarters = change / 25;&nbsp;<span class="cmt">// see how many quarters</span><br>
+        change = change % 25;&nbsp;&nbsp;&nbsp;<span class="cmt">// store the remainder in change</span><br>
+        dimes = change / 10;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// see how many dimes</span><br>
+        change = change % 10;&nbsp;&nbsp;&nbsp;<span class="cmt">// store the remainder in change</span><br>
+        nickels = change / 5;&nbsp;&nbsp;&nbsp;<span class="cmt">// see how many nickels</span><br>
+        pennies = change % 5;&nbsp;&nbsp;&nbsp;<span class="cmt">// everything left is a penny</span><br>
+        </p>
+        <div class='exercise'>
+        <h5>Exercise</h5>
+        <p> Here are a couple "challenge questions" you can practice with.
+            See if you can figure out what the answers should be. Then,
+            use the DrJava Interactions Pane to see if you were right.
+        </p>
+        <p class="code">
+            int a = 5 % 3;<br>
+            int b = 0 % 2;<br>
+            int c = 12 % 12;<br>
+            int d = 2 % 0;
+        </p>
+        </div>
+    <h3>Precedence</h3>
+        <p>Earlier I mentioned that operators have
+            the three characteristics
+            of <i>arity</i>, <i>precedence</i>, and <i>associativity</i>.
+            Let's look at what we mean by <b>precedence</b>.
+        </p>
+        <p> Precedence is one of the rules that determine the order in
+            which operators are applied to operands. Each operator is given
+            a particular <b>priority</b>. Those operators with a higher
+            priority, or precedence, get to perform their operations
+            before those of lower status.
+        </p>
+        <p>
+            The following table (from
+            <a href="http://java.sun.com/docs/books/tutorial/java/nutsandbolts/expressions.html" target="_blank"><b>Sun's Java Tutorial</b></a>) shows the
+            precedence assigned to the operators: the higher
+            in the table an operator appears, the higher its precedence. Operators
+            with higher precedence are evaluated before operators with a relatively
+            lower precedence. Operators on the same line have equal precedence.
+            (You can find a complete precedence table in an appendix in
+            your textbook.)
+        </p>
+        <table style='width:600px;margin:auto;' border="1">
+            <tbody><tr style="background: navy none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">
+                <th class="thead">Precedence Groups</th>
+                <th class="thead">Operators</th>
+            </tr>
+            <tr>
+                <td class="tdata">postfix operators</td>
+                <td style="font-size: smaller;"><code>[] . (<em>params</em>) <em>expr</em>++ <em>expr</em>--</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">unary operators</td>
+                <td style="font-size: smaller;"><code> ++<em>expr</em> --<em>expr</em> +<em>expr</em> -<em>expr</em> ~ !</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">creation or cast</td>
+                <td style="font-size: smaller;"><code>new (<em>type</em>)<em>expr</em></code></td>
+            </tr>
+            <tr>
+                <td class="tdata">multiplicative</td>
+                <td style="font-size: smaller;"><code>* / %</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">additive</td>
+                <td style="font-size: smaller;"><code>+ -</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">shift</td>
+                <td style="font-size: smaller;"><code>&lt;&lt; &gt;&gt; &gt;&gt;&gt;</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">relational</td>
+                <td style="font-size: smaller;"><code>&lt; &gt; &lt;= &gt;= instanceof</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">equality</td>
+                <td style="font-size: smaller;"><code>== !=</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">bitwise AND</td>
+                <td style="font-size: smaller;"><code>&amp;</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">bitwise exclusive OR</td>
+                <td style="font-size: smaller;"><code>^</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">bitwise inclusive OR</td>
+                <td style="font-size: smaller;"><code>|</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">logical AND</td>
+                <td style="font-size: smaller;"><code>&amp;&amp;</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">logical OR</td>
+                <td style="font-size: smaller;"><code>||</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">conditional</td>
+                <td style="font-size: smaller;"><code>? :</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">assignment</td>
+                <td style="font-size: smaller;"><code>= += -= *= /= %= &amp;= ^= |= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=</code></td>
+            </tr>
+        </tbody></table>
+        <p> As you can see, the postfix and unary operators have the highest
+            precedence, followed by the multiplication operators, addition,
+            and finally assignment, at the very bottom.
+        </p>
+        <p> When faced with an expression involving multiple operations,
+            you use the rules of precedence to decide "who goes first."
+            Here's an example; what value does the variable <code>a</code>
+            have after this line of code is evaluated?
+        </p>
+        <p class="code">
+            int a = 3 + 4 * 7 - 9;
+        </p>
+
+        <p> There are obviously several ways you could evaluate this
+            expression. One way would be to go from left to right so that:
+        </p>
+        <ul>
+            <li>3 + 4 is 7</li>
+            <li>7 * 7 is 49</li>
+            <li>49 - 9 is 40</li>
+        </ul>
+        <p> Applying the rules of precedence, however, you can see that
+            multiplication [*] has higher precedence, so you perform that
+            first, followed by the addition and subtraction:
+        </p>
+        <ul>
+            <li>4 * 7 is 28</li>
+            <li>28 + 3 - 9 is 22</li>
+        </ul>
+        <p>Quite a difference!</p>
+        <div class='alert'>
+        <p>Note also that because assignment has the <i>lowest</i>
+            precedence, <b>all</b> of the other operations will be performed
+            <b>before</b> the result is copied back into the variable (<code>a</code>
+            in this case).
+        </p>
+        </div>
+
+    <h3>Associativity</h3>
+        <p> Suppose that our previous expression had read like
+            this instead:
+        </p>
+        <p class="code">
+            int a = 3 + 4 * 7 / 9;
+        </p>
+        <p> Now we have a quandary. Both multiplication and division have
+            the same precedence. But if we do the multiplication first
+            we get this:
+        </p>
+        <ul>
+            <li>4 * 7 is 28</li>
+            <li>28 / 9 is 3</li>
+            <li>3 + 3 is 6</li>
+        </ul>
+
+        <p>If we do the division first, we get this:</p>
+        <ul>
+            <li>7 / 9 is 0 (Integer division)</li>
+            <li>4 * 0 is 0</li>
+            <li>3 + 0 is 3</li>
+        </ul>
+
+        <p> So, which should we use? In situations like this, where
+            precedence offers insufficient guidance, we have to fall
+            back on the associativity of the operators. Remember that
+            associativity determines whether an operation is performed
+            left-to-right or right-to-left.
+        </p>
+        <p> The unary operators, postfix operators, and the assignment
+            operators work right-to-left [they are <i>right-associative</i>].
+            All of the other operators work left-to-right.
+        </p>
+        <p class="pullquote">Associativity is only needed to act
+            as a "tie-breaker" when operators share operands at same level of
+            precedence. If operators are at different levels of precedence,
+            you don't need to consult the operator associativity.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Processing Data Summary
+        </p>
+        <ul>
+            <li><b>Expressions</b> are combinations of operands and operators
+                that can be evaluated to produce a value. An <b>operand</b>
+                is a symbol that represents a <b>value</b>, while an <b>operator</b>
+                is a symbol that represents an operation.
+            </li>
+            <li> The <b>arity</b> of an operator is the number of operands that it
+                works with. A <b>unary</b> operator (like <code>-</code> for the negative
+                sign), works on a single piece of data. A <b>binary</b> operator
+                (like <code>-</code> for <i>subtraction</i>), needs two pieces of
+                data. (The same symbol (<code>-</code>) can represent
+                two <i>different</i> operators).
+            </li>
+            <li> Java has <b>five fundamental binary arithmetic operators</b>: addition
+                (<code>+</code>), subtraction (<code>-</code>),
+                multiplication (<code>*</code>), division (<code>/</code>) and
+                remainder (<code>%</code>).
+            </li>
+            <li> There are two versions of the division operator; if both operands
+                are integers, then <b>integer division</b> is performed. In integer
+                division, only the quotient is calculated&mdash;no fractional part.
+                The division remainder is discarded. If either number is a real
+                number, then <b>real division</b> is used and the quotient can
+                have a fractional part.
+            </li>
+            <li> With integer operands and the <b>remainder operator</b>, an integer division
+                is performed, but the result of the expression is the remainder,
+                <b>not</b> the quotient.
+            </li>
+            <li> In complex expressions, <b>precedence</b> determines which operators
+                interact with which operands, similar to the rules in Algebra. Expressions
+                in parentheses are evaluated first, followed by unary expressions (such as
+                a negative number), followed by the <b>multiplicative</b> operators
+                (<code>*,/,%</code>), followed by the <b>additive</b> operators
+                (<code>+,-</code>), finally followed by <b>assignment</b>.
+            </li>
+            <li> When two operators have the same level of precedence, and those
+                operators <b>share an operand</b>, the "tie-breaking" rule of
+                <b>associativity</b> is used. In Java, binary operators are
+                <b>left-associative</b>, which simply means that the operator
+                on the left goes first.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

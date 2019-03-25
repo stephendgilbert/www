@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>fraction.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include</span> <span class="dstr">&quot;fraction.h&quot;</span><span class="dir"></span>
+<span class="line">  2 </span><span class="dir">#include &lt;cassert&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;stdexcept&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwb">int</span> Fraction<span class="sym">::</span><span class="kwd">gcd</span><span class="sym">(</span><span class="kwb">int</span> n<span class="sym">,</span> <span class="kwb">int</span> m<span class="sym">)</span>
+<span class="line">  6 </span><span class="sym">{</span>
+<span class="line">  7 </span>   <span class="slc">// Euclid's Greatest Common Divisor algorithm.</span>
+<span class="line">  8 </span>   <span class="kwd">assert</span><span class="sym">((</span>n <span class="sym">&gt;</span> <span class="num">0</span><span class="sym">) &amp;&amp; (</span>m <span class="sym">&gt;</span> <span class="num">0</span><span class="sym">));</span>
+<span class="line">  9 </span>   <span class="kwa">while</span> <span class="sym">(</span>n <span class="sym">!=</span> m<span class="sym">)</span>
+<span class="line"> 10 </span>   <span class="sym">{</span>
+<span class="line"> 11 </span>      <span class="kwa">if</span> <span class="sym">(</span>n <span class="sym">&lt;</span> m<span class="sym">)</span>
+<span class="line"> 12 </span>         m <span class="sym">=</span> m <span class="sym">-</span> n<span class="sym">;</span>
+<span class="line"> 13 </span>      <span class="kwa">else</span>
+<span class="line"> 14 </span>         n <span class="sym">=</span> n <span class="sym">-</span> m<span class="sym">;</span>
+<span class="line"> 15 </span>   <span class="sym">}</span>
+<span class="line"> 16 </span>   <span class="kwa">return</span> n<span class="sym">;</span>
+<span class="line"> 17 </span><span class="sym">}</span>
+<span class="line"> 18 </span>
+<span class="line"> 19 </span>Fraction<span class="sym">::</span><span class="kwd">Fraction</span><span class="sym">(</span><span class="kwb">int</span> t<span class="sym">,</span> <span class="kwb">int</span> b<span class="sym">) :</span> <span class="kwd">top</span><span class="sym">(</span>t<span class="sym">),</span> <span class="kwd">bottom</span><span class="sym">(</span>b<span class="sym">)</span>
+<span class="line"> 20 </span><span class="sym">{</span>
+<span class="line"> 21 </span>    <span class="kwd">normalize</span><span class="sym">();</span>
+<span class="line"> 22 </span><span class="sym">}</span>
+<span class="line"> 23 </span>
+<span class="line"> 24 </span>Fraction<span class="sym">::</span><span class="kwd">Fraction</span><span class="sym">() :</span> <span class="kwd">top</span><span class="sym">(</span><span class="num">0</span><span class="sym">),</span> <span class="kwd">bottom</span><span class="sym">(</span><span class="num">1</span><span class="sym">) { }</span>
+<span class="line"> 25 </span>
+<span class="line"> 26 </span>Fraction<span class="sym">::</span><span class="kwd">Fraction</span><span class="sym">(</span><span class="kwb">int</span> t<span class="sym">) :</span> <span class="kwd">top</span><span class="sym">(</span>t<span class="sym">),</span> <span class="kwd">bottom</span><span class="sym">(</span><span class="num">1</span><span class="sym">) { }</span>
+<span class="line"> 27 </span>
+<span class="line"> 28 </span><span class="kwb">int</span> Fraction<span class="sym">::</span><span class="kwd">numerator</span><span class="sym">()</span> <span class="kwb">const</span>
+<span class="line"> 29 </span><span class="sym">{</span>
+<span class="line"> 30 </span>    <span class="kwa">return</span> top<span class="sym">;</span>
+<span class="line"> 31 </span><span class="sym">}</span>
+<span class="line"> 32 </span>
+<span class="line"> 33 </span><span class="kwb">int</span> Fraction<span class="sym">::</span><span class="kwd">denominator</span><span class="sym">()</span> <span class="kwb">const</span>
+<span class="line"> 34 </span><span class="sym">{</span>
+<span class="line"> 35 </span>    <span class="kwa">return</span> bottom<span class="sym">;</span>
+<span class="line"> 36 </span><span class="sym">}</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span><span class="kwb">void</span> Fraction<span class="sym">::</span><span class="kwd">normalize</span><span class="sym">()</span>
+<span class="line"> 39 </span><span class="sym">{</span>
+<span class="line"> 40 </span>   <span class="slc">// Normalize fraction by</span>
+<span class="line"> 41 </span>   <span class="slc">// (a) moving sign to numerator</span>
+<span class="line"> 42 </span>   <span class="slc">// (b) ensuring numerator and denominator have no common divisors</span>
+<span class="line"> 43 </span>   <span class="kwb">int</span> sign <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 44 </span>   <span class="kwa">if</span> <span class="sym">(</span>top <span class="sym">&lt;</span> <span class="num">0</span><span class="sym">)</span>
+<span class="line"> 45 </span>   <span class="sym">{</span>
+<span class="line"> 46 </span>      sign <span class="sym">= -</span><span class="num">1</span><span class="sym">;</span>
+<span class="line"> 47 </span>      top <span class="sym">= -</span>top<span class="sym">;</span>
+<span class="line"> 48 </span>   <span class="sym">}</span>
+<span class="line"> 49 </span>   <span class="kwa">if</span> <span class="sym">(</span>bottom <span class="sym">&lt;</span> <span class="num">0</span><span class="sym">)</span>
+<span class="line"> 50 </span>   <span class="sym">{</span>
+<span class="line"> 51 </span>      sign <span class="sym">= -</span>sign<span class="sym">;</span>
+<span class="line"> 52 </span>      bottom <span class="sym">= -</span>bottom<span class="sym">;</span>
+<span class="line"> 53 </span>   <span class="sym">}</span>
+<span class="line"> 54 </span>   <span class="kwd">assert</span><span class="sym">(</span>bottom <span class="sym">!=</span> <span class="num">0</span><span class="sym">);</span>
+<span class="line"> 55 </span>   <span class="kwb">int</span> d <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line"> 56 </span>   <span class="kwa">if</span> <span class="sym">(</span>top <span class="sym">&gt;</span> <span class="num">0</span><span class="sym">)</span> d <span class="sym">=</span> <span class="kwd">gcd</span><span class="sym">(</span>top<span class="sym">,</span> bottom<span class="sym">);</span>
+<span class="line"> 57 </span>   top <span class="sym">=</span> sign <span class="sym">* (</span>top <span class="sym">/</span> d<span class="sym">);</span>
+<span class="line"> 58 </span>   bottom <span class="sym">=</span> bottom <span class="sym">/</span> d<span class="sym">;</span>
+<span class="line"> 59 </span><span class="sym">}</span>
+<span class="line"> 60 </span>
+<span class="line"> 61 </span>Fraction <span class="kwc">operator</span><span class="sym">+(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 62 </span><span class="sym">{</span>
+<span class="line"> 63 </span>   Fraction <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">()</span>
+<span class="line"> 64 </span>      <span class="sym">+</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">(),</span>
+<span class="line"> 65 </span>      left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">());</span>
+<span class="line"> 66 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 67 </span><span class="sym">}</span>
+<span class="line"> 68 </span>
+<span class="line"> 69 </span>Fraction <span class="kwc">operator</span><span class="sym">-(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 70 </span><span class="sym">{</span>
+<span class="line"> 71 </span>   Fraction <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">()</span>
+<span class="line"> 72 </span>      <span class="sym">-</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">(),</span>
+<span class="line"> 73 </span>      left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">());</span>
+<span class="line"> 74 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 75 </span><span class="sym">}</span>
+<span class="line"> 76 </span>
+<span class="line"> 77 </span>Fraction <span class="kwc">operator</span><span class="sym">*(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 78 </span><span class="sym">{</span>
+<span class="line"> 79 </span>   Fraction <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">(),</span>
+<span class="line"> 80 </span>      left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">());</span>
+<span class="line"> 81 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 82 </span><span class="sym">}</span>
+<span class="line"> 83 </span>
+<span class="line"> 84 </span>Fraction <span class="kwc">operator</span><span class="sym">/(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line"> 85 </span><span class="sym">{</span>
+<span class="line"> 86 </span>   Fraction <span class="kwd">result</span><span class="sym">(</span>left<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">(),</span>
+<span class="line"> 87 </span>      left<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">());</span>
+<span class="line"> 88 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 89 </span><span class="sym">}</span>
+<span class="line"> 90 </span>
+<span class="line"> 91 </span>Fraction <span class="kwc">operator</span><span class="sym">-(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> value<span class="sym">)</span>
+<span class="line"> 92 </span><span class="sym">{</span>
+<span class="line"> 93 </span>   Fraction <span class="kwd">result</span><span class="sym">(-</span>value<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">(),</span> value<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">());</span>
+<span class="line"> 94 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 95 </span><span class="sym">}</span>
+<span class="line"> 96 </span>
+<span class="line"> 97 </span><span class="kwb">int</span> Fraction<span class="sym">::</span><span class="kwd">compare</span><span class="sym">(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span> <span class="kwb">const</span>
+<span class="line"> 98 </span><span class="sym">{</span>
+<span class="line"> 99 </span>   <span class="kwa">return</span> <span class="kwd">numerator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">()</span>
+<span class="line">100 </span>      <span class="sym">-</span> <span class="kwd">denominator</span><span class="sym">() *</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">();</span>
+<span class="line">101 </span>   <span class="slc">// Return the numerator of the difference</span>
+<span class="line">102 </span><span class="sym">}</span>
+<span class="line">103 </span>
+<span class="line">104 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">&lt;(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">105 </span><span class="sym">{</span>
+<span class="line">106 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) &lt;</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">107 </span><span class="sym">}</span>
+<span class="line">108 </span>
+<span class="line">109 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">&lt;=(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">110 </span><span class="sym">{</span>
+<span class="line">111 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) &lt;=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">112 </span><span class="sym">}</span>
+<span class="line">113 </span>
+<span class="line">114 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">==(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">115 </span><span class="sym">{</span>
+<span class="line">116 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) ==</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">117 </span><span class="sym">}</span>
+<span class="line">118 </span>
+<span class="line">119 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">!=(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">120 </span><span class="sym">{</span>
+<span class="line">121 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) !=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">122 </span><span class="sym">}</span>
+<span class="line">123 </span>
+<span class="line">124 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">&gt;=(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">125 </span><span class="sym">{</span>
+<span class="line">126 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) &gt;=</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">127 </span><span class="sym">}</span>
+<span class="line">128 </span>
+<span class="line">129 </span><span class="kwb">bool</span> <span class="kwc">operator</span><span class="sym">&gt;(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> left<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">130 </span><span class="sym">{</span>
+<span class="line">131 </span>   <span class="kwa">return</span> left<span class="sym">.</span><span class="kwd">compare</span><span class="sym">(</span>right<span class="sym">) &gt;</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">132 </span><span class="sym">}</span>
+<span class="line">133 </span>
+<span class="line">134 </span>ostream<span class="sym">&amp;</span> <span class="kwc">operator</span><span class="sym">&lt;&lt;(</span>ostream<span class="sym">&amp;</span> out<span class="sym">,</span> <span class="kwb">const</span> Fraction<span class="sym">&amp;</span> value<span class="sym">)</span>
+<span class="line">135 </span><span class="sym">{</span>
+<span class="line">136 </span>   out <span class="sym">&lt;&lt;</span> value<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">() &lt;&lt;</span> <span class="str">&quot;/&quot;</span> <span class="sym">&lt;&lt;</span> value<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">();</span>
+<span class="line">137 </span>   <span class="kwa">return</span> out<span class="sym">;</span>
+<span class="line">138 </span><span class="sym">}</span>
+<span class="line">139 </span>
+<span class="line">140 </span>istream<span class="sym">&amp;</span> <span class="kwc">operator</span><span class="sym">&gt;&gt;(</span>istream<span class="sym">&amp;</span> in<span class="sym">,</span> Fraction<span class="sym">&amp;</span> r<span class="sym">)</span>
+<span class="line">141 </span><span class="sym">{</span>
+<span class="line">142 </span>   <span class="kwb">int</span> t<span class="sym">,</span> b<span class="sym">;</span>
+<span class="line">143 </span>   <span class="slc">// Read the top</span>
+<span class="line">144 </span>   in <span class="sym">&gt;&gt;</span> t<span class="sym">;</span>
+<span class="line">145 </span>   <span class="slc">// If there is a slash, read the next number</span>
+<span class="line">146 </span>   <span class="kwb">char</span> c<span class="sym">;</span>
+<span class="line">147 </span>   in <span class="sym">&gt;&gt;</span> c<span class="sym">;</span>
+<span class="line">148 </span>   <span class="kwa">if</span> <span class="sym">(</span>c <span class="sym">==</span> <span class="str">'/'</span><span class="sym">)</span>
+<span class="line">149 </span>      in <span class="sym">&gt;&gt;</span> b<span class="sym">;</span>
+<span class="line">150 </span>   <span class="kwa">else</span>
+<span class="line">151 </span>   <span class="sym">{</span>
+<span class="line">152 </span>      in<span class="sym">.</span><span class="kwd">unget</span><span class="sym">();</span>
+<span class="line">153 </span>      b <span class="sym">=</span> <span class="num">1</span><span class="sym">;</span>
+<span class="line">154 </span>   <span class="sym">}</span>
+<span class="line">155 </span>   r <span class="sym">=</span> <span class="kwd">Fraction</span><span class="sym">(</span>t<span class="sym">,</span> b<span class="sym">);</span>
+<span class="line">156 </span>   <span class="kwa">return</span> in<span class="sym">;</span>
+<span class="line">157 </span><span class="sym">}</span>
+<span class="line">158 </span>
+<span class="line">159 </span>Fraction<span class="sym">&amp;</span> Fraction<span class="sym">::</span><span class="kwc">operator</span><span class="sym">++()</span>
+<span class="line">160 </span><span class="sym">{</span>
+<span class="line">161 </span>   top <span class="sym">+=</span> bottom<span class="sym">;</span>
+<span class="line">162 </span>   <span class="kwa">return</span> <span class="sym">*</span><span class="kwa">this</span><span class="sym">;</span>
+<span class="line">163 </span><span class="sym">}</span>
+<span class="line">164 </span>
+<span class="line">165 </span>Fraction Fraction<span class="sym">::</span><span class="kwc">operator</span><span class="sym">++(</span><span class="kwb">int</span> unused<span class="sym">)</span>
+<span class="line">166 </span><span class="sym">{</span>
+<span class="line">167 </span>   Fraction <span class="kwd">clone</span><span class="sym">(</span>top<span class="sym">,</span> bottom<span class="sym">);</span>
+<span class="line">168 </span>   top <span class="sym">+=</span> bottom<span class="sym">;</span>
+<span class="line">169 </span>   <span class="kwa">return</span> clone<span class="sym">;</span>
+<span class="line">170 </span><span class="sym">}</span>
+<span class="line">171 </span>
+<span class="line">172 </span>Fraction<span class="sym">&amp;</span> Fraction<span class="sym">::</span><span class="kwc">operator</span><span class="sym">+=(</span><span class="kwb">const</span> Fraction<span class="sym">&amp;</span> right<span class="sym">)</span>
+<span class="line">173 </span><span class="sym">{</span>
+<span class="line">174 </span>   top <span class="sym">=</span> top <span class="sym">*</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">() +</span> bottom <span class="sym">*</span> right<span class="sym">.</span><span class="kwd">numerator</span><span class="sym">();</span>
+<span class="line">175 </span>   bottom <span class="sym">*=</span> right<span class="sym">.</span><span class="kwd">denominator</span><span class="sym">();</span>
+<span class="line">176 </span>   <span class="kwd">normalize</span><span class="sym">();</span>
+<span class="line">177 </span>   <span class="kwa">return</span> <span class="sym">*</span><span class="kwa">this</span><span class="sym">;</span>
+<span class="line">178 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

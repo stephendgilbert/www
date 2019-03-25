@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>1.3&mdash;Java Mechanics</title>
+<script type='text/javascript'>
+$(document).ready(function() {
+    $('#cycle-small').click(function() {
+        $('#cycle-large').fadeIn();
+    });
+
+    $('#cycle-large').click(function() {
+        $('#cycle-large').fadeOut();
+    });
+});
+</script>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 1.3</p>
+        <p id='lessonTitle'>Java Mechanics</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/genie.jpg" class="right" alt="The magic of programming.">
+            <b><span class="cap2">I</span>n some ways, writing a computer program
+            is a little like magic</b>. You can think of your computer keyboard
+            like Harry Potter's magic wand or like Aladdin's magic lamp.
+            You type in the correct incantation, and, if you do it
+            <b>just right</b>, the compiler will accept your request
+            and compile and run your program.
+        </p>
+
+        <p> Of course, programming really <b>isn't</b> magic; instead of
+            memorizing a dusty volume of "Open Sesame", in this class, you'll
+            learn the <b>meaning</b> behind each of the phrases that make
+            up your Java programs. (I have to admit, though, that there <b>will</b>
+            still be times when I'll wave my hands, and say something that
+            sounds suspiciously like "Abracadabara". But those
+            times will get much rarer as the semester goes on.)
+        </p>
+    <h2>Java Mechanics</h2>
+        <p>To create your own Java programs,
+            you follow a <b>mechanical process</b>, a well-defined
+            set of steps called the <b>edit-compile-run</b> cycle
+            that looks like this: <img id='cycle-small'
+            style='cursor:pointer;'
+            src='images/edit-comp-run-sm.gif'
+            alt='The edit-compile-run cycle'
+            title='The edit-compile-run cycle (Click to see a large version)'
+            class='right'>
+            <div id='cycle-large' style='cursor:pointer;display:none; position:absolute; margin:auto; margin-top:-25px;' >
+            <img src='images/edit-comp-run-lg.gif'
+            alt='The edit-compile-run cycle.'
+            title='The edit-compile-run cycle. (Click to dismiss)'>
+            </div>
+        </p>
+        <ol>
+            <li class='d'>Create your <b>source code</b></li>
+
+            <li class='d'>Compile the code to produce object, or <b>bytecode</b></li>
+            <li class='d'>If <b>syntax errors</b> occur, return to your editor to fix them</li>
+            <li class='d'>Run your program using appletviewer or the Java interpreter</li>
+            <li class='d'>If <b>runtime errors occur</b>, return to your editor to fix them</li>
+        </ol>
+        <p> Learning this process is <b>necessary</b> before you can
+            learn to program, but it is <b>not</b> the
+            same as learning how to program; you must master the
+            process, but mastering the process
+            doesn't mean you'll write correct and elegant programs.
+        </p>
+    <p>Here are the steps in the process:</p>
+    <h3>Edit</h3>
+        <p> <img src='images/editor.png' class='right' style='width:125px;' alt='An editor icon.'>
+            When you write a program in a high-level language,
+            you write your instructions&#8212;in the form of programming
+            language statements&#8212;using a <b>plain text editor</b>.
+            The document
+            you produce at this stage is called <b>source code</b>.
+            In Java, your source code is placed into a file with the
+            extension <b>.java</b>.
+        </p>
+        <p> While you can write Java programs using a regular text
+            editor, like Windows Notepad, your Java IDE includes a
+            programming editor that knows all about
+            Java's syntax rules and can display different program
+            elements in different colors. This feature, called
+            <b>syntax highlighting</b>, helps you identify
+            inadvertent typing errors as you write your
+            programs.
+        </p>
+    <h3>Compile</h3>
+        <p> <img src='images/compiler.png' class='right' style='width:125px;' alt='Compiler icon.'>
+            Once you've written your program, you <b>
+            compile</b> it by using a software program called,
+            (surprise!), a <b>compiler</b>. The compiler turns
+            your source code into the machine language for the
+            Java Virtual Machine, and stores that code in a new
+            document. The "generic" name for this file is
+            <b>object code</b>, but the Java-specific form of
+            object code is called <b>bytecode</b>. If your
+            program fails to compile, (if you have "grammatical"
+            or <b>syntax</b> errors in your source code), then
+            you must re-edit the code until it compiles correctly.
+        </p>
+        <p> Sun supplies a Java Development Kit (or JDK) that has a
+            command-line compiler named <b>javac</b>. Using the command-line
+            and the javac compiler, you can compile a Java program named
+            <b>FirstApp.java</b> like this:<br>
+            <img src='images/j2se16b.gif' class='inlineCenter' alt='Compiling a program from the command-line.'>
+            If you haven't made any syntax errors, the compiler places the
+            Java <b>bytecode</b> it generates in a new file named
+            <b>FirstApp.class</b>. If there <b>are</b> syntax mistakes,
+            the compiler reports them on the command-line like this,
+            and <b>no</b> class file is generated.<br>
+            <img src='images/syntax-error.png' class='inlineCenter' alt='A syntax error from the command line.'>
+
+        </p>
+        <div class='alert'>
+        <p><b>Note:</b> On Windows or Linux, you can only use the <b>javac</b> compiler like this
+            if you have downloaded and installed the Sun JDK (or, if you're
+            on a Mac, where the JDK is installed automatically). Since you
+            don't absolutely have to have the JDK for this class, these
+            "incantations" might not work on your machine.
+        </p>
+        </div>
+        <p>Once a program compiles without errors,
+            it is <b>syntactically</b> correct. It still may
+            contain runtime or logic errors, however. <b>Runtime</b> errors
+            are errors that cause your program to "crash" when it runs, usually
+            displaying a nasty error message on the screen. <b>Logic</b> errors
+            occur when your program produces the <b>wrong output</b>; it may give
+            the wrong answer or carry out an action at the wrong time, like
+            giving you a "C" when your percentage grade in the class is exactly 80%.
+            (This kind of logic error is called a <b>fencepost</b> error).
+        </p>
+
+    <h3>Run</h3>
+        <p> <img src='images/linker.png' class='right' style='width:215px;' alt='A linker icon.'>
+            Once your program compiles, you <b>run</b> it. All high-level
+            languages require a significant amount of additional
+            machine-language code&#8212;in addition to the code you've
+            written&#8212;before your program will actually run. This
+            additional code is contained in collections of classes known as
+            <b>libraries</b>. In Java, these different libraries are placed in special zip files
+            known as Java Archives or <b>JAR</b> files.
+        </p>
+        <p> How this additional code is added to your program varies from
+            language to language and from system to system. Generically,
+            this is called <b>linking</b>, when library code is combined
+            with the code you've written to produce and <b>executable image</b>
+            in memory that can be run. With Java, this happens behind the
+            scenes as part of the process of compiling your program, and then,
+            again, when you run your program. There is no separate explicit
+            linking step that you have to worry about.
+        </p>
+        <p> Internally, Java uses something called the <b>classpath</b>
+            (or <b>build path</b>) to know  which libraries or folders to
+            search for additional classes. Your IDE will normally take care
+            of this for you when you use only the classes available with the
+            JRE. When you use additional library classes (like we'll do with
+            the ACM JTF class libraries and the JUnit testing libraries),
+            you'll have to explicitly adjust the build path inside your IDE.
+        </p>
+    <h4>Testing</h4>
+        <p> <img src='images/runner.png' class='right' style='width:125px;' alt='A runner icon.'>
+            When you <b>run</b> your program, the first thing
+            you'll want to do is to verify that it runs as you
+            expect it. This process is called <b>testing</b>. It
+            is not uncommon to find that your program has some
+            logic errors that can only be discovered when the
+            program runs. These errors may even make your program
+            "crash". These kinds of errors are called <b>runtime
+            errors</b>
+        </p>
+        <p> To fix a runtime error, you go back to the
+            very first step&#8212;your source code&#8212;and make changes
+            there, repeating the edit-compile-run cycle until
+            the program runs correctly.
+        </p>
+        <p> In addition to <i>correctness</i> checking, you'll also be
+            responsible for formatting your code correctly and making sure that
+            your <b>style</b> meets the CS 170 guidelines. Your program may
+            run correctly, but still be sloppy and unreadable. A portion of
+            your programming grade will be based on learning how to write
+            readable code.
+        </p>
+
+    <h3>Practice, Practice, Practice</h3>
+        <p> As you know, a good portion of your grade in this class is
+            based on your performance on several practical programming
+            proficiency quizzes. Since these are skill-based quizzes, there's really no
+            way to "cram" for them; the only practical strategy is to get
+            lots of practice.
+        </p>
+        <p> I will give you several exercises that
+            are similar to the problems (or a portion of the problems)
+            on the programming quizzes that you'll take. The first quiz
+            requires you to write simple, console-mode <b>output</b>
+            programs. The first step to doing that is to follow the steps <b>in
+            this section</b> (and, in
+            <b>Homework 2</b>)
+            to create, compile and test a program.
+        </p>
+        <p> Since the quizzes are closed book, you'll need to
+            <b>memorize</b> the steps you need to follow. If you haven't
+            done so, go ahead and <b class='ry'>complete
+           <b>Homework 2</b>
+            now</b>, so you'll be
+            ready for the next class session, when you'll be asked to
+            write a couple of simple programs like this from scratch.
+            I expect that you'll need to refer to
+            your notes for the first one, but you should be able to get
+            a little further on each problem.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Java Mechanics Summary
+        </p>
+        <ul>
+            <li>To create a Java program, you <b>edit</b> your source code,
+                <b>compile</b> it to produce bytecode, and then <b>run</b>
+                the program using a Java Virtual Machine.
+            </li>
+            <li>You can use the command-line tools in the Java Development
+                Kit (JDK) to compile and run your code, but it is easier to use
+                a specialized Integrated Development Environment or IDE. We will
+                use DrJava in this book.
+            </li>
+            <li> Mistakes discovered when you compile your programs are
+                called <b>syntax</b> errors. You must correct your syntax
+                errors and recompile your programs before you can run them.
+            </li>
+            <li> Runtime and logic errors occur when your program
+                "crashes" the JVM, or when your program produces incorrect
+                output when it is run.
+            </li>
+            <li>Testing is used to check for logic errors. Unit tests compare
+                the <b>expected output</b> of your program, (often under several different
+                input conditions), with the <b>actual output</b> produced when it
+                runs.
+            </li>
+            <li>Style checking is used to make sure that your program follows
+                the conventions required for this course.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

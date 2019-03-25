@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>CS 170 - Week 8 Exercises &amp; Assignments</title>
+    <style type='text/css'>
+        li { line-height:1.45em; }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner06">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 170&mdash;Week 8</p>
+        <p id='lessonTitle'>Exercises &amp; Assignments</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>T</span>his week you'll spend some
+            more time working with loops</b>. In addition, you'll have
+            an opportunity to work on some programs that use animation,
+            process events and create some <code>JLabel</code> widgets.
+            Here's the list of things you should do this week.</p>
+    <ol>
+        <li class='d'>
+            <b class='grn'>Advanced Loops&mdash;AdvancedLoopProblems</b>:
+            Get some extra practice with loop functions by completing
+            these problems in <b>AdvancedLoopProblems.java</b>. To get
+            started, walk through the first exercise in
+            <b>Section 8.2&mdash;Java Jumps</b>. That will get you through the first exercise.
+            Once you're finished, you can continue with these problems:
+             <ul>
+                <li><b>withoutString</b></li>
+                <li><b>gHappy</b></li>
+                <li><b>mirrorEnds</b></li>
+                <li><b>sameEnds</b></li>
+                <li><b>maxBlock</b></li>
+            </ul>
+            <p>Complete these problems using any loops you like. You may need multiple
+                loops. You may also make use of the the different <b>jump</b> statements,
+                like <code>break</code> and <code>continue</code>.
+            </p>
+            <p> You can check your answers with the
+                <b>Check</b> program, and look at the solutions if you get stuck.
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Using Iterators and Files&mdash;RainStats</b>:
+            This week you learned how to <b>read</b> files, using the <code>Scanner</code>
+            class, and how to <b>write</b> files, using the <code>PrintWriter</code>
+            class. Complete the program named <b>RainStats.java</b>. As it now
+            stands, the program <b>writes</b> the output file named <b>rainfall-stats.txt</b>
+            and places it in your <b>Chapter08</b> folder when you run it.
+            <div class='box'>
+            <p><b class='ry'>OOPS!</b>. Forgot to include the <b>RainStats.java</b> file in
+                your Chapter08 folder this week. You can download it from
+                <b><a href='RainStats.java' target='_blank'>here</a></b>. Please place
+                the file in your Chapter08 folder.
+            </p>
+            </div>
+            <p> Your job is to complete the program by adding code inside the
+                <code>summarizeStatsFile()</code> method. Inside the method
+                you need to open the input file, read each line, and produce
+                a new output file summarizing the rainfall for each month.<br>
+                <img src='images/rainfall-stats.png' class='inlineCenter' alt='Running RainStats.java.'>
+                Notice that the input file has:
+            </p>
+            <ul>
+                <li class='d'>A title line, in this case, the statistics for the year 823</li>
+                <li class='d'>12 lines of samples, one for each month. The first entry on each line
+                    is how many days of measurable rain occured in that month.
+                </li>
+                <li class='d'>The number of samples is followed by one <code>double</code> value
+                    for each sample. In the picture shown here, it rained 21 days in January, so
+                    the line has 21 doubles following the word 21. In February, it rained every
+                    day, so there are 28 entries. March was especially dry with only 7 entries, and
+                    so on.
+                </li>
+            </ul>
+            <p>Your job is to open and read the input file that the program produces
+                and produce another output file. As shown here, your output file should
+                have a title line with the word STATISTICS replace by SUMMARY. Then,
+                for every month, you should have the <b>sum</b> of all the sample
+                values supplied on that line.
+            </p>
+            <p> There is no <b>Check</b> program for this exercise, but you
+                <i>may</i> look at the solution page if you get stuck
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Animation &amp; Events&mdash;PacMan</b>:
+            The title character in the PacMan series of arcade games is pretty easy
+            to draw using a yellow-filled <code>GArc</code>. Using the starter code
+            from Chapter08 (which just creates the window the correct size), add
+            a PacMan character at the far left side of the screen. Use the standard
+            animation skeleton to move him to the right side, where he'll reverse
+            course and start chomping his way back to the left.<br>
+            <img src='images/pacman.png' class='inlineCenter' alt='The PacMan application.'>
+            In addition to the animation, you'll need to add some mouse event
+            handling. When you click on the program, the PacMan character should
+            change direction (just as if he had hit the right or left sides of the
+            application).
+            <p>Here are some tips to help you implement the application:</p>
+            <ul>
+                <li>You'll need some instance variables to represent the state of the
+                    object during the animation. For instance, the variable <code>dx</code>
+                    can be used to represent how far the PacMan moves during each frame.
+                    To start moving in the opposite direction, (when you hit either end),
+                    just reverse the sign of <code>dx</code>.
+                </li>
+                <li>To animate the mouth, you'll want varibles for <code>startAngle</code>,
+                    <code>endAngle</code> and the amount to open or close the mouth on
+                    each frame (I call this <code>mx</code> because it works kind of like
+                    <code>dx</code>). You'll also need a constant for <b>MOUTH</b> set to
+                    <code>90.0</code>. This is the widest that the mouth can get before
+                    you need to change directions.
+                    <p>The start angle should begin at
+                    <code>MOUTH / 2</code> and the sweep angle should be <code>360 - MOUTH</code>.
+                    At each frame, subtract <code>mx / 2</code> from the start angle, and
+                    add it to the sweep angle. When the sweep angle goes to zero, or it
+                    passes <code>MOUTH</code>, then change the sign of the "change" variable,
+                    <code>mx</code>.
+                </li>
+                <li>To change the direction of the PacMan, just add <code>180</code> to
+                    <code>sweepAngle</code> and change the sign of <code>dx</code>.
+                </li>
+            </ul>
+            <p> There is no <b>Check</b> program for this, but you can compare your work to
+            <a href='javascript:var%20w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/PacMan.html","The PacMan Applet","width=650,height=350,scrollbars=yes");'>
+            <b>the completed applet</b></a> which you can run by clicking the link in
+            this sentence.
+            </p>
+
+        </li>
+        <li class='d'>
+            <p><b class='grn'>Extra Credit #3&mdash;Animation and Events</b>:
+            For those of you looking for a challenge, complete the game of
+            <b>Breakout</b> for extra credit. This is one of the Stanford University
+            <i>Nifty Assignments</i>. You'll find the items you need in
+            the Chapter08 folder, including a PDF of the original problem and
+            a starter file:
+            </p>
+            <ul>
+                <li>The original <b>assignment handout</b> with instructions and hints.
+                    You can <b class='ry'>ignore all of the Stanford-specific instructions
+                    (like the due dates)</b>. Use the information in this and previous
+                    chapters, instead of the references in the assignment handout.
+                </li>
+                <li>The starter file <b>Breakout.java</b> that contains the constants you'll
+                    use when you create your program. (It's slightly modified
+                    from the one in the handout.)
+                </li>
+                <li>Some sound files <b>bounce.au</b> and <b>bounce.wav</b> that you can
+                    use if you want to add sound as an extension. (I'm actually not sure
+                    that this works with the current version of the ACM libraries we
+                    are using.)
+                </li>
+            </ul>
+            <p> Submit only <b>Breakout.java</b> for extra credit.
+        </li>
+    </ol>
+    <p> Remember that all of these assignments are due
+        <span style='color:red'><b>before the deadline</b></span>,
+        so make sure you don't get "caught short".
+    </p>
+</div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

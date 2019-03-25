@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>9.2&mdash;Java's Jumps</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.2</p>
+        <p id='lessonTitle'>Java's Jumps</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">J</span>ava's selection and iteration
+            statements</b> are called <b>flow-of-control</b> statements
+            because they provide a highly <b>structured</b> method of conditionally
+            and repeatedly executing a particular section of code.
+        </p>
+        <p>
+            In years past, however, before the control structures we use
+            today, programmers still needed the equivalent of <code>if</code>
+            statements and loops.
+            <img src="images/e01.jpg" class="right" alt="Esdgar Dijkstra.">
+            Rather than relying on built-in language
+            features, though, these iron-age programmers constructed their
+            own flow of control statements, using the <b>jump</b>.
+        </p>
+
+        <p>
+            The jump statement often uses another name; even programmers who
+            have never heard of the jump have heard of its nom de plume,
+            the <b><code>goto</code></b> statement. The computer scientist
+            Edsger Dijkstra, (shown here), is best known for his landmark
+            paper published in the journal, <i>Communications of the ACM</i>,
+            entitled <b>GOTO Considered Harmful</b>. The paper, which pointed
+            out the dangers of using the <code>goto</code> statement, and
+            urged its retirement, ignited a storm of controversy and
+            is often credited with starting the <b>structured programming
+            revolution</b>.
+        </p>
+        <p> The <code>goto</code> is
+            one of Java's fifty reserved words, but it isn't actually
+            implemented as part of the language, (like it is in C++ and C#).
+            If your dream is to arbitrarily jump willy-nilly hither-and-yon
+            through your code, you'll have to find another programming
+            language to accommodate you. When it comes to loop control,
+            however, Java hasn't abandoned the jump altogether. Java has two
+            statements&#8212;<code>break</code> and <code>continue</code>&#8212;that
+            let you do your jumping in a controlled fashion.
+        </p>
+    <h2>The break Statement</h2>
+        <p>The <code>break</code> statement is used in two different
+            circumstances, but both circumstances are quite similar.
+            The break statement allows you to <b>jump out of</b>:
+            <img src="images/break2.png" alt="The break statement" class="right">
+        </p>
+        <ul>
+            <li>a <code>switch</code> statement</li>
+            <li>a loop</li>
+        </ul>
+        <p>
+            When a <code>break</code> statement is encountered in the
+            body of a loop, your program jumps to the statement immediately
+            <b>following</b> the loop body, as you can see in the illustration
+            shown here.
+        </p>
+        <p> Any remaining statements within the loop body are skipped. The
+            test expression is not re-evaluated; the termination occurs
+            regardless of the value of the test expression.
+        </p>
+        <p> Although it can be misused, allowing you to write
+            code that is as convoluted as any produced by the
+            <code>goto</code> statement, the <code>break</code> can
+            sometimes be used to make your loops simpler and clearer,
+            especially when used to create a <b>loop-and-a-half</b>.
+        </p>
+        <div class='info'>
+        <p>Many textbooks discourage the use of the break
+            statement as part of a loop, but I disagree. Research has shown
+            that students who use the <code>break</code> statement following
+            the loop-and-a-half pattern shown below, understand the termination
+            condition better and consistently write correct loops more often.<br>
+            <br>
+            If you'd like to read more on this topic, I've included a link to
+            Eric Roberts' 1995 paper,
+            "<a href='LoopExits.pdf' target='_blank'><b>Loop Exits
+            and structured programming: Reopening the debate</b></a>", given
+            at the Twenty-sixth SIGCSE Technical Symposium on Computer
+            Science Education (1995). Although it's several years old, and
+            mainly concerned with Pascal, the points the Roberts makes are
+            still applicable to Java.
+        </p>
+        </div>
+    <h3>Loop-and-a-half</h3>
+        <p> As you know, the built-in loops test either <b>before</b> the
+            loop body, or <b>after</b> the loop body. Sometimes, however,
+            its much more convenient to test <b>inside</b> the loop body.
+            This is especially true when a <b>primed</b> loop requires
+            many lines of code just to set up the loop condition.
+        </p>
+        <p> This <i>can</i> be done by using a Boolean <b>flag</b>, like we did
+            in the last section. There are pros and cons to this approach.
+        </p>
+        <ul>
+            <li><b>Con</b>: using a flag introduces another variable,
+                which adds to the "mental overhead" of understanding
+                the function.
+            </li>
+            <li><b>Pro</b>: the flag <i>can</i> be used to consolidate
+                several different, otherwise unrelated, bounds
+                conditions, making the overall loop structure clearer.
+            </li>
+        </ul>
+        <p> I, personally, feel that <b>flag-controlled</b> loops only
+            make sense in this second situation: where you have several
+            different bound conditions and you can use nested or
+            sequential <code>if</code> statements to initialize a
+            single Boolean flag.
+        </p>
+    <h3>The PositiveMean2 Example</h3>
+        <p> Let's look at an example of a loop that uses the
+            <code>break</code> statement to implement a loop-and-a-half.
+            <b>PositiveMean2.java</b> (which you can find in this chapter's
+            code folder) is a rewrite of the
+            <b>PositiveMean</b> example from <i>Section 7.5&mdash;The while
+            Loop</i>.
+        </p>
+        <p> Instead of using a <b>primed loop</b> that reads
+            a number before the loop, and then reads the next number
+            at the bottom of the loop, this version of the application
+            uses a <b>single read statement</b>, along with a
+            <code>break</code> statement to exit the loop:<br>
+            <img src="images/pm2.gif" class="inlineCenter" alt="A fragment of PositiveMean2.java.">
+            Note that the <code>while</code> loop uses a bounds condition
+            of <code>true</code>; that means that this is an
+            <b>infinite</b> loop that can only exit using the
+            <code>if</code> statement in its center.
+        </p>
+        <p> Often, in a loop-and-a-half, you'll put the <b>necessary</b>
+            bound here, to make sure a loop doesn't run past the end of
+            an input <code>String</code>, for instance.
+        </p>
+        <p> Inside the loop you'll find:</p>
+        <ol>
+            <li class="d"> An "input" section in the top half of the
+                loop. Of course, you'll recall that this is exactly the
+                same structure that was used for the <b>flag-controlled</b>
+                sentinel loop in the last lesson.
+            </li><li class="d">  The loop condition
+                doesn't need to test for the sentinel value, because it's
+                tested in the middle of the loop body, using
+                and <code>if</code> statement. When the sentinel is
+                encountered, the loop is exited using the <code>break</code>
+                statement. This is the loop's <b>intentional</b> bounds.
+            </li>
+            <li class="d"> After the "test in the middle", the actual
+                processing takes place. Unlike a flag-controlled loop,
+                this code does <b>not</b> need to be placed inside an
+                <code>else</code> block, since the <code>break</code> statement
+                causes a <b>jump</b> past this code when it is encountered.
+            </li>
+        </ol>
+        <p> You can
+            <a href='javascript:var%20w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/PositiveMean2.html","A loop and a half","width=525,height=400,scrollbars=yes");'>
+            <b>run the program</b></a> as an applet (written as an
+            ACM console program) by clicking the hyperlink
+            in this sentence. Even better, though, is to run it on your
+            own machine in DrJava. Here's what the program looks like when it runs on
+            my machine:<br>
+            <img src="images/pm2a.gif" alt="Running the PositiveMean2 app." class="inlineCenter">
+        </p>
+    <h2>The continue Statement</h2>
+        <p> The <code>continue</code> statement is a jump statement like
+            <code>break</code>, but unlike <code>break</code>,
+            the <code>continue</code> jumps <b>back</b> to the loop
+            condition, rather than jumping <b>out</b> of the loop.
+        </p>
+        <p>Exactly what that means depends upon which loop you're using:</p>
+        <ul>
+            <li>For the <code>while</code> loop and the
+                <code>do</code>-<code>while</code> loop, the <code>continue</code>
+                statement jumps to the <code>boolean</code> test, skipping
+                backward (<code>while</code>) or forward
+                (<code>do</code>-<code>while</code>) as necessary.<br>
+                <img src='images/continue01.png' class='inlineCenter' alt='The continue with a while.'>
+            </li>
+            <li>
+                 With the <code>for</code> loop, control jumps to the update
+                expression, <b>instead of</b> the test expression.<br>
+                <img src='images/continue02.png' class='inlineCenter' alt='The continue with a for loop.'>
+            </li>
+        </ul>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Java Jumps Summary
+        </p>
+        <ul>
+            <li>In early programming languages, an <b>unconditional jump
+                statement</b>, called the <code>goto</code> was used as the
+                main <b>flow-of-control</b> statement. Through the writings
+                of computer scientists like Edsger Dijkstra, <b>structured
+                control statements</b> like <code>if</code>-<code>else</code>
+                and loops have mostly replaced the use of
+                unconditional jumps.
+            </li>
+            <li>While Java has reserved <code>goto</code> as a keyword, it
+                is not implemented in the language. Java does have two
+                <b>limited versions</b> of the <code>goto</code>: the
+                <code>break</code> and <code>continue</code> statements.
+            </li>
+            <li>The <code>break</code> statement is used to <b>unconditionally
+                exit a block of code</b>. The statement is <b>only valid</b>
+                inside a <code>switch</code> code block and from inside a
+                loop. A <code>break</code> <b>does not</b> exit from inside
+                an <code>if</code> statement.
+            </li>
+            <li>When a <code>break</code> is encountered, execution jumps to
+                the line of code <b>following the control structure</b>, that is,
+                following the body of the loop or the closing brace in the
+                <code>switch</code>.
+            </li>
+            <li>The <code>break</code> statement can be used, along with
+                <code>if</code>, to write a simpler form of the indefinite loop,
+                called a <b>loop-and-a-half</b>. When used in this controlled
+                and restricted manner, it can actually make your loops
+                easier to understand.
+            </li>
+            <li>The <code>continue</code> statement <b>only works inside
+                a loop</b>, where it skips the remaining statements inside
+                the loop body and jumps to the loop condition (in a
+                <code>while</code> or <code>do-while</code>) or to the
+                loop's update expression (in a <code>for</code> loop).
+            </li>
+            <li>The <code>continue</code> statement must be used with
+                an <code>if</code> statement to avoid a section of
+                unreachable code. In addition, use of the <code>continue</code>
+                inside a counter-controlled <code>while</code> loop can
+                lead to unreliable counter updating.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

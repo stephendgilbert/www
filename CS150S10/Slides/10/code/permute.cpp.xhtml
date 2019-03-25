@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>permute.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="com">/**</span>
+<span class="line">  8 </span><span class="com">   Generates all permutations of the characters in a string</span>
+<span class="line">  9 </span><span class="com">   &#64;param word a string</span>
+<span class="line"> 10 </span><span class="com">   &#64;return a vector that is filled with all permutations</span>
+<span class="line"> 11 </span><span class="com">   of the word</span>
+<span class="line"> 12 </span><span class="com">*/</span>
+<span class="line"> 13 </span>vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> <span class="kwd">generate_permutations</span><span class="sym">(</span>string word<span class="sym">)</span>
+<span class="line"> 14 </span><span class="sym">{</span>
+<span class="line"> 15 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> result<span class="sym">;</span>
+<span class="line"> 16 </span>   <span class="kwa">if</span> <span class="sym">(</span>word<span class="sym">.</span><span class="kwd">length</span><span class="sym">() &lt;=</span> <span class="num">1</span><span class="sym">)</span>
+<span class="line"> 17 </span>   <span class="sym">{</span>
+<span class="line"> 18 </span>      result<span class="sym">.</span><span class="kwd">push_back</span><span class="sym">(</span>word<span class="sym">);</span>
+<span class="line"> 19 </span>      <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 20 </span>   <span class="sym">}</span>
+<span class="line"> 21 </span>
+<span class="line"> 22 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> word<span class="sym">.</span><span class="kwd">length</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 23 </span>   <span class="sym">{</span>
+<span class="line"> 24 </span>      string shorter_word <span class="sym">=</span> word<span class="sym">.</span><span class="kwd">substr</span><span class="sym">(</span><span class="num">0</span><span class="sym">,</span> i<span class="sym">)</span>
+<span class="line"> 25 </span>         <span class="sym">+</span> word<span class="sym">.</span><span class="kwd">substr</span><span class="sym">(</span>i <span class="sym">+</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 26 </span>      vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> shorter_permutations
+<span class="line"> 27 </span>         <span class="sym">=</span> <span class="kwd">generate_permutations</span><span class="sym">(</span>shorter_word<span class="sym">);</span>
+<span class="line"> 28 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> shorter_permutations<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> j<span class="sym">++)</span>
+<span class="line"> 29 </span>      <span class="sym">{</span>
+<span class="line"> 30 </span>         string longer_word <span class="sym">=</span> word<span class="sym">[</span>i<span class="sym">] +</span> shorter_permutations<span class="sym">[</span>j<span class="sym">];</span>
+<span class="line"> 31 </span>         result<span class="sym">.</span><span class="kwd">push_back</span><span class="sym">(</span>longer_word<span class="sym">);</span>
+<span class="line"> 32 </span>      <span class="sym">}</span>
+<span class="line"> 33 </span>   <span class="sym">}</span>
+<span class="line"> 34 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 35 </span><span class="sym">}</span>
+<span class="line"> 36 </span>
+<span class="line"> 37 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 38 </span><span class="sym">{</span>
+<span class="line"> 39 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Enter a string: &quot;</span><span class="sym">;</span>
+<span class="line"> 40 </span>   string input<span class="sym">;</span>
+<span class="line"> 41 </span>   <span class="kwd">getline</span><span class="sym">(</span>cin<span class="sym">,</span> input<span class="sym">);</span>
+<span class="line"> 42 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> v <span class="sym">=</span> <span class="kwd">generate_permutations</span><span class="sym">(</span>input<span class="sym">);</span>
+<span class="line"> 43 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> v<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 44 </span>      cout <span class="sym">&lt;&lt;</span> v<span class="sym">[</span>i<span class="sym">] &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 45 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 46 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

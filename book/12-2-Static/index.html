@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>12.2&mdash;Static Members</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner06">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 12.2</p>
+        <p id='lessonTitle'>Static Members</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/f02.gif" class="right" alt="Captain Static cartoon character.">
+            <b><span class="cap">I</span>nstance variables are variables that
+            are defined in a class</b>, outside of any method. When you create
+            a new object from your class, every object receives its own
+            copy of those variables.
+        </p>
+        <p> In addition to instance variables</b> and
+            instance methods, though, your program can also have
+            <b>class or static</b> variables and methods.
+            A <code>static</code> object is one that comes into existence
+            when your program is loaded, and that remains there as
+            long as your program is running.
+        </p>
+        <p> In Java, we have both <b>static fields</b> and
+            <b>static methods</b>&mdash;we'll refer to these as
+            <b>static members</b>.
+            Let's start by looking at <code>static</code> fields.
+        </p>
+    <h2> Static Fields</h2>
+        <p><b><span class='cap2'>S</span>tatic fields are <i>shared</i> fields</b>.
+            You can think of them as sort of like <b>class-wide global</b>
+            variables; they're <b>not</b> accessible everywhere in your program,
+            but they <b>are</b> shared among all the objects in a class.
+        </p>
+        <p> A <code>static</code> variable is often called a
+            <b>class variable</b>, as opposed to an <b>instance
+            variable</b>. You can think of it as belonging to the class
+            as a whole, rather than to any individual object.
+        </p>
+        <p> When you create an object from a class, that object gets a
+            <b>copy</b> of each of the instance variables defined by the
+            class. The same object, however, does <b>not</b> get a copy
+            of the class variables; there is only <b>one</b> copy of each
+            class variable, "living" inside the class.
+        </p>
+        <div class="sidebar" style="background: ghostwhite none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <p style="border-bottom: 1px solid silver; font-size: larger; font-weight: bold; text-align: center; color: navy;">
+        A Useful Analogy
+        </p>
+        <p> Here's an analogy that I read in a discussion group, and that I
+            thought was very useful. Suppose that you're building a piece of
+            software that simulates an iPod factory. Each iPod would have
+            certain data associated with it, and one of those pieces of data
+            would be the individual iPod <i>serial number</i>. In your program,
+            <code>serialNumber</code> would be an <b>instance variable</b> because
+            each iPod would have a unique value and that value should be
+            attached to the individual iPod object.
+        </p>
+        <p> In the iPod constructor, you'd want to initialize the serial
+            number field, but you'd also have to make sure that no two iPods
+            had the <u>same</u> serial number. How would you do that?
+        </p>
+        <p> The easiest way is for the iPod class itself to keep a "master
+            serial number" that individual iPod objects can access, and that
+            gets updated to "the next number" whenever the current one is
+            used by an iPod object.
+        </p>
+        <p> If you think of a class as a "factory" for producing objects,
+            then the <code>serialNumber</code> belongs to the individual
+            iPod, while the <code>masterSerialNumber</code> data belongs
+            to the iPodFactory.
+        </p>
+        </div>
+    <h3>Defining Class Variables</h3>
+        <p> To define a class variable, you just add the keyword
+            <code>static</code> as one of the modifiers appearing before
+            the variable type. There are no rules about the order of
+            modifiers, as long as it comes before the type.
+        </p>
+        <p> Here's an example that illustrates shows both a class variable
+            and an instance variable. (This is from a "SpaceWars" type game.)
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            public class XFighter extends Fighter<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private int serialNo; <span class="cmt">// Instance variable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private <span class="red">static</span> int numShips = 0; <span class="cmt">// Class variable</span><br>
+            }
+        </p>
+        <p> The class variable <code>numShips</code> is an example of a
+            <b>population counter</b>. In the "SpaceWars" game, each
+            <code>XFighter</code> object would get its own
+            <code>serialNo</code>  value, but all of the
+            <code>XFighters</code> would share the single copy of
+            <code>numShips</code>.<br>
+            <img src='images/x-fighter.png' class='inlineCenter' alt='Class and instance variables illustration.'>
+        </p>
+        <p> The constructor would be responsible for giving each ship
+            a serial number, which would be stored in the instance variable,
+            attached to each ship as shown in the illustration here.
+            The constructor would also increment the total number of
+            ships in the shared variable <code>numShips</code>:
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            public XFighter(int serialNo)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.serialNo = serialNo; <span class="cmt">// set the serial number</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips + 1; <span class="cmt">// increase the number of ships</span><br>
+            }
+        </p>
+        <p> When the ship was destroyed, a method could decrease the
+            total number of <code>XFighter</code> objects in existence,
+            like this:
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            public void dieDieDIE()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Make neat explosion noises, etc.</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips - 1; <span class="cmt">// decrease the number of ships</span><br>
+            }
+        </p>
+    <h2> Static Methods</h2>
+        <p> <img src='images/overlord.png' class='right' style='margin-top:-4em;' alt='A decorative icon.'>
+            <b><span class='cap2'>W</span>hile the counter <code>numShips</code> works fine for keeping
+            track of the number of <code>XFighter</code> objects</b>, it has
+            one nagging problem: only <code>XFighter</code> objects can
+            find out how many <code>XFighter</code> exist! How does the
+            <b>UniversalOverlord</b> object find out if he (or she!) needs
+            to create more <code>XFighters</code>?
+        </p>
+        <p> A regular method won't work in this case. Assume that you
+            had a method named <code>getNumShips()</code>, defined like this:
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            public int getNumShips() { return numShips; }
+        </p>
+        <p> How does the <code>UniversalOverlord</code> use the class?
+            Like this?
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            XFighter temp = new XFighter(0);<br>
+            int numXFighters = temp.getNumShips() - 1;<br>
+            temp.dieDieDIE();
+        </p>
+        <p> Well, <b class='ry'>that's
+            stupid!</b> We had to create, and destroy, a dummy
+            <code>XFighter</code>, just to find out how many fighters
+            exist. Then we had to subtract one from the result just
+            to eliminate the dummy variable we created. (Not to mention
+            putting up with the pyrotechnics generated by the
+            <code>dieDieDIE()</code> method.)
+            <b>This</b> is where we need the <code>static</code> method.
+        </p>
+    <h3>Defining and Using a Static Method</h3>
+        <p> To define a <code>static</code> method, just add the word
+            <code>static</code> as one of the modifiers; it must go
+            before the return type, but does not have to go before
+            the access specifier (<code>public</code> or <code>private</code>).
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            public <span class="red">static</span> int getNumShips() { return numShips; }
+        </p>
+        <p> Inside the body of the static method, you <b>cannot</b> refer
+            to any instance variables. You may create local variables, and
+            you can refer to <code>static</code> fields, but not
+            instance variables. Since the <code>getNumShips()</code>
+            method only refers to the <code>static</code> variable
+            <code>numShips</code>, the code it contains is fine.
+        </p>
+        <p> To use a <code>static</code> method, you use the name of the
+            <b>class</b>, instead of the name of an object, when
+            calling the method. Here's the code that <code>UniversalOverlord</code>
+            would use to call the method:
+        </p>
+        <p class="code"  style='font-size:1.2em;'>
+            int numXFighters = <span class="red">XFighter</span>.getNumShips();
+        </p>
+        <p> Note that we need neither create, nor destroy, an <code>XFighter</code>
+            object, to find out how many exist.
+        </p>
+        <div class='info'>
+        <p> A <code>static</code>
+            method can <b>only</b> access <code>static</code> variables,
+            <b>or</b> call other <code>static</code> methods. Since
+            your <code>main()</code> method <b>must be</b> a
+            <code>static</code> method, you have to use such methods
+            if you want to call them from <code>main()</code>.
+        </p>
+        </div>
+    <h3>More Static Methods</h3>
+        <p> The <code>Math</code> class, which consists of methods that perform
+            arithmetic (as you'd expect), consists <b>entirely</b> of <code>static</code>
+            methods. You'll write static methods whenever you need a method that
+            will work without first creating an object.
+        </p>
+        <p> So, let's get some hands-on practice working with <code>static</code>
+            fields and methods. Open <b>Account.java</b> (which models a simple
+            bank account class), and <b>AccountTest.java</b>
+            which you'll find in this chapter's code folder.
+        </p>
+        <p> When you try to compile
+            <b>AccountTest</b>, you'll see that there is one error:<br>
+            <img src='images/account-test.gif' class='inlineCenter' alt='The AccountTest error.'>
+            Fix the error by modifying <b>Account.java</b>. (<i>Hint:
+            you'll need both a <code>static</code> field and method.</i>)
+            Once <b>AccountTest</b> compiles, run it. When asked enter
+            <b>5</b> for the number of accounts to create.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Static Member Summary
+        </p>
+        <ul>
+            <li>Static variables are <b>shared variables</b>, defined inside
+                a class. Instead of every object getting its own copy, all
+                objects in the class have access to the single variable.
+                These variables are sometimes called <b>class variables</b>.
+            </li>
+            <li>To <b>define a static variable</b>, just add the <code>static</code>
+                modifier to the variable definition. You <b>cannot</b> create
+                <code>static</code> local variables.
+            </li>
+            <li>A <b>static method</b> is a method that <b>belongs to a class</b>
+                (like the functions in the <code>Math</code> class) instead of
+                to a particular object. To <b>call</b> a class method, you send
+                your request to <b>the class</b>, like: <code>double r = Math.random();</code>
+            </li>
+            <li>A static method <b>may not call non-static methods or access
+                any instance variables</b>. It may only call other static
+                methods or access static fields.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

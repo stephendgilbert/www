@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>14.1&mdash;Extending Classes</title>
+
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner13">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 14.1</p>
+        <p id='lessonTitle'>Extending Classes</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">C</span>lassification is one of the
+            primary mechanisms</b> that we
+            use to understand the natural world around us. Starting
+            as infants we begin to recognize the difference between
+            <b>categories</b> like food, toys, pets, and people.
+            <img src="images/pet.png" class="right" alt="A child and a chicken.">
+            As we mature,
+            we learn to divide these general categories or classes into
+            <b>subcategories</b> like siblings and parents, vegetables and
+            dessert.
+        </p>
+        <p> When faced with a <b>new</b> object, we try to understand
+            it by fitting it into the categories with which we&#8217;re
+            acquainted:
+        </p>
+        <ul>
+            <li>Does it taste good? Perhaps it&#8217;s dessert.
+            </li><li>Is it soft and fuzzy? Maybe it&#8217;s a pet.
+            </li><li>Otherwise, it&#8217;s most certainly a toy of some sort!
+        </li></ul>
+        <p> <b>Encapsulation</b>&#8212;the specification of attributes and behavior
+            as a single entity&#8212;allows us to build on this understanding
+            of the natural world as we create software. By creating
+            classes and objects that <b>model categories</b> in the "real world,"
+            we have confidence that our software solutions closely track
+            the problems we are trying to solve.
+        </p>
+        <p> Once we've learned how to design our own classes, instead of
+            thinking in terms of computer files and variables, our
+            programs can be expressed in terms of <b>Customers</b>,
+            <b>Invoices</b>, and <b>Products</b>.
+        </p>
+    <h2>Introducing Inheritance</h2>
+        <p> <img src="images/pie.png" class="right" alt="Broccoli and pie.">
+            <b>Inheritance</b> adds to encapsulation the ability to express
+            <b>relationships between classes</b>. Think back to the categories
+            "desserts" and "vegetables." Cherry pie and broccoli are both,
+            at least arguably, edible items; for humans, they belong to
+            the <b>food</b> class.
+        </p>
+        <p> Yet most of us recognize that, in addition
+            to belonging to the food class, cherry pie is a <b>kind of
+            dessert</b>, whereas broccoli is a <b>kind of vegetable</b>.
+            Both <b>desert</b> and <b>vegetable</b> represent subcategories
+            of foods.
+        </p>
+        <p> If you ponder this for a moment, you&#8217;ll realize that you can
+            draw three conclusions:
+        </p>
+        <ul>
+            <li>Although both cherry pie and broccoli are kinds of food,
+                the food class itself consists of, thankfully, <b>more</b> than
+                just these two items. Cherry pie and broccoli are just
+                two small <b>subsets</b> of all possible food types.
+                Thus, the <b>relationship</b> between the food class and
+                the cherry pie class is one of <b>superset</b> (food)
+                and <b>subset</b> (cherry pie).
+                In object-oriented terminology, we call this the
+                <b>superclass-subclass relationship</b>.
+            </li>
+
+            <li><img src="images/food.png" class="right" alt="The food pyramid.">
+                Superclasses and subclasses can be arranged in a
+                <b>hierarchy</b>, with one superclass divided into
+                numerous subclasses, and each subclass divided into
+                more specialized kinds of subclasses. That&#8217;s what we
+                find with the food class.
+
+            <p> It can be divided into desserts, vegetables, soups,
+                salads, and entrees. Each category can be further divided
+                into <b>more specialized</b> kinds of food.
+            </p>
+            </li>
+            <li>A classification hierarchy represents an organization based on
+                <b>generalization and specialization</b>. The superclasses in such
+                a hierarchy are very general, and their attributes few; the
+                only thing that a class must do to qualify as food, for
+                instance, is to provide nutrients.
+            </li>
+        </ul>
+        <p>As you move down the
+                hierarchy, the subclasses become more specialized, and
+                their attributes and behavior become more specific. Thus,
+                although broccoli qualifies as food (it is, after all,
+                digestible), it lacks the necessary qualifications to
+                make it into the dessert class.
+        </p>
+    <h3>Inheritance and Programming</h3>
+        <p> When you create your own new, reusable components, there are really
+            three different strategies you can use:
+        </p>
+        <ul>
+            <li> You can build your component completely from scratch,
+                like we did with the various versions of the <code>Ball</code>
+                class in Chapter 12.
+            </li>
+            <li> You can <b>combine</b> simpler parts together, such as
+                a <code>JLabel</code> and a <code>JTextField</code>, to
+                create a more complex component.
+            </li>
+            <li>You can <b>extend</b> a more basic component by adding
+                new features or behaviors.
+            </li>
+        </ul>
+        <p> Since you've already learned how to build a class from scratch,
+            in this chapter we'll take a look at these last two techniques.
+            We'll start by <b>extending</b> an existing component to
+            create a new class that <b>inherits</b> methods and fields
+            from its superclass.
+        </p>
+    <h3>Has-A and Is-A</h3>
+        <p> These two different strategies are used to express two different
+            kinds of "class relationships":
+        </p>
+        <ul>
+            <li>The <b>has-a</b> relationship, when one class is a combination
+                of other objects. We can say that a <code>JLabel</code>
+                object <b>has-a</b> background color property. In this kind of
+                <b>has-a</b> relationship one component is composed of different
+                parts. A <code>Bicycle</code> class thus may contain two instances
+                of the <code>Wheel</code> class.
+            </li>
+            <li><img src="images/inheritance01.png" class="right" alt="Bicycles and inheritance.">
+                The <b>is-a</b> relationship, when one class is an extension
+                or "kind of" another class. The <b>is-a</b> relationship occurs
+                when members of one class form a <b>subset</b> of another class,
+                like the Animal, Mammal, Rodent example we discussed back
+                at the beginning of <i>Section 8.4&mdash;GImage and Friends</i>.
+                This is also called an <b>inheritance</b>
+                relationship. In the inheritance relationship shown here,
+                we'd say that a <code>MountainBike</code> <b>is-a</b>
+                <code>Bicycle</code>.
+            </li>
+        </ul>
+        <p> Back in Chapter 12 we used the original applet version of a "bouncing
+            ball" program to develop, step-by-step, a bouncing-ball <b>class</b>;
+            one that contained constructors, accessors, and mutators, and that
+            "knew" how to bounce around the screen. The bouncing ball classes that
+            we developed, though, only worked in applets; they didn't work
+            as part of an ACM graphics program, because the classes weren't
+            members of the <code>GObject</code> family, like all of the
+            other ACM graphical objects.
+        </p>
+        <p> In this chapter, we'll create two versions of the bouncing-ball
+            class, both designed to work with ACM graphics programs. One will
+            use <b>inheritance</b>, and one will use <b>composition</b>.
+            Before we do that, though, let's look at how inheritance works
+            in Java.
+        </p>
+    <h3>Inheritance: Syntax and Semantics</h3>
+        <p> <img src="images/nonagon.png" class="right" alt="A nonagon with all 36 edges connected.">
+            It's really tempting to dive right
+            in and start by extending some of the ACM classes, making
+            a new <b>ImageBall</b> or <b>PlayingCard</b>
+            class, or perhaps fill in some of the missing geometric shapes;
+            anyone up for a new <b>GNonagon</b> class?
+        </p>
+        <p> The only problem with that strategy is that inheritance actually
+            <b>introduces quite a few new possibilities</b> into your programs,
+            and each of those possibilities needs to be handled in a
+            very specific way. Starting with a more complex class, even though
+            it might be more interesting, makes it easy to miss some of the
+            details that you really <b>must</b> master to make
+            effective use of the object-oriented technique of inheritance.
+        </p>
+        <p> So, instead of working with fun stuff, like card games and shooting
+            down aliens, we'll start by returning to the old, boring
+            "finger-exercise" type of examples that let you concentrate on
+            one piece of the inheritance puzzle at a time.
+        </p>
+    <h2>Topic 1: Extending a Class</h2>
+        <p> <img src="images/inheritance02.png" class="right" style='margin-top:-3em;' alt="Classes in Inheritance01.java.">
+            <b>When you create a new class using inheritance</b>, you use the
+            <code>extends</code> keyword to specify the parent or
+            <b>superclass</b> when you define the child or <b>subclass</b>.
+            For our first example, let's look at a simplest possible class
+            that represents people: the <code>Person</code> class. Then,
+            we'll create a new <b>kind</b> of <code>Person</code>, the
+            <code>Student</code>.
+        </p>
+        <p> To the right is the UML (Unified Modeling Language) class diagram for
+            the two classes we'll start with. You'll be developing these
+            classes in class and in Lab this week.
+        </p>
+        <p> Here's what you should notice about each of these classes.
+        </p>
+    <h3>The Person Class</h3>
+        <p> <img src="images/person01b.png" class="right" alt="The Person UML diagram.">
+            The <b>Person</b> class has a single attribute, <code>name</code>
+            which is stored as a <code>String</code>. The minus sign preceding
+            <code>name</code> tells us that the instance variable used to
+            store this attribute will be marked <code>private</code>.
+        </p>
+        <p> The class has one mutator, <code>setName()</code> that allows
+            us to change the name of the <code>Person</code>. There is also
+            one accessor method, <code>getName()</code> which is a "getter"
+            method that allows us to read the value of the attribute. The
+            plus sign appearing before the method says that the method is
+            <code>public</code>. The <code>void</code> appearing at the
+            end of the entry is the method return type.
+        </p>
+    <h3>The Student Class</h3>
+        <p> <img src="images/student01b.png" class="right" alt="The Student UML diagram.">
+            The <b>Student</b> class is a <b>subclass</b> of <code>Person</code>.
+            The hollow-headed arrow pointing from <code>Student</code> to
+            <code>Person</code> says that <code>Student</code> <b>inherits
+            from</b> or (in Java) <code>extends</code> the <code>Person</code>
+            class. <i>(Note: the hollow-headed arrow appears in in the UML
+            class diagram that contains both classes, at the beginning of this section.)</i>
+        </p>
+        <p> <code>Student</code> also has one private attribute, the
+            <code>studentID</code> which will be stored as a <code>long</code>.
+            To initialize both the student's name and their ID, the class
+            has a public constructor that takes two parameters.
+        </p>
+        <p> The class has an accessor or "getter" method to retrieve the
+            value stored in the <code>studentID</code> field. There are no
+            methods to set or change the ID. While a student might change
+            their name (because of marriage, for instance) they can never
+            change their student ID.
+        </p>
+    <h3>Inherited Methods and Fields</h3>
+        <p> Let's create an object of the <code>Student</code> class,
+            and then call some of the methods:<br>
+            <img src="images/inherit01a.png" class="inlineCenter" alt="Creating a student and calling methods.">
+            <img src="images/inherit01c.png" class="right" alt="Calling inherited and new methods.">
+            Notice that when I create the <code>Student</code> object named
+            <code>steve</code>, I can call the <code>getID()</code> method,
+            which was defined in the <code>Student</code> class.
+        </p>
+        <p>
+            However, I can <b>also</b> call the <code>setName()</code>
+            and <code>getName()</code> methods which were not defined
+            in <code>Student</code>, but in <code>Person</code>. More
+            importantly, I'm also able to access the <code>name</code>
+            field in the <code>Person</code> class if I use these
+            methods. Why is that?
+        </p>
+        <p> When we create <code>Student</code> objects, each subclass
+            object contains <b>all of the attributes and methods
+            of its superclass</b>. If we were to look at a "logical"
+            diagram of the student class, it would look something like
+            that shown here:<br>
+            <img src="images/student01.png" class="inlineCenter" alt="The &quot;virtual&quot; Student class">
+            However, (<i>and this is very important</i>), <b>most</b> of the
+            fields, and some of the methods <b>will not be accessible</b>
+            to the subclass object, because they were declared
+            <code>private</code> in the superclass.
+        </p>
+        <p> So, for instance,
+            if we were to change the <code>Student</code> constructor
+            so that it attempted to set the <code>private name</code>
+            field directly, (instead of using the <code>setName()</code>
+            method), we'd get an error like this:<br>
+            <img src="images/inherit01b.png" class="inlineCenter" alt="Trying to access a private field from a subclass.">
+            Even though you can't access the <code>private name</code> field
+            from the subclass, the field is are there nonetheless. You know
+            that because the <b>inherited</b> <code>setName()</code> and
+            <code>getName()</code> methods work correctly.
+        </p>
+        <p> Those methods (and fields) that are not declared <code>private</code>
+            in the superclass are called <b>inherited</b> methods (and fields).
+            An object may use its inherited methods and fields without any
+            further qualification, exactly as if they were defined inside
+            the object's own class (as I've done in the example here.)
+        </p>
+        <div class='alert'>
+        <p>While <code>private</code> methods are not inherited
+            at all, <code>private</code> instance variables <b>are</b>
+            inherited, in the sense that each subclass object contains
+            a copy of each <code>private</code> variable defined in
+            the superclass, even though the methods in the subclass
+            object are not free to directly access that variable.
+        </p>
+        </div>
+    <h4>The Protected Modifier</h4>
+        <p> If a superclass wishes to allow a subclass access to an instance
+            variable, but not allow <code>public</code> access, the method
+            or field can be given the <code>protected</code> modifier.
+            Protected fields and methods are kind of half-way between
+            <code>public</code> and <code>private</code>; the children can
+            access them, but the general public cannot.
+        </p>
+        <p> These different access specifiers work kind of the same way most
+            of us manage our households. My children are free to access the
+            refrigerator, getting a glass of orange juice without asking
+            me; you, on the other hand, would have to knock at the front
+            door, and ask first. My refrigerator has something similar to
+            <code>protected</code> access.
+        </p>
+        <p> On the other hand, even my children aren't permitted to
+            grab my credit card and charge up a storm on the Internet;
+            my credit card is <code>private</code>.
+        </p>
+    <h3>Specialization and Extension</h3>
+        <p> Normally, a subclass <code>extends</code> an existing
+            class by <b>adding</b> additional fields or methods. That is
+            because logically, a subclass represents <b>specialization</b>.
+            The <code>Elephant</code> class represents a specialized form of
+            <code>Mammal</code>, and the <code>Mammal</code> class represents
+            a specialized form of <code>Animal</code>.
+        </p>
+        <p> In our case, the <code>Student</code> class added one new
+            field and one new method, along with a constructor.
+        </p>
+    <h3>Implicit Inheritance</h3>
+        <p> Every class without an explicit <code>extends</code> clause
+            <b>implicitly</b> inherits from the Java <b>root</b> class
+            named <code>Object</code>. Just as with explicit inheritance,
+            the implicit subclass (<code>Person</code>) <b>inherits</b>
+            several fields and methods from its superclass.
+        </p>
+        <p> One of these is the <code>toString()</code> method. Even though
+            <b>neither</b> the <code>Person</code> nor the <code>Student</code>
+            class have defined a <code>toString()</code> method, we can
+            <b>call</b> the <code>toString()</code> method <b>inherited</b> from
+            the <code>Object</code> class like this:<br>
+            <img src="images/inherit01d.png" class="inlineCenter" alt="The inherited toString() method.">
+            Of course, as you can see, the results are not very satisfying.
+            The <code>Object</code> version of <code>toString()</code> just
+            prints out the name of the class followed by the <b>memory
+            address</b> where the actual object is located in memory.
+        </p>
+        <div class='info'>
+        <p>The example shown here <b>explicitly</b> calls
+            the inherited <code>toString()</code> method. The code can be
+            made even simpler, like this:<br>
+            <img src="images/inherit01e.png" class="inlineCenter" alt="The implicit toString() method.">
+            When you use any kind of object with string concatenation like
+            I've done here, Java <b>implicitly</b> call's the object's
+            <code>toString()</code> method to perform the concatenation.
+        </p>
+        </div>
+        <p> Of course, as you can see, in this case the inherited method
+            really doesn't work the way we'd like. Which brings us to
+            the second inheritance topic: <b>method overriding</b>. Before
+            we talk about that in the next section, though, let's return
+            to the concept of <b>variable scope</b> from last chapter.
+        </p>
+    <h3>Scope and Inheritance</h3>
+        <p> In <i>Section 13.1&mdash;Variable &amp; Method Scope</i>,
+            you saw that two instance variables in two different
+            classes <b>may</b> have the same name, like this:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A { private int x = 3; }<br>
+            public class B { private double x = 3.3; }
+        </p>
+        <p> This works because both <code>class A</code>
+            and <code>class B</code> are different class scopes, so
+            the names don't clash with each other at all.
+            But what happens if we change the picture slightly, and make
+            <code>class B</code> a subclass of <code>class A</code>?
+            Then we end up with this piece of code:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class A { int x = 3; }<br>
+            public class B extends A { double x = 3.3; }
+        </p>
+        <p> Surprisingly, this also is fine; however in this case the
+            instance variable <b>x</b>,
+            defined in <code>class B</code>, "<b>shadows</b>" or
+            "<b>hides</b>" the variable <b>x</b>
+            declared in <code>class A</code>, just like a local
+            variable hides an instance variable of the same name.
+        </p>
+        <p> When a superclass instance variable is shadowed by a
+            subclass instance variable, the <b>more local</b> variable
+            takes precedence. In this case, if a method in <code>class B</code>
+            wished to make changes to the instance variable <b>x</b> declared
+            in <code>class A</code>, it would have to use the <code>super</code>
+            keyword like this:
+        </p>
+        <p class="code"  style='font-size:1.25em;'>
+            public class B extends A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 3.3;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 5.2; &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// This is in class B</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.x = 7; <span class="cmt">// This is from class A</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <div class='alert'>
+        <p>This example <b>only</b> works if there is <b>no</b>
+            access specifier used when the original instance variable was
+            defined in class A, or, if the access specifier was
+            <code>protected</code> or <code>public</code>. If you make
+            your instance variables <code>private</code>, as recommended,
+            you won't have to deal with the complications of shadowing
+            with subclasses. You <b>will</b> still need to deal with
+            instance-variable/local-variable shadowing, though.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Extending Classes Summary
+        </p>
+        <ul>
+            <li><b>Classification</b> is a mental tool for combining
+                similar kinds of objects into categories and subcategories.
+                The <b>hierarchical</b> relationship between categories
+                allow us to understand more complex real-world models.
+            </li>
+            <li>In Java, <b>inheritance</b> adds the ability to a <b>hierarchy
+                of classes</b> which can share characteristics and behaviors.
+            </li>
+            <li>In a class hierarchy, the more general class is called a
+                <b>superclass</b>, while the more specific classes, which
+                are usually specialized kinds of the general class are
+                known as <b>subclasses</b>.
+            </li>
+            <li>When a new class is created by adding new features to
+                an existing class, using inheritance, we say (informally)
+                that there is an <b>is-a</b> relationship between the
+                original class and the new specialized class.
+            </li>
+            <li>To use inheritance in Java, you use the <code>extends</code>
+                keyword in the class header. The class name following the
+                keyword is the <b>superclass</b> for your new subclass.
+            </li>
+            <li>All <code>public</code> fields and methods <b>are inherited
+                by the subclass</b> exactly as if they had been declared
+                inside the subclass. Any <code>private</code> fields are
+                inherited, but <b>not accessible</b> in the subclass.
+                Any <code>private</code> methods are not inherited.
+            </li>
+            <li>The <code>protected</code> modifier, when applied to
+                any <b>superclass field or method</b> allows unrestricted
+                access in the subclass, but not to classes outside the
+                "family".
+            </li>
+            <li>If a new class does not have an <b>explicit</b> <code>extends</code>
+                clause, then the <b>implicit</b> <code>extends Object</code> is
+                assumed. <b>Every Java class</b> ultimate descends from the
+                class named <code>Object</code>, and inherits all of its
+                methods.
+            </li>
+            <li>If a subclass creates an instance variable <b>as the same
+                name as a variable in its superclass</b>, the subclass
+                instance variable <b>hides</b> the superclass variable of
+                the same name. If the superclass instance variable is
+                <code>private</code>, then it is not accessible from
+                the subclass. If it is <code>public</code> or
+                <code>protected</code> then the superclass variable
+                can be accessed by using the prefix <code>super.</code>
+                in your subclass.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

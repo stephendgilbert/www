@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>12.5&mdash;Writing Classes</title>
+    <style type='text/css'>
+        .shadowBox{
+            width: 90%;
+            margin: auto;
+            padding: .3em;
+            text-align: center;
+            font-size: xx-large;
+            font-weight: bold;
+            background-color: #FFFF99;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -moz-box-shadow: 10px 10px 5px #888;
+            -webkit-box-shadow: 10px 10px 5px #888;
+            box-shadow: 10px 10px 5px #888;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 12.5</p>
+        <p id='lessonTitle'>Writing Classes</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">T</span>he theme of this section is "writing
+            classes"</b> and it brings together everything that we've
+            discussed separately in this chapter. As I've pointed out several times,
+            writing <i>your own</i> classes to define <i>your
+            own</i> objects is really at the <b>heart</b> of object-oriented
+            programming.
+        </p>
+        <p> <img src='images/pong.png' class='right' alt='The Atari PONG game.'>
+            Defining a class is a two-step process. You need to:</p>
+        <ul>
+            <li>define the attributes (fields or instance variables) that
+                each object will use to store its state.
+            </li>
+            <li>write the methods each object will use to carry out its
+                unique behavior.
+            </li>
+        </ul>
+        <p> So far in this chapter you've learned how to define instance
+            variables, write methods, use encapsulation and define
+            constructors. Now it's time to direct all of that learning
+            to a useful purpose:
+        </p>
+        <div class="shadowBox">
+            <span class='red' style='text-shadow: 0.1em 0.1em 0.05em #BBB'>
+            P O N G !</span>
+        </div>
+        <div class='info'>
+        <p>The version of Pong you'll be working on is one
+            of Stanford University's <i>Nifty Assignments</i>. It was
+            originally developed by Professor Grand Braught at Dikinson College.
+            I've modified it to work in DrJava.
+        </p>
+        </div>
+    <h2>Introduction</h2>
+        <p> <img src="images/pong.gif" class="right" alt="The OLD Co. Pong game.">
+            Here's the "backstory" from the original nifty assignment:
+            You have just been hired by the Object-Oriented Language Development
+            Company (OLD Co.) They have begun development of what they believe
+            to be a radically new computer game, with the wholly original
+            name of Pong, which you can see in the screenshot to the right.
+        </p>
+        <p> Pong is a two player game in which each player attempts to
+            prevent the pong-ball from reaching the wall behind his
+            pong-paddle.  A player deflects the pong-ball before it reaches
+            the wall by placing his pong-paddle into path of the pong-ball.
+            This causes the ball to bounce off of the paddle in the opposite
+            direction.
+        </p>
+        <p> If the ball reaches the wall behind a player's paddle, the
+            opponent scores.  The number of points scored is dependent on
+            the region of the wall contacted by the ball.  The closer to
+            the center of the wall the greater the number of points scored.
+            (You can see the regions marked on the walls behind the paddles.)
+        </p>
+        <p> The high-paid software engineers at OLD Co. spent years designing
+            the Pong program.  They have identified the classes that
+            the program will use, and they have carefully defined the <b>public
+            interfaces</b> of each of the classes. The specifications for
+            these classes were handed off to the programmers who completed
+            the majority of the project. However, just before the program was
+            complete, all of the programmers were offered huge salaries
+            to develop automated trading programs on Wall Street.
+            Once they saw all the money that was to be made, they all
+            simply quit on the spot!
+        </p>
+        <p> So, in exchange for a big check I agreed to write these classes for
+            OLD Co. But being, ever the dedicated educator, I decided that
+            writing these classes would be a good experience for <b>you</b>.
+            (Of course, I get to keep the check from OLD Co!)
+        </p>
+        <p> The remainder of this section describes how to get started writing
+            the Pong game and the details of the classes you must write.
+        </p>
+    <h3>Setup</h3>
+        <p> All the files you need for the <b>Pong</b> game are included in
+            this chapter's code folder, <b>inside their own folder</b>.
+            To open the files, you use <b>Project->Open</b> and locate
+            <b>Pong.drjava</b> in the <b>Pong-Project</b> folder.
+            To try it out, just open<br>
+            <img src='images/open-project.png' class='inlineCenter' alt='Opening a project.'>
+            As you can see, this opens <b>all</b> of the classes used in the
+            project. It also allows me to specify a library file (<b>PongLib.jar</b>)
+            be used when compiling these files. You can see these settings, by
+            choosing <b>Project->Properties</b> after opening the <b>Pong</b>
+            project:<br>
+            <img src='images/ponglib.png' class='inlineCenter' alt='Project properties.'>
+        </p>
+    <h4>Compiling and Running Pong</h4>
+        <p> <img src='images/pong05.gif' class='right' style='margin-top:-3em;' alt='Starting the Pong game.'>
+            To compile all the files, choose <b>Compile Project</b>. To run the
+            finished program, just choose <b>Run Project</b>.
+            When the Pong application starts up, pressing the "B" key is
+            <b class='ry'>supposed</b> to start the ball bouncing. Then,
+            pressing the "A" or "Z" keys <b class='ry'>should</b> move the blue paddle,
+            and pressing "K" or "M" <b class='ry'>should</b> move the green paddle.
+        </p>
+        <p> Finally, as points are scored, the individual scores should
+            be tallied in the status area.
+        </p>
+        <p> Obviously, though, <b class='ry'>nothing works!</b>.
+            Of course, that's why we need you! You'll need to implement
+            the <code>PongBall</code>, <code>PongScore</code> and
+            <code>PongPaddle</code> classes. I'll walk you through
+            <code>PongBall</code>. You'll do <code>PongScore</code>
+            and <code>PongPaddle</code>
+            as homework exercises.
+        </p>
+    <h2>The PongBall Class</h2>
+        <p> Your assignment is to write and test <b><u>three</u></b> classes
+            that are missing from the Pong game. These classes are the
+            <code>PongScore</code>, <code>PongPaddle</code> and <code>PongBall</code>
+            classes. We'll start with <code>PongBall</code> first.
+        </p>
+        <p> <img src="images/PongBallClassDiag.gif" class="right" alt="The PongBall class diagram.">
+            The <code>PongBall</code> class describes the object which the Pong
+            application uses to represent the ball that bounces around the screen.
+            The following class diagram illustrates the information and
+            operations that are defined by the <code>PongBall</code> class.
+        </p>
+        <p> When the Pong application is executed it creates a new
+            <code>PongBall</code> object that is positioned at the center of
+            the playing field. Approximately every 10<sup>th</sup> of a second
+            the Pong application calls the <code>move()</code> method on its
+            <code>PongBall</code> object causing the ball to update its position.
+            Following the call to <code>move()</code> the Pong application uses
+            the <code>getX()</code> and <code>getY()</code> methods to find
+            the new location of the ball.
+        </p>
+        <p> If the Pong application determines that the ball would have collided
+            with a wall or a paddle it will invoke the <code>bounceX()</code> or
+            the <code>bounceY()</code> method to change the horizontal or vertical
+            direction of the ball. Finally, the Pong application will draw the
+            ball on the screen at its new location and the process will be
+            repeated again in another 10<sup>th</sup> of a second.
+        </p>
+    <h3>Implementation</h3>
+        <p> To get started, create a new class in DrJava named
+            <b>PongBall</b>.  You just need to write the basic class skeleton,
+            filling in the Javadoc at the beginning, like this:<br>
+            <img src="images/pb01c.gif" class='inlineCenter' alt="The PongBall class skeleton.">
+            Save <b>PongBall.java</b> in the same folder as the other
+            classes. You'll see that DrJava automatically adds it to your
+            project.
+        </p>
+        <p> Now, compile the Pong project once again.
+        </p>
+        <div class='ry' style='padding:10px;margin:auto;width:90%;font-size:xx-large;font-weight:bold;text-align:center;border-top:1px solid navy; border-bottom:1px solid navy;'>
+        What Happened To My Project????
+        </div>
+        <p> <img src='images/p02b.png' class='right' style='margin-top:-2em;' alt='Errors in the project.'>
+            <b>Hmmmm!</b> As you can see in the screen-shot on the right, your
+            Pong project, which had <b>no</b> errors last time we compiled, now
+            has <b class='ry'>66 new errors!</b> What's going
+            on with that???
+        </p>
+        <p> Well, first, don't be alarmed. The error you see occurs because
+            when you <b>added</b> the new, minimal <code>PongBall</code> class, it
+            <b>replaced</b> the non-functional, but syntactically correct version
+            of <code>PongBall</code> already included in the project's
+            <b>PongLib.jar</b> file.
+        </p>
+        <p> Once you've <b>completed</b> your new class by
+            adding all the necessary fields and methods that a
+            <code>PongBall</code> should have, all of the
+            syntax errors will disappear. In the meantime, while you
+            can't compile the project with the incomplete version of
+            <code>PongBall</code>, you <b class='ry'>can</b> compile
+            and test the <code>PongBall</code> class by itself.
+        </p>
+        <ol>
+            <li class='d'>Select <b>PongBall.java</b> in DrJava's <b>File Pane</b>,
+                right-click, and select <b>Compile File</b>.
+            </li>
+            <li class='d'>To test your class, you can use the CS 170 <b>Check</b>
+                program we've used earlier in the semester.
+            </li>
+        </ol>
+        <div class='drjava-note'>
+        <p> When you use <b>Check</b> as a guide to developing your classes,
+            it will put your syntax errors at the bottom (instead of at the
+            top, like it did with the function tests you met earlier). Make
+            sure you correct all of the lines marked <b>SYNTAX</b> before
+            worrying about the correctness of your program.<br>
+            <img src='images/pb-check01.png' class='inlineCenter' alt='Checking PongBall.'>
+        </p>
+        </div>
+    <h3>Instance Variables</h3>
+        <p> Once you have the skeleton in place, you'll need to implement
+            the <b>instance variables</b> that will store each object's
+            state as the program runs. As you can see from the UML class
+            diagram, you'll need to define instance variables for the <b>x</b>
+            and <b>y</b> position of the ball as well as the velocity
+            of the ball in the <b>x</b> and <b>y</b> directions. These
+            will be <code>int</code> variables that will be initialized
+            by the <code>PongBall</code> constructor.
+        </p>
+        <p> Here's what your code should look like at this point:<br>
+            <img src="images/p03b.gif" alt="Defining the PongBall instance variables." class='inlineCenter'>
+            Note that each instance variable is declared using
+            the <code>private</code> modifier.
+        </p>
+    <h3>The Pong Game Specification</h3>
+        <p> Once you have the instance variables in place, you're ready to
+            define the <i>constructor</i> and other methods in
+            the <code>PongBall</code> class. You can find the signatures
+            for the constructor and the methods in the UML diagram you saw earlier.
+        </p>
+        <p> That's all of the information you need to write the headers for
+            each of the additional methods, but it's not enough information
+            to actually write the instructions inside the method itself.
+            For that, you'll need to use the <b>specifications</b> supplied by
+            the program designer. In this case, you'll find the specifications
+            in the <b>PongGameSpec.pdf</b> file in the Pong-Project code folder.
+        </p>
+        <p> You can open the spec using your system's PDF software
+            just by double-clicking the file in Windows Explorer
+            (or the Finder, if you're using the Mac):<br>
+            <img src='images/spec.gif' class='inlineCenter' alt='The specification for the PongBall class.'>
+            Scroll down until you find the documentation for the <code>PongBall</code> class.
+            Your implementation of the <code>PongBall</code> class must meet
+            the specifications given in the documentation, so please study it
+            carefully.
+        </p>
+        <p> Here are the constructors and methods you'll need to define:</p>
+    <h3>The Constructor</h3>
+        <p> The <b>constructor</b> takes four arguments which you'll just use to
+            initialize the instance variables like this:<br>
+            <img src="images/p04b.gif" alt="The PongBall constructor." class='inlineCenter'>
+            Notice that the constructor is <code>public</code>, and that it
+            has <b>no return type</b>. Adding a return type of <code>void</code>
+            is a common error that will prevent your code from working correctly
+            even though your class will compile without an error.
+        </p>
+    <h3>Accessor Methods</h3>
+        <p>The <b>accessor methods</b> <code>getX()</code> and <code>getY()</code>
+            simply return the values of their respective fields like this:<br>
+            <img src="images/p05b.gif" alt="The getX() and getY() methods." class='inlineCenter'>
+        </p>
+    <h3>The move() Method</h3>
+        <p>Reading the documentation for the <b>mutator method</b>
+            <code>move()</code>, you can see that it works like this:<br>
+            <img src='images/move.gif' class='inlineCenter' alt='Docs for move().'>
+            This sounds like we can just add the field <code>xVelocity</code> to
+            <code>x</code>, and add the field <code>yVelocity</code> to <code>y</code>,
+            leaving the result in <code>x</code> and <code>y</code> like this:<br>
+            <img src="images/p06b.gif" alt="The move() method." class='inlineCenter'>
+        </p>
+    <h3>Changing Velocity</h3>
+        <p>To see how to code the <b>mutator methods</b> <code>bounceX()</code>
+            and <code>bounceY()</code>, you'll need to read through the
+            specification again:<br>
+            <img src='images/spec02.gif' class='inlineCenter' alt='The bounceX() spec.'>
+            There, you can see that these methods
+            are called when the ball "hits the wall." Your responsibility is to
+            change the velocity which you can do by reversing the sign of each
+            of the velocity fields, like this:<br>
+            <img src="images/p07b.gif" alt="The bounceX() method." class='inlineCenter'>
+            Although only <code>bounceX()</code> is shown here, the code for
+            <code>bounceY()</code> is almost identical. Only the field
+            and method names are changed.
+        </p>
+    <h3> Try it Out</h3>
+        <p> <img src='images/running.gif' class='right' alt='Running the Pong game.'>
+            Once you've finished adding these methods to your <code>PongBall</code>
+            class, notice that <b>the errors in your project disappear</b>. If you find
+            that's not the case, then it's likely that you made a mistake somewhere
+            along the way.
+        </p>
+        <p> To try out your new code, just run the <b>Pong</b> program like you did at
+            the beginning of this section. When you do, your new class will replace the
+            old, useless class provided by the original programmers. When the program
+            starts, press the "B" key and the ball should start bouncing. You can
+            speed it up by pressing "B" again.
+        </p>
+    <h2>Testing</h2>
+        <p> One way to test the <code>PongBall</code> class is to add
+            it to the <b>Pong</b> application and see if the ball begins moving
+            correctly. What do you do, though, if the ball <b>doesn't</b> work
+            ask you expect? How do you track down any logic errors in your code?
+        </p>
+        <p> Because we do not know <b><u>precisely</u></b>
+            <i>how</i> the Pong application uses the <code>PongBall</code>
+            class, it is very difficult to determine simply by watching
+            the Pong application if the <code>PongBall</code> class behaves
+            correctly in every situation. Thus, before adding the
+            <code>PongBall</code> class to the Pong application we will
+            test its behavior independently.
+        </p>
+        <p> I have already written a set of tests that you can access
+            via the <b>Check</b> program. If I <b class='ry'>hadn't</b> done
+            that, however, you could still test the <code>PongBall</code>
+            class by writing a program named <code>PongBallTest</code>,
+            that contains a <code>main()</code> method. The <code>main</code>
+            method in the <code>PongBallTest</code> class should create several
+            <code>PongBall</code> objects and test their instance methods.
+        </p>
+        <p> For example, the following snippet of code will create a
+            <code>PongBall</code> object and test the <code>getX()</code>,
+            <code>getY()</code> and <code>move()</code> methods:<br>
+            <img src='images/testing.gif' class='inlineCenter' alt='PongBallTest.java'>
+            Notice that the program:
+        </p>
+        <ol>
+            <li class='d'>First <b>creates</b> a <code>PongBall</code> object,
+                passing it some known values. Make sure you pass different
+                values for each parameter so you can check that the output is
+                correct.
+            </li>
+            <li class='d'>Next, the accessor methods are used to see if the
+                actual values are correct. If you don't get the expected output
+                for <code>x</code> and <code>y</code> at this point, you know you've
+                made a mistake in the constructor.
+            </li>
+            <li class='d'>Finally, a mutator method is called and then the accessors
+                are used to check the current state of the object. We can't check
+                <code>xVelocity</code> and <code>yVelocity</code> directly, but
+                the changes to <code>x</code> and <code>y</code> should be
+                correct.
+            </li>
+        </ol>
+        <p> Note that the output of the test program indicates
+            both the correct values and the actual values that are
+            computed.  Writing your test programs in this way makes
+            it easy to tell if the class you are testing is working correctly.
+        </p>
+        <p> In the next chapter you'll learn more about writing your <b>own</b> unit
+            tests like this.
+        </p>
+    <h2>The Remaining Classes</h2>
+        <p> For the remaining classes, I'm going to leave you "on your own". Follow
+            the same steps as you did for the <code>PongBall</code> class.
+            If you have difficulty, ask questions on the Discussion Board.
+            I haven't posted solutions for these classes.
+        </p>
+    <h3>The PongScore Class</h3>
+        <p> <img src="images/p08.gif" class="right" alt="The PongScore Class Diagram.">
+            The <code>PongScore</code> class describes the object
+            that the Pong application uses to keep track of the score
+            for <b>each</b> player. The following class diagram illustrates
+            the information and operations that are defined by the
+            <code>PongScore</code> class.
+        </p>
+        <p> When the Pong application is executed it creates two
+            <code>PongScore</code> objects, one for the blue player
+            and one for the green player. Each time the ball contacts the
+            end wall behind the blue paddle, the <code>scorePoints()</code>
+            method of the green player's <code>PongScore</code> object is
+            invoked, and vice versa.
+        </p>
+        <p> When invoking the <code>scorePoints()</code>
+            method, the Pong application passes it <b>an argument</b>
+            corresponding to the number of points indicated in the region of
+            the wall that was contacted. The Pong application will then invoke
+            the <code>getScore()</code> method to determine the
+            score to be displayed beside the player's name below the playing field.
+        </p>
+        <p> After completing <code>PongScore</code>, when you run the Pong application
+        and press the "B" key, the ball
+            will again begin to bounce around the playing field. However, now each
+            time the ball contacts the end wall the opponent's score will be
+            incremented by the appropriate number of points.
+        </p>
+    <h3>The PongPaddle Class</h3>
+        <p><img src="images/p09.gif" class="right" alt="The PongPaddle Class Diagram.">
+            The <code>PongPaddle</code> class describes the objects that the Pong
+            application uses to keep track of the size and location of the
+            pong paddles. The class diagram on the right illustrates the the
+            information and operations that are defined by the
+            <code>PongPaddle</code> class.
+        </p>
+        <p> When the Pong application is run it creates two new <code>PongPaddle</code>
+            objects: one for the blue player positioned at the left end of the
+            playing field, the other for the green player positioned at the
+            right end of the playing field. When the blue player presses the "A" key,
+            the Pong application invokes the <code>moveUp()</code>
+            method of the blue player's <code>PongPaddle</code> object.
+            Conversely, when the blue player presses the "Z" key the Pong
+            application invokes the <code>moveDown()</code> method.
+        </p>
+        <p> Similar actions are taken using the green player's
+            <code>PongPaddle</code> object when the "M" and "K" keys are pressed.
+            The Pong application then uses the <code>getLeftX()</code>,
+            <code>getTopY()</code>, <code>getRightX()</code>
+            and <code>getBottomY()</code> methods to determine <b><u>where</u></b>
+            on the screen the blue and green paddles should be drawn.
+            These methods are also used by the Pong application to determine when the
+            ball collides with one of the paddles.
+        </p>
+        <p> When the Pong application is run, pressing the "B" key begins the
+            ball bouncing as before. However, now when the "A" or "Z" keys are
+            pressed the blue paddle will move up or down.  Similarly, when the
+            "K" or "M" keys are pressed the green paddle will move up or down.
+        </p>
+        <p> Congratulations! You now have a complete working Pong application!</p>
+    <h2>In Summary ...</h2>
+        <p> In this section you wrote several independent classes and integrated them into
+            a complete application. To write your classes, you learned how to define
+            <b>instance variables</b>, and how to write <b>constructors</b> to initialize
+            your fields. You also learned how to write <b>accessor methods</b> that
+            return information about the state of your objects, and <b>mutator
+            methods</b> that change the state of your objects. You also wrote mutator
+            methods that used <b>parameters</b> to decide how to modify their state.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

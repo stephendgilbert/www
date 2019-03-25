@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>8.4&mdash;GImage and Friends</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner13">
+        <img id='lessonLogo' src='../images/l.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 8.4</p>
+        <p id='lessonTitle'>GImage and Friends</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/classes02.gif" class="right" alt="Some of the ACM graphics classes.">
+            <b><span class="cap">L</span>et's finish up our exploration of
+            the <code>GObject</code> family</b>,
+            by looking at a class that let's us manipulate images.
+            The <code>GImage</code> class that allows you to display
+            JPEG and GIF images in your programs, and then modify
+            the individual pixels that make up the picture.
+        </p>
+
+        <p> You've already met most of the methods you need, so to give you a
+            quick flavor for some of the other classes
+            in the <code>acm.graphics</code> package, let's build a simple
+            program called <b>TwoCards</b>. Our program will:
+        </p>
+        <ul>
+            <li>Display a dark-green "table" in the center of the
+                application with a caption saying "Place your bets!"
+                underneath it.
+            </li>
+            <li>Draw two playing cards on the table, one face up,
+                and one face down.
+            </li>
+            <li>Flip over the face-down card and set it next to
+                the face-up card when it's clicked with the mouse.
+            </li>
+        </ul>
+        <p> Here's a screen shot that shows the program when it
+            first loads (on the left), and a shot of the applet
+            after the user has clicked the face-down card:<br>
+            <img src="images/acmg21.gif" class='inlineCenter' alt="Running the TwoCard applet.">
+            To start, create an ACM <code>GraphicsProgram</code> named
+            <b>TwoCards</b>, following the same steps you followed for
+            <b>MyFirstAcmGuiApp</b> in the last chapter. Make sure you
+            save your file in the <b>Chapter08</b> folder and import the
+            <code>acm.program</code>, <code>acm.graphics</code> and
+            <code>java.awt</code> packages. Place your
+            code in the <code>run()</code> method.
+        </p>
+    <h3>Part 1: The Table</h3>
+        <p> To create the table, we'll use the <code>GRect</code> class.
+            <code>GRect</code> is one of the <code>Fillable</code> classes,
+            so you can specify an interior color that's different than
+            the background. We'll make our interior dark green.
+        </p>
+        <p> <img src="images/acmg23.gif" class="right" alt="Creating the table object.">
+            Start by defining a couple of constants, <code>T_WIDTH</code>
+            and <code>T_HEIGHT</code> to represent the width and height of
+            our table (instead of using <i>magic numbers</i>).
+        </p>
+        <p> Then, create
+            a <code>GRect</code> object named <code>table</code> using the
+            constructor. Use 0,0 for the origin, and pass your two constants
+            for the width and height like that shown in the screenshot.
+        </p>
+    <h4>Positioning</h4>
+        <p><img src="images/acmg24.gif" class="right" alt="Positioning the table object.">
+            To position the table, you'll need to subtract one-half its width
+            and one-half its height from the width and height of your program
+            itself. Remember, you can get those numbers by calling the
+            <code>getWidth()</code> and <code>getHeight()</code> methods.
+        </p>
+        <p> Then, use the <code>setLocation()</code> method to position the
+            <code>table</code> object in the center of the screen, like that
+            shown in this screenshot.
+        </p>
+    <h4>Color and Add</h4>
+        <p> <img src="images/acmg25.gif" class="right" alt="Coloring and adding the table object.">
+            To color our table, we need to do three things:
+        </p>
+        <ul>
+            <li>Use the <code>GRect</code> method
+                <code>setFillColor()</code> to the background color
+                we want for the table. I've used the <code>Color</code>
+                constructor to create a dark green felt color.
+            </li>
+            <li>Send the <code>setFilled(true)</code> message to
+                the table to tell it to fill itself in when it's
+                drawn.
+            </li>
+            <li>Add the finished component to our program's canvas, so
+                we can see it.
+            </li>
+        </ul>
+        <p> The screenshot shows the code for each of
+            these steps.
+        </p>
+    <h4>Add a Caption</h4>
+        <p> <img src="images/acmg26.gif" class="right" alt="Adding the table caption.">
+            Since we've already had experience using the <code>GLabel</code>
+            class, you should be able to figure out how to add the
+            table caption so that its centered right underneath the
+            table itself.
+        </p>
+        <p> The secret lies in figuring out where the bottom of the
+            table is on the screen, and then adding the height of
+            the caption itself to that number for the vertical
+            position of the label.
+        </p>
+        <p> The screenshot to the right shows what the calculations
+            should look like.
+        </p>
+    <h3>Step 2: Drawing the Cards</h3>
+        <p> The ACM <code>GImage</code> class allows you to easily display
+            and position objects created from standard JPEG and GIF images.
+            <img src="images/cards.gif" class="right" alt="Storing the card images in a folder.">
+            For this problem, I've downloaded the GPL card images from
+            <a href="http://www.waste.org/%7Eoxymoron/cards/" target="_blank">
+            <b>http://www.waste.org/~oxymoron/cards/</b></a> and placed them
+            in this week's download folder. You can use
+            these images without charge, but if you eventually create a
+            commercial product, you'll need to replace them with a different
+            set.
+        </p>
+        <p> Each card image is stored in a separate file, so they're fairly
+            easy to manipulate. The two of Clubs is in the file <b>2c.gif</b>,
+            the Ace of Spades is in <b>as.gif</b>, and so on.
+        </p>
+        <div class='alert'>
+        <p> To make sure
+            all of the filenames are only two characters long, the "tens"
+            are in a set of files named like <b>tc.gif</b> instead of
+            <b>10c.gif</b>. Also, the file <b>b.gif</b> is used for
+            the backs of the cards.
+        </p>
+        </div>
+    <h4>Card 1: The GImage Class</h4>
+        <p> We'll need to create <b>two</b> cards for our program, so
+            I'll just name them <code>card1</code> and <code>card2</code>.
+            To create the card objects, we'll use the <code>GImage</code>
+            class.
+        </p>
+        <p> <img src="images/acmg27.gif" class="right" alt="Creating and displaying a card.">
+            <code>GImage</code> actually hides a lot of complexity that
+            you'll be exposed to later. Right now, to construct your first
+            card object, simply pass it a <code>String</code> containing
+            the path to the image file you want to use. This path needs
+            to be relative to the location of your Java program.
+        </p>
+        <p> Once you've created the <code>card1</code> object, you can
+            position it with <code>setLocation()</code>. Rather than
+            calculating the location independently, we can just
+            "put it on the table" by asking the <code>table</code> object
+            for its location (using <code>table.getLocation()</code>),
+            and passing that value.
+        </p>
+        <p> Then, because we don't want to display the card in the
+            upper-left corner of the table, we can use the <code>move()</code>
+            method to move the card in from the left and down from the top.
+        </p>
+        <p> The screenshot shows the code required to do this.</p>
+    <h4>Card 2, Face Down</h4>
+        <p><img src="images/acmg29.gif" class="right" alt="Creating and displaying the second card.">
+            The second card uses almost exactly the same code, with the following
+            differences:
+        </p>
+        <ul>
+            <li>We used the image for the back of the card,
+                so the card appears dealt "face down".
+            </li>
+            <li>We used the location of the first card
+                when positioning our second, rather than
+                the location of the table.
+            </li>
+            <li>We moved the second card so that a little
+                more of the first card shows.
+            </li>
+        </ul>
+        <p> The code for the second card is shown in the screenshot here.</p>
+    <h3>Moving the Card</h3>
+        <p> In the next chapter you'll start learning how to handle mouse clicks and
+            button presses. For right now, you can just use this code to
+            cause your program to pause, waiting for a mouse click. (We
+            aren't actually checking to see if the user clicks the face
+            down card. We'll do that later.)<br>
+            <img src="images/flip.png" class="inlineCenter"
+                alt="Flipping the second card.">
+            When the user clicks the mouse, we do two things:
+        </p>
+        <ul>
+            <li>change the image displayed by the <code>GImage</code>
+                object named <code>card2</code>. Instead of constructing a
+                new <code>GImage</code> object, we simply replace its
+                picture property.
+            </li>
+            <li>move the second card into position using its <code>move()</code>
+                method. We use its own width to determine how far to move it
+                to the right. We use a negative amount for the vertical position,
+                since we started the card 10 pixels down from the top of
+                <code>card1</code>.
+            </li>
+        </ul>
+        <p> Go ahead and compile and run. Make sure that you can flip over
+            your card when you click the program. As you can see, Blackjack isn't
+            far away.
+        </p>
+        <p> There are several other classes in the ACM Graphics package you
+            might want to learn about. A great way to meet them is to
+            reach <b><i>Chapter 2: Using the acm.graphics Package</i></b>,
+            in the <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/tutorial/Tutorial.pdf" target="_blank"><b>JTF Tutorial</b></a>,
+            available in PDF format by clicking the link in this sentence.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

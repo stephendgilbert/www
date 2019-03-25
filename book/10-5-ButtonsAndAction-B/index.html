@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>10.5&mdash;Buttons and Action Events</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner12">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 10.5</p>
+        <p id='lessonTitle'>Buttons and Action Events</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class='cap'>L</span>et's face
+            it, the <code>JLabel</code>, which you met in the Chapter 8,
+            really doesn't know a whole lot of
+            tricks</b>. The <code>JButton</code>'s middle name, by contrast,
+            is <b>action</b>.
+            <img src='images/button.png' class='right' alt='A button saying Click Me.'>
+            If you want something to happen in your Java
+            program, you use a <code>JButton</code> object
+            to start it off and then you write a method to carry out the
+            action you want performed.
+        </p>
+        <p> Creating buttons is actually a <b>little easier</b> than creating
+            labels, since there is no concept of "alignment". That means you
+            only have to learn four constructors, instead of six:
+        </p>
+        <p class="code">
+            JButton(); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// the default constructor</span><br>
+
+            JButton(Icon); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// displays an image</span><br>
+            JButton(String);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// displays text</span><br>
+            JButton(String, Icon);&nbsp;<span class="cmt">// displays both text and an image</span>
+        </p>
+        <p> While there <i>is</i> a no-parameter <code>JButton</code> constructor, it
+            isn't as useful as the <code>JLabel</code> constructor,
+            since you rarely want to create such an "empty" button.
+        </p>
+        <p> The other three constructors allow you to
+            specify the text, icon, or combination of text and icon that
+            will appear on the button. You use the <code>ImageIcon</code>
+            class to create an icon for a <code>JButton</code>, just as
+            you did for the <code>JLabel</code> class.
+        </p>
+
+        <p> To see how this works, open the <b>JButtonWorld</b> program from
+            this chapter's code folder and complete the marked portions of code.
+            Start by creating three buttons
+            using each of the last three constructors.<br>
+            <img src="images/widget14.gif" class="inlineCenter" alt="Creating JButtons.">
+            The first button (<b>btn1</b>)
+            has only an icon, the second, (<b>btn2</b>) has only text, while the
+            third, (<b>btn3</b>) has both.
+        </p>
+    <h3>Mnemonics and ToolTips</h3>
+        <p> <code>JButtons</code> <i>automatically</i> handle "mnemonic" key
+            identifiers ("shortcuts" or "hot-keys" for us mere mortals), as well
+            as <b>tool-tips</b>. Here's the section of code you should add
+            to <b>JButtonWorld</b> that activates both of those features:<br>
+            <img src="images/widget15.gif" class="inlineCenter" alt="JButtons tooltips and mnemonics.">
+            The <code>setMnemonic()</code> method is used to assign an
+            <b>Alt+Key</b> keyboard shortcut to a particular button. If the button
+            contains text, then the shortcut character will be underlined.
+        </p>
+        <p> <img src="images/widget16.gif" class="right" alt="Using the setMnemonic method.">
+            Use the code <code>btn2.setMnemonic('P');</code> to assign
+            the keyboard shortcut <b>Alt+P</b> to the plain text
+            <code>JButton</code>. When the button is displayed, the 'P' in
+            "Plain Text" is underlined as shown here.
+        </p>
+        <p> You can use keyboard shortcuts that <b>don't</b> generate a
+            printable character code by using the <b>virtual key constants</b>
+            in the <code>KeyEvent</code> class. In my example here, <b>btn1</b> is
+            assigned to the <b>Alt+F1</b> function key combination, while
+            <b>btn2</b> is assigned <b>Alt+1</b>.
+        </p>
+    <h3>Tool-Tips</h3>
+        <p> Adding a "tool-tip"&#8212;the small help message that appears when your mouse
+            hovers over a component for a few seconds&#8212;is even easier than setting
+            a keyboard shortcut.
+        </p>
+        <p> You just call the method <code>setToolTipText()</code>,
+            like this:
+        </p>
+        <p class="code">
+            btn1.setToolTipText("Click here to order a red Range Rover");
+        </p>
+        <p><img src="images/widget17.gif" class="right" alt="Creating tooltips.">
+            The tool-tip displays your message when it pops up.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Once you've completed these two sections in <b>JButtonWorld</b>,
+            compile and run the program. Make sure both the
+            hot-keys and the tool-tips work.
+        </p>
+        </div>
+    <h2>JButtons and Events</h2>
+        <p> When a <code>JButton</code> object is clicked, instead of
+            generating mouse events, it generates
+            a specific kind of event object called an
+            <code>ActionEvent</code>.
+        </p>
+        <div class='info'>
+        <p>
+            <b>ActionEvent</b> objects are not specific to buttons;
+            if you press the <b>ENTER</b> key inside a <b>JTextField</b>
+            object, or, if you double-click an entry in a <b>List</b>
+            object, the component will generate an <b>ActionEvent</b>
+
+            object as well.
+        </p>
+        </div>
+        <p>To perform an action when a <code>JButton</code> object is
+            clicked (inside your ACM graphical programs), you only have to
+            do these three things:
+            <img src="images/checklist02.gif" class="right" alt="The checklist image.">
+        </p>
+        <ol>
+            <li class="d"> Make sure that the <code>java.awt.event</code>
+                package is available, just like you did when working with
+                the different mouse events.
+            </li>
+            <li class="d"> Tell your program to <b>subscribe</b> to
+                any <code>ActionEvent</code>s generated by the
+                <code>JButton</code> objects you've added to your
+                program. In your ACM programs, you'll do this by
+                calling <code>addActionListeners()</code> from inside
+                your <code>init()</code> method.
+            </li>
+            <li class="d">Add an <code>actionPerformed()</code> method to
+                your program where you'll respond whenever any of the
+                buttons in your program are selected.
+            </li>
+        </ol>
+        <p> To get a feel for button event-handling, create a new program,
+            <b>ButtonActions.java</b>, which will be very similar to
+            the <b>JButtonWorld</b> program from the first part of this section.<br>
+            <img src="images/action09.gif" class="inlineCenter" alt="Running ButtonAction.">
+            Instead of three buttons, though, we'll add a <code>JLabel</code>
+            and one of the <b>ACM GUI components</b>, the
+            <code>DoubleField</code>, so that you can interactively change
+            the radius of the circle displayed on the screen.
+        </p>
+    <h3>Step 1: Import the Packages</h3>
+        <p> As always, you'll also need to <b><code>import</code></b> the
+            package containing the <code>ActionEvent</code> and <code>ActionListener</code>
+            classes. These listeners are in the <b>same</b> package as the
+            mouse events: <code>java.awt.event</code>. It's easy to
+            forget to add this line to the top of your program:
+            <img src="images/action01.gif" class="inlineCenter" alt="The ButtonActions import statements.">
+            Notice that in addition to the Java event packages, I <b>also</b>
+            need to remember to import:
+       </p>
+        <ul>
+
+            <li>The <code>acm.gui</code> package which contains the code for
+                the "enhanced" numeric version of the <code>JTextField</code>
+                class, called <code>DoubleField</code>. We could use
+                <code>JTextField</code>, of course, but then we'd have to
+                handle converting the radius from <code>String</code> to
+                <code>double</code> ourselves.
+            </li>
+
+            <li>The <code>javax.swing</code> package that contains the
+                Swing GUI components, such as <code>JLabel</code> and
+                <code>JButton</code>.
+            </li>
+        </ul>
+    <h3>Step 2: Initialize the Application</h3>
+        <p> Reactive or event-driven programs often do not have a
+            <code>run()</code> method. Instead, we'll put all of our
+            code inside the <code>init()</code> method as well as the
+            event-handlers that will be called as the users interact
+            with our app. Instead of just looking at the code that
+            sets up the event-handling, let's look at each of the
+            main points inside the <code>init()</code> method.
+        </p>
+
+    <h4>Instance Variables</h4>
+        <p> Our program starts by defining several instance variables
+            that will be used inside both the <code>init()</code> method as
+            well as from inside the event-handlers:<br>
+            <img src="images/action02.gif" class="inlineCenter" alt="The ButtonActions instance variables.">
+            There are fields for each of the GUI components, as well as a
+            <code>GPoint</code> to store the center of the screen (so we don't
+            need to calculate it again and again.)
+        </p>
+
+    <h4>Creating the Objects</h4>
+        <p>The first section inside <code>init()</code> simply calls the
+            various constructors to create each of the objects associated
+            with our program's fields:<br>
+          <img src="images/action03.gif" class="inlineCenter" alt="Initializing the fields.">
+          The <code>GPoint</code> used to keep track of the center of the application
+          is offset by 20 pixels up from the bottom, to allow for the toolbar at
+          the bottom of the screen.
+        </p>
+
+    <h4>Additional Initialization</h4>
+        <p>While each object's constructor is responsible for initializing
+            the objects you create, often, especially with GUI apps, you'll
+            find that many components need additional initialization,
+            such as that shown here:<br>
+          <img src="images/action04.gif" class="inlineCenter" alt="Additional initialization.">
+          In addition to adding a hot-key and tool-tip for the button,
+          the program sets the fill color for the dot on the screen
+          as well.
+        </p>
+    <h4>Adding and Actions</h4>
+        <p>After the objects are created and any initialization is
+            performed, each of the components is added to the toolbar at the
+            bottom of the screen. The <code>GPoint</code> is used to calculate
+            the location of the <code>GOval</code> object:<br>
+
+          <img src="images/action05.gif" class="inlineCenter" alt="Hooking up action events.">
+          The last line in the <code>init()</code> method is the line
+          the <b>activates</b> the event handling for your buttons. (If you
+          want to respond to mouse events also, you can add an
+          <code>addMouseListeners()</code> line as well.)
+        </p>
+    <h3>Step 3: Responding</h3>
+
+        <p> How will the <code>JButton</code> object, <b>goBtn</b>, notify
+            you when an <code>ActionEvent</code> occurs? It will send <b><u>a
+            particular message</u></b>, passing along the <code>ActionEvent</code>
+            object as an argument. The name of the message&#8212;and the method
+            you must write&#8212;is <code>actionPerformed()</code>, and you'll
+            place it <b>inside</b> your class:<br>
+
+          <img src="images/action06.gif" class="inlineCenter" alt="The actionPerformed method.">
+            In the body of the <code>actionPerformed()</code>
+            method, you can carry out the actions you want to occur when
+            <b>goBtn</b> is clicked.
+        </p>
+        <p> In this case, I:</p>
+        <ul>
+
+            <li>Extract the new radius from the <code>DoubleField</code>
+                named <code>radiusTf</code>. Note that the ACM GUI
+                component doesn't require me to convert the value,
+                but allows me to read it directly, using its
+                <code>getValue()</code> method.
+            </li>
+            <li>Use the new radius value to first position and then
+                resize the <code>GOval</code> object on the screen.
+            </li>
+
+        </ul>
+    <h4>Handling the Focus</h4>
+        <p> When the user enters a new radius into the text field, and
+            then clicks the button, the GUI <b>focus</b> remains on the
+            <code>JButton</code> object. To go back and enter another
+            value, the user has to either use the tab key, or click with
+            the mouse and erase the old value in the text field.
+        </p>
+        <p> To make your code more user-friendly, you can perform those
+            two steps using code, each time the <code>actionPerformed()</code>
+
+            method is called, like this:<br>
+          <img src="images/action07.gif" class="inlineCenter" alt="Changing the focus.">
+          The first line selects all of the text inside the text field,
+          while the second line sends the keyboard focus back to that
+          field. All the user has to do is type a new value.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Once you've completed the <b>ButtonActions</b> program,
+            run it and then resize the central dot a few times.
+        </p>
+        </div>
+    <h3>Multiple Buttons</h3>
+        <p> If you have multiple buttons inside your application, all of
+            them will call the <b>same</b> <code>actionPerformed()</code>
+            method. Inside your method, you'll need to determine which
+            button actually triggered the event.
+        </p>
+        <p> You can do that in two ways:</p>
+        <ol>
+            <li class="d">You can call the <code>ActionEvent</code> parameter's
+                <code>getSource()</code> method, and compare the
+                <code>Object</code> reference that you get back to the
+                button you want to respond to. Here's what that would
+                look like, if you had a second button named colorBtn
+                that changed the oval's color:<br>
+
+                <img src="images/action10.gif" class="inlineCenter" alt="Using getSource().">
+
+            </li>
+            <li class="d">You can call the <code>ActionEvent</code> parameter's
+                <code>getActionCommand()</code> method to "read" the text appearing
+                on the button, and differentiate between the buttons that way.
+                This works even if the button was not defined as an instance
+                variable. Here's what that looks like:<br>
+                <img src="images/action11.gif" class="inlineCenter" alt="Using getActionCommand().">
+            </li>
+        </ol>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Button and Action Event Summary
+        </p>
+        <ul>
+            <li>To create a <code>JButton</code> object, you import the
+                <code>javax.swing</code> package (like all JFC widgets) and
+                use one of the constructors, specifying the button's text
+                or an icon, or both.
+            </li>
+            <li>To <b>start listening for button clicks</b>, add the line <code>addActionListeners()</code>
+                <b>to the end</b> of your ACM <code>init()</code> method. Make sure all
+                buttons have been created and added to your application before calling
+                the method.
+            </li>
+            <li>To <b>respond to button clicks</b> write an event handler method
+                <code>public void actionPerformed(ActionEvent e) {}</code>. The
+                method will be called when your button is clicked.
+            </li>
+            <li>If your program has <b>multiple buttons</b>, all of them will
+                call the same <code>actionPerformed()</code> method. You can
+                determine which button was clicked by using the <code>ActionEvent</code>
+                parameter and it's methods <code>getSource()</code> or
+                <code>getActionCommand()</code>.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

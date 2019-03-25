@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>tax.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">    1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">    2 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">    3 </span>
+<span class="line">    4 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">    5 </span>
+<span class="line">    6 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line">    7 </span><span class="sym">{</span>
+<span class="line">    8 </span>   <span class="kwb">const double</span> SINGLE_LEVEL1 <span class="sym">=</span> <span class="num">21450.00</span><span class="sym">;</span>
+<span class="line">    9 </span>   <span class="kwb">const double</span> SINGLE_LEVEL2 <span class="sym">=</span> <span class="num">51900.00</span><span class="sym">;</span>
+<span class="line">   10 </span>
+<span class="line">   11 </span>   <span class="kwb">const double</span> SINGLE_TAX1 <span class="sym">=</span> <span class="num">3217.50</span><span class="sym">;</span>
+<span class="line">   12 </span>   <span class="kwb">const double</span> SINGLE_TAX2 <span class="sym">=</span> <span class="num">11743.50</span><span class="sym">;</span>
+<span class="line">   13 </span>
+<span class="line">   14 </span>   <span class="kwb">const double</span> MARRIED_LEVEL1 <span class="sym">=</span> <span class="num">35800.00</span><span class="sym">;</span>
+<span class="line">   15 </span>   <span class="kwb">const double</span> MARRIED_LEVEL2 <span class="sym">=</span> <span class="num">86500.00</span><span class="sym">;</span>
+<span class="line">   16 </span>
+<span class="line">   17 </span>   <span class="kwb">const double</span> MARRIED_TAX1 <span class="sym">=</span> <span class="num">5370.00</span><span class="sym">;</span>
+<span class="line">   18 </span>   <span class="kwb">const double</span> MARRIED_TAX2 <span class="sym">=</span> <span class="num">19566.00</span><span class="sym">;</span>
+<span class="line">   19 </span>
+<span class="line">   20 </span>   <span class="kwb">const double</span> RATE1 <span class="sym">=</span> <span class="num">0.15</span><span class="sym">;</span>
+<span class="line">   21 </span>   <span class="kwb">const double</span> RATE2 <span class="sym">=</span> <span class="num">0.28</span><span class="sym">;</span>
+<span class="line">   22 </span>   <span class="kwb">const double</span> RATE3 <span class="sym">=</span> <span class="num">0.31</span><span class="sym">;</span>
+<span class="line">   23 </span>
+<span class="line">   24 </span>   <span class="kwb">double</span> income<span class="sym">;</span>
+<span class="line">   25 </span>   <span class="kwb">double</span> tax<span class="sym">;</span>
+<span class="line">   26 </span>
+<span class="line">   27 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter your income: &quot;</span><span class="sym">;</span>
+<span class="line">   28 </span>   cin <span class="sym">&gt;&gt;</span> income<span class="sym">;</span>
+<span class="line">   29 </span>
+<span class="line">   30 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Please enter s for single, m for married: &quot;</span><span class="sym">;</span>
+<span class="line">   31 </span>   string marital_status<span class="sym">;</span>
+<span class="line">   32 </span>   cin <span class="sym">&gt;&gt;</span> marital_status<span class="sym">;</span>
+<span class="line">   33 </span>
+<span class="line">   34 </span>   <span class="kwa">if</span> <span class="sym">(</span>marital_status <span class="sym">==</span> <span class="str">&quot;s&quot;</span><span class="sym">)</span>
+<span class="line">   35 </span>   <span class="sym">{</span>
+<span class="line">   36 </span>      <span class="kwa">if</span> <span class="sym">(</span>income <span class="sym">&lt;=</span> SINGLE_LEVEL1<span class="sym">)</span>
+<span class="line">   37 </span>         tax <span class="sym">=</span>  RATE1 <span class="sym">*</span> income<span class="sym">;</span>
+<span class="line">   38 </span>      <span class="kwa">else if</span> <span class="sym">(</span>income <span class="sym">&lt;=</span> SINGLE_LEVEL2<span class="sym">)</span>
+<span class="line">   39 </span>         tax <span class="sym">=</span> SINGLE_TAX1
+<span class="line">   40 </span>            <span class="sym">+</span> RATE2 <span class="sym">* (</span>income <span class="sym">-</span> SINGLE_LEVEL1<span class="sym">);</span>
+<span class="line">   41 </span>      <span class="kwa">else</span>
+<span class="line">   42 </span>         tax <span class="sym">=</span> SINGLE_TAX2
+<span class="line">   43 </span>            <span class="sym">+</span> RATE3 <span class="sym">* (</span>income <span class="sym">-</span> SINGLE_LEVEL2<span class="sym">);</span>
+<span class="line">   44 </span>   <span class="sym">}</span>
+<span class="line">   45 </span>   <span class="kwa">else</span>
+<span class="line">   46 </span>   <span class="sym">{</span>
+<span class="line">   47 </span>      <span class="kwa">if</span> <span class="sym">(</span>income <span class="sym">&lt;=</span> MARRIED_LEVEL1<span class="sym">)</span>
+<span class="line">   48 </span>         tax <span class="sym">=</span>  RATE1 <span class="sym">*</span> income<span class="sym">;</span>
+<span class="line">   49 </span>      <span class="kwa">else if</span> <span class="sym">(</span>income <span class="sym">&lt;=</span> MARRIED_LEVEL2<span class="sym">)</span>
+<span class="line">   50 </span>         tax <span class="sym">=</span> MARRIED_TAX1
+<span class="line">   51 </span>            <span class="sym">+</span> RATE2 <span class="sym">* (</span>income <span class="sym">-</span> MARRIED_LEVEL1<span class="sym">);</span>
+<span class="line">   52 </span>      <span class="kwa">else</span>
+<span class="line">   53 </span>         tax <span class="sym">=</span> MARRIED_TAX2
+<span class="line">   54 </span>            <span class="sym">+</span> RATE3 <span class="sym">* (</span>income <span class="sym">-</span> MARRIED_LEVEL2<span class="sym">);</span>
+<span class="line">   55 </span>   <span class="sym">}</span>
+<span class="line">   56 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;The tax is $&quot;</span> <span class="sym">&lt;&lt;</span> tax <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line">   57 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">   58 </span><span class="sym">}</span>
+<span class="line">   59 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

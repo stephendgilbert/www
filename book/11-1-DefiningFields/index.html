@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>11.1&mdash;Defining Fields</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner11">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.1</p>
+        <p id='lessonTitle'>Defining Fields</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/binary3.png" class="right" style='margin-top:-3em;' alt="A cartoon of a machine-language programmer.">
+            <b><span class="cap">B</span>ack in the computing "iron-age"</b>,
+            when programmers wrote their code in machine or assembly language,
+            to manipulate a data element representing quarterly sales or the
+            velocity of a missile, you simply used the data element's
+            memory <b>address</b>, like the line shown below,
+            which assigns a value (stored in the CPU's <code>AX</code> register)
+            to the memory location <code>A42C</code>:<br>
+            <img src="images/assembly02.gif" class='inlineCenter' style='margin-top:-3em;' alt="A piece of assembly language.">
+            When high-level languages, like FORTRAN and COBOL were developed,
+            they made things much easier, because now programmers could
+            use <b>names</b> for the data elements inside their programs;
+            when the programmer wrote something like this:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            int velocity = 125;
+        </p>
+        <p> there was no more need to keep track of exactly <b>where</b> the
+            value 125 was stored in memory; the high-level language
+            compiler took care of the minutia of associating the memory
+            address <code>A42C</code> (or, whatever) with the variable
+            named <code>velocity</code>.
+        </p>
+        <p> <img src="images/datatypes.gif" class="right" alt="Different variable types.">
+            Even better, though was the fact that the compiler could now
+            keep track of <b>what kind of thing</b> you stored in the memory
+            location <code>A42C</code> and warn you if you made a mistake.
+            Just like 7-11 has different kinds of containers for each of
+            their beverages, programmers now had <b>different kinds of variables</b>
+            for <b>different kinds of data</b>.
+        </p>
+        <p> With high-level languages, variables were no longer just chunks
+            of arbitrary bits; each variable now had a specific
+            <b>data type</b>, like <code>char</code>, <code>boolean</code>,
+            <code>int</code> or <code>double</code>.
+        </p>
+    <h3>User-Defined Types</h3>
+        <p> Each high-level language, from <b>FORTRAN</b> and <b>COBOL</b>
+            in the 1950s, to Java and C++ today comes equipped with a
+            pre-defined, <b>built-in</b> set of data types. In Java, these
+            are the <b>primitive</b> types you met early in the text.
+        </p>
+        <p> However, programmers soon discovered that <b>they wanted more</b>.
+            Financial programmers wanted <b>real numbers</b>, scientific programmers
+            couldn't live without <b>imaginary numbers</b>. Business programmers
+            wanted <b>dates</b> and <b>times</b>, while graphics programmers really
+            needed <b>points</b> and <b>shapes</b>.<br>
+            <img src="images/rube.gif" class="inlineCenter" alt="Rube Goldberg contraption.">
+        </p>
+        <p> Rather than adding all of these extensions as built-in types,
+            creating complex, "Rube-Goldberg-like languages", designers found
+            it better to <b>give programmers
+            the ability to define their own types</b>. That's really at the
+            <b>heart</b> of modern, object-oriented programming, and that's
+            what you'll learn how to do in this chapter.
+        </p>
+        <p> But first, a little review!</p>
+    <h2>What are Classes?</h2>
+        <p> <b>Object-oriented programs are collections
+            of cooperating objects</b>, but what, exactly, are <b>classes</b>?
+            Although often confused, the difference between classes and
+            objects is simple:
+        </p>
+        <p class="pullquote"><b>A class represents
+            the definition&#8212;the blueprint if you like&#8212;that is used to
+            construct an object.</b>
+
+        </p>
+        <p> Objects are created (or <b>instantiated</b>) when your program
+            runs, by following the definition specified in a particular class.
+            A class defines the characteristics of each individual object,
+            and each class can be used to produce many objects.
+        </p>
+        <p> The blueprint
+            shown here, for instance is used to define the characteristics
+            of a particular automobile. The same blueprint can be used
+            to produce any number of individual cars:<br>
+            <img src="images/classes-n-objects.gif" class="inlineCenter" alt="Classes are used to produce objects.">
+            In object-oriented programs, classes represent a concept that is
+            similar to the concept of a <b>user-defined data type</b> in other languages.
+            In languages like BASIC, Pascal, and C, you can combine individual
+            related variables into a package, (called a <b>record</b> or a <b>struct</b>),
+            and then treat that package as in individual unit. A record
+            might store the information for a customer in a hospital application,
+            or for a student in a program used to run a school.
+        </p>
+    <h3>Attributes and Behavior</h3>
+        <p> <img src="images/b01.gif" class="right" alt="The parts of a class.">
+            Classes, though, are <b>different</b> than the structures
+            and records or these earlier languages. Like a record, a class
+            describes <b>the attributes of an object</b>: the kinds
+            of data it stores internally.
+            If you were designing a <b>Car</b> class, for instance, as shown
+            in the clip to the right, you'd need to specify the physical
+            attributes that make up each car: its serial number, body type,
+            color, type of interior, engine size, and so on.
+        </p>
+        <p> <b>Unlike</b> a structure, though, a class
+            <b>also</b> describes the behaviors of its objects: the kinds of
+            operations that each object in the class can perform.
+            When you define a class, you need to specify <b>what the object
+            can do</b>, providing an explicit list of its possible behaviors.
+            The small car shown here can start, stop, turn, and go in forward
+            or reverse.
+        </p>
+    <h4>Fields and Methods</h4>
+        <p> As you begin writing Java programs, you'll find that classes
+            are very important. In fact, <b>every Java program you write is
+            a class definition</b>. In your class definitions you describe
+            the attributes that each of your objects possesses, and define
+            the methods that each uses to carry out its actions.
+        </p>
+        <p> To store the attributes of an object, you
+            use instance variables&#8212;the data objects that you
+            define to store an object's <i>state</i>. In Java,
+            instance variables are also called <b>fields</b>. To specify the
+            behavior for your classes, you <b>write methods</b>.
+        </p>
+    <h2>Hands-On: Creating Your Own Class</h2>
+        <p> <img src="images/appletbounce01.gif" class="right" alt="The original AppletBounce.">
+            <b><span class="cap">E</span>nough theory!</b>
+            Let's look at an example! In this section and the next,
+            we'll return to the bouncing ball program,
+            <b>AppletBounce</b> from earlier in the text.
+        </p>
+        <p> We'll write several different versions of the application,
+            gradually turning it into an object-oriented program that
+            applies the principle of <b>encapsulation</b>.
+        </p>
+        <p> By writing
+            several different versions, you'll come to appreciate <b>why</b>
+            encapsulation is needed, and <b>how it can make your programs
+            simpler and more robust</b>.
+        </p>
+    <h3>The Original AppletBounce</h3>
+        <p> The <b>AppletBounce</b> program was introduced in <i>Section
+        8.4&mdash;Introducing Animation</i>. I've placed a copy in this
+        chapter's code folder. Go ahead and open it in DrJava, and note that
+        the program extends the <code>Animator</code>
+        class and then basically does three things:
+        </p>
+        <ul>
+            <li>It defines three instance variables: a <code>Rectangle</code>
+                which we use to represent our ball, and two integers to
+                represent the horizontal and vertical movement of the
+                rectangle during each animation frame.<br>
+                <img src="images/ab101.gif" class="inline" alt="Defining the original AppletBounce instance variables.">
+            </li>
+            <li>The variables are initialized in the
+                applet's <code>init()</code> method:<br>
+                <img src="images/ab102.gif" class="inline" alt="Initializing the original AppletBounce instance variables.">
+                The applet foreground
+                is set to yellow so that we dodn't need to keep track
+                of the ball color separately. (If we had wanted to draw
+                a red ball as well, we would have needed more code.)
+            </li>
+            <li>Inside the <code>advanceOneFrame()</code> method, the rectangle is
+                moved (using the <code>translate()</code> method) and then
+                drawn on the screen, using the <code>Graphics fillOval()</code>
+                method.
+                <img src="images/ab103.gif" class="inline" alt="Moving and painting the ball.">
+                After drawing the image, the location of the rectangle is
+                checked against the applet's bounding rectangle, and, if it
+                has bounced "out of bounds", the horizontal and/or vertical
+                movement fields are adjusted:<br>
+                <img src="images/ab104.gif" class="inline" alt="Adjusting the ball velocity.">
+            </li>
+        </ul>
+    <h2>The SimpleBall Class</h2>
+        <p> <img src="images/soccerball.gif" class="right" alt="A soccer ball image.">
+            For the first sequel to <b>AppletBounce</b>, instead of using a
+            <code>Rectangle</code> and separate fields or local variables
+            for the attributes of our bouncing ball, let's
+            <b>create a class to represent our ball</b>.
+        </p>
+        <p> To keep
+            confusion to a minimum, let's start with the <b>simplest class
+            definition</b> possible: in fact, let's call it
+            <b>SimpleBall</b>. We'll start with the
+            first part of the class definition: <b>defining instance
+            variables</b> of <b>fields</b> to store the object's state.
+        </p>
+    <h3>The Class "Skeleton"</h3>
+        <img src="images/sb01.gif" class="right" style="margin-top: -3em;" alt="The SimpleBall class skeleton.">
+        <p> Just like we have a "skeleton" for the methods you write,
+            there is also a skeleton for a simple, user-defined type.
+        </p>
+        <p> To start, just use DrJava to
+            create the <b>SimpleBall</b> class <b>exactly like</b> you
+            create a regular Java program or applet, <b>except</b>:
+        </p>
+        <ul>
+            <li>the class <b>does not</b> <code>extend</code> anything!</li>
+            <li>it does not contain a <code>run()</code>, <code>paint()</code>,
+            or <code>main()</code> method.
+            </li>
+        </ul>
+        <p> To the right is the basic code for the <code>SimpleBall</code>
+            class. As you can see, I've added a class comment to the top
+            of your file. When you're asked to write your own classes on
+            the final programming exam, you'll need to do that to get
+            all of the possible style points.
+        </p>
+    <h3>Data Attributes</h3>
+        <p> To define the fields for your class, you have to decide
+            what data elements you'll need to represent objects of
+            the class. If were were defining a <b>Car</b> class,
+            like the illustration shown earlier, we might want to have
+            fields for <b>Serial Number</b>, <b>Color</b>, <b>Engine
+            Size</b> and <b>Body Style</b>.
+        </p>
+        <p> In our case, we <i>could</i> use a <code>java.awt.Rectangle</code>,
+            like the original <b>AppletBounce</b> program did. One of the
+            advantages of object-oriented programming, though, is that it lets
+            you think in more "natural" terms. Rather than thinking in
+            terms of rectangles, let's model our ball using:
+        </p>
+        <ul>
+            <li><b>radius</b>: how big the ball is.</li>
+            <li><b>location</b>: where the ball is located.</li>
+            <li><b>dx,dy</b>: the velocity of the ball.</li>
+            <li><b>color</b>: the color used to paint the ball.</li>
+        </ul>
+        <p> This doesn't look that much different than the previous
+            example, of course; but there's one <b>major difference</b>:
+        </p>
+        <p class="pullquote">
+            The data elements are packaged now packaged inside our class,
+            not "lying loose" inside our program.
+        </p>
+    <h3>Defining Fields</h3>
+        <p> You've already worked a little with instance variables,
+            so the syntax for creating them should be familiar; it's exactly
+            the same as that used for local variables:<br>
+            <img src="images/var-syntax.gif" class="inlineCenter" alt="Variable syntax.">
+            <b>except</b> that
+        </p>
+        <ul>
+            <li>it is defined inside the class body, but
+            outside of any method, and</li>
+            <li>some of the modifiers that
+            appear before an instance variable are different than those
+            that can appear before a local variable.
+            </li>
+        </ul>
+        <div class='alert'>
+        <p> As I mentioned before, <b>normally</b> we'll use the modifier
+            <code>private</code> in front of every instance variable. For
+            the <b>SimpleBall</b> class, though, I'm going to use the
+            modifier <code>public</code> instead. This is just a learning
+            exercise though; <b>don't do this with the real classes that
+            you develop</b>.
+        </p>
+        </div>
+        <p> Here's the <b>SimpleBall</b> class with each of these fields
+            defined:<br>
+            <img src="images/sb02.gif" class="inlineCenter" alt="The finished SimpleBall class.">
+            Notice that:
+        </p>
+        <ul>
+            <li>The fields themselves can be primitive types like <code>int</code>,
+                or they can be reference types like <code>Point</code> and
+                <code>Color</code>
+            </li>
+            <li>When you use a class type, you must include the <code>import</code>
+                statement for the class, just like I've done with
+                <code>java.awt</code> here, so I can use the <code>Point</code>
+                and <code>Color</code> classes when defining my fields.
+            </li>
+        </ul>
+    <h4>Javadoc</h4>
+        <p> Because each of the fields we've defined is <code>public</code>,
+            users of the <code>SimpleBall</code> class will be able to
+            directly access the fields. Any time you have a public member
+            (whether a field or a method), you should add a Javadoc comment,
+            so users will know what the public element does:<br>
+            <img src="images/sb04.gif" class="inlineCenter" alt="Javadoc comments.">
+            Once you've done this, the description will appear in the
+            Javadoc documentation that you can generate for your
+            users by just clicking the Javadoc button in DrJava. When you
+            do this (as long as you have the JDK installed), DrJava will
+            generate documentation for all of the files open in the
+            Files pane.
+        </p>
+    <h2>AppletBounce2: Using SimpleBall</h2>
+        <p> To test your new class, you need to write a program that <b>uses</b>
+            the class. Do that by saving <b>AppletBounce</b> as <b>AppletBounce2</b>
+            and then changing the class name. You should be able to compile it
+            and run it just like the original.
+        </p>
+        <p> Now, let's make the changes so that
+            your program uses the <code>SimpleBall</code>
+            class instead of the <code>Rectangle</code> class and
+            <code>int</code> variables. <br>
+            <img src="images/ab2a.gif" class="inlineCenter" alt="AppletBounce2 instance variables.">
+            Instead of fields for <code>dx</code> and <code>dy</code>, those
+            are packaged up inside the <code>SimpleBall</code> class.
+        </p>
+    <h3>Instantiation</h3>
+        <p> To initialize the applet's <code>SimpleBall</code> field,
+            we first need to <b>create</b> a <code>SimpleBall</code>
+            object. You do that by using a <b>constructor</b> along with
+            the <code>new</code> operator, just like any of the classes
+            you've worked with up to this point:<br>
+            <img src="images/ab2b.gif" class="inlineCenter" alt="Creating a SimpleBall instance.">
+            Notice that since color is now a data attribute inside the
+            <code>SimpleBall</code> class, we no longer need to set the
+            applet's foreground color to yellow.
+        </p>
+        <div class='info'>
+        <p> Those of you who already know a little object-oriented
+            programming might wonder how we can create a <code>SimpleBall</code>
+            object without first defining a <i>constructor</i> for the class.
+            The answer is simple: if you don't define a constructor for your
+            class, then Java will write the "no-argument" (default) constructor
+            for you. This no-argument constructor doesn't initialize any of
+            the fields, but does create the object in memory.
+        </p>
+        </div>
+    <h3>Initialization</h3>
+        <p> Now we've created an object to go along with the <code>ball</code>
+            field, we still need to initialize the fields inside that object.
+            This code also appears inside the applet's <code>init()</code>
+            method:<br>
+            <img src="images/ab2c.gif" class="inlineCenter" alt="Initializing the SimpleBall instance.">
+            Here's what the initialization code does:
+        </p>
+        <ol>
+            <li class="d">To get a ball that's 50-pixels wide, we need to
+                set the <code>radius</code> field to 25. <b>Note the syntax
+                for accessing a <code>public</code> field:</b> it is very
+                similar to calling a method:<br>
+                <img src="images/fieldaccess2.gif" class="inlineCenter" alt="Accessing a public field.">
+            </li>
+            <li class="d">Since the <code>location</code> filed is a
+                <code>Point</code> object, we need to create a new
+                <code>Point</code> when we assign it.
+            </li>
+            <li class="d">The <code>dx</code> and <code>dy</code> fields are
+                initialized just as they were in the original
+                <b>AppletBounce</b>, except that now they are <b>inside</b>
+                the <code>SimpleBall</code> field.
+            </li>
+            <li class="d">Finally, we can set the <code>color</code> field by
+                assigning one of the constants from the <code>Color</code>
+                class.
+            </li>
+        </ol>
+        <div class='alert'>
+            <p>Although I haven't shown it in the screenshot here, make sure
+                you <b>leave</b> the line that sets the frame rate at the end
+                of the <code>init()</code> method. Otherwise, your new ball
+                won't bounce around the screen at all.
+            </p>
+        </div>
+    <h3>Painting Each Frame</h3>
+        <p> The <code>advanceOneFrame()</code> method for <b>AppletBounce2</b> is
+            <i>almost</i> the same as the original version; there are really
+            only three main differences:
+        </p>
+        <ul>
+            <li>Instead of accessing the <i>applet</i> instance variables,
+                such as <code>dx</code> and <code>dy</code>, the code needs
+                to access the <b>fields inside of the ball</b>.
+            </li>
+            <li>Instead of relying on the default applet foreground color
+                when painting, the new version extracts the ball color before
+                drawing the ball on the screen.
+            </li>
+            <li>When using <code>fillOval()</code> to paint the image of
+                the bouncing ball on the screen, the calculation is slightly
+                different than the one you used previously. With a
+                <code>Rectangle</code>, the <b>origin</b> of the ball was
+                in the upper-left corner. With our home-grown
+                <code>SimpleBall</code> class, the origin (point 0,0) is
+                in the <b>center</b> of the ball. This is also true for the
+                calculations used in the edge-collision.
+            </li>
+        </ul>
+        <p> Here's what the new code looks like:<br>
+            <img src="images/ab2d.gif" class="inlineCenter" alt="Painting the ball.">
+            Notice how:
+        </p>
+        <ul>
+            <li><code>ball.dx</code> and <code>ball.dy</code> is used in place
+                of an unadorned <code>dx</code> and <code>dy</code> in the
+                original.
+            </li>
+            <li>When an object's fields are, themselves, objects, you need
+                to use <b>several</b> "dots" to "drill-down" to the embedded
+                value you are interested in.
+            </li>
+        </ul>
+        <p> This last point can be seen by examining the ball's
+            <code>location</code> field. Since this is a <code>Point</code>
+            field, and <code>Point</code> class objects contain <code>x</code>
+            and <code>y</code> fields, we need to use <b>two</b> dots: one
+            between the variable (<code>ball</code>) and the field name
+            (<code>location</code>), and then another between <code>location</code>
+            and <b>its</b> field <code>x</code> (or <code>y</code>).
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> To see if you've created the <b>SimpleBall</b> class correctly,
+            complete, compile and run <b>AppletBounce2</b>. Then, <b class='ry'>change the ball's
+            color and size, and run it again</b> and make sure it works.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Defining Fields Summary
+        </p>
+        <ul>
+            <li> Assembly language programmers referred to the data elements
+                used in their programs using <b>addresses</b>. High-level languages
+                provided the ability to attach a <b>name</b> to the data element
+                and to restrict it's contents to a <b>particular type</b>.
+            </li>
+            <li> Later high-level languages gave programmers the ability
+                to create their own <b>user-defined data types</b>. Object-oriented
+                language extend this idea by allowing programmers to specify
+                exactly what operations should be allowed on the new types.
+            </li>
+            <li><b>Classes</b> are the blueprint for a user-defined type.
+                The class describes what <b>attributes</b> (data elements) each
+                member of the class will have as well as the <b>behaviors</b>
+                members of the class can perform.
+            </li>
+            <li><b>Objects</b> are individual <b>instances</b> of your
+                user-defined type, created as your program runs by following
+                the blueprint supplied in the class definition.
+            </li>
+            <li>Data attributes are defined by creating <b>instance variables</b>
+                or <b>fields</b> that will hold the state of each object. These
+                fields are <b>initialized</b> by using a <b>constructor</b>.
+            </li>
+            <li>The <b>behavior</b> of each class is specified by defining
+                <b>methods</b> that make up each object's behavior.
+            </li>
+            <li>To <b>define a field</b> specify its type and name. Place
+                the field definition <b>outside</b> of any method. Normally
+                you'll use the <code>private</code> <b>access modifier</b>
+                but for this first example, we've used <code>public</code>.
+            </li>
+            <li>To access the value of a <code>public</code> field, you use
+                the <b>object-dot-name</b> syntax to refer to the variable:
+                <code>myBall.dx = 35;</code>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

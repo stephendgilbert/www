@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>between.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  3 </span>
+<span class="line">  4 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  5 </span>
+<span class="line">  6 </span><span class="com">/**</span>
+<span class="line">  7 </span><span class="com">   Returns all values within a range.</span>
+<span class="line">  8 </span><span class="com">   &#64;param values a vector of floating-point numbers</span>
+<span class="line">  9 </span><span class="com">   &#64;param low the low end of the range</span>
+<span class="line"> 10 </span><span class="com">   &#64;param high the high end of the range</span>
+<span class="line"> 11 </span><span class="com">   &#64;return a vector of the given values that fall within the range</span>
+<span class="line"> 12 </span><span class="com">*/</span>
+<span class="line"> 13 </span>vector<span class="sym">&lt;</span><span class="kwb">double</span><span class="sym">&gt;</span> <span class="kwd">between</span><span class="sym">(</span>vector<span class="sym">&lt;</span><span class="kwb">double</span><span class="sym">&gt;</span> values<span class="sym">,</span>
+<span class="line"> 14 </span>    <span class="kwb">double</span> low<span class="sym">,</span> <span class="kwb">double</span> high<span class="sym">)</span>
+<span class="line"> 15 </span><span class="sym">{</span>
+<span class="line"> 16 </span>   vector<span class="sym">&lt;</span><span class="kwb">double</span><span class="sym">&gt;</span> result<span class="sym">;</span>
+<span class="line"> 17 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> values<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 18 </span>      <span class="kwa">if</span> <span class="sym">(</span>low <span class="sym">&lt;=</span> values<span class="sym">[</span>i<span class="sym">] &amp;&amp;</span> values<span class="sym">[</span>i<span class="sym">] &lt;=</span> high<span class="sym">)</span>
+<span class="line"> 19 </span>         result<span class="sym">.</span><span class="kwd">push_back</span><span class="sym">(</span>values<span class="sym">[</span>i<span class="sym">]);</span>
+<span class="line"> 20 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 21 </span><span class="sym">}</span>
+<span class="line"> 22 </span>
+<span class="line"> 23 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 24 </span><span class="sym">{</span>
+<span class="line"> 25 </span>   vector<span class="sym">&lt;</span><span class="kwb">double</span><span class="sym">&gt;</span> <span class="kwd">salaries</span><span class="sym">(</span><span class="num">5</span><span class="sym">);</span>
+<span class="line"> 26 </span>   salaries<span class="sym">[</span><span class="num">0</span><span class="sym">] =</span> <span class="num">35000.0</span><span class="sym">;</span>
+<span class="line"> 27 </span>   salaries<span class="sym">[</span><span class="num">1</span><span class="sym">] =</span> <span class="num">63000.0</span><span class="sym">;</span>
+<span class="line"> 28 </span>   salaries<span class="sym">[</span><span class="num">2</span><span class="sym">] =</span> <span class="num">48000.0</span><span class="sym">;</span>
+<span class="line"> 29 </span>   salaries<span class="sym">[</span><span class="num">3</span><span class="sym">] =</span> <span class="num">78000.0</span><span class="sym">;</span>
+<span class="line"> 30 </span>   salaries<span class="sym">[</span><span class="num">4</span><span class="sym">] =</span> <span class="num">51500.0</span><span class="sym">;</span>
+<span class="line"> 31 </span>
+<span class="line"> 32 </span>   vector<span class="sym">&lt;</span><span class="kwb">double</span><span class="sym">&gt;</span> midrange_salaries
+<span class="line"> 33 </span>      <span class="sym">=</span> <span class="kwd">between</span><span class="sym">(</span>salaries<span class="sym">,</span> <span class="num">45000.0</span><span class="sym">,</span> <span class="num">65000.0</span><span class="sym">);</span>
+<span class="line"> 34 </span>
+<span class="line"> 35 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> midrange_salaries<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 36 </span>      cout <span class="sym">&lt;&lt;</span> midrange_salaries<span class="sym">[</span>i<span class="sym">] &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 39 </span><span class="sym">}</span>
+<span class="line"> 40 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

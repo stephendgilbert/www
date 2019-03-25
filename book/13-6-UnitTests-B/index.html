@@ -1,0 +1,672 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>13.6&mdash;Unit Tests</title>
+
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/i.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 13.6</p>
+        <p id='lessonTitle'>Unit Tests</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/bugs01.png" class="right" alt="Bugs.">
+            <b><span class="cap">W</span>hen you test your programs</b>,
+            there are really three kinds of
+            techniques you can use to, locate and correct the
+            defects in your code.
+
+        </p>
+        <ul>
+            <li><b>Assertions and exceptions</b> can be place placed inside
+                your code to make a method's preconditions and
+                postconditions <i>explicit</i>. If a method takes a
+                parameter and it <i>assumes</i> that the parameter always
+                contains the values 1, 2, 3, or 4, you'd check the parameter
+                value before it was used, and throw an exception
+                if it was incorrect. Exceptions and assertions are
+                used to expose errors made when <i>calling methods</i>,
+                not when defining them.
+            </li>
+            <li><b>Tracing or logging</b> is used when errors occur during
+                program runtime, but you don't want to interrupt the
+                program like you would with an exception. Instead a log
+                file is created that can later be examined to track down
+                errors.
+            </li>
+            <li>Finally, <b>debugging</b> is the <i>interactive examination of your
+                program</i>. You learned how to debug your code using the
+                DrJava debugger in <i>Section 5.6&mdash;Debugging</i>,
+                earlier in the semester.
+            </li>
+        </ul>
+        <p> While assertions, logging and debugging are all important
+            techniques, here I want to look at the <b>single most
+            important testing tool at your disposal: the unit test</b>.<br>
+            <img src="images/test07.png" class="inlineCenter" alt="Object testing cartoon.">
+            Unit testing isn't anything new for you, of course. From the
+            very beginning of the course, your homework assignments and
+            exams have been graded using the <b>Check</b> program and the unit tests that
+            I've written.
+        </p>
+        <p> In this section you'll learn how to write unit tests using DrJava,
+            and the JUnit testing framework. Rather than hand-crafted unit tests,
+            you'll learn how to write your unit tests by calling the methods in
+            the JUnit <code>TestCase</code> class.
+        </p>
+
+    <h2>Testing: the Big Ideas</h2>
+        <p> <b><span class='cap2'>T</span>esting and debugging are really two
+            sides of the same coin</b>; both are designed to <i>ensure that
+            your program runs
+            correctly</i>. Testing is designed to <b>expose errors</b>, while
+            debugging is used to <b>locate and fix the errors</b> that are
+            discovered through testing. Of course once you've fixed an
+            error, you need to make sure you test it to show that it does
+            what you expect.
+        </p>
+        <p> <img src="images/djikstra.png" class="right" alt="Esgar Djikstra.">
+            One person who has been very influential in the area of
+            testing is Edsger Dijstra, the Dutch professor famous for his
+            ACM "Goto considered harmful" paper that's often credited with
+            sparking the structured programming revolution in the sixties
+            and seventies.
+        </p>
+        <p> Dijkstra is responsible for
+            two really big ideas when it comes to testing:
+        </p>
+        <ul>
+            <li>testing <b>does not</b> prove that your program is correct.</li>
+            <li><b>exhaustive testing</b> is impossible.</li>
+        </ul>
+    <h3>Testing and Correctness</h3>
+        <p> First is the idea that <b>testing can never prove that your
+            program is correct</b>. Thorough testing can show the
+            <b>presence</b> of bugs, but it can never prove that all the bugs
+            in your code have been found.
+        </p>
+        <p> Dijkstra was a proponent
+            of <i>software verification</i> and the discipline known as <i>formal
+            methods</i>; he wanted to make a very clear distinction
+            between <b>verified code</b>&#8212;that is, code that is
+            mathematically proven to be correct&#8212;and code that was
+            merely well tested.
+        </p>
+        <p> In fact, though,
+            the promise of formal verification has not proved to be as
+            useful as Dijkstra first hoped, both because of the
+            difficulty and the cost.
+        </p>
+    <h3>Exhaustive Testing</h3>
+        <p> Of course, if you could test <b>every possible input value</b>, then
+            maybe you <b>could</b> prove that your code has no bugs. Dijkstra
+            anticipated this objection as well, and proved that such
+            exhaustive testing was physically impossible.
+        </p>
+        <p> Here's a short quote from his original 1969 paper,
+            <a href='Dijkstra-NotesOnStruturesProgramming.pdf'
+            target='_blank'><b>Notes on Structure Programming</b></a>,
+            which dealt with the microcode
+            contained in a CPU:
+        </p>
+        <div class="info">
+        <p> Let us restrict, for a moment, our attention to the hardware
+            and let us wonder to what extent one can convince oneself of
+            its being properly constructed. Some years ago a machine
+            was installed on the premises of my University; in its
+            documentation it was stated that it contained, among many
+            other things, circuitry for the fixed-point multiplication of two
+            27-bit integers. A legitimate question seems to be: "Is this
+            multiplier correct, is it performing according to the
+            specifications?".<br><br>
+            The naive answer to this is: "Well, the number of different
+            multiplications this multiplier is claimed to perform correctly is
+            finite, viz. 2<sup>54</sup>, so let us try them all." But, reasonable as this
+            answer may seem, it is not, for although a single
+            multiplication took only some tens of microseconds, the total
+            time needed for this finite set of multiplications would add up
+            to more than 10,000 years! We must conclude that
+            exhaustive testing, even of a single component such as a
+            multiplier, is entirely out of the question.
+        </p>
+        </div>
+        <p> Today, you might write a function that takes two 32-bit ints.
+            Using Djikstra's calculations, if you could test a million
+            calculations a second, then testing all possible combinations
+            of those two 32-bit ints would take you 585,000 years.
+        </p>
+    <h2>What Are Unit Tests?</h2>
+        <p><b><span class='cap2'>T</span>esting involves not only carefully
+            deciding what values to feed into your program</b>,
+            but also, for every input value,
+            knowing <b>exactly what the expected output should be</b>. Simply
+            <i>calling</i> a method is not the same as <i>testing</i> the method.
+        </p>
+        <p class="pullquote"> To test a method, call it and <b>then</b>
+            compare it's <b>expected</b> output with its <b>actual</b> output.
+        </p>
+        <p> Of course, for that to work, you have to <b>know the expected output</b> ahead of
+            time. Not only that, but you have to be able to examine the results
+            and easily see when the expected and actual outputs differ. For that,
+            you'll use a <b>test harness</b>.
+        </p>
+    <h3>The Test Harness</h3>
+        <p> A test harness is a program that is designed to feed
+            arguments to your class or methods and then, to evaluate the
+            correctness of the results. This simplest kind of test harness
+            is a "hand-rolled" test program, similar to the
+            <b>PongBallTest</b> program shown here.<br>
+            <img src='images/testing.gif' class='inlineCenter' alt='Testing the PongBall class.'>
+            A hand-rolled test program like this 1) creates an instance of the class
+            you are testing, and then 2) calls each of the methods in the class.
+            Each time a method is called, 3) the test program
+            prints out the expected and actual values of
+            the object's instance variables.
+        </p>
+        <p> Hand-rolled tests are fine, but the real problem comes with
+            evaluating the results. With the
+            <b>PongBallTest</b> program, for instance, you might not
+            notice if the <i>actual</i> values for <code>x</code> and
+            <code>y</code> were <b>different</b> from the <b>expected</b>
+            values because there was <b>so much output</b>.
+        </p>
+        <p> Carefully examining each line of output in a test program
+            is very, very time consuming. That's where <b>automated unit tests</b> are
+            much more efficient. Automated unit testing programs are an entire category of
+            software. The most popular is the JUnit family of programs.
+        </p>
+        <div class='alert'>
+            <p>The most recent version of JUnit is version 4. DrJava includes
+            JUnit 4 built in, but creates test programs that run with either
+            JUnit 4 or with the older JUnit version 3. The DrJava wizard
+            creates JUnit 3 style test programs, so that's what I'll
+            show you here.
+            </p>
+        </div>
+    <h2>Testing the Calculator Class</h2>
+        <p><b><span class='cap2'>W</span>e're going to start our examination of
+            JUnit</b> by writing some
+            tests for a class named <b>Calculator.java</b>, which was
+            originally written by Stephen Edwards at Virginia Tech. You'll
+            find the program in this chapter's code folder.
+            Go ahead and open it in the DrJava editor and add your own
+            author and version tags to the header.
+        </p>
+        <p> Before we get to testing, let's spend a few minutes looking through
+            the source code of the <b>Calculator</b> class.
+        </p>
+        <ul>
+            <li>The class has a single field (<code>value</code>) which acts as
+                the <b>accumulator</b> for the calculator:<br>
+                <img src="images/calc02.png" class="inlineCenter" alt="The accumulator.">
+            </li>
+            <li>The constructor initializes the accumulator to zero (although that's
+                really not necessary of course):<br>
+                <img src="images/calc03.png" class="inlineCenter" alt="The constructor.">
+            </li>
+            <li>There are methods to get, set and clear the
+                accumulator, as well as the normal four functions that you'd
+                expect in a calculator: add, subtract, multiply and divide:<br>
+                <img src="images/calc04.png" class="inlineCenter" alt="Some methods.">
+            </li>
+        </ul>
+        <p> Each of the arithmetic operations puts its result back into the accumulator
+            and uses the accumulator as its left-hand operand.
+        </p>
+    <h3>Creating the Test Case</h3>
+        <p> With JUnit 3, you put your unit tests inside a <b>TestCase</b> class
+            that can include a number of tests. To get you started,
+            DrJava has a rudimentary wizard that you can
+            run by choosing <b>New->JUnit Test Case</b> from the <b>File</b>
+            menu, like this:<br>
+            <img src="images/dj01.gif" class="inlineCenter" alt="Creating a new test case.">
+            All you need to do is supply a name for your test program. As I
+            By convention, you use the name of the class you are testing,
+            (<code>Calculator</code> in our case), along with the word "Test".
+            <img src="images/dj02.gif" class="right" alt="Creating a new test case.">
+            So we'll name our test program <b>CalculatorTest</b>.
+        </p>
+        <p> When you click OK, DrJava will generate a new <code>CalculatorTest</code>
+            class in the Definitions Pane. You should <b>immediately</b> save the
+            file in your current folder (instead of leaving it "untitled").
+        </p>
+        <p> The skeleton that DrJava writes for you is very simple. It consists of
+            a class that extends <code>junit.framework.TestCase</code> and a single,
+            empty, test method. You'll add more test methods for each feature you
+            want to test:
+            <img src="images/dj03.gif" class="inlineCenter" alt="CalculatorTest starter file.">
+        </p>
+
+    <h3>Run the Tests</h3>
+        <p> To run the test, first make sure that <b>CalculatorTest.java</b>
+            is the selected file in the Definitions Pane, and then right-click
+            and choose <b>Test File</b> from the context menu:<br>
+            <img src="images/dj04.gif" class="inlineCenter" alt="Running tests.">
+            Alternatively you can:<br>
+            <img src="images/dj05.gif" class="inlineCenter" alt="Running tests.">
+        </p>
+        <ul>
+            <li>Choose <b>Test Current Document</b> from the <b>Tools</b> menu,
+                (or press Control+Shift+T to do the same thing).
+            </li>
+            <li>Choose <b>Test All Documents</b> from the <b>Tools</b> menu,
+                which runs <b>all</b> open JUnit Test Case classes open in the
+                Files pane. Pressing Control+T, or clicking the <b>Test</b>
+                toolbar button does the same thing. (<b class='ry'>Actually</b>,
+                this semester I've replaced the <b>Test</b> toolbar button with the
+                <b>Check</b> button, so you can't use that method to run your tests.)
+            </li>
+        </ul>
+        <p> When you run a test program, the output appears in the JUnit tab
+            at the bottom of the screen. Since the test contained in the
+            DrJava starter program is empty, it automatically passes, and
+            this is what you see:<br>
+            <img src="images/dj06.gif" class="inlineCenter" alt="Running tests.">
+        </p>
+        <ol>
+            <li class="d">  As each JUnit Test Case program is run, you'll
+                see a message printed about that class, (at #1). Since we
+                have only one TestCase program, it prints out the name:
+                <code>CalculatorTest</code>.
+            </li>
+            <li class='d'>Each <b>passing</b> test has its name displayed
+                (at #2). The generated test method is called <code>testX</code>
+                and since it was empty, it automatically "passed". Normally
+                we'll use more descriptive test names.
+            </li>
+            <li> Finally, to the right, you'll see what I call a
+                "scoreboard" that contains a bar that will contain green and red
+                segments: red for failures and green for successes. In our
+                case the only test passes, so it's solid green.
+            </li>
+        </ol>
+        <p> By convention, test method names begin with
+            the prefix "test"; this is required in JUnit 3, and we'll follow
+            this convention.
+        </p>
+    <h2>Writing Test Methods</h2>
+        <p> <b><span class='cap2'>T</span>o test your class</b>,
+            you'll write at least one separate test
+            method for each operation, following the same syntax as
+            the <code>testX()</code> method supplied by DrJava. (That is,
+            your methods won't take parameters, they'll be <code>public</code>
+            with a <code>void</code> return type, and they'll start with the
+            word "<code>test</code>").
+        </p>
+        <p> Inside each test method you will normally:</p>
+        <ul>
+            <li><b>create an object</b> of the class you are testing, and make
+                sure that it is placed in a <b>known state</b>. In our case
+                we'll create a <code>Calculator</code> object,
+                with the accumulator set to 0.
+            </li>
+            <li>Then, you'll <b>call the different mutator methods</b> that
+                you are testing. Each test method should generally make only
+                one change to the object.
+            </li>
+            <li>Finally, after calling the mutator, you'll call an accessor method and
+                compare the <b>expected value</b> with the <b>actual value</b>
+                returned by the accessor.
+            </li>
+        </ul>
+        <p> Let's try a simple example. Let's check to see if the <code>Calculator</code>
+            class constructor really <b>does</b> set the accumulator to 0, like it
+            is supposed to. To do that, convert the dummy <code>testX()</code> starter
+            code into a method named <code>testConstructor()</code> using the
+            code shown here:<br>
+            <img src="images/dj08.gif" class="inlineCenter" alt="The testConstructor() method.">
+            Once that's done, save the test program and run your tests again.
+            Note how this method:
+        </p>
+        <ul>
+            <li><b>Creates</b> a <code>Calculator</code> object</li>
+            <li><b>Manually</b> calculates the expected value of the accumulator
+                when you construct a <code>Calculator</code>.</li>
+            <li>Compares the <b>expected value</b> (0) with the <b>actual value</b>
+                returned by calling <code>getValue()</code>
+            </li>
+        </ul>
+        <p> This last step is done by using a special <b>JUnit assertion</b>. Let's go
+            ahead and look at that now.
+        </p>
+    <h3>JUnit Assertions</h3>
+        <p>
+            JUnit assertions <b>do not</b> use the <code>assert</code> keyword, which you
+            learned about earlier in this chapter. When you use the <code>assert</code>
+            keyword, you place it inside your normal source code, and, if the assertion
+            fails, the program is terminated.
+        </p>
+        <p> Instead, JUnit assertions are special methods
+            that JUnit uses to compare actual and expected values inside a
+            JUnit test program (not inside your regular source code). When you
+            run the JUnit Test Case class, your program does not stop when a test is
+            failed. Instead, <b>all of the tests</b> are run, and the results are
+            displayed in the special JUnit window.<br>
+            <img src="images/dj09.gif" class="inlineCenter" alt="The testConstructor() method.">
+            Of course, since your test still passes, the output doesn't look much
+            different than before, except the name of the method is a little
+            more informative.
+        </p>
+        <p> The JUnit assertion method that you'll use most
+            often is named <code>assertEquals()</code>. When you use
+            <code>assertEquals()</code>, the first parameter is the value you expect
+            and the second parameter is the actual value produced by calling one of
+            your object's accessors.
+        </p>
+    <h3>Failed Assertions</h3>
+        <p> Now that you know what both a passed test looks like, let's
+            see a <b>failed</b> test. Go ahead and add another test method
+            named <code>testSetValue()</code> which will be used to make
+            sure that the <code>setValue()</code> method works correctly:<br>
+            <img src="images/dj10.gif" class="inlineCenter" alt="The testSetValue() method.">
+            As you can see, the general format of the test was copied directly
+            from <code>testConstructor()</code>. Besides the change in name
+            is that <code>testSetValue()</code> also calls a <b>mutator</b> method
+            and then checks to see that the <code>Calculator</code> object was
+            modified appropriately.
+        </p>
+       <p> Now, change the <b>expected value</b> to 4 (even though it really
+            <b>should be 5</b>). Since the actual value will be
+            5, not 4, the test will fail.
+            Re-run the tests, and this time, examine the <b>Failure Trace</b>
+            area immediately below the list of tests that were run:<br>
+            <img src="images/dj11.gif" class="inlineCenter" alt="The testSetValue() method failing.">
+            Notice how the message points out the actual and expected values.
+        </p>
+    <h3>Other Assertion Methods</h3>
+        <p> If you want to supply a hint or other information about what
+            the test is doing (to help in debugging, you can use a
+            three-parameter version of <code>assertEquals()</code> like
+            this:<br>
+            <img src="images/calc21.png" class="inlineCenter" alt="Supplying an additional error message.">
+            The first parameter is an error message that you want to have displayed
+            whenever the selected test fails. Often, you can use other variables
+            when composing the message, to help you track down problems that can
+            occur. Here's what the failure looks like after adding a message
+            parameter:<br>
+            <img src="images/dj12.gif" class="inlineCenter" alt="The testSetValue() method failing.">
+        </p>
+    <h3>Floating-Point Assertions</h3>
+        <p> For <code>double</code> or floating-point tests, you'll
+            often have situations that are <b>logically and mathematically</b>
+            equal, but where your tests still fail.
+            Here, for instance, is an assertion comparing two values that
+            are mathematically equal:<br>
+            <img src="images/calc23.png" class="inlineCenter" alt="A rounding error.">
+            When you use the "regular" version of <code>assertEquals()</code>,
+            you'll see that the result fails with the following error message:<br>
+            <img src="images/calc24.png" class="inlineCenter" alt="A rounding error message.">
+            In these cases, you
+            can pass another parameter to <code>assertEquals()</code>,
+            following the actual value. (If you supply an error message,
+            then it would be a fourth parameter; if you don't add your
+            own error message, then it will be the third parameter.)
+        </p>
+        <p> This extra parameter is a <b>tolerance value</b> that is
+            used to determine when two values are <b>effectively equal</b>.
+            You can use <code>1E-14</code> as a general-purpose tolerance value,
+            like this:<br>
+            <img src="images/calc25.png" class="inlineCenter" alt="Adding a tolerance value.">
+            With this change, the test shown here no longer fails.
+        </p>
+    <h3>Boolean Tests</h3>
+        <p> To test <code>boolean</code> methods or Boolean expressions,
+            use the <code>assertTrue()</code> and <code>assertFalse()</code>
+            methods. You can also use these in place of <code>assertEquals()</code>
+            by creating an expression using relational operators, but if you do,
+            then the error messages are not very informative. ("Test failed. Too bad."):<br>
+            <img src="images/calc26.png" class="inlineCenter" alt="A boolean assertion.">
+            As with the other assertions, the use of a user-supplied error message,
+            like I've used here, is optional. Although my message here is kind of
+            silly, if you use the JUnit Boolean assertions, you'll want to make
+            sure that your error messages let you know exactly what failed, since
+            you won't be shown the actual and expected values, <b>or</b> the
+            Boolean expression that was tested and failed.
+        </p>
+    <h2>Writing a Test Fixture</h2>
+        <p> <b><span class='cap2'>I</span>n the test method that we just wrote</b>,
+            we first created a
+            <code>Calculator</code> object set to its default state. In fact, probably
+            <b>all</b> of your test methods will require this <b>exact line of code</b>.
+            To simplify your code, you might be tempted to create the
+            <code>Calculator</code> object as an instance variable and
+            then initialize it in the test class constructor.
+        </p>
+        <p> Unfortunately, that won't work, because you want all of your
+            test methods to be <b>completely independent</b>. You don't
+            know (nor should you know) what order the tests you write will
+            be run in, and no single test should be able to affect the outcome
+            of any other test.
+        </p>
+        <p> If you create the <code>Calculator</code> as an
+            instance variable, it will be initialized when the class loads,
+            but it <b>won't be reinitialized</b> for subsequent test methods;
+            you won't be running with a clean slate. You also can't assume
+            that test methods will run in any particular order, so you can't create
+            sequences of tests that take prior method modifications into
+            account. Basically every test has to be self-contained.
+        </p>
+        <p> That doesn't mean that you have to write the same duplicate
+            object creation code in each test method though. The solution is to:<br>
+             <img src="images/dj14.gif" class="inlineCenter" alt="The test fixture">
+        </p>
+        <ul>
+            <li>create an instance variable that contains the object under test</li>
+            <li>and then, create a <code>setUp()</code> method that initializes the
+                instance variable putting it into the "clean slate" state you
+                need before each test runs.
+            </li>
+        </ul>
+        <p> The <code>setUp()</code> method, which is known as a <b>test fixture</b>,
+            will be run before each test.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> One you have the test fixture done, why don't you finish up
+            <code>CalculatorTest</code> by writing test methods for all of the other
+            methods in <code>Calculator</code>. You can just copy the existing,
+            working method (that's what I do), and then just change the
+            name and modify the code.
+        </p>
+        </div>
+        <p> To write good test cases, though, you'll need to
+            also think about <b>what</b> you should test. Let's look at
+            that briefly before we finish up this chapter.
+        </p>
+    <h2>Selecting Test Cases</h2>
+        <p> <b><span class='cap2'>N</span>ow that you know how to write a test
+            case</b>, let's talk about
+            <b>what kind</b> of test cases you should write. You already know
+            that you should have at least one test case for each method
+            in the class you are testing, but actually, you'll need quite a
+            few more, each one handling a particular kind of input.
+        </p>
+        <ul>
+            <li>First, you should have some values that represent
+                <b>legitimate values</b> that your program is expected to handle
+                normally. You don't need a lot of these. In a square root
+                program, you'd test some values greater than 0. In a
+                grade calculating program you'd test values for each of
+                the grades: A &#8211; F.
+            </li>
+            <li>Next, you need to test<b> boundary cases</b>. Boundary cases
+                include those values that are legitimate, but <b>likely to
+                produce incorrect output if there is an error in your code</b>.
+                If you are calculating letter grades from percentages, for
+                example, testing 85% for the "B" grade would be a
+                regular legitimate value. You'd also need to test the
+                boundary conditions 80% and 79% in case you had used
+                the relational operators incorrectly. These would be the
+                boundary conditions.
+            </li>
+            <li>Finally, you need to handle some <b>negative cases</b>: input
+                that you expect to fail. You want to make sure that if you
+                supply the wrong kinds of values, that the method doesn't
+                somehow magically produce output.
+            </li>
+        </ul>
+    <h3>Regression Testing</h3>
+        <p> <img src='images/cycling.png' class='right' alt='A cycling jersey.'>
+            Whenever you fix a bug in your code, you want to make sure
+            that the bug doesn't reappear later. Of course, this really
+            applies to code in the "real" world, and not the code that you'll
+            turn in for homework assignments. You don't want a bug that
+            was fixed in Version 1 of your program to magically reappear
+            when you release Version 5, a problem known as <b>cycling</b>.
+        </p>
+        <p> The best way to prevent this is to add a test to your
+            <code>TestCase</code> class that specifically tests for that bug. As time goes
+            on, the <code>TestCase</code> class will get larger and larger as more
+            bugs are fixed and tests are added.
+        </p>
+        <p> Then, every time you fix a new bug, you'll run all of the tests
+            you've collected, so your new fix can't reintroduce an old bug.
+            This practice of testing your code against a collection of tests
+            from past bugs is known as <b>regression testing</b>, and it's
+            another reason to keep your test data, and to use automated
+            testing tools like JUnit.
+        </p>
+    <h3>Black-box and White-box</h3>
+        <p> One last type of testing you should know about is the
+            difference between black-box and white-box testing.
+            So far, all of the testing that we've done tests the program's
+            actual behavior against the expected output. That means
+            we're <i>testing against what the program should be doing, or
+            the specification</i>. This is called <b>black-box testing</b>.
+        </p>
+        <p> The only problem with black-box testing is that it doesn't
+            ensure that all the <i>internal</i> portions of the code are actually
+            tested. It's possible that your inputs don't test every single
+            branch in an <code>if</code> or <code>switch</code> statement.
+        </p>
+        <p> <b>White-box testing</b> "looks inside" your code and tries to make
+            sure that <b>every portion of your code is actually tested</b>. The
+            most common kind of white box testing is called <b>coverage
+            testing</b>. Coverage testing uses specialized tools that are
+            actually very expensive. One common tool is named
+            <b>Clover</b>.
+        </p>
+    <h3>More Information on Testing</h3>
+        <p> For more information on using JUnit to help you as you develop
+            your programs, you may want to read Arizona State Professor
+            Rick Mercer's CS-1 textbook,
+            <a href='http://www.cs.arizona.edu/~mercer/Books/127A.pdf' target='_blank'>
+            <b>Asserting Java with JUnit</b></a>, which you can get for free
+            from his Web site. He also has a CS2 (Data Structures) textbook
+            available as well, titled
+            <a href='http://www.cs.arizona.edu/~mercer/Books/127B.pdf' target='_blank'>
+            <b>Data Structures with Java and JUnit</b></a>.
+        </p>
+        <p> For more information on software testing in general, here's a link to
+            Chapter 16 in Jean-Paul Tremblay's 2002 textbook, <b>
+            <a href='http://www.cs.usask.ca/classes/280/t2/Notes/Text/TremblayChap16.pdf'
+            target='_blank'>Data Structures and Software Development in an
+            Object-Oriented Domain</a></b>. Although a lot of the material in
+            this text is advanced for this course, I think some of you will
+            find it useful to read through the material.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Unit Testing Summary
+        </p>
+        <ul>
+            <li>Testing is designed to <b>expose errors</b> in your code.
+                Testing does not prove your program is correct and cannot show
+                the absence of bugs. <b>Exhaustive testing</b> is impossible,
+                even for trivial inputs.
+            </li>
+            <li><b>Unit tests</b> are designed to test the <b>expected state</b> of
+                an object, with the <b>actual state</b> after calling the
+                object's methods.
+            </li>
+            <li>A <b>test harness</b> creates an object in a known state and then
+                calls the method under test and compares the actual and
+                expected values. In a manual test harness, the values are
+                just printed.
+            </li>
+            <li>A <b>unit testing framework</b> provides facilities for creating
+                using tests and <b>automating the comparison</b> of the actual
+                and expected values when the tests are run.
+            </li>
+            <li>The <b>most popular unit-testing framework</b> in the Java world is
+                named JUnit. While DrJava will run JUnit-4 tests, its "wizards"
+                support writing JUnit-3 style tests.
+            </li>
+            <li>To write a <b>JUnit-3 style test harness</b> for a class, create a
+                subclass of JUnit's <code>TestCase</code> class and then
+                add individual test methods for each feature you want to
+                test.
+            </li>
+            <li>In JUnit-3, <b>a test method</b> is a <code>void</code> method
+                that starts with <code>test</code> and doesn't take any parameters.
+                Inside the method, you create an instance of the class under test,
+                and then call the mutator method you want to test.
+            </li>
+            <li>Inside your test method, to <b>compare the actual and expected
+                state</b> of your object, use the different JUnit <code>Assert</code>
+                methods. The most common is <code>assertEquals()</code>.
+            </li>
+            <li>To <b>add a message when a test fails</b>, you can use the
+                overloaded versions of the <code>Assert</code> methods that
+                take a <code>String</code> message as their first parameter.
+            </li>
+            <li>To <b>test methods that return a floating-point</b> value, use
+                the overloaded <code>assertEquals()</code> methods that take
+                an additional <code>double tolerance</code> value.
+            </li>
+            <li>To <b>test a Boolean condition</b>, use the <code>assertTrue()</code>
+                and <code>assertFalse()</code> methods. To test for <b>null or
+                not-null</b> objects, use the <code>assertNull()</code> and
+                <code>assertNotNull()</code> methods.
+            </li>
+            <li>Once you have written a <code>TestCase</code> class, you can
+                <b>run it in DrJava</b> by right-clicking the test class and choosing
+                <b>Test File</b>. You can run all the tests open in the Files Pane,
+                by choosing <b>Test All Documents</b> from the <b>Tools</b> menu.
+            </li>
+            <li>The object setup code for each test method <b>is often the same</b>.
+                You can put this code into a method named <code>setUp()</code> and
+                it will <b>automatically be run</b> as if it were inserted into the
+                first line of each test method. This is called a <b>test fixture</b>.
+            </li>
+            <li>When selecting test cases you should make sure you have a good
+                selection of <b>legitimate input values</b>. You should also try to
+                test every <b>boundary condition</b>, as well as making sure that
+                invalid input (that is, <b>negative cases</b>) are handled correctly
+                in your code. That means your test cases <b>may</b> need to use
+                exception handling.
+            </li>
+            <li>When you fix a bug in your code, you should write a test that
+                specifically fails if the bug appears. As you make changes to
+                your code, you should continue to run these older tests to make
+                sure that the bug is not re-introduced. This is called
+                <b>regression testing</b>.
+            </li>
+            <li>Unit tests that compare the expected state to the actual
+                state are known as <b>black box</b> tests. As you write more
+                complex programs, you will also want to "look inside" your code
+                and make sure that every portion of your code is tested. This
+                is done using <b>white box testing</b> techniques known as
+                <b>coverage testing</b>.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

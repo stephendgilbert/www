@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>15.1&mdash;Abstract Classes</title>
+    <style type='text/css'>
+        p.code {
+            font-size: 11pt;
+        }
+        pre.code {
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner07">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 15.1</p>
+        <p id='lessonTitle'>Abstract Classes</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">T</span>he classes you've used so
+            far&#8212;ordinary classes, if you will&#8212;are called
+            <i>concrete</i> classes.</b> Java also allows you to
+            create a <i>second</i> kind of class, called an
+            <b>abstract</b> class.<br>
+             <img src="images/e16.gif" class="inlineCenter" alt="The no-abstract-object logo.">
+        </p>
+        <p> An abstract class is usually an <b><u>incomplete</u></b> class,
+            a class that contains certain methods that are <b><u>specified</u></b>,
+            but not <b><u>implemented</u></b> in the definition of the class.
+            Because the abstract class contains these incomplete methods, it
+            <b>cannot</b> be used to create objects&#8212;it can only be used as a
+            superclass when defining other classes. That is, it <b>only</b>
+            makes sense in the context of <i>inheritance</i>.
+        </p>
+    <h2>Two Types of Inheritance</h2>
+        <p> <b><span class='cap2'>I</span>n the last chapter</b> you learned that inheritance is
+            a form of <b>specialization</b>, with the new subclass <b>inheriting</b> both
+            the methods and the instance variables from its superclass, while
+            optionally adding more of both. Thus we can say that the subclass
+            <b>is-a</b> specialized form of the more generic superclass.
+        </p>
+        <p> <img src='images/checklist.png' class='right' alt='A specification checklist.'>
+            There's actually a second form of inheritance, though, called
+            <b>specification</b> inheritance. In contrast to the extension
+            relationship, which we've been using up to this point,
+            a superclass may simply <b>specify a set of responsibilities</b>
+            that a subclass <b>must fulfill</b>, but not provide any actual
+            implementation.
+            In this case, the only thing inherited is
+            <b>the interface</b> (or method signatures) from the superclass.
+        </p>
+        <p> The most common way that this specification relationship is
+            used is <b>in combination</b> with regular extension.
+            In this form,
+        </p>
+        <ul>
+            <li> the subclass inherits the interface of the
+                superclass, as it does in specification,
+            </li>
+            <li> but it also inherits a <b>default implementation</b> of,
+                at least, some of its methods.
+            </li>
+        </ul>
+        <p> In this form of inheritance, the
+            subclass may override an inherited method to provide specialized
+            behavior, <b>or</b> it may be required to provide an implementation
+            <b>for a particular method</b>, which could not be provided in the
+            superclass. This form of inheritance is often called
+            <b>polymorphic inheritance</b>, because its principal value lies
+            in its ability to provide specialized behavior in response to
+            the same messages.
+        </p>
+    <h3>Polymorphic Inheritance</h3>
+        <p> <img src="images/e17.gif" class="right" alt="The Shape class hierarchy.">
+            Suppose, for instance, that you want to create a drawing
+            program, like Visio, that can draw all kinds of shapes.
+            When writing your program, you might have an abstract <code>Shape</code>
+            superclass that doesn't have the faintest notion of how to
+            implement its abstract <code>draw()</code> method, yet it knows that
+            each of its concrete children will need to do so.
+        </p>
+        <p> Only the <b>concrete</b>
+            classes derived from <code>Shape</code>&#8212;<code>Circle</code>,
+            <code>Square</code>, and <code>Star</code>&#8212;for instance,
+            possess the necessary knowledge to actually <code>draw()</code>
+            themselves.
+        </p>
+        <p> So, <b>abstract classes</b> provide a way of <b>guaranteeing</b>
+            that an object of a given type will understand a given
+            message. In that sense, they specify a set of responsibilities
+            that a subclass must fulfill. This is important,
+            because a Java program that tries to send a message to an object
+            that doesn't understand the message will malfunction.
+        </p>
+        <p> Interfaces perform a similar role, and you'll learn more about
+            them in the next chapter. Interfaces, though, are a type of
+            <b>pure specification</b>. Abstract classes can <b>also</b>
+            contain fields and regular methods, though, so unlike an interface
+            they can provide a default implementation of a capability that
+            their subclasses are intended to perform.
+        </p>
+    <h2>Creating Abstract Classes</h2>
+        <p> Creating an abstract class is as simple as including
+            the keyword <code>abstract</code> in the header of an otherwise ordinary
+            class. Here's a simple abstract class that represents shapes
+            that can be drawn on a display:<br>
+            <img src='images/shape01.png' class='inlineCenter' alt='The Shape interface.'>
+            The <code>Shape</code> class contains fields that can be used to
+            store its location on the display (x,y).
+        </p>
+    <h3>Hands On: Playing Blackjack</h3>
+        <p> As we work through this chapter I'll
+            illustrate the different concepts we encounter by completing a simple
+            game of Blackjack or 21, which you'll find included in this
+            chapter's code folder as <b>BeginnersBlackjack</b>.
+        </p>
+        <p> Before we can play Blackjack, though, we need a class to hold
+            a hand of playing cards. I've already created the basic <code>Hand</code>
+            class; you can find that in the code folder as well.
+        </p>
+        <p> For <b>Exercise 1</b>, I want you to open the <code>Hand</code>
+            class and make it an <b>abstract</b> class. That's because it represents
+            a <b>generic</b> hand that you could use in <b>any</b> card game. To
+            complete this part, you'll only have to add <b>one word</b> to the
+            file, like this:<br>
+            <img src='images/hand01.gif' class='inlineCenter' alt='The abstract class.'>
+        </p>
+    <h4>Abstract Variables</h4>
+        <p> Even though we can't create <code>Hand</code> <b>objects</b>, (because
+            the class is now <code>abstract</code>), we <b>can</b> create <code>Hand</code>
+            <b>variables</b>. Let's see how that works:
+        </p>
+        <ol>
+            <li class='d'>Open the <b>BeginnersBlackjack.java</b> and locate the
+                task for <b>Exercise 2</b>.
+            </li>
+            <li class='d'>Create two <code>Hand</code> instance variables. Name one
+                <code>player</code> and name the other <code>dealer</code>. Note
+                that DrJava <b>does not</b> give you a syntax error
+                when you compile your code. It is perfectly legal
+                to create a <b>variable</b> using an <code>abstract</code>
+                class:<br>
+                <img src='images/hand01e.gif' class='inlineCenter' alt='Creating Hand variables.'>
+            </li>
+        </ol>
+        <p> While <code>Hand</code> variables are perfectly acceptable,
+            <code>Hand</code> <b>objects</b> are not. If you try to instantiate the
+            <code>Hand</code> class, you'll get an error like this:<br>
+            <img src='images/hand01d.gif' class='inlineCenter' alt='Trying to create Hand objects.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Try to instantiate a <code>Hand</code> object as I've
+            done here. Compile <b>BeginnersBlackjack.java</b>
+            after making this change. When you
+            are done, fix the error by removing the
+            <code>new Hand()</code> portion of the code.
+        </p>
+        </div>
+
+    <h3>Abstract Methods</h3>
+        <p> In addition to regular fields and methods, an abstract class
+            may also contains one or more <b>abstract methods</b>.
+            An abstract method includes the keyword <code>abstract</code>
+            in the method header, and <b>doesn't include a method body</b>.
+            In place of the body, you simply put a semicolon (;).
+        </p>
+        <p> Here's the <code>Shape</code> class
+            along with its abstract method:<br>
+            <img src='images/shape02.png' class='inlineCenter' alt='Shape with an abstract method.'>
+        </p>
+    <h4>Exercise 3: An Abstract Method</h4>
+        <p> Now that you know how to define an <code>abstract</code> method,
+            add the <code>evaluateHand()</code> method to the
+            <code>Hand</code> class. The method takes no parameters and simply
+            returns the number of points that the particular hand is worth.
+        </p>
+        <p> Since each individual card game scores its hands differently,
+            you'll make the method <code>abstract</code>. Here's what your finished
+            method should look like:<br>
+            <img src='images/hand03.gif' class='inlineCenter' alt='The evaluateHand() method.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> After adding the <code>abstract evaluateHand()</code>
+            method, compile the <code>Hand</code> class (so
+            you can see that there are no errors).
+        </p>
+        </div>
+    <h3>Adding More Methods</h3>
+        <p> <img src="images/shape08.gif" class="right" alt="The Shape class UML diagram.">
+            Abstract classes are <b>not restricted</b> to abstract
+            methods like the <code>draw()</code> method in the
+            <code>Shape</code> class; you can have as many regular methods as you'd
+            like, freely mixed in with your abstract methods.
+        </p>
+        <p> The <code>Shape</code> class, for instance, could easily have
+            a <code>setLocation()</code> method, like that shown in
+            this UML diagram.
+        </p>
+        <p> Your concrete methods are free to <b>call</b> <code>call</code> abstract
+            methods as part of their definition. Let's see how that works.
+        </p>
+    <h4>Exercise 4: Calling an Abstract Method</h4>
+        <p> Add a <b>non-abstract</b> method to the <code>Hand</code> class named
+            <code>compareTo()</code>. The method takes one parameter: a <code>Hand</code>
+            that you'll compare the current hand to.
+        </p>
+        <p> The method returns:</p>
+        <ul>
+            <li><b>0</b> if both hands have the same point value.</li>
+            <li><b>&lt; 0</b> if the current hand has a point value lower than the
+                other hand.</li>
+            <li><b>&gt; 0</b> if the current hand has a point value greater than
+                the other hand.
+            </li>
+        </ul>
+        <p> So, how do we find the point values for the current hand and the
+            other hand? We <b>call the abstract <code>evaluateHand()</code>
+            method</b>. Here's what your code should look like when you've finished
+            this step:<br>
+            <img src='images/hand04.gif' class='inlineCenter' alt='The compareTo() method.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> After adding the non-abstract <code>compareTo()</code>
+            method to the <code>Hand</code> class, compile it so
+            you can see that there are no errors.
+        </p>
+        </div>
+    <h2>Extending Abstract Classes</h2>
+        <p> <b><span class='cap2'>W</span>hen you extend an abstract class</b>, your new subclass should override
+            <b>every</b> abstract method in its superclass, giving each a
+            concrete implementation. The resulting subclass is a
+            <b>concrete class</b>, and it can be used to create new objects.
+        </p>
+        <p> Let's look at an example. To create the
+            <code>Triangle</code> (or <code>Circle</code> or
+            <code>Square</code>) classes, using
+            the <code>abstract Shape</code> class as the superclass,
+            all you need to do is:
+        </p>
+        <ol>
+            <li class='d'>specify the <code>Shape</code> class as the superclass
+                in the class header.</li>
+            <li class='d'>make sure that you provide an implementation
+                for <b>every</b> abstract method in the <code>Shape</code>
+                class.</li>
+        </ol>
+        <p> For the <code>Triangle</code> class, that means we <b>must</b>
+            define a <code>draw()</code> method that looks like this.
+            <img src="images/e20.gif" class="inlineCenter" alt="The Triangle generated code.">
+            All you need to do is to do is add the code where
+            indicated by the comments.
+            Of course, in reality, you'll probably want to do a lot more.
+            The <code>Circle</code> class, for instance, might have a
+            <code>radius</code> field, the <code>Square</code> class
+            could have fields for <code>width</code> and <code>height</code>,
+            and the <code>Triangle</code> class could have fields and methods
+            for <code>base</code> and <code>height</code>.
+        </p>
+<!--
+        <p> <a href="http://www.ecst.csuchico.edu/%7Emayur/Test1.html" target="_blank">
+            <b>Here's an applet</b></a> created by a student at Chico State which puts
+            these ideas together into a simple drawing program. Take a look
+            at the <code>abstract</code> superclass, and each of the
+            <b>concrete</b> subclasses.
+        </p>
+-->
+    <h3>Hands-On: The BlackjackHand</h3>
+        <p> Let's see how this works with our project. Follow the steps in the
+            previous section to create the <code>BlackjackHand</code> by extending
+            the <code>Hand</code> class (just like I did for <code>Triangle</code>):
+            <img src='images/blackjackhand02.gif' class='inlineCenter' alt='BlackjackHand class.'>
+            <img src='images/contract01.png' class='right' alt='Shaking hands.'>
+            Since <code>evaluateHand()</code> is <code>abstract</code> in the
+            <code>Hand</code> class, we <b class='ry'>must</b> supply an
+            implemented version inside our <code>BlackjackHand</code> class:
+            that's our part of the <b>specification contract</b>.
+        </p>
+        <div class='alert'>
+        <p> The easiest way to find out what methods you <b>must</b>
+            supply, is to not supply any, and then let the Java
+            compiler tell you which ones are missing. Here's what
+            that looks like with <code>BlackjackHand</code>:<br>
+            <img src='images/blackjackhand01.gif' class='inlineCenter' alt='BlackjackHand class.'>
+        </p>
+        </div>
+    <h4>Evaluating Your Hand</h4>
+        <p> Implementing the method for our <b>simplified</b> form of 21 is pretty
+            easy. We'll just count each of the cards, examining the card's
+            <code>Rank</code>. If it's an Ace, we'll always count it as 11 and
+            not worry about switching between values. Face
+            cards will all be worth 10, and the others will be worth whatever
+            value their rank indicates.
+        </p>
+        <p> Probably the easiest way to do this is to just use a <code>switch</code>
+            statement, using <code>Rank</code> as the <code>switch</code> selector,
+            like this:<br>
+            <img src='images/blackjackhand.gif' class='inlineCenter' alt='The Blackjack evaluateHand() method.'>
+        </p>
+    <h4>Exercise 5: Testing BlackjackHand</h4>
+        <p> Now, let's add some <b>testing code</b> to the bottom of the
+            <b>BeginnersBlackjack</b> <code>init()</code> method. (Look for
+            the <b>Exercise 5</b> marker.)
+        </p>
+        <p> Here's what you should do in this section:</p>
+        <ol>
+            <li class='d'>Call the <code>newDeck()</code> method.</li>
+            <li class='d'>Initialize <code>player</code> by using the
+                <code>BlackjackHand()</code> constructor. Note that the
+                <b>variable</b> is a <code>Hand</code> but the <b>object</b>
+                it refers to is a <code>BlackjackHand</code>.
+            </li>
+            <li class='d'>Remove the top two cards from the deck and add them to
+                the player's hand by calling <code>dealCard()</code>
+            </li>
+            <li class='d'>Pass the <code>player</code> and the <code>playerPile</code>
+                to the <code>showCards()</code> method that is already written.
+            </li>
+        </ol>
+        <p> Run your program and it should automatically deal you a hand.
+            (We'll hook up the buttons in the next chapter, so don't worry that
+            they don't work.) If you have problems, check your code
+            against this example:<br>
+            <img src='images/testing.gif' class='inlineCenter' alt='The code to test the BlackjackHand.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> After adding the necessary code, compile
+            <b>BeginnersBlackjack</b>, deal a hand, and
+            run your program.
+        </p>
+        </div>
+    <h4>Exercise 6: Showing the Score</h4>
+        <p> Although seeing the cards is nice, it would be better if the
+            program told us what the actual score was. To do that, I want
+            you to add a method named <code>showScore()</code>.
+        </p>
+        <p> The method should:</p>
+        <ol>
+            <li class='d'>takes a <code>Hand</code> object as its parameter. (Notice that
+                because it processed <code>Hand</code> objects, it will work with
+                Go Fish as well as Poker or Canasta.)
+            </li>
+            <li class='d'>Inside the method call the hand's <code>evaluateHand()</code>
+                method and display the result in the <code>statusLbl</code> on the screen.
+            </li>
+        </ol>
+        <p> Here's what your code should look like:<br>
+            <img src='images/showScore01.gif' class='inlineCenter' alt='The code to show the score.'>
+            Once you've finished adding this code, head on back to the
+            <code>init()</code> method, (where you are testing the
+            <code>BlackjackHand</code> class), and <b>call</b> <code>showScore()</code>
+            passing your <code>player</code> variable. You should see something
+            like this:<br>
+            <img src='images/showscore02.gif' class='inlineCenter' alt='Showing the score.'>
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> After completing the <code>showScore()</code> method,
+            (<i>and</i> calling it from the <code>init()</code>
+            method), run your program and show me some
+            cards and their score. Try it several times to
+            make sure your calculation code is always correct.
+        </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Abstract Classes Summary
+        </p>
+        <ul>
+            <li>An <b>abstract class</b> is an incomplete class where certain
+                methods are specified but not implemented. You <b>cannot
+                instaniate</b> an abstract class, but you can create
+                variables and extend the class.
+            </li>
+            <li><b>Specification inheritance</b> is where a subclass inherits
+                a <b>set of mandatory responsibilities</b> in the form of
+                method signatures that subclasses must override, but does not
+                inherit an implementation of those methods.
+            </li>
+            <li><b>Polymorphic inheritance</b> is where inheritance is used
+                to provide concrete types that implement varying behavior.
+                Programmers using the type, create variables of the
+                abstract type and attach concrete objects to those
+                variables.
+            </li>
+            <li>Abstract classes provide a way of <b>guaranteeing</b> that
+                all members of the family will implement a particular
+                method. Abstract classes can <b>force</b> subclasses
+                to override a particular method.
+            </li>
+            <li>To <b>define an abstract class</b>, simply add
+                the <code>abstract</code> modifier to the class header.
+                You can do this even if the class contains no
+                abstract methods.
+            </li>
+            <li>To <b>define an abstract method</b>, add the modifier
+                <code>abstract</code> to the class header, and
+                <b>omit the class body</b>, replacing it with a
+                semicolon instead. If a class contains at least
+                one abstract method, then it <b>must be</b> declared
+                as an <code>abstract</code> class.
+            </li>
+            <li>When you extend an abstract class, you <b>must
+                override every abstract method</b> in the
+                abstract class. If you do not, then your subclass
+                will be an abstract class as well. If you do,
+                then the resulting class is known as a
+                <b>concrete class</b>.
+            </li>
+
+
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

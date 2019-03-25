@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>7.6&mdash;Random Numbers</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/k.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 7.6</p>
+        <p id='lessonTitle'>Random Numbers</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">E</span>arlier in the semester</b>,
+        you learned to use the <code>Math.random()</code>
+            function to generate numbers in the range 0.0 to &lt;1.0. Under the
+            hood, <code>Math.random()</code> uses one of the Java core
+            classes named <code>java.util.Random</code>.
+        </p>
+        <p> Using the <code>Random</code> class is not quite
+            as easy as using the <code>Math.random()</code> method:
+        </p>
+        <ul>
+            <li>First, you have to import the <code>java.util</code>
+                package. You don't have to import anything to use the
+                <code>Math</code> class.
+            </li>
+            <li>Second, you must create a
+                <code>Random</code> object. The methods of the
+                <code>Random</code> class are not <code>static</code> like
+                those of the <code>Math</code> class.
+            </li>
+        </ul>
+        <p> Despite this extra work, however, creating a <code>Random</code>
+            object, and using its methods to generate your random numbers,
+            can often prove beneficial. Let's start by creating a
+            <code>Random</code> object.
+        </p>
+    <h4>Creating Random Objects</h4>
+        <p> When you construct a <code>Random</code> object you have
+            your choice of two <code>Random</code> constructors: one that
+            takes no argument and one that takes a single <code>long</code>
+            as the random number generator <b>seed</b>.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Random r1 = new Random();<br>
+            Random r2 = new Random(10L);
+        </p>
+        <p> If you use the first constructor, the <b>seed</b> (or starting
+            number) used for the random number generator is taken from the
+            current time. If you use the second constructor, the numbers
+            generated will be randomly distributed (in the statistical sense),
+            but the <b>same sequence</b> will always repeat in exactly the same
+            order, every time the program is run.
+        </p>
+
+        <p> This is often useful for testing. You run the
+            program using a predefined seed during the test phase, and
+            then switch to a more truly random seed when you ship your
+            product.
+        </p>
+    <h3>Generating Numbers</h3>
+        <p> To generate a random number, you send messages to
+            your <code>Random</code> object, asking it to manufacture a
+            new number for you. Here are some of the random numbers you
+            can ask for:
+        </p>
+        <ul>
+            <li><b><code>nextDouble()</code></b> returns a <code>double</code>
+                between 0.0 and 1.0. This method has exactly the same
+                characteristics as calling <code>Math.random()</code>.
+            </li>
+            <li><b><code>nextFloat()</code></b> works like
+                <code>nextDouble()</code> but the result is a
+                <code>float</code>.
+            </li>
+            <li><b><code>nextInt()</code></b> and <b><code>nextLong()</code></b>
+                return an <code>int</code> and a <code>long</code>,
+                respectively, that is uniformly distributed over the entire
+                range of <code>int</code> or <code>long</code>. That means,
+                <code>nextInt()</code> could return a number anywhere from
+                around two-billion to around minus two-billion.
+            </li>
+            <li><b><code>nextInt(int max)</code></b> returns an
+                <code>int</code> that is uniformly distributed between <b>0</b>
+                (inclusive), and <b>max</b> (exclusive).
+            </li>
+            <li><b><code>nextGaussian()</code></b> returns a <code>double</code>
+                like <code>nextDouble()</code>, but rather than being
+                uniformly distributed between 0.0 and 1.0, the number is
+                "<i>the next pseudorandom, Gaussian ("normally") distributed
+                double value with mean 0.0 and standard deviation 1.0 from this
+                random number generator's sequence</i>." This means that
+                <code>nextGausian()</code> delivers both positive and negative
+                numbers, and that those numbers can be larger than 1.0.
+           </li>
+        </ul>
+        <p> Once you've generated a random number using one of
+            these methods, you may have to manipulate it, as you did
+            earlier, to make sure it falls within the range of acceptable
+            values.
+        </p>
+    <h3>Let 'em Roll</h3>
+        <p> <img src='images/e05.gif' class='right' alt='A Let Em Roll lottery ticket.'>
+            Because the return values are a little different,
+            the manipulations are also. For instance suppose you
+            wanted to simulate an extremely hard-to-win lottery game
+            called <b>Let 'em Roll</b>, where the winner
+            must guess six random numbers between 39 and 173 (inclusive
+            on both ends).
+        </p>
+
+        <p> This time, let's use the <code>Random</code> class, and the
+            <code>nextInt()</code> method to generate our numbers. As with
+            the year picking example, you'll need some variables to store
+            each of the six picks. Then, use the <code>nextInt()</code>
+            method to generate a random number of each pick; but before
+            storing it in the variable, manipulate it like this:
+        </p>
+        <ol>
+            <li class='d'>Because the random number can be positive or negative,
+                use <code>Math.abs()</code> to convert it to a positive
+                number.
+            </li>
+
+            <li class='d'>Once it is a positive number, you restrict it to the
+                values 39 to 173 (inclusive). To do this, first find
+                the range (number of numbers), and then use the modulus
+                (remainder) operator on your value. (173-39+1 is 135
+                total values.)
+            </li>
+            <li class='d'>The result of using <b>% 135</b> will be a positive
+                number from 0-134, so you have to add 39 for your
+                final answer.
+            </li>
+        </ol>
+        <p>Here's what these steps look like in code:</p>
+        <p class="code" style='font-size:1.25em;'>
+            Random r = new Random();<br>
+
+            int min = 39;<br>
+            int max = 173;<br>
+            int range = max - min + 1;<br>
+            <br>
+            int p1 =(Math.abs(r.nextInt()) % range) + min;<br>
+            int p2 =(Math.abs(r.nextInt()) % range) + min;<br>
+
+            int p3 =(Math.abs(r.nextInt()) % range) + min;<br>
+            int p4 =(Math.abs(r.nextInt()) % range) + min;<br>
+            int p5 =(Math.abs(r.nextInt()) % range) + min;<br>
+            int p6 =(Math.abs(r.nextInt()) % range) + min;<br>
+        </p>
+        <p> Of course, since the <code>Random</code> class <b>already has</b>
+            a <code>nextInt(int range)</code> method, each line in
+            this code can actually be reduced to:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            int p1 = r.nextInt(range) + min;<br>
+        </p>
+    <h3>The ACM RandomGenerator Class</h3>
+        <p> ACM programs can make use of an "enhanced" version of the
+            <code>Random</code> class, named <code>RandomGenerator</code>. To
+            use this class, you create a <code>RandomGenerator</code> variable
+            using the <code>getInstance()</code> method like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            import acm.util.*;&nbsp;&nbsp;&nbsp;&nbsp;<span class='red'>// import needed</span><br>
+            RandomGenerator gen = RandomGenerator.getInstance();
+        </p>
+        <p> The copy of the generator will be shared among all the ACM classes
+            running at any given time. You can use all of the <code>Random</code>
+            methods, in addition to these handy additions:
+        </p>
+        <ul>
+            <li><b><code>nextBoolean(double p)</code></b> returns a
+                <code>boolean</code> value with the specified
+                <i>probability</i>. That is, <code>gen.nextBoolean(.5)</code>
+                would return <code>true</code> 50% of the time.
+            </li>
+            <li><b><code>nextColor()</code></b> returns a randomly selected
+                opaque <code>java.awt.Color</code> object.
+            </li>
+            <li><b><code>nextDouble(double low, double high)</code></b>
+                returns a <code>double</code> between <code>low</code>
+                (inclusive) and <code>high</code> (exclusive).
+            </li>
+            <li><b><code>nextInt(int low, int high)</code></b> returns an
+                <code>int</code> that is uniformly distributed between
+                <code>low</code> (inclusive), and <code>high</code> (exclusive).
+            </li>
+        </ul>
+        <p> Remember, though, the <code>RandomGenerator</code> class <b>only</b>
+            works in ACM programs.
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Random Numbers Summary
+        </p>
+        <ul>
+            <li>The <code>java.util.Random</code> class creates a <b>random
+                number generator</b> than can be used to produce random numbers
+                using several different schemes.
+            </li>
+            <li>To use the <code>Random</code> class you first create a
+                <code>Random</code> object and then call its methods to
+                produce the next in a sequence of randomly distributed
+                values.
+            </li>
+            <li>If you create a <code>Random</code> number with no parameter,
+                then the <b>system clock</b> is used to seed the generator.
+                You may, though, choose to pass a specific seed value.
+            </li>
+            <li>The sequence produced depends on the initial value of the
+                <code>Random</code> object, called the <b>seed</b>. Although
+                the sequences will always be distributed randomly, the
+                specific sequence that is chosen depends on the seed. If
+                the same seed is used, the same sequence will always be
+                produces. For that reason, these are known as <b>pseudorandom
+                numbers</b>.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

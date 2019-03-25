@@ -1,0 +1,720 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>7.6&mdash;GImage and Friends</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner11">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 7.6</p>
+        <p id='lessonTitle'>GImage and Friends</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/classes02.gif" class="right" alt="Some of the ACM graphics classes.">
+            <b><span class="cap">N</span>ow that you know how to create an
+            ACM <code>GraphicsProgram</code></b>,
+            let's take a look at some of the different components,
+            from the hierarchy of ACM classes on the right, that you
+            can use to create your own masterpieces. Since there
+            are so many classes, though, we'll only cover a few.
+        </p>
+        <p> We looked at the <code>GLabel</code> class in the last chapter.
+            In this chapter we want to look at:
+        </p>
+        <ul>
+            <li>the <code>GObject</code> class that provides the basic
+                behavior that all graphical objects share.
+            </li>
+            <li>the <code>GImage</code> class that allows you to display
+                JPEG and GIF images in your programs.
+            </li>
+            <li>the <code>GFillable</code>, <code>GResizable</code> and
+                <code>GScalable</code> interfaces that allow you to
+                fill and size your shapes.
+            </li>
+            <li>the classes that replace the primitive <code>Graphics</code>
+                class drawing operations you used in the last unit. This
+                includes <code>GLine</code>, <code>GRect</code>,
+                <code>GOval</code> and <code>GArc</code>, as well
+                as the ACM "measuring classes", <code>GPoint</code>,
+                <code>GRect</code> and <code>GDimension</code>.
+            </li>
+        </ul>
+        <p> Let's start by looking at the <code>GObject</code> class first,
+            since it contains fields and methods that are common to
+            all of the other classes.
+        </p>
+    <h2>The ACM Graphics Class Hierarchy</h2>
+        <p> As you know, similar classes are often placed in <b>packages</b>
+            in Java. Thus, to use the graphical objects in the ACM library,
+            you <code>import</code> the classes in the <code>acm.graphics</code>
+            package.
+        </p>
+        <p> While packages are important to get your program to run, to
+            really understand what an object can do, you have to understand
+            its <b>class hierarchy</b>. A class hierarchy is based on the
+            object-oriented facility known as <b>inheritance</b>, which
+            you were introduced to earlier.
+        </p>
+        <p> With inheritance, classes are arranged in a sort of
+            parent-child-grandchild structure, that looks a lot like the
+            taxonomies you'd meet in a biology class, and for much the
+            same reason. In the different "levels" have different names,
+            like "kingdom", and "phylum". In object-oriented programming,
+            we have a simpler set of terms.
+            <img src="images/y01.gif" class="right" alt="A class hierarchy.">
+        </p>
+    <h3>Animals and Insects</h3>
+        <p> Here's an example from the "real world." Suppose that all of the
+            animals in the world could be lumped together into the class
+            <code>Animal</code>. If we took all of the animals and divided
+            them into different groups, we might find that some were
+            mammals, (which we'd assign to the <code>Mammal</code> class),
+            some were insects, etc. Each of these groupings would be a
+            <b>subset</b> of the entire class of <b>Animal</b>.
+        </p>
+        <p> Such a subset (<code>Mammal</code>, <code>Insect</code>,
+            <code>Amphibian</code>) is called a <b>subclass</b>, and, as
+            you might expect, the superset (<code>Animal</code>) is
+            called the <b>superclass</b>.
+        </p>
+
+        <p> This relationship is called an <b>is-a</b> relationship because
+            if an object belongs to a subclass, (<b>brenda</b> and
+            <b>jumbo</b> in the <code>Elephant</code> class, for instance),
+            that object is simultaneously a member of each of <b>all</b>
+            its <b>ancestor</b> classes as well. Thus, we can say that
+            Jumbo "<b>is-a</b>" <code>Elephant</code>, but, by virtue of
+            being an <code>Elephant</code>, he is, simultaneously, a
+            <code>Mammal</code> and an <code>Animal</code> as well.
+            <br style='clear:both;'>
+        </p>
+        <div class='info'>
+        <p><b>UML Notes</b><br>
+            The diagram here is a simplified UML, or Unified Modeling Language
+            diagram. UML is the "blueprint" language for object-oriented programming.
+            The arrows in the diagram shown here specify
+            class relationships. The upward-pointing arrow going from
+            <code>Insect</code>, <code>Mammal</code>, and <code>Amphibian</code>,
+            says that these three classes are subclasses of <code>Animal</code>,
+            or, more technically, that <code>Animal</code> is a <b>generalization</b>
+            of the other three classes.<br><br>
+            The dotted lines with the lighter arrowhead, connecting
+            <b>jumbo</b> and <b>brenda</b> with the <code>Elephant</code>
+            class indicate that <b>jumbo</b> and <b>brenda</b> are <b>objects</b>
+            created from the class. The <b>«instanceOf»</b>
+            notation appearing to the right of the lines is called a
+            <b>stereotype</b> and is a required part of the notation.
+        </p>
+        </div>
+    <h2>The GObject Class</h2>
+        <p> With inheritance, all subclasses <b>automatically inherit</b> the
+            behavior and attributes of their parent or superclasses. That means,
+            if we have several classes that have a common method, or common
+            attributes, we can place those methods and attributes in a
+            superclass, and then they can be <b>shared</b> by all the
+            descendent classes.
+        </p>
+        <p> In the Java class libraries, the <b>root class</b> that all other
+            classes are derived from is named <code>Object</code>. Whenever you
+            create a new class, and don't have an <code>extends</code> clause
+            in the class header, your new class <b>implicitly</b> extends the
+            <code>Object</code> class.<br>
+            <img src="images/gobj02.gif" class="inlineCenter" alt="The Object and GObject class hierarchies.">
+            In a similar way, the <code>GObject</code> class is the root class
+            for the visible classes in the ACM Graphics package. It contains the
+            methods and attributes common to all of the visible graphical objects
+            you'll be using in this unit.
+        </p>
+        <p> To illustrate each of these methods, I'll use a simple (and
+            fairly useless) program named <b>GObjectMethods</b> that you'll
+            find in this chapter's code folder.
+        </p>
+    <h3>Creating GObjects</h3>
+        <p> The <code>GObject</code> class itself is <b>abstract</b>. That
+            means that your programs <b>cannot</b> actually create an instance
+            of the <code>GObject</code> class. Instead, your programs will
+            create objects from the <b>concrete subclasses</b> such as
+            <code>GOval</code> or <code>GRect()</code>.
+        </p>
+        <p> Even though you can't create <code>GObject</code> objects,
+            your program <b>may</b> create <code>GObject</code> <b>variables</b>,
+            as long as they refer to an object created using one of the
+            subclass constructors, like this:<br>
+            <img src="images/gobj03.gif" class="inlineCenter" alt="Creating two GObject variables.">
+            When you pass the <code>GObject</code> variables <code>a</code>
+            and <code>b</code> to the <code>GraphicsProgram</code>'s
+            <code>add()</code> method, each individual shape object is
+            placed on the surface of the program's central canvas, like
+            this.
+        </p>
+        <p> When you do this, you can use <b>any</b> of the <code>GObject</code>
+            methods with the variables <code>a</code> and <code>b</code>.
+            You cannot, however, use any methods that are specific to the
+            <code>GRect</code> or <code>GOval</code> classes, even though
+            <code>a</code> refers to a <code>GRect</code> object and
+            <code>b</code> refers to a <code>GOval</code> object.
+        </p>
+        <p> You can also create methods that take <code>GObject</code>
+            parameters, and then pass <b>any kind of</b> ACM graphical
+            object to it like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void center(GObject obj) ...
+        </p>
+    <h3>Drawing Colors</h3>
+        <p> Some graphical object represent closed shapes, like rectangles
+            and ovals, while some are not closed, like lines. Those that
+            are closed can be filled with a solid color. Since not all
+            objects <i>can</i> be filled, though, the <code>GObject</code> class
+            <b>does not</b> have a <code>setFillColor()</code> method.
+        </p>
+        <p> All graphical objects <b>can</b> change the color used to draw
+            their outline, however. You change that by using the <code>setColor()</code>
+            method like this:<br>
+            <img src="images/gobj05.gif" class="inlineCenter" alt="Changing object drawing color.">
+            The ACM graphical shapes do not have <code>setBackground()</code>
+            and <code>setForeground()</code> methods, like the traditional
+            Java component system has. However, you can add an <code>init()</code>
+            method to your <code>GraphicsProgram</code>, and call its
+            <code>setBackground()</code> method to change the background color
+            for the canvas used by your program.
+        </p>
+        <p> The <code>Color</code> class is <b>not</b> one of the ACM graphics
+            classes, so to use the class in your program, you need to remember
+            to add one of these two <code>import</code> statements to your
+            code:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            import java.awt.*; <span class="cmt">// import all AWT classes</span><br>
+            import java.awt.Color;  <span class="cmt">// import the Color class</span>
+        </p>
+    <h3>GObject Coordinates</h3>
+        <p> ACM Graphics objects use the same basic coordinate system that
+            you met earlier, when you learned about applets. Like
+            applets, the <b>origin</b> (position 0, 0) is in the upper left
+            corner. X, or horizontal locations increase as you move to the right,
+            while Y, or vertical locations increase as you move down. (Remember
+            that this is a little different than the Cartesian coordinates
+            you learned in geometry!)<br>
+            <img src="images/coords.gif" class="inlineCenter" alt="The GObject coordinate system.">
+            Each x,y coordinate pair represents a <b>pixel</b> on the
+            screen. However, with ACM graphical objects, this coordinate
+            pair is stored as <code>double</code> values, instead of the
+            <code>int</code>s used in the traditional Java graphics model.
+        </p>
+        <p> ACM <code>GObjects</code> all store their location, width and
+            height as <code>double</code>s. When the different objects are
+            actually drawn on-screen, though, each of these values is
+            automatically converted to an <code>int</code>, because we
+            can't actually paint a line that falls <b>between</b> two pixels
+            on the screen.
+        </p>
+        <p> You normally won't need to worry about this difference at all;
+            the only practical effect is to <b>reduce</b> the amount of work that
+            you have to do when a shape calculation involves <code>double</code>
+            values (which is extremely common when using the <code>Math</code>
+            functions.).
+        </p>
+    <h4>Measuring Classes</h4>
+        <p> In a previous chapter, you met the three Java AWT "measuring"
+            classes: <code>Point</code>, <code>Dimension</code> and
+            <code>Rectangle</code>. Each of these three simple classes
+            contains <code>public int</code> fields that are used to
+            measure the size of a graphical component, such as the
+            width and height of the screen.
+        </p>
+        <p> Since ACM <code>GObject</code>s use <code>double</code>
+            coordinates, the ACM graphics package also includes replacements
+            for these three classes. The replacement
+            classes&#8212;<code>GPoint</code>, <code>GDimension</code> and
+            <code>GRectangle</code>&#8212;are identical to the other
+            measuring classes except that their fields are <code>double</code>s
+            not <code>int</code>s.
+        </p>
+    <h3>Location</h3>
+        <p> There are a variety of methods that allow you to change the
+            size and location of an object, as well as those that allow
+            you to retrieve the location or size of an object.
+        </p>
+        <p> There are three methods that will get the 2-dimensional coordinates
+            or location of an object:<br>
+            <img src="images/gobj06.gif" class="inlineCenter" alt="Getting the location of an object.">
+            As you can see, we can get the individual coordinates as
+            <code>double</code>s, or <b>both</b> together as a <code>GPoint</code>.
+            To display the <code>GPoint</code>, the example here just uses
+            its <code>toString()</code> method.
+        </p>
+        <p> There are four methods to <b>change</b> the location of an
+            object in the two-dimensional plane:<br>
+            <img src="images/gobj09.gif" class="inlineCenter" alt="Changing the location.">
+            Here's what the methods do:
+            <img src="images/gobj08.gif" class="right" alt="After moving the shapes.">
+        </p>
+        <ul>
+            <li>The <code>setLocation(x, y)</code> and
+                <code>setLocation(p)</code> methods both move the object to the
+                absolute position specified by their <code>double</code> or
+                <code>GPoint</code> parameters. In the example here,
+                <code>a.setLocation(pt)</code> moves the <code>GObject a</code>
+                (the rectangle), down so that it has the same origin as the
+                oval. The line <code>b.setLocation(0, 0);</code> moves the
+                oval (<code>b</code>) to the upper-left corner.
+            </li>
+
+            <li>The <code>move()</code> and <code>movePolar()</code> methods
+                use the object's current position when calculating its final
+                resting place. In the example here, <code>b.move(50, 50);</code>
+                adds 50 to both the <code>x</code> and <code>y</code> fields
+                in the oval object, <code>b</code>. The line
+                <code>a.movePolar(100, 120);</code> moves the rectangle
+                100 units toward the origin, which is (roughly) 120 degrees.
+            </li>
+        </ul>
+        <p>Once these lines have run, the objects should be located on
+            the canvas in this position. (Note that the location printed on
+            the canvas is for the original location, not the updated location.)
+        </p>
+    <h4>Z Order</h4>
+        <p> There are also four methods that allow you to change the
+            location of the object in the <b>depth</b> or "Z" dimension.
+            This is known as the object's <b>stacking order</b>.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            obj.sendToFront(); <span class="cmt">// put in front of all other objects</span><br>
+            obj.sendToBack();  <span class="cmt">// put behind all other objects</span><br>
+            obj.sendForward(); <span class="cmt">// move one layer closer to user</span><br>
+            obj.sendBackward(); <span class="cmt">// move one layer further from user</span>
+        </p>
+        <p> Obviously,
+            with a 2-dimensional display, you can't actually change the
+            depth of any object. What you <b>can</b> adjust, however, is
+            the object's <b>apparent</b> location, by changing the overlapping
+            of different objects as they are drawn. Those objects that are
+            "closer" to the viewer are drawn "on top" of those that appear
+            further away.
+        </p>
+        <p> Here's a picture from the ACM JTF Tutorial, showing what would
+            happen if you used the statement <code>oval.sendBackward();</code>
+            to the picture below:<br>
+            <img src="images/gobj10.gif" class="inlineCenter" alt="Changing the stacking order.">
+        </p>
+
+    <h3>Shape Size</h3>
+        <p> Finally, there are four methods that allow you to obtain the
+            size of an object:<br>
+            <img src="images/gobj11.gif" class="inlineCenter" alt="Object size.">
+            Here's how these methods work:
+        </p>
+        <ul>
+            <li>The <code>getHeight()</code> and <code>getWidth()</code>
+                methods return the height and width of the object as
+                a <code>double</code>.
+            </li>
+            <li>The <code>getSize()</code> method returns <b>both</b>
+                the width and height, wrapped up in a <code>GDimension</code>
+                object.
+            </li>
+            <li>The <code>getBounds()</code> method returns the size of
+                the object, <b>as well as its location</b>, all wrapped up
+                in a <code>GRectangle</code> object.
+            </li>
+        </ul>
+
+    <h2>Resizable, Scalable and Fillable</h2>
+        <p>Note that while there are methods to change the
+            location of an object, there are <b>no methods</b> to change
+            the size of an object. Just as only <b>some</b> objects are
+            "fillable", <b>only some objects</b> are "scalable" and "resizable".
+            Since these are capabilities that not all objects have,
+            the <code>GObject</code> class does not contain any methods
+            to perform these operations.
+        </p>
+        <ul>
+            <li>Three of the shape classes in the ACM Graphics
+            package&#8212;<code>GRect</code>, <code>GOval</code> and
+            <code>GImage</code>&#8212;can be <b>resized</b>.
+            </li>
+            <li>These three
+            classes, and four others&#8212;<code>GArc</code>,
+            <code>GCompound</code>, <code>GLine</code> and
+            <code>GPolygon</code>&#8212;can also be <b>scaled</b>.
+            </li>
+            <li>Finally, five classes&#8212;<code>GArc</code>, <code>GOval</code>,
+            <code>GPen</code>, <code>GPolygon</code> and
+            <code>GRect</code>&#8212;are also <b>fillable</b>.
+            </li>
+        </ul>
+        <p> Each of these capabilities is defined by an <b>interface</b>
+            that these different classes <b>implement</b>. An interface
+            is a way of defining the behavior or methods that a class
+            contains, without defining the family of classes that it
+            belongs to. You'll study interfaces a little later in
+            the semester.
+        </p>
+        <p> Right now, we'll look at the methods defined
+            in each of these interfaces, using a small sample
+            program named <b>ACMGraphicsInterfaces.java</b>, located in
+            this chapter's code folder.
+        </p>
+
+    <h3>The GFillable Interface</h3>
+        <p> The classes that implement the <code>GFillable</code> interface
+            all have the ability to paint a solid center, using a separate
+            brush color. These include the closed shapes <code>GRect</code>,
+            <code>GOval</code> and <code>GPolygon</code>, as well as the
+            <code>GArc</code> and the free-hand drawing class, <code>GPen</code>.
+        </p>
+        <p> If an object is fillable, you can specify whether the center should
+            be solid or hollow like this:<br>
+            <img src="images/interface02.gif" class="inlineCenter" alt="Using the GFillable interface.">
+            The color used for the outline does not have to be the same as the
+            color used to fill the center of the shape.
+        </p>
+        <ul>
+            <li>You met the <code>setColor()</code>
+                method earlier, which sets the outline color for all
+                <code>GObject</code>s. In this example, the outline for
+                <code>ovalA</code> is drawn with a blue pen, while the
+                outline for <code>ovalB</code> is drawn with a cyan pen.
+            </li>
+            <li>For <i>fillable</i> objects, the <code>setFillColor()</code>
+                method specifies the brush used to fill the interior of the
+                shape. In this example, <code>ovalA</code> is filled with
+                a red brush, while <code>ovalB</code> is filled with a
+                green brush.
+            </li>
+            <li>No matter what brush is used to fill the interior of the
+                object, it is only used if directed by calling the
+                <code>setFilled()</code> method, passing <code>true</code>
+                as the parameter. If you don't do this, (or, if you call
+                <code>setFilled(false)</code>, then the shape outline is
+                drawn, but the center remains hollow, like
+                <code>ovalB</code> in my example here.
+            </li>
+        </ul>
+        <p> Of course, if you want a solid, or non-outlined shape, just use
+            the same color for the outline as well as for the fill color.
+            Here's what this code looks like when it runs:<br>
+            <img src="images/interface01.gif" class="inlineCenter" alt="Running the GFillable interface.">
+        </p>
+
+    <h3>The GResizable Interface</h3>
+        <p> Images, ovals and rectangles are all resizable. There are two
+            versions of two methods (for a total of four) defined in the
+            <code>GResizable</code> interface.
+        </p>
+        <p> The <code>setSize()</code> methods allow you to change the
+            width and height of an existing object, but leaves the location
+            as it is. You can supply separate parameters for the width
+            and height, or a single parameter wrapped up in a
+            <code>GDimension</code> object:<br>
+            <img src="images/interface03.gif" class="inlineCenter" alt="Resizing two ovals.">
+        </p>
+        <p> If you want to change the location at the same time as you change
+            the size, then the two versions of <code>setBounds()</code> are
+            what you want:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            oval.setBounds(0, 0, 100, 50);  <span class="cmt">// Change location, width and height</span><br>
+            oval.setBounds(newBounds); <span class="cmt">// newBounds is a GRectangle object</span>
+        </p>
+    <h3>The GScalable Interface</h3>
+        <p> While there are only three classes that are resizable, there
+            are a larger number of classes that can be resized by
+            <b>scaling</b>. Those classes that implement the <code>GScalable</code>
+            interface all contain a <code>scale()</code> method, which allows
+            the object to change its size by multiplying its width and height
+            by a scaling factor:<br>
+            <img src="images/interface04.gif" class="inlineCenter" alt="Scaling two ovals.">
+            There are two versions of the <code>scale()</code> method. If you
+            supply a single factor, them both height and width will be multiplied
+            by that factor. In the code above, <code>ovalA</code> is scaled to
+            50%, but the ratio between width and height remains the same.
+        </p>
+        <p> In the case of <code>ovalB</code>, though, separate factors are
+            supplied for width and height. The width is multiplied by 1.5, and
+            the height is multiplied by 2.0, changing the shape of the
+            oval as well as its dimensions. To change only one of the
+            dimensions, use the two-parameter version of <code>scale()</code>,
+            but use 1.0 for the dimension you wish to remain fixed.
+        </p>
+    <h2>The TwoCards Project</h2>
+        <p> To give you a quick flavor for some of the other classes
+            in the <code>acm.graphics</code> package, let's build a simple
+            program called <b>TwoCards</b>. Our program will:
+        </p>
+        <ul>
+            <li>Display a dark-green "table" in the center of the
+                application with a caption saying "Place your bets!"
+                underneath it.
+            </li>
+            <li>Draw two playing cards on the table, one face up,
+                and one face down.
+            </li>
+            <li>Flip over the face-down card and set it next to
+                the face-up card when it's clicked with the mouse.
+            </li>
+        </ul>
+        <p> Here's a screen shot that shows the program when it
+            first loads (on the left), and a shot of the applet
+            after the user has clicked the face-down card:<br>
+            <img src="images/acmg21.gif" class='inlineCenter' alt="Running the TwoCard applet.">
+            To start, create an ACM <code>GraphicsProgram</code> named
+            <b>TwoCards</b>, following the same steps you followed for
+            <b>MyFirstAcmGuiApp</b> in the last chapter. Make sure you
+            save your file in the <b>Chapter07</b> folder and import the
+            <code>acm.program</code>, <code>acm.graphics</code> and
+            <code>java.awt</code> packages. Place your
+            code in the <code>run()</code> method.
+        </p>
+    <h3>Part 1: The Table</h3>
+        <p> To create the table, we'll use the <code>GRect</code> class.
+            <code>GRect</code> is one of the <code>Fillable</code> classes,
+            so you can specify an interior color that's different than
+            the background. We'll make our interior dark green.
+        </p>
+        <p> <img src="images/acmg23.gif" class="right" alt="Creating the table object.">
+            Start by defining a couple of constants, <code>T_WIDTH</code>
+            and <code>T_HEIGHT</code> to represent the width and height of
+            our table (instead of using <i>magic numbers</i>).
+        </p>
+        <p> Then, create
+            a <code>GRect</code> object named <code>table</code> using the
+            constructor. Use 0,0 for the origin, and pass your two constants
+            for the width and height like that shown in the screenshot.
+        </p>
+    <h4>Positioning</h4>
+        <p><img src="images/acmg24.gif" class="right" alt="Positioning the table object.">
+            To position the table, you'll need to subtract one-half its width
+            and one-half its height from the width and height of your program
+            itself. Remember, you can get those numbers by calling the
+            <code>getWidth()</code> and <code>getHeight()</code> methods.
+        </p>
+        <p> Then, use the <code>setLocation()</code> method to position the
+            <code>table</code> object in the center of the screen, like that
+            shown in this screenshot.
+        </p>
+    <h4>Color and Add</h4>
+        <p> <img src="images/acmg25.gif" class="right" alt="Coloring and adding the table object.">
+            To color our table, we need to do three things:
+        </p>
+        <ul>
+            <li>Use the <code>GRect</code> method
+                <code>setFillColor()</code> to the background color
+                we want for the table. I've used the <code>Color</code>
+                constructor to create a dark green felt color.
+            </li>
+            <li>Send the <code>setFilled(true)</code> message to
+                the table to tell it to fill itself in when it's
+                drawn.
+            </li>
+            <li>Add the finished component to our program's canvas, so
+                we can see it.
+            </li>
+        </ul>
+        <p> The screenshot shows the code for each of
+            these steps.
+        </p>
+    <h4>Add a Caption</h4>
+        <p> <img src="images/acmg26.gif" class="right" alt="Adding the table caption.">
+            Since we've already had experience using the <code>GLabel</code>
+            class, you should be able to figure out how to add the
+            table caption so that its centered right underneath the
+            table itself.
+        </p>
+        <p> The secret lies in figuring out where the bottom of the
+            table is on the screen, and then adding the height of
+            the caption itself to that number for the vertical
+            position of the label.
+        </p>
+        <p> The screenshot to the right shows what the calculations
+            should look like.
+        </p>
+    <h3>Step 2: Drawing the Cards</h3>
+        <p> The ACM <code>GImage</code> class allows you to easily display
+            and position objects created from standard JPEG and GIF images.
+            <img src="images/cards.gif" class="right" alt="Storing the card images in a folder.">
+            For this problem, I've downloaded the GPL card images from
+            <a href="http://www.waste.org/%7Eoxymoron/cards/" target="_blank">
+            <b>http://www.waste.org/~oxymoron/cards/</b></a> and placed them
+            in this week's download folder. You can use
+            these images without charge, but if you eventually create a
+            commercial product, you'll need to replace them with a different
+            set.
+        </p>
+        <p> Each card image is stored in a separate file, so they're fairly
+            easy to manipulate. The two of Clubs is in the file <b>2c.gif</b>,
+            the Ace of Spades is in <b>as.gif</b>, and so on.
+        </p>
+        <div class='alert'>
+        <p> To make sure
+            all of the filenames are only two characters long, the "tens"
+            are in a set of files named like <b>tc.gif</b> instead of
+            <b>10c.gif</b>. Also, the file <b>b.gif</b> is used for
+            the backs of the cards.
+        </p>
+        </div>
+    <h4>Card 1: The GImage Class</h4>
+        <p> We'll need to create <b>two</b> cards for our program, so
+            I'll just name them <code>card1</code> and <code>card2</code>.
+            To create the card objects, we'll use the <code>GImage</code>
+            class.
+        </p>
+        <p> <img src="images/acmg27.gif" class="right" alt="Creating and displaying a card.">
+            <code>GImage</code> actually hides a lot of complexity that
+            you'll be exposed to later. Right now, to construct your first
+            card object, simply pass it a <code>String</code> containing
+            the path to the image file you want to use. This path needs
+            to be relative to the location of your Java program.
+        </p>
+        <p> Once you've created the <code>card1</code> object, you can
+            position it with <code>setLocation()</code>. Rather than
+            calculating the location independently, we can just
+            "put it on the table" by asking the <code>table</code> object
+            for its location (using <code>table.getLocation()</code>),
+            and passing that value.
+        </p>
+        <p> Then, because we don't want to display the card in the
+            upper-left corner of the table, we can use the <code>move()</code>
+            method to move the card in from the left and down from the top.
+        </p>
+        <p> The screenshot shows the code required to do this.</p>
+    <h4>Card 2, Face Down</h4>
+        <p><img src="images/acmg29.gif" class="right" alt="Creating and displaying the second card.">
+            The second card uses almost exactly the same code, with the following
+            differences:
+        </p>
+        <ul>
+            <li>We used the image for the back of the card,
+                so the card appears dealt "face down".
+            </li>
+            <li>We used the location of the first card
+                when positioning our second, rather than
+                the location of the table.
+            </li>
+            <li>We moved the second card so that a little
+                more of the first card shows.
+            </li>
+        </ul>
+        <p> The code for the second card is shown in the screenshot here.</p>
+    <h3>Moving the Card</h3>
+        <p> In the next chapter you'll start learning how to handle mouse clicks and
+            button presses. For right now, you can just use this code to
+            cause your program to pause, waiting for a mouse click. (We
+            aren't actually checking to see if the user clicks the face
+            down card. We'll do that later.)<br>
+            <img src="images/flip.png" class="inlineCenter"
+                alt="Flipping the second card.">
+            When the user clicks the mouse, we do two things:
+        </p>
+        <ul>
+            <li>change the image displayed by the <code>GImage</code>
+                object named <code>card2</code>. Instead of constructing a
+                new <code>GImage</code> object, we simply replace its
+                picture property.
+            </li>
+            <li>move the second card into position using its <code>move()</code>
+                method. We use its own width to determine how far to move it
+                to the right. We use a negative amount for the vertical position,
+                since we started the card 10 pixels down from the top of
+                <code>card1</code>.
+            </li>
+        </ul>
+        <p> Go ahead and compile and run. Make sure that you can flip over
+            your card when you click the program. As you can see, Blackjack isn't
+            far away.
+        </p>
+        <p> There are several other classes in the ACM Graphics package you
+            might want to learn about. A great way to meet them is to
+            reach <b><i>Chapter 2: Using the acm.graphics Package</i></b>,
+            in the <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/tutorial/Tutorial.pdf" target="_blank"><b>JTF Tutorial</b></a>,
+            available in PDF format by clicking the link in this sentence.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            GImage and Friends Summary
+        </p>
+        <ul>
+            <li>The ACM graphical shapes belong to a <b>class
+                hierarchy</b>&mdash;a family of classes related to each other
+                through inheritance, and sharing attributes and methods.
+            </li>
+            <li>The <b>root class</b> (ultimate <b>superclass</b>)
+                for all of the ACM graphical shapes
+                is named <code>GObject</code> and it contains methods that
+                are <b>shared</b> among all of the different ACM
+                components.
+            </li>
+            <li> The <code>GObject</code> class is <b>abstract</b>. You
+                can create <code>GObject</code> variables, but need to
+                attach those variables to <b>concrete subclass</b> objects like
+                <code>GRect</code> or <code>GOval</code>.
+            </li>
+            <li> Use the <code>setColor()</code> method to change the
+                color of the outline used to draw individual shapes.
+            </li>
+            <li> ACM graphical objects use <code>double</code> coordinates
+                internally, even though the coordinates are mapped to
+                integers when drawn on the screen. Most of the objects
+                (with the exception of <code>GLabel</code>) map they
+                <code>x</code>,<code>y</code> coordinate to the upper-left
+                corner of the component.
+            </li>
+            <li> ACM graphical objects use the "helper" classes <code>GPoint</code>,
+                <code>GDimension</code> and <code>GRectangle</code> to provide
+                measuring services for individual classes. These work like the
+                AWT measuring classes, but use <code>double</code> rather than
+                <code>int</code> coordinates.
+            </li>
+            <li> Use the <code>getX()</code>, <code>getY()</code> or
+                <code>getLocation()</code> methods to retrieve the position
+                of a component. Use <code>setLocation()</code>, <code>move()</code>,
+                or <code>movePolar()</code> to change the location.
+            </li>
+            <li> You can change the <b>apparent Z-order</b> of a component
+                using the <code>sendToFront()</code>, <code>sendToBack()</code>,
+                <code>sendForward()</code> and <code>sendBackward()</code>
+                methods.
+            </li>
+            <li> You can <b>obtain the size</b> of an object using <code>getWidth()</code>,
+                <code>getHeight()</code>, <code>getSize()</code> and <code>getBounds()</code>.
+            </li>
+            <li>Only <code>GRect</code>, <code>GOval</code> and <code>GImage</code>
+                <b>implement the <code>Resizable</code> interface</b> and can be
+                resized with the <code>setSize()</code> method.
+            </li>
+            <li>Seven classes&mdash;the three resizable along with
+                <code>GArc</code>, <code>GCompound</code>, <code>GLine</code> and
+                <code>GPolygon</code>&#8212;can also be <b>scaled</b> by using
+                one of the <code>scale()</code> methods.
+            </li>
+            <li>Five classes&#8212;<code>GArc</code>, <code>GOval</code>,
+                <code>GPen</code>, <code>GPolygon</code> and
+                <code>GRect</code>&#8212;are <b>fillable</b> so you can
+                call the <code>setFilled()</code> and <code>setFillColor()</code>
+                methods to specify their interior color.
+            </li>
+            <li>The <code>GImage</code> class can display pictures stored in
+                jpeg, gif or png format.
+            </li>
+
+
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

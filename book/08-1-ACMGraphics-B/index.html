@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>8.1&mdash;ACM Graphics Programs</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner03">
+        <img id='lessonLogo' src='../images/c.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 8.1</p>
+        <p id='lessonTitle'>ACM Graphics Programs</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/g02.jpg" class="right" alt="A rotation widget.">
+        <b><span class="cap">A</span> little earlier in this text</b>, you learned how to use Java's
+            AWT <code>Graphics</code> class to draw ovals, rectangles, and text, and used
+            that knowledge to draw some simple pictures.
+        </p>
+        <p> While the drawing methods you learned&#8212;<code>drawRect()</code>,
+            <code>fillOval()</code>, and so on&#8212;were simple, they <i><b>weren't</b></i> particularly
+            <i>object-oriented</i>. Instead of dealing with oval <i>objects</i> that know
+            how to draw themselves, you "issued orders", giving precise instructions
+            for completing your drawings. If you look back on your self-portrait,
+            for instance, you'll see that it mostly consists of a sequence of
+            commands, that have to be carried out in a particular order.
+        </p>
+        <p> Although we did use a <code>Graphics</code> <b>object</b> to carry out the
+            work, we also gave precise instructions on <b>how</b> to do the
+            task, and in what order. This reliance on a specific <b>sequence</b>,
+            and the focus on <b>actions</b>, is really at the heart of
+            <b>procedural programming</b>.
+        </p>
+        <p> Now, though, it's time for us
+            to start moving away from this style of programming, and to
+            start working with <b>independent graphical objects</b>.
+            While the built-in Java class libraries provide support for
+            creating your own graphical objects, they don't really
+            have any easy-to-use components. So, for this unit
+            we'll use the ACM <code>GraphicsProgram</code> class,
+            and the graphical shapes available in the
+            <code>acm.graphics</code> package:<br>
+            <img src="images/acmg17.gif" alt="The classes in the ACM graphics pacakge." class='inlineCenter'>
+        </p>
+        <div class='info'>
+        <p>If you want to know more about the "built-in"
+            OO drawing capabilities of Java, called <b>Java 2D</b>, you
+            can follow the Sun Java Tutorial trail at:
+            <a href="http://java.sun.com/docs/books/tutorial/2d/index.html" target="_blank">
+            <b>http://java.sun.com/docs/books/tutorial/2d/index.html</b></a>.
+            The ACM classes that we're using, however, are much easier to use than
+            the built-in Java 2D classes, and in many ways, are more sophisticated
+            as well.
+        </p>
+        </div>
+        <p> We'll start by using the <code>GLabel</code> class to display
+            the traditional "Hello, I love you!" program. Then, in the rest
+            of the text, we'll use many of the other classes to
+            illustrate different object-oriented techniques and principles.
+        </p>
+    <h2>Your First ACM GraphicsProgram</h2>
+        <p> Like the ACM <code>ConsoleProgram</code> class you used in previous
+            chapters, the ACM <code>GraphicsProgram</code> class is contained in
+            the Java library (or <b>archive</b>) file <b>acm.jar</b>,
+            (which I have already bundled into our customized
+            version of DrJava).
+        </p>
+        <p> Open DrJava and create a new file named <i>MyFirstAcmGuiApp.java</i>.
+            Save the file in your <b>Chapter08</b> folder, and then follow along to
+            complete it.
+            The <b>basic structure</b> for a
+            <code>GraphicsProgram</code> is almost identical to
+            the ACM <code>ConsoleProgram</code> you wrote earlier:
+            <img src="images/acm2-02.gif" class="inlineCenter" alt="Generated GraphicsProgram.">
+            In fact, the only differences are:
+        </p>
+        <ol>
+            <li class="d">An additional <code>import</code> line at the top of the
+                program. This line makes the ACM graphical shapes accessible
+                to your GUI program.
+            </li>
+            <li class="d">Instead of extending <code>ConsoleProgram</code>,
+                we <code>extend GraphicsProgram</code> instead. You recall
+                that this means our application is a <b>kind of</b>
+                <code>GraphicsProgram</code>.
+            </li>
+        </ol>
+        <p>
+            As we did previously, we'll start by comparing
+            <i>MyFirstAcmGuiApp</i> to its non-GUI sibling, and to the
+            GUI <b>applet</b> you wrote previously.
+        </p>
+    <h3>The run() Method</h3>
+        <p> Because <i>MyFirstAcmGuiApp</i> is an <b>application</b>, not an
+            <b>applet</b>, it has a <code>run()</code> method like your
+            first ACM <code>ConsoleProgram</code>. <b>But</b>, it's <i>also</i> a
+            <b>graphical</b> program, like <i>MyFirstJavaApplet</i>,
+            although it doesn't use the <code>paint()</code> method.<br>
+            <img src="images/apps01.gif" class="inlineCenter" alt="Comparing run menthods.">
+            Comparing the <code>run()</code> methods of your ACM console program
+            and <i>MyFirstAcmGuiApp</i>, you can see that they are
+            really pretty different. The console program consists of sequential
+            input, output, and processing statements.
+            The <i>MyFirstAcmGuiApp</i> <code>run()</code> method, on the other
+            hand:
+        </p>
+        <ul>
+            <li>creates several visual GUI objects</li>
+            <li>adds those objects to the surface of the application</li>
+            <li>sends messages to the objects</li>
+            <li>responds to events generated by those objects</li>
+        </ul>
+        <p> Go ahead and type in the <code>run()</code> method. Then compile and
+            run your program. When you're ready, let's take a quick look at
+            the program's graphical objects.
+        </p>
+    <h2>GLabel Objects</h2>
+        <p> The objects we'll use to display text in our ACM graphical
+            programs belong to a class named <code>GLabel</code>. You create
+            <code>GLabel</code> objects using the same kind of syntax you'd
+            use to create any Java object.
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            SomeClass <i>varName</i> = new SomeClass(&lt;<i>parameters</i>&gt;);
+        </p>
+        <p> Remember that with objects:</p>
+        <ul>
+            <li><code>SomeClass varName</code> creates an <b>object variable</b>
+                which will hold a <i>reference to</i> the actual
+                "SomeClass" object itself. You replace
+                "SomeClass" with the actual name of the class.
+            </li>
+            <li><code>new SomeClass(&lt;<i>parameters</i>&gt;)</code> creates the <b>actual
+                object</b> itself on the <i>"heap"</i>. The parameters
+                are used to initialize the state of the object.
+            </li>
+            <li> The assignment statement stores the reference to the
+                actual object in the object variable.
+            </li>
+        </ul>
+        <p> Let's take a look at how the two <code>GLabel</code> objects are
+            created and used in <i>MyFirstAcmGuiApp</i>.
+        </p>
+    <h3>Creating and Placing GLabel Objects</h3>
+        <p> The first step in using the ACM graphical objects is to create an
+            object variable. In the picture here, you can see that I've named
+            my <code>helloLabel</code>.<br>
+            <img src="images/apps03.gif" class="inlineCenter" alt="Creating helloLabel.">
+            The <b>Label</b> at the end helps
+            remind me that it's a graphical, user-interface "label" object.
+        </p>
+        <p> The second step (on the same line) is to initialize the object by
+            using the <code>new</code> operator and a constructor. In the case
+            of <code>helloLabel</code>, I've used a constructor that requires
+            three parameters:
+        </p>
+        <ol>
+            <li class="d">The text we want the <code>GLabel</code> object to
+                "manage" for us; in this case, the words "Hello. I love you!"
+            </li>
+            <li class="d">The horizontal position (in pixels) for the left side of
+                the <code>GLabel</code> object to be positioned. Notice that even
+                though the label hasn't yet been added to the display, it actually
+                "knows" where it belongs. It's "x-position" is part of the object's
+                state.
+            </li>
+            <li class="d">Similarly, the vertical position (in pixels) down from
+                the top of the display, is supplied as the third parameter. In
+                our case, the words will appear 25 pixels in from the left and
+                25 pixels down from the top.
+            </li>
+        </ol>
+        <p> Once we've created our graphical object, we need to add it to
+            our program. To do that, we use the <code>GraphicsProgram</code>
+            method named <code>add()</code>, passing it the object that we
+            want to add to the canvas. (That portion of code is marked (4)
+            in my snapshot.)
+        </p>
+    <h3>Alternative Methods</h3>
+        <p> When we add this label to the canvas, we don't need to tell it
+            where it should be located, since we specified that when the
+            label was constructed. We could have done things differently,
+            though. For instance, we could have constructed an object
+            using just the single-parameter constructor, like the
+            <code>GLabel</code> named <code>questionLabel</code>, shown here:<br>
+            <img src="images/apps04.gif" class="inlineCenter" alt="Creating questionLabel.">
+            When you only supply text to the <code>GLabel</code> constructor,
+            then the <code>x</code> and <code>y</code> position attributes are
+            set to zero. If I were to add <code>question</code> to the application's
+            canvas, it would then appear off-screen, sitting right above the
+            upper-left corner of the program. If that were to occur, then I
+            could use the <code>setLocation()</code> method to position the label
+            in a separate step.
+        </p>
+        <p> Another alternative is to do what this example does, and use an
+            alternate form of the <code>GraphicsProgram add()</code> method,
+            one that takes the location to place the object as the second and
+            third parameters. When you use this version of <code>add()</code>,
+            then your program automatically sets the <code>GLabel</code>'s
+            <code>x</code> and <code>y</code> attributes before placing the
+            label on the screen.
+        </p>
+    <h2>ACM Graphics Metaphors</h2>
+        <p> OK, OK, I admit that when you run the <i>MyFirstAcmGuiApp</i> program
+            it doesn't look a lot (<i>read <b>any</b></i>) more impressive than
+            the <i>MyFirstJavaApplet</i> program, where we
+            used Java's <code>drawString()</code> method to do pretty much
+            the same thing. Of course <i>MyFirstAcmGuiApp</i> is also an <b>application</b>
+            instead of just an applet, but there is also <b>one larger difference</b>.
+        </p>
+        <p> In <i>MyFirstAcmGuiApp</i> the variable <code>helloLabel</code> is an
+            <b>object</b> that you can send messages to and manipulate
+            on the screen. When you use <code>drawString()</code> all you
+            have are some pixels painted on the display.
+        </p>
+        <p> <img src="images/collage02.gif" class="right" alt="Hanna Koch collage.">
+            One way to think about ACM graphical programs it to compare it
+            to a collage, like <i>"Cut with the Dada Kitchen Knife through the Last
+            Weimar Beer-Belly Cultural Epoch in Germany"</i> by the artist
+            Hannah H&ouml;ch from the State National Gallery in Berlin.
+        </p>
+        <p> An artist like H&ouml;ch creates her work by assembling various
+            objects on a background canvas. As you can see from the example
+            here, those object can be geometrical shapes, newspaper clippings,
+            images from magazines, and so on.
+        </p>
+        <p> ACM graphics programs work in a similar way. Instead of magazine
+            clippings, and painted shapes, programmers create their applications
+            by placing graphical objects at various positions on the
+            screen area, called the <i>canvas</i>. In the ACM graphics package,
+            there are analogues for each of the graphical objects that a
+            collage artist might use. You can find a listing of these objects
+            in the class hierarchy at the very top of this lesson.
+        </p>
+    <h3>The Felt-Board Metaphor</h3>
+        <p> <img src="images/feltboard.gif" class="right" alt="A childrens felt-board">
+            When you were in elementary school, you probably played with a <b>felt-board</b>
+            or <b>flannel-graph</b>. With a felt board, a child (or teacher) can create
+            pictures by taking shapes of colored felt and then sticking them on
+            the large felt-board that acts as the background for the picture as
+            a whole.
+        </p>
+    <h2>Exploring GLabel</h2>
+        <p> The ACM graphical objects are <b>different</b> from the simple
+            shapes you'd use on a felt board, or the newspaper clippings that
+            an artist would use in a collage, though: the ACM shapes are
+            <b>active</b>&#8212;they actually know how to <b>do things</b>.
+        </p>
+        <p> To see what kinds of things you can do with <code>GLabel</code>
+            objects, like <code>helloLabel</code> head on over to the
+            <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/javadoc/student/index.html" target="_blank">
+            <b>ACM Library docmentation site</b></a>, and locate and click
+            the link for the <code>GLabel</code> class.<br>
+            <img src="images/acmg12.gif" alt="Looking up the docs for the GLabel class." class='inlineCenter'>
+        </p>
+        <div class='info'>
+        <p> As an alternative in DrJava, you can just place your cursor on the
+            word <code>GLabel</code> in your source code, and then use the hot-key
+            combination, Control+F6 to open the documentation for the
+            word under the cursor. This will launch the default browser on
+            your machine. You can find more information about the ACM JTF classes at:
+            <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/index.html" target="_blank">
+            <b>Eric Roberts' Stanford University JTF Web Site</b></a>.
+            You might also be interested in the
+            <a href='ACMTutorial.pdf' target='_blank'><b>ACM Tutorial</b></a>
+            (pdf) available here.
+        </p>
+
+        </div>
+    <h3>Changing Appearance</h3>
+        <p> There are three things you can do to change the appearance of
+            the labels you create:
+        </p>
+        <ul>
+            <li>change the font used by the label.</li>
+            <li>change the words themselves.</li>
+             <li>change the color that the words are displayed in.</li>
+       </ul>
+        <p> Each of these requires you to use a <b>mutator method</b> that
+            changes the state of your label object. Let's look briefly at
+            each of them.
+        </p>
+    <h4>Changing the Font</h4>
+        <p> You can change the font used by the label by creating a
+            <code>Font</code> object, and then calling your label's
+            <code>setFont()</code> method, like this:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            Font mediumFont = new Font("Sansserif", Font.PLAIN, 28);<br>
+            helloLabel.setFont(mediumFont);
+        </p>
+        <p> <img src="images/acmg13.gif" class="right" alt="Changing the font size.">
+            This displays your greeting in a 28-point Arial or Helvetica-style
+            font so your program looks like the screenshot shown to the right.
+        </p>
+        <p> With ACM graphical programs, you can <b>also</b>
+            use the <code>setFont()</code> method with
+            a <code>String</code> object, instead of a <code>Font</code>.
+            When you do this, the <code>String</code> needs to be in
+            the form: "family-style-size". For the style, instead of
+            using constants, like <code>Font.PLAIN</code>, just use
+            <b>bold</b>, <b>italic</b>, <b>plain</b>, or <b>bolditalic</b>.
+            The style portion is not case-sensitive, though, so you can
+            use <b>BOLD</b> or <b>Bold</b> if you like.
+        </p>
+        <p> <img src="images/acmg14.gif" class="right" alt="Changing the font using the convenience methods.">
+            If you want
+            to leave one of the three parts "as-is", then just use
+            an asterisk, like this: <code>helloLabel.setFont("*-bold-*);</code>.
+            Internally, this version of <code>setFont()</code>
+            uses Java's <code>Font decode()</code> method to
+            create an unnamed <code>Font</code> object from the <code>String</code>
+            you pass as an argument.
+        </p>
+        <p>Here's a line that changes the font to a 36-point bold,
+            serif-style font, as shown in the picture on the right.
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            helloLabel.setFont("Serif-bold-36");
+        </p>
+    <h4>Changing the Message</h4>
+        <p> <img src="images/acmg16.gif" class="right" alt="Changing the message that is displayed.">
+            You change the message that the label displays by providing
+            your object with a different <code>String</code> using the
+            <code>setLabel()</code> method.
+        </p>
+        <p> Here's a piece of code that changes the message to
+            represent the opening line from Alan Sherman's
+            classic novelty song about a little boy stuck at summer
+            camp and the letter he sends to his parents:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            helloLabel.setLabel("Hello Muddah");
+        </p>
+     <h4>Changing Colors</h4>
+        <p> <img src="images/acmg15.gif" class="right" alt="Changing the font color.">
+            You can change the color for the text that's displayed by sending
+            the <code>setColor()</code> message to the label, like this:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            helloLabel.setColor(Color.RED);
+        </p>
+        <p> Of course, you can use a custom <code>Color</code> object,
+            and not just the constant that I used here. Unlike many of
+            the other ACM Graphics objects, you can't change the background
+            color, only the foreground. (You can change the background color
+            of the entire canvas itself, of course.)
+        </p>
+        <div class='alert'>
+            <p>Remember, if you do change the colors or set the fonts, you'll
+                need to add the <code>import java.awt.*;</code> line to your program
+                so that the compiler can find the <code>Color</code> and <code>Font</code>
+                classes.
+            </P>
+        </div>
+   <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            ACM Graphics Programs Summary
+        </p>
+        <ul>
+            <li>Using the AWT <code>Graphics</code> methods to draw pictures
+                is simple, but <b>not very object-oriented</b>. Instead of
+                creating an <code>Oval</code> object and sending it messages,
+                we told a <code>Graphics</code> object to <b>draw an oval</b>.
+            </li>
+            <li>The ACM <code>graphics</code> package contains a collection of
+                easy-to-use and sophisticated <b>graphical objects</b> that allow
+                you to write graphical applications in an object-oriented style.
+            </li>
+            <li>To create an ACM GUI program, <code>import</code> both the
+                <code>acm.program</code> and the <code>acm.graphics</code>
+                packages, and then <code>extend</code> the <code>GraphicsProgram</code>
+                class. Your GUI app can have both an <code>init()</code> method
+                (like applets), and a <code>run()</code> method, like an ACM
+                console application.
+            </li>
+            <li> Instead of sequential IPO statements, an ACM GUI program <b>creates
+                independent graphical objects</b>, like <code>GLabel</code> and then
+                sends messages to those objects and responds to events generated
+                by those objects.
+            </li>
+            <li>Instead of being drawn in a <code>paint()</code> method, ACM
+                graphical objects are <b>added to the canvas</b> of the GUI
+                program. Writing an ACM GUI program is similar to creating a
+                <b>collage</b> or working with a child's <b>felt-board</b>.
+            </li>
+            <li>The <code>GLabel</code> class is used for textual output in
+                an ACM GUI app. When you create a <code>GLabel</code> object,
+                you can <b>specify its text and its initial location</b>, or, you
+                can simply supply the text and set the location later.
+            </li>
+            <li> Once you have created a graphical object, you use the
+                application's <code>add()</code> method to <b>place it on the
+                canvas</b>. You may specify a location when you add the
+                object to the screen.
+            </li>
+            <li> Use the different <code>GLabel</code> methods to change the
+                <b>font</b> used by the label, the <b>text</b> displayed by
+                the label, or the <b>color</b> of the letters themselves.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

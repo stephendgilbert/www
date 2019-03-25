@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>tele.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;map&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;utility&gt;</span>
+<span class="line">  4 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  5 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  8 </span>
+<span class="line">  9 </span><span class="com">/**</span>
+<span class="line"> 10 </span><span class="com">   TelephoneDirectory maintains a map of name/number pairs</span>
+<span class="line"> 11 </span><span class="com">   and an inverse multimap of numbers and names.</span>
+<span class="line"> 12 </span><span class="com">*/</span>
+<span class="line"> 13 </span><span class="kwc">class</span> TelephoneDirectory
+<span class="line"> 14 </span><span class="sym">{</span>
+<span class="line"> 15 </span><span class="kwc">public</span><span class="sym">:</span>
+<span class="line"> 16 </span>   <span class="com">/**</span>
+<span class="line"> 17 </span><span class="com">      Add a new name/number pair to database.</span>
+<span class="line"> 18 </span><span class="com">      &#64;param name the new name</span>
+<span class="line"> 19 </span><span class="com">      &#64;param number the new number</span>
+<span class="line"> 20 </span><span class="com">   */</span>
+<span class="line"> 21 </span>   <span class="kwb">void</span> <span class="kwd">add_entry</span><span class="sym">(</span>string name<span class="sym">,</span> <span class="kwb">int</span> number<span class="sym">);</span>
+<span class="line"> 22 </span>
+<span class="line"> 23 </span>   <span class="com">/**</span>
+<span class="line"> 24 </span><span class="com">      Find the number associated with a name.</span>
+<span class="line"> 25 </span><span class="com">      &#64;param name the name being searched</span>
+<span class="line"> 26 </span><span class="com">      &#64;return the associated number, or zero</span>
+<span class="line"> 27 </span><span class="com">      if not found in database</span>
+<span class="line"> 28 </span><span class="com">   */</span>
+<span class="line"> 29 </span>   <span class="kwb">int</span> <span class="kwd">find_entry</span><span class="sym">(</span>string name<span class="sym">);</span>
+<span class="line"> 30 </span>
+<span class="line"> 31 </span>   <span class="com">/**</span>
+<span class="line"> 32 </span><span class="com">      Find the names associated with a number.</span>
+<span class="line"> 33 </span><span class="com">      &#64;param number the number being searched</span>
+<span class="line"> 34 </span><span class="com">      &#64;return the associated names</span>
+<span class="line"> 35 </span><span class="com">   */</span>
+<span class="line"> 36 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> <span class="kwd">find_entries</span><span class="sym">(</span><span class="kwb">int</span> number<span class="sym">);</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span>   <span class="com">/**</span>
+<span class="line"> 39 </span><span class="com">      Print all entries.</span>
+<span class="line"> 40 </span><span class="com">   */</span>
+<span class="line"> 41 </span>   <span class="kwb">void</span> <span class="kwd">print_all</span><span class="sym">();</span>
+<span class="line"> 42 </span><span class="kwc">private</span><span class="sym">:</span>
+<span class="line"> 43 </span>   map<span class="sym">&lt;</span>string<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&gt;</span> database<span class="sym">;</span>
+<span class="line"> 44 </span>   multimap<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">,</span> string<span class="sym">&gt;</span> inverse_database<span class="sym">;</span>
+<span class="line"> 45 </span><span class="sym">};</span>
+<span class="line"> 46 </span>
+<span class="line"> 47 </span><span class="kwb">void</span> TelephoneDirectory<span class="sym">::</span><span class="kwd">add_entry</span><span class="sym">(</span>string name<span class="sym">,</span> <span class="kwb">int</span> number<span class="sym">)</span>
+<span class="line"> 48 </span><span class="sym">{</span>
+<span class="line"> 49 </span>   database<span class="sym">[</span>name<span class="sym">] =</span> number<span class="sym">;</span>
+<span class="line"> 50 </span>   inverse_database<span class="sym">.</span><span class="kwd">insert</span><span class="sym">(</span><span class="kwd">make_pair</span><span class="sym">(</span>number<span class="sym">,</span> name<span class="sym">));</span>
+<span class="line"> 51 </span><span class="sym">}</span>
+<span class="line"> 52 </span>
+<span class="line"> 53 </span><span class="kwb">int</span> TelephoneDirectory<span class="sym">::</span><span class="kwd">find_entry</span><span class="sym">(</span>string name<span class="sym">)</span>
+<span class="line"> 54 </span><span class="sym">{</span>
+<span class="line"> 55 </span>   map<span class="sym">&lt;</span>string<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&gt;::</span>iterator p <span class="sym">=</span> database<span class="sym">.</span><span class="kwd">find</span><span class="sym">(</span>name<span class="sym">);</span>
+<span class="line"> 56 </span>   <span class="kwa">if</span> <span class="sym">(</span>p <span class="sym">==</span> database<span class="sym">.</span><span class="kwd">end</span><span class="sym">())</span>
+<span class="line"> 57 </span>      <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span> <span class="slc">// not found</span>
+<span class="line"> 58 </span>   <span class="kwa">else</span>
+<span class="line"> 59 </span>      <span class="kwa">return</span> p<span class="sym">-&gt;</span>second<span class="sym">;</span>
+<span class="line"> 60 </span><span class="sym">}</span>
+<span class="line"> 61 </span>
+<span class="line"> 62 </span>vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> TelephoneDirectory<span class="sym">::</span><span class="kwd">find_entries</span><span class="sym">(</span><span class="kwb">int</span> number<span class="sym">)</span>
+<span class="line"> 63 </span><span class="sym">{</span>
+<span class="line"> 64 </span>   multimap<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">,</span> string<span class="sym">&gt;::</span>iterator lower
+<span class="line"> 65 </span>      <span class="sym">=</span> inverse_database<span class="sym">.</span><span class="kwd">lower_bound</span><span class="sym">(</span>number<span class="sym">);</span>
+<span class="line"> 66 </span>   multimap<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">,</span> string<span class="sym">&gt;::</span>iterator upper
+<span class="line"> 67 </span>      <span class="sym">=</span> inverse_database<span class="sym">.</span><span class="kwd">upper_bound</span><span class="sym">(</span>number<span class="sym">);</span>
+<span class="line"> 68 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> result<span class="sym">;</span>
+<span class="line"> 69 </span>
+<span class="line"> 70 </span>   <span class="kwa">for</span> <span class="sym">(</span>multimap<span class="sym">&lt;</span><span class="kwb">int</span><span class="sym">,</span> string<span class="sym">&gt;::</span>iterator pos <span class="sym">=</span> lower<span class="sym">;</span>
+<span class="line"> 71 </span>        pos <span class="sym">!=</span> upper<span class="sym">;</span> pos<span class="sym">++)</span>
+<span class="line"> 72 </span>      result<span class="sym">.</span><span class="kwd">push_back</span><span class="sym">(</span>pos<span class="sym">-&gt;</span>second<span class="sym">);</span>
+<span class="line"> 73 </span>   <span class="kwa">return</span> result<span class="sym">;</span>
+<span class="line"> 74 </span><span class="sym">}</span>
+<span class="line"> 75 </span>
+<span class="line"> 76 </span><span class="kwb">void</span> TelephoneDirectory<span class="sym">::</span><span class="kwd">print_all</span><span class="sym">()</span>
+<span class="line"> 77 </span><span class="sym">{</span>
+<span class="line"> 78 </span>   <span class="kwa">for</span> <span class="sym">(</span>map<span class="sym">&lt;</span>string<span class="sym">,</span> <span class="kwb">int</span><span class="sym">&gt;::</span>iterator pos <span class="sym">=</span> database<span class="sym">.</span><span class="kwd">begin</span><span class="sym">();</span>
+<span class="line"> 79 </span>        pos <span class="sym">!=</span> database<span class="sym">.</span><span class="kwd">end</span><span class="sym">();</span> pos<span class="sym">++)</span>
+<span class="line"> 80 </span>   <span class="sym">{</span>
+<span class="line"> 81 </span>      cout <span class="sym">&lt;&lt;</span> pos<span class="sym">-&gt;</span>first <span class="sym">&lt;&lt;</span> <span class="str">&quot;: &quot;</span> <span class="sym">&lt;&lt;</span> pos<span class="sym">-&gt;</span>second <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 82 </span>   <span class="sym">}</span>
+<span class="line"> 83 </span><span class="sym">}</span>
+<span class="line"> 84 </span>
+<span class="line"> 85 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 86 </span><span class="sym">{</span>
+<span class="line"> 87 </span>   TelephoneDirectory data<span class="sym">;</span>
+<span class="line"> 88 </span>   data<span class="sym">.</span><span class="kwd">add_entry</span><span class="sym">(</span><span class="str">&quot;Fred&quot;</span><span class="sym">,</span> <span class="num">7235591</span><span class="sym">);</span>
+<span class="line"> 89 </span>   data<span class="sym">.</span><span class="kwd">add_entry</span><span class="sym">(</span><span class="str">&quot;Mary&quot;</span><span class="sym">,</span> <span class="num">3841212</span><span class="sym">);</span>
+<span class="line"> 90 </span>   data<span class="sym">.</span><span class="kwd">add_entry</span><span class="sym">(</span><span class="str">&quot;Sarah&quot;</span><span class="sym">,</span> <span class="num">3841212</span><span class="sym">);</span>
+<span class="line"> 91 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Number for Fred: &quot;</span> <span class="sym">&lt;&lt;</span> data<span class="sym">.</span><span class="kwd">find_entry</span><span class="sym">(</span><span class="str">&quot;Fred&quot;</span><span class="sym">) &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 92 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> names <span class="sym">=</span> data<span class="sym">.</span><span class="kwd">find_entries</span><span class="sym">(</span><span class="num">3841212</span><span class="sym">);</span>
+<span class="line"> 93 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Names for 3841212: &quot;</span><span class="sym">;</span>
+<span class="line"> 94 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> names<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 95 </span>      cout <span class="sym">&lt;&lt;</span> names<span class="sym">[</span>i<span class="sym">] &lt;&lt;</span> <span class="str">&quot; &quot;</span><span class="sym">;</span>
+<span class="line"> 96 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 97 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;All names and numbers:</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 98 </span>   data<span class="sym">.</span><span class="kwd">print_all</span><span class="sym">();</span>
+<span class="line"> 99 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line">100 </span><span class="sym">}</span>
+<span class="line">101 </span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

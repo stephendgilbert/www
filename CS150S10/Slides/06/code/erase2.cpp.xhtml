@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>erase2.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;string&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;vector&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="com">/**</span>
+<span class="line">  8 </span><span class="com">   Removes an element from an ordered vector.</span>
+<span class="line">  9 </span><span class="com">   &#64;param values a vector</span>
+<span class="line"> 10 </span><span class="com">   &#64;param pos the position of the element to erase</span>
+<span class="line"> 11 </span><span class="com">*/</span>
+<span class="line"> 12 </span><span class="kwb">void</span> <span class="kwd">erase</span><span class="sym">(</span>vector<span class="sym">&lt;</span>string<span class="sym">&gt;&amp;</span> values<span class="sym">,</span> <span class="kwb">int</span> pos<span class="sym">)</span>
+<span class="line"> 13 </span><span class="sym">{</span>
+<span class="line"> 14 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> pos<span class="sym">;</span> i <span class="sym">&lt;</span> values<span class="sym">.</span><span class="kwd">size</span><span class="sym">() -</span> <span class="num">1</span><span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 15 </span>      values<span class="sym">[</span>i<span class="sym">] =</span> values<span class="sym">[</span>i <span class="sym">+</span> <span class="num">1</span><span class="sym">];</span>
+<span class="line"> 16 </span>   values<span class="sym">.</span><span class="kwd">pop_back</span><span class="sym">();</span>
+<span class="line"> 17 </span><span class="sym">}</span>
+<span class="line"> 18 </span>
+<span class="line"> 19 </span><span class="com">/**</span>
+<span class="line"> 20 </span><span class="com">   Prints all elements in a vector.</span>
+<span class="line"> 21 </span><span class="com">   &#64;param values the vector to print</span>
+<span class="line"> 22 </span><span class="com">*/</span>
+<span class="line"> 23 </span><span class="kwb">void</span> <span class="kwd">print</span><span class="sym">(</span>vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> values<span class="sym">)</span>
+<span class="line"> 24 </span><span class="sym">{</span>
+<span class="line"> 25 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> values<span class="sym">.</span><span class="kwd">size</span><span class="sym">();</span> i<span class="sym">++)</span>
+<span class="line"> 26 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;[&quot;</span> <span class="sym">&lt;&lt;</span> i <span class="sym">&lt;&lt;</span> <span class="str">&quot;] &quot;</span> <span class="sym">&lt;&lt;</span> values<span class="sym">[</span>i<span class="sym">] &lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 27 </span><span class="sym">}</span>
+<span class="line"> 28 </span>
+<span class="line"> 29 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 30 </span><span class="sym">{</span>
+<span class="line"> 31 </span>   vector<span class="sym">&lt;</span>string<span class="sym">&gt;</span> <span class="kwd">staff</span><span class="sym">(</span><span class="num">5</span><span class="sym">);</span>
+<span class="line"> 32 </span>   staff<span class="sym">[</span><span class="num">0</span><span class="sym">] =</span> <span class="str">&quot;Cracker, Carl&quot;</span><span class="sym">;</span>
+<span class="line"> 33 </span>   staff<span class="sym">[</span><span class="num">1</span><span class="sym">] =</span> <span class="str">&quot;Hacker, Harry&quot;</span><span class="sym">;</span>
+<span class="line"> 34 </span>   staff<span class="sym">[</span><span class="num">2</span><span class="sym">] =</span> <span class="str">&quot;Lam, Larry&quot;</span><span class="sym">;</span>
+<span class="line"> 35 </span>   staff<span class="sym">[</span><span class="num">3</span><span class="sym">] =</span> <span class="str">&quot;Reindeer, Rudolf&quot;</span><span class="sym">;</span>
+<span class="line"> 36 </span>   staff<span class="sym">[</span><span class="num">4</span><span class="sym">] =</span> <span class="str">&quot;Sandman, Susan&quot;</span><span class="sym">;</span>
+<span class="line"> 37 </span>   <span class="kwd">print</span><span class="sym">(</span>staff<span class="sym">);</span>
+<span class="line"> 38 </span>
+<span class="line"> 39 </span>   <span class="kwb">int</span> pos<span class="sym">;</span>
+<span class="line"> 40 </span>   cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;Remove which element? &quot;</span><span class="sym">;</span>
+<span class="line"> 41 </span>   cin <span class="sym">&gt;&gt;</span> pos<span class="sym">;</span>
+<span class="line"> 42 </span>
+<span class="line"> 43 </span>   <span class="kwd">erase</span><span class="sym">(</span>staff<span class="sym">,</span> pos<span class="sym">);</span>
+<span class="line"> 44 </span>   <span class="kwd">print</span><span class="sym">(</span>staff<span class="sym">);</span>
+<span class="line"> 45 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 46 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

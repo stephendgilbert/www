@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>heap.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl"><pre class="hl"><span class="hl line">  1 </span><span class="hl dir">#include &lt;iostream&gt;</span>
+<span class="hl line">  2 </span><span class="hl dir">#include &lt;vector&gt;</span>
+<span class="hl line">  3 </span>
+<span class="hl line">  4 </span><span class="hl kwa">using namespace</span> std<span class="hl sym">;</span>
+<span class="hl line">  5 </span>
+<span class="hl line">  6 </span><span class="hl com">/**</span>
+<span class="hl line">  7 </span><span class="hl com">   This class implements a heap.</span>
+<span class="hl line">  8 </span><span class="hl com">*/</span>
+<span class="hl line">  9 </span><span class="hl kwc">class</span> Heap
+<span class="hl line"> 10 </span><span class="hl sym">{</span>
+<span class="hl line"> 11 </span><span class="hl kwc">public</span><span class="hl sym">:</span>
+<span class="hl line"> 12 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 13 </span><span class="hl com">      Constructs an empty heap.</span>
+<span class="hl line"> 14 </span><span class="hl com">   */</span>
+<span class="hl line"> 15 </span>   <span class="hl kwd">Heap</span><span class="hl sym">();</span>
+<span class="hl line"> 16 </span>
+<span class="hl line"> 17 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 18 </span><span class="hl com">      Adds a new element to this heap.</span>
+<span class="hl line"> 19 </span><span class="hl com">      &#64;param new_element the element to add</span>
+<span class="hl line"> 20 </span><span class="hl com">   */</span>
+<span class="hl line"> 21 </span>   <span class="hl kwb">void</span> <span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwb">int</span> new_element<span class="hl sym">);</span>
+<span class="hl line"> 22 </span>
+<span class="hl line"> 23 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 24 </span><span class="hl com">      Gets the maximum element stored in this heap.</span>
+<span class="hl line"> 25 </span><span class="hl com">      &#64;return the maximum element</span>
+<span class="hl line"> 26 </span><span class="hl com">   */</span>
+<span class="hl line"> 27 </span>   <span class="hl kwb">int</span> <span class="hl kwd">top</span><span class="hl sym">()</span> <span class="hl kwb">const</span><span class="hl sym">;</span>
+<span class="hl line"> 28 </span>
+<span class="hl line"> 29 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 30 </span><span class="hl com">      Removes the maximum element from this heap.</span>
+<span class="hl line"> 31 </span><span class="hl com">   */</span>
+<span class="hl line"> 32 </span>   <span class="hl kwb">void</span> <span class="hl kwd">pop</span><span class="hl sym">();</span>
+<span class="hl line"> 33 </span>
+<span class="hl line"> 34 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 35 </span><span class="hl com">      Returns the number of elements in this heap.</span>
+<span class="hl line"> 36 </span><span class="hl com">   */</span>
+<span class="hl line"> 37 </span>   <span class="hl kwb">int</span> <span class="hl kwd">size</span><span class="hl sym">()</span> <span class="hl kwb">const</span><span class="hl sym">;</span>
+<span class="hl line"> 38 </span><span class="hl kwc">private</span><span class="hl sym">:</span>
+<span class="hl line"> 39 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 40 </span><span class="hl com">      Turns the tree back into a heap, provided only the root</span>
+<span class="hl line"> 41 </span><span class="hl com">      node violates the heap condition.</span>
+<span class="hl line"> 42 </span><span class="hl com">   */</span>
+<span class="hl line"> 43 </span>   <span class="hl kwb">void</span> <span class="hl kwd">fix_heap</span><span class="hl sym">();</span>
+<span class="hl line"> 44 </span>
+<span class="hl line"> 45 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 46 </span><span class="hl com">      Returns the index of the left child.</span>
+<span class="hl line"> 47 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 48 </span><span class="hl com">      &#64;return the index of the left child of the given node</span>
+<span class="hl line"> 49 </span><span class="hl com">   */</span>
+<span class="hl line"> 50 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_left_child_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 51 </span>
+<span class="hl line"> 52 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 53 </span><span class="hl com">      Returns the index of the right child.</span>
+<span class="hl line"> 54 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 55 </span><span class="hl com">      &#64;return the index of the right child of the given node</span>
+<span class="hl line"> 56 </span><span class="hl com">   */</span>
+<span class="hl line"> 57 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_right_child_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 58 </span>
+<span class="hl line"> 59 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 60 </span><span class="hl com">      Returns the index of the parent.</span>
+<span class="hl line"> 61 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 62 </span><span class="hl com">      &#64;return the index of the parent of the given node</span>
+<span class="hl line"> 63 </span><span class="hl com">   */</span>
+<span class="hl line"> 64 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_parent_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 65 </span>
+<span class="hl line"> 66 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 67 </span><span class="hl com">      Returns the value of the left child.</span>
+<span class="hl line"> 68 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 69 </span><span class="hl com">      &#64;return the value of the left child of the given node</span>
+<span class="hl line"> 70 </span><span class="hl com">   */</span>
+<span class="hl line"> 71 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_left_child</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 72 </span>
+<span class="hl line"> 73 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 74 </span><span class="hl com">      Returns the value of the right child.</span>
+<span class="hl line"> 75 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 76 </span><span class="hl com">      &#64;return the value of the right child of the given node</span>
+<span class="hl line"> 77 </span><span class="hl com">   */</span>
+<span class="hl line"> 78 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_right_child</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 79 </span>
+<span class="hl line"> 80 </span>   <span class="hl com">/**</span>
+<span class="hl line"> 81 </span><span class="hl com">      Returns the value of the parent.</span>
+<span class="hl line"> 82 </span><span class="hl com">      &#64;param index the index of a node in this heap</span>
+<span class="hl line"> 83 </span><span class="hl com">      &#64;return the value of the parent of the given node</span>
+<span class="hl line"> 84 </span><span class="hl com">   */</span>
+<span class="hl line"> 85 </span>   <span class="hl kwb">int</span> <span class="hl kwd">get_parent</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">);</span>
+<span class="hl line"> 86 </span>
+<span class="hl line"> 87 </span>   vector<span class="hl sym">&lt;</span><span class="hl kwb">int</span><span class="hl sym">&gt;</span> elements<span class="hl sym">;</span>
+<span class="hl line"> 88 </span><span class="hl sym">};</span>
+<span class="hl line"> 89 </span>
+<span class="hl line"> 90 </span>Heap<span class="hl sym">::</span><span class="hl kwd">Heap</span><span class="hl sym">()</span>
+<span class="hl line"> 91 </span><span class="hl sym">{</span>
+<span class="hl line"> 92 </span>   elements<span class="hl sym">.</span><span class="hl kwd">push_back</span><span class="hl sym">(</span><span class="hl num">0</span><span class="hl sym">);</span>
+<span class="hl line"> 93 </span><span class="hl sym">}</span>
+<span class="hl line"> 94 </span>
+<span class="hl line"> 95 </span><span class="hl kwb">void</span> Heap<span class="hl sym">::</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl kwb">int</span> new_element<span class="hl sym">)</span>
+<span class="hl line"> 96 </span><span class="hl sym">{</span>
+<span class="hl line"> 97 </span>   <span class="hl slc">// Add a new leaf</span>
+<span class="hl line"> 98 </span>   elements<span class="hl sym">.</span><span class="hl kwd">push_back</span><span class="hl sym">(</span><span class="hl num">0</span><span class="hl sym">);</span>
+<span class="hl line"> 99 </span>   <span class="hl kwb">int</span> index <span class="hl sym">=</span> elements<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() -</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">100 </span>
+<span class="hl line">101 </span>   <span class="hl slc">// Demote parents that are smaller than the new element</span>
+<span class="hl line">102 </span>   <span class="hl kwa">while</span> <span class="hl sym">(</span>index <span class="hl sym">&gt;</span> <span class="hl num">1</span>
+<span class="hl line">103 </span>      <span class="hl sym">&amp;&amp;</span> <span class="hl kwd">get_parent</span><span class="hl sym">(</span>index<span class="hl sym">) &lt;</span> new_element<span class="hl sym">)</span>
+<span class="hl line">104 </span>   <span class="hl sym">{</span>
+<span class="hl line">105 </span>      elements<span class="hl sym">[</span>index<span class="hl sym">] =</span>  <span class="hl kwd">get_parent</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">106 </span>      index <span class="hl sym">=</span> <span class="hl kwd">get_parent_index</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">107 </span>   <span class="hl sym">}</span>
+<span class="hl line">108 </span>
+<span class="hl line">109 </span>   <span class="hl slc">// Store the new element into the vacant slot</span>
+<span class="hl line">110 </span>   elements<span class="hl sym">[</span>index<span class="hl sym">] =</span> new_element<span class="hl sym">;</span>
+<span class="hl line">111 </span><span class="hl sym">}</span>
+<span class="hl line">112 </span>
+<span class="hl line">113 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">top</span><span class="hl sym">()</span> <span class="hl kwb">const</span>
+<span class="hl line">114 </span><span class="hl sym">{</span>
+<span class="hl line">115 </span>   <span class="hl kwa">return</span> elements<span class="hl sym">[</span><span class="hl num">1</span><span class="hl sym">];</span>
+<span class="hl line">116 </span><span class="hl sym">}</span>
+<span class="hl line">117 </span>
+<span class="hl line">118 </span><span class="hl kwb">void</span> Heap<span class="hl sym">::</span><span class="hl kwd">pop</span><span class="hl sym">()</span>
+<span class="hl line">119 </span><span class="hl sym">{</span>
+<span class="hl line">120 </span>   <span class="hl slc">// Remove last element</span>
+<span class="hl line">121 </span>   <span class="hl kwb">int</span> last_index <span class="hl sym">=</span> elements<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() -</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">122 </span>   <span class="hl kwb">int</span> last <span class="hl sym">=</span> elements<span class="hl sym">[</span>last_index<span class="hl sym">];</span>
+<span class="hl line">123 </span>   elements<span class="hl sym">.</span><span class="hl kwd">pop_back</span><span class="hl sym">();</span>
+<span class="hl line">124 </span>
+<span class="hl line">125 </span>   <span class="hl kwa">if</span> <span class="hl sym">(</span>last_index <span class="hl sym">&gt;</span> <span class="hl num">1</span><span class="hl sym">)</span>
+<span class="hl line">126 </span>   <span class="hl sym">{</span>
+<span class="hl line">127 </span>      elements<span class="hl sym">[</span><span class="hl num">1</span><span class="hl sym">] =</span> last<span class="hl sym">;</span>
+<span class="hl line">128 </span>      <span class="hl kwd">fix_heap</span><span class="hl sym">();</span>
+<span class="hl line">129 </span>   <span class="hl sym">}</span>
+<span class="hl line">130 </span><span class="hl sym">}</span>
+<span class="hl line">131 </span>
+<span class="hl line">132 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">size</span><span class="hl sym">()</span> <span class="hl kwb">const</span>
+<span class="hl line">133 </span><span class="hl sym">{</span>
+<span class="hl line">134 </span>   <span class="hl kwa">return</span> elements<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() -</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">135 </span><span class="hl sym">}</span>
+<span class="hl line">136 </span>
+<span class="hl line">137 </span><span class="hl kwb">void</span> Heap<span class="hl sym">::</span><span class="hl kwd">fix_heap</span><span class="hl sym">()</span>
+<span class="hl line">138 </span><span class="hl sym">{</span>
+<span class="hl line">139 </span>   <span class="hl kwb">int</span> root <span class="hl sym">=</span> elements<span class="hl sym">[</span><span class="hl num">1</span><span class="hl sym">];</span>
+<span class="hl line">140 </span>
+<span class="hl line">141 </span>   <span class="hl kwb">int</span> last_index <span class="hl sym">=</span> elements<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() -</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">142 </span>   <span class="hl slc">// Promote children of removed root while they are larger than last</span>
+<span class="hl line">143 </span>
+<span class="hl line">144 </span>   <span class="hl kwb">int</span> index <span class="hl sym">=</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">145 </span>   <span class="hl kwb">bool</span> more <span class="hl sym">=</span> <span class="hl kwa">true</span><span class="hl sym">;</span>
+<span class="hl line">146 </span>   <span class="hl kwa">while</span> <span class="hl sym">(</span>more<span class="hl sym">)</span>
+<span class="hl line">147 </span>   <span class="hl sym">{</span>
+<span class="hl line">148 </span>      <span class="hl kwb">int</span> child_index <span class="hl sym">=</span> <span class="hl kwd">get_left_child_index</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">149 </span>      <span class="hl kwa">if</span> <span class="hl sym">(</span>child_index <span class="hl sym">&lt;=</span> last_index<span class="hl sym">)</span>
+<span class="hl line">150 </span>      <span class="hl sym">{</span>
+<span class="hl line">151 </span>         <span class="hl slc">// Get larger child</span>
+<span class="hl line">152 </span>
+<span class="hl line">153 </span>         <span class="hl slc">// Get left child first</span>
+<span class="hl line">154 </span>         <span class="hl kwb">int</span> child <span class="hl sym">=</span> <span class="hl kwd">get_left_child</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">155 </span>
+<span class="hl line">156 </span>         <span class="hl slc">// Use right child instead if it is larger</span>
+<span class="hl line">157 </span>         <span class="hl kwa">if</span> <span class="hl sym">(</span><span class="hl kwd">get_right_child_index</span><span class="hl sym">(</span>index<span class="hl sym">) &lt;=</span> last_index
+<span class="hl line">158 </span>            <span class="hl sym">&amp;&amp;</span> <span class="hl kwd">get_right_child</span><span class="hl sym">(</span>index<span class="hl sym">) &gt;</span> child<span class="hl sym">)</span>
+<span class="hl line">159 </span>         <span class="hl sym">{</span>
+<span class="hl line">160 </span>            child_index <span class="hl sym">=</span> <span class="hl kwd">get_right_child_index</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">161 </span>            child <span class="hl sym">=</span> <span class="hl kwd">get_right_child</span><span class="hl sym">(</span>index<span class="hl sym">);</span>
+<span class="hl line">162 </span>         <span class="hl sym">}</span>
+<span class="hl line">163 </span>
+<span class="hl line">164 </span>         <span class="hl slc">// Check if smaller child is larger than root</span>
+<span class="hl line">165 </span>         <span class="hl kwa">if</span> <span class="hl sym">(</span>child <span class="hl sym">&gt;</span> root<span class="hl sym">)</span>
+<span class="hl line">166 </span>         <span class="hl sym">{</span>
+<span class="hl line">167 </span>            <span class="hl slc">// Promote child</span>
+<span class="hl line">168 </span>            elements<span class="hl sym">[</span>index<span class="hl sym">] =</span> child<span class="hl sym">;</span>
+<span class="hl line">169 </span>            index <span class="hl sym">=</span> child_index<span class="hl sym">;</span>
+<span class="hl line">170 </span>         <span class="hl sym">}</span>
+<span class="hl line">171 </span>         <span class="hl kwa">else</span>
+<span class="hl line">172 </span>         <span class="hl sym">{</span>
+<span class="hl line">173 </span>            <span class="hl slc">// Root is larger than both children</span>
+<span class="hl line">174 </span>            more <span class="hl sym">=</span> <span class="hl kwa">false</span><span class="hl sym">;</span>
+<span class="hl line">175 </span>         <span class="hl sym">}</span>
+<span class="hl line">176 </span>      <span class="hl sym">}</span>
+<span class="hl line">177 </span>      <span class="hl kwa">else</span>
+<span class="hl line">178 </span>      <span class="hl sym">{</span>
+<span class="hl line">179 </span>         <span class="hl slc">// No children</span>
+<span class="hl line">180 </span>         more <span class="hl sym">=</span> <span class="hl kwa">false</span><span class="hl sym">;</span>
+<span class="hl line">181 </span>      <span class="hl sym">}</span>
+<span class="hl line">182 </span>   <span class="hl sym">}</span>
+<span class="hl line">183 </span>
+<span class="hl line">184 </span>   <span class="hl slc">// Store root element in vacant slot</span>
+<span class="hl line">185 </span>   elements<span class="hl sym">[</span>index<span class="hl sym">] =</span> root<span class="hl sym">;</span>
+<span class="hl line">186 </span><span class="hl sym">}</span>
+<span class="hl line">187 </span>
+<span class="hl line">188 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_left_child_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">189 </span><span class="hl sym">{</span>
+<span class="hl line">190 </span>   <span class="hl kwa">return</span> <span class="hl num">2</span> <span class="hl sym">*</span> index<span class="hl sym">;</span>
+<span class="hl line">191 </span><span class="hl sym">}</span>
+<span class="hl line">192 </span>
+<span class="hl line">193 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_right_child_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">194 </span><span class="hl sym">{</span>
+<span class="hl line">195 </span>   <span class="hl kwa">return</span> <span class="hl num">2</span> <span class="hl sym">*</span> index <span class="hl sym">+</span> <span class="hl num">1</span><span class="hl sym">;</span>
+<span class="hl line">196 </span><span class="hl sym">}</span>
+<span class="hl line">197 </span>
+<span class="hl line">198 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_parent_index</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">199 </span><span class="hl sym">{</span>
+<span class="hl line">200 </span>   <span class="hl kwa">return</span> index <span class="hl sym">/</span> <span class="hl num">2</span><span class="hl sym">;</span>
+<span class="hl line">201 </span><span class="hl sym">}</span>
+<span class="hl line">202 </span>
+<span class="hl line">203 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_left_child</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">204 </span><span class="hl sym">{</span>
+<span class="hl line">205 </span>   <span class="hl kwa">return</span> elements<span class="hl sym">[</span><span class="hl num">2</span> <span class="hl sym">*</span> index<span class="hl sym">];</span>
+<span class="hl line">206 </span><span class="hl sym">}</span>
+<span class="hl line">207 </span>
+<span class="hl line">208 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_right_child</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">209 </span><span class="hl sym">{</span>
+<span class="hl line">210 </span>   <span class="hl kwa">return</span> elements<span class="hl sym">[</span><span class="hl num">2</span> <span class="hl sym">*</span> index <span class="hl sym">+</span> <span class="hl num">1</span><span class="hl sym">];</span>
+<span class="hl line">211 </span><span class="hl sym">}</span>
+<span class="hl line">212 </span>
+<span class="hl line">213 </span><span class="hl kwb">int</span> Heap<span class="hl sym">::</span><span class="hl kwd">get_parent</span><span class="hl sym">(</span><span class="hl kwb">int</span> index<span class="hl sym">)</span>
+<span class="hl line">214 </span><span class="hl sym">{</span>
+<span class="hl line">215 </span>   <span class="hl kwa">return</span> elements<span class="hl sym">[</span>index <span class="hl sym">/</span> <span class="hl num">2</span><span class="hl sym">];</span>
+<span class="hl line">216 </span><span class="hl sym">}</span>
+<span class="hl line">217 </span>
+<span class="hl line">218 </span><span class="hl kwb">int</span> <span class="hl kwd">main</span><span class="hl sym">()</span>
+<span class="hl line">219 </span><span class="hl sym">{</span>
+<span class="hl line">220 </span>   Heap tasks<span class="hl sym">;</span>
+<span class="hl line">221 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">2</span><span class="hl sym">);</span>
+<span class="hl line">222 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">3</span><span class="hl sym">);</span>
+<span class="hl line">223 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">2</span><span class="hl sym">);</span>
+<span class="hl line">224 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">1</span><span class="hl sym">);</span>
+<span class="hl line">225 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">4</span><span class="hl sym">);</span>
+<span class="hl line">226 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">9</span><span class="hl sym">);</span>
+<span class="hl line">227 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">1</span><span class="hl sym">);</span>
+<span class="hl line">228 </span>   tasks<span class="hl sym">.</span><span class="hl kwd">push</span><span class="hl sym">(</span><span class="hl num">5</span><span class="hl sym">);</span>
+<span class="hl line">229 </span>
+<span class="hl line">230 </span>   <span class="hl kwa">while</span> <span class="hl sym">(</span>tasks<span class="hl sym">.</span><span class="hl kwd">size</span><span class="hl sym">() &gt;</span> <span class="hl num">0</span><span class="hl sym">)</span>
+<span class="hl line">231 </span>   <span class="hl sym">{</span>
+<span class="hl line">232 </span>      <span class="hl kwb">int</span> task <span class="hl sym">=</span> tasks<span class="hl sym">.</span><span class="hl kwd">top</span><span class="hl sym">();</span>
+<span class="hl line">233 </span>      tasks<span class="hl sym">.</span><span class="hl kwd">pop</span><span class="hl sym">();</span>
+<span class="hl line">234 </span>      cout <span class="hl sym">&lt;&lt;</span> task <span class="hl sym">&lt;&lt;</span> <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl sym">;</span>
+<span class="hl line">235 </span>   <span class="hl sym">}</span>
+<span class="hl line">236 </span>   <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl sym">;</span>
+<span class="hl line">237 </span><span class="hl sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.6.10, http://www.andre-simon.de/-->

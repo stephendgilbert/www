@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>9.3&mdash;Nesting and Limits </title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 9.3</p>
+        <p id='lessonTitle'>Nesting and Limits</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class='cap'>W</span>hen you put one <code>if</code> statement inside the body of
+            another <code>if</code> statement</b>, you have a <b>nested</b>
+            <code>if</code> statement. You can do the same thing with loops.
+            As you'd expect, these are called <code>nested loops</code>.
+            When you stick one loop inside another loop, the first loop
+            encountered is called the <code>outer</code> loop, and the
+            next is called the <code>inner</code> loop.
+        </p>
+        <p> Here's an example of a pair of nested <code>for</code>
+            loops that print a multiplication table. This is taken from
+            the console application, <b>TimesTable.java</b>:<br>
+            <img src="images/tt01.png" class="inlineCenter" alt="The Times nested loop.">
+            With a the nested loops shown here, every repetition
+            of the outer loop (1) contains ten repetitions of the inner loop (2). Every time
+            the outer loop goes round once, the inner loop goes through it's entire
+            set of repetitions.
+        </p>
+        <p> Notice that inside the inner loop, each value of <code>product</code>
+            is printed to the console window using the <code>print()</code>
+            statement (so each value appears on the same line), and formatted
+            using <code>printf()</code>, using a field width specifier,
+            so that both the small numbers and the large numbers take the same
+            amount of space on the line, and so that the columns line up.
+        </p>
+        <p> After the inner loop finishes, the outer loop contains one more
+            statement, a plain <code>println()</code> that advances the
+            cursor to the next line.
+        </p>
+        <div class='info'>
+        <p>Often, you'll find it easier to understand a
+            nested loop, by reading it "from the inside out". Figure out
+            what the inner loop does first. Then, for every repetition
+            of the outer loop, perform the inner loop actions.
+        </p>
+        </div>
+        <p> Here's what the program looks like when you run it:
+            <img src="images/tt02.png" alt="Running the TimesTable app" class="inlineCenter">
+        </p>
+    <h3>Improvements</h3>
+        <p> A first improvement would be to label both the rows and
+            columns in our table. Fortunately, that's pretty easy
+            because we can use the counter variables and some "constants"
+            like this:<br>
+            <img src="images/tt03.png" alt="TimesTable app with headings" class="inlineCenter">
+            Notice that:
+        </p>
+        <ol>
+            <li class="d">I've replaced the literal <b>magic number</b> with
+                a variable (<code>limit</code>) and then used that variable
+                over and over. (I could have made it a <code>static</code> class-wide
+                <b>constant</b>, but I'm going to make the program interactive in a
+                sec, so I just made it a local variable for now.)
+            </li>
+            <li class="d">I've addded a set of <b>sequential</b> <code>for</code>
+                loops to print the column labels and the separator that
+                appears below it.
+            </li>
+            <li class="d">I've added a single <code>print()</code> statement,
+                <b>inside the outer loop</b> and <b>before the inner loop</b>
+                that is used to print the <b>row labels</b>.
+            </li>
+        </ol>
+        <p> Here's what the program looks like after this improvement:<br>
+            <img src="images/tt04.png" alt="RunningTimesTable app with headings" class="inlineCenter">
+        </p>
+    <h4>Interactive Times Table</h4>
+        <p> We can make the program <b>interactive</b> by just asking
+            the user for the upper limit, like this:<br>
+            <img src="images/tt05.png" alt="TimesTable app with user input." class="inlineCenter">
+            Here's what that looks like when it runs with a limit of 12:<br>
+            <img src="images/tt06.png" alt="Running TimesTable app with user input." class="inlineCenter">
+        </p>
+    <h4>Eliminate Redundancy</h4>
+        <p> Finally, notice that each product in the table <b>appears
+            twice</b>: once when we multiply the row by the column and
+            again when we multiply the column by the row. We can
+            eliminate this redundancy by <b>using the outer loop counter
+            as the inner loop limit</b>.
+        </p>
+        <p> In other words, the inner loop will no longer go from
+            1 to <code>limit</code> each time, but will go from
+            1 to <code>outer</code>; the number of inner loop repetitions
+            will vary in response to the outer loop counter variable,
+            like this:<br>
+            <img src="images/tt07.png" alt="TimesTable app with single product." class="inlineCenter">
+        </p>
+        <p> Here's what that looks like when it runs:<br>
+            <img src="images/tt08.png" alt="Running TimesTable app with single product." class="inlineCenter">
+        </p>
+    <h3>Labeled break and continue</h3>
+        <p> One of the problems with <b>nested loops</b> is that the
+            <code>break</code> and <code>continue</code> statements stop
+            "working." Actually, they don't stop working, exactly; they just
+            don't work quite the way you'd like. Here's the problem.
+        </p>
+        <p> Both <code>break</code> and <code>continue</code> work on
+            the <b>current</b> loop. That means, when you are in an inner
+            loop, a <code>break</code> statement only exits the inner loop,
+            it doesn't get you out of the outer loop. Java has a facility
+            to address this deficiency, called the <b>labeled break</b> and
+            the <b>labeled continue</b>. Here's how they work:
+        </p>
+        <ol>
+            <li class="d"><b>Before</b> each loop, add a <b>label</b>. A label is
+                simply an identifier that ends in a <b>colon</b>.
+            </li>
+            <li class="d">Inside the loop, use the name of the label, along
+                with the keyword <code>break</code> or <code>continue</code>,
+                to jump to the loop following the label.
+            </li>
+        </ol>
+        <p> Here's an example:</p>
+        <p class="code">
+            <span class="cmt"><b>// Labeled break and continue</b></span><br>
+            <br>
+            int count = 0;<br>
+            <br>
+            Outer: <span class="cmt">// label ends with a colon</span><br>
+            for (int outer = 1; outer &lt; 1000; outer++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(int inner = 1; inner &lt; 1000; inner++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( inner % 2 == 0)&nbsp;&nbsp; continue;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( inner % 201 == 0 ) break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( outer % 25 == 0 )&nbsp; continue Outer;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( outer % 51 == 0 )&nbsp; break Outer;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Can you follow the flow of control in this nested loop?
+            Let's analyze it:
+        </p>
+        <ol>
+            <li class="d">The outer loop goes from 1 to 999, and for every revolution
+                of the outer loop, the inner loop should also go around 999
+                times. If there were no <code>breaks</code> or
+                <code>continues</code>, then the loop would repeat
+                998,001 times.
+            </li>
+            <li class="d">In the inner loop, every even value where (<code>inner % 2 == 0</code>)
+                uses <code>continue</code> to skip back to the update
+                expression of the inner loop. However, when <code>inner</code>
+                reaches 201 (an odd number) <code>break</code> ends the
+                inner loop. The inner loop, then, never executes more than
+                201 times per revolution of the outer loop.
+            </li>
+            <li class="d">On the 25th repetition of the outer loop, there is a
+                labeled <code>continue</code>. The target of this
+                <code>continue</code> is the label <code>Outer</code>. This causes
+                a jump to the expression <code>outer++</code>, (after
+                updating count) and the 25th and 50th iterations of the
+                inner loop are skipped.
+            </li>
+            <li class='d'>Finally, on the 51st repetition of the outer loop, the
+                labeled <code>break</code> is encountered. This jumps to
+                the statement following the closing brace of the loop labeled
+                by <code>Outer</code>.
+            </li>
+        </ol>
+        <p> The result? The variable <code>count</code> records 201
+            iterations of the inner loop times 48 iterations of the outer
+            loop, plus 3 entries to the inner loop with early exit (two
+            <code>continue</code> <code>Outer</code> and one
+            <code>break</code> <code>Outer</code>). The final total for
+            <code>count</code> is 9,648 instead of 998,001.
+        </p>
+        <p> If you find it confusing and difficult to follow the flow of
+            control with all of these breaks and continues, then you're
+            starting to get an idea of what early programmers had to go
+            through to understand complex programs that contained
+            <b>spaghetti code</b> like this, and <i>why</i> using
+            jump statements is generally discouraged.<img src='../images/smiley.gif' style='vertical-align:top;' alt='A smiley icon.'>
+        </p>
+
+    <h2>Leap Before You Look</h2>
+        <img src='images/diver.png' class='right' style='margin-top:-8em;' alt='A cliff diver.'>
+        <p> In addition to the <code>for</code> and <code>while</code> loops,
+            Java also has a loop that performs its <code>boolean</code> test
+            <b>after</b> the loop body, instead of before. This loop, the
+            <code>do</code>-<code>while</code> loop illustrated here,
+            will always execute the statements inside its body at least once.
+            <img src="images/x04.gif" alt="The syntax of the do-while loop" class="inline">
+            The body of the <code>do</code>-<code>while</code> loop appears
+            between the keywords <code>do</code> (which <b>precedes</b> the
+            loop body) and <code>while</code>. Like all loops, the body of
+            the <code>do</code>-<code>while</code> loop can be a single
+            statement, ending with a semicolon, or it can be a compound
+            statement enclosed in braces. As with the other loops, you'll
+            have a more fulfilling life if you train yourself to always use
+            a compound (brace-delimited) loop body.
+        </p>
+        <p> The <code>do</code>-<code>while</code> loop's <code>boolean</code>
+            condition follows the <code>while</code> keyword. As with
+            all selection and iteration statements in Java, the
+            <code>boolean</code> condition must be enclosed in parentheses,
+            which are part of the statement syntax. In the
+            <code>do</code>-<code>while</code> loop, the <code>boolean</code>
+            condition is followed by a semicolon, unlike the <code>while</code>
+            loop, where following the condition with a semicolon can
+            lead to subtle, hard to find bugs.
+        </p>
+        <p> The <code>do</code>-<code>while</code> loop is often employed
+            by beginning programmers, because, for some reason, it seems
+            more natural. If you find yourself in this situation, however,
+            you should think twice. 99% of the time, a <code>while</code>
+            loop or a <code>for</code> loop can be employed to better effect
+            than using a <code>do</code>-<code>while</code>. In fact, except
+            for salting your food...<br>
+            <img src="images/x12a.gif" class="inlineCenter" alt="Salting your food.">
+            which should <b>always</b> be done before
+            tasting, there are relatively few other situations where a
+            test-at-the-bottom strategy is superior to
+            "looking before you leap."
+        </p>
+    <h3>GuessOMatic II</h3>
+        <p> One application of a <code>do-while</code> loop is an
+            ATM-type situation. You've got your money or made your
+            deposit, and, instead of giving you your card back, the
+            machine asks you "Do you want another transaction?".
+        </p>
+        <p> This is easily handled with a <code>do-while</code> loop.
+            Let's employ this technique to make the <b>GuessOMatic</b> more
+            like its Vegas cousins. When we start the game, we'll ask
+            the user for a deposit. Then, at the end of each game,
+            we'll let them cash out, deposit more money or play again.
+        </p>
+        <p> Begin by saving your finished GuessOMatic (from <i>Section 9.1&mdash;Sentinel
+            Loops</i>) to a new
+            file (<b>GuessOMatic2.java</b>). Be sure to change the class
+            name when you do that. Then make these changes.
+        </p>
+    <h3>The do-while Loop</h3>
+        <p> Start by "wrapping" all of the existing code in the
+            GuessOMatic <code>run()</code> method
+            in a <code>do-while</code> loop, starting at the line
+            marked (1) in this picture:<br>
+            <img src="images/gom2a.png" class="inlineCenter" alt="The GOM2 do loop.">
+            Before the new loop (in the section marked (2)):
+        </p>
+        <ul>
+            <li>Create a <code>double</code> variable, <code>bankRoll</code>
+                and initialize it by asking for an initial deposit. (I'll
+                leave writing the code to put the charge on the player's
+                MasterCard as an "exercise for you, the reader".)
+            </li>
+            <li>Create a <code>boolean</code> variable named
+                <code>playAgain</code> and initialize it to <code>false</code>.
+            </li>
+        </ul>
+        <p> Inside your new <code>do-while</code> loop, at the very top,
+            (right before the existing
+            initialization statements), subtract the dollar from the
+            bankroll for playing the game. This is marked (3) in the picture.
+        </p>
+        <p> At the <b>end</b> of the loop, use the <code>playAgain</code>
+            variable as the <b>flag bounds</b>
+            in the <code>while</code> portion of your <code>do-while</code>
+            loop, like this:<br>
+            <img src="images/gom2b.png" class="inlineCenter" alt="The GOM2 do-while loop.">
+            Then, after the loop, print a "Thank You" message along with the
+            value of the player's bankroll.
+        </p>
+    <h4>Controlling the do-while Loop</h4>
+        <p> Inside the <b>very end</b> of your <code>do-while</code> loop,
+            you'll place the code that controls the next repetition of the game,
+            <b>after</b> the existing code and <b>before</b> the <code>while</code>
+            condition that ends the loop:<br>
+            <img src="images/gom2c.png" class="inlineCenter" alt="The GOM2 do-while loop.">
+            Here's what our code needs to do:
+        </p>
+        <ol>
+            <li class="d"> First, we need to add the winnings (if any)
+                back to the user's bankroll.
+            </li>
+            <li class="d"> Next, we have two possibilities. If they still
+                have enough money left to play another game, ask them if
+                they want to continue. Store the result in a
+                <code>String</code> variable. Then, use that variable to
+                initialize the <code>playAgain</code> flag variable. I'm
+                assuming they'll enter something that starts with a "Y"
+                to continue.
+            </li>
+            <li class="d"> If they don't have enough money to play again,
+                we don't want to just drop them out. Instead, ask them
+                to deposit some more money. Then, set the <code>playAgain</code>
+                flag using the Boolean expression
+                <code>bankRoll &gt; 1.0</code>.
+            </li>
+        </ol>
+    <h2>Limit Testing</h2>
+        <p><b><span class='cap2'>N</span>ow that you know the syntax of
+            the <code>while</code> and
+            <code>do-while</code></b>, let's look at one final kind of bounds:
+            the <b>limit</b> bounds. A limit bounds is a natural bounds
+            in many mathematical, graphical and financial applications.
+        </p>
+        <p> So, what, exactly <b>is</b> a limit bounds? A limit bounds
+            is a condition that occurs when one more repetition of the
+            loop would either get you no closer to the goal or would
+            actually lead you astray. Limits can be exact values (reducing
+            a number to zero, for instance), boundaries (exceeding an
+            upper size limit), or relative values (the difference between
+            two successive calculations is less than .00000001 percent).
+            <br><img src="images/limit01.gif" class="inlineCenter" alt="A bifurcation loop plotting.">
+        </p>
+        <p> Here are some common limit loop bounds:</p>
+        <ul>
+            <li><b>Reduction loops</b>. Methodically reduce a number to zero, or less
+                than some known value. The algorithm for integer division
+                by subtraction is an example of this.
+            </li>
+            <li><b>Successive approximation methods</b>. Each time a calculation
+                is performed, the result is compared to a previous calculation.
+                The bound is reached when two successive calculations
+                yield approximately the same results.
+            </li>
+            <li><b>Bisection methods</b>. These calculate mathematical
+                approximations. The limit is set by approaching to within
+                some tiny amount of an answer that is known to be correct.
+            </li>
+            <li><b>Non-convergence tests</b>. These are often the necessary
+                bounds applied to the other techniques, to make sure they
+                haven't gone astray.
+            </li>
+        </ul>
+    <h3>An Example</h3>
+        <p> Loops that involve limit bounds are mostly mathematical. These
+            include things like finding the greatest common denominator (gcd)
+            using Euclid's algorithm, calculating square roots using
+            Newton's method, or approximating pi, using the Buffon's Needle
+            experiment.
+        </p>
+        <p> All of these are fairly difficult if you're uncomfortable with
+            math. My goal is for you only to recognize and apply a limit
+            loop, so I'll show you a simpler example.
+        </p>
+        <p> The <b>SumDigits</b> program you wrote as an exercise
+            back in Chapter 3 asked
+            you to add up the digits in an integer between 1 and 1000. Let's
+            use a limit loop that allows you to add up the digits in an
+            integer of any size. (We <b>won't</b> handle non-digit characters
+            like the <code>sumDigits()</code> homework assignment this week,
+            which adds up the digits in a <code>String</code> parameter.)
+            We'll call this new program <b>SumDigits2</b>, just so you don't
+            confuse it with the earlier version. You'll find
+            the completed program in this chapter's code folder.
+        </p>
+    <h4>The Concept</h4>
+        <p> <img src="images/sumdigits2.gif" class="right" alt="Dividing integers by 10">
+            The concept behind the program is simple. When you use integer
+            division to divide the number <code>n</code> by ten, the
+            <b>remainder</b> is the single right-most digit, while the
+            <b>quotient</b> consist of the remaining digits on the left.
+        </p>
+        <p> If we repeatedly perform this operation, eventually, n will
+            reach 0. This is our <b>limit</b>.
+        </p>
+    <h3>The Code</h3>
+        <p> The program begins, like the original <b>SumDigits</b> with
+            some input. Here I've told the user to enter an integer
+            between 1 and the largest possible integer:<br>
+            <img src="images/sd2b.gif" class="inline" alt="Integer input">
+            I used the <code>Integer</code> class constant, rather than hard-coding
+            the maximum number in the prompt, and then used the
+            <code>Scanner nextInt()</code> method to read the user's
+            response, storing the result in the <code>int</code> variable
+            <code>number</code>.
+        </p>
+        <p> The loop itself consists of three sections<br>
+            <img src="images/sd2c.gif" class="inlineCenter" alt="Integer input">
+        </p>
+        <ol>
+            <li class="d">Before the loop, I declare and initialize the
+                precondition variable <code>sum</code> to 0. I also save
+                the value of <code>number</code> in a new variable,
+                <code>original</code>, since the "reduction" algorithm
+                will destroy <code>number</code> when it is finished.
+            </li>
+            <li class="d">I used a <code>do-while</code> loop for this
+                problem (although I could have used a <code>while</code>
+                loop instead). The bounds of the loop is the <b>limit</b>,
+                <code>number &gt; 0</code>. Inside the loop I first add the
+                right-most digit to the sum, and then remove the digit,
+                moving closer to the limit bounds, by dividing
+                <code>number</code> by 10.
+            </li>
+            <li class="d">Finally, after the loop is finished, I print
+                both the number and its sum. Since we reduced the variable
+                <code>number</code>
+                to 0, I must use the variable <code>original</code> to
+                report the original number entered.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when it runs:<br>
+            <img src="images/sd2a.gif" class="inlineCenter" alt="Running SumDigits2.">
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Nesting and Limits Summary
+        </p>
+        <ul>
+            <li> <b>Nested</b> loops, (commonly used with <i>for</i> loops),
+                place one loop inside another. The enclosing loop is known
+                as the <b>outer</b> loop, while the <i>enclosed</i> loop is
+                called the <b>inner</b> loop.
+            </li>
+            <li> With nested loops, the inner loop completes an entire cycle of
+                iterations for <b>each iteration of the outer loop</b>. For instance,
+                if both loops repeat 10 times, the inner loop will <b>repeat 100 times</b>,
+                10 times for each trip through the outer loop.
+            </li>
+            <li>The <b>labeled</b> versions of <code>break</code> and
+                <code>continue</code> can be sometimes be used with nested
+                loops, but can quickly produce complex <b>spaghetti code</b>
+                that is hard to follow, and thus likely to be unreliable.
+            </li>
+            <li> The <code>do-while</code> loop <b>tests its condition
+                after executing the body of the loop</b>. Use this when
+                you have a "do you want to do it again" type situation.
+            </li>
+            <li><b>Limit loops</b> are loops that test "the amount of work" that
+                each iteration performs (in various ways), and that stop when the
+                loop is getting no closer to the goal. Limit loops are common in
+                science, finance and graphics. These loops include
+                <b>reduction</b>, successive <b>approximation</b>, <b>bisection</b>
+                and <b>non-convergence</b> tests.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

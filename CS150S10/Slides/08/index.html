@@ -1,0 +1,807 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		'2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Author' content='Kurt Schmidt' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To understand the concepts of inheritance and polymorphism </li>
+  <li> To learn how inheritance is a tool for code reuse </li>
+  <li> To learn how to call base-class constructors and member 
+    functions </li>
+  <li> To understand the difference between static and dynamic 
+    binding </li>
+  <li> To be able to implement dynamic binding with virtual functions </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Inheritance </h1>
+<p> <dfn>Inheritance</dfn> and <dfn>polymorphism</dfn>:
+important concepts in object-oriented programming </p>
+<dl>
+	<dt> Inheritance </dt>
+	<dd> Define new classes that are extensions of existing classes </dd>
+	<dt> Polymorphism </dt>
+	<dd> Allows you to take advantage of the commonality between related
+	classes </dd>
+	<dd> Individual classes may have specific behavior </dd>
+	<dd> Used in building very flexible and extensible systems </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Derived Classes </h1>
+<ul>
+  <li> Inheritance is a mechanism for enhancing existing working 
+    classes </li>
+  <li> A new class <dfn>inherits</dfn> from a class representing 
+		a more general concept </li>
+	<li> A manager is a special type of employee:
+      <code>
+class Manager : <strong>public</strong> Employee
+{
+public:
+   <i>new member functions</i>
+private:
+   <i>new data members</i>
+};</code>
+    </li>
+  <li> <dfn>base class</dfn> &mdash; the more general class
+		(<tt>Employee</tt>) </li>
+	<li> <dfn>derived class</dfn> &mdash; the more specialized class, inherits
+		from the base class (<tt>Manager</tt>) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes </h1>
+<ul>
+  <li> All member functions and data members of the base class 
+    are inherited by the derived class
+		<code>
+Manager m;
+m.set_salary(68000);</code>
+	</li>
+  <li> In the derived class definition you specify only new member 
+    functions and data members </li>
+</ul>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> The class diagram shows the relationship between these classes
+			</li>
+			<li> The arrow with a hollow head indicates inheritance </li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig1.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> An Inheritance
+			Diagram </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : Derived Class Definition </h1>
+<div class='syntax'>
+<code>class <i>DerivedClassName </i>: public <i>BaseClassName</i>
+{
+   <i>features</i>
+};</code>
+	<h3> Example: </h3>
+<code>class Manager : public Employee
+{
+public:
+   Manager(string name, double salary, string dept);
+   string get_department() const;
+private:
+   string department;
+};</code>
+	<h3> Purpose: </h3>
+	<p> Define a class that inherits features from a base class. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes </h1>
+<h2> Clock Example</h2>
+<h3> The <tt>Clock</tt> Class </h3>
+<ul>
+	<li> Tells the local current time </li>
+	<li> 12- or 24-hour format, set in constructor </li>
+	<li> Inspectors:
+		<code>
+int get_hours() const
+int get_minutes() const</code>
+	</li>
+	<li> A predicate:
+		<code>
+bool is_military() const</code>
+	</li>
+	<li> Function will be redefined in the derived class; just returns "Local"
+	here:
+		<code>
+string get_location() const</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes &mdash; <tt>clock.h</tt> </h1>
+<h2> The <tt>clock</tt> class </h2>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks1/clock.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes &mdash; <tt>clock.cpp</tt> </h1>
+<h2> The <tt>clock</tt> class </h2>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks1/clock.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes &mdash; <tt>clocks1.cpp</tt> </h1>
+<h2> A driver for <tt>Clock</tt> </h2>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks1/clocks1.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes  </h1>
+<h2> Travel Clock </h2>
+<ul>
+	<li> Shows time in a different location </li>
+	<li> Stores city names and relative time differences </li>
+  <li> The time for a <tt>TravelClock</tt> is computed by taking 
+    the local time and adding the time difference. 
+		<code>
+TravelClock clock(true, "New York", 3);
+cout &lt;&lt; "The time in "; &lt;&lt; clock.get_location() &lt;&lt; "; is ";
+   &lt;&lt; clock.get_hours() &lt;&lt; ";:"; &lt;&lt; clock.get_minutes();</code>
+	</li>
+  <li> Derive <tt>TravelClock</tt> from <tt>Clock</tt> </li>
+	<li> Different in three ways:
+		<ul>
+			<li> Stores location and time difference </li>
+			<li> <tt>get_hours()</tt> adjusts current time </li>
+			<li> <tt>get_location</tt> returns something other than
+				<tt>"Local"</tt> </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes  </h1>
+<ul>
+  <li> When the <tt>TravelClock</tt> class inherits from the <tt>Clock</tt> 
+    class, it needs only to spell out these three differences. 
+		<code>
+class TravelClock : public Clock
+{
+
+public:
+   TravelClock(bool mil, string loc, double off);
+   int get_hours() const;
+   string get_location() const;
+private:
+   string location;
+   int time_difference;
+};</code>
+    </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Derived Classes  </h1>
+<h2> Layout of <tt>TravelClock</tt> </h2>
+<ul>
+	<li> <tt>TravelClock</tt> gains two additional fields: <tt>location</tt>
+		and <tt>time_difference</tt> </li>
+	<li> Attributes of the base class are present in each derived-class object
+		</li>
+	<li> Private members of the base class are <em>not</em> accessible to
+		methods in the derived class </li>
+	<li> Derived class must interact with a base class through its public
+		interface, like any other class </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 3</span> Data Layout of
+Derived Object </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Private Inheritance </h3>
+<p> Don't forget the <tt>public</tt> modifier when inheriting: </p>
+<code>class Manager : Employee // Error
+{
+   ...
+};</code>
+<p> Defaults to <tt>private</tt> </p>
+<ul>
+	<li> Legal </li>
+	<li> Rarely useful </li>
+	<li> <tt>Employee</tt> methods in a <tt>Manager</tt> object all become
+		<tt>private</tt> </li>
+	<li> These methods can't be called on a <tt>Manager</tt> object </li>
+	<li> So, a derived-class object is not usable in the same context that a
+		base-class object is </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Calling the Base-Class Constructor </h1>
+<p> The constructor of a derived class has two tasks: </p>
+<ul>
+	<li> Initialize the base object </li>
+	<li> Initialize all data members </li>
+</ul>
+<h3> Initializing data members </h3>
+<ul>
+	<li> Fairly straightforward </li>
+	<li> We'll avoid negative values by adding 24
+		<code>
+TravelClock::TravelClock(bool mil, string loc, int diff)
+// Not complete
+{
+   location = loc;
+   time_difference = diff;
+   while (time_difference &lt; 0)
+      time_difference = time_difference + 24;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Calling the Base-Class Constructor </h1>
+<p> Initializing the base class is less straightforward </p>
+<ul>
+  <li> We must set <tt>Clock::military</tt> </li>
+	<li> <tt>Clock</tt> has no methods for doing this </li>
+	<li> Must be done through the constructor </li>
+	<li> Frequently, we must invoke the base-class constructor before
+		initializing the derived-class data </li>
+	<li> Use the <dfn>initializer list</dfn>:
+		<code>
+TravelClock::TravelClock(bool mil, string loc, int diff)
+   <span class='hl'>: Clock(mil)</span>
+{
+   ...
+};</code>
+  <li> If you omit the base-class constructor, then the base object 
+    is constructed using its default constructor (if it has one) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Constructor with Base-Class Initializer </h1>
+<div class='syntax'>
+<code><i>DerivedClassName </i>:: <i>DerivedClassName</i>(<i>expressions</i>)<i>
+   </i>:<i> BaseClassName</i>(<i>expressions</i>)<i>
+</i>{<i>
+</i>   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>Manager::Manager(string name, double salary, string dept)
+   : Employee(name, salary)
+{
+   department = dept;
+}</code>
+	<h3> Purpose: </h3>
+	<p> Supply the implementation of a constructor, initializing the base
+	class before the body of the derived-class constructor. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Overriding Member Functions </h1>
+<ul>
+	<li> It is common to <dfn>override</dfn> a member function of a base
+		class </li>
+	<li> <tt>TravelClock::get_hours()</tt> needs to adjust the local time for
+		the location
+		<code>
+int TravelClock::get_hours() const
+{
+   int h = <i>local hour value</i>;
+   if (<i>clock uses military time</i>)
+      return (h + time_difference) % 24;
+   else
+   {
+      h = (h + time_difference) % 12;
+      if (h == 0) return 12;
+      else return h;
+   }
+}</code>
+	</li>
+	<li> We need to determine whether the clock uses military time, and what
+	the time is </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions </h1>
+<ul>
+	<li> Can't look at <tt>Clock::military</tt> ; it's private </li>
+	<li> Use <tt>Clock::is_military()</tt>
+		<code>
+if (is_military()) ...</code>
+	</li>
+	<li> It's inherited from <tt>Clock</tt>, so call it through the
+		<dfn>implicit parameter</dfn> of the <tt>TravelClock</tt> </li>
+	<li> To get hours, we need the base class' <tt>get_hours()</tt> </li>
+	<li> However, we can't use the implicit parameter; both the base class and
+		the derived class have a <tt>get_hours()</tt> method </li>
+	<li> Need to explicitly scope it to the base class:
+		<code>
+int TravelClock::get_hours() const
+{
+   int h = Clock::get_hours();
+   ...
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions </h1>
+<p> In general, if <var>B</var>::<var>f</var> is a function in the base
+class, then the derived class <dfn><tt>D</tt></dfn> can take three kinds of
+actions: </p>
+<ul>
+	<li> The derived class can <em>extend</em>
+		<dfn><tt>B</tt></dfn><tt>::<dfn>f</dfn></tt> by supplying a new
+		implementation that refers to the base-class implementation.<br/>
+		For example, the <tt>TravelClock::get_hours</tt> function is an
+		extension of <tt>Clock::get_hours</tt> </li>
+	<li> The derived class can <em>replace</em>
+		<dfn><tt>B</tt></dfn><tt>::<dfn>f</dfn></tt> by supplying a new
+		implementation that is unrelated to the base-class implementation.<br/>
+		For example, <tt>TravelClock::get_location </tt>is a replacement for
+		<tt>Clock::get_location</tt> </li>
+	<li> The derived class can <em>inherit</em>
+		<dfn><tt>B</tt></dfn><tt>::<dfn>f</dfn></tt> by not supplying an
+		implementation for <tt><dfn>f</dfn></tt>.<br/>
+		For example, <tt>TravelClock</tt> inherits <tt>Clock::get_minutes</tt>
+		and <tt>Clock::is_military</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions &mdash; <tt>clock.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks2/clock.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions &mdash; <tt>travelclock.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks2/travelclock.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions &mdash; <tt>travelclock.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks2/travelclock.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Overriding Member Functions &mdash; <tt>clocks2.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks2/clocks2.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Protected Access </h3>
+<ul>
+	<li> C++ provides a third access modifier:  <tt>protected</tt>
+		<code>
+class Clock
+{
+public:
+   ...
+<span class='hl'>protected</span>:
+   bool military
+};</code>
+	</li>
+	<li> Protected members can be accessed by all derived classes </li>
+	<li> Still hidden from the outside world </li>
+	<li> This would alleviate some of the grief experienced when implementing
+		<tt>TravelClock</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Protected Access (continued) </h3>
+<p> Protected members are still subject to the same problems that public
+	members present </p>
+<ul>
+	<li> Base class designer has no control over authors of the
+	derived classes </li>
+	<li> Derived-class methods can corrupt base-class data </li>
+	<li> Data-hiding is broken; the base class becomes harder to modify
+	</li>
+</ul>
+<p> It is better to make all attributes private </p>
+<ul>
+	<li> To provide access only to derived classes, provide protected
+		accessor methods </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Polymorphism </h1>
+<ul>
+  <li> You will find that there is quite a bit of repetitive code 
+    in <tt>main()</tt>, in <tt>clocks2.cpp</tt> </li>
+  <li> The compiler realizes that a <tt>TravelClock</tt> is a special 
+    case of a <tt>Clock</tt>, and permits the assignment
+	<code>clocks[1] = TravelClock(true, "Rome", 9);</code> </li>
+  <li> However, there is no room to store the derived-class data </li>
+	<li> That data simply gets <dfn>sliced away</dfn> when a derived-class
+		object is assigned to a base-class variable. 
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig4.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 4</span> Slicing Away
+Derived-Class Data </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism </h1>
+<ul>
+	<li> <tt>TravelClock</tt> objects are larger than <tt>Clock</tt>s </li>
+	<li> Vectors can't handle this </li>
+	<li> Store pointers (or references) in the vector, instead </li>
+  <li> A base-class pointer can point to a derived-class object. 
+    (The reverse is an error) </li>
+  <li> Pointers to the various clock objects all have the same 
+		size - the size of a memory address - even though the objects themselves
+		may have different sizes </li>
+  <li> Since every <tt>TravelClock</tt> is a special case of a 
+		<tt>Clock</tt>, the starting address of a <tt>TravelClock</tt> object is
+		the starting address of a <tt>Clock</tt> object </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism </h1>
+<table>
+<tr>
+	<td>
+		<p> Code to store both base-class and derived-class objects: </p>
+<code>vector&lt;Clock*&gt; clocks;
+// Populate clocks
+clocks[0] = <span class='hl'>new</span> Clock(true);
+clocks[1] = <span class='hl'>new</span> TravelClock(true, &quot;Rome&quot;, 9);
+clocks[2] = <span class='hl'>new</span> TravelClock(false, &quot;Tokyo&quot;, -7);</code>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig5.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 5</span> A Polymorphic
+			Vector </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism </h1>
+<p> The vector now holds pointers, so, the code to print needs to be changed
+	a bit </p>
+<code>cout &lt;&lt; clocks[i]<span class='hl'>-&gt;</span>get_location() &lt;&lt; &quot; time is &quot;
+   &lt;&lt; clocks[i]<span class='hl'>-&gt;</span>get_hours() &lt;&lt; &quot;:&quot;
+   &lt;&lt; setw(2) &lt;&lt; setfill('0')
+   &lt;&lt; clocks[i]<span class='hl'>-&gt;</span>get_minutes()
+   &lt;&lt; setfill(' ') &lt;&lt; &quot;\n&quot;;</code>
+<p> Unfortunately, the following code does still not work! The output is
+still </p>
+<code>Local time is 21:15
+Local time is 21:15
+Local time is 9:15</code>
+<ul>
+  <li> Recall that both <tt>Clock</tt> and <tt>TravelClock</tt> 
+    have a <tt>get_location</tt> and a <tt>get_hours</tt> member function </li>
+  <li> The compiler calls the <tt>Clock</tt> member function because 
+    the pointer is of type <tt>Clock*</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism </h1>
+<ul>
+	<li> We want to find the actual type to which <tt>clocks[i]</tt> points
+	</li>
+	<li> Then call the appropriate methods </li>
+  <li> You must alert the compiler that the function call needs 
+		to be preceded by the appropriate function selection </li>
+  <li> Use the <tt>virtual</tt> keyword:
+		<code>
+class Clock
+{
+public:
+   Clock(bool use_military);
+   <span class='hl'>virtual</span> string get_location() const;
+   <span class='hl'>virtual</span> int get_hours() const;
+   int get_minutes() const;
+   bool is_military() const;
+private:
+   . . .
+};</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism </h1>
+<ul>
+	<li> Now, each object's type will be inspected, <em>at run time</em> </li>
+  <li> Such a selection/call combination is called <i>dynamic binding</i> </li>
+  <li> The traditional call, which always invokes the same function, 
+    is called <i>static binding</i> (is known at compile time) </li>
+	<li> <tt>virtual</tt> must be used in the base class </li>
+	<li> Applies to all functions of the same name and parameter types in the
+		derived class </li>
+	<li> Considered good form to explicitly label these as <tt>virtual</tt>,
+		too </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism &mdash; <tt>clock.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks3/clock.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism &mdash; <tt>travelclock.h</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks3/travelclock.h" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Polymorphism &mdash; <tt>clocks3.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "clocks3/clocks3.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : Virtual Function Definition </h1>
+<div class='syntax'>
+<code>class <i>ClassName
+</i>{
+   virtual<i> return_type function_name</i>(<i>parameter</i><sub>1</sub><i>, parameter</i><sub>2</sub><i>, ..., parameter</i><sub>n</sub>);<i>
+   </i>... 
+};</code>
+	<h3> Example: </h3>
+<code>class Employee
+{
+public:
+   virtual double get_salary();
+   ... 
+};</code>
+	<h3> Purpose: </h3>
+		<p> Define a dynamically bound function that can be redefined in derived
+			classes. When the function is called, the actual type of the implicit
+			parameter determines which version of the function executes. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Slicing an Object </h3>
+<ul>
+	<li> It is legal to copy a derived-class object into a base-class variable
+	</li>
+	<li> Derived-class data is lost
+		<code>
+Manager m;
+...
+Employee e = m; // Holds only the Employee base data of m</code>
+	</li>
+	<li> This may be desirable </li>
+	<li> If not, use pointers </li>
+	<li> The reverse assignment is not legal:
+		<code>
+Employee e;
+...
+Manager m = e; // Error</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Virtual Self-Calls </h3>
+<ul>
+	<li> Add a print function to <tt>Clock</tt>:
+		<code>
+void Clock::print() const
+{
+   cout &lt;&lt; get_location() &lt;&lt; " time is "
+   &lt;&lt; get_hours() &lt;&lt; ":"
+   &lt;&lt; setw(2) &lt;&lt; setfill('0')
+   &lt;&lt; get_minutes()
+   &lt;&lt; setfill(' ') &lt;&lt; "\n";
+}</code>
+	</li>
+	<li> This call works just like you'd want it to:
+		<code>
+TravelClock rome_clock(true, "Rome", 9);
+rome_clock.print();</code>
+	</li>
+	<li> The call to <tt>get_hours</tt> uses the implicit parameter:
+		<code>
+this-&gt;get_hours()</code>
+	</li>
+	<li> It's virtual, so, the right class' method is called </li>
+</ul>
+</div>
+
+</body>
+</html>

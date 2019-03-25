@@ -1,0 +1,1112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		'2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To be able to read and write files </li>
+  <li> To convert between strings and numbers using string streams </li>
+	<li> To use stream manipulators to format output </li>
+  <li> To learn how to process the command line </li>
+  <li> To understand the concepts of sequential and random access </li>
+  <li> To be able to build simple random-access database files </li>
+  <li> To learn about encryption </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Intro </h1>
+<ul>
+	<li> C++ I/O library based on <em>streams</em> </li>
+	<li> <i>input stream</i> &mdash; source of data </li>
+	<li> <i>output stream</i> &mdash; destination for data </li>
+	<li> Wrappers (inherited classes) provide stream access to files
+		(including the screen and keyboard), strings, etc. </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> 
+	<script type='text/javascript'>
+		//<![CDATA[
+		section( "1" )
+		//]]>
+	</script>
+	Reading and Writing Text Files </h1>
+<ul>
+	<li> Include the header file <tt>fstream</tt> </li>
+	<li> Use a file variable to access a disk file:
+		<dl>
+			<dt> <tt>ifstream</tt> </dt>
+			<dd> For reading (input) </dd>
+			<dt> <tt>ofstream</tt> </dt>
+			<dd> For writing (output) </dd>
+			<dt> <tt>fstream</tt> </dt>
+			<dd> For both reading and writing </dd>
+		</dl>
+	<li> For example:
+		<code>
+ifstream input_data;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files </h1>
+<h2>Input </h2>
+<ul>
+	<li> File must be opened:<tt>input_data.open("input.dat");</tt></li>
+	<li>Associates a disk file with a file variable
+	</li>
+	<li> <tt>input_data</tt> is a stream </li>
+	<li> Can be used much like <tt>cin</tt>:
+		<code>
+int n;
+double x;
+input_data &gt;&gt; n &gt;&gt; x;</code>
+	</li>
+	<li> Read strings in the familiar way:
+		<code>
+string s;
+input_data &gt;&gt; s; // Read a word 
+getline(input_data, s); // Read a line</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files</h1>
+<h2>Characters</h2>
+<ul>
+	<li> Use the <tt>get</tt> method to read a single character:
+		<code>
+char ch;
+input_data.get(ch);</code>
+	</li>
+	<li> Use <tt>unget</tt> for a <dfn>one-character lookahead</dfn>:
+		<code>
+char ch;
+input_data.get(ch);
+if ('0' &lt;= ch &amp;&amp; ch &lt;= '9') // It was a digit 
+{
+   input_data.unget(); // Oops - didn't want to read it 
+   int n;
+   input_data &gt;&gt; n; // Read integer starting with ch
+}</code>
+	</li>
+	<li> Older version of the library use <tt>put_back</tt> (remember last
+	character):
+		<code>
+input_data.put_back(ch)</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files</h1>
+<h2>Stream fail</h2>
+<ul>
+	<li> Stream may be in a <dfn>fail state</dfn> if:
+		<ul>
+			<li> It couldn't be opened (doesn't exist, no permission) </li>
+			<li> You don't have write permission on an output file </li>
+			<li> The stream has discovered the end of an input file </li>
+		</ul>
+	</li>
+	<li> The <tt>fail</tt> function tells you when input has failed
+	</li>
+	<li> Close the file when you are done with it:
+		<code>
+input_data.close()</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files</h1>
+<h2>Output</h2>
+<ul>
+  <li> Writing to a file is similar </li>
+  <li> Use an <tt>ofstream</tt> object:
+		<code>
+ofstream output_data;
+output_data.open(&quot;output.dat&quot;);</code>
+	</li>
+  <li> Send information:
+		<code>
+output_data &lt;&lt; n &lt;&lt; &quot; &quot; &lt;&lt; x &lt;&lt; &quot;\n&quot;;</code>
+	</li>
+  <li> Write a single character:
+		<code>
+output_data.put(ch);</code>
+	</li>
+  <li> Remember to close the file:
+		<code>
+output_data.close();</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files</h1>
+<ul>
+	<li> <tt>open</tt> expects a <tt>char *</tt> (a C-style string)
+		<code>
+ifstream input_data;
+input_data.open("input.dat");</code>
+	</li>
+	<li> If filename is in a <tt>string</tt> variable, use <tt>c_str()</tt>:
+		<code>
+string input_name;
+cin &gt;&gt; input_name;
+ifstream input_data;
+input_data.open(input_name.c_str());</code>
+	</li>
+	<li> Filenames may contain path information:
+		<code>
+~/homework/input.dat // UNIX</code>
+	</li>
+	<li> Backslashes (used in Windows) in a string constant need to be
+		escaped:
+		<code>
+input_data.open("c:\\homework\\input.dat");</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files </h1>
+<ul>
+<li> <tt>maxtemp.cpp</tt> (Section 4.6) must be restarted on input error
+</li>
+<li> <tt>maxval1.cpp</tt> is an improvement:
+	<ul>
+		<li> Asks user for an input file </li>
+		<li> Opens the file for reading </li>
+		<li> Passes the stream to <tt>read_data()</tt> </li>
+	</ul>
+</li>
+<li> <strong>Note:</strong>  <em>Always</em> pass streams by reference!
+</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files &mdash; <tt>maxval1.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "maxval1.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "2" )
+//]]>
+</script>
+The Inheritance Hierarchy of Stream Classes </h1>
+<ul>
+<li> <tt>istream</tt> and <tt>ostream</tt> are the most fundamental I/O
+	classes </li>
+<li> <tt>istream</tt> :
+	<ul>
+		<li> Source of bytes </li>
+		<li> Defines <tt>get</tt>, <tt>getline</tt> and <tt>&gt;&gt;</tt>
+		</li>
+		<li> Parent of <tt>ifstream</tt> and <tt>istringstream</tt> classes
+		</li>
+	</ul>
+</li>
+<li> <tt>open()</tt> is newly defined in <tt>ifstream</tt> </li>
+<li> <tt>ostream</tt> :
+	<ul>
+		<li> Destination for bytes </li>
+		<li> Defines several forms of <tt>&lt;&lt;</tt> </li>
+		<li> Parent of <tt>ofstream</tt> </li>
+	</ul>
+</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The Inheritance Hierarchy of Stream Classes </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+image( "fig1.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 1</span> The Inheritance
+Hierarchy of Stream Classes </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> The Inheritance Hierarchy of Stream Classes
+</h1>
+<ul>
+	<li> Read data only calls <tt>istream</tt> methods (no
+		<tt>ifstream</tt>-specific methods) </li>
+	<li> Make it more general (and useful):
+		<code>
+double read_data(istream&amp; in);</code>
+	</li>
+	<li> Can now be used with any <tt>istream</tt>
+		<ul>
+			<li> <tt>ifstream</tt> </li>
+			<li> <tt>cin</tt> </li>
+			<li> etc. </li>
+		</ul>
+	</li>
+	<li> The following example gives the user a choice
+		<code>
+max = read_data(infile);</code>
+	or
+		<code>
+max = read_data(cin);</code>
+	</li>
+	<li> Note, the reference parameter is now also needed to avoid
+		<dfn>slicing</dfn> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Reading and Writing Text Files &mdash; <tt>maxval2.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "maxval2.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "3" )
+//]]>
+</script>
+Stream Manipulators </h1>
+<ul>
+	<li> Found in the <tt>iomanip</tt> header file </li>
+	<li> Allow you to format output </li>
+	<li> Objects that are sent to a stream use the <tt>&lt;&lt;</tt>
+		manipulator </li>
+	<li> <tt>setprecision()</tt> is an example:
+		<code>
+out &lt;&lt; setprecision(2);</code>
+		<ul>
+			<li> Does not change the stream (add any characters) </li>
+			<li> Affects how subsequent float-type outputs are written </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Stream Manipulators</h1>
+<table class='book'>
+<caption> <span class='hl'>Table 1</span>  Stream Manipulators </caption>
+<tr>
+	<th class='hl'> Manipulator </th>
+	<th class='hl'> Purpose </th>
+	<th class='hl'> Example </th>
+	<th class='hl'> Output </th>
+</tr>
+<tr>
+		<td class='code'><tt> setw </tt></td>
+		<td> Sets the field width of the next item only </td>
+		<td class='code'><tt> out &lt;&lt; setw(6) &lt;&lt; 123; </tt></td>
+		<td class='code'><tt> &nbsp;&nbsp;&nbsp;123 </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> setfill </tt></td>
+	<td> Sets the fill character for padding a field.  (The default
+		character is a space.) </td>
+	<td class='code'><tt> out &lt;&lt; setfill('0') &lt;&lt; setw(6) &lt;&lt; 123; </tt></td>
+	<td class='code'><tt> 000123 </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> left </tt></td>
+	<td> Selects left alignment </td>
+	<td class='code'><tt> 
+		out &lt;&lt; left &lt;&lt; setw(6) &lt;&lt; 123;
+	</tt></td>
+	<td class='code'><tt> 123 </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> right </tt></td>
+	<td> Selects right alignment (default) </td>
+	<td class='code'><tt>
+		out &lt;&lt; right &lt;&lt; setw(6) &lt;&lt; 123;
+	</tt></td>
+	<td class='code' style='text-align:right'><tt> 123 </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> hex </tt></td>
+	<td> Selects base 16 for integers </td>
+	<td class='code'><tt> out &lt;&lt; hex &lt;&lt; 123; </tt></td>
+	<td class='code'><tt> 7b </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> dec </tt></td>
+	<td> Selects base 10 for integers </td>
+	<td class='code'><tt> out &lt;&lt; dec &lt;&lt; 123; </tt></td>
+	<td class='code'><tt> 123 </tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> fixed </tt></td>
+	<td> Selects fixed format for floating-point numbers </td>
+	<td class='code'><tt>
+		double x = 123.4567;<br/>
+		out &lt;&lt; x &lt;&lt; endl &lt;&lt; fixed &lt;&lt; x;
+	</tt></td>
+	<td class='code'><tt>
+		123.457 <br/>
+		123.456700
+	</tt></td>
+</tr>
+<tr>
+	<td class='code'><tt> setprecision </tt></td>
+	<td>
+		Sets the number of significant digits for general format, the number
+		of digits after the decimal point for fixed format
+	</td>
+	<td class='code'><tt>
+		double x = 123.4567;<br/>
+		out &lt;&lt; setprecision(2) &lt;&lt; x<br/>
+		&nbsp;&nbsp;&lt;&lt; endl &lt;&lt; fixed &lt;&lt; x;
+	</tt></td>
+	<td class='code'><tt>
+		1.2e+02<br/>
+		123.46
+	</tt></td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Stream Manipulators </h1>
+<ul>
+<li> Default for float-type is <dfn>general</dfn> format
+	<ul>
+		<li> Displays # of digits set with <tt>setprecision</tt> (default is
+			6) </li>
+		<li> Switches to scientific, as needed </li>
+	</ul>
+		<code>
+out &lt;&lt; 12.3456789 &lt;&lt; " " &lt;&lt; 123456789.0;</code>
+	yields
+		<code>
+12.3457 1.23457e+08</code>
+	</li>
+	<li> <tt>fixed</tt> uses same # of digits <em>after the decimal</em>
+		<code>
+12.345679 123456789.000000</code>
+	</li>
+	<li> All manipulators set the state of the stream object for all
+	subsequent operations
+		<ul>
+			<li> <em>Except</em> for <tt>setw()</tt>, which resets to 0 after each
+			output operation </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "4" )
+//]]>
+</script>
+String Streams </h1>
+<ul>
+	<li> Use the <tt>sstream</tt> header file </li>
+	<li> Used to "read from" and "write to" strings (like other files) </li>
+	<li> Handy for reading a number in a string, or converting numbers into
+		strings </li>
+	<li> <tt>istringstream</tt> class reads data from a string </li>
+	<li> <tt>ostringstream</tt> class writes data to a string </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams &mdash; <tt>istringstream</tt> </h1>
+<ul>
+	<li> E.g.:  Given a date string, extract the month, day, and year
+		<code>
+string input = "January 23, 1955";
+istringstream instr(input);</code>
+		creates an <tt>istringstream</tt> object, <tt>instr</tt>, around the
+		input string
+	</li>
+	<li> Use <tt>&gt;&gt;</tt> to read the month, day, comma and year:
+		<code>
+string month;
+int day;
+string comma;
+int year;
+instr &gt;&gt; month &gt;&gt; day &gt;&gt; comma &gt;&gt; year;</code>
+	</li>
+	<li> Had we used <tt>substr()</tt> to take this apart, we'd have only
+		strings, which we would need to convert to integers </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams &mdash; <tt>istringstream</tt> </h1>
+<ul>
+	<li> Converting strings to integers is common </li>
+	<li> A helper function in our private library might be handy:
+		<code>int string_to_int(string s)
+{
+ istringstream instr(s);
+ int n;
+ instr &gt;&gt; n;
+ return n;
+}</code>
+	</li>
+	<li> Can be used like this:
+		<code>int i = string_to_int("1999");</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams &mdash; <tt>ostringstream</tt> </h1>
+<p> To convert a number to a string: </p>
+<ul>
+	<li> Construct an <tt>ostringstream</tt> object:
+		<code>
+ostringstream outstr;</code>
+	</li>
+	<li> Change <tt>&lt;&lt;</tt> to send a number to the stream:
+		<code>
+outstr &lt;&lt; setprecision(5) &lt;&lt; sqrt(2);</code>
+	</li>
+	<li> Use the <tt>str()</tt> function to recover the string:
+		<code>
+string output = outstr.str();</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams &mdash; <tt>ostringstream</tt> </h1>
+<ul>
+	<li> Example: (builds the string &quot;January 23, 1955&quot;) 
+		<code>
+string month = "January";
+int day = 23;
+int year = 1955;
+ostringstream outstr;
+outstr &lt;&lt; month &lt;&lt; &quot; &quot; &lt;&lt; day &lt;&lt; &quot;,&quot; &lt;&lt; year;
+string output = outstr.str();</code>
+	</li>
+	<li> Another useful helper function:
+<code>
+string int_to_string(int n)
+{
+   ostringstream outstr;
+   outstr &lt;&lt; n;
+   return outstr.str();
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams </h1>
+<ul>
+	<li> We commonly accept input a line at a time, then parse each line </li>
+	<li> String streams make this task easier </li>
+	<li> Avoids problems of mixing <tt>&lt;&lt;</tt> and <tt>getline()</tt>
+	</li>
+	<li> E.g., getting a time from the user.  Input lines might be:
+		<code>
+21:30
+9:30 pm
+9 am</code>
+	</li>
+	<li> Inputs are converted to 2 integers:  HH24, and MM </li>
+	<li> A new "standard" string is made: HH24:MM </li>
+	<li> <tt>read_time()</tt> accepts the entire line, computes the time, calls
+		<tt>time_to_string()</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> String Streams &mdash; <tt>readtime.cpp</tt> </h1>
+<script type='text/javascript'>
+//<![CDATA[
+	wrapCode( "readtime.cpp" )
+//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+<script type='text/javascript'>
+//<![CDATA[
+	section( "5" )
+//]]>
+</script>
+Command Line Arguments </h1>
+<p> From the command line, <dfn>arguments</dfn> may be passed to a
+program: </p>
+<code>prog -v input.dat </code>
+<ul>
+  <li> <tt>prog</tt> receives two (<dfn>arguments</dfn>):
+    <ol>
+      <li> "<tt>-v</tt>" </li>
+      <li> "<tt>input.dat</tt>" </li>
+    </ol>
+  </li>
+  <li> By convention, arguments that start w/a <tt>-</tt> are
+    <dfn>options</dfn> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Command Line Arguments </h1>
+<ul>
+	<li> To receive command-line arguments, <tt>main</tt> needs to look a
+		little different:
+		<code>
+int main(int argc, char* argv[])
+{
+   ...
+}</code>
+	</li>
+	<li> <tt>main</tt> now accepts 2 parameters:
+		<ul>
+			<li> An integer &mdash; the number (<dfn>count</dfn>) of command-line
+				arguments (strings) on the command line (including the program name
+				itself) </li>
+			<li> An array of C-style strings (character arrays) &mdash; the
+				<dfn>value</dfn> of the arguments </li>
+		</ul>
+	</li>
+	<li>Example: <tt>argc</tt> is 3, and <tt>argv</tt> contains three strings:
+		<code>
+string(argv[0]):   "prog"
+string(argv[1]):   "-v"
+string(argv[2]):   "input.dat"</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Command Line Arguments &mdash; <tt>caeser.cpp</tt> </h1>
+<ul>
+	<li> <tt>caeser</tt> is a program which will encrypt text files </li>
+	<li> A simple rotation cipher is used
+		<p> Given key <var>k</var> (1 &le; k &le; 25), shift each letter k
+		spaces. </p>
+		<p> If <var>k</var> is 3 (the default): </p>
+		<ul>
+			<li> A &rarr; D </li>
+			<li> a &rarr; d </li>
+			<li> b &rarr; e </li>
+			<li> x &rarr; a </li>
+			<li> z &rarr; c </li>
+		</ul>
+	</li>
+	<li> This type of cipher was used by Julius Caeser </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Command Line Arguments &mdash; <tt>caeser.cpp</tt> </h1>
+<ul>
+	<li> Program takes these command-line arguments:
+		<dl>
+			<dt> <tt>-d</tt> (opt) </dt>
+			<dd> indicates decryption, rather than encryption </dd>
+			<dt> <tt>-k<span style='font-style:italic'></span></tt> (opt) </dt>
+			<dd> Optional encryption key </dd>
+			<dt> <tt><span style='font-style:italic'>input file name</span></tt> </dt>
+			<dd> file to be encrypted (decrypted) </dd>
+			<dt> <tt><span style='font-style:italic'>output file name</span></tt> </dt>
+			<dd> Result of the operation </dd>
+		</dl>
+	</li>
+	<li> If bad or insufficient arguments are provided, <tt>usage()</tt> is
+	called, program returns an error code (not 0) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Command Line Arguments &mdash; <tt>caeser.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "caesar.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+	</h1>
+<h3> Encryption Algorithms </h3>
+<p> RSA: </p>
+<ul>
+	<li> Rivest, Shamir, Adleman (1978) </li>
+	<li> <dfn>Asymmetic</dfn> &mdash; generate 2 keys: 1 public, 1 private
+	</li>
+	<li> Publish the public key
+		<ul> 
+			<li> Used to encrypt messages </li>
+			<li> Can not be used to decrypt that message </li>
+		</ul>
+	</li>
+	<li> Keep the private key safe
+		<ul>
+			<li> Use it to decrypt messages encrypted with your public key </li>
+		</ul>
+	</li>
+</ul>
+
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 3</span> Public-Key Encryption
+</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Random Access </h1>
+<ul>
+  <li> You can access any position by moving the <dfn>file pointer</dfn>
+		prior to a read or write operation </li>
+	<li> Previous programs were examples of  <i>sequential access</i>
+	&ndash; reading (or writing) a byte (or other unit) at a time </li>
+  <li> <i>Random access</i> allows us to access specific locations, and
+		modify only those locations </li>
+	<li> Only file streams (disk files) support random access
+		<ul>
+			<li> <tt>cin</tt> and <tt>cout</tt>, do not </li>
+		</ul>
+	</li>
+	<li> (There is nothing random actually happening, nor happening randomly)
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Random Access </h1>
+<p> Each disk file has two special positions: </p>
+<dl>
+	<dt> <i>get</i> pointer </dt>
+	<dd> Location of the next character to be read </dd>
+	<dd> Normally starts at the beginning of the file </dd>
+
+	<dt> <i>put</i> pointer </dt>
+	<dd> Location of where the next character will be written </dd>
+	<dd> Normally at the end of the file (output is appended) </dd>
+	<dd> If moved prior to the end, overwrites existing contents </dd>
+</dl>
+
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig4.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 4</span> Sequential and Random
+Access </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Random Access </h1>
+<ul>
+	<li> To move the get and put pointers to character <var>n</var> positions
+		from the beginning of the file <tt>fs</tt>:
+		<code>
+fs.seekg(n, ios::beg);
+fs.seekp(n, ios::beg);</code>
+	</li>
+	<li> The second argument can also be <tt>ios:end</tt> or <tt>ios::cur</tt>
+	</li>
+  <li> To determine the current position of the get and put pointers 
+    (from the beginning of the file), use
+		<code>
+n = fs.tellg();
+n = fs.tellp();</code>
+	</li>
+  <li> Because the files can be very large, the positions are 
+    long integers </li>
+  <li> To find the number of characters in a file, move the 
+    get pointer to the end, then find its offset (from the beginning):
+		<code>
+fs.seekg(0, ios::end);
+long file_length = fs.tellg();</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Random Access </h1>
+<ul>
+	<li> When manipulating data, pay attention to the
+		formatting </li>
+  <li> Example: Suppose we store the data as text:  
+		<br/>&nbsp;
+		<table class='array'>
+			<tr class='data'>
+				<td>H</td>
+				<td>a</td>
+				<td>c</td>
+				<td>k</td>
+				<td>e</td>
+				<td>r</td>
+				<td>,</td>
+				<td> </td>
+				<td>H</td>
+				<td>a</td>
+				<td>r</td>
+				<td>r</td>
+				<td>y</td>
+				<td> </td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>0</td>
+				<td>0</td>
+				<td>\n</td>
+				<td>C</td>
+				<td>r</td>
+				<td>a</td>
+				<td>c</td>
+				<td>k</td>
+				<td>e</td>
+				<td>r</td>
+			</tr>
+		</table>
+		<p> Now raise Harry's salary by 5.5 percent to $36,397.50: </p>
+		<table class='array'>
+			<tr class='data'>
+				<td>H</td>
+				<td>a</td>
+				<td>c</td>
+				<td>k</td>
+				<td>e</td>
+				<td>r</td>
+				<td>,</td>
+				<td> </td>
+				<td>H</td>
+				<td>a</td>
+				<td>r</td>
+				<td>r</td>
+				<td>y</td>
+				<td> </td>
+				<td class='hl'>3</td>
+				<td class='hl'>6</td>
+				<td class='hl'>3</td>
+				<td class='hl'>9</td>
+				<td class='hl'>7</td>
+				<td class='hl'>.</td>
+				<td class='hl'>5</td>
+				<td>r</td>
+				<td>a</td>
+				<td>c</td>
+				<td>k</td>
+				<td>e</td>
+				<td>r</td>
+			</tr>
+		</table>
+		<p> The update overwrites some characters in the next field </p>
+	</li>
+  <li> Random access is better suited to files with fixed-length records
+		(and fixed-length fields) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Random Access  </h1>
+<h3> Fixed-Length Records </h3>
+<ul>
+  <li> Every record in the file has the same size </li>
+	<li> Easy to jump over records </li>
+	<li> A given field has the same size in all records </li>
+	<li> Fields are in the same order in all records </li>
+	<li> Easy to find a field in a record </li>
+	<li> Data can be safely modified in-place </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig6.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 6</span> Variable-Size and
+Fixed-Size Records </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Random Access  </h1>
+<ul>
+  <li> Example: restructure the records
+		<ul>
+			<li> Name: 30 characters </li>
+      <li> Salary: 10 characters </li>
+		</ul>
+	</li>
+	<li> Allow for random access </li>
+</ul>
+<table class='array'>
+	<tr class='data'>
+		<td>H</td>
+		<td>a</td>
+		<td>c</td>
+		<td>k</td>
+		<td>e</td>
+		<td>r</td>
+		<td>,</td>
+		<td> </td>
+		<td>H</td>
+		<td>a</td>
+		<td>r</td>
+		<td>y</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td>3</td>
+		<td>4</td>
+		<td>5</td>
+		<td>0</td>
+		<td>0</td>
+		<td>.</td>
+		<td>0</td>
+		<td>0</td>
+		<td>\n</td>
+	</tr>
+</table>
+<table class='array'>
+	<tr class='data'>
+		<td>C</td>
+		<td>r</td>
+		<td>a</td>
+		<td>c</td>
+		<td>k</td>
+		<td>e</td>
+		<td>r</td>
+		<td>,</td>
+		<td> </td>
+		<td>C</td>
+		<td>a</td>
+		<td>r</td>
+		<td>l</td>
+		<td> </td>
+		<td>V</td>
+		<td>.</td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td> </td>
+		<td>6</td>
+		<td>1</td>
+		<td>8</td>
+		<td>2</td>
+		<td>0</td>
+		<td>.</td>
+		<td>7</td>
+		<td>5</td>
+		<td>\n</td>
+	</tr>
+</table>
+<ul>
+	<li> Each record is 40 bytes, <strong>plus</strong> the newline </li>
+	<li> Newline is slippery; on Windows it's actually 2 bytes
+		<ul>
+			<li> Usually invisible to you; handled by the I/O library </li>
+			<li> See Advanced Topic 9.1 for a discussion </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Random Access &mdash; <tt>database.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "database.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Binary Files </h3>
+<ul>
+	<li> Binary files are <dfn>raw data</dfn> (jpeg, mp3, etc.) </li>
+	<li> Text files are meant to be human readable
+		<ul>
+			<li> The newline is messy </li>
+			<li> Could be <tt>\n</tt> (Unix), <tt>\r\n</tt> (Windows, Vax), or
+				just <tt>\r</tt> (Mac) </li>
+			<li> <em>All</em> files in unix are "binary" </li>
+		</ul>
+	<li> By default, the C++ I/O library opens files in text mode </li>
+	<li> Numbers, written as characters take up more space
+		<ul>
+			<li> 1 byte is needed for each digit (base 10) </li>
+			<li> 1 byte could contain a base-256 digit </li>
+			<li> Tough to debug, for a human to look at the files </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	</h1>
+<h3> Databases </h3>
+<ul>
+	<li> Databases handle truly massive amounts of data </li>
+	<li> They do it fast </li>
+	<li> Most follow the <dfn>relational model</dfn>
+		<ul>
+			<li> Data organized into different files (tables) </li>
+			<li> Store your home address once </li>
+			<li> A different table lists all of your accounts (once) </li>
+			<li> A 3rd table might record all transactions on a given account
+			</li>
+			<li> Information across tables are linked by a <dfn>key</dfn> </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	(cont.)
+	</h1>
+<h3> Privacy </h3>
+<ul>
+	<li> Many organizations like to use your Social Security Number (SSN)
+	</li>
+	<li> It's become a universal ID (counter to its original purpose)
+	<li> It's a poor choice for and ID (and for a key)
+		<ul>
+			<li> There is no checksum </li>
+			<li> Easy to make up a number </li>
+			<li> Possible that the same number is assigned to more than one person
+			(illegal immigrants) </li>
+		</ul>
+	</li>
+	<li> Many people are concerned that everyone wants your SSN </li>
+	<li> Don't give it out!  Those that are required:
+		<ul>
+			<li> IRS, and other government agencies </li>
+			<li> Any bank that holds your money (to report income) </li>
+			<li> Your employer </li>
+		</ul>
+	</li>
+	<li> Finally, consider merging various databases
+		<ul>
+			<li> Insurance companies might charge more if you have relatives with a
+				certain disease </li>
+			<li> You might be denied a loan (or a job) because of an inaccurate
+				credit or medical report.  They won't even tell you why. </li>
+		</ul>
+	</li>
+</ul>
+</div>
+	
+</body>
+</html>

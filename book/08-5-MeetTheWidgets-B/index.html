@@ -1,0 +1,500 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>8.6&mdash;Meet the Widgets</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 8.6</p>
+        <p id='lessonTitle'>Meet the Widgets</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/widget01.gif" class="right" alt="Buttons in programs.">
+            <b><span class="cap">I</span>n the last few chapters you've written
+            graphical programs</b>
+            using the <code>Graphics</code> class to draw pictures on your
+            applets, and the object-oriented ACM Graphics classes, like
+            <code>GImage</code> and <code>GRect</code>, to draw pictures
+            in your applications.
+        </p>
+        <p> You <b>haven't</b> yet worked with graphical "interactors" or GUI
+            components, like buttons and labels. In the final section of
+            this chapter, you'll learn how to add buttons and labels to your
+            programs. That way the users of your video Blackjack program will
+            be able to tell you whether they want to hit or stand, and you'll
+            be able to tell them when they've won or lost.
+        </p>
+        <p> Before we do that, though, let's take a look at that intriguing
+            term, <b>widget</b>.
+        </p>
+    <h2>What are Widgets?</h2>
+        <p><img src="images/g02.jpg" class="right" alt="A rotation widget.">
+            Michael Gleicher, in his
+            1994 Carnegie Mellon Computer Science Thesis,
+            <a href="http://www.cs.wisc.edu/graphics/Papers/Gleicher/Thesis/" target="_blank">
+            <i><b>A Differential Approach to Graphical Interaction</b></i></a>,
+            discusses the use of numerical constraint solving as a basis for the
+            creation of direct manipulation graphical interfaces. In the
+            paper he describes, and illustrates, the <b>rotation
+            widget</b> pictured to the right.
+        </p>
+        <p> <img src="images/g03.jpg" class="left" style="margin-right: 2em;" alt="Widget the book.">
+            Six years later, on September 5, 2001, Lyn Rossiter McFarland,
+            wrote her book about <b>Widget</b>, a wet, stray, homeless Westie,
+            who masquerades as a kitten to be accepted into a family
+            of six well-fed cats.
+        </p>
+        <p> <b><i>Our</i></b> widgets, though, have <i>nothing</i> to do with lost
+            dogs or mathematical constraints. For us, widget is a generic
+            term that, in the programming world, has come to mean a
+            control or component used to construct a Graphical User
+            Interface (GUI). Widget refers to the graphical controls
+            that are used to capture user input and to display your computer's
+            output. This includes things like pushbuttons, checkboxes,
+            radio buttons, labels, scrollbars, menus, text areas and so on.
+        </p>
+    <h3>Java Widget Toolkits</h3>
+        <p> Now you've probably noticed that these widgets often look
+            <i>different</i> on <i>different platforms</i>. The buttons and labels on a
+            Mac look a lot different than those on Windows. Even on the
+            <i>same</i> platform, though, the widgets can take on a different look
+            and feel. In Windows XP, for instance, you can choose whether
+            all of the controls will use the XP look, or the Windows
+            Classic look<br>
+            <img src="images/widget02.gif" class="inlineCenter" alt="Different widget styles on Windows.">
+            A collection of widgets is commonly called a <b>toolkit</b>.
+            Java actually has <b>two</b> different toolkits that you can use.
+            The "original" Java widgets are called the <b>AWT</b> components;
+            <b>AWT</b> stands for <b>A</b>bstract <b>W</b>indow <b>T</b>oolkit.
+            When Java 2 came out, a second widget toolkit was added to the
+            Java class libraries. This toolkit is officially named the <b>JFC</b>, which
+            stands for the <b>J</b>ava <b>F</b>oundation <b>C</b>lasses, but
+            it's almost universally referred to by the code name in use
+            when the classes were developed: <b>Swing</b>.
+        </p>
+        <div class='info'>
+        <p> While the Java Class Libraries include both the AWT and Swing
+            toolkits, there's nothing to stop you from using an entirely
+            different set of widgets. That's what Eclipse does; the folks
+            at IBM who originally created Eclipse didn't especially like
+            either Swing or the AWT and so they developed the <b>Standard
+            Widget Toolkit</b> or <b>SWT</b>. While you <i>can</i> use the SWT in your
+            programs, you'll have to distribute the SWT library along
+            with your program classes, just like Eclipse does.
+        </p>
+        </div>
+        <p> You can also
+            think of the graphical ACM classes we used earlier in the text
+            as a toolkit of sorts. The AWT <code>Label</code> class, for
+            instance, is similar (in ways) to the <code>GLabel</code> class you
+            used last week.
+        </p>
+    <h3>AWT and Swing</h3>
+        <p> To get started, let's take a look at some of the main "players"
+            in the AWT/JFC family tree" of classes:<br>
+            <img src="images/g01.gif" class="inlineCenter" style='width:600px;' alt="The widget family tree.">
+            The diagram shown here is an <b>inheritance hierarchy</b> that
+            shows the relationships between the different GUI classes.
+            In Java, the <code>Object</code> class is ultimate superclass
+            for all classes, not just the GUI classes. Although it's an
+            important class, for the AWT and Swing toolkits, the
+            <code>Component</code> class is probably more important.
+        </p>
+
+        <p> <b><code>Component</code></b> is the <b><u>direct</u></b>
+            superclass for almost all AWT
+            GUI "widgets" such as <code>Label</code>, <code>Button</code>,
+            and <code>TextField</code>, as you can see from the illustration.
+            (These are the classes highlighted in green.)
+        </p>
+    <h3>Heavyweight and Lightweight</h3>
+        <p> As you can see from the picture above, for every component in the
+            AWT, such as <code>Button</code> or <code>Label</code>, there is a
+            similar Swing component that starts with J: the <code>JButton</code>
+            and the <code>JLabel</code>, for instance. This continuity allows
+            you to build on what you already know, while adding new functionality.
+        </p>
+        <p> In addition to these "replacement" components, there are also new
+            components available that are not available in the AWT. These
+            include the <code>JSlider</code> class, the <code>JProgressBar</code>
+
+            class, and the <code>JToolBar</code> class, as well as more complex
+            and sophisticated components such as trees, grids, and editors.
+        </p>
+        <p><img src='images/lightweight.png' class='right' alt='Lightweight vs. heavyweight.'>
+            You might wonder why the JFC didn't simply <b>improve</b> the
+            existing <code>Button</code> class instead of adding a whole new
+            class. There is an important reason for this, and it underlies the
+            basic difference between the AWT and Swing:
+        </p>
+        <ul>
+
+            <li>In the AWT, all components are created by the underlying
+                operating system using a system of "parallel objects"
+                known as <b>peers</b>. Because of these operating-system
+                created peers, AWT widgets are called <b>heavyweight</b>
+                components.
+            </li>
+            <li>In the JFC, all components, (except for <code>JFrame</code>
+                and a few others, are <b>lightweight</b> components&mdash;they
+                don't involve the operating-system created peers that
+                underlie the AWT.
+            </li>
+
+        </ul>
+        <p>Two important consequences follow from this underlying difference:</p>
+        <ul>
+            <li>In the AWT, the user interface will take on the look of
+                the operating system that the program is running on, since the
+                components are actually created by the host operating system.
+                The same Java program will appear as a Windows program when run
+                on Windows, and as a Mac program when run on the Mac.
+                <p>With Swing, that's not necessarily true; a Swing program
+                <b>can</b> look the same on the Mac, Solaris, and Windows by
+                using a "cross-platform look and feel". Swing programs can
+                also emulate the host look and feel, but the components are
+                not created using native widgets, but are "drawn" by the
+                Java runtime.
+                <img src='images/heavyweight.gif' class='right' alt='Mixing heavyweight and lightweight components.'>
+
+                </p>
+            </li>
+            <li>Swing and AWT components don't "mix and match" very well.
+                Because of their different underlying architectures, you should
+                try and use <b>only</b> Swing components or <b>only</b> AWT
+                components; not half-and-half. That's why the <code>Button</code>
+                class wasn't simply improved; it's because Swing is a
+                fundamentally different animal than the AWT.
+            </li>
+        </ul>
+        <div class='alert'>
+        <p> My previous recommendation was to use the AWT components for
+            applets, which should be as accessible as possible, and to use
+            Swing for Java applications, where you can ship a Java runtime
+            with your program if necessary. Today, in 2011, though, there's
+            really no reason to use the older AWT components, even for
+            general-distribution applets. For your ACM graphics programs,
+            we'll use the Swing components.
+        </p>
+        </div>
+        <p> This doesn't mean, however, that the AWT has gone away. In fact,
+            as you can see from the picture above, all of the new Swing
+            components are derived from <code>java.awt.Container</code>, (which is,
+            itself, derived from <code>java.awt.Component</code>, so all of
+            the time you spent learning how to use Java's <code>Component</code>
+            class is time well spent. In addition, all of the <code>Graphics</code>
+            methods in the AWT have been retained, and many of them have been
+            enhanced in the Java 2D packages.
+        </p>
+        <div class='info'>
+        <p style='padding-left:2em;'>
+            <span style='font-size:1.3em;font-weight:bold;color:navy;border-bottom:1px dotted forestgreen;'>
+            Changing the Look and Feel</span><br>
+            When you write a GUI program using the Java Swing classes, you can
+            actually change the "look and feel" when the program runs. If you
+            want the program to look as natural as possible, just add this
+            function to your program and call it when your program starts up.<br>
+            <img src='images/laf.png' class='inlineCenter' alt='Setting the system look and feel.'>
+            If you are <b>only</b> going to run your program <b>inside</b> DrJava,
+            it's even easier;
+            just add the following line at the beginning of your program:
+            <code>LAF.setSystemLAF();</code>
+        </p>
+        </div>
+    <h2>Using Widgets</h2>
+        <p> We'll start out by using the <b>JFC</b> (or <b>Swing</b>)
+            components inside ACM graphics programs. The JFC components
+            <b>are not</b> part of the ACM libraries though, like the
+            <code>GImage</code> and <code>GRect</code> classes are. The
+            JFC widgets are part of the standard Java class libraries.
+        </p>
+        <p> That means that the JFC components will work <b>exactly</b>
+            the same way when you use them in a "regular" Java GUI program.
+            The only difference is that with the ACM programs, it's a little
+            easier to make the widgets look good when you add them to your
+            program. In a regular Java GUI program, there's quite a bit of
+            code required to set up the "container" part of your program,
+            and to place the widget where you want it to go; this is code
+            that the ACM <code>GraphicsProgram</code> class supplies for you.
+            You'll learn how to create "regular" Java GUI programs later
+            in the course.
+        </p>
+    <h3>Basic Widgets</h3>
+        <p> You can really write quite a few programs by learning to use
+            just a few different components. At a minimum, you'll need
+            controls for <b>input, processing and output</b>: the basic
+            operations of every computer program. The components we'll
+            use for that are:<br>
+            <img src="images/swingcomponents.gif" class="inlineCenter" alt="Swing components.">
+        </p>
+        <ul>
+            <li>The <code>JButton</code> widget, which you'll use to trigger
+                the processing step in your program. When someone clicks a
+                button, you'll take a particular action.
+            </li>
+            <li>The <code>JLabel</code> widget, which you'll use to display
+                the results of your processing back to the user.
+            </li>
+            <li>The <code>JTextField</code> widget, which will handle the input side
+                of the IPO equation.
+            </li>
+        </ul>
+    <h3>Importing the Swing Package</h3>
+        <p>To use any of these widgets in your program, you need to
+            add a new <code>import</code> statement at the top of every
+            program that uses them. All of these widgets are in the
+            <code>javax.swing package</code>, so just add:
+        </p>
+        <p class="code" style='font-size:1.25em;'> import javax.swing.*; </p>
+        <p> to the top of your file. The <b>x</b> in <b>javax</b> means
+            that the classes are a <b>standard extension</b> to the base Java
+            class libraries. Of course, since they're included in the
+            Java Class libraries themselves, the word extension doesn't
+            have much meaning. When Swing was originally released, these
+            extension classes were included in a separate JAR file, just
+            like the ACM classes are now.
+        </p>
+        <div class='alert'>
+        <p>
+            Although all of the JFC widgets are included in the
+            <code>javax.swing</code> package, you still will usually
+            need to import the <code>java.awt</code> package as well,
+            so that you can use classes like <code>Color</code> and
+            <code>Font</code>.
+        </p>
+        </div>
+    <h3>A Widget Checklist</h3>
+        <p> To use <b>any kind</b> of widget in your program, whether it's a
+            <code>JButton</code>, a <code>JTextField</code> or a
+            <code>JLabel</code>, you'll always follow
+            these <b>three basic steps</b>. Think of them as a checklist
+            or a recipe:
+            <img src="images/checklist.gif" class="right" alt="Checklist illustration.">
+        </p>
+        <ol>
+            <li class="d">First, <b>create a widget instance variable</b>.
+                You don't need to initialize it.
+            </li>
+            <li class="d">Next, use a <b>widget constructor to create
+                a widget object</b>. Often, however, the widget constructor
+                won't complete all of the required initialization. You
+                may want to change the size or color of the widget.
+                You'll normally create your object and perform this
+                additional initialization will go inside your
+                program's <code>init()</code> method. (If you're writing
+                a non-ACM program, you can put it inside your program's
+                constructor instead.)
+            </li>
+            <li class="d">Finally, you need to <b>place the widget on the
+                surface of the program</b>, so that the user can see and
+                interact with it.
+            </li>
+        </ol>
+
+        <p> Here's the what each of these steps looks like in code. Go ahead
+            and open <b>WidgetWorld.java</b> which you'll find in this
+            chapter's code folder:<br>
+            <img src="images/widgetworld.gif" class="inlineCenter" alt="The widget checklist.">
+            In ACM Graphics programs, you can add
+            the component to one of the borders of the program (that is,
+            on the north or south) or you can place it on the graphics
+            canvas itself. In an applet or a regular non-ACM program,
+            you'd normally create a panel and then add the widget
+            to that. As I mentioned earlier, though, the ACM method
+            is a little easier.
+        </p>
+        <p> If all of this sounds familiar, it should! It's almost exactly
+            what you did when you worked with the ACM graphical shapes
+            last week!
+        </p>
+        <div class='alert'>
+            <p><b class='ry'>NOTE:</b> There <b>is no real <code>Widget</code> class</b>.
+            I've placed a "dummy" class inside the code folder so that your
+            program will compile, but if you run it, nothing happens.
+            This code just shows you
+            the <b>pattern</b> you'll follow when we get to the <b>real</b>
+            specific widgets, like <code>JLabel</code> in the next section.
+            </p>
+        </div>
+    <h3>Step 1: Instance Variables</h3>
+        <p> In the example shown here, the widget is created
+            as an <b>instance variable</b>, or <b>field</b>. You
+            should make your widgets instance variables whenever you have to
+            use them later in other parts of your program.
+        </p>
+        <p> In Java, variables created <b>outside</b> of a method are
+            officially called <b>fields</b>. However, in the real world,
+            you'll more often see them called <b>instance variables</b>,
+            which is a more general object-oriented term.<br>
+            <img src="images/fields.gif" class="inlineCenter" alt="Instance variables.">
+            Instance variables <b>can be used inside any method in the class</b>.
+            Normally, instance variables are created using the <b>access
+            modifier</b> <code>private</code>, so that the variable cannot
+            be used outside of the class. Occasionally, fields will
+            use the modifier <code>protected</code>, so that subclasses
+            created from the class may directly access the fields.
+        </p>
+        <div class='info'>
+        <p>It doesn't matter <b>where</b> inside the class
+            the instance variable is created. Some programmers and textbooks
+            like to put them at the bottom of the program, while others
+            place them at the top.
+        </p>
+        </div>
+        <p> In very rare instances, programmers will use the
+            <code>public</code> modifier to allow unrestricted access
+            to an object's instance variables. This is almost always a
+            poor idea, as the designers of Java's <code>Point</code>,
+            <code>Dimension</code>, and <code>Rectangle</code> classes
+            discovered after-the-fact.
+        </p>
+        <p> Unlike local variables, instance variables are automatically
+            given a value (initialized), even when you don't provide an
+            initial value. Numeric variables (like <code>int</code>) are
+            initialized to the value 0, while object variables are given
+            the special value <code>null</code>. In the example here,
+            the field <code>velocity</code> starts with the value
+            0.0. Every time the <code>move()</code> method is called,
+            <code>velocity</code> increased by .2.
+        </p>
+    <h3>Step 2: Instantiation and Initialization</h3>
+        <p> Inside the <code>init()</code> method, or your program's
+            constructor, you'll <b>instantiate</b> widgets for each of
+            your widget instance variables. Remember that creating an
+            object variable <b>does not</b> create the actual object.
+            When you create the actual object, use the name of the
+            instance variable, but <b>don't</b> precede the name
+            with the widget type. That would create a <b>local</b>
+            widget object and not instantiate your instance variable.<br>
+            <img src="images/widget03.gif" class="inlineCenter" alt="Instantiating the widget.">
+            In addition, if you need to do any additional widget
+            initialization, you can do it right after you've created the
+            widget object. Here I've set the background property for my
+            widget to yellow.
+        </p>
+        <p> If a widget is <b>only</b> used for display (like most
+            <code>Label</code> objects, for instance), you should make
+            the widget either a <b>local variable</b>, inside the
+            <code>init()</code> method, or simply construct and pass
+            the widget to the <code>add()</code>
+            method, (inside the <code>init()</code> method), like this:<br>
+            <img src="images/widget04.gif" class="inlineCenter" alt="Local and anonymous widgets.">
+            In the example shown here, <code>myWidget2</code> is a local variable
+            that can't be accessed outside of the <code>init()</code> method.
+            Because it's a <i>local</i> variable, it <b>doesn't</b> use the
+            <code>private</code> modifier. (In fact, it <b>can't</b> use the
+            <code>private</code> modifier, which is legal only for instance
+            variables and methods.)
+        </p>
+        <p> Line 33 creates an unnamed (or anonymous)
+            <code>Widget</code> object, rather than a local variable. You
+            can use an anonymous object if you aren't going to make any
+            changes at all to the object, once it's created. You'll often
+            do this for purely descriptive labels, for instance.
+        </p>
+    <h3>Step 3: Adding Your Widgets</h3>
+        <p> When you create widget object using the <code>new</code>
+            operator, it's constructed and stored in memory, but it isn't
+            yet visible to the user of your program. To make a GUI
+            component visible, you need to <b>add it to some kind of
+            container</b>.
+        </p>
+        <p> In this case, that's your ACM <code>GraphicsProgram</code> itself.
+            To add a component to a container, you use, naturally, the method
+            named <code>add()</code>. (This is true in all Java GUI programs,
+            not just ACM programs).
+        </p>
+        <p> <img src="images/widget05.gif" class="right" alt="Location for widgets.">
+            In ACM programs, though, you can tell the component which border
+            location you want to place it into, using the constants
+            <code>NORTH</code>, <code>SOUTH</code>, <code>EAST</code>
+            or <code>WEST</code>. When using these, remember that they
+            are all upper-case.
+        </p>
+        <p> In a <code>GraphicsProgram</code> you can also place widgets on
+            the canvas area as well. To do this you:
+        </p>
+        <ul>
+            <li>Retrieve the <code>GCanvas</code> object that makes up the
+                center of an ACM graphics program.
+            </li>
+            <li>Add the widget to the canvas, supplying parameters for
+                the x,y location of the widget.
+            </li>
+        </ul>
+        <p> Here's what that looks like in code:<br>
+            <img src="images/widget06.gif" class="inlineCenter" alt="Positioning a widget on the canvas.">
+        </p>
+        <div class='info'>
+            <p> Now, that you know, in <b><i>theory</i></b> how to use Java's
+                Widget classes, turn over to HW25 to get some hands-on
+                practice with a <b>real</b> widget, the <code>JLabel</code>.
+            </p>
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Meet the Widgets Summary
+        </p>
+        <ul>
+            <li> <b>Widget</b> is a generic term that means a control or component
+                used to interact with the user in a GUI program. They include
+                labels, checkboxes, pushbuttons, etc. Widgets are also sometimes
+                called <b>interactors</b>.
+            </li>
+            <li> Different computing platforms <b>have different widget sets</b>.
+                Buttons look (and act) differently on the Mac and on Windows, or
+                even on different versions of the Mac OS and different revisions
+                of Windows.
+            </li>
+            <li> The standard Java class libraries provide two built-in
+                <b>widget toolkits</b>, or collections of widgets. The original
+                <b>AWT</b> makes use of your operating system's native
+                (heavyweight) components, while the more recent <b>JFC</b>
+                or <b>Swing</b> toolkit replaces all of the native widgets
+                with its own (lightweight) components written in Java itself.
+            </li>
+            <li> Other toolkits, such as the <b>SWT used in Eclipse</b> require
+                you to include the GUI toolkit library when you package your
+                program for distribution (just like distributing the ACM
+                classes with your program).
+            </li>
+            <li> In Swing programs, you can <b>change the look and feel (LAF)</b> of
+                the widget set when your program first starts up. The Swing
+                classes can generally mimic or emulate the native widget
+                set for most platforms if asked. (However, because if copyright
+                restrictions, you can't use the Windows LAF on a non-Windows
+                machine, or the Mac LAF on a non-Mac).
+            </li>
+            <li> Using a widget is similar to using the ACM graphical components.
+                Make sure you have imported the <code>javax.swing</code> package.
+                Then, you <b>construct an object</b> (usually as an instance
+                variable). Next, customize it by
+                calling any extra methods (<b>initialization</b>). Finally,
+                <b>add</b> it to the surface of your GUI program by calling
+                the <code>add()</code> method.
+            </li>
+            <li> In ACM graphical programs, you add your program to one of
+                the four borders of the program, <code>NORTH</code>, <code>SOUTH</code>,
+                <code>EAST</code> or <code>WEST</code>. In "regular" GUI programs,
+                you need to use a <b>layout manager</b> to place your components.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

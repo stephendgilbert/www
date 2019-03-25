@@ -1,0 +1,702 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>6.5&mdash;Logical Operators</title>
+    <style type='text/css'>
+        td, th { padding: 3px; }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner06">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 6.5</p>
+        <p id='lessonTitle'>Logical Operators</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">E</span>arlier in this chapter you met
+            the <i>relational</i> operators</b>,
+            which work with numeric or object operands and produce
+            <code>boolean</code> values.
+            In this section, you'll meet another group of operators
+            that can be used to produce <code>boolean</code> values,
+            known as to <b>logical</b> or <b>Boolean</b> operators.
+        </p>
+        <p><img src="images/y04.gif" class="right" alt="The logical operators.">
+            Unlike the relational operators, the logical
+            operators that you'll meet here <b>only</b>
+            work with <code>boolean</code> operands, not numbers or
+            objects. The logical operators can be used to <b>combine</b>
+            several Boolean expressions into a single <code>true</code>
+            or <code>false</code> value which can be used as the
+            test condition in an <code>if</code> statement.
+        </p>
+        <p> Java has six logical operators. These operators
+            require <code>boolean</code> operands, just like the arithmetic
+            operators require numeric values as operands.
+            The six logical operators include:
+        </p>
+        <ul>
+            <li>One unary logical operator: <b>NOT</b> (<code>!</code>)</li>
+            <li>Two versions of the binary <b>AND</b> operator
+                (<code>&amp;&amp;</code>, <code>&amp;</code>)
+            </li>
+            <li> Two versions of the binary <i>inclusive</i> <b>OR</b> operator
+                (<code>||</code>, <code>|</code>)
+            </li>
+            <li> One <i>exclusive</i> <b>OR</b> operator (<code>^</code>)
+        </li></ul>
+        <p>Let's start by looking a <b>NOT</b>.</p>
+    <h2>The NOT Operator</h2>
+        <p>The unary <b>NOT</b> operator&#8212;which uses the exclamation point as
+            its symbol, and <i>not</i> the word <b>NOT</b>&#8212;appears to
+            the left of (in front of) the value it operates on. The effect
+            of <b>NOT</b> is to reverse the sense of a <code>boolean</code>
+            expression.<br>
+            <img src="images/y01a.gif" class='inlineCenter' alt="The logical NOT operator.">
+            For instance, here are three different expressions:<br>
+            <img src="images/usingnot.gif" class='inlineCenter' alt="Using the NOT operator.">
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>The first expression: <code>10 == 5 + 3 + 2</code>
+                is <b>true</b> because 10 is equivalent to 5 +  3 + 2.
+            </li>
+            <li class='d'>To <i>reverse</i> the value of the expression by using
+                the <b>NOT</b> operator you put the expression in parentheses
+                and place the <code>!</code> symbol in front. As you can
+                see, that makes the expression <code>false</code>.
+            </li>
+            <li class='d'>The parentheses <b><u>are</u></b> required.
+                If you leave them off, then the expression will
+                not compile, because <b>NOT</b>, being a unary
+                operator, has higher precedence than the
+                arithmetic addition operator (<code>+</code>),
+                or than the relational equality operator (<b>==</b>).
+            </li>
+        </ol>
+        <p> By omitting the
+            parentheses in example 3, the expression attempts to
+            apply the <b>NOT</b> operator to the number 10; but 10 is a numeric value,
+            not a <code>boolean</code> value. <b>NOT</b> only operates on
+            <code>boolean</code> values.
+        </p>
+    <h3>NOT and Methods</h3>
+        <p> I find myself using the <b>NOT</b> operator most often to
+            reverse the sense of a <i>predicate</i> function. For instance,
+            the <code>String</code> class has and <code>equals()</code>
+            method, but it <b>doesn't</b> have a <code>notEquals()</code>
+            method. Instead, you'll use the <b>NOT</b> operator like this:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if (! s.equals(answer)) ... <span class="cmt">// s != answer</span>
+        </p>
+    <h3>Using NOT as a Toggle</h3>
+        <p> One useful technique you should know is how to <b>toggle</b>
+            a value between different states: from <code>true</code> to
+            <code>false</code> and then back to <code>true</code>. Programs
+            that use this technique are examples of very simple
+            <i>state machines</i>.
+        </p>
+        <p> Here's an example that you can follow along with
+            in <b>CountWords.java</b>, (which you'll find in this chapter's
+            code folder). Suppose we want to count the words
+            in a <code>String</code>, using a loop and checking each
+            character. The "boilerplate" code here repeatedly
+            extracts each character in
+            a <code>String</code> like this:
+            <img src='images/countwords01.gif' class='inlineCenter' alt='Boilerplate code.'>
+        </p>
+        <div class='alert'>
+            <p> We don't actually look at <b>loops</b> until next week. For
+                right now, just concentrate on the <b>logic</b> needed to
+                decide if we are in a word or outside of a word.
+            </p>
+        </div>
+        <p> To actually <b>count</b> the number of words, we need to
+            check the transition from being "inside" of a word and being
+            "outside" of a word.  We can do that by <b>adding</b> a Boolean <b>flag</b>
+            or <b>state</b> variable to keep track of "where we are",
+            like this:
+            <img src='images/countwords02.gif' class='inlineCenter' alt='A Boolean flag.'>
+            When we first start, since we haven't processed any
+            characters, we set <code>isInside</code> to <code>false</code>.
+            When we move from being outside to inside, we add one to
+            our counter. However, we also need to set our flag to its
+            opposite state. You can do that with the <b>toggle</b>
+            statement like this:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            isInside = !IsInside;
+        </p>
+        <p> As the program runs, <code>isInside</code> will switch to
+            <code>true</code> when we enter a word and back to <code>false</code>
+            when we exit. This is why it is called a <b>toggle</b>, because
+            it acts like the <b>toggle switch</b> that turns your computer
+            on and off; you don't have separate on and off switches, do you?
+        </p>
+        <p> I'll continue with the word counting example in a minute, but to finish it
+            we'll need to know how to combine several Boolean conditions.
+            For that, you'll need to use the rest of the logical operators.
+        </p>
+    <h2>The AND Operators</h2>
+        <p> The four <i>binary</i> logical operators each require
+            two <code>boolean</code> values, one on each side of the
+            operator as shown here:<br>
+            <img src="images/y05.gif" alt="The binary logical operators" class='inlineCenter'>
+            The <b>AND</b> symbol used by Java is the
+                ampersand (<code>&amp;</code>) or, more commonly, the
+                double-ampersand (<code>&amp;&amp;</code>).
+        </p>
+        <div class='alert'>
+        <p>When using the
+                double-ampersand (<code>&amp;&amp;</code>), make sure you don't
+                put a space or line-break between the symbols&#8212;they must
+                appear adjacent to one another.
+        </p>
+        </div>
+        <p> The <b>AND</b> operator corresponds to our normal, logical understanding
+            of the word <b>and</b>. If a teacher says that you must
+            score at least 85% on the average of three exams <b>AND</b>
+            complete at least 90% of the homework to get an 'A', you
+            understand that you must complete <b><i>both</i></b>
+            prerequisites before you'll get an 'A'. Given this scenario,
+            completing 80% of the homework, and getting 100% on the
+            exams would not earn you an 'A'.
+        </p>
+    <h3>An Example</h3>
+        <p> When used in programs, the logical <b>AND</b>
+            is used to <b>make sure</b> that more than one condition
+            is <b>true</b> before executing a piece of code.
+        </p>
+        <p> Here's a simplistic discounting strategy, for
+            instance, that attempts to provide a bigger discount for
+            products which have sold fewer items, but limits the
+            discounting strategy to low-ticket products:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if (numSold &gt; 0 &amp;&amp; price &lt; 1500)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;discount = price / 2 / numSold;<br>
+            }<br>
+            else<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;discount = 0.0;<br>
+            }
+        </p>
+        <p> Because both sides of the expression must be <b>true</b>
+            before the code will be executed, you won't inadvertently apply
+            the discount to a new Lexus. You'll also avoid a
+            division-by-zero error that would occur if you didn't check
+            first to make sure that the number sold was greater than zero.
+        </p>
+    <h3>Counting Words Again</h3>
+        <p> Let's look at our word counting example again. Let's assume that
+            each word is separated by the others using <i>whitespace</i>
+            characters which include the regular space, the tab character
+            and the newline among others.
+        </p>
+        <p> The <code>isWhitespace()</code>
+            predicate method in the <code>Character</code> "wrapper" class
+            will tell you if a character is a whitespace character. You
+            can use it like this to test when you move from being
+            outside of a word to being inside a word:<br>
+            <img src='images/countwords03.gif' class='inlineCenter' alt='Using AND and a toggle.'>
+            Notice how we <b>must</b> use the <b>AND</b> operator here:
+            you move from being inside of a word to being outside of
+            a word <b>only</b> when <b>both</b> conditions are true:
+        </p>
+        <ul>
+            <li>the current character read is a whitespace character, and...</li>
+            <li><code>isInside</code> is <code>true</code>, indicating that
+                the last character read was <b>not</b> a whitespace character.
+            </li>
+        </ul>
+        <p> Note also that we don't update the number of words when this
+            occurs; we count the word when we <b>enter</b> it, <b>not</b>
+            when we leave it.
+        </p>
+        <p> So, what does the code look like to check for an entry to a
+            word? It's almost the same, except we need to use the <b>NOT</b>
+            operator (<i>twice!</i>) along with <b>AND</b> like this:<br>
+            <img src='images/countwords04.gif' class='inlineCenter' alt='Using AND and a toggle.'>
+            Besides the use of the <b>NOT</b> operator, the only difference
+            is that in this block of code we update the word counter as
+            well.
+        </p>
+        <div class='exercise'>
+
+        <h5>Try It Yourself</h5>
+        <p> Go ahead and try it out. Complete <b>CountWords.java</b>
+            using the code shown up to now.
+            Run the program and make sure that the first paragraph
+            of Moby Dick really has 198 words. <br>
+            <img src='images/countwords05.gif' class='inline' alt='Running CountWords.java.'>
+        </p>
+        </div>
+
+    <h2>The OR Operators</h2>
+        <p> Like the logical <b>AND</b> operators, the logical <b>OR</b>
+            operators both require two operands, one on the left and one
+            on the right of the operator. Java uses the vertical bar symbol
+            (<code>|</code>), and double vertical bar symbols
+            (<code>||</code>) for its <b>OR</b> operators. As with the
+            <b>AND</b> symbol (<code>&amp;&amp;</code>), make sure you
+            don't put a space between the two vertical bars.
+        </p>
+        <p> The <b>OR</b> operator, like <b>AND</b>, also corresponds to
+            our natural way of speaking. If a teacher promises you ten
+            points for going to the museum or for watching a documentary
+            on PBS, you expect your ten points if you do either one, or
+            if you do both. You won't get any points, however, if you do
+            neither.
+        </p>
+    <h3>An Example</h3>
+        <p> When writing code, the <b>OR</b> operator is used to make sure
+            that <i><b>at least one</b></i> necessary condition is
+            <b>true</b>. Here's an example that gives a discount to both
+            senior citizens and children:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            double discount = 0.0;<br>
+            if (age &lt;= 12 || age &gt;= 65)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;discount = .25;<br>
+            }
+        </p>
+    <h3>The XOR Operator</h3>
+        <p> Java has one additional version of the <b>OR</b> operator
+            that isn't used as often as the others. The "exclusive OR" operator,
+            (commonly known as the <b>XOR</b> operator) used the
+            "caret" (<code>^</code>) as its symbol.
+        </p>
+        <p> <b>XOR</b> is a binary operator, like the other versions
+            of <b>OR</b>. Unlike the <i>inclusive</i> <b>OR</b> however,
+            an <b>XOR</b> expression is true when exactly one of its
+            operands is <code>true</code> and exactly one of its
+            operands is <code>false</code>.
+        </p>
+        <p> Here's an example, from James Gosling's book, <i>The Java
+            Programming Language</i>, that uses the <b>XOR</b> operator
+            to determine if two numbers have the same or different
+            signs:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if ((x &lt; 0) ^ (y &lt; 0))<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;processDifferentSign();<br>
+            else<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;processSameSign();<br>
+        </p>
+        <div class='info'>
+        <p> Although you should <i>recognize</i> the <b>XOR</b> operator
+            when you see it, it's not actually used that often in
+            code. In fact, all three single-symbol logical
+            operators (<code>|</code>, <code>&amp;</code>,
+            <code>^</code>) are used infrequently. What is
+            often confusing for beginning programmers is that
+            the same three symbols can be used to manipulate and
+            test the bits of integer values, for a similar,
+            but really different purpose.
+        </p>
+        </div>
+    <h2>AND and OR Pitfalls</h2>
+        <p><img src="images/y06.jpg" class="right" alt="Picasso Don Quixote.">
+            As you begin to write code that uses <b>AND</b> and <b>OR</b>,
+            you're almost certain to occasionally confuse the two. When
+            you do, you'll find yourself writing two kinds of erroneous
+            condition statements: the <b>impossible</b> condition and the
+            <b>unavoidable</b> condition.
+        </p>
+        <p>Let's take a look at both.</p>
+    <h3>The Impossible Condition</h3>
+        <p>
+            An <b>impossible condition</b> occurs when <b>no conceivable
+            combination of values</b> could ever make the condition <b>true</b>.
+            Let's take our senior-citizen/children's discount example.
+            If you are writing the code, you might receive the problem
+            statement phrased like this:
+        </p>
+        <div class='alert'>
+        <p>Give a 25% discount to children who are 12 and
+            under <b>and</b> to patrons who are 65 or older.
+        </p>
+        </div>
+        <p> <img src='images/impossible.gif' class='right' alt='The impossible condition.'>
+            If you're in a hurry, you may notice the <b>AND</b> in the
+            problem statement, and write your code like this.
+        </p>
+        <p> This is an <b>impossible</b> condition because for every
+            possible value that the variable age could take on, the
+            expression still evaluates to <b>false</b>. If the value in
+            the variable <code>age</code> is less than 12, then, by
+            definition, it cannot be greater than 65. If <code>age</code>
+            contains a value greater than 65, then by definition,
+            it cannot be less than 12.
+        </p>
+        <p> Because <b>AND</b> requires that both sides be <b>true</b>
+            before the entire expression is <b>true</b>, this condition
+            can never be <b>true</b>. It is impossible.
+        </p>
+    <h3>The Unavoidable Condition</h3>
+        <p> The impossible condition occurs when you use <b>AND</b>
+            when you should use <b>OR</b>. The unavoidable condition
+            occurs in the opposite case. An unavoidable condition occurs
+            when <b>no conceivable combination of values</b> used as
+            operands could ever make the condition <b>false</b>.
+        </p>
+        <p> Here's our same discount example. This time an attempt is made
+            to calculate the ticket price, rather than just a discount. The
+            problem statement is phrased this way:
+        </p>
+        <div class='alert'>
+        <p>If the patron's age is greater than 12 <b>or</b>
+            less than 65 we'll charge them 8.75 for their ticket. All others
+            will pay the discounted price of 5.75.
+        </p>
+        </div>
+        <p> <img src='images/unavoidable.gif' class='right' alt='The unavoidable condition.'>
+            If you simply blindly translate this problem into Java code,
+            without thinking, you end up with the code shown here.
+        </p>
+        <p> As you can see, for every value of <code>age</code>, the entire
+            expression is <b>true</b>. If <code>age</code> is less than 12,
+            it fails the first test, but passes the second. If age is
+            greater than 65, it passes the first test, while failing the
+            second. If <code>age</code> falls between 12 and 65 it passes
+            both tests.
+        </p>
+        <p> For every possible value of <code>age</code>, the expression
+            is <b>true</b>. Everyone pays full price because the condition
+            is <b>unavoidable</b>.
+        </p>
+    <h3>The Solution</h3>
+        <p> The solution to both of these problems is to double-check each
+            time you use <b>AND</b> and <b>OR</b>, to make sure you are
+            using the correct one. Our first example can be fixed by using
+            <b>OR</b> instead of <b>AND</b>, like this:<br>
+            <img src='images/fixed.png' class='inlineCenter' alt='Fixed logical conditions.'>
+            In the same way, the unavoidable condition can
+            be fixed by replacing <b>OR</b> with <b>AND</b>.
+        </p>
+    <h2>Short-circuit Evaluation</h2>
+        <p><img src="images/y07.jpg" class="right" alt="Wheel of Fortune.">
+            If you've ever watched the television
+            game show "Wheel of Fortune", you know that there comes
+            a time when the answer to the puzzle is obvious, even if all
+            of the letters haven't been exposed, like the example
+            shown here. I can hear you shouting out the answer at
+            your TV right now.
+        </p>
+        <p> The same thing is true with Java's logical operators;
+            at some point, Java "knows" what the result will be, even if it
+            hasn't evaluated the entire expression.
+        </p>
+        <p> Let's look at a couple of examples:<br>
+            <img src='images/dead-code.gif' class='inlineCenter' alt='Some dead code.'>
+            Since you know that the expression <code>2 + 2 == 5</code> is
+            <b>false</b>, it really doesn't matter if <b>a</b> is larger
+            than <b>b</b> or not. You <b><i>know</i></b> that the whole
+            expression is <b>false</b>, regardless of the values stored in
+            <b>a</b> and <b>b</b>.
+        </p>
+        <div class='info'>
+        <p> The screenshot shown here was taken using the professional
+            Eclipse IDE, which marks both the expression and the
+            body of the <code>if</code> statement as <b>dead code</b>,
+            since the expression is <b>always</b> <code>false</code>.
+        </p>
+        </div>
+        <p> Here's another example:<br>
+            <img src='images/sure-bet.gif' class='inlineCenter' alt='Some unavoidable code.'>
+            Again, no matter what values are stored in <b>b</b> or <b>c</b>,
+            you know that the whole expression is <b>true</b>, because
+            <b>a == a</b> by definition, is <code>true</code>. You don't
+            have to even glance twice at <b>c</b> and <b>d</b>; they're
+            <b>irrelevant</b>.
+        </p>
+        <p> That is how Java's <code>&amp;&amp;</code> and <code>||</code>
+            operators (formally known as the <i>conditional</i> operators)
+            work:
+        </p>
+        <ul>
+            <li>The <code>&amp;&amp;</code> and <code>||</code> operators
+                evaluate their expressions from left to right and stop
+                evaluation when the result is assured.
+            </li>
+            <li>For <code>&amp;&amp;</code>, the evaluation stops when
+                a <b>false</b> value is encountered.
+            </li>
+            <li>For <code>||</code>, the evaluation stops when a <b>true</b>
+                value is encountered.
+            </li>
+        </ul>
+        <p> The <code>&amp;</code>, <code>|</code> and <code>^</code> operators, in
+            contrast, evaluate both sides of an expression, even if the
+            result is a forgone conclusion.
+        </p>
+        <div class='info'>
+        <p><b>The "Bitwise" Logical Operators</b><br>
+            If you are a C or C++ programmer, you are
+            probably used to thinking of the <code>&amp;</code>,
+            <code>|</code>, and <code>^</code> operators as the "bitwise"
+            <b>AND</b>, <b>OR</b> and <b>XOR</b> operators. In Java,
+            however, these operators live a double life. When applied to
+            numeric values, they act like the bitwise logical operators
+            used in C; when applied to <code>boolean</code> operands,
+            they act as described here.
+        </p>
+        </div>
+        <p> Here are some examples using the different operators,
+            along with a little commentary:
+        </p>
+    <h3>Example 1</h3>
+        <p> Here's an example that checks to make sure <b>a</b> is
+            not equal to zero and that <b>b</b> divided by <b>a</b> is
+            greater than twelve.
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if ( (a != 0) <span class="red">&amp;&amp;</span> (b / a &gt; 12))<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;performExcellently();<br>
+            }
+        </p>
+        <p> Because the short-circuit form of <b>AND</b> (&amp;&amp;)
+            is employed, if <b>a</b> is equal to zero, the second test
+            will never be attempted, guaranteeing that there will be no
+            unsightly divide-by-zero error.
+        </p>
+    <h3>Example 2</h3>
+        <p> This is similar to the previous example, except
+            the "long-circuit" version of <b>AND</b> is used. What
+            result would you expect?
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if ( (a != 0) <span class="red">&amp;</span> (b / a &gt; 12))<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;performPoorly();<br>
+            }
+        </p>
+        <p> While using <code>&amp;</code> instead of <code>&amp;&amp;</code>
+            doesn't change the ultimate result of the expression, this
+            example nevertheless is in error. If <b>a</b> is ever zero,
+            then a <b>divide-by-zero runtime error</b> is guaranteed,
+            because both sides of the
+            <b>AND</b> expression <b>will be</b> evaluated.
+        </p>
+        <p> A bug like this is hard to find in testing, because
+            you must make sure to test it when <b>a</b> is zero. This
+            test is often skipped.
+        </p>
+    <h3>Example 3</h3>
+        <p> The <b>OR</b> operator is also susceptible to certain
+            pitfalls, along with the <b>AND</b> operator. Because of
+            short-circuit evaluation, the right-hand side of the following
+            expression is <b>not</b> evaluated when <b>a</b> is greater
+            than ten. That means that the variable <b>b</b> will only be
+            incremented when <b>a</b> is less than, or equal to ten.
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if ( (a &gt; 10) <span class="red">||</span> (b++ &gt; 7))<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;aPotentialProblem();<br>
+            }
+        </p>
+        <p> Unlike the previous example, this is not always a bug.
+            Nonetheless it is very poor style because those reading it
+            will have a hard time accounting for the side effect that
+            occurs when the variable <b>b</b> is incremented.
+        </p>
+    <h3>Example 4</h3>
+        <p> This shows a more understandable way to code the
+            previous example. Here, the variable <b>b</b> is incremented
+            <b>every time</b> the expression is evaluated, and it is
+            much easier to follow the execution of the code when you
+            are debugging.
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            if ( (a &gt; 10) <span class="red">|</span> (b++ &gt; 7))<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;allsOK();<br>
+            }
+        </p>
+    <h2>Precedence</h2>
+        <p>When studying the primitive types, you learned about
+            precedence and its effect on the evaluation of numeric
+            expressions. Precedence has an effect on the use of relational
+            and logical operators, as well. Here the precedence chart you
+            saw previously saw, with the operators we're looking at now
+            highlighted:
+        </p>
+        <table style='width:85%;margin:auto;' border="1">
+            <tbody><tr style="background-color: navy;color: white;">
+                <th class="thead">Precedence Groups</th>
+                <th class="thead">Operators</th>
+            </tr>
+            <tr>
+                <td class="tdata">postfix operators</td>
+                <td style="font-size: smaller;"><code>[] . (<em>params</em>) <em>expr</em>++ <em>expr</em>--</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">unary operators</td>
+                <td style="font-size: smaller;"><code> ++<em>expr</em> --<em>expr</em> +<em>expr</em> -<em>expr</em> ~ !</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">creation or cast</td>
+                <td style="font-size: smaller;"><code>new (<em>type</em>)<em>expr</em></code></td>
+            </tr>
+            <tr>
+                <td class="tdata">multiplicative</td>
+                <td style="font-size: smaller;"><code>* / %</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">additive</td>
+                <td style="font-size: smaller;"><code>+ -</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">shift</td>
+                <td style="font-size: smaller;"><code>&lt;&lt; &gt;&gt; &gt;&gt;&gt;</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">relational</td>
+                <td style="font-size: smaller;"><code>&lt; &gt; &lt;= &gt;= instanceof</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">equality</td>
+                <td style="font-size: smaller;"><code>== !=</code></td>
+            </tr>
+            <tr style="background: honeydew none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+                <td class="tdata">bitwise AND</td>
+                <td style="font-size: smaller;"><code>&amp;</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">bitwise exclusive OR</td>
+                <td style="font-size: smaller;"><code>^</code></td>
+            </tr>
+            <tr style="background: honeydew none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+                <td class="tdata">bitwise inclusive OR</td>
+                <td style="font-size: smaller;"><code>|</code></td>
+            </tr>
+            <tr style="background: honeydew none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+                <td class="tdata">logical AND</td>
+                <td style="font-size: smaller;"><code>&amp;&amp;</code></td>
+            </tr>
+            <tr style="background: honeydew none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+                <td class="tdata">logical OR</td>
+                <td style="font-size: smaller;"><code>||</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">conditional</td>
+                <td style="font-size: smaller;"><code>? :</code></td>
+            </tr>
+            <tr>
+                <td class="tdata">assignment</td>
+                <td style="font-size: smaller;"><code>= += -= *= /= %= &amp;= ^= |= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=</code></td>
+            </tr>
+        </tbody></table>
+        <p> Here are the important things you should notice:</p>
+        <ol>
+            <li class='d'>First, note that the relational operators all appear below the
+                arithmetic operators, so you can write
+                <p class='code' style='font-size:1.2em;'>
+                    a &gt; 3 + 5
+                </p>
+                rather than having to write
+                <p class='code' style='font-size:1.2em;'>
+                    a &gt; (3 + 5)
+                </p>
+            </li>
+            <li class='d'> Second, note that the logical operators all appear below the
+                relational operators, so you can write
+                <p class='code' style='font-size:1.2em;'>
+                    a &gt; 3 || b &lt; 5
+                </p>
+                rather than having to write
+                <p class='code' style='font-size:1.2em;'>
+                    (a &gt; 3) || (b &lt; 5)
+                </p>
+            </li>
+            <li class='d'>Finally, note that <b>AND</b> (<code>&amp;&amp;</code>) has higher
+                precedence than <b>OR</b> (<code>||</code>). This means that
+                the expression:
+                <p class='code' style='font-size:1.2em;'>
+                    10 &lt; 15 || 5 &gt; 8 &amp;&amp; 3 &gt; 5
+                </p>
+                is evaluated as
+                <p class='code' style='font-size:1.2em;'>
+                    10 &lt; 15 || ( 5 &gt; 8 &amp;&amp; 3 &gt; 5)
+                </p>
+                which is <b>true</b>, instead of as
+                <p class='code' style='font-size:1.2em;'>
+                    (10 &lt; 15 || 5 &gt; 8) &amp;&amp; 3 &gt; 5
+                </p>
+                which is <b>false</b>.
+            </li>
+        </ol>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Logical Operators Summary
+        </p>
+        <ul>
+            <li>The <b>logical operators</b> work with <code>boolean</code> operands
+                and produce a <code>boolean</code> result.
+            </li>
+            <li>The <b>unary NOT</b> operator (<code>!</code>)
+                reverses the sense of a Boolean expression,
+                <b>toggling</b> <code>true</code> to <code>false</code>, and vice-versa.
+            </li>
+            <li>The <b>binary logical operators</b> are used to combine several
+                Boolean expressions into one single Boolean expression.
+            </li>
+            <li>The <b>binary AND</b> operators (<code>&amp;&amp;</code> and <code>&amp;</code>)
+                return <code>true</code> if <b>both</b>
+                operands are <code>true</code>, and <code>false</code> if <b>any</b>
+                operand is <code>false</code>.
+            </li>
+            <li>The <b>binary OR</b> operators (<code>||</code> and <code>|</code>)
+                return <code>true</code> if <b>any</b>
+                operand is <code>true</code>, and <code>false</code> only when
+                <b>all</b> operands are <code>false</code>.
+            </li>
+            <li>The (infrequently used) <b>XOR operator</b> returns <code>true</code>
+                if <b>exactly one</b> of its operands is <code>true</code>, and
+                <code>false</code> for all other combinations.
+            </li>
+            <li>The <b>impossible condition</b> occurs when you mistakenly use the
+                AND operator when you should use OR. This produces a combined
+                condition that can never be satisfied.
+            </li>
+            <li>The <b>unavoidable condition</b> occurs when you mistakenly use the
+                OR operator when you should use AND. This produces a condition
+                that will <b>always</b> be satisfied.
+            </li>
+            <li>When using the <code>&amp;&amp;</code> version of AND, or the
+                <code>||</code> version of OR, Java will <b>stop evaluating the
+                expression</b> when the result is assured. This is called
+                <b>short-circuit or lazy evaluation</b>. The single-symbol
+                versions of these operators will always evaluate both sides
+                of the expression.
+            </li>
+            <li>The logical operators have <b>lower precedence</b> than the
+                relational operators, so you don't have to use parentheses when
+                combining two relational expressions. The logical AND
+                has <b>higher precedence</b> than the logical OR.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

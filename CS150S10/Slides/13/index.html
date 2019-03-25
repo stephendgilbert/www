@@ -1,0 +1,1125 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN'
+   'http://www.w3.org/TR/html4/strict.dtd'>
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' >
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.'>
+	<meta name='Publisher' content='John Wiley & Sons, Inc.'>
+	<meta http-equiv='Content-Language' content='en-us'>
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+	<meta name='Date' content='2008'>
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' >
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' >
+	<script type='text/javascript'>
+	//<![CDATA[
+		title()
+		//]]>
+	</script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To become familiar with the set, map, and priority queue data types
+	</li>
+	<li> To understand the implementation of binary search trees and heaps
+	</li>
+	<li> To learn about the efficiency of operations on tree structures </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Sets </h1>
+<ul>
+	<li> Vectors and lists keep elements in order </li>
+	<li> Sets don't maintain an order </li>
+	<li> Tradeoff: lose ordering, but find things quickly </li> 
+</ul>
+<dl>
+	<dt> Set </dt>
+	<dd> Unordered collection of distinct items </dd>
+</dl>
+<ul>
+	<li> E.g.:
+		<ul>
+			<li> Called numbers in a Bingo round </li>
+			<li> Dictionary, for a spell-checker </li>
+			<li> List of available printers on a network </li>
+			<li> List of invitees </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Operations on a Set </h1>
+<ul>
+	<li> Add an element
+		<ul>
+			<li> Adding an existing element has no effect </li>
+		</ul>
+	</li>
+	<li> Remove an element
+		<ul>
+			<li> Removing a non-existent element has no effect </li>
+		</ul>
+	</li>
+	<li> Find an element </li>
+	<li> Traverse all elements </li>
+</ul>
+</div> 
+
+<div class='slide'>
+<h1> C++ <tt>set</tt> (in the STL) </h1>
+<ul>
+	<li> It's a template:
+		<code>
+#include &lt;set&gt;
+set&lt;string&gt; names; </code>
+	</li>
+	<li> Use <tt>insert()</tt> and <tt>erase()</tt>:
+		<code>
+names.insert("Romeo");
+names.insert("Juliet");
+names.insert("Romeo"); // Has no effect: "Romeo" is already in the set
+names.erase("Juliet");
+names.erase("Juliet"); // Has no effect: "Juliet" is no longer in the set </code>
+	</li>
+	<li> To check for existence:
+		<code>
+int c = names.count("Romeo"); // count returns 1 </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> STL <tt>set</tt> (iterators) </h1>
+<ul>
+	<li> You can visit each element:
+		<code>
+names.insert("Tom");
+names.insert("Dick");
+names.insert("Harry");
+set&lt;string&gt;::iterator pos;
+for (pos = names.begin(); pos != names.end(); pos++)
+   cout &lt;&lt; *pos &lt;&lt; " "; </code>
+	</li>
+	<li> They are returned in sorted order (<em>not</em> insertion order):
+		<code>
+Dick Harry Romeo Tom</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The STL <tt>multiset</tt> </h1>
+<ul>
+	<li> A <tt>multiset</tt> (also called a <dfn>bag</dfn>) may contain
+		duplicates </li>
+	<li> Element count is maintained
+		<code>
+multiset&lt;string&gt; names;
+names.insert("Romeo");
+names.insert("Juliet");
+names.insert("Romeo"); // Now names.count("Romeo") is 2
+names.erase("Juliet"); // Now names.count("Juliet") is 0
+names.erase("Juliet"); // Has no effect: "Juliet" is no longer in the bag</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Defining an Ordering for Container Elements </h3>
+<ul>
+	<li> Strictly speaking, an ordering on a set is irrelevant </li>
+	<li> However, we use one for efficiency's sake (fast lookups) </li>
+	<li> By default, STL containers and algorithms use the <tt>&lt;
+	operator</tt> </li>
+	<li> You can supply your own <dfn>strict, weak ordering</dfn>:
+		<ul>
+			<li> Overload the <tt>&lt; operator</tt> (Chapter 14):
+				<code>
+bool operator&lt;(Employee a, Employee b)
+{
+   return a.get_name() &lt; b.get_name();
+}</code>
+			</li>
+			<li> Create a <dfn>function object</dfn> (Chapter 20) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Binary Search Trees </h1>
+<p> Sets can be represented in a number of ways </p>
+<ul>
+	<li> Ordered array:
+		<ul>
+			<li> <i>O</i>(log(<var>n</var>)) lookups (binary search) </li>
+			<li> <i>O</i>(<var>n</var>) insertion/removal </li>
+		</ul>
+	</li>
+	<li> Unordered array:
+		<ul>
+			<li> <i>O</i>(1) insertion/removal </li>
+			<li> <i>O</i>(<var>n</var>) lookups </li>
+		</ul>
+	</li>
+	<li> Binary search tree:
+		<ul>
+			<li> Simplest of the many, more efficient, set data structures </li>
+			<li> <i>O</i>(log(<var>n</var>)) operations (if tree is properly maintained)
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Trees </h1>
+<p> <dfn>Binary trees</dfn> have the following properties:
+<ul>
+	<li> Finite collection of <dfn>nodes</dfn> </li>
+	<li> Each <dfn>node</dfn> has, at most, two <dfn>children</dfn> </li>
+	<li> Each <dfn>node</dfn>  has exactly one <dfn>parent</dfn>
+		<ul>
+			<li> Except for the <dfn>root node</dfn> </li>
+		</ul>
+	</li>
+	<li> If <dfn>balanced</dfn>, the height is <i>O</i>(log(<var>n</var>))
+		<ul>
+			<li> There is a path of length &lt; log(<var>n</var>) from the root to
+			every node in the tree </li>
+		</ul>
+	</li>
+	<li> Note, a subtree of a binary tree is a binary tree </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Trees </h1>
+<p> A <dfn>binary search tree</dfn> is a binary tree, with the following
+	properties: </p>
+<ul>
+	<li> The values of all descendants to the left of any node are less
+		than the value of that node, and </li>
+	<li> All descendants to the right have greater values </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 3</span> A Binary Search Tree </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree &#8211; <tt>TreeNode</tt> </h1>
+<p> As with the list data type, we will use 2 classes: </p>
+<dl>
+	<dt> <tt>TreeNode</tt> </dt>
+		<dd> represents an individual node </dd>
+		<dd> Maintains a data field, and a pointer to each of its children:
+			<code>
+class TreeNode
+{
+   ...
+private:
+   <span class='hl'>string data;</span>
+   <span class='hl'>TreeNode* left;</span>
+   <span class='hl'>TreeNode* right;</span>
+friend class BinarySearchTree;
+}; </code>
+		</dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree &#8211; <tt>BinarySearchTree</tt> </h1>
+<dl>
+	<dt> <tt>BinarySearchTree</tt> </dt>
+		<dd> <i>Holds</i> the entire tree </dd>
+		<dd> Maintains a pointer to the root node
+			<code>
+class BinarySearchTree
+{
+   ...
+private:
+   <span class='hl'>TreeNode* root;</span>
+}; </code>
+		</dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Inserting) </h1>
+<p> Simple algorithm for inserting into a BST: </p>
+<ul>
+	<li> If node is non-NULL, look at its data 
+		<ul>
+			<li> If its value is larger than the one you want to insert, go left
+			</li>
+			<li> If its value is smaller, go right </li>
+		</ul>
+	</li>
+	<li> If you encounter a NULL node, replace it with the new node </li>
+</ul>
+<table>
+	<tr>
+		<td class='code'>
+			<code>
+BinarySearchTree tree;
+tree.add("Juliet");
+tree.add("Tom");
+tree.add("Dick");
+tree.add("Harry"); </code>
+		</td>
+		<td>
+			<div class='center'>
+				<script type='text/javascript'>
+				//<![CDATA[
+					image( "fig5.png" )
+				//]]>
+				</script>
+				<p class='caption'> <span class='blue'>Figure 5</span> BST After
+					Four Insertions </p>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Inserting) </h1>
+<p> To insert <tt>Romeo</tt> into the set: </p>
+<table>
+	<tr>
+		<td>
+			<ul>
+				<li> Start at root (<tt>Juliet</tt>) </li>
+				<li> <tt>Romeo</tt> comes after <tt>Juliet</tt>, so go right </li>
+				<li> <tt>Romeo</tt> comes before <tt>Tom</tt>, so go left </li>
+				<li> Fell off tree, so insert <tt>Romeo</tt> node as the left child
+					of <tt>Tom</tt> </li>
+			</ul>
+		</td>
+		<td>
+			<div class='center'>
+				<script type='text/javascript'>
+				//<![CDATA[
+					image( "fig6.png" )
+				//]]>
+				</script>
+				<p class='caption'> <span class='blue'>Figure 5</span> BST After
+					Five Insertions </p>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree &#8211; <tt>TreeNode::insert_node()</tt> </h1>
+<p> Helper function for <tt>insert()</tt> (does most of the actual work)
+</p>
+<code>void TreeNode::insert_node(TreeNode* new_node)
+{
+   if (new_node-&gt;data &lt; data)
+   {
+      if (left == NULL) left = new_node;
+      else left-&gt;insert_node(new_node);
+   }
+   else if (data &lt; new_node-&gt;data)
+   {
+      if (right == NULL) right = new_node;
+      else right-&gt;insert_node(new_node);
+   }
+}</code>
+<ul>
+	<li> Checks if new object is less than node's value
+		<ul>
+			<li> If so, recursively calls its <em>left</em> child's
+				<tt>insert_node</tt> </li>
+			<li> Else, recursively calls its <em>left</em> child's
+				<tt>insert_node</tt> </li>
+		</ul>
+	</li>
+	<li> If the desired child is null, makes a child of the new node </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree &#8211; <tt>BinarySearchTree::insert()</tt> </h1>
+<ul>
+	<li> "Wraps" data in a new node </li>
+	<li> If tree is empty (<tt>root</tt> is <tt>NULL</tt>), new node becomes
+		root </li>
+	<li> Otherwise, call root's <tt>insert_node</tt> method
+		<code>
+void BinarySearchTree::insert(string data)
+{
+   TreeNode* new_node = new TreeNode;
+   new_node-&gt;data = data;
+   new_node-&gt;left = NULL;
+   new_node-&gt;right = NULL;
+   if (root == NULL) root = new_node;
+   else root-&gt;insert_node(new_node);
+}</code>
+	</li>	
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Removal) </h1>
+<p> To remove a element from the set: </p>
+<ul>
+	<li> First find the node </li>
+	<li> If it has no child trees, remove it
+		<ul>
+			<li> Set the parent link to this node to <tt>NULL</tt> </li>
+		</ul>
+	</li>
+	<li> If it has only 1 child, promote the entire subtree
+		<ul>
+			<li> Modify the link from the parent so that it points to the child
+			</li>
+		</ul>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig7.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 7</span> Removing a Node
+			with One Child </p>
+		</div>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Removal) </h1>
+<p> If the node to be removed has 2 children: </p>
+<ul>
+	<li> It is simplest to replace the node with its smallest right descendant
+	</li>
+	<li> This successor is the very next larger value </li>
+	<li> Maintains BST property </li>
+	<li> Easy to remove, since it has, at most, one child
+		<ul>
+			<li> Successor is left-most node in the right subtree </li>
+		</ul>
+	</li>
+	<li> Successor is a single node, and replaces target </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Removal) </h1>
+<p> Removing a node with 2 children: </p>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig8.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 8</span> Removing a Node with
+Two Children </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Runtime) </h1>
+<ul>
+	<li> Lookups (and insertion and removal) are <i>O</i>(<var>h</var>), the height
+	of the tree </li>
+</ul>
+<h2> Balanced Trees </h2>
+<ul>
+	<li> <dfn>balanced</dfn> &#8211; each node has approximately
+		as descendants on the left as on the right </li>
+	<li> Height of tree is <i>O</i>(log(<var>n</var>)) </li>
+</ul>
+<h2> Unbalanced (Degenerate) Trees </h2>
+<ul>
+	<li> Height grows more quickly as tree becomes unbalanced </li>
+	<li> Consider, a linked list <em>is</em> a binary tree </li>
+	<li> Worst case, height is <i>O</i>(<var>n</var>) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Binary Search Tree (Runtime) </h1>
+<table class='book'> 
+<caption> <span class='hl'>Table 1</span>  Execution Times for Container
+	Operations </caption>
+	<tr>
+		<th class='hl'> Operation </th>
+		<th class='hl'> Vector </th>
+		<th class='hl'> Linked List </th>
+		<th class='hl'> Balanced BT </th>
+	</tr>
+	<tr>
+    <td> Add/remove element at end </td>
+		<td> <var>O</var>(1) </td>
+		<td> <var>O</var>(1) </td>
+		<td> N/A </td>
+	</tr>
+	<tr>
+    <td> Add/remove element in the middle </td>
+		<td> <var>O</var>(<var>n</var>) </td>
+		<td> <var>O</var>(1) </td>
+		<td> <var>O</var>(log(<var>n</var>)) </td>
+	</tr>
+	<tr>
+    <td> Get the <var>k</var><sup>th</sup> element </td>
+		<td> <var>O</var>(1) </td>
+		<td> <var>O</var>(<var>k</var>) </td>
+		<td> N/A </td>
+	</tr>
+	<tr>
+    <td> Find value </td>
+		<td> <var>O</var>(<var>n</var>) </td>
+		<td> <var>O</var>(<var>n</var>) </td>
+		<td> <var>O</var>(log(<var>n</var>)) </td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Tree Traversal </h1>
+<ul>
+	<li> Use an <dfn>inorder traversal</dfn> to print elements if a BST in
+	order:
+		<ol>
+			<li> Print the left subtree </li>
+			<li> Print the node's data </li>
+			<li> Print the right subtree </li>
+		</ol>
+	</li>
+	<li> Recursive algorithm </li>
+	<li> Visits each node in a BT exactly once </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Tree Traversal &#8211; <tt>print()</tt> </h1>
+<code>void TreeNode::print_nodes() const
+{
+   if (left != NULL)
+      left-&gt;print_nodes();
+   cout &lt;&lt; data &lt;&lt; "\n";
+   if (right != NULL)
+      right-&gt;print_nodes();
+}
+
+void BinarySearchTree::print() const
+{
+   if (root != NULL)
+      root-&gt;print_nodes();
+}</code>
+</div>
+
+<div class='slide'>
+<h1> Tree Traversal </h1>
+<p> There are other schemes, useful for other applications of binary trees:
+</p>
+<p> <i>preorder traversal</i> ("me first") </p>
+<ol>
+	<li> Print the node's data </li>
+	<li> Print the left subtree </li>
+	<li> Print the right subtree </li>
+</ol>
+<p> <i>postorder traversal</i> ("me last") </p>
+<ol>
+	<li> Print the left subtree </li>
+	<li> Print the right subtree </li>
+	<li> Print the node's data </li>
+</ol>
+</div>
+
+<div class='slide'>
+<h1> Tree Traversal &#8211 <tt>bintree.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "bintree.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Maps </h1>
+<ul>
+	<li> Stores associations between <dfn>keys</dfn> and <dfn>values</dfn>
+	</li>
+	<li> Keys are unique </li>
+	<li> Also called a <dfn>dictionary</dfn> </li>
+	<li> Is a set of key-value pairs </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig10.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 10</span> A Map </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>map</tt> class </h1>
+<ul>
+	<li> Declared in the <tt>&lt;map&gt;</tt> header file </li>
+	<li> Takes 2 type arguments:  the <i>key</i> type, and the <i>value</i> type
+		<ul>
+			<li> Requires that the <tt>&lt; operator</tt> be define on the key type
+		</ul>
+	</li>
+	<li> Use the <tt>[] operator</tt> to create associations:
+		<code>
+map&lt;string, double&gt; scores;
+scores["Tom"] = 90;
+scores["Dick"] = 86;
+scores["Harry"] = 100;</code>
+	</li>
+	<li> Also used to read values:
+	<code>
+	cout &lt;&lt; "Tom's score: " &lt;&lt; <span class='hl'>scores["Tom"];</span></code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>map</tt> class </h1>
+<ul>
+	<li> <tt>find()</tt> returns an iterator </li>
+	<li> The iterator "points to" a <tt>pair</tt> 
+		<ul>
+			<li> Declared in <tt>&lt;utility&gt;</tt> </li>
+			<li> Has 2 public <em>fields</em>:  <tt>first</tt> and <tt>second</tt>
+			</li>
+		</ul>
+		<code>
+map&lt;string, int&gt;::iterator pos = scores.find("Harry"); // Call find
+if (pos == scores.end()) // Check if there was a match
+   cout &lt;&lt; "No match for Harry";
+else
+   cout &lt;&lt; "Harry's score: " &lt;&lt; (*pos).second;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>map</tt> class </h1>
+<ul>
+	<li> As with pointers, <tt>(*pos).</tt> can be written <tt>pos-&gt;</tt>
+	</li>
+	<li> Code to iterate over the contents of a map:
+		<code>
+map&lt;string, int&gt;::iterator pos;
+for (pos = scores.begin(); pos != scores.end(); pos++)
+{
+   cout &lt;&lt; "The score of " &lt;&lt; pos-&gt;first &lt;&lt; " is " &lt;&lt;
+      pos-&gt;second &lt;&lt; "\n";
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>multimap</tt> </h1>
+<ul>
+	<li> Keys need not be unique </li>
+	<li> Instead of <tt>[]</tt>, use <tt>insert()</tt> and <tt>erase()</tt>
+		<ul>
+			<li> <tt>make_pair()</tt> function also in <tt>&lt;utility&gt;</tt>
+			</li>
+		</ul>
+	</li>
+	<li> E.g.
+		<code>
+multimap&lt;string, string&gt; friends;
+friends.insert(make_pair("Tom", "Dick"));  // Dick is a friend of Tom
+friends.insert(make_pair("Tom", "Harry"));  // Harry is also a friend of Tom</code>
+
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>multimap</tt> </h1>
+<ul>
+	<li> A "find" operation essentially describes a range, which can be
+	iterated over </li>
+	<li> First, get the range (for a given key):
+		<code>
+multimap&lt;string, string&gt;::iterator lower = friends.lower_bound("Tom");
+multimap&lt;string, string&gt;::iterator upper = friends.upper_bound("Tom");</code>
+	</li>
+	<li> Then iterate over that range:
+		<code>
+cout &lt;&lt; "Tom's friends: ";
+for (multimap&lt;string, string&gt;::iterator pos = lower; pos != upper; pos++) 
+   cout &lt;&lt; pos-&gt;second &lt;&lt; " ";</code>
+	</li>
+	<li> To remove a single key-value pair, pass an iterator to
+		<tt>erase()</tt>
+		<code>
+friends.erase(pos);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>tele.cpp</tt> </h1>
+<ul>
+	<li> Provides 2-way lookups for a phone book </li>
+	<li> Uses a <tt>map</tt> to associate numbers with names
+		<ul>
+			<li> We are assuming only one number per person </li>
+		</ul>
+	</li>
+	<li> Uses a <tt>multimap</tt> to associate names with numbers
+		<ul>
+			<li> More than one person might have the same number </li>
+		</ul>
+	</li>
+	<li> Since a <tt>map</tt> iterator returns keys in order,
+		<tt>print_all()</tt> naturally prints in dictionary order </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Maps &#8211; <tt>tele.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "tele.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Constant Iterators </h3>
+<ul>
+	<li> Preceding code is not "<tt>const</tt>-correct"
+		<ul>
+			<li> Methods for finding and printing are not marked as <tt>const</tt>
+			</li>
+		</ul>
+	</li>
+	<li> If they were, compiler would complain about non-<tt>const</tt> iterators
+		<ul>
+			<li> An iterator could be used to modify the container </li>
+		</ul>
+	</li>
+	<li> Every iterator comes in a "<tt>const</tt>" flavor:
+		<code>
+int TelephoneDirectory::find_entry(string name) <span class='hl'>const</span>
+{
+   map&lt;string, int&gt;::<span class='hl'>const_iterator</span> p = database.find(name);
+   if (p == database.end())
+      return 0; // Not found
+   else
+      return p-&gt;second;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Priority Queues </h1>
+<p> A collection organized so as to permit fast access to and removal of the
+largest element </p>
+<ul>
+	<li> <dfn>Prioritization</dfn> is a weaker condition than ordering </li>
+	<li> Order of insertion irrelevant </li>
+	<li> Element with the highest priority (whatever that means) comes out next
+	</li>
+	<li> Not really a <dfn>queue</dfn>: not a FIFO </li>
+	<li> Basic operations:
+		<ul>
+			<li> <tt>push()</tt> &#8211; Adds an element to the collection </li>
+			<li> <tt>top()</tt> &#8211; Looks at the element with the highest
+				priority </li>
+			<li> <tt>pop()</tt> &#8211; Removes this element </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Priority Queues &#8211; <tt>pqueue.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "pqueue.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Priority Queues &#8211; <tt>pqueue.cpp</tt> </h1>
+<ul>
+	<li> PQ stores instances of <tt>WorkOrder</tt> </li>
+	<li> Assigned priorities stored in the <tt>priority</tt> field </li>
+	<li> We supply the <tt>&lt; operator</tt> so that the PQ can compare
+		<tt>WorkOrders</tt> </li>
+	<li> <tt>priority_queue</tt> defined in <tt>&lt;queue&gt;</tt> </li>
+	<li> Program produces the following output:
+		<code>
+9 - Fix overflowing sink
+5 - Order cleaning supplies
+4 - Replace light bulb
+3 - Empty trash
+2 - Water plants
+2 - Shampoo carpets
+1 - Remove pencil sharpener shavings
+1 - Clean coffee maker</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> Discrete Event Simulations </h3>
+<ul>
+	<li> Classic application of a priority queue </li>
+	<li> Events are prioritized by a timestamp (lower timestamp has higher
+		priority)
+		<code>
+class Event
+{
+public:
+   double get_time() const;
+   virtual void act();
+   ...
+};</code>
+	</li>
+	<li> The "clock" (priority queue) is loaded with some initial events </li>
+	<li> Simulator processes events in order </li>
+	<li> Events may spawn other events, which are added to the priority queue
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> Discrete Event Simulation (cont.) </h3>
+<ul>
+	<li> Each type of event (arrival, departure, etc.) is a subclass of
+	<tt>Event</tt>
+		<ul>
+			<li> Each subclass overrides the <tt>act()</tt> method </li>
+		</ul>
+	</li>
+	<li> The heart of the simulator is the event loop
+		<ul>
+			<li> Removes next even from the priority queue </li>
+			<li> Set the simulation clock to that event's time </li>
+			<li> Calls that event's <tt>act()</tt> method </li>
+		</ul>
+		<code>
+while (event_queue.size() &gt; 0)
+{
+   Event* next_event = event_queue.top();
+   current_time = next_event-&gt;get_time();
+   next_event-&gt;act(); // Typically adds new events
+   delete next_event;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> Discrete Event Simulation (cont.) </h3>
+<ul>
+	<li> The event queue holds <tt>Event*</tt> </li>
+	<li> The <tt>&lt; operator</tt> is already defined </li>
+	<li> We will define a function to use to compare events:
+		<code>
+bool event_less(const Event* e1, const Event* e2)
+{
+   return e1-&gt;get_time() &gt; e2-&gt;get_time();
+      // The earliest event should have the largest priority
+}</code>
+	</li>
+	<li> We tell the <tt>priority_queue</tt> to use this function, instead
+	(see Chapter 20):
+		<code>
+priority_queue&lt;Event*, vector&lt;Event*&gt;,
+   bool (*)(const Event*, const Event*)&gt; event_queue(event_less);</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Heaps </h1>
+<ul>
+	<li> A <i>heap</i> (or <i>max-heap</i>, in this example) is a
+	binary tree with 2 further properties:
+		<ul>
+			<li> <i>almost complete</i> &#8211; all nodes are filled in one
+			row (depth) at a time, from left-to-right </li>
+			<li> <i>heap property</i> &#8211; each node stores a value that is
+			at least as large as its children </li>
+		</ul>
+		</i></li>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig11.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 11</span> An Almost Complete
+		Tree </p>
+		</div>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Heaps </h1>
+<ul>
+	<li> Note, the largest element is at the top
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig12.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 12</span> A Heap </p>
+	</div>
+	</li>
+	<li> There is no notion of <dfn>sibling order</dfn> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Inserting) </h1>
+<ul>
+	<li> Insert new node at next open leaf (to keep our nice, balanced tree)
+	</li>
+	<li> Then <dfn>uphead</dfn> that node, to fix our heap property </li>
+	<li> The following example inserts 40 into the heap, above </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig13-1.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 13</span> Inserting an Element
+into a Heap </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Inserting) </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig13-2.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 13 (cont) </span> Inserting an
+Element into a Heap </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Inserting) </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig13-3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 13 (cont) </span> Inserting an
+Element into a Heap </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Removing) </h1>
+<p> Only the root is extracted </p>
+<ol>
+	<li> Remove (save) the root value </li>
+	<li> Replace the root with the "last" leaf element </li>
+	<li> Fix the heap property by <dfn>downheaping</dfn> the element at the
+	root </li>
+</ol>
+<p> Note, we still have a "nicely shaped" tree </p>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Removing) </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig14-1.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 14</span> Removing the Maximum
+Value from a Heap </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Removing)</h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig14-2.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 14 (cont) </span> Removing the
+Maximum Value from a Heap </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Cost) </h1>
+<ul>
+	<li> Heap keeps a balanced shape </li>
+	<li> Insertion and removal each require, at most, <var>h</var> swaps </li>
+	<li> Tree of height <var>h</var> contains at least
+		2<sup><var>h</var>-1</sup> nodes, but less than 2<sup><var>h</var></sup>
+		nodes </li>
+	<li> Then <var>h</var>-1 &le; log<sub>2</sub>(<var>n</var>) &lt;
+		<var>h</var> </li>
+	<li> So, insertion and removal require <i>O</i>(log(<var>n</var>)) steps </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Representation) </h1>
+<ul>
+	<li> Because of the heap's shape, node values can be stored in an array
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig15.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 15</span> Storing a Heap in an
+Array </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Heaps (Representation) </h1>
+<ul>
+	<li> Traversal is easy:
+		<ul>
+			<li> parent( <var>i</var> ) = <var>i</var> / 2 </li>
+			<li> leftChild( <var>i</var> ) = 2 * <var>i</var> </li>
+			<li> rightChild( <var>i</var> ) = 2 * <var>i</var> + 1 </li>
+		</ul>
+	</li>
+	<li> In the following program we roll our own heap </li>
+	<li> We could make it a template (see Chapter 16) so that it can store any
+	ordered type </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Heaps &#8211; <tt>heap.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "heap.cpp" )
+	//]]>
+</script>
+</div>
+
+</body>
+</html>

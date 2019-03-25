@@ -1,0 +1,1012 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.'>
+	<meta name='Publisher' content='John Wiley & Sons, Inc.'>
+	<meta http-equiv='Content-Language' content='en-us'>
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+	<meta name='Date' content='2008'>
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'>
+	//<![CDATA[
+		title()
+		//]]>
+	</script>
+</head>
+
+<body>
+
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To become familiar with using vectors to collect objects </li>
+	<li> To be able to access vector elements and resize vectors </li>
+	<li> To learn how to use one- and two-dimensional arrays </li>
+	<li> To learn about common array algorithms </li>
+	</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Using Vectors to Collect Data Items</h1>
+<table>
+<tr>
+	<td>
+	<ul>
+		<li> <dfn>Vector</dfn> &mdash; a collection of data items of the same type </li>
+		<li> Each element can be accessed separately </li>
+		<li> Here we define a vector of salaries
+			<code>
+vector&lt;double&gt; salaries(10);</code>
+		</li>
+		<li> Type is <tt>vector&lt;double&gt;</tt> </li>
+		<li> <tt>(10)</tt> indicates that the vector holds ten values </li>
+		<li> <tt>salaries</tt> stores a sequence of 10 <tt>double</tt> values
+		</li>
+	</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig1.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> Figure of
+		Salaries </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Using Vectors to Collect Data Items   </h1>
+
+
+<h2><tt>[]</tt> operator</h2>
+<table><tr>	
+<td><ul><li> To fill slot 4 with the value 35000:
+			<code>
+salaries[4] = 35000;</code>
+		</li>
+		<li> Slots numbers begin at zero </li>
+		<li> Slot 4 is the fifth slot in the vector </li>
+		<li> Indexed the same as the C-array </li>
+	</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig2.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 2</span> Vector Slot
+		Filled with <tt>double</tt> Value </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1>Using Vectors to Collect Data Items</h1>
+<h2>Index values</h2>
+<ul><li> <dfn>Bounds error</dfn> &mdash; an attempt to access a location
+		that is not within the valid index range </li>
+	<li> Compiler does not catch bounds errors </li>
+	<li> The most common bounds error is the following:
+		<code>
+vector&lt;double&gt; salaries(10);
+cout &lt;&lt; salaries[10];</code>
+	</li>
+	<li> Here, index values range from 0 to 9 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>  Using Vectors to Collect Data Items</h1>
+<ul>
+	<li> Index can be any <em>integer</em> value </li>
+	<li> To find the highest salary:
+		<code>
+double highest = salaries[0];
+for (i = 1; i &lt; 10; i++)
+   if (<span class='hl'>salaries[i]</span> &gt; highest)
+      highest = <span class='hl'>salaries[i]</span>;</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : Vector Variable Definition </h1>
+<div class='syntax'>
+<code>vector&lt;<i>type_name</i>&gt; <i>variable_name</i>;
+vector&lt;<i>type_name</i>&gt; <i>variable_name</i>(<i>initial_size</i>);</code>
+	<h3> Example: </h3>
+<code>vector&lt;int&gt; scores;
+vector&lt;Employee&gt; staff(20); </code>
+	<h3> Purpose: </h3>
+	<p>Define a new variable of vector type, and optionally supply an initial size.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Vector Subscript </h1>
+<div class='syntax'>
+<code> vector_Expression[integer_expression] </code>
+	<h3> Example: </h3>
+<pre> salaries[i + 1] </pre>
+	<h3> Purpose: </h3>
+	<p> Access an element in a vector.</p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Working with Vectors </h1>
+<ul>
+	<li> When a vector is defined without a size parameter, it is empty and
+		can hold no elements </li>
+	<li> <tt>size()</tt> method gets vector size </li>
+	<li> A better loop:
+		<code>
+for (i = 1; i &lt; <span class='hl'>salaries.size()</span>; i++)
+   if (salaries[i] &gt; highest)
+      highest = salaries[i];</code>
+	</li>
+	<li> This is common for visiting all elements in a vector </li>
+	<li> <strong>Note:</strong>  <tt>i</tt> is a legal index if
+		<tt>0 &le; i</tt> and <tt>i &lt; v.size()</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Working with Vectors  </h1>
+<ul>
+	<li> It is often difficult to know how many elements you need to store
+	</li>
+	<li> <tt>push_back</tt> grows the vector as needed, adds new
+		element to end
+		<code>
+vector&lt;double&gt; salaries;
+...
+double s;
+cin &gt;&gt; s;
+...
+<span class='hl'>salaries.push_back(s);</span></code>
+	</li>
+	<li> Resizing the vector may be costly </li>
+	<li> If possible, specify the size when you define the vector </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Working with Vectors </h1>
+<ul>
+	<li> <tt>pop_back</tt> removes the last element of a vector, shrinking its
+		size by one </li>
+	<li> Does not return the element that is being removed </li>
+	<li> To capture element:
+		<code>
+double last = salaries[salaries.size() - 1];
+salaries.pop_back();</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> <tt>salvect.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "salvect.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Bounds Errors</h3>
+<ul>
+	<li> The most common vector error is accessing a nonexistent slot 
+	 <code>
+vector&lt;double&gt; data(10);
+data[10] = 5.4;</code></li>
+	<li> <tt>data</tt> has 10 elements with subscripts 0 to 9 </li>
+	<li> No error message if program accesses a vector through an out-of-bounds subscript</li>
+	<li> Program will corrupt some memory making it act flaky or cause a horrible death many instructions later </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Strings Are Vectors of Characters </h3>
+<ul>
+	<li> Data type <tt>char</tt> denotes individual characters </li>
+	<li> <code>string greeting = "Hello";</code> 
+can be considered a vector of five characters 'H', 'e', 'l', 'l', 'o' </li>
+	<li> You can modify the characters in a string:
+<code>
+greeting[3] = 'p';
+greeting[4] = '!';</code> </li>
+	<li> Manipulating the characters directly is more efficient than extracting
+substrings and concatenating strings </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Vector Parameters and Return Values </h1>
+<ul>
+	<li> A vector can be copied (pass-by-value) into a function </li>
+	<li> To compute the average of a vector of floating-point numbers, consider this function
+		<code>
+double average(<span class='hl'>vector&lt;double&gt; values</span>)
+{
+   if (values.size() == 0) return 0;
+   double sum = 0;
+   for (int i = 0; i &lt; values.size(); i++)
+      sum = sum + values[i];
+   return sum / values.size();
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Vector Parameters and Return Values  </h1>
+<h2>Modifying a Vector</h2>
+<ul><li> If a function modifies a vector, it must use a reference parameter
+	</li>
+	<li> To raise all values in the vector by the given percentage:
+		<code>
+void raise_by_percent(<span class='hl'>vector&lt;double&gt;&amp; values</span>, double rate)
+{
+   for (int i = 0; i &lt; values.size(); i++)
+      values[i] = values[i] * (1 + rate / 100);
+}</code>
+	</li>
+	<li> If a vector is passed by value, and a function modifies the vector,
+		the modification affects the local copy of that value only, not the call
+		parameter </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1>  Vector Parameters and Return Values  </h1>
+<h2>Returning a Vector</h2>
+<ul><li> Useful if a function computes a result that consists of a collection
+		of values of the same type </li>
+	<li> This function collects all values that fall in a certain range
+		<code>
+vector&lt;double&gt; between(vector&lt;double&gt; values, double low, double high)
+{
+   vector&lt;double&gt; result;
+   for (int i = 0; i &lt; values.size(); i++)
+      if (low &lt;= values[i] &amp;&amp; values[i] &lt;= high)
+         result.push_back(values[i]);
+   return <span class='hl'>result</span>;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Vector Parameters and Return Values  </h1>
+<h2>Returning a Vector of Positions</h2>
+<ul><li> Instead of returning matching values, you can return just the positions
+		of all matching values in a vector
+		<code>
+vector&lt;int&gt; between_locations(vector&lt;double&gt; values, double low, double high)
+{
+   vector&lt;int&gt; pos;
+   for (int i = 0; i &lt; values.size(); i++)
+   {
+      if (low &lt;= values[i] &amp;&amp; values[i] &lt;= high)
+         pos.push_back(i);
+   }
+   return pos;
+}</code></li>
+<li>Now print the matches
+		<code>
+vector&lt;int&gt; matches = between_locations(salaries, 45000.0, 65000.0);
+for (int j = 0; j &lt; matches.size(); j++)
+   cout &lt;&lt; <span class='hl'>salaries[matches[j]]</span> &lt;&lt; "\n";</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Passing Vectors by Constant Reference </h3>
+<ul>
+	<li> Passing a vector by value is inefficient, because the function must
+		make a copy of all elements </li>
+	<li> Instead of:
+		<code>
+double average(vector&lt;double&gt; values)</code>
+	</li>
+	<li> You can use a constant reference:
+		<code>
+double average(<span class='hl'>const</span> vector&lt;double&gt;<span class='hl'>&amp;</span> values)</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Removing and Inserting Vector Elements </h1>
+<table>
+<tr>
+	<td> <h2> Removing an element &mdash; Where order is <em>not</em> important </h2>
+		<ul>
+			<li> Overwrite old element with last element </li>
+			<li> Shrink vector
+				<code>
+int last_pos = values.size() -1;
+values[pos] = values[last_pos];
+values.pop_back();</code>
+			</li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig5.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 5</span> Removing an
+			Element in an Unordered Vector </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+
+<div class='slide'>
+<h1> Removing and Inserting Vector Elements  </h1>
+<table>
+<tr>
+<td> <h2> Removing an element &mdash; Where order <em>is</em> important </h2>
+<ul>
+<li> Move all elements following the element to be removed to a lower
+index </li>
+<li> Shrink the size of the vector </li>
+</ul>
+   <code>
+for (int i = pos; i &lt; values.size() - 1; i++)
+   values[i] = values[i + 1];
+values.pop_back();</code>
+		<p> See <a href='code/erase2.cpp'>erase2.cpp</a> </p>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig6.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 6</span> Removing an
+			Element in an Ordered Vector </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+
+<div class='slide'>
+<h1> Removing and Inserting Vector Elements </h1>
+<table>
+<tr>
+	<td>
+		<h2> Inserting, other than at the end </h2>
+			<ul>
+				<li> Create a new element at the end </li>
+				<li> Move all elements above the insertion location up (to a higher
+					index) by one slot </li>
+			</ul>
+<code>int last = values.size() - 1;
+values.push_back(values[last]);
+for (int i = last; i &gt; pos; i--)
+   values[i] = values[i - 1];
+values[pos] = s;</code>
+		<p> See <a href='code/insert.cpp'>insert.cpp</a> </p>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig7.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 7</span> Inserting an
+		Element in an Ordered Vector </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Make Parallel Vectors into Vectors of Objects </h3>
+<ul> 
+	<li> If using vectors of the same length, each of which stores a part of
+		what conceptually should be an object, sometimes it is better to use a
+		vector whose elements are objects </li>
+	<li> Example of parallel vectors storing product data:
+<code>vector&lt;string&gt; names;
+vector&lt;double&gt; prices;
+vector&lt;int&gt; scores;</code>
+	</li>
+	<li> Issues with parallel vectors:
+		<ul>
+			<li> Ensuring vectors always have the same length </li>
+			<li> Ensuring all corresponding slices actually match </li>
+			<li> Any function that operates on a slice must get all vectors as
+				parameters </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h2> Make Parallel Vectors into Vectors of Objects &mdash; Part 2</h2>
+<ul>
+	<li> Instead, create a class named <tt>Product</tt>, which contains the
+name, price, and score </li>
+	<li> Use <tt>vector&lt;Product&gt; products;</tt> </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> Eliminating Parallel
+	Vectors </p>
+</div>
+</div>
+
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Arrays </h1>
+<ul>
+	<li> The built-in homogenous container in C/C++ </li>
+	<li> Like vectors, arrays collect elements of the same type </li>
+	<li> Lower-level abstraction than the vector </li>
+	<li> Less convenient </li>
+	<li> Arrays are faster and more efficient than vectors </li>
+	<li> Vectors built on top of arrays </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.1" )
+	//]]>
+	</script>
+Defining and Using Arrays </h1>
+<ul>
+	<li> An array of ten floating-point numbers:
+		<code>
+double salaries[10];</code>
+		</li>
+	<li> An array can be initialized when it is defined:
+		<code>
+double salaries[] = { 31000, 24000, 55000, 82000, 49000, 42000, 35000,
+   66000, 91000, 60000 };</code>
+	</li>
+	<li> Above, compiler determines the size by counting the values </li>
+	<li> Array size has to be known <em>at compile time</em> </li>
+	<li> Size of a statically-allocated array can <strong>not</strong> change
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+  Array Variable Definition </h1>
+<div class='syntax'>
+<code><i>type_name variable_name</i>[<i>size</i>]; </code>
+	<h3> Example: </h3>
+<code> int scores[20]; </code>
+	<h3> Purpose: </h3>
+	<p> Define a new variable of an array type. </p>
+</div>
+</div>
+
+
+<div class='slide'>
+<h1> Defining and Using Arrays  </h1>
+<h2>Companion Variable</h2>
+<ul><li> Use a constant to describe the size:
+		<code>
+const int SALARIES_CAPACITY = 100;
+double salaries[SALARIES_CAPACITY];</code>
+	</li>
+	<li> Often the entire array is not in use; <tt>SALARIES_CAPACITY</tt>
+		only stores the capacity </li>
+	<li> You must also remember how many elements in the array are of interest
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Defining and Using Arrays </h1>
+<h2>Companion Variable</h2>
+<ul><li> Use a companion variable <tt>salaries_size</tt> to store the number
+		of used elements </li>
+	<li> The following loop stores data in the salaries array
+		<code>
+int salaries_size = 0;
+while (more &amp;&amp; salaries_size &lt; SALARIES_CAPACITY) 
+{
+   cout &lt;&lt; "Enter salary or 0 to quit: ";
+   double x;
+   cin &gt;&gt; x;
+   if (cin.fail())
+      more = false;
+   else 
+   {
+      salaries[salaries_size] = x;
+      salaries_size++;
+   }
+}</code>
+	</li>
+	<li> You need to manually update <tt>salaries_size</tt> </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Defining and Using Arrays</h1>
+<ul>
+	<li> Compute highest salary:
+		<code>
+double highest = 0;
+if (salaries_size &gt; 0)
+{
+   highest = salaries[0];
+   int i;
+   for (i = 1; i &lt; salaries_size; i++)
+      if (salaries[i] &gt; highest)
+         highest = salaries[i];
+}</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.2" )
+	//]]>
+	</script>
+  Array Parameters </h1>
+<ul>
+	<li> Use empty <tt>[]</tt> to define an array parameter:
+		<code>
+double maximum(double a[], int a_size);</code>
+	<li> The function has no way of knowing the size of the array </li>
+	<li> Pass the size of the array in, too </li>
+	<li> Arrays are always passed by reference </li>
+	<li> Do not use an <tt>&amp;</tt> to define an array parameter </li>
+	<li> Add the <tt>const</tt> keyword whenever a function does not actually
+		modify an array
+		<code>
+double maximum(const double a[], int a_size)</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Array Parameters </h1>
+<ul>
+	<li> If a function adds elements to an array, pass:
+	<ul>
+		<li> The array </li>
+    <li> The current size as a reference (so function can update it) </li>
+		<li> The maximum size </li>
+	</ul>
+	
+<code>
+void read_data(double a[], int a_capacity, int&amp; a_size)
+{
+   a_size = 0;
+   while (a_size &lt; a_capacity)
+   {
+      double x;
+      cin &lt;&lt; x;
+      if (cin.fail()) return;
+      a[a_size] = x;
+      a_size++;
+   }
+}</code></li> </ul>
+</div>
+
+
+<div class='slide'>
+<h1> Array Parameters </h1>
+<ul>
+	<li> Arrays cannot be function return types </li>
+	<li> The caller must provide an array argument to be filled in by the
+		function
+		<code>
+void between(double values[], int values_size, double low, double high,
+   <span class='hl'>double result[], double&amp; result_size</span>)</code>
+	</li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1> Array Parameters &mdash; <tt>salarray.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "salarray.cpp" )
+	//]]>
+</script>
+</div>
+
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.3" )
+	//]]>
+	</script>
+Character Arrays </h1>
+<table>
+<tr>
+	<td>
+	<ul>
+		<li> Arrays that hold <tt>char</tt>s </li>
+		<li> How C and C++ store strings (before the STL) </li>
+		<li> <tt>char</tt> type denotes an individual character
+			<ul>
+				<li> Delimited using single quotes </li>
+				<li> Actually a 1-byte integer </li>
+			</ul>
+		</li>
+		<li> <tt>'y'</tt> is different from <tt>"y"</tt> </li>
+		<li> An array that holds a string:
+		<code>
+char greeting[] = "Hello";
+   // Same as char greeting[6] = "Hello"</code>
+		</li>
+		<li> Last item is a sentinel, the <dfn>null-terminator</dfn> character
+		</li>
+		<li> String constants (<tt>"Hello"</tt>) are always null-terminated
+		</li>
+	</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig10.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 10</span> A Character
+			Array </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+
+<div class='slide'>
+<h1> Character Arrays </h1>
+<ul>
+	<li> A function that reads a character array does not need its size </li>
+	<li> The null-terminator serves as a sentinel (for ASCII strings) </li>
+	<li> This is from the standard library:
+		<code>
+int strlen(const char s[])
+{
+   int i = 0;
+   while (s[i] != '\0')
+      i++;
+   return i;
+}</code>
+	</li>
+	<li> A function that writes into a character array must know the maximum
+		length </li>
+	<li> Code <tt>append.cpp</tt>, on the next slide, prints <tt>Hello, Wor</tt> </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+	<h1> Character Arrays &mdash; <tt>append.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "append.cpp" )
+	//]]>
+</script>
+</div>
+
+
+<div class='slide'>
+<h1> Character Arrays </h1>
+<ul>
+	<li> Some of the library functions (<tt>strcat</tt>) do not take a length
+		parameter </li>
+	<li> Will write past the end of an array (it doesn't know the size) </li>
+	<li> Check the size yourself, or use <tt>strncat</tt>, <tt>strncpy</tt>,
+		etc. </li>
+	<li> The <tt>string</tt> class in the STL is more convenient
+		<ul>
+			<li> Minds these details for you </li>
+		</ul>
+	</li>
+	<li> Use <tt>c_str()</tt> member function of the string class to convert
+		string into a character array </li>
+	<li> Needed if dealing with a function that was written before the
+		<tt>string</tt> class </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5.4" )
+	//]]>
+	</script>
+Two-Dimensional Arrays </h1>
+<table>
+<tr>
+	<td>
+	<ul>
+		<li> Use a <dfn>two-dimensional array</dfn> (or <tt>matrix</tt>) to
+			store tabular data </li>
+		<li> C++ uses an array with two subscripts (literally, an array of
+			arrays) to store a matrix:
+			<code>
+const int POWERS_ROWS = 11;
+const int POWERS_COLS = 6;
+double powers[POWERS_ROWS][POWERS_COLS];</code>
+		</li>
+		<li> Individual elements are accessed by double subscripts m[i][j]
+			<code>
+powers[3][4] = future_value(1,000 6.5, 25);</code>
+		</li>
+		<li> <strong>Use separate brackets!</strong> </li>
+		<li> <tt>powers[3,4]</tt> will compile, but isn't what you want </li>
+	</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig11.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 11</span> Accessing an
+			Element in a Two-Dimensional Array </p>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+
+<div class='slide'>
+<h1> Two-Dimensional Arrays  </h1>
+<h2>Filling in Data</h2>
+<ul><li> As with one-dimensional arrays, size can't be changed </li>
+	<li> To fill a two-dimensional array, you use two nested loops, like
+	this:<code>
+for (int i = 0; i &lt; POWERS_ROWS; i++)
+   for (int j = 0; j &lt; POWERS_COLS; j++)
+      powers[i][j] = <i>value for row</i> i, <i>column</i> j;</code>
+	</li>
+	<li> Still stored as a sequence in memory </li>
+	<li> Compiler finds <tt>table[i][j]</tt> by computing
+		the offset:
+		<code>
+i * POWERS_COLS + j</code>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig12.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 12</span> A Two-Dimensional
+	Array Is Stored as a Sequence of Rows </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Two-Dimensional Arrays  </h1>
+<h2>Passing to Functions</h2>
+<ul><li> Specify the number of columns when declaring a matrix parameter
+		<code>
+void print_table(const double table[][POWERS_COLS], int table_rows)
+{
+   const int WIDTH = 10;
+   cout &lt;&lt; fixed &gt;&gt; setprecision(2);
+   for (int i = 0; i &lt; table_rows; i++)
+   {
+      for (int j = 0; j &lt; POWERS_COLS; j++)
+         cout &lt;&lt; setw(WIDTH) &lt;&lt; table[i][j];
+      cout &lt;&lt; "\n";
+   }
+}</code>
+	</li>
+	<li> The compiler ignores the first index, if supplied </li>
+	<li> Function probably needs the number of rows as a separate argument (as
+		with arrays) </li>
+</ul>
+</div>
+
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+ : Two-Dimensional Array Definition </h1>
+<div class='syntax'>
+<code> <i>type_name variable_name</i>[<i>size</i><sub>1</sub>][<i>size</i><sub>2</sub>]; </code>
+	<h3> Example: </h3>
+<code> double monthly_sales[NREGIONS][12]; </code>
+	<h3> Purpose: </h3>
+	<p> Define a new variable that is a two-dimensional array. </p>
+</div>
+</div>
+
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Omitting the Column Size of a Two-Dimensional Array Parameter </h3>
+<ul>
+	<li> When passing a one-dimensional array to a function, you specify the
+		size of the array as a separate parameter:
+		<code>
+double maximum(const double a[], int a_size)</code>
+	</li>
+	<li> For two-dimensional arrays you cannot simply pass in the number of rows
+		and columns:
+		<code>
+void print(const double table[][], int table_rows,
+int table_cols) // NO!</code>
+	</li>
+	<li> You <strong>must</strong> specify the number of columns in the array
+		parameter:
+		<code>
+const int TABLE_COLS = 6;
+void print(const double table[][TABLE_COLS],
+int table_rows) // OK</code>
+	</li>
+</ul>
+</div>
+
+</body>
+</html>

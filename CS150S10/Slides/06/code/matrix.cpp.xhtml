@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>matrix.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../Scripts/highlight.css"/>
+</head>
+<body class="hl">
+<pre class="hl"><span class="line">  1 </span><span class="dir">#include &lt;iostream&gt;</span>
+<span class="line">  2 </span><span class="dir">#include &lt;iomanip&gt;</span>
+<span class="line">  3 </span><span class="dir">#include &lt;cmath&gt;</span>
+<span class="line">  4 </span>
+<span class="line">  5 </span><span class="kwa">using namespace</span> std<span class="sym">;</span>
+<span class="line">  6 </span>
+<span class="line">  7 </span><span class="kwb">const int</span> BALANCES_ROWS <span class="sym">=</span> <span class="num">11</span><span class="sym">;</span>
+<span class="line">  8 </span><span class="kwb">const int</span> BALANCES_COLS <span class="sym">=</span> <span class="num">6</span><span class="sym">;</span>
+<span class="line">  9 </span>
+<span class="line"> 10 </span><span class="kwb">const double</span> RATE_MIN <span class="sym">=</span> <span class="num">5</span><span class="sym">;</span>
+<span class="line"> 11 </span><span class="kwb">const double</span> RATE_MAX <span class="sym">=</span> <span class="num">10</span><span class="sym">;</span>
+<span class="line"> 12 </span><span class="kwb">const double</span> RATE_INCR <span class="sym">=</span>
+<span class="line"> 13 </span>   <span class="sym">(</span>RATE_MAX <span class="sym">-</span> RATE_MIN<span class="sym">) / (</span>BALANCES_ROWS <span class="sym">-</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 14 </span><span class="kwb">const int</span> YEAR_MIN <span class="sym">=</span> <span class="num">5</span><span class="sym">;</span>
+<span class="line"> 15 </span><span class="kwb">const int</span> YEAR_MAX <span class="sym">=</span> <span class="num">30</span><span class="sym">;</span>
+<span class="line"> 16 </span><span class="kwb">const int</span> YEAR_INCR <span class="sym">=</span>
+<span class="line"> 17 </span>   <span class="sym">(</span>YEAR_MAX <span class="sym">-</span> YEAR_MIN<span class="sym">) / (</span>BALANCES_COLS <span class="sym">-</span> <span class="num">1</span><span class="sym">);</span>
+<span class="line"> 18 </span>
+<span class="line"> 19 </span>
+<span class="line"> 20 </span><span class="com">/**</span>
+<span class="line"> 21 </span><span class="com">   Prints a table of account balances.</span>
+<span class="line"> 22 </span><span class="com">   &#64;param the table to print</span>
+<span class="line"> 23 </span><span class="com">   &#64;param table_rows the number of rows in the table.</span>
+<span class="line"> 24 </span><span class="com">*/</span>
+<span class="line"> 25 </span><span class="kwb">void</span> <span class="kwd">print_table</span><span class="sym">(</span><span class="kwb">const double</span> table<span class="sym">[][</span>BALANCES_COLS<span class="sym">],</span>
+<span class="line"> 26 </span>   <span class="kwb">int</span> table_rows<span class="sym">)</span>
+<span class="line"> 27 </span><span class="sym">{</span>
+<span class="line"> 28 </span>   <span class="kwb">const int</span> WIDTH <span class="sym">=</span> <span class="num">10</span><span class="sym">;</span>
+<span class="line"> 29 </span>   cout <span class="sym">&lt;&lt;</span> fixed <span class="sym">&lt;&lt;</span> <span class="kwd">setprecision</span><span class="sym">(</span><span class="num">2</span><span class="sym">);</span>
+<span class="line"> 30 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> table_rows<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 31 </span>   <span class="sym">{</span>
+<span class="line"> 32 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> BALANCES_COLS<span class="sym">;</span> j<span class="sym">++)</span>
+<span class="line"> 33 </span>         cout <span class="sym">&lt;&lt;</span> <span class="kwd">setw</span><span class="sym">(</span>WIDTH<span class="sym">) &lt;&lt;</span> table<span class="sym">[</span>i<span class="sym">][</span>j<span class="sym">];</span>
+<span class="line"> 34 </span>      cout <span class="sym">&lt;&lt;</span> <span class="str">&quot;</span><span class="esc">\n</span><span class="str">&quot;</span><span class="sym">;</span>
+<span class="line"> 35 </span>   <span class="sym">}</span>
+<span class="line"> 36 </span><span class="sym">}</span>
+<span class="line"> 37 </span>
+<span class="line"> 38 </span><span class="com">/**</span>
+<span class="line"> 39 </span><span class="com">   Computes the value of an investment with compound interest.</span>
+<span class="line"> 40 </span><span class="com">   &#64;param initial_balance the initial value of the investment</span>
+<span class="line"> 41 </span><span class="com">   &#64;param p the interest rate per period in percent</span>
+<span class="line"> 42 </span><span class="com">   &#64;param n the number of periods the investment is held</span>
+<span class="line"> 43 </span><span class="com">   &#64;return the balance after n periods</span>
+<span class="line"> 44 </span><span class="com">*/</span>
+<span class="line"> 45 </span><span class="kwb">double</span> <span class="kwd">future_value</span><span class="sym">(</span><span class="kwb">double</span> initial_balance<span class="sym">,</span> <span class="kwb">double</span> p<span class="sym">,</span> <span class="kwb">int</span> n<span class="sym">)</span>
+<span class="line"> 46 </span><span class="sym">{</span>
+<span class="line"> 47 </span>   <span class="kwb">double</span> b <span class="sym">=</span> initial_balance <span class="sym">*</span> <span class="kwd">pow</span><span class="sym">(</span><span class="num">1</span> <span class="sym">+</span> p <span class="sym">/</span> <span class="num">100</span><span class="sym">,</span> n<span class="sym">);</span>
+<span class="line"> 48 </span>   <span class="kwa">return</span> b<span class="sym">;</span>
+<span class="line"> 49 </span><span class="sym">}</span>
+<span class="line"> 50 </span>
+<span class="line"> 51 </span><span class="kwb">int</span> <span class="kwd">main</span><span class="sym">()</span>
+<span class="line"> 52 </span><span class="sym">{</span>
+<span class="line"> 53 </span>   <span class="kwb">double</span> balances<span class="sym">[</span>BALANCES_ROWS<span class="sym">][</span>BALANCES_COLS<span class="sym">];</span>
+<span class="line"> 54 </span>   <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> i <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> i <span class="sym">&lt;</span> BALANCES_ROWS<span class="sym">;</span> i<span class="sym">++)</span>
+<span class="line"> 55 </span>      <span class="kwa">for</span> <span class="sym">(</span><span class="kwb">int</span> j <span class="sym">=</span> <span class="num">0</span><span class="sym">;</span> j <span class="sym">&lt;</span> BALANCES_COLS<span class="sym">;</span> j<span class="sym">++)</span>
+<span class="line"> 56 </span>         balances<span class="sym">[</span>i<span class="sym">][</span>j<span class="sym">] =</span> <span class="kwd">future_value</span><span class="sym">(</span><span class="num">10000</span><span class="sym">,</span>
+<span class="line"> 57 </span>            RATE_MIN <span class="sym">+</span> i <span class="sym">*</span> RATE_INCR<span class="sym">,</span>
+<span class="line"> 58 </span>            YEAR_MIN <span class="sym">+</span> j <span class="sym">*</span> YEAR_INCR<span class="sym">);</span>
+<span class="line"> 59 </span>
+<span class="line"> 60 </span>   <span class="kwd">print_table</span><span class="sym">(</span>balances<span class="sym">,</span> BALANCES_ROWS<span class="sym">);</span>
+<span class="line"> 61 </span>
+<span class="line"> 62 </span>   <span class="kwa">return</span> <span class="num">0</span><span class="sym">;</span>
+<span class="line"> 63 </span><span class="sym">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 2.4.8, http://www.andre-simon.de/-->

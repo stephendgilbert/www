@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>More Selection Forms</title>
+    <style type='text/css'>
+        th, td { padding: 3px; }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner08">
+        <img id='lessonLogo' src='../images/g.png' alt='A decorative icon.'>
+        <p id='lessonTitle'>More Selection Forms</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+    <p class='firstLine'>
+        <b><span class="cap">B</span>oth the nested <code>if</code> statements and the ladder-style
+            <code>if</code>-<code>else</code>-<code>if</code> statements</b>
+            provide you with the tools you need to do
+            <i><b>multi-way</b></i> branches. But there's still one more
+            multi-way selection tool
+            that you should have in your programming toolbox.
+        </p>
+        <p> <img src="images/f40.gif" class="right" alt="A telephone switch.">
+            Another Java control structure, the <code>switch</code> statement,
+            provides an even more efficient way to select between several
+            different alternatives, provided you can live with its
+            limitations and somewhat idiosyncratic behavior.
+        </p>
+        <p>
+            Many other languages have a multi-way branch statement,
+            usually called a <code>case</code> statement. If you've programmed in
+            one of these different languages, you might find the term
+            <code>switch</code> a little unusual. The name seems much more
+            logical, however, if you think of a railway switching yard or
+            a telephone switchboard, rather than a light-switch.
+        </p>
+        <p> The <code>switch</code> statement is different than
+            the <code>if</code>-<code>else</code> statement because the
+            <code>switch</code> is based upon an <b>integer evaluation</b>,
+            rather than upon a <code>boolean</code> test.
+            Let's briefly look at the syntax of the <code>switch</code>
+            statement and then we'll take a look at how it works.
+        </p>
+    <h3>Switch Syntax</h3>
+        <p> Here's an illustration that shows the syntax of the
+            <code>switch</code> statement:<br>
+            <img src="images/switch-syntax.png" class='inlineCenter' alt="The syntax of the switch statement">
+            As you can see, the <code>switch</code> statement
+            consists of five different parts.
+        </p>
+        <ol>
+            <li class='d'>The <b><code>switch</code></b> keyword, followed by an integral
+                expression enclosed in parentheses. This expression is called the
+                <b>switch selector</b>. The selector can be a variable or any expression,
+                as long as the type of the expression is <code>byte</code>, <code>short</code>,
+                <code>int</code>, or <code>char</code>. You cannot use floating-point,
+                <code>long</code> or <code>String</code> selectors. (Note: in
+                Java 7 and later, you <b>may</b> use <code>String</code> selectors.)
+                The body of the
+                <code>switch</code> statement, which follows, is enclosed
+                in braces.
+            </li>
+            <li class='d'> Any number of <b><code>case</code></b> labels. Each
+                <code>case</code> label consists of the keyword
+                <code>case</code>, followed by a <b>constant</b>
+                expression. The <code>case</code> label ends
+                with a <b>colon</b>, not a semicolon.
+            </li>
+            <li class='d'>Any number of statements following each
+                <code>case</code> label. These do not have to
+                be enclosed in braces as with a loop or <code>if</code> body.
+            </li>
+            <li class='d'>A <b><code>break</code></b> statement to end each
+                <code>case</code>.
+            </li>
+            <li class='d'>A <b><code>default:</code></b> label to handle the unmatched
+                cases.</li>
+        </ol>
+        <p> Let's look at each of these pieces to see how they work
+            together.
+        </p>
+    <h3>How it works</h3>
+        <p> When a <code>switch</code> statement is encountered, the
+            first thing that happens is that its switch selector, or
+            integer "test" expression is evaluated. After the test expression is
+            evaluated the following steps are performed:
+        </p>
+        <ol>
+            <li class='d'>The list of labeled constants is scanned, looking
+                for a match. If an exact match is found:
+                <ul>
+                    <li>Java begins executing the first line of code immediately
+                        following the matching <code>case</code> label.
+                    </li>
+                    <li>Each line of code following the <code>case</code> label
+                        is executed sequentially until either a <code>break</code>
+                        statement is encountered or all of the statements in
+                        the <code>switch</code> body have been executed.
+                    </li>
+                </ul>
+            </li>
+            <li class='d'>If no match is found, then execution jumps to the
+                statement following the <b><code>default:</code></b>
+                label, if one was supplied.
+            </li>
+            <li class='d'>If no match is found and there is no <b><code>default:</code>
+                </b> label, then execution jumps to the first statement following
+                the <code>switch</code> body.
+            </li>
+        </ol>
+    <h3>A Simple Example</h3>
+        <p> A very common use for a <code>switch</code> statement is to
+            implement a menu. Let's create a simple menu that allows the
+            user to select 1) for Twinkies, and 2) for Tofu; something
+            for everyone. Here's the code:<br>
+            <img src="images/switch01.gif" class="inlineCenter" alt="The SimpleMenuSwitch program.">
+            You can find this in the program <code class='b'>SimpleMenuSwitch.java</code> in this
+            week's code folder. Let's look at the code:
+        </p>
+        <ol>
+            <li class="d">The first section of the program creates a
+                <code>Scanner</code> object for input and then prints a
+                menu.
+            </li>
+            <li class='d'>After printing the menu, the program creates an
+                <code>int</code> variable named <code>choice</code> and
+                allows the user to initialize it.
+            </li>
+            <li class="d">The <code>choice</code> variable is used as the
+                <b>switch selector</b>.
+            <div class='info'>
+                <p>The <code>switch</code> statement can evaluate
+                    <code>int</code>, <b>byte</b>, <b>short</b>, <b>char</b>, or <code>String</code>
+                    (in Java 7+) selector values. It will not work with <b>double</b>,
+                    <b>long</b> or any other object types.
+                </p>
+            </div>
+            </li>
+            <li class="d">Each <b>case label</b> contains a <b>constant</b>
+                value to be matched against the <b>switch selector</b>.
+                The value stored in <code>choice</code> will be compared to
+                each of the <b>case label values</b> and if an exact match is
+                found, the program will jump to the first line of code in that block.
+            </li>
+            <li class="d">Each <b>case block</b> should (almost always) end with
+                a <code>break</code> statement. If you don't have a <code>break</code>
+                then control will continue to the next case block, <b>even if</b>
+                the selector does not match that block's case label.
+            </li>
+            <li class="d">Finally, if you want to do something if the switch
+                selector fails to match any case, then you can add an optional
+                <code>default</code> block. This block is traditionally placed
+                last (which is why I haven't included a <code>break</code>
+                statement). If you don't have a <code>default</code> block
+                then nothing would happen at all when the user entered an
+                invalid selection.
+            </li>
+        </ol>
+        <p> Here's what the program looks like as it runs:<br>
+            <img src="images/switch02.gif" class="inlineCenter" alt="Running the SimpleMenuSwitch app.">
+        </p>
+    <h3>Switch Pitfalls</h3>
+        <p> There are two common problems students encounter when learning
+            to use the <code>switch</code> statement.
+        </p>
+        <p> The first problem has to do with the <code>case</code>
+            labels. Each <code>case</code> label must include:
+        </p>
+        <ul>
+            <li>A <b>constant</b> integer expression (not including <code>long</code>), followed by
+                a colon.
+            </li>
+            <li>This means you can't use variables
+                or ranges as part of your <code>case</code> label.
+            </li>
+        </ul>
+        <p> The second problem has to do with forgetting to use
+            a <b><code>break</code></b> statement. If you don't include a
+            <code>break</code> statement, <b class='ry'>then all of the statements in
+            the <code>switch</code> body, following your <code>case</code>
+            are executed as well</b>. This is called <b>fall through</b> and is
+            a very common programming error when using a <code>switch</code>
+            statement.
+        </p>
+        <p> Fallthrough is not, necessarily and error, though; it<b>can</b> be useful
+            if you want to execute the
+            same code for several different case labels. Here's an example:
+        </p>
+        <p class='code'>
+            switch(c)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case 'A': case 'a': case 'E': case 'e': ....<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vowels++;<br>
+            ...<br>
+            }
+        </p>
+        </p>I have only included some of the case labels. The actual labels would include
+            all of the upper and lower-case vowel characters. Some programmers also 
+            prefer to put each case label on its own line, even when all of them
+            resolve to the same block of code.
+        </p>
+    
+    <h2>The Conditional Operator</h2>
+        <p><b><span class='cap2'>O</span>ne problem with using</b>
+            <code>if</code>&mdash;<code>else</code> is that you <b>can't</b> use an
+            <code>if</code>&mdash;<code>else</code> in a <b>formula</b> or
+            <b><u>expression</u></b>;
+            <code>if</code>&mdash;<code>else</code> is a <b>statement;</b> it does
+            not produce a value. That means, you must create an additional
+            variable, like <code>bonusPcnt</code> in the earlier example.
+        </p>
+        <p> Java's, <b>conditional operator</b> provides a way to use an
+            <code>if</code>-<code>else</code> condition inside an expression.
+            The conditional operator is sometime called the <b>ternary</b>,
+            or <b>teriary</b> operator, because it is the only operator
+            to require three operands. It's also sometimes known as the
+            <b>selection operator</b>, since it selects from two values:<br>
+            <img src="images/conditional-operator.png" class='inlineCenter' style='margin-bottom:-1em;' alt="The syntax of the conditional operator">
+            The operands of the conditional operator are:
+        </p>
+        <ol>
+            <li class='d'><b>The condition or test expression</b>: This must be
+                some expression that evaluates to a <code>boolean</code>
+                value.
+            </li>
+            <li class='d'><b>The true result</b>: If the condition portion is
+                <b><code>true</code></b>, then the <b><i>whole expression</i></b>
+                takes on the value listed in this clause. This value
+                can be of any type.
+            </li>
+            <li class='d'><b>The false result</b>: If the condition portion is
+                <b><code>false</code></b>, then the <i><b>whole expression</b></i>
+                takes on the value listed here. This value can also
+                be of any type, but should match the type of
+                the <b><code>true</code></b> result.
+            </li>
+        </ol>
+        <p> The condition is separated from the results portion by a
+            question mark ( <code>?</code> ). The results are separated from each
+            other by a colon ( <code>:</code> ).
+        </p>
+        <p> Using the conditional operator, we could calculate
+            <code>bonusAmt</code> like
+            this:<br>
+            <img src='images/conditional-operator.gif' class='inlineCenter' alt='A conditional operator example.'>
+            This example has been formatted so that each operand used
+            by the conditional operator appears on a separate line, but
+            that's not required.
+        </p>
+        <p> Here's the <b>WageCalculator</b> example once again,
+            this time using the conditional operator to calculate
+            the value for <code>grossPay</code>:
+            <img src="images/if04.gif" class="inline" alt="The conditional operator.">
+            You'll have to decide whether you find this clearer or
+            not. I think that I prefer the <code>if-else</code> instead.
+        </p>
+        <p> You can also <b><i>nest</i></b> another conditional expression
+            (using the conditional operator) inside the true or false
+            portions of a first conditional expression. This quickly becomes
+            unreadable, however, and, despite what you might think, may
+            even execute more slowly. You should attempt to write source
+            code that is clear and to-the-point, not code that uses the
+            fewest possible lines.
+        </p>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

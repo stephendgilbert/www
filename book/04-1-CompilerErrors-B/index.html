@@ -1,0 +1,693 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>4.1&mdash;Syntax Errors</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/h.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 4.1</p>
+        <p id='lessonTitle'>Syntax Errors</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/e05a.gif" class="right" alt="A drill seargent.">
+        <b><span class="cap">I</span>n one of my favorite allusions</b>,
+            Dr. Bill McCarty likens the Java compiler to a <i>"...stern and pedantic
+            taskmaster..."</i> that <i>"...tolerates absolutely no departure from the
+            official rules of the Java language."</i>
+            I really like the image that this conveys. I <i>also</i> like
+            to think of the Java compiler as a particularly tough Marine
+            Drill Sergeant.
+        </p>
+        <p> The reason that I like both these images is that they both hint
+            at the <b>reason</b> why the compiler is so strict. It's a good idea
+            to learn to speak and think and write well while you are young
+            and in school; doing so opens up opportunities that aren't
+            available otherwise.
+        </p>
+        <p> Similarly, it is much less costly for a
+            soldier to learn on the training ground than to learn in the
+            heat of battle. Like the Marine Drill Sergeant, the Java compiler
+            finds your weaknesses early on, and <b>makes you fix them</b>,
+            so an inadvertent error won't lead to disaster later.
+        </p>
+        <p> When you write Java programs, your programs can contain
+            three different kinds of <b>errors</b>:
+        </p>
+        <ul>
+            <li>The <b>Java compiler</b> always tells you when you've made
+                a mistake using Java's grammar, even if you don't understand
+                its error messages. The errors that the compiler catches are
+                called <b>syntax errors</b>.
+            </li>
+            <li>The <b>Java Virtual Machine</b> can recognize even more
+                errors; even those that leave the compiler blissfully unaware.
+                When it encounters these <b>runtime errors</b>, it stops
+                running your program and prints an error message.
+            </li>
+            <li>Even the JVM doesn't recognize every <b>semantic</b> or
+                <b>logical</b> error. (A semantic error means that
+                your program is grammatically correct, but doesn't actually
+                do what you thought; it is an error in <b>meaning</b>, not
+                form.) Some semantic errors show up as an obvious malfunction,
+                while others require careful testing to coax them out of
+                hiding.
+            </li>
+        </ul>
+        <p> In this chapter we'll look at <b>compile-time</b> or <b>syntax
+            errors</b>, and learn some strategies for dealing with them.
+        </p>
+        <div class='alert'>
+        <p> Because haven't completed your study of the Java language,
+            you might find some of the errors mentioned here (such as
+            using <code>=</code> instead of <code>==</code>)
+            confusing; <b class='ry'>don't worry</b>. What you should take away from
+            this chapter is a <b>technique</b> for dealing with
+            compiler errors. Then, go ahead and bookmark this section,
+            so you can refer to it in the future when the Java
+            compiler is driving you crazy.
+        </p>
+        </div>
+
+    <h2>Syntax Errors</h2>
+        <img src='images/runtime-errors.png' style='margin-top:-5em;' class='right' alt='A runtime error in Times Square.'>
+        <p>
+            Surprisingly, <b>you want your compiler to be as picky as possible</b>,
+            because errors that are discovered when you are <b>developing</b>
+            your program are much easier (and less expensive) to fix,
+            than errors that are discovered when your program has been
+            shipped to customers all over the world.
+        </p>
+        <p> Let me give you an example. The Visual Basic language,
+            which is also used as the programming language in Microsoft's
+            Office products, allows programmers
+            to create variables by simply using them. This is called
+            <b>implicit declaration</b>:<br>
+            <img src="images/implicit01.gif" class="inline" alt="Implicit variable declaration.">
+            If you use implicit declaration,
+            your Visual Basic compiler will not generate a syntax error when it
+            encounters a new variable it hasn't seen before. Your compiler
+            is much friendlier.
+        </p>
+        <p> <img src="images/implicit02.gif" class="right" alt="Mistake because of implicit variable declaration.">
+            This sounds great, but professional programmers almost always
+            <b>turn this feature off</b>, if possible. Why? Because allowing
+            implicitly declared variables in your program <b>also</b> allows
+            misspelled variable names to slip through, and <b>those</b> errors
+            don't show up until your program runs.
+        </p>
+
+        <p> Professional programmers quickly learn that it is better to
+            catch every possible error in your program <b>before</b> you
+            ship it off into battle, even if that requires a compiler that
+            seems, well, a little "pedantic":<br>
+            <img src="images/implicit03.gif" class="inline" alt="Compiler error.">
+        </p>
+        <p class="note">Here's a second example. Adobe's Flash uses a
+            language called ActionScript that is based on JavaScript. The
+            earlier versions of Flash used implicit typing, just like
+            JavaScript. The latest version of ActionScript (AS3), however,
+            should look familiar to those of you who've learned Java.
+            That's right, when you declare a variable, you need to
+            explicitly give it a type.
+        </p>
+        <p> Errors that the Java compiler is able to find are
+            called <b>compile-time</b> or, more generally,
+            <b>syntax errors</b>. Such errors violate the very strict
+            rules governing Java's formal grammar.
+            Not all errors in your program can be found by the compiler. The
+            most difficult and intractable problems are not errors in
+            expression, but errors in logic. To find and fix those kinds of errors,
+            you'll need to learn about <b>testing</b> your code.
+        </p>
+    <h3>What About Error Messages?</h3>
+        <p> You might think that fixing compiler errors would be simple; after all,
+            doesn't the compiler <b>tell you</b> exactly what the program is?
+            Well, let's see. The following program contains several syntax errors. Before you go
+            any further, why don't you just walk through the listing and see
+            how many errors you can identify?<br>
+            <img src='images/error1-java.gif' class='inlineCenter' alt='A program with several syntax errors.'>
+        </p>
+        <p> Now open the program (you'll find it in your Chapter04 starter
+            folder) and compile it with DrJava. While most of you have Java 7 or 8,
+            some of you may have the Java 5 JDK installed as well. Others, without a
+            JDK, are using the Eclipse compiler built into DrJava.
+            I'll look at each of those.
+        </p>
+    <h3>Different Compilers</h3>
+        <p> If you compile this program with DrJava set to use
+            the Java 5 <b>javac</b> compiler from the Java Development
+            Kit, you will get the two error messages listed here.<br>
+            <img src='images/errors01.gif' class='inlineCenter' alt='First pass with javac.'>
+            This <b>doesn't mean</b> that the program
+            necessarily has exactly two syntax errors,
+            however. Individual errors will often:
+        </p>
+        <ul>
+            <li>cause "cascading errors"
+                when one error leads to more errors, as
+                subsequent lines are misinterpreted.
+            </li>
+            <li><b>hide</b> errors because the existing
+                error "masks" subsequent lines.
+            </li>
+        </ul>
+    <h3>Fixing Errors</h3>
+        <p> Let's try fixing some of the problems. Notice that
+            the first error says <b>Identifier Expected</b> and
+            points to line 8 that assigns the value 32 to the
+            variable <code>num</code>. The message is not
+            <i>especially</i> helpful, because the statement looks
+            so simple that it couldn't <b>possibly</b> have an error.
+        </p>
+        <p> <b>But it does!</b></p>
+        <p> Remember that there are two kinds of assignment
+            statements: <b>initializing</b> assignments, which can
+            appear anywhere inside your program, and <b>executable</b>
+            assignments which can <b>only</b> appear inside
+            a method. Since <code>num</code> obviously <b>is</b>
+            an identifier, the message would make more sense if
+            it said something like "invalid executable statement
+            outside of method", but it doesn't.
+        </p>
+        <p> We can fix this by combining lines 7 and
+            8 into a single, initializing assignment, like this:
+            <img src='images/errors02.gif' class='inlineCenter' alt='Fixing the first error.'>
+            After this, compile and you'll see you now have only
+            <b>one</b> error:<br>
+            <img src='images/errors03.gif' class='inlineCenter' alt='Fixing the first error.'>
+            This error seems to say that it is missing a semicolon
+            on line 10. This is a very common error message, and
+            it is usually very accurate. (Usually the missing
+            semicolon is on the <b>previous</b> line, however.)
+        </p>
+        <p> Let's see if that's the case. Just add a semicolon
+            at the end of the previous line, like this, and
+            recompile:<br>
+            <img src='images/errors04.gif' class='inlineCenter' alt='Fixing the second error.'>
+            <b class='ry'>HMMMMM! That doesn't look good!</b>.
+            And it's not. While the error messages may be helpful,
+            they aren't a real map that you can follow. Why?
+            Because ...
+        </p>
+        <p class="pullquote">
+            Not All Error Messages Are Correct!
+        </p>
+        <p> In the same way that one error can "cascade" and produce
+            other errors, one error can also <b>hide</b> legitimate
+            errors. You may <b>think</b> that your program only has
+            a few errors, but when you fix one of them, all of a
+            sudden, a dozen more appear. That's because with some
+            mistake, the compiler can't understand enough of your
+            code to discover the mistaken statements.
+        </p>
+    <h3>The Java 6, 7 &amp; 8 Compilers</h3>
+        <p> Not all Java compilers will give you the same error
+            messages. For instance, if we switch DrJava so that
+            it uses a Java 6, 7 or 8 compiler (I have several
+            JDKs installed on my computer), you'll see that
+            the error situation is quite different.<br>
+            <img src='images/java6errors.gif' class='inlineCenter' alt='Compiling with Java 6.'>
+            That looks a little better, since apparently the more recent Java
+            compilers can make sense of more of your program than
+            the Java 5 compiler. However, that's not necessarily
+            the case.
+        </p>
+        <p> Look at the second error; it's the same one that the
+            Java 5 compiler flagged, and you already saw that the
+            message wasn't accurate at all. You <b class='ry'>don't</b>
+            need a semicolon on line 9. That's not the problem.
+        </p>
+        <p> So, as you can see, you can't simply rely on the compiler
+            <b>telling you</b> exactly what's wrong with your code.
+            Instead, you need to follow a <b>systematic strategy</b>
+            that will help you track down, <b>understand</b> and
+            then squash your syntax errors.
+        </p>
+
+    <h3>Common Errors</h3>
+        <p> Although there are a wide variety of error messages,
+            compile-time errors really come in four basic categories:
+        </p>
+        <ol>
+            <li class="d">Structural errors</li>
+            <li class="d">"Real" syntax errors</li>
+            <li class="d">Typographical errors</li>
+            <li class="d">Type errors</li>
+        </ol>
+        <p> Understanding these basic categories, and the different ways to
+            correct and avoid them, will go a long way toward helping you
+            write code that compiles cleanly the first time. Of course,
+            once you've done that, the <b>real</b> error correction
+            is just getting started.
+        </p>
+
+        <p>Let's take a look at these four categories.</p>
+    <h2>Structural Errors</h2>
+        <p> <img src="images/parse.gif" class="right" style='margin-top:-5em;' alt="Parsing source code.">
+            Sometimes, we think of the Java compiler as a machine that
+            takes source code in one end and spits compiled bytecode
+            out the other. The problem with this analogy is that it
+            leads us to think of the compiler like a log chipper
+            processing our source code in a purely sequential manner.
+            In fact, that's not what happens at all.
+        </p>
+        <p> Before the Java compiler can even <b>think</b> about turning
+            your source code into byte-code, it first must read your
+            <b>entire</b> program, and then <b>organize</b> it. This is done in
+            several phases.
+        </p>
+        <p> The first phase, <b>scanning</b> or <b>lexical analysis</b>,
+            breaks the entire program up into individual pieces called <b>tokens</b>.
+            The output of this phase is called a <b>token stream</b>.
+            This tokenizing phase is almost exclusively dependent upon the
+            <b>precise</b> matching of <b>pairs of delimiters</b>:
+            single quotes, double quotes, parentheses, and braces.<br>
+            <img src='images/stages.png' class='inlineCenter' alt='Stages of compilation.'>
+        </p>
+        <h4>What Does This Mean?</h4>
+        <p> During the scanning phase, the compiler attempts to organize the
+            program by matching keywords such as <code>class</code>, along
+            with delimiters. When you fail to get the <b>essential
+            organization</b> of your program correct, then the compiler
+            really can't go any further.
+        </p>
+
+        <p> The <b>Error1</b> program doesn't <b>really</b> have
+            only two errors; the remaining errors are <b>hidden</b>
+            by the structural errors. Only <b>after</b> the entire program
+            is organized correctly, can the compiler go through
+            and make sure the right tokens are in the correct order.
+        </p>
+    <h3>How Do You Fix It?</h3>
+        <p><b>Preventing</b> structural errors is really much easier than
+            correcting them afterwards. Here are three things you can do to
+            prevent them from occurring in the first place:
+        </p>
+        <ol>
+
+            <li class="d"><b><i><u>Understand what goes where.</u></i></b><br>
+                Don't just copy code and place code fragments at random in your Java
+                programs. Know <b>where</b> each element belongs. Specifically,
+                make sure you understand that:
+            <ul>
+                <li><code>import</code> and <code>package</code> statements
+                    must appear at the <b>beginning</b> of your file.
+                </li>
+                <li>Field definitions must appear <b>inside</b> a class
+                    definition, but <b>outside</b> of any method
+                    definition.
+                </li>
+                <li>Method definitions must be <b>inside</b> a class
+                    definition, but not inside any other method definition.
+                </li>
+                <li>Program statements, <i>except for field definitions</i>,
+                    must appear <b>inside</b> methods. Program statements
+                    must end with semicolons.
+                </li>
+                <li>Formal parameter variables go <b>inside</b> the parentheses
+                    following a method name, and must include <b>both</b>
+                    a type and a name for each parameter variable.
+                </li>
+                <li><b>Braces</b> are used to delimit the body of classes, methods,
+                    and selection structures like loops, while <b>parentheses</b>
+                    are used to delimit parameter lists and the condition
+                    list in control statements. Don't confuse these.
+                </li>
+
+            </ul>
+            </li>
+            <li class="d"><b><i><u>Write structural elements in one piece.</u></i></b><br>
+                Beginning programmers often start at the beginning of a
+                structural element&#8212;a class or method definition, or a
+                selection or iteration statement&#8212;and work through to the
+                bottom. Experienced programmers will put the structure
+                in place first&#8212;write the header and add the opening and
+                closing braces&#8212;before turning to the body of the class
+                or method.
+            </li>
+            <li class="d"><b><i><u>Indent correctly.</u></i></b><br>
+                Use a consistent and easily checked indenting style. Your
+                indenting style should allow you to easily tell,
+                <b>at a glance</b>, if all your braces are in the right
+                place. Failing to indent and line up your braces makes
+                your code almost impossible to check.
+                <div class='drjava-note' style='min-height:90px;'>
+                <p> In the DrJava IDE, if your code gets
+                "messed up", you can correct the indentation by
+                selecting all the lines in the file and choosing
+                <b>Indent Lines</b> from the <b>Edit</b> menu.
+                This <b>only</b> works, though, if you've fixed
+                the overall structural problems first.
+                </p>
+                </div>
+            </li>
+            </ol>
+        <h3>Hands-On: Error1 Structural Errors</h3>
+        <p> So, let's look at <b>Error1.java</b> and go through
+            the checklist. When you do, you'll find two structural
+            errors:<br>
+            <img src='images/errors05.gif' class='inlineCenter' alt='Fixing structural errors.'>
+        </p>
+        <ol>
+            <li class='d'>An executable assignment that belongs
+                in the body of a method (or that can be converted
+                to an initializing assignment as I did earlier.)
+            </li>
+            <li class='d'>The body of the method is delimited
+                with parentheses instead of braces.
+            </li>
+        </ol>
+        <p> Once you fix these two structural errors, and recompile,
+            then <b>all of the compilers</b>, which previously reported two errors,
+            or 21 errors, <b>now</b> show five errors! That's because the other errors
+            were <b>hidden</b> by the structural errors:<br>
+            <img src='images/errors06.gif' class='inlineCenter' alt='Fixing structural errors.'>
+            That's also why more modern compilers, which <b>seem</b> to understand
+            more of your code, are really a mixed blessing; they only understand more
+            of your code by "guessing" about what you actually intended to write.
+        </p>
+        <p class='pullquote'>If the <b>structure</b> of your program is
+            incorrect,<br /> <b>NO COMPILER</b> can correctly
+            understand it.
+        </p>
+
+
+    <h2>"Real" Syntax Errors</h2>
+        <p> After the Java compiler has tokenized your code, a second phase
+            of <b>parsing</b> takes place. This is <b>syntax analysis</b>&#8212;making
+            sure that the correct kinds of elements (tokens) are in the
+            correct places. The output of the parser phase is an
+            <b>abstract syntax tree</b>. The abstract syntax tree is then
+            <b>double checked</b> for consistency errors, in the phase called
+            <b>semantic analysis</b>. Errors discovered in the parsing or
+            semantic analysis phases are "really" syntax errors.
+        </p>
+        <p> Here are some examples:</p>
+        <ul>
+            <li>Using a keyword as an identifier, for instance, results in a syntax
+                error like this:<br>
+                <img src='images/keyword-as-identifier.gif' class='inline' alt='Cannot use keyword in wrong place.'>
+            </li>
+            <li>Using a keyword when it is <b>not necessary</b> results in a
+                syntax error. This is a common example:<br>
+                <img src='images/extra-keyword.gif' class='inline' alt='Extra keyword in declaration.'>
+            </li>
+            <li><b>Omitting</b> a required token results in a similar syntax
+                error, like this:<br>
+                <img src='images/missing-keyword.gif' class='inline' alt='Missing type keyword in declaration.'>
+            </li>
+            <li>Using a token in an incorrect context (such as the keyword
+                <code>void</code>) can also result in a syntax error like this:<br>
+                <img src='images/wrong-location-void.gif' class='inline' alt='Using keyword in wrong context.'>
+            </li>
+        </ul>
+        <p> There is no "magic bullet" for detecting and preventing this
+            kind of syntax error. You simply have to learn to <b>put the
+            right keywords and tokens in the correct order</b>.
+        </p>
+    <h3>Hands-On: Error1 Syntax Errors</h3>
+        <p> After fixing the structural errors, you'll see that
+            there are two "real" syntax errors in <b>Error1.java</b><br>
+            <img src='images/errors07.gif' class='inlineCenter' alt='Real syntax errors in Error1.java'>
+        </p>
+        <ol>
+            <li class='d'>In the program we are trying to print
+                the value of the variable <code>num</code>. However,
+                since <code>num</code> was declared outside the
+                method, we can't access it from a <code>static</code>
+                method like <code>main()</code>.
+                <div class='alert'>
+                <p> This is a case where the fix of a previous
+                    problem, caused a subsequent error. Previously
+                    I fixed the executable assignment problem by
+                    changing it to an initializing assignment. What
+                    I <b>should</b> have done is move both statements
+                    into the main method.
+                </p>
+                </div>
+            </li>
+            <li class='d'> On line 14, the program tries to return
+                a value, which isn't syntactically correct for a
+                <code>void</code> method.
+            </li>
+        </ol>
+        <p> After fixing both of these problems, the code looks
+            like this:<br>
+            <img src='images/errors08.gif' class='inlineCenter' alt='Fixing syntax errors.'>
+            When you recompile, you'll see there are only three
+            errors left, (or <b>are</b> there?)
+        </p>
+    <h2>Typographical Errors</h2>
+        <p> Typographical errors are somewhat easier to deal with than
+            structural errors because the Java compiler usually pinpoints
+            them fairly accurately.
+        </p>
+        <p> Here are the three most common typographical errors you're
+            likely to make:
+        </p>
+        <ol>
+            <li class="d"><b><i><u>Missing semicolon.</u></i></b><br>
+                Let's face it, semicolons are small, and hard to see.
+                Even worse, the colon, which looks almost exactly like
+                a semicolon, is on the same key and is the character you're
+                likely to insert when you mistype.
+            </li>
+            <li class="d"><b><i><u>Using assignment (<b><code>=</code></b>)
+                instead of equality (<b><code>==</code></b>).</u></i></b><br>
+                Fortunately, Java, unlike C, will <b>usually</b> catch this error.
+                (It won't catch it if the variable you are trying to compare
+                is a <code>boolean</code>, though. When we get to selection
+                statements, I'll show you some techniques for avoiding these
+                kinds of errors.)
+                Still, it's annoying to have to go back and fix it.
+            </li>
+            <li class="d"><b><i><u>Using the wrong case.</u></i></b><br>
+                Java is a case sensitive language, and that case sensitivity
+                extends to Java filenames, even on operating systems that
+                are not, themselves case sensitive, like Windows and the Mac.
+            </li>
+        </ol>
+    <h3>Hands-On: Error1 Typographical Errors</h3>
+        <p> The <b>Error1</b> program has two obvious "typos": the
+            name of the file is different than the name of the
+            class, and the <code>java.applet</code> package in
+            the <code>import</code> statement got capitalized.
+            (Remember, packages don't have capitals, classes do!).<br>
+            <img src='images/errors09.gif' class='inlineCenter' alt='Typos.'>
+            After recompiling, you'll see that one of the three previous
+            errors goes away, because the misspelled package name
+            made the compiler overlook the <code>Applet</code> class.
+        </p>
+        <p> On the other hand, another error "pops up" when you fix
+            the two typos. Don't worry, this is common, and you shouldn't
+            get discouraged. The new error:<br>
+            <img src='images/errors10.gif' class='inlineCenter' alt='Another syntax error.'>
+            is a "real" syntax error. One of the rules of Java is that
+            all local variable must be initialized before use. In this case,
+            the variable named <code>var</code> has not been initialized,
+            so the code won't compile.
+        </p>
+        <p> The solution? Give <code>var</code> a value by initializing it when
+            it is created. Do that, and that "stern and demanding taskmaster",
+            DrJava will reward you with a "Well Done":<br>
+            <img src='images/errors11.gif' class='inlineCenter' alt='Clean compile.'>
+        </p>
+
+    <h2>Type Errors</h2>
+        <p> In programming, a <b>variable</b> is a "bucket" in memory
+            where you store <b>values</b>.
+            When you ask the compiler to create a variable for you, you tell
+            it what <b>kind</b> of values you intend to store in your bucket.
+            This allows Java to prevent you from storing milk or soda in a
+            cardboard box designed to hold dry cereal, so to speak.<br>
+            <img src="images/variables.gif" class="inlineCenter" alt="Some variable types.">
+            Java's type system is designed to keep you from losing information,
+            not to make life difficult for you. Understanding these three
+            simple rules should help you to go along with the program:
+        </p>
+        <ol>
+            <li class="d">You can store a little value in a big bucket, but not
+                vice-versa. This means you can store <code>byte</code>,
+                <code>short</code>, <code>int</code>, and <code>long</code>
+                values in a <code>long</code> variable, but you cannot store
+                a <code>long</code> value in a <code>byte</code>,
+                <code>short</code>, or <code>int</code> variable.
+            </li>
+            <li class="d">You can store a <b>less-precise</b> value in a
+                <b>more-precise</b> bucket, but not vice-versa. This means
+                you can store <code>byte</code>, <code>short</code>,
+                <code>int</code>, <code>long</code>, and <code>float</code>
+                values in a <code>double</code> variable, but <b>cannot</b>
+                store <code>double</code> values in a <code>byte</code>,
+                <code>short</code>, <code>int</code>, <code>long</code>,
+                or <code>float</code> variable; the "bucket" is incapable
+                of retaining the necessary precision.
+            </li>
+            <li class="d">You can only store similar things in similar buckets. You
+                can store different numeric values in different kinds of
+                numeric variables, but you cannot store <code>boolean</code>
+                values or object references in numeric variables.
+            </li>
+        </ol>
+    <h2>Finding the Errors</h2>
+        <p>If your program has only a single
+            compile-time error, and, if the
+            error is straightforward, finding and fixing it is usually no
+            problem. What do you do, though, when you get 25 errors, or
+            when the error message produced by Java's compiler doesn't seem
+            to make any sense at all.
+        </p>
+        <p> When this occurs, you really need to have a <b>systematic
+            strategy</b> for finding and fixing the errors,
+            instead of simply starting at the beginning. Systematically
+            attacking the problem will help you
+            avoid frustration and will help you eliminate syntax
+            errors in record time. This is called the "divide and
+            conquer" approach.
+        </p>
+        <p>Let's work through and example to see how this works
+            using the DrJava IDE. The following applet generates a dozen (or more)
+            errors, but the strategy you'll learn
+            will help you regardless of the number of errors.
+        </p>
+        <p> Here's what the program looks like in DrJava:<br>
+            <img src="images/errors12.gif" class="inlineCenter" alt="The Error3 program.">
+        </p>
+    <h3>Step 1: Structure First</h3>
+        <p> Begin by "commenting out" the entire body of your applet's class.
+            This means placing a <code>//</code> at the beginning of every
+            line inside the class, <b class='ry'>being careful to</b>
+            leave the opening and closing braces intact.<br>
+            <img src='images/errors13.gif' class='inlineCenter' alt='Commenting-out the body.'>
+        </p>
+        <div class='drjava-note'>
+        <p> The easiest way to do that in DrJava is to select the lines
+            you want to comment or uncomment, and choose <b>Comment Lines</b>
+            from the <b>Edit</b> menu. When you want to reverse the procedure,
+            select the commented lines and choose <b>Uncomment</b> from the
+            same menu. Even easier is to learn the "hot keys": Control + / to
+            comment-out, and Control + Shift + / to un-comment.
+        </p>
+        </div>
+        <p> Now when you compile your program you won't see any errors at
+            all. <b>If any errors did appear</b>, you'd know that you had:
+        </p>
+        <ul>
+            <li>made an error in the basic structure of your class, or...</li>
+
+            <li>made an error in one of your import statements, or...</li>
+            <li>made an error in the class header.</li>
+        </ul>
+        <p> By <b>commenting out</b> the body of your class, you've <b>narrowed
+            the number of places where you have to go looking for errors</b>.
+        </p>
+    <h3>Step 2: Reveal the Fields</h3>
+
+        <p> Once the basic structure of your program compiles cleanly,
+            toggle the comments that are hiding your <b>instance
+            variables</b> or <b>fields</b>. When you do this, you'll see the
+            following errors displayed:
+            <img src="images/errors14.gif" class="inline" alt="Displaying the fields.">
+            Now you have isolated the errors those that have to do with
+            <b>defining fields or instance variables</b>. That means, once
+            again, you have <b>fewer things to think about</b>. Instead of trying
+            to remember the syntax for a method, you only need to remember
+            how to define an instance variable.
+        </p>
+        <p class='pullquote'>This is the principle of "divide and conquer".</p>
+        <p> For this example, you'd make the following changes:<br>
+            <img src="images/fields02.gif" class="inline" alt="Displaying the corrected fields.">
+            The corrected code changes from the Pascal syntax originally
+            used for the two integer variables, removes the extra
+            <code>double</code> keyword inserted in the second declaration,
+            and makes sure that we use Java instead of Visual Basic to
+            define the applet's button.
+        </p>
+        <p> Since we haven't covered this part of Java yet, you wouldn't necessarily
+            know how to fix this problem. The point is, though, that you've
+            limited the scope of the problem you're looking at, so you
+            can ask intelligent questions to get it fixed.
+        </p>
+    <h3>Step 3: Method by Method</h3>
+        <p> Continue this divide and conquer approach by "uncommenting"
+            to reveal the first method. Recompile and fix
+            the errors you find. Continue to reveal the rest of the class,
+            method by method, until the entire program compiles without
+            error.
+        </p>
+
+        <div class="redbox">
+            One problem with the "method-by-method" method shows up when
+            one method calls another method in the same class. When this
+            occurs, you'll normally comment out the <b>body</b> of the
+            method being called, so the method being tested will compile.
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Compiler Errors Summary
+        </p>
+        <ul>
+            <li><b>Syntax errors</b> are caught by the Java <b>compiler</b>.
+                <b>Runtime errors</b> are caught by the Java Virtual Machine.
+                <b>Logic errors</b> need to be discovered by <b>testing</b>.
+            </li>
+            <li>Compiler <b>error messages</b> are often inaccurate because the
+                compiler may need to "guess" at what you are trying to say. Sometimes,
+                one error will <b>hide</b> different errors. Sometimes, one error
+                will cause a <b>cascade</b> of errors. Learn to use compiler error
+                messages as <b>clues</b>, not as a prescription.
+            </li>
+            <li><b>Structural</b> errors are mistakes in the basic form and placement
+                of your program that prevent the compiler from accurately <b>tokenizing</b>
+                and organizing the program elements. Often these errors are caused by
+                failing to use program delimiters like braces, parentheses and quotes
+                correctly.
+            </li>
+            <li> Memorizing the location for each type of element,
+                writing structural elements in one piece, and using a consistent indentation
+                style can help you avoid structural errors in your code.
+            </li>
+            <li> <b>"Real" syntax errors</b> mean that you've used the Java "grammar
+                elements", such as keywords, in an incorrect context. The parts themselves
+                may be correct, but they don't <b>make sense</b>. The best defense
+                against real syntax errors is constant practice, until you learn to
+                put the right keywords and tokens in the correct order.
+            </li>
+            <li> <b>Typographical</b> errors, or "typos" are common mistakes made
+                when entering a program. Forgetting a semicolon, or mistyping it,
+                using the assignment operator instead of the equality operator,
+                or, most often, simply misspelling a variable or class name,
+                are the most common typos you'll encounter.
+            </li>
+            <li> <b>Type</b> errors occur when you attempt to place a value of one
+                type into a variable of a different type, and the two types are
+                incompatible for some reason. The most common reason you'll encounter
+                is when the assignment would result in some data being lost in
+                an arithmetic assignment.
+            </li>
+            <li> To <b>systematically</b> discover and fix syntax errors, employ the
+                technique of <b>divide and conquer</b>. Comment out all but a small
+                portion of the code and recompile. When you've fixed the simple errors,
+                uncomment another portion of code. In this way, you only need focus on a
+                small subset of your program at any one time.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

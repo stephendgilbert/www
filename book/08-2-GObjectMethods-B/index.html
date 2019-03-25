@@ -1,0 +1,516 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>8.2&mdash;Meet the GObject</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner11">
+        <img id='lessonLogo' src='../images/j.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 8.2</p>
+        <p id='lessonTitle'>Meet the GObject</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/classes02.gif" class="right" alt="Some of the ACM graphics classes.">
+            <b><span class="cap">N</span>ow that you know how to create an
+            ACM <code>GraphicsProgram</code></b>,
+            let's take a look at some of the different components,
+            from the hierarchy of ACM classes on the right, that you
+            can use to create your own masterpieces. Since there
+            are so many classes, though, we'll only cover a few.
+        </p>
+        <p> We looked at the <code>GLabel</code> class in the last chapter.
+            In this chapter we want to look at:
+        </p>
+        <ul>
+            <li>the <code>GObject</code> class that provides the basic
+                behavior that all graphical objects share.
+            </li>
+            <li>the classes that replace the primitive <code>Graphics</code>
+                class drawing operations you used in the last unit. This
+                includes <code>GLine</code>, <code>GRect</code>,
+                <code>GOval</code> and <code>GArc</code>, as well
+                as the ACM "measuring classes", <code>GPoint</code>,
+                <code>GRect</code> and <code>GDimension</code>.
+            </li>
+        </ul>
+        <p> Let's start by looking at the <code>GObject</code> class first,
+            since it contains fields and methods that are common to
+            all of the other classes.
+        </p>
+    <h2>The ACM Graphics Class Hierarchy</h2>
+        <p> As you know, similar classes are often placed in <b>packages</b>
+            in Java. Thus, to use the graphical objects in the ACM library,
+            you <code>import</code> the classes in the <code>acm.graphics</code>
+            package.
+        </p>
+        <p> While packages are important to get your program to run, to
+            really understand what an object can do, you have to understand
+            its <b>class hierarchy</b>. A class hierarchy is based on the
+            object-oriented facility known as <b>inheritance</b>, which
+            you were introduced to earlier.
+        </p>
+        <p> With inheritance, classes are arranged in a sort of
+            parent-child-grandchild structure, that looks a lot like the
+            taxonomies you'd meet in a biology class, and for much the
+            same reason. In the different "levels" have different names,
+            like "kingdom", and "phylum". In object-oriented programming,
+            we have a simpler set of terms.
+            <img src="images/y01.gif" class="right" alt="A class hierarchy.">
+        </p>
+    <h3>Animals and Insects</h3>
+        <p> Here's an example from the "real world." Suppose that all of the
+            animals in the world could be lumped together into the class
+            <code>Animal</code>. If we took all of the animals and divided
+            them into different groups, we might find that some were
+            mammals, (which we'd assign to the <code>Mammal</code> class),
+            some were insects, etc. Each of these groupings would be a
+            <b>subset</b> of the entire class of <b>Animal</b>.
+        </p>
+        <p> Such a subset (<code>Mammal</code>, <code>Insect</code>,
+            <code>Amphibian</code>) is called a <b>subclass</b>, and, as
+            you might expect, the superset (<code>Animal</code>) is
+            called the <b>superclass</b>.
+        </p>
+
+        <p> This relationship is called an <b>is-a</b> relationship because
+            if an object belongs to a subclass, (<b>brenda</b> and
+            <b>jumbo</b> in the <code>Elephant</code> class, for instance),
+            that object is simultaneously a member of each of <b>all</b>
+            its <b>ancestor</b> classes as well. Thus, we can say that
+            Jumbo "<b>is-a</b>" <code>Elephant</code>, but, by virtue of
+            being an <code>Elephant</code>, he is, simultaneously, a
+            <code>Mammal</code> and an <code>Animal</code> as well.
+            <br style='clear:both;'>
+        </p>
+        <div class='info'>
+        <p><b>UML Notes</b><br>
+            The diagram here is a simplified UML, or Unified Modeling Language
+            diagram. UML is the "blueprint" language for object-oriented programming.
+            The arrows in the diagram shown here specify
+            class relationships. The upward-pointing arrow going from
+            <code>Insect</code>, <code>Mammal</code>, and <code>Amphibian</code>,
+            says that these three classes are subclasses of <code>Animal</code>,
+            or, more technically, that <code>Animal</code> is a <b>generalization</b>
+            of the other three classes.<br><br>
+            The dotted lines with the lighter arrowhead, connecting
+            <b>jumbo</b> and <b>brenda</b> with the <code>Elephant</code>
+            class indicate that <b>jumbo</b> and <b>brenda</b> are <b>objects</b>
+            created from the class. The <b>«instanceOf»</b>
+            notation appearing to the right of the lines is called a
+            <b>stereotype</b> and is a required part of the notation.
+        </p>
+        </div>
+    <h2>The GObject Class</h2>
+        <p> With inheritance, all subclasses <b>automatically inherit</b> the
+            behavior and attributes of their parent or superclasses. That means,
+            if we have several classes that have a common method, or common
+            attributes, we can place those methods and attributes in a
+            superclass, and then they can be <b>shared</b> by all the
+            descendent classes.
+        </p>
+        <p> In the Java class libraries, the <b>root class</b> that all other
+            classes are derived from is named <code>Object</code>. Whenever you
+            create a new class, and don't have an <code>extends</code> clause
+            in the class header, your new class <b>implicitly</b> extends the
+            <code>Object</code> class.<br>
+            <img src="images/gobj02.gif" class="inlineCenter" alt="The Object and GObject class hierarchies.">
+            In a similar way, the <code>GObject</code> class is the root class
+            for the visible classes in the ACM Graphics package. It contains the
+            methods and attributes common to all of the visible graphical objects
+            you'll be using in this unit.
+        </p>
+        <p> To illustrate each of these methods, I'll use a simple (and
+            fairly useless) program named <b>GObjectMethods</b> that you'll
+            find in this chapter's code folder.
+        </p>
+    <h3>Creating GObjects</h3>
+        <p> The <code>GObject</code> class itself is <b>abstract</b>. That
+            means that your programs <b>cannot</b> actually create an instance
+            of the <code>GObject</code> class. Instead, your programs will
+            create objects from the <b>concrete subclasses</b> such as
+            <code>GOval</code> or <code>GRect()</code>.
+        </p>
+        <p> Even though you can't create <code>GObject</code> objects,
+            your program <b>may</b> create <code>GObject</code> <b>variables</b>,
+            as long as they refer to an object created using one of the
+            subclass constructors, like this:<br>
+            <img src="images/gobj03.gif" class="inlineCenter" alt="Creating two GObject variables.">
+            When you pass the <code>GObject</code> variables <code>a</code>
+            and <code>b</code> to the <code>GraphicsProgram</code>'s
+            <code>add()</code> method, each individual shape object is
+            placed on the surface of the program's central canvas, like
+            this.
+        </p>
+        <p> When you do this, you can use <b>any</b> of the <code>GObject</code>
+            methods with the variables <code>a</code> and <code>b</code>.
+            You cannot, however, use any methods that are specific to the
+            <code>GRect</code> or <code>GOval</code> classes, even though
+            <code>a</code> refers to a <code>GRect</code> object and
+            <code>b</code> refers to a <code>GOval</code> object.
+        </p>
+        <p> You can also create methods that take <code>GObject</code>
+            parameters, and then pass <b>any kind of</b> ACM graphical
+            object to it like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void center(GObject obj) ...
+        </p>
+    <h3>Drawing Colors</h3>
+        <p> Some graphical object represent closed shapes, like rectangles
+            and ovals, while some are not closed, like lines. Those that
+            are closed can be filled with a solid color. Since not all
+            objects <i>can</i> be filled, though, the <code>GObject</code> class
+            <b>does not</b> have a <code>setFillColor()</code> method.
+        </p>
+        <p> All graphical objects <b>can</b> change the color used to draw
+            their outline, however. You change that by using the <code>setColor()</code>
+            method like this:<br>
+            <img src="images/gobj05.gif" class="inlineCenter" alt="Changing object drawing color.">
+            The ACM graphical shapes do not have <code>setBackground()</code>
+            and <code>setForeground()</code> methods, like the traditional
+            Java component system has. However, you can add an <code>init()</code>
+            method to your <code>GraphicsProgram</code>, and call its
+            <code>setBackground()</code> method to change the background color
+            for the canvas used by your program.
+        </p>
+        <p> The <code>Color</code> class is <b>not</b> one of the ACM graphics
+            classes, so to use the class in your program, you need to remember
+            to add one of these two <code>import</code> statements to your
+            code:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            import java.awt.*; <span class="cmt">// import all AWT classes</span><br>
+            import java.awt.Color;  <span class="cmt">// import the Color class</span>
+        </p>
+    <h3>GObject Coordinates</h3>
+        <p> ACM Graphics objects use the same basic coordinate system that
+            you met earlier, when you learned about applets. Like
+            applets, the <b>origin</b> (position 0, 0) is in the upper left
+            corner. X, or horizontal locations increase as you move to the right,
+            while Y, or vertical locations increase as you move down. (Remember
+            that this is a little different than the Cartesian coordinates
+            you learned in geometry!)<br>
+            <img src="images/coords.gif" class="inlineCenter" alt="The GObject coordinate system.">
+            Each x,y coordinate pair represents a <b>pixel</b> on the
+            screen. However, with ACM graphical objects, this coordinate
+            pair is stored as <code>double</code> values, instead of the
+            <code>int</code>s used in the traditional Java graphics model.
+        </p>
+        <p> ACM <code>GObjects</code> all store their location, width and
+            height as <code>double</code>s. When the different objects are
+            actually drawn on-screen, though, each of these values is
+            automatically converted to an <code>int</code>, because we
+            can't actually paint a line that falls <b>between</b> two pixels
+            on the screen.
+        </p>
+        <p> You normally won't need to worry about this difference at all;
+            the only practical effect is to <b>reduce</b> the amount of work that
+            you have to do when a shape calculation involves <code>double</code>
+            values (which is extremely common when using the <code>Math</code>
+            functions.).
+        </p>
+
+    <h4>Measuring Classes</h4>
+        <p> In a previous chapter, you met the three Java AWT "measuring"
+            classes: <code>Point</code>, <code>Dimension</code> and
+            <code>Rectangle</code>. Each of these three simple classes
+            contains <code>public int</code> fields that are used to
+            measure the size of a graphical component, such as the
+            width and height of the screen.
+        </p>
+        <p> Since ACM <code>GObject</code>s use <code>double</code>
+            coordinates, the ACM graphics package also includes replacements
+            for these three classes. The replacement
+            classes&#8212;<code>GPoint</code>, <code>GDimension</code> and
+            <code>GRectangle</code>&#8212;are identical to the other
+            measuring classes except that their fields are <code>double</code>s
+            not <code>int</code>s.
+        </p>
+    <h3>Location</h3>
+        <p> There are a variety of methods that allow you to change the
+            size and location of an object, as well as those that allow
+            you to retrieve the location or size of an object.
+        </p>
+        <p> There are three methods that will get the 2-dimensional coordinates
+            or location of an object:<br>
+            <img src="images/gobj06.gif" class="inlineCenter" alt="Getting the location of an object.">
+            As you can see, we can get the individual coordinates as
+            <code>double</code>s, or <b>both</b> together as a <code>GPoint</code>.
+            To display the <code>GPoint</code>, the example here just uses
+            its <code>toString()</code> method.
+        </p>
+        <p> There are four methods to <b>change</b> the location of an
+            object in the two-dimensional plane:<br>
+            <img src="images/gobj09.gif" class="inlineCenter" alt="Changing the location.">
+            Here's what the methods do:
+            <img src="images/gobj08.gif" class="right" alt="After moving the shapes.">
+        </p>
+        <ul>
+            <li>The <code>setLocation(x, y)</code> and
+                <code>setLocation(p)</code> methods both move the object to the
+                absolute position specified by their <code>double</code> or
+                <code>GPoint</code> parameters. In the example here,
+                <code>a.setLocation(pt)</code> moves the <code>GObject a</code>
+                (the rectangle), down so that it has the same origin as the
+                oval. The line <code>b.setLocation(0, 0);</code> moves the
+                oval (<code>b</code>) to the upper-left corner.
+            </li>
+
+            <li>The <code>move()</code> and <code>movePolar()</code> methods
+                use the object's current position when calculating its final
+                resting place. In the example here, <code>b.move(50, 50);</code>
+                adds 50 to both the <code>x</code> and <code>y</code> fields
+                in the oval object, <code>b</code>. The line
+                <code>a.movePolar(100, 120);</code> moves the rectangle
+                100 units toward the origin, which is (roughly) 120 degrees.
+            </li>
+        </ul>
+        <p>Once these lines have run, the objects should be located on
+            the canvas in this position. (Note that the location printed on
+            the canvas is for the original location, not the updated location.)
+        </p>
+    <h4>Z Order</h4>
+        <p> There are also four methods that allow you to change the
+            location of the object in the <b>depth</b> or "Z" dimension.
+            This is known as the object's <b>stacking order</b>.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            obj.sendToFront(); <span class="cmt">// put in front of all other objects</span><br>
+            obj.sendToBack();  <span class="cmt">// put behind all other objects</span><br>
+            obj.sendForward(); <span class="cmt">// move one layer closer to user</span><br>
+            obj.sendBackward(); <span class="cmt">// move one layer further from user</span>
+        </p>
+        <p> Obviously,
+            with a 2-dimensional display, you can't actually change the
+            depth of any object. What you <b>can</b> adjust, however, is
+            the object's <b>apparent</b> location, by changing the overlapping
+            of different objects as they are drawn. Those objects that are
+            "closer" to the viewer are drawn "on top" of those that appear
+            further away.
+        </p>
+        <p> Here's a picture from the ACM JTF Tutorial, showing what would
+            happen if you used the statement <code>oval.sendBackward();</code>
+            to the picture below:<br>
+            <img src="images/gobj10.gif" class="inlineCenter" alt="Changing the stacking order.">
+        </p>
+
+    <h3>Shape Size</h3>
+        <p> Finally, there are four methods that allow you to obtain the
+            size of an object:<br>
+            <img src="images/gobj11.gif" class="inlineCenter" alt="Object size.">
+            Here's how these methods work:
+        </p>
+        <ul>
+            <li>The <code>getHeight()</code> and <code>getWidth()</code>
+                methods return the height and width of the object as
+                a <code>double</code>.
+            </li>
+            <li>The <code>getSize()</code> method returns <b>both</b>
+                the width and height, wrapped up in a <code>GDimension</code>
+                object.
+            </li>
+            <li>The <code>getBounds()</code> method returns the size of
+                the object, <b>as well as its location</b>, all wrapped up
+                in a <code>GRectangle</code> object.
+            </li>
+        </ul>
+    <h3>Location at Work</h3>
+        <p> In the <i>MyFirstAcmGuiApp</i> program, we positioned the
+            <code>GLabel</code> object, <code>helloLabel</code>, by supplying
+            two additional arguments representing the horizontal, or <b>x</b>
+            location (measured from the left-hand side of the program's
+            window), and the vertical, or <b>y</b> location, measured
+            from the top of the window.
+        </p>
+        <p> Most of the components in the <code>acm.graphics</code> package
+            use similar x-y coordinates to position themselves, using the
+            upper-left corner of the component as the <b>origin</b>. The
+            <code>GLabel</code> class acts a little differently. Instead
+            of using the upper-left corner for the origin, <code>GLabel</code>
+            uses the left-hand side of the text, and the <b>baseline</b> as
+            shown in this figure:<br>
+            <img src="images/acmg18.gif" alt="The origin of a GLabel obejct." class='inlineCenter'>
+            You can find out if any letters in your label are "hanging down" (like
+            a lowercase p, q, or j would do), by calling the method
+            <code>getDescent()</code>. Similarly, you can find the height of the tallest
+            character <b>above</b> the baseline using the <code>getAscent()</code>
+            method.
+        </p>
+        <h4>Setting the Position</h4>
+        <p> You've already seen how you can supply the x,y parameters when
+            constructing the object, or, when calling the <code>add()</code>
+            method. We could have done this as well:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            GLabel helloLabel = new GLabel("Hello, I love you!");<br>
+            add(helloLabel);<br>
+            helloLabel.setLocation(25, 25);
+        </p>
+        <p> All three of these techniques have the effect of changing the
+            x,y values stored in the object <code>helloLabel</code>. When the
+            <b>state</b> of the object changes, its display on screen changes
+            to reflect its new state.
+        </p>
+    <h3>Centering Objects</h3>
+        <p> <img src="images/acmg20.gif" class="right" alt="Centering the ACM label.">
+            One thing you may want to do, is to <b>center</b> a label or other
+            graphical component. This is easy to do in a console application,
+            because you know the length of each <code>String</code>, and
+            all you need is a loop and some simple logic.
+        </p>
+        <p> With graphical applications, though, it's much, much more
+            difficult. In the <code>MyFirstJavaApplet</code> program we had
+            to repeatedly adjust the x,y values used by <code>drawString()</code>
+            to get the text to appear in the correct location. Then, when we
+            changed the font size, everything got messed up again.
+        </p>
+        <p> The good news is, that with graphical <b>objects</b>, centering
+            and other positioning is as simple conceptually and arithmetically,
+            as it was with console applications. All you need to do is:
+        </p>
+        <ul>
+            <li>Divide the width and height of the program window in half. This
+                gives you the center of the screen.
+            </li>
+            <li>Divide the width of the <code>GLabel</code> object in
+                half as well. Subtract half the label width from the center point for
+                the x argument. The y argument is a little harder. What seems
+                to work best visually is to add one quarter of the label
+                height to the center point for the y argument. Note that this
+                means the y argument will always be below the window center point,
+                because the label's origin is at the baseline, not the upper-left
+                corner of the text.
+            </li>
+        </ul>
+        <p>
+            To find the width or height of the program window or of the
+            <code>helloLabel</code> variable, use the <code>getWidth()</code>
+            and <code>getHeight()</code> methods. For the width of the program
+            window, you'll leave the receiver portion empty, or use the
+            keyword <code>this</code>.
+        </p>
+        <p> Here's an the example that centers the phrase horizontally and
+            vertically as shown in the screenshot at the beginning
+            of this section.
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            double width = this.getWidth(); <span class="cmt">// or skip the this</span><br>
+            double height = getHeight();<br>
+            double widthLbl = helloLabel.getWidth();<br>
+            double heightLbl = helloLabel.getHeight();<br>
+            <br>
+            helloLabel.setLocation(width/2 - widthLbl/2, height/2 + heightLbl/4);
+        </p>
+    <h2>Drawing Lines with GLine</h2>
+        <p> If you look at the screenshot from the last section, you'll see
+            that I've also drawn a few lines so you can see the visual effect
+            of centering your text. Rather than using the <code>drawLine()</code>
+            method, though, I've used the ACM <code>GLine</code> class.
+        </p>
+        <p> To construct a <code>GLine</code> object, you pass in four
+            values that represent the <b>end-points</b> of the line segment:
+            <code>x1</code>, <code>y1</code> for the start of the line,
+            and <code>x2</code>, <code>y2</code> for the third and fourth
+            arguments, and the position where the line ends.
+        </p>
+        <p> Given the variables defined in the previous section, here
+            are the instructions to create a <code>GLine</code> object
+            named <code>topLine</code> and add it to the program:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            GLine topLine = <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;new GLine(&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;height/2 - heightLbl/2,&nbsp;&nbsp;&nbsp;<span class="cmt">// x1, y1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width,
+height/2 - heightLbl/2);&nbsp;&nbsp;<span class="cmt">// x2, y2</span><br>
+            add(topLine);
+        </p>
+        <p> Note that <code>x1</code> is <b>0</b>, the left-hand side of the screen,
+            and <code>x2</code> is <code>width</code>, which is the right-hand side
+            of the screen. Both <code>y1</code> and <code>y2</code> have the
+            same values, calculated by finding the vertical center of the screen
+            (<code>height/2</code>) and then subtracting half the height of the
+            <code>GLabel</code> object (<code>heightLbl/2</code>). Because both
+            y parameters are the same, the result is a horizontal line.
+        </p>
+        <p> The horizontal and vertial center lines, and the horizontal line
+            falling below the text were all created and placed using similar
+            calculations.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Meet the GObject Summary
+        </p>
+        <ul>
+            <li>The ACM graphical shapes belong to a <b>class
+                hierarchy</b>&mdash;a family of classes related to each other
+                through inheritance, and sharing attributes and methods.
+            </li>
+            <li>The <b>root class</b> (ultimate <b>superclass</b>)
+                for all of the ACM graphical shapes
+                is named <code>GObject</code> and it contains methods that
+                are <b>shared</b> among all of the different ACM
+                components.
+            </li>
+            <li> The <code>GObject</code> class is <b>abstract</b>. You
+                can create <code>GObject</code> variables, but need to
+                attach those variables to <b>concrete subclass</b> objects like
+                <code>GRect</code> or <code>GOval</code>.
+            </li>
+            <li> Use the <code>setColor()</code> method to change the
+                color of the outline used to draw individual shapes.
+            </li>
+            <li> ACM graphical objects use <code>double</code> coordinates
+                internally, even though the coordinates are mapped to
+                integers when drawn on the screen. Most of the objects
+                (with the exception of <code>GLabel</code>) map they
+                <code>x</code>,<code>y</code> coordinate to the upper-left
+                corner of the component.
+            </li>
+            <li> ACM graphical objects use the "helper" classes <code>GPoint</code>,
+                <code>GDimension</code> and <code>GRectangle</code> to provide
+                measuring services for individual classes. These work like the
+                AWT measuring classes, but use <code>double</code> rather than
+                <code>int</code> coordinates.
+            </li>
+            <li> Use the <code>getX()</code>, <code>getY()</code> or
+                <code>getLocation()</code> methods to retrieve the position
+                of a component. Use <code>setLocation()</code>, <code>move()</code>,
+                or <code>movePolar()</code> to change the location.
+            </li>
+            <li> You can change the <b>apparent Z-order</b> of a component
+                using the <code>sendToFront()</code>, <code>sendToBack()</code>,
+                <code>sendForward()</code> and <code>sendBackward()</code>
+                methods.
+            </li>
+            <li> You can <b>obtain the size</b> of an object using <code>getWidth()</code>,
+                <code>getHeight()</code>, <code>getSize()</code> and <code>getBounds()</code>.
+            </li>
+            <li> You can use other methods to <b>change the location</b> of
+                the label as your program runs, and <b>determine the height and
+                width</b> of the text label itself. Using this information,
+                you can easily <b>center</b> your text on the screen.
+            </li>
+            <li> The <code>GLine</code> class is used in place of the
+                <code>drawLine()</code> method in the <code>Graphics</code>
+                class.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

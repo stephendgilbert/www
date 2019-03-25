@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>11.4&mdash;More Array Topics</title>
+    <style type="text/css">
+        li div[class=code] {
+            font-size:1.2em;
+            margin:1em;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner04">
+        <img id='lessonLogo' src='../images/e.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 11.4</p>
+        <p id='lessonTitle'>More Array Topics</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/shortcut.gif" class="right" alt="Command-line arguments in a shortcut.">
+            <b><span class="cap">N</span>ow, let's look at three</b>
+            additional array topics. In this section we want to
+            learn:
+        </p>
+        <ul>
+            <li>how to process the array of <b>command-line arguments</b>
+                that are passed to every application.
+            </li>
+            <li>how to use arrays to write methods that take a <b>variable
+                number of arguments</b>.
+            </li>
+            <li>how to convert between 2D arrays and 1D arrays which
+                can become important in some graphics, video and sound
+                applications.
+            </li>
+        </ul>
+        <p> Let's start with <b>command-line</b> arguments, which allow you
+            to customize the way a program works, either from the shell
+            window (thus the name, <i>command-line</i> arguments), or from
+            a GUI shortcut if you are working in Windows or on the
+            Mac. In the picture shown here, for instance, the Windows
+            Eclipse shortcut has been modified to change the way
+            that the Eclipse IDE uses memory when it runs.
+        </p>
+    <h2>Command-line Arguments</h2>
+        <p> One of the most common uses of <code>String</code> arrays
+            is when you create an application and you need to pass information
+            into that application when you run it.
+            With applications, both GUI <i>and</i> console-mode, arguments
+            are passed to your program via the operating system shell
+            <b><u>command line</u></b>,
+            similar to those you supply when you use <b>javac</b> to compile
+            your Java code from the terminal window.
+        </p>
+        <p> When you manually compile your code, you type in the word
+            <b><i>javac</i></b>, and then follow that with the name
+            of the program you want to compile, like this:
+            <img src="images/f11.gif" class="inline" alt="Compiling from the command line.">
+            The program file name you supply, <b>VoteCounter.java</b> in the screenshot
+            shown here, is an example of a command line argument.
+        </p>
+    <h3>Processing the Command Line</h3>
+        <p> As you'll recall, when a Java application begins, it starts with the
+            <code>main()</code> method. The <code>main()</code> method is passed
+            a single argument from the operating system, an array of
+            <code>String</code>, traditionally called <code>args</code>.
+            (Of course, you <i>can</i> name it anything you like.)
+        </p>
+        <p> Inside your <code>main()</code> method, you can check the field
+            <code>args.length</code> to see how many arguments were passed.
+            If no arguments were passed to your application, then
+            <code>args.length</code> will be 0.
+        </p>
+        <p> Since <code>args.length</code> tells you how many arguments there are, the
+            situation practically <i><b>begs</b></i> for a <code>for</code> loop,
+            right? Here's a simple console mode application, <b>Args.java</b>,
+            that you can use to see how this works. You'll find it in this chapter's
+            code folder.<br>
+            <img src='images/command-line.gif' class='inlineCenter' alt='The Args application.'>
+            Since <b>Args</b> is a console mode application, it doesn't need to
+            extend anything, it just needs to have a <code>main()</code>
+            method. Inside the <code>main()</code> method, the program simply loops
+            through the array (<code>args</code>) and prints each command
+            line argument to the console.
+        </p>
+
+        <p> Here's what the program looks like as it runs from the Windows
+            console or "shell" window:<br>
+            <img src="images/f12.gif" class="inlineCenter" alt="Running the Args program from the command line.">
+            As you can see, Java separates each word into a separate element of the
+            <code>args</code> array: the first word becomes element 0, the second
+            becomes element 1, and so on. When you enclose several words in quotes,
+            like "Three Four" in the example, the entire phrase is treated as a single
+            element of the array.
+        </p>
+    <h4>Running From DrJava</h4>
+        <p> You can also run a program that processes command-line arguments
+            from within the DrJava by using the Interactions Pane, instead of
+            the <b>Run</b> button. To run your program, just type the same
+            command you would type into a console window,
+            like this:<br>
+            <img src='images/drjava.gif' class='inlineCenter' alt='Command-line arguments in DrJava.'>
+            In the example here, I've typed in exactly the same arguments
+            that I used when running from the console window. When you
+            run the program in the DrJava IDE, the output appears in the
+            Interactions Pane as shown here, as well as in the Console
+            Pane.
+        </p>
+        <div class='alert'>
+        <p> <b>Remember:</b> command-line arguments are passed as
+            <code>Strings</code>, not numbers. That means that
+            if you want to process <b>numbers</b>, you'll need to <i>convert</i>
+            the numbers, using a method like <code>Integer.parseInt()</code>.
+        </p>
+        </div>
+    <h2>Variable-Length Parameter Lists</h2>
+        <p> Variable-length parameter lists are a feature introduced with Java 5
+            that allows you to create methods that take, as the name
+            suggests, a variable number of parameters. Suppose, for
+            instance, that you wrote a method that returned the
+            maximum of two doubles, like this:<br>
+            <img src='images/max-v1.gif' class='inlineCenter' alt='A 2-parameter version of max().'>
+            This is fine for two numbers, but when you need to find
+            the maximum of three numbers, or four, you'll need to
+            write <b>overloaded methods for each of
+            those cases</b>, like this:<br>
+            <img src='images/max-v2.gif' class='inlineCenter' alt='Several overloaded versions of max().'>
+            Of course, the code in each method is going to be
+            different, to handle the differing number of arguments.
+            Variable-length parameter-lists allow you to write a
+            <b>single</b> method that can be used in all of those cases.
+            Here's how it works.
+        </p>
+    <h3>Parameter Definition</h3>
+        <p> A variable-length formal parameter is really a way of
+            defining a special kind of <b>array</b> parameter. When defining
+            the formal parameter, <b>use an ellipsis</b> (three dots) <i>instead</i>
+            of the square brackets you'd use for a normal array declaration.
+        </p>
+        <p> Here's an example using the <code>max()</code> method:
+            <img src='images/max-v3.gif' class='inlineCenter' alt='Variable parameter version of max().'>
+            Inside the <code>max()</code> method, you treat <code>nums</code>
+            as a regular array of double. That means that you can use the
+            standard array-processing algorithm for finding the largest
+            value, and then return that, as shown here.
+        </p>
+    <h4>Using the Method</h4>
+        <p> The big difference between a variable-length parameter method,
+            and one that takes a regular array as a formal parameter, is
+            that, for the variable-length variety, Java will create the
+            array <b>for</b> you; with the "regular" version, it's up to
+            the caller to create the array before calling the method.
+            <img src='images/max-v4.gif' class='inlineCenter' alt='Calling the variable parameter version of max().'>
+        </p>
+        <p> Constructors can also be
+            written to accept variable numbers of parameters. You can
+            combine a variable-length parameter with regular parameters,
+            but the variable-length parameter must come last. You <b>can't</b>
+            have more than one variable-length parameter per method.
+        </p>
+    <h2>2D to 1D Arrays</h2>
+        <p> <b>In <i>Section 11.5&mdash;Image Processing</i></b>, you'll learn how to
+            do <b>image processing</b> with 2D arrays, using the <code>getPixelArray()</code>
+            method of the <code>GImage</code> class. The 2D array that you get back has
+            one <code>int</code> for every pixel in the original picture, with the
+            red, green, blue and alpha values for the pixel packed into that integer.
+        </p>
+        <p> This 2D representation of an image is both intuitive (because it's easy to
+            picture the position of each pixel in the actual physical image), and
+            easy to work with. However, many of the <b>native image processing</b>
+            classes in the Java API require a 1D array of <code>int</code> instead.
+        </p>
+        <p> This is not a problem in the C or C++ languages (which much of the
+            underlying Java code was written in), since in those languages the
+            storage for 1D and 2D arrays are identical; the only difference between
+            them is the notation used to access the individual elements.
+        </p>
+        <p> To solve this problem in Java, you have to know how to convert between
+            1D and 2D arrays. You <b>can't</b> do this with casting; it always involves
+            a loop. Here's how to do it.
+        </p>
+    <h3>2D to 1D array</h3>
+        <p> Assuming that you have a <b>rectangular array</b> (that is, all rows
+            have the same number of columns), you can convert it to a 1D array
+            using this code fragment:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            <span class='cmt'>// Assume that twoD is the 2D array variable to convert</span><br>
+            int cols = twoD[0].length;<br>
+            int rows = twoD.length;<br>
+            int[] oneD = new int[rows * cols]; <span class='cmt'>// allocate space</span><br>
+            int pos = 0;<br>
+            for (int[] a : twoD) <span class='cmt'>// enhanced for loop</span><br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.arraycopy(a, 0, oneD, pos, cols);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;pos += cols;<br>
+            }
+        </p>
+        <p> Here's what that looks like visually:<br>
+            <img src='images/2D-1D.png' class='inlineCenter' alt='Convert 2D to 1D array'>
+            Notice that the first row, is followed by the second, which is followed
+            by the third.
+        </p>
+        <p> You might wonder, though, how you can find the equivalent of
+            <code>twoD[1][1]</code>, now that the elements have been moved into a
+            single, <b>flattened 1D array</b>. That's pretty easy.
+        </p>
+        <p> The formula for is simply: <code>columns * row + col</code>. So, in our case,
+            <code>columns</code> (that is, then width of each row in the rectangular
+            2D array) is <code>2</code>, so the equivalent element can be found at
+            <code>oneD[2 * 1 + 1]</code>. (If you check yourself, you'll see that
+            in both cases, that is the value <code>7</code> in the illustration.)
+        </p>
+    <h4>1D to 2D</h4>
+        <p> To go the other direction, you have to know how many columns go into
+            each array. Here's a function that takes a 1D array, along with the
+            width of each column, and returns a 2D version of the array.
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            <span class='cmt'>// Assumes that length is evenly divided by width</span><br>
+            int[][] oneDTo2D(int[] oneD, int width)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (oneD.length % width != 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new IllegalArgumentException("explain");<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int[][] result = new int[oneD.length / width][width];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i &lt; result.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.arraycopy(oneD, i * width, result[i], 0, width);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+            }
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            More Array Topics Summary
+        </p>
+        <ul>
+            <li> <b>Command-line arguments</b> are passed to your program by
+                the operating system (<i>usually by the command-processor, or "shell"</i>)
+                when it is launched. You can retrieve these arguments by
+                processing the <b>array of <code>String</code></b> supplied to
+                the application's <code>main()</code> method.
+            </li>
+            <li> <b>Each word</b> passed on the command line <b>becomes an element</b> in
+                the command-line arguments array.
+            </li>
+            <li> Normally, <b>the operating system will "pre-process" the command-line</b>
+                strings before they get to your program. In both Unix and Windows,
+                for instance, enclosing a pair of strings in double-quotes
+                delivers it to your application as a single element of the
+                command-line array.
+            </li>
+            <li> Command-line arguments are passed to your programs as
+                <code>String</code> elements, so any <b>numeric values will have to
+                be parsed</b> as part of your initial processing.
+            </li>
+            <li> A method can accept a <b>variable number of parameters</b>,
+                provided all of the parameters are the same type. The variable
+                parameter must be the last parameter in the parameter list. To
+                declare a <b>variable formal parameter</b>, simply add an
+                <b>ellipsis</b> (three dots) after the variable type
+            </li>
+            <li> Inside your method, you treat a variable parameter the same
+                way you would treat an array parameter. When you <b>call</b>
+                the method, though, you pass individual values for each
+                element, <b>not an array</b>.
+            </li>
+            <li> To convert a 2D rectangular array to a <b>flattened 1D array</b>,
+                create an empty array and copy each row into the new array. To
+                turn a flattened 1D array back into a 2D array, divide its length
+                by the number of columns in each row, create a new 2D array with
+                that number of rows and columns, and then copy each portion
+                of the original array into a new row.
+            </li>
+            <li> To convert a 2D array row, column subscript pair <b>into its
+                equivalent 1D flattened single subscript</b>, multiply the 2D row
+                subscript by the width of a single column, and then add the
+                2D column subscript.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

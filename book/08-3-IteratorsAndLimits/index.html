@@ -1,0 +1,572 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>8.3&mdash;Iterators and Limits</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 8.3</p>
+        <p id='lessonTitle'>Iterators and Limits</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">U</span>p to now we've written
+            counter-controlled</b>, sentinel-controlled and
+            flag-controlled loops. There are two last categories of
+            loops you'll need to know how to implement: the <b>data-bound</b>
+            loop and the <b>limit-bound</b> loop.
+        </p>
+        <p> <img src='images/file-cabinet.png' class='right' alt='A file cabinet.'>
+            With a data-bound loop, instead of looking for a specific
+            value, like we do with a sentinel, or a computed value,
+            like we do with limit loops, we just keep going until
+            there is no more data left.
+        </p>
+        <p> Well, how do we tell if there is any more data left? For
+            that, we rely on the operating system to send us a specific
+            signal, traditionally called <b>EOF</b>. EOF stands for
+            "end of file"; an <b>EOF-controlled</b> loop is just another
+            name for a <b>data-bound</b> loop.
+        </p>
+    <h2>Introducing Iterators</h2>
+        <p> <img src="images/iterator2.gif" class="right" alt="Different iterators.">
+            To implement a data-bound loop, you'll usually use an
+            <b>iterator</b> of some sort. An <b>iterator</b> is an object
+            that allows you to apply some operation to all of the members
+            of a group of related variables or objects, using a loop.
+        </p>
+        <p> Iterators can be used to skip from cell to cell in a biological
+            simulation, or to display an "overhead radar" of all of the
+            objects in a game of Doom (as the illustration on the right
+            shows.) As one textbook put it: "iterators provide a consistent
+            and simple mechanism for systematically processing a group of
+            items", no matter what kind of things those items might be,
+            or <b>how those items are stored</b>.
+        </p>
+        <p> Such groups of related items or variables are known as
+            <b><i>collections</i></b>, and Java has several different
+            types. The <code>String</code> class is a collection of
+            characters. But, in another sense, we can treat a
+            <code>String</code> as a collection of <b>tokens</b>. Tokens
+            are just meaningful sequences of characters.
+        </p>
+        <p> In the next chapter, we'll take a look at Java's <b>array</b>
+            collection type, and, then later, we'll look at
+            the <b>ArrayList</b> class. If you go on in Computer Science
+            and take a <i>Data Structures</i> course, you'll learn
+            about dozens of different kinds of collections and
+            their associated iterators.
+        </p>
+        <p> To get started for right now, though, let's take another look
+            at an iterator object you've already met: the
+            <code>java.util.Scanner</code> class.
+        </p>
+    <h3>The Scanner Class</h3>
+        <p> You first met the <code>Scanner</code> class back in
+            <i>Section 3.1&mdash;Interactive Programs</i>,
+            where you saw how it could be used to read input in
+            a "traditional" Java console program.
+            The <code>Scanner</code> class is actually much more versatile
+            than I've let on. Using a <code>Scanner</code> as an
+            iterator allows us to:
+        </p>
+        <ul>
+            <li>process each individual word in a line of text</li>
+            <li>read and process each line of text in a file</li>
+            <li>read and process tokens from a network stream, such as
+                a Web page or FTP connection
+            </li>
+        </ul>
+        <p> In the last chapter, (<i>Section 7.1&mdash;Logical Operators</i>), you
+            saw how you could use the logical <b>AND</b> and <b>NOT</b>
+            operators to count the number of words in a <code>String</code>.
+            In that section, you had to carefully monitor each character
+            to see if you were entering or leaving a word, and then act
+            accordingly.
+        </p>
+        <p> The iterators provided by the <code>Scanner</code> class
+            will do all of that for you automatically.
+        </p>
+    <h3>Reading Tokens</h3>
+        <p> To read a <b>token</b> using the <code>Scanner</code> class,
+            you have to do three things:
+        </p>
+        <ol>
+            <li class="d">Construct a <code>Scanner</code> object and
+                "hook it up" with the <b>source</b> of the data.
+            </li>
+            <li class="d">Write a <code>while</code> loop that continues
+                until you are out of data. You do that by calling the
+                <code>Scanner hasNext()</code> method. If you are at
+                end-of-input (or EOF), then the method will return
+                <code>false</code>; otherwise it returns <code>true</code>.
+            </li>
+            <li class="d">Read the next word or <i>token</i> from the
+                input. You do that by calling the method <code>next()</code>
+                which <b>returns a token, <span class='ry'>not</span>
+                a line of text</b>.
+            </li>
+        </ol>
+        <p> The <code>next()</code> method returns its token as a
+            <code>String</code> with all of the <i>delimiters</i>
+            (or <i>token-separators</i>) removed. The "stock" version
+            of the <code>Scanner</code> uses whitespace as the delimiter,
+            so the token you get back will have both leading and
+            trailing whitespace removed.
+        </p>
+    <h3>Creating Scanner Objects</h3>
+        <p> Here are a few snippets that show you how to connect a
+            <code>Scanner</code> object with different kinds of
+            data sources. You already saw how to connect to the
+            standard Java system console (<code>System.in</code>) like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Scanner cin = new Scanner(System.in);
+        </p>
+        <p> To "read" from a <code>String</code> token-by-token,
+            either of these will work:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Scanner sin1 = new Scanner("A string literal.");<br>
+            Scanner sin2 = new Scanner(str); <span class="cmt">// a String variable</span>
+        </p>
+        <p> To read from a file on disk, you first need to <b>open</b> the file.
+            Java has a wealth of classes that allow you to do this, but,
+            unfortunately, all of them require you to explicitly handle
+            various error conditions, such a missing file.
+        </p>
+        <p> You'll learn how to use Java's standard file-processing classes
+            later in the course. For right now, though, we'll just add:
+        </p>
+        <ol>
+            <li>another <code>import</code> statement to the top of
+                our program: <code>import java.io.File;</code>, and then...
+            </li>
+            <li>a bit of "<b>magic</b>" to our program's <code>main()</code>
+                method, adding this line to heading you've already memorized:
+            <p class="code" style='font-size:1.25em;'>
+                public static void main(String[] args) <b class='ry'>throws Exception</b>
+            </p>
+            </li>
+        </ol>
+        <p> Once you've added the <code>import java.io.File;</code> and
+            the <code>throws Exception</code> to the end of
+            the <code>main()</code> method header, then here's how you'd open the
+            text file "moby.txt" containing the text of Moby Dick:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Scanner fin = new Scanner(new File("moby.txt"));
+        </p>
+        <p> I named this <code>Scanner</code> variable <code>fin</code> to
+            remind me that it's a <b>file</b> input, not a <b>console</b>
+            input.
+        </p>
+    <h3>Scanners in ACM Programs</h3>
+        <p> Although we haven't used the <code>Scanner</code> class in our
+            ACM console programs, the ACM libraries have several methods that
+            allow you to hook up a <code>Scanner</code> to a network URL or
+            to a data file, as well as reading from the console window itself.
+        </p>
+        <p> To create a <code>Scanner</code> that reads from the ACM
+            <code>ConsoleProgram</code> window, (instead of from the
+            standard input stream), you can add this line to your program:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Scanner cin = new Scanner(getReader());
+        </p>
+        <p> To create a <code>Scanner</code> that reads from a data file,
+            you can import the <code>acm.util</code> package and then
+            use the <code>MediaTools.openDataFile()</code> method, like
+            this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            Scanner fin = new Scanner(MediaTools.openDataFile("moby.txt"));
+        </p>
+        <p> The advantage of the using the <code>MediaTools</code> method,
+            instead of the <code>File</code> constructor, is that you don't
+            need to add <code>throws Exception</code> to your <code>run()</code>
+            method. (In fact, you <b>can't</b>; your code won't compile if you
+            do.
+        </p>
+        <p> Another advantage is that if the <code>String</code> passed to
+            <code>openDataFile()</code> starts with <b>http://</b>, then
+            the method will try to open that Web page instead of looking
+            for a file of that name.
+        </p>
+
+    <h2>Hands-On: The FileStats Example</h2>
+        <p> To see how an iterator works, let's build a
+            program that asks the user for the name of the file to open,
+            and then uses the <code>Scanner</code> class to loop through
+            the file and count them the words, lines and characters.
+        </p>
+        <p> Start by creating a console program named <b>FileStats</b>.
+            Place it inside this chapter's code folder, where you'll
+            find the text file <b>moby.txt</b>.
+            Here's what the program should look like as it runs:<br>
+            <img src="images/fs01.gif" class="inlineCenter" alt="Running FileStats.java.">
+            Here are the steps you'll need to follow to complete the
+            program.
+        </p>
+    <h3>Getting Started</h3>
+        <p> Our program needs to use the <code>Scanner</code> class, which is
+            located in the <code>java.util</code> package and the
+            <code>File</code> class which is part of the
+            <code>java.io</code> package, which we'll need to open
+            the file.
+        </p>
+        <p> Step 1 is to <code>import</code> those two packages,
+            like this:<br>
+            <img src="images/fs02.gif" class="inlineCenter" alt="FileStats imports.">
+        </p>
+    <h3>Opening the File</h3>
+        <p> Here's the code from the program that opens the file:<br>
+            <img src="images/fs03.gif" class="inlineCenter" alt="FileStats open the file.">
+            The code shown here:
+        </p>
+        <ol>
+            <li class="d">first adds the clause <code>throws Exception</code>
+                to the end of the <code>main()</code> method heading. Without
+                this line, we won't be able to open the file without
+                explicitly adding code to deal with errors.
+            </li>
+            <li class="d">Next, the program creates a "regular" <code>Scanner</code>
+                connected to the console, and then asks the user for the name of
+                the file to open. The "keyboard" <code>Scanner</code> is used
+                to read the response from the user, which is stored in the
+                <code>String</code> variable named <code>filename</code>
+            </li>
+            <li class="d">Finally, the method creates <b>another</b>
+                <code>Scanner</code> object to process (or <i>iterate over</i>)
+                the contents of file. As I did earlier, I named this object
+                <code>fin</code>, but <code>fItr</code> (for file iterator)
+                is also popular. To construct the <code>Scanner</code> object,
+                I need to call the <code>File</code> constructor with the
+                name of the file to open.
+            </li>
+        </ol>
+    <h3>Reading the File</h3>
+        <p> We'll use <b>this</b> iterator (<code>fin</code>) to
+            process the data file <b>a line at a time</b>. Here's the code that
+            does that<br>
+            <img src="images/fs04.gif" class="inlineCenter" alt="FileStats read the file.">
+            Here's how it works:
+        </p>
+        <ol>
+            <li class="d">Before we start reading the file, we need to
+            create and initialize <b>counter variables</b> to hold the
+            number of lines, words and characters that we encounter.
+            </li>
+            <li class="d">Because this is a <b>data-bound</b> loop, we'll
+                keep going as long as there are more lines in the file.
+                Do that by using the iterator's <code>hasMoreLines()</code>
+                method.
+            </li>
+            <li class="d">Inside the loop, we actually <b>read</b> the
+                line by using the iterator's <code>nextLine()</code>
+                method and storing the result in a <code>String</code>
+                variable.
+            </li>
+            <li class="d">Once we've read a line of text we can update
+                our word and character counters.
+            </li>
+        </ol>
+        <div class='alert'>
+        <p> One thing you should note
+            is that <code>nextLine()</code> does <b>not</b> save the
+            newline characters at the end of each line of text, so
+            the number of characters we'll report will not include those.
+            If it is important to have an accurate count, you can call
+            <code>System.getProperty("line.separator")</code>. This will return
+            a <code>String</code> containing the <i>end-of-line</i> character
+            for the platform you are running on. Append this to each line
+            as it is read and you'll have an accurate count.
+        </p>
+        </div>
+    <h3>Counting Words</h3>
+        <p> To count the words in the file, we'll create a <b>third</b>
+            <code>Scanner</code> object, and use it to iterate over the
+            line of text that we retrieved from the file. Here's what
+            that code looks like:<br>
+            <img src="images/fs05.gif" class="inlineCenter" alt="FileStats read the words.">
+            Here's how it works:
+        </p>
+        <ol>
+            <li class="d">The new <code>Scanner</code> object, <code>wordItr</code>,
+                is constructed by passing the line of text read from the
+                file. <b>Notice that this iterator will be iterating over a
+                <code>String</code> instead of a file</b>.
+                That's the beauty of iterators: it doesn't
+                matter what you're looping over, the methods are the same.
+            </li>
+            <li class="d">Because we want to read token-by-token, we use
+                another data-bound <code>while</code> loop, using the
+                <code>has.next()</code> (instead of <code>hasNextLine()</code>)
+                iterator method.
+            </li>
+            <li class="d">Inside the loop, we read the next token (using
+                the <code>next()</code> method. We aren't going to further
+                examine it, so we don't bother saving it in a variable;
+                instead, we just count the word.
+            </li>
+            <li class="d">Finally, after the loop, we have a regular
+                formatted print statement displaying the statistics
+                on our file.
+            </li>
+        </ol>
+    <h3>When Things Go Wrong</h3>
+        <p> What happens if you type in a name for a file and your
+            program can't find the file you've requested? Unfortunately,
+            the error message that is printed on the console is not
+            really fit for "regular users":<br>
+            <img src="images/fs06.gif" class="inlineCenter" alt="Bad file name.">
+        </p>
+        <p> You can anticipate this problem, and make your program look
+            a little more professional, by first checking to see
+            if the file you want to open actually exists. You can do
+            that by first creating a <code>File</code> object using the
+            filename retrieved from the user, and then using its
+            <code>exists()</code> function, to make sure the filename
+            is valid. If it isn't valid, then you can use a <code>return</code>
+            statement like this:<br>
+            <img src="images/fs07.gif" class="inlineCenter" alt="Checking for a file.">
+            Once you know that the filename is valid, you can pass the
+            <code>File</code> object to the <code>Scanner</code> constructor.
+        </p>
+        <div class='alert'>
+        <p>If the file isn't found, I simply exit the program
+            by using a plain <code>return</code> statement. Since the
+            <code>main()</code> procedure is <b>not a function</b> it
+            doesn't <b>need</b> a <code>return</code> statement. If
+            you want to leave a procedure early, though, you can always
+            use a plain <code>return</code> with no expression following it.
+        </p>
+        </div>
+    <h3>Closing the File</h3>
+        <p> In this program, we open a disk file and never close it.
+            That's a really bad habit to get into. We can close the
+            file by closing the <code>Scanner</code> object we used
+            to read the file in the first place.
+        </p>
+        <p> Add this line to the end of your <code>main()</code> method
+            and all will be well:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            fin.close();
+        </p>
+        <p> Note that you <b>don't</b> need to close the <code>Scanner</code>s
+            used to read from <code>System.in</code> or from the individual
+            lines of text.
+        </p>
+        <div class='exercise'>
+        <h5>Try It Yourself</h5>
+        <p> Go ahead and complete <b>FileStats</b> and then
+            use it to read the stats on itself (FileStats.java).
+        </p>
+        </div>
+    <h3>More on Tokens</h3>
+        <p> Once each line has been extracted, the <b>FileStats</b> program uses a
+            <b>second</b> <code>Scanner</code> designed to break each line into its
+            individual parts, (called <i>tokens</i>). A token is just a "meaningful
+            chunk of text". Words are tokens, as are the operators, operands, and keywords
+            in a programming language like Java.
+        </p>
+        <p> To define a token, you specify the characters that separate one token from
+            another. These are called <b>delimiters</b>. As I mentioned, the
+            default delimiters are the whitespace characters. If you want to
+            read your text based on a different set of tokens, though, you
+            can use the <code>Scanner useDelimiter()</code> method to change
+            the separator to something else.
+        </p>
+    <h4>Different Tokens</h4>
+        <p> The <code>String</code> you supply to the <code>useDelimiter()</code>
+            method is actually a <b>regular expression</b>. That means you can
+            use some very sophisticated pattern matching when processing an
+            input file. One useful delimiter is the "end-of-file" regular expression.
+            Here is how you set this delimiter:
+        </p>
+        <p class='code'>
+            fin.useDelimiter("\\Z");
+        </p>
+        <p> Now, when you call the <code>next()</code> method, your <code>Scanner</code>
+            will <b>read the entire file</b> into a single <code>String</code>. (Don't forget
+            to <code>close()</code> the <code>Scanner()</code> after doing this.)
+        </p>
+    <h2>Limit Bounds</h2>
+        <p> Now that you know the syntax of the <code>while</code> and
+            <code>do-while</code>, let's look at one final kind of bounds:
+            the <b>limit</b> bounds. A limit bounds is a natural bounds
+            in many mathematical, graphical and financial applications.
+        </p>
+        <p> So, what, exactly <b>is</b> a limit bounds? A limit bounds
+            is a condition that occurs when one more repetition of the
+            loop would either get you no closer to the goal or would
+            actually lead you astray. Limits can be exact values (reducing
+            a number to zero, for instance), boundaries (exceeding an
+            upper size limit), or relative values (the difference between
+            two successive calculations is less than .00000001 percent).
+            <br><img src="images/limit01.gif" class="inlineCenter" alt="A bifurcation loop plotting.">
+        </p>
+        <p> Here are some common limit loop bounds:</p>
+        <ul>
+            <li><b>Reduction loops</b>. Methodically reduce a number to zero, or less
+                than some known value. The algorithm for integer division
+                by subtraction is an example of this.
+            </li>
+            <li><b>Successive approximation methods</b>. Each time a calculation
+                is performed, the result is compared to a previous calculation.
+                The bound is reached when two successive calculations
+                yield approximately the same results.
+            </li>
+            <li><b>Bisection methods</b>. These calculate mathematical
+                approximations. The limit is set by approaching to within
+                some tiny amount of an answer that is known to be correct.
+            </li>
+            <li><b>Non-convergence tests</b>. These are often the necessary
+                bounds applied to the other techniques, to make sure they
+                haven't gone astray.
+            </li>
+        </ul>
+    <h3>An Example</h3>
+        <p> Loops that involve limit bounds are mostly mathematical. These
+            include things like finding the greatest common denominator (gcd)
+            using Euclid's algorithm, calculating square roots using
+            Newton's method, or approximating pi, using the Buffon's Needle
+            experiment.
+        </p>
+        <p> All of these are fairly difficult if you're uncomfortable with
+            math. My goal is for you only to recognize and apply a limit
+            loop, so I'll show you a simpler example.
+        </p>
+        <p> The <b>SumDigits</b> program you wrote as an exercise
+            back in Chapter 3 asked
+            you to add up the digits in an integer between 1 and 1000. Let's
+            use a limit loop that allows you to add up the digits in an
+            integer of any size. (We <b>won't</b> handle non-digit characters
+            like the <code>sumDigits()</code> function in <i>Section 8.2&mdash;Java Jumps</i>
+            which adds up the digits in a <code>String</code> parameter.)
+            We'll call this new program <b>SumDigits2</b>, just so you don't
+            confuse it with the earlier version. You'll find
+            the completed program in this chapter's code folder.
+        </p>
+    <h4>The Concept</h4>
+        <p> <img src="images/sumdigits2.gif" class="right" alt="Dividing integers by 10">
+            The concept behind the program is simple. When you use integer
+            division to divide the number <code>n</code> by ten, the
+            <b>remainder</b> is the single right-most digit, while the
+            <b>quotient</b> consist of the remaining digits on the left.
+        </p>
+        <p> If we repeatedly perform this operation, eventually, n will
+            reach 0. This is our <b>limit</b>.
+        </p>
+    <h3>The Code</h3>
+        <p> The program begins, like the original <b>SumDigits</b> with
+            some input. Here I've told the user to enter an integer
+            between 1 and the largest possible integer:<br>
+            <img src="images/sd2b.gif" class="inline" alt="Integer input">
+            I used the <code>Integer</code> class constant, rather than hard-coding
+            the maximum number in the prompt, and then used the
+            <code>Scanner nextInt()</code> method to read the user's
+            response, storing the result in the <code>int</code> variable
+            <code>number</code>.
+        </p>
+        <p> The loop itself consists of three sections<br>
+            <img src="images/sd2c.gif" class="inlineCenter" alt="Integer input">
+        </p>
+        <ol>
+            <li class="d">Before the loop, I declare and initialize the
+                precondition variable <code>sum</code> to 0. I also save
+                the value of <code>number</code> in a new variable,
+                <code>original</code>, since the "reduction" algorithm
+                will destroy <code>number</code> when it is finished.
+            </li>
+            <li class="d">I used a <code>do-while</code> loop for this
+                problem (although I could have used a <code>while</code>
+                loop instead). The bounds of the loop is the <b>limit</b>,
+                <code>number &gt; 0</code>. Inside the loop I first add the
+                right-most digit to the sum, and then remove the digit,
+                moving closer to the limit bounds, by dividing
+                <code>number</code> by 10.
+            </li>
+            <li class="d">Finally, after the loop is finished, I print
+                both the number and its sum. Since we reduced the variable
+                <code>number</code>
+                to 0, I must use the variable <code>original</code> to
+                report the original number entered.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when it runs:<br>
+            <img src="images/sd2a.gif" class="inlineCenter" alt="Running SumDigits2.">
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Iterators and Limits Summary
+        </p>
+        <ul>
+            <li>An <b>iterator</b> is an object that knows how to loop over
+                a <b>collection of values</b> in a consistent way, regardless of the
+                type of values or the way that they are stored.
+            </li>
+            <li>A <b>data bound</b> loop keeps processing data until there is
+                no more data to be read. This is traditionally known as the
+                <b>EOF</b> or <b>end-of-file</b> condition (even when the
+                data doesn't come from a traditional file).
+            </li>
+            <li>When using the <code>Scanner</code> class as an iterator,
+                first <b>connect it to a data source</b>, then use a loop
+                to <b>read individual tokens</b> until you have
+                read all the data.
+            </li>
+            <li>To connect to a data file, use the <code>File</code> constructor,
+                passing the name of your  file. Add the phrase <code>throws
+                Exception</code> to the <code>main()</code> method heading
+                in the event the file does not exist.
+            </li>
+            <li>To connect to a <code>String</code>, pass the <code>String</code>
+                as a parameter to the <code>Scanner</code> constructor.
+            </li>
+            <li>In ACM programs, you can read from the console window (passing
+                <code>getReader()</code>) or a Web page or local data file by
+                using the <code>acm.util.MediaTools.openDataFile()</code> method.
+            </li>
+            <li>To control your loop, call the <code>Scanner</code>'s
+                <code>hasNext()</code> method to see if the
+                input source has been completely read.
+            </li>
+            <li>You may use <b>any of the <code>Scanner</code> methods you
+                met earlier</b> to read specific kinds of tokens from the
+                iterator. If a <code>String</code> contains digits, for instance,
+                you can use <code>nextInt()</code>.
+            </li>
+            <li>If your iterator opens an external resource, like a data file
+                or a Web page, then make sure you <b>close the iterator</b>
+                before your program ends.
+            </li>
+            <li>You can <b>change the way that the <code>next()</code> method
+                works</b> by changing the delimiters used around tokens with
+                the <code>setDelimiter()</code> method.
+            </li>
+            <li><b>Limit loops</b> are loops that test "the amount of work" that
+                each iteration performs (in various ways), and that stop when the
+                loop is getting no closer to the goal. Limit loops are common in
+                science, finance and graphics. These loops include
+                <b>reduction</b>, successive <b>approximation</b>, <b>bisection</b>
+                and <b>non-convergence</b> tests.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

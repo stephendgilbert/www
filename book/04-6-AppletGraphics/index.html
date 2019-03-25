@@ -1,0 +1,691 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>4.6&mdash;Applet Graphics</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 4.6</p>
+        <p id='lessonTitle'>Applet Graphics</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src="images/artist.gif" class="right" alt="Portrait of the artist as a young man.">
+            <b><span class="cap">A</span>s you look through the Javadocs</b>
+            for the <code>Graphics</code> class, you can see that it "knows how"
+            to do a lot of things. However, up until now, you've really only
+            seen one example: drawing text. To finish up this chapter, we'll look at some of the
+            <code>Graphics</code> methods for drawing shapes, and
+            show you <b>several</b> new examples.
+        </p>
+        <p>In this section you'll learn:</p>
+        <ul>
+            <li>how to draw simple lines</li>
+            <li>how to draw filled and outline rectangles</li>
+            <li>how to draw ovals</li>
+            <li>how to draw 3D shapes</li>
+        </ul>
+        <p>One "role" of the
+            <code>Graphics</code> object passed into the <code>paint()</code>
+            method, is to provide methods that act as "artist's assistants."
+            These methods draw lines, simple shapes, and complex geometric
+            patterns. As you'll see later, these assistants know
+            how to work with JPEGs and GIFs as well.
+        </p>
+        <p> Before we do that, though, let's take a quick look at the role of
+            the <b>AWT</b> (or <i>Abstract Window Toolkit</i>) and the process
+            of drawing on the screen.
+        </p>
+    <h2>The Graphics Class</h2>
+        <p> <img src='images/pen.png' class='right' alt='A plume pen drawing a W.'>
+            When you paint text on the screen, using the <code>drawString()</code> method,
+            you send your messages to an object named "pen". Who, or
+            what, exactly, is "pen"? At first glance, it would seem that
+            the <b>Applet</b> or <b>String</b> classes would be likely
+            candidates to handle such drawing chores. In fact, however,
+            neither of them is up to it.
+        </p>
+        <p> The <b>String</b> class knows all about characters,
+            but it doesn't know anything about the resolution of your video
+            display, or how many pixels are required to draw a "t". For
+            that, you need the services of an expert; in Java, that expert
+            is a member of the <b>Graphics</b> class.
+        </p>
+        <p> From working with the <code>drawString()</code> method, you
+            can see that only <b>Graphics</b> objects can draw on the
+            display of an applet. You might wonder why this is. Why can't
+            you just tell your computer to paint a red pixel at location
+            100, 100, without involving some <b>Graphics</b> object?
+            Let's see!
+        </p>
+    <h3>Who Does What?</h3>
+        <p> In the "old days", back when every computer ran a single program
+            at a time, telling your computer to turn a particular pixel red was
+            a reasonable request. Today, however, it doesn't make much sense at
+            all. Here's why.
+        </p>
+        <p> As I'm writing this, I have fourteen different applications running
+            in the foreground. If all fourteen of my applications decided
+            to paint at location 100, 100 at the same time, chaos would
+            quickly follow. Obviously, with multiple applications running,
+            each application <b>cannot</b> treat the display as its own private
+            resource. Each one has to <b>share</b> with the others. They all have
+            to agree to abide by the same "contract:<br>
+            <img src="images/g04.gif" alt="The AWT - Programmer contract" class="inlineCenter">
+            Let's take a look at how the programmer-AWT contract works.
+        </p>
+    <h3>Responsibilities of the AWT and the Graphics Class</h3>
+        <p> The key figure in this picture is the AWT (the Abstract Window
+            Toolkit) and its <code>Graphics</code> object. The <code>Graphics</code>
+            object acts as a "traffic cop" to make sure your efforts to paint on the display
+            don't interfere with other programs, or with different parts of
+            your own program.
+        </p>
+        <p>It does this in three ways:</p>
+        <ol>
+            <li class="d">The <code>Graphics</code> object "clips" your drawing region. If you create a
+                drawing area that is 100 pixels square, and you try to
+                paint a bright red circle that extends outside your drawing
+                area, your <code>Graphics</code> object, in effect, holds a
+                "stencil", (called the <b>clipping region</b>) over your
+                drawing area so your efforts don't spill over on your
+                neighbor's area.
+            </li>
+            <li class="d">The AWT "monitors" your drawing region. If another
+                application should drag a dialog box over your drawing
+                area, or if your application should scroll a portion of
+                your image out of its window, the AWT will "notify" you
+                when your drawing region needs to be repainted. (It
+                notifies you by calling your applet's <code>paint()</code>
+                method.
+            </li>
+            <li class="d">The AWT "schedules" access to your drawing region, so that
+                different methods don't end up fighting over the area.
+                Although you have to write the instructions (inside your
+                <code>paint()</code> method), that do the actual painting,
+                you can ask the AWT to perform the painting, by calling
+                your applet's <code>repaint()</code> method. This submits
+                a "work order" with the AWT, letting it know that you'd
+                like to have your applet repainted.
+            </li>
+        </ol>
+        <p> The AWT manages the overall painting process, but it doesn't
+            write the instructions that do the actual painting. That
+            responsibility is up to you.
+        </p>
+    <h3>Inside the Graphics Class</h3>
+        <p> Every Java <code>Component</code> has its own <code>Graphics</code> object.
+            A copy of that <code>Graphics</code> object (not the original) is
+            <b>passed</b> to the <code>paint()</code> method when it is
+            called. When you receive your <code>Graphics</code> object, you're
+            going to use it for two things:
+        </p>
+        <ul>
+            <li>The <code>Graphics</code> object provides the environment in
+                which you'll work: your own "painting studio" to speak.
+                There are several methods that allow you to modify that
+                environment.
+            </li>
+            <li>The <code>Graphics</code> object contains a set of methods that
+                will help you in your actual painting. Think of these as
+                your "painter's apprentice." You can use these methods to
+                do your drawing.
+            </li>
+        </ul>
+        <p>We'll look at the different painting methods shortly. Before we do,
+            though, let's take a quick look at the "environment" part.
+        </p>
+    <h4>The Environment</h4>
+        <p> <img src="images/graphics-environment.gif" class="right" alt="The Graphics Environment.">
+            The <code>Graphics</code> object contains the "environment" used when
+            any Java graphical component is drawn. This environment consists of:
+        </p>
+        <ul>
+            <li>a default <code>Font</code>, used to display text when you
+                call the <code>drawString()</code> method.
+            </li>
+            <li>a default pen color, used when drawing lines or shapes.</li>
+            <li>a default background or pen color.</li>
+            <li>a default drawing <b>mode</b>.</li>
+            <li>a default coordinate system.</li>
+        </ul>
+        <p> The <code>Graphics</code> object that you receive, itself "borrows"
+            several of these items from the graphical component it represents. A
+            <code>Graphics</code> object uses its component's <b>foreground</b> property
+            as its default drawing color, for instance, and the
+            <code>Graphics</code> coordinate system is relative to the upper-left
+            corner of its component.
+        </p>
+        <p> Inside your <code>paint()</code> method you can make
+            changes to the temporary <code>Graphics</code> copy you receive by
+            calling the <b>methods</b> in the <code>Graphics</code> class.
+        </p>
+        <p>For instance, to change the drawing color (assuming your
+            <code>Graphics</code> object is named <code>pen</code>), you could
+            write:
+        </p>
+        <p class="code">
+            pen.setColor(Color.RED);
+        </p>
+        <p> This doesn't change the "master copy" of the <code>Graphics</code>
+            object attached to your applet. The default drawing color is still
+            normally black. As you saw when we discussed the <code>Color</code> class,
+            you can change the default foreground and background colors for a
+            graphical object (such as your <code>Applet</code> object), by using
+            its <code>setBackground()</code> or <code>setForeground()</code>
+            methods.
+        </p>
+        <p> Now, let's look at some of the <code>Graphics</code> drawing methods, starting with
+            the methods that <b>draw lines</b>.
+        </p>
+
+    <h2>Drawing Lines</h2>
+        <p> The <code>drawLine()</code> method takes four <code>int</code>
+            parameters, representing the two end-points of a line. Here
+            is the method signature:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            void drawLine(int x1, int y1, int x2, int y2)
+        </p>
+        <p>The arguments <code>x1,y1</code> represent the horizontal (x),
+            and vertical (y) point at one end of the line, while
+            <code>x2,y2</code> represent the point at the other end. Since
+            all four arguments are <code>int</code>, you simply substitute
+            a whole number for each argument when calling the method.
+        </p>
+        <p> When you draw lines in Java, all lines are 1 pixel thick, and
+            use the default <code>Graphics</code> brush color (retrieved
+            from your component's foreground property). You can change the
+            color of the brush, used to paint the lines, but you can't
+            change the thickness of the line.
+        </p>
+        <div class='info'>
+        <p>Java actually <b>can</b> draw fancier lines with
+            different thicknesses, styles and end-types. To do so, though, you
+            have to use the Java 2D package and the <code>Graphics2D</code> class,
+            which is slightly more complex than what I've shown you here. Once
+            you've learned how to use the simpler <code>Graphics</code> class,
+            you'll find the <code>Graphics2D</code> <i>much</i> easier to
+            understand.
+        </p>
+        </div>
+        <p> The algorithm used to draw lines in Java is <b>inclusive</b>; both
+            the point <code>x1,y1</code> and the point <code>x2,y2</code> are
+            <b>included</b> in the line. Thus, if you want to draw a single
+            pixel on the screen&#8212;at point 100,100, for instance, you do it
+            like this:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            pen.drawLine(100, 100, 100, 100);
+        </p>
+        <p> Here's a sequence of <code>drawLine()</code> calls that
+            creates a five-sided star:
+            <img src="images/f04.gif" alt="The DrawStar applet source code" class="inline">
+            Here's how it works:
+        </p>
+        <ul>
+            <li>Line 13 starts at 101 pixels in from the left side, (since
+                the first pixel is numbered 0), and 0 pixels down from the top,
+                (on the first line, in other words). It then draws to
+                position 200,200, which is 201 pixels from the left side,
+                and 201 pixels down from the top.
+            </li>
+            <li>Line 14 picks up where line 13 left off, that is, at position
+                200,200. It draws a line from that position, to position 0x,
+                (that is, against the left-hand margin), and 100y, (that is,
+                101 pixels down from the top).
+            </li>
+            <li>Line 15 picks up from there and draws a horizontal
+                line clear across the applet. Not that the "y" parameter
+                for the two end-points is both set to 100. The "x"
+                parameter starts at 0 (the left-hand side), and goes
+                to 200 (the right-hand side).
+            </li>
+            <li>Line 16 continues, drawing from the right-hand margin over
+                to the lower-left corner, and line 17 continues that
+                line up to the original starting point at 100,0.
+            </li>
+        </ul>
+        <p><a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/DrawStar.html","","width=500,height=350,scrollbars=yes");'><b>Click this link</b></a> to run the applet
+            in your browser. You'll find the source code for the applet in this chapter's
+            source code folder.
+        </p>
+        <div class='info'>
+        <p> Note that when I write the
+            <code>paint()</code> method, I can call the <code>Graphics</code>
+            object anything I like; here I've named it <b>bob</b>. You
+            don't have the same freedom to rename the word
+            <code>Graphics</code>, or the method name <code>paint()</code>,
+            however; they both must be spelled exactly as shown.
+        </p>
+        </div>
+    <h2>Drawing Shapes</h2>
+        <p>In addition to lines, the <code>Graphics</code> class knows how to
+            draw simple geometric shapes, including rectangles, ovals, arcs,
+            round-cornered rectangles, and polygons.
+        </p>
+        <p> Many of Java's simple geometric shapes use the principle of a <i>bounding
+            box</i> to specify their location and size. A bounding box is the
+            smallest rectangle that can <i>contain</i> the object you are
+            drawing. This rectangle is known as the shape's <b>bounds</b>:
+            <img src="images/bound_box.gif" alt="The bounding box used by Graphics methods" class="inlineCenter">
+            You specify a bounding box by passing <code>x,y</code> values for
+            the <b>location</b> of the shape, (that is, the upper-left corner
+            of the bounding box), along with two additional parameters for
+            its <b>size</b>: the <code>width</code> (first) and the
+            <code>height</code> (second). Each of the values used for
+            the bounding box should be a positive whole number.
+        </p>
+        <div class='alert'>
+        <p><b>Note : </b><u>Do not</u> supply values for the
+            lower-right corner when drawing simple shapes. This is easy to forget,
+            because the <code>drawLine()</code> method <b>does</b> use <i>end-points</i>
+            (<code>x1,y1</code> and <code>x2, y2</code>)
+            rather than <code>width</code> and <code>height</code>, so it's easy to
+            get them confused.
+        </p>
+        </div>
+    <h3>Drawing Plain Rectangles</h3>
+        <p>There are three methods that allow you to draw, fill, or
+            clear a given rectangle:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            drawRect(int x, int y, int width, int height)<br>
+            fillRect(int x, int y, int width, int height)<br>
+            clearRect(int x, int y, int width, int height)<br>
+        </p>
+        <p>Here's how these methods work:</p>
+    <div class="box">
+        <ul>
+            <li>The <code>drawRect()</code> method draws a 1-pixel wide
+                outline rectangle that starts at <code>x,y</code>, and
+                goes to <code>width + 1</code> and <code>height + 1</code>.
+                With most components, the color of the line is taken from
+                the default foreground color. You can change it at will,
+                of course, by using <code>Graphics setColor()</code>
+                method.
+            </li>
+            <li>The <code>fillRect()</code> method uses the same pen color
+                as <code>drawRect()</code>, but paints a solid block starting
+                at <code>x,y</code> and extending <code>width</code>
+                and <code>height</code> pixels. A rectangle drawn with
+                <code>fillRect()</code> will fall one pixel short on the
+                right and bottom, compared to a rectangle drawn with
+                <code>drawRect()</code>.
+            </li>
+            <li>The <code>clearRect()</code> method works exactly like
+                <code>fillRect()</code> except it draws using the component's
+                background color rather than the foreground or
+                <code>Graphics</code> color attribute.
+            </li>
+        </ul>
+    </div>
+        <p> Here's the code for a simple applet, <b>SimpleRect.java</b>,
+            that draws four rectangles. The rectangle in the upper-left
+            quadrant is created using <code>drawRect()</code>. The rectangles
+            in the lower-left and upper-right are drawn using
+            <code>fillRect()</code>, and the rectangle in the lower-right
+            was drawn using <code>clearRect()</code>:
+            <img src="images/f05.gif" alt="The SimpleRect applet source code" class="inlineCenter">
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/SimpleRect.html","","width=475,height=365,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. You'll find the source code for the applet in this chapter's
+            code folder.
+        </p>
+        <p> Note that all four rectangles should be 100 pixels high and
+            100 pixels wide. If you run the applet, however,
+            and magnify the area in the center of the applet like this:<br>
+            <img src="images/f07.gif" alt="A closeup of the SimpleRect applet" class="inlineCenter" style='border:1px solid black;'>
+            you'll see that the rectangle created by using
+            <code>drawRect()</code> is actually 101 pixels wide and
+            high. The reason for this is kind of esoteric
+            (see the note following); just remember that all of the
+            <code>Graphics drawXXX()</code> methods add one to the height
+            and width, while the <code>fillXXX()</code> and <code>clearXXX()</code>
+            methods do not.
+        </p>
+        <div class='info'>
+        <p><b><u>Sun's Explanation</u></b><br>
+            Coordinates are infinitely thin and lie between the pixels of
+            the output device. Operations which draw the outline of a
+            figure operate by traversing an infinitely thin path between
+            pixels with a pixel-sized pen that hangs down and to the right
+            of the anchor point on the path. Operations which fill a figure
+            operate by filling the interior of that infinitely  thin path.
+        </p>
+        </div>
+         <img src="images/randrect.gif" class="right" alt="The RandRect applet.">
+    <h4>The RandRect Example</h4>
+        <p> <b>RandRect.java</b> is more extensive example program
+            that draws twenty-five random outline rectangles on the
+            left side of the screen, and
+            another twenty-five random filled rectangles on the right.
+        </p>
+        <p> <a href='javascript:var%20w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/RandRect.html","","width=600,height=400,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet in your browser. You'll
+            find the source code in this chapter's code folder so that you can examine it.
+        </p>
+    <h3>Thicker Lines</h3>
+        <p> When the <code>Graphics</code> class draws a "outline-version"
+            rectangle or oval, it uses a 1-pixel-wide pen, just like the
+            <code>drawLine()</code> method does. Drawing thicker lines is
+            fairly difficult, especially if the line is drawn at a slope,
+            because you have to draw several strokes side-by-side, and
+            then calculate the differing end-points.
+        </p>
+        <p> Drawing thicker rectangles (and ovals) is much easier: you simply
+            use a <b>sequence</b> of <code>drawRect()</code> calls, and each
+            time you add 1 to x and add 1 to y. In addition, you need to <b>decrease</b>
+            both the width and height, so that the new rectangle fits snug
+            inside the existing one. Because you already added one to x and y,
+            you need to <b>subtract 2</b> from both width and height.
+        </p>
+        <p> Here's a fragment that draws a rectangle with a line 3 pixels thick:</p>
+        <p class='code' style='font-size:1.25em'>
+            pen.drawRect(10, 10, 100, 100);<br>
+            pen.drawRect(11, 11,  98,  98);<br>
+            pen.drawRect(12, 12,  96,  96);
+        </p>
+        <p> If you have a very thick line, though, it can be pretty tedious to
+            type in a long list of <code>drawRect()</code> calls. In that case,
+            you can use a combination of <code>fillRect()</code> and <code>clearRect()</code>
+            to do the same thing.
+        </p>
+        <p> Here, for instance, is a rectangle with a
+            10-pixel-wide outline; instead of using ten statements, it
+            uses only two:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            pen.fillRect(10, 10, 100, 100);   // draw the outline<br>
+            pen.clearRect(20, 20,  80,  80);  // clear the interior
+        </p>
+    <h3>Rounded Rectangles</h3>
+        <p>In addition to the plain old rectangles, the <code>Graphics</code>
+            class can also draw two fancier rectangles: the <b>rounded
+            rectangle</b> and the <b>3D rectangle</b>. Let's take a
+            quick look at the rounded rectangle first.
+        </p>
+        <p> There are two methods to draw rounded rectangles: one to draw an
+            outline and one to draw a filled shape. There is no "clear"
+            method, but you can easily write your own by setting the
+            <code>Graphics</code> color using <code>getBackground()</code>
+            before filling the rectangle.
+        </p>
+        <p>Here are the rounded rectangle methods:</p>
+        <p class='code' style='font-size:1.25em'>
+            void drawRoundRect(int x, int y, int width, int height,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int
+xArc, int yArc)<br>
+            <br>
+            void fillRoundRect(int x, int y, int width, int height,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int
+xArc, int yArc) </p>
+
+        <p> Like plain-old-rectangles, rounded rectangles are specified by
+            supplying an <code>x,y</code> coordinate along with a
+            <code>width</code> and <code>height</code>. The outline rounded
+            rectangles are one pixel higher and wider than their filled
+            brethren, just as with plain-old rectangles.
+        </p>
+        <p> Notice though, that the rounded rectangle methods require <b>six</b>
+            parameters instead of <b>four</b> like the plain rectangles.
+            The two additional parameters determine how "round" the corners of
+            each rectangle will be. The value you supply is interpreted as
+            the diameter of an oval placed against the corner of the bounding
+            box like this:
+            <img src="images/draw_round_rect.gif"
+            alt="Use of the xArc and yArc arguments to the drawRoundRect() method."
+            class="inlineCenter" style="border:1px solid black;">
+            If you use the same values for <code>width</code> and
+            <code>xArc</code>, along with identical values for
+            <code>height</code> and <code>yArc</code>, you'll end up with
+            an ellipse. The corners will "consume" all the rectangle portion
+            of your shape. If all four parameters&#8212;<code>width</code>,
+            <code>height</code>, <code>xArc</code>, <code>yArc</code>&#8212;are
+            the same, then you end up with a circle.
+        </p>
+    <h3>3-D Rectangles</h3>
+        <p> In addition to the regular and rounded rectangles, the
+            <code>Graphics</code> class has an additional
+            method for drawing "3D" rectangles:</p>
+        <p class='code' style='font-size:1.25em'>
+            void draw3DRect(int x, int y, int width, int height, <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean raised)
+        </p>
+        <p> Like the rounded rectangles, the 3D variety requires additional
+            information, in the form of an extra parameter. The last parameter
+            to the <code>draw3DRect()</code> method, <code>raised</code>, is
+            a <code>boolean</code>, or true/false value.
+            When a method takes a <code>boolean</code>
+            argument like this, just type in the words <code>true</code> or
+            <code>false</code>, without quotes.
+        </p>
+        <p> If you pass <code>true</code> to the <code>draw3DRect()</code> method,
+            the rectangle will "pop out" like a button; if you pass
+            <code>false</code>, the rectangle will appear sunken. There
+            are two <b>complications</b> when using <code>draw3DRect()</code>:
+        </p>
+        <ul>
+            <li>Even with 3D rectangles Java draws using a one-pixel pen.
+                If you want to create "deeper" or "higher" rectangles, you need
+                to draw several rectangles, nested inside each other.
+            </li>
+            <li>The default foreground and background color, (black and
+                white), don't allow the 3D effect to work; you have to
+                change the drawing color and the background color, so
+                that both are the same. If you do that with other shapes,
+                you won't be able to see the shape, because the "paper"
+                color and the "pen" color are identical. With the
+                <code>draw3DRect()</code> method, it changes the
+                colors of the lines automatically, to create the
+                raised (or lowered) effect.
+            </li>
+        </ul>
+        <p>Let's see how this works.</p>
+    <h4>The ThreeDRect Applet</h4>
+        <p> Here's some more code, this time for an applet,
+            <b>ThreeDRect.java</b>, that draws a 4-pixel thick raised
+            rectangle in the middle of the applet.
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/ThreeDRect.html","","width=475,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. You'll find the source code for the applet in this chapter's
+            code folder.
+        </p>
+        <p> There are a couple of new pieces to this applet. First,
+            since <code>draw3DRect()</code> doesn't work in black and
+            white, there are two lines that change the drawing color,
+            and then use <code>fillRect()</code> to erase the background
+            using light gray:<br>
+            <img src="images/f09.gif" alt="Erasing the background color" class="inlineCenter">
+            The second thing that's new is duplicating (or repeating) the
+            same statement several times, but just changing the arguments
+            to get a different effect. In the code shown here:<br>
+            <img src="images/f10.gif" alt="Drawing the 3D rectangles" class="inlineCenter">
+            each call to <code>draw3DRect()</code> moves the starting
+            position down and to the right by one pixel, and then decreases
+            <code>width</code> and <code>height</code> by two pixels. The
+            result is a series of decreasing rectangles, each one nested
+            inside the previous one, giving the illusion of a line that
+            is 4-pixels thick:<br>
+            <img src="images/f11.gif" alt="Running the ThreeDRect applet" class="inlineCenter">
+        </p>
+    <h2>Drawing Ovals</h2>
+        <p> Drawing ovals works almost exactly like drawing plain rectangles.
+            There are two methods:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            void drawOval(int x, int y, int width, int height)<br>
+            void fillOval(int x, int y, int width, int height)
+        </p>
+        <p> There is no <code>clearOval()</code> method. Each of these draws
+            an oval that touches an imaginary "bounding box" represented by
+            coordinates passed as <code>x</code>, <code>y</code>,
+            <code>width</code> and <code>height</code>.
+        </p>
+    <h3>Thicker Ovals</h3>
+        <p>As with the rectangles, "drawn" ovals are 1-pixel wider and higher
+            than "filled" ovals. Like rectangles, ovals are drawn using a
+            line that is one-pixel wide. You can simulate thicker lines by
+            drawing several ovals, one inside the other.
+        </p>
+         <p>This scheme is not as effective for ovals as for rectangles,
+            because of the <b>aliasing</b> ("stairstepping" or "jaggies")
+            that occurs as each one-pixel-wide oval is drawn.
+        </p>
+       <img src="images/drawovals.gif" class="right" alt="The DrawOvals applet.">
+       <p> A better solution is to draw just <b>two</b> ovals using
+            <code>fillOval()</code>. Draw the larger oval first, using the
+            "line" color. Then draw the inside oval using the background
+            color like this example
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            pen.fillOval(10, 10, 50, 50);<br>
+            pen.setColor(getBackground());<br>
+            pen.fillOval(15, 15, 40, 40);
+        </p>
+        <p>which draws an oval using a 5-pixel wide brush.
+        </p>
+        <p> The <b>DrawOvals</b> applet uses both methods to draw a
+            10-pixel-wide blue oval. As you can see, the line for the
+            oval on the left has several pixilated drop-out sections.
+            <a href='javascript:var%20w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/DrawOvals.html","","width=400,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet in your browser, or
+            run it on your own machine using the source code in this chapter's
+            code folder.
+        </p>
+
+    <h2>Drawing Arcs</h2>
+        <p> The <code>Graphics</code> class has two method for drawing and
+            filling arcs:
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            void drawArc(int x, int y, int w, int h, int start, int end)<br>
+            void fillArc(int x, int y, int w, int h, int start, int end)
+        </p>
+        <p> Both methods use the same parameters. The first four specify
+            the bounding box for an imaginary oval. The last two parameters
+            specify the starting and ending angles of the arc in degrees.
+        </p>
+        <p> Here is some code that draws an arc with a start angle of 0
+            degrees and an end angle of 270 degrees:<br>
+            <img src="images/arc01.gif" class="inlineCenter" alt="Drawing an arc.">
+            I've added some code that uses <code>drawRect()</code> to
+            display the bounding box in a light gray color, just to
+            help you visualize the process.
+        </p>
+        <p> Here's what the program looks like as it runs. Notice that
+            the starting angle is at the "3 o'clock" position, and that
+            the angles sweep counter-clockwise around 270 degrees:<br>
+            <img src="images/arc02.gif" class="inlineCenter" alt="Drawing an arc.">
+            Note that the 270 is <b>not</b> the position on the circle,
+            but the number of degrees "traveled". If we wanted to sweep the
+            other direction (clockwise), and end up at the same point on
+            the bounding box, we'd <b>supply a negative number for the
+            ending position</b>.
+        </p>
+        <p> Here's the same program using -90 as the ending parameter:<br>
+            <img src="images/arc03.gif" class="inlineCenter" alt="Drawing an arc.">
+            This causes us to sweep clockwise 90 degrees, which is the same
+            point as sweeping counter-clockwise 270 degrees.
+        </p>
+    <h3>Filled Arcs</h3>
+        <p> <img src="images/arc04.gif" class="right" alt="Drawing a Pacman">
+            The arc is the only unclosed shape that can be filled in
+            the <code>Graphics</code> class. The <code>fillArc()</code>
+            method fills the interior of the as if there were lines
+            drawn to the center of the bounding box.
+        </p>
+        <p> Here's a Pacman figure painted using <code>fillArc()</code>.
+            Note, though, that the figure is <b>not</b> outlined. To
+            draw the outline, you have to use <code>drawArc()</code> which
+            does <b>not</b> draw the closing lines to the radius. To draw
+            those, you have to use separate <code>drawLine()</code>
+            statements, along with the appropriate mathematical calculations:<br>
+            <img src="images/arc05.gif" class="inlineCenter" alt="Drawing a PacMan.">
+            These are fairly straightforward calculations for circles, but can
+            become more complex for other ellipses.
+        </p>
+
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Applet Graphics Summary
+        </p>
+        <p> The AWT and the <code>Graphics</code> class work together (along with
+            your operating system) to allow different programs to run at the same
+            time and share the screen.
+        </p>
+        <ul>
+            <li>Each graphical component contains a <code>Graphics</code> object
+                with its own <b>clipping region</b> that determines where you can
+                paint.
+            </li>
+            <li>You will place your instructions inside the <code>paint()</code> method,
+                but the AWT will schedule the painting when it is necessary.
+            </li>
+            <li>Each <code>Graphics</code> object contains an <b>environment</b>
+                consisting of things like fonts and drawing colors, and a set of
+                <b>methods</b> that can be used to draw on the display, and
+                those that can be used to <b>modify its environment</b>.
+            </li>
+        </ul>
+        <p> Here are some of the <b>drawing methods</b> discussed in this section.
+            All of the drawing methods will use a 1-pixel wide pen; the default
+            component color will be used unless changed by calling <code>Graphics
+            setColor()</code> before drawing.
+        </p>
+        <ul>
+            <li>Use <code>drawLine(x1, y1, x2, y2)</code> to draw a line
+                between two points (including the points themselves).
+            </li>
+            <li>Use <code>drawRect(x, y, width, height)</code> to draw the <b>outline
+                of a rectangle</b>. The width and height will be 1 pixel larger than
+                requested.
+            </li>
+            <li>Use <code>fillRect(x, y, width, height)</code>, or
+                <code>clearRect(x, y, width, height)</code> to paint a <b>solid
+                rectangle</b>. The first uses the foreground color, the second uses
+                the background. The width and height will be as requested.
+            </li>
+            <li>Use <code>drawRoundRect(x, y, width, height, xArc, yArc)</code> or
+                   <code>fillRoundRect(x, y, width, height, xArc, yArc)</code>
+                   to paint a <b>rectangle with rounded corners</b>.
+            </li>
+            <li>Use <code>draw3DRect(x, y, width, height, raised)</code> to draw
+                a <b>rectangle with a 3D effect</b>. Pass <code>true</code> as the last
+                parameter for a <i>raised</i> effect, and <code>false</code> for
+                a <i>sunken</i> rectangle. The effect doesn't work for all
+                background and foreground colors. Also, to get a larger effect,
+                you need to repeat the code several times, changing the parameters.
+            </li>
+            <li>You can <b>paint ovals</b> by using the <code>drawOval(x, y, width, height)</code>
+                and <code>fillOval(x, y, width, height)</code> methods.
+            </li>
+            <li>You can <b>paint arc segments</b> using
+                <code>drawArc(x, y, width, height, start-angle, sweep-degrees)</code>, and
+                create <b>pie slices</b> using
+                <code>fillArc(x, y, width, height, start-angle, sweep-degrees)</code>. The
+                first four arguments represent the bounding box (as with the
+                other shapes). The last two represent the starting angle (with 0
+                being 3 o'clock) and the number of degrees to sweep around the
+                circle. A negative sweep-degrees goes clockwise, positive goes
+                counter-clockwise:<br>
+                <img src="images/arc02.gif" class="inlineCenter" style="width:500px;" alt="Drawing an arc.">
+            </li>
+        </ul>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

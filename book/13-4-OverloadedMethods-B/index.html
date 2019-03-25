@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>13.4&mdash;Overloaded Methods</title>
+
+    <style type='text/css'>
+        td, th { padding: 5px; }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner08">
+        <img id='lessonLogo' src='../images/g.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 13.4</p>
+        <p id='lessonTitle'>Overloaded Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <img src="images/f10.gif" class="right" alt="A DNA molecule image from NASA.">
+            <b><span class="cap">Y</span>ou might be surprised
+            to find out</b> that the same class can have two methods
+            that have the same name. In fact, you can have several methods,
+            in the same class, all sharing the same name; it's quite common.
+            Such methods are called <b>overloaded methods.</b>
+        </p>
+        <p> Here is the basic rule that determines how such
+            methods can be created and which particular version of a
+            method will be called.
+            Methods in the same class may have the same name, if:
+        </p>
+        <ul>
+            <li>The number of their formal parameters differ</li>
+            <li>The type or order of their parameter types differ</li>
+        </ul>
+        <p> This combination of method name, formal parameter type,
+            number, and order, is called the method's <b>signature</b>,
+            and it acts like "DNA" to uniquely identify a particular
+            method.
+        </p>
+    <h3>Overloaded Examples</h3>
+        <p> Here is a class with several methods, all having
+            the same name. Take a look at the different method signatures,
+            and, using the rules you've just learned, decide which methods
+            are legal, and which methods are illegal (assuming that all of
+            them appeared in the same class, just as shown here).
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public class TestIt<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod() { }<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int a) { }<br>
+            <span style='background-color:wheat;'>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int a, int b) { }<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int c, int d) { }<br>
+            </span>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int a, byte b) { }<br>
+            }
+        </p>
+        <p> Of the five methods here, numbers 1, 2, and 5
+            are legal, while number 3 and 4 (highlighted in the listing here)
+            are not, because they have the
+            same number and type of parameters.
+        </p>
+        <div class='alert'>
+            <p> Actually <b>both</b> 3 and 4 <b>are</b> legal; just <b>not together</b>.
+                You only need to eliminate <b>one</b> of the conflicting methods,
+                and the other will be fine.
+            </p>
+        </div>
+    <h4>Return Types</h4>
+        <p> When looking at the method signature, Java <b>does not</b>
+            consider the return type of the method. Java will not permit
+            two methods in the same class that have identical signatures,
+            but different return types.
+        </p>
+        <p> Because of this, the following two methods <b class='ry'>cannot</b>
+            co-exist in the same class:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public int doIt(int a) { }<br>
+            public double doIt(int b) { }
+        </p>
+    <h3>Calling Overloaded Methods</h3>
+        <p> When calling a method, Java looks at the <b>actual</b>
+            arguments to decide which of several overloaded methods to
+            call. This is called <b>argument matching</b>.
+            The rules for matching actual argument with the
+            formal parameters can become quite baroque,
+            but here's the simple version.
+        </p>
+        <p> For this example, we'll use a version of the <code>TestIt</code>
+            class, with the third method removed. We'll call this class
+            <code>TestIt2</code>, as shown here. (You'll find it in this
+            chapter's code folder).
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public class TestIt2<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod() { }<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int a) { }<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int c, int d) { }<br>
+            &nbsp;&nbsp;&nbsp; public void aMethod(int a, byte b) { }<br>
+            }
+        </p>
+
+        <p> Let's assume as well,
+            that you have created a <code>TestIt2</code> object like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            TestIt2 obj = new TestIt2();
+        </p>
+        <p> Here are the rules that will apply when you try
+            to call any of the methods in the <code>TestIt2</code> class
+            using your object <b>obj</b>.
+        </p>
+    <h4>Rule 1 : Number of arguments</h4>
+        <p> Java first tries to match the <b>number of actual
+            arguments</b> with a method that has the <b>same number of
+            formal parameters</b>. If it cannot find a match, then it
+            gives up as an error. Thus the method call:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            obj.aMethod(10, 20, 30);
+        </p>
+        <p> immediately fails, because there are no methods that take
+            three arguments.
+        </p>
+    <h4>Rule 2 : Exact type matches</h4>
+        <p> Once Java has located a <i>candidate</i> method, (or methods),
+            having the correct number of <b>formal parameters</b>, it
+            compares the type of each <b>actual</b> argument to the
+            corresponding formal parameter. If an <b>exact match</b> can be
+            found, then Java calls the method. Thus the method call:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            obj.aMethod(10, 20);
+        </p>
+        <p><b>exactly</b> matches the third method, because both
+            arguments are of type <code>int</code>.
+        </p>
+    <h4>Rule 3 : Acceptable conversions</h4>
+        <p> If Java <b>cannot</b> match the exact types of arguments,
+            it looks for acceptable conversions, preferring the conversions
+            that are closest to the actual argument type. Java will not,
+            however, make conversions where data will be lost. Thus the call:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            obj.aMethod(10, 1.5);
+        </p>
+        <p> will <b>always</b> fail because <b>1.5</b> cannot be converted to either
+            an <code>int</code> or a <code>byte</code>, the only two options
+            for the second argument, given the available methods.
+        </p>
+    <h3>Good Arguments</h3>
+        <p> When you call a method, the actual arguments you
+            pass must be compatible with the formal parameters. Java will
+            attempt to ensure this using a process called <b>type-checking</b>.
+        </p>
+        <p> Generally what this means is that if assignment
+            would succeed then the method call will also succeed.
+            Remember, you can
+            normally assign a smaller or less precise value to a more precise
+            variable.
+        </p>
+        <p> Here are some examples of acceptable primitive arguments that
+            may help you:
+        </p>
+        <table style='width:85%;margin:auto;' border="1">
+        <tbody>
+            <tr style="background-color: navy;color: white;">
+                <th class="thead">Formal Parameters</th>
+                <th class="thead">Acceptable</th>
+                <th class="thead">Unacceptable</th>
+            </tr>
+            <tr>
+                <th class="tcode">byte</th>
+                <td class="tdata"><code>byte</code></td>
+                <td class="tdata">everything else</td>
+            </tr>
+            <tr>
+                <th class="tcode">short</th>
+                <td class="tdata"><code>byte</code>, <code>short</code></td>
+                <td class="tdata">everything else</td>
+            </tr>
+            <tr>
+                <th class="tcode">int</th>
+                <td class="tdata"><code>byte</code>, <code>short</code>, <code>int</code>, <code>char</code></td>
+                <td class="tdata">everything else</td>
+            </tr>
+            <tr>
+                <th class="tcode">long</th>
+                <td class="tdata"><code>byte</code>, <code>short</code>, <code>int</code>, <code>char</code>, <code>long</code></td>
+                <td class="tdata"><code>float</code>, <code>double</code></td>
+            </tr>
+            <tr>
+                <th class="tcode">char</th>
+                <td class="tdata"><code>byte</code>, <code>short</code></td>
+                <td class="tdata">everything else</td>
+            </tr>
+            <tr>
+                <th class="tcode">long</th>
+                <td class="tdata"><code>byte</code>, <code>short</code>, <code>int</code>, <code>char</code>, <code>long</code></td>
+                <td class="tdata"><code>float</code>, <code>double</code></td>
+            </tr>
+            <tr>
+                <th class="tcode">float</th>
+                <td class="tdata"><code>float</code>, all integer types</td>
+                <td class="tdata"><code>double</code></td>
+            </tr>
+            <tr>
+                <th class="tcode">double</th>
+                <td class="tdata">all numeric types</td>
+                <td class="tdata">none</td>
+            </tr>
+        </tbody>
+        </table>
+
+    <h2>Overloading II : Why Bother?</h2>
+        <p> Why bother with method overloading? Doesn't it seem like having
+            multiple methods, all with the same name, would be confusing?
+            How are you supposed to remember which method is being called?
+        </p>
+        <p> All of these are valid arguments <b>against</b> using
+            overloaded methods. Simply giving all of your methods the same
+            name without ample planning and forethought really <b>will</b>
+            make your programs harder to understand and maintain.
+        </p>
+    <h3>Making Easy-to-use Methods</h3>
+        <p> Properly used, however, method overloading allows
+            you to write methods that are <b>much easier to use</b> than those
+            that don't employ overloading. Here's an example
+            using <b>ButtonFactory.java</b> from the last section.
+        </p>
+        <p> Suppose that 90% of the buttons in your current project
+            always use a blue, 24 point font, but that 5% require
+            a 30 point blue font and the remaining buttons require
+            fonts in varying sizes and colors.
+        </p>
+    <h4>The Generic Solution</h4>
+        <p> To meet these requirements you could use the generic
+            <code>getButton()</code> method (from the last
+            section). If you do so, it means that for <b>all</b>
+            of your buttons you'll have to write this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton b = getButton("String", 24, Color.BLUE);
+        </p>
+        <p> even though you know that <b>90% of the time</b> you
+            will be using <code>24</code> and <code>Color.BLUE</code> as the
+            last two arguments.
+        </p>
+    <h4>Uniquely-named Methods</h4>
+        <p> Another option would be to write multiple, uniquely-named
+            methods, like <code>get24ptBlueButton()</code> and
+            <code>get30ptBlueButton()</code>, and have each of these
+            methods call <code>getButton()</code> passing the correct
+            arguments.
+        </p>
+    <h4>Overloaded Methods</h4>
+        <p> Finally, a third option would be to write three different
+            methods, but to name all three methods <code>getButton()</code>.
+            For the vast majority of your buttons&mdash;those blue, 24 point
+            ones&mdash;you could call the method defined like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton getButton(String text) { }
+        </p>
+        <p> For those times when you need a blue button, but
+            in a different size, you can call the method defined like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton getButton(String text, int fontSize) { }
+        </p>
+        <p> Finally, for the time when you <code>really</code>
+            need 10 point yellow buttons, you can use the "full-featured"
+            version of <code>getButton()</code> which is defined like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton getButton(String text, int fontSize, Color bColor) { }
+        </p>
+    <h3>Defining and Refining getButton()</h3>
+        <p> It might seem like this is a lot of extra work, just
+            to make calling a few methods a little simpler. That turns out,
+            however, not to be the case. Once you have defined the
+            "full-featured" version of <code>getButton()</code>,
+            the other versions just call that version to get their actual
+            work done. Both overloaded methods are only a single line long.
+        </p>
+        <p> Here is the single-argument version of <code>getButton()</code>
+            that you can add to <b>ButtonFactory.java</b>:
+        </p><p class="code" style='font-size:1.25em;'>
+            public static JButton getButton(String text)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return getButton(text, 14, Color.BLUE);<br>
+            }
+        </p>
+        <p>Here is the two-argument version:</p>
+        <p class="code" style='font-size:1.25em;'>
+            public static JButton getButton(String text, int fontSize)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return getButton(text, fontSize, Color.BLUE);<br>
+            }
+        </p>
+    <h3>Using Overloaded getButton()</h3>
+        <p> Using these overloaded <code>getButton()</code>
+            methods is <b>much easier on the users</b> of your class than
+            having them try to remember the names of several different
+            button-creation functions, or having them pass three arguments
+            for every button, especially when most of the buttons use
+            the same arguments.
+        </p>
+        <p> Furthermore, when you use overloaded methods
+            like this, if your manager decides that those 90% of your
+            buttons should have been green instead of blue, you only have to
+            change one function. If you used the generic
+            <code>getButton()</code> to create your buttons, you'll have to
+            change the actual arguments used for every button.
+        </p>
+        <p>Here's another version of our sample program, this one named
+            <b>OverloadedButtons.java</b>, that uses these three versions
+            of <code>getButton()</code> to create different buttons like
+            this:<br>
+            <img src="images/ob02.png" class="inlineCenter" alt="Creating three buttons in MakeButtons.java.">
+            When the program runs it looks like this:<br>
+            <img src="images/ob01.png" class="inlineCenter" alt="Running the MakeButtons applet in appletviewer">
+            Of course, since you have the program in this chapter's
+            code folder, you can compile it and run it yourself, once you've
+            finished enhancing the <code>ButtonFactory</code> class.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Overloaded Method Summary
+        </p>
+        <ul>
+            <li>Methods in the same class <b>may have the same name</b>,
+                provided that the number of arguments or the order of
+                arguments differ. Such methods are called <b>overloaded
+                methods</b>.
+            </li>
+            <li>The method name, type and order of arguments is known
+                as the <b>method signature</b> and it is used to determine
+                which of several identially named methods is called when
+                a request is made.
+            </li>
+            <li>Although the <b>return type</b> of a method is not part
+                of its signature <b>for purposes of overloading</b>, you generally
+                should used the same return type for all such methods.
+            </li>
+            <li>When a <b>method is called</b>, the actual arguments are matched
+                to each possible method to determine which one to invoke. The
+                number of parameters must be the same for a match to occur. If
+                the types of the arguments are <b>an exact match</b> to the
+                method signature, that method is preferred.
+            </li>
+            <li>If an exact match
+                cannot be found, then any automatic implicit conversions are
+                applied to attempt to find a match. When attempting such
+                conversions, <b>only widening conversions</b> which would
+                not result in a loss of information, are attempted.
+            </li>
+            <li>Overloaded methods are useful because they can
+                <b>simplify the interface</b> of your class for those who
+                use it.
+            </li>
+
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <script>doEmail();</script><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

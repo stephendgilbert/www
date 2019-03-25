@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>1.6&mdash;ACM ConsoleProgram</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner10">
+        <img id='lessonLogo' src='../images/i.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 1.6</p>
+        <p id='lessonTitle'>ACM ConsoleProgram</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+         <img src="images/acm.gif" class="right" style='width:275px;' alt="A program created with the ACM class libraries.">
+       <b><span class='cap'>T</span>oday, Java is the most popular language for
+        teaching computer science</b>, especially for introductory classes like
+        CS 170.
+        In 2003-2004, the College Board moved the Advanced Placement Computer
+        Science program to Java, from C++. Most universities, (UCI, Berkeley, Stanford,
+        etc.) use Java for at least some, (if not the majority), of their courses.
+        </p>
+
+        <p> Many schools, though, have discovered that Java, which was designed with the
+            commercial marketplace in mind, isn't really ideal for teaching beginning
+            programmers the fundamental concepts they'll need to master. Specifically,
+            instructors have complained that Java is too complex, and too unstable.
+        </p>
+        <p> Responding to these complaints, the Education Board of the Association for
+            Computing Machinery, (ACM),
+            set up the ACM Java Task Force (JTF) in Fall 2003, and charged them with the task of:
+        </p>
+
+        <ul>
+            <li>reviewing the Java language, APIs, and tools from the perspective
+                of introductory computing education.
+            </li>
+            <li>developing a stable collection of pedagogical resources to make it
+                easier to teach Java to first-year computing students without having
+                those students overwhelmed by its complexity.
+            </li>
+        </ul>
+        <p> Under the leadership of Eric Roberts from Stanford, the JTF released the
+            first version of the ACM libraries in February 2005. We'll be using
+            version 2.0 in this class, maintained on Roberts' Stanford Web site.
+            As we go through the semester, I'll show you how to use these
+            libraries to create some interesting programs.
+            We'll start, though, by looking at the ACM <b>program</b>
+            package of classes.
+        </p>
+        <div class='info'>
+        <p>
+            <b><img src="images/acmlogo.gif" class="right" alt="The ACM logo.">
+                <i>What is the ACM?</i></b><br>
+                "The ACM, the Association for Computing
+                Machinery, is an international scientific and educational organization
+                dedicated to advancing the arts, sciences, and applications of
+                information technology. With a world-wide membership of more than 80,0000,
+                ACM is a leading resource for computing professionals and students
+                working in the various fields of Information Technology, and for
+                interpreting the impact of information technology on society."
+                <br><br>
+                Visit the ACM Web site, <a href="http://www.acm.org/" target="_blank">
+                <b>http://www.acm.org</b></a> for more information, or to join up.
+                Student memberships start at about $20 a year.
+        </p>
+        </div>
+    <h2>The ACM Program Classes</h2>
+        <p> <b><span class='cap2'>W</span>hen you first start programming in Java</b>,
+            there are certain concepts
+            that are fairly natural and easy to explain, and others that are
+            difficult to grasp, even after you are fairly proficient in the
+            language. One of those difficult-to-grasp topics is the fact that
+            Java <b>doesn't</b> have a separate facility for <b>programs</b>.
+            Instead, you can stick a <code>main()</code> method into any class,
+            and turn that class into a program. That's what we did in the last
+            chapter.
+        </p>
+        <p> When you add a <code>main()</code> method to a class, though,
+            that class doesn't <b>really</b> turn into a program. The
+            <code>main()</code> method can't access any of the instance
+            variables in the class, or call any of the regular (non <code>static</code>)
+            methods; it's really a very awkward mechanism, that isn't
+            at all object-oriented.
+        </p>
+
+        <p> Applets, on the other hand, <b>are</b> very object-oriented: your browser
+            creates an instance of your class. All of the methods you write have
+            access to both the class instance variables and to the other methods
+            in the class. The problem with applets, though, is that you have to
+            run them through a Web browser and have to create an extra source
+            file, the HTML page that loads the applet.
+        </p>
+        <p> "Wouldn't it be nice", the JTF folks said, "if we could have programs
+            that were as simple as applets, and that worked when run as both
+            an application and as an applet?"
+        </p>
+        <p> The ACM program classes, shown here, do just that:
+            <img src="images/acm06.gif" class='inlineCenter' alt="The ACM program hierarchy.">
+            This <b>hierarchy</b> of classes allows you to easily write programs
+            that can be run both as applets, and as applications. Also, by
+            changing just one line of code, you can change the "input style"
+            from console-mode to dialog-based. (You can
+            <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/javadoc/student/index.html" target="_blank"><b>read the documentation</b></a> for all of the
+            classes in the ACM Library on the
+            <a href="http://www-cs-faculty.stanford.edu/%7Eeroberts/jtf/index.html" target="_blank"><b>Java Task Force Web site</b></a>.)
+        </p>
+    <h3>External Libraries</h3>
+        <p> When you write a traditional console program, much of the code
+            that your program uses is contained in collections of classes
+            known as <b>libraries</b>. When you write <code>System.out.println()</code>,
+            for instance, the code for the <code>System</code> class and
+            the code for the <code>PrintStream</code> class is located
+            in a library. In Java, these different libraries are placed in special zip files
+            known as Java Archives or <b>JAR</b> files. The standard
+            Java classes are available as part of the JRE.
+        </p>
+    <h4>The Classpath</h4>
+        <p> Internally, Java uses
+            something called the <b>classpath</b> (or <b>build path</b>) to know
+            which libraries or folders to search for additional classes.
+            DrJava takes care of this for you when you use only
+            the classes available with the JRE.
+        </p>
+        <p> When you use additional library classes (like
+            we'll do with the ACM JTF class libraries this week), you have
+            to let DrJava "know" about this additional code. Normally,
+            to do this, you can add the file containing the library to
+            DrJava's <b>Extra Classpath</b> setting in the Preferences
+            window. For this class, though, I've included the ACM
+            library code <b>inside</b> the customized <b>OCDJ.jar</b>
+            version of DrJava that we're using for CS 170. That way you
+            don't have to do <b>anything extra</b> to create ACM programs.
+        </p>
+    <h2>ACM Console Programs</h2>
+        <p><b>ACM console programs</b> have almost exactly the same organization
+            as the traditional console programs you wrote in the last
+            section. To see what the differences are I'll "recreate"
+            your first console application as a simple ACM program named
+            <b>MyFirstACMConsoleApp</b>. If you want, you can open Drjava
+            and follow along, but I won't collect this program.
+        </p>
+    <h3>The Class Header</h3>
+        <p> The class header for <b>MyFirstACMConsoleApp</b>, on line 6 in the screenshot
+            below, looks like this:
+            <img src="images/d01.png" class='inlineCenter' alt="The class header for FirstApp.java.">
+            As you can see, the only difference between this class, and
+            the traditional console program, <b>MyFirstConsoleProgram</b>,
+            that you saw in the last chapter, is the last phrase,
+            <code>extends ConsoleProgram</code>.
+            You already met the <code>extends</code> keyword when you looked
+            at the <code>Applet</code> class in Chapter 1.
+        </p>
+        <p> As you'll recall,
+            the <b>extends</b> keyword means that what
+            precedes it (in this case the <b>public class MyFirstACMConsoleApp</b>),
+            adds something to, or builds upon, what follows it
+            (in this case, something called <b>ConsoleProgram</b>).
+            The real question is, "What's a <b>ConsoleProgram</b>, and
+            where does it come from?"<br>
+            <img src="images/ConsoleProgramLineage.gif" class='inlineCenter' alt="The ConsoleProgram JavaDocs.">
+            Like <code>Applet</code>, <code>ConsoleProgram</code> is a class,
+            but instead of being part of the built-in JRE System classes,
+            it is one of the classes supplied with the <b>ACM Class
+            Libraries</b>. As you can see from the Javadocs, the
+            <b>fully qualified name</b> of this class is:
+            <code>acm.program.ConsoleProgram</code>.
+        </p>
+        <p> In Java, you recall, a <b>package</b> describes the "place"
+            where the specific class we want to use is stored. In this case,
+            the <code>ConsoleProgram</code> class is in the package,
+            <b>acm.program</b>. These classes are <i>physically</i> stored
+            in the archive (or zip) file, <b>acm.jar</b>. In our case,
+            they have been incorporated into the DrJava JAR file, so
+            that DrJava can locate the class
+            when it goes looking for a package it needs.
+        </p>
+    <h3>Import Statements Again</h3>
+        <p> Since we told the compiler that <code>MyFirstACMConsoleApp
+            extends ConsoleProgram</code>, we must also tell it
+            <b>where to find</b>
+            the <code>ConsoleProgram</code> class. We <i>could</i> do that
+            <b>explicitly</b> by writing:
+        </p>
+        <p class="code" style='font-size:1.25em'>
+            public class MyFirstACMConsoleApp extends acm.program.ConsoleProgram
+        </p>
+        <p> but that would be kind of tedious. Instead, we can just add this
+            line to the top of our class file: <br>
+            <img src="images/import.gif" class='inlineCenter' alt="Importing the program classes.">
+            Now, when the Java compiler encounters the name
+            <code>ConsoleProgram</code>,
+            it will look first in the <b>acm.program</b> package to locate the
+            class. If it can't find it there, then it issues an error.
+        </p>
+        <div class='info'>
+        <p> This particular form of the <b>import</b> statement is called a
+            <b>wildcard</b> import because it makes <b>all</b> of the classes in
+            the package accessible to your program. Instead, you could use a
+            <b>specific</b> import statement like this:
+            <br><br>
+            <span class='code' style='font-size:1.25em'>import acm.program.ConsoleProgram;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <br><br>
+            to make sure that only the <code>ConsoleProgram</code> was imported. Many
+            programmers prefer to use specific rather than wildcard imports. However,
+            if your program uses a lot of classes from the same package, it does
+            make the <b>import</b> section of your program fairly large.
+        </p>
+        </div>
+    <h3>The run() Method</h3>
+        <p> Instead of a <code>main()</code> method, ACM console programs
+            use a simpler <code>run()</code> method as the program starting point:<br>
+            <img src='images/run.png' class='inlineCenter' alt='The ACM run() method.'>
+            Notice that the <code>run()</code> method (unlike the <code>main()</code>
+            method in a traditional console program):
+        </p>
+        <ul>
+            <li>does <b>not</b> use the <code>static</code> modifier.
+            </li>
+            <li>does not have any parameters, like <code>String[] args</code>
+                in the <code>main()</code> method parameter list.
+            </li>
+        </ul>
+        <p> You may have also noticed that the statements <b>inside</b> the
+            <code>run()</code> method look a little different than those
+            from <b>MyFirstConsoleProgram</b>. Let's look at that now.
+        </p>
+
+    <h3>ACM Console Output</h3>
+        <p> <img src='images/sumdigits.gif' class='right' alt='An ACM Console program.'>
+            In ACM console programs, you <b>don't</b> use the
+            traditional <code>System.out</code> object to write your
+            output, since <code>System.out</code> prints to the
+            <b>system console</b>, while ACM programs write to a
+            graphical console, which uses an independent window, and
+            which <i>can</i> be displayed as an applet in a Web page.
+        </p>
+        <p> To display text output in ACM console programs, each program
+            comes with an <code>IOConsole</code> object that knows how to
+            do both input and output. Instead
+            of using one object for input and a different one for output,
+            ACM console programs can use a single object for both purposes.
+        </p>
+        <p> In fact, though, ACM programs make things even easier. Instead
+            of using the <code>IOConsole</code> class, the <code>ConsoleProgram</code>
+            class itself also has methods for both input and output, so
+            you don't need to use a separate I/O object at all, you can just
+            ask your "program object" to do the printing for you. To use the
+            "currently executing object" as the receiver for your message,
+            just use the keyword <code>this</code>.
+        </p>
+        <p> All of the ACM <b>Program</b>
+            classes have two methods for sending output to the console:
+        </p>
+        <p class="code" style='font-size:1.25em'>
+            void print(any-type parameter)<br>
+            void println(any-type parameter)
+        </p>
+
+    <h4>Printing Methods</h4>
+        <p> These two methods work just like the <code>print()</code>
+            and <code>println()</code> methods from <code>System.out</code>
+            except that you can use <code>this</code> instead of
+            <code>System.out</code> as the receiver. In fact, though,
+            <b class='ry'>you don't need to precede them with anything at all</b>.
+            If you don't supply a receiver when calling a method, then
+            <code>this</code> is <i>assumed</i> automatically.
+        </p>
+        <p> That means, you can just write
+            either <code>print()</code> or <code>println()</code>,
+            passing the method a <b>single</b> parameter, which can be of
+            (almost) <b>any</b> kind or type. The parameter (or argument)
+            that you pass is converted to a "human-readable" text format,
+            called a <b>String</b>, and then displayed on the program's
+            <b>console</b> window.
+        </p>
+
+        <p> Here's and example that uses both <code>print()</code>
+            and <code>println()</code>:
+        </p>
+        <p class="code" style='font-size:1.25em'>
+            print("I am ");<br>
+            print(59);<br>
+            println(" years old.");
+        </p>
+        <p> Just as with <code>System.out</code>, the difference between
+            <code>print()</code> and <code>println()</code>,
+            is that <code>println()</code> adds a <b>newline</b> to the
+            end of its output, so that the next time you use
+            <code>print()</code> or <code>println()</code>, the new output
+            appears at the beginning of the <b>following</b> line.
+        </p>
+
+        <p> You can also call
+            <code>println()</code> with no arguments, if you just want to
+            add a "blank" line on the console.
+        </p>
+    <h3>Running ACM Programs as Applets</h3>
+        <p> Because ACM programs are <b>both</b> applications <b>and</b>
+            applets, you have a choice when you run them. <br>
+            <img src='images/acm-run.gif' class='inlineCenter' alt='Running ACM programs.'>
+            If you choose
+            <b>Run Document as Applet</b>, then you'll see something like this:<br>
+            <img src='images/acm-run02.gif' class='inlineCenter' alt='Running ACM programs.'>
+        </p>
+    <h3>The ACM Program main() Method</h3>
+        <p> When you run an ACM program from inside DrJava, the IDE does some extra
+            work that allows the <code>Program</code> class <code>main()</code> method
+            to run your code. Remember, <b class='ry'>all</b> Java applications
+            (but not applets), must define <b>one</b> method named <code>main()</code>.
+        </p>
+        <p> If you want to run an ACM <code>ConsoleProgram</code>s <b>outside</b>
+            of DrJava, you can add your own <code>main()</code> method, in addition
+            to the regular ACM <code>run()</code> method. Here's what the
+            structure of the ACM <code>main()</code> method looks like:
+            <img src="images/acm-main.png" class='inlineCenter' alt="MyFirstACMConsoleApp.java main method.">
+            While the ACM <code>main()</code> method <b>header</b> is exactly the
+            same as every <code>main()</code> method you've seen up
+            until now, the statements in the body are quite
+            a bit different. Instead of carrying out actions,
+            (like printing or reading user input), it simply:
+        </p>
+        <ul>
+            <li>creates a program "object" using its constructor</li>
+            <li>then tells the program object to <code>start()</code>
+                running.
+            </li>
+        </ul>
+        <p> Every ACM program (that you want to run as an application outside of DrJava),
+            will have this same basic structure. You'll just change the
+            name of the class. If you want to run only as an applet, or, if
+            you want to use it inside DrJava, then you don't need the
+            <code>main()</code> method.
+        </p>
+    <h4>Problems with main()</h4>
+        <p><img src='images/girls.png' class='right' alt='Two surprised girls.'>
+            If you're a conscientious student comparing the code you see
+            in <b>MyFirstConsoleProgram</b> with
+            the code you see here, you're probably thinking:
+        </p>
+        <p class='redbox' style='color:crimson;font-weight:bold;font-size:large;background-color:lightyellow;'>
+            Why does MyFirstACMConsoleApp<br>look <i>SOOO</i> different?
+        </p>
+
+        <p> Instead of creating a "program object" and
+            then telling that object to start running, simple console programs
+            put all of the program statements into the <code>main()</code>
+            method itself. <i>Much</i> simpler, huh?
+        </p>
+        <p> Well, <b>not exactly</b>. One difficult-to-grasp Java topic is the
+            fact that Java <b>doesn't</b> have a separate facility for
+            <b>programs</b>. Instead, you can stick a <code>main()</code> method
+            into any class, and turn that class into a program, (kind of). That
+            is what many textbooks do.
+        </p>
+
+        <p> When you add a <code>main()</code> method to a class, though,
+            that class doesn't <b>really</b> turn into a program. The
+            <code>main()</code> method can't access any of the data elements
+            (<i>instance variables</i>) in the class, or call any of the regular
+            (non <code>static</code>) methods; it's really a very awkward
+            mechanism, that <b>isn't at all object-oriented</b>.
+        </p>
+
+        <p> Applets, and ACM programs on the other hand, <b>are</b> very
+            object-oriented. With an applet, your browser
+            creates an instance of your class. All of the methods you write have
+            access to both the class instance variables and to the other methods
+            in the class. With the ACM program classes we get the best of
+            both worlds: simple input and output in a graphical console window.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            ACM Console Program Summary
+        </p>
+        <ul>
+            <li>The <b>Association for Computing Machinery</b> (ACM) is the leading
+                international academic, scientific and professional organization
+                for computing professionals and computing education.
+            </li>
+            <li>The ACM's 2003 <b>Java Task Force</b> under the leadership of
+                Stanford's Eric Roberts, created a library of classes
+                designed for university students learning Java.
+            </li>
+            <li>To use an <b>external library</b>, like the ACM classes, you need to
+                add them to your JVM <b>classpath</b>. (Our customized version
+                of DrJava has this done already.)
+            </li>
+            <li> To write an <b>ACM console program</b>, you must <code>import</code> the
+                classes in the <code>acm.program</code> package, and
+                <code>extend</code> the <code>ConsoleProgram</code> class.
+            </li>
+            <li> Instead of writing a <code>main()</code> method, put
+                your code inside a <code>run()</code> method. The method
+                does not need to be <code>static</code> and you do not need
+                to declare a <code>String[] args</code> parameter.
+            </li>
+            <li>Instead of using <code>System.out.print()</code> to display data,
+                you can write <code>this.print("data")</code> to use your
+                program itself as the receiver of your <code>print</code>
+                request.
+            </li>
+            <li> If you like, when sending messages to the currently active
+                object (<code>this</code>), you may <b>omit the receiver</b> and simply
+                call the method directly, like <code>print("data");</code>.
+            </li>
+            <li> You may add a <code>main()</code> method to your ACM program,
+                but this is <b>only</b> necessary if you wish to run it <b>outside</b> the
+                DrJava environment. The ACM programs in this book won't include
+                a <code>main()</code> method.
+            </li>
+            <li> You can run your ACM programs inside their own graphical
+                window, or run them as applets, which can be embedded in a
+                Web page.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

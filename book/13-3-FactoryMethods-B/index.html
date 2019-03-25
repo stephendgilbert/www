@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs17012.css" type="text/css" rel="stylesheet">
+
+    <title>13.3&mdash;Object Factories</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner07">
+        <img id='lessonLogo' src='../images/f.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 13.3</p>
+        <p id='lessonTitle'>Object Factories</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <img src='images/factory.png' class='right' alt='A factory icon.'>
+            <b><span class="cap">O</span>ne common use for
+            <code>static</code> methods is to
+            create <i>object factories</i></b>, methods that can be
+            used in place of more complex constructors. This is
+            especially useful, when it is difficult for you,
+            the programmer, to know exactly <b>how</b> to construct
+            an object.
+        </p>
+        <p> Let me give you an example. Up until now in this class,
+            we've used the <code>String.format()</code> and the
+            <code>System.out.printf()</code> methods to produce formatted
+            text. However, Java has a <b>second</b> way of doing that which
+            is much more flexible: by using the formatting classes in
+            the <code>java.text</code> package:<br>
+            <img src='images/numberformat01.png' class='inlineCenter' alt='Constructing a NumberFormat object.'>
+            Notice:
+        </p>
+        <ul>
+            <li>I created my <code>NumberFormat</code> "formatting object"
+                by <b>calling a method</b> in the <code>NumberFormat</code> class,
+                named <code>getCurrencyInstance()</code>.
+            </li>
+            <li>This is an example of a <b>factory</b> method, used
+                <b>instead of</b> a constructor.
+            </li>
+            <li>With the factory method, I didn't have to specify all of the
+                messy details, such as the currency symbol, the number of
+                decimal places and so on. The factory took care of the
+                details for me.
+            </li>
+        </ul>
+        <p> Actually, the situation is even more interesting than that. How,
+            for instance, do you suppose Java knew that I wanted a dollar sign
+            for my currency, and commas for the separators? Because I'm running
+            the program in the USA on an American configured computer.
+        </p>
+        <p>
+            If I change those defaults in the Windows Control Panel, so that
+            the program "thinks" that I am using the computer in French speaking
+            Switzerland, (for instance):<br>
+            <img src='images/numberformat02.png' class='inlineCenter' alt='A Swiss Franc currency.'>
+            the <code>getCurrencyInstance()</code>
+            method is "smart" enough to construct a <code>NumberFormat</code>
+            object that obeys the local conventions in that environment. That would be
+            a lot of work using a conventional constructor.
+        </p>
+    <h2>Object Factories by Example</h2>
+        <p> <img src="images/f03.gif" class="inlineCenter" alt="The Rock of Ages factory in Vermont where the Vietnam Memorial was built.">
+            Object factory methods are a useful technique that you should
+            be aware of and able to implement. Suppose, for instance, that you have
+            an application that contains many buttons, and that all of the buttons
+            must be blue, and use 14-point type.
+        </p>
+        <p> You <b>could</b> use the regular methods
+            supplied by the <code>JButton</code> class to create each
+            <code>JButton</code> object, but that would mean changing the
+            color and setting the font <b>for every single button</b>
+            that you create.
+        </p>
+    <h3>Creating an Object Factory Method</h3>
+        <p> A better idea is to create an <b>object factory method</b> to
+            construct your buttons for you. To create a factory method
+            you follow these three steps:
+        </p>
+        <ol>
+            <li class="d">In your method header, use a <b>return type</b> of
+                <code>JButton</code>. If you were to create some other
+                type of object, you'd put that return type there instead.
+            </li>
+            <li class="d">Inside your method, create a local <code>JButton</code>
+                object using the <code>new</code> operator and then change
+                its font and text color as normal.
+            </li>
+            <li class="d">Use the <code>return</code> statement to return your modified
+                <code>JButton</code> object.
+            </li>
+        </ol>
+        <p> Factory methods are almost always <code>static</code> methods
+            as well, so that you don't need an instance to use its services.
+        </p>
+    <h3>The ButtonFactory</h3>
+        <p> Let's create a class called <b>ButtonFactory</b> that contains a
+            single factory method named <code>getBigBlueButton()</code>.
+            The skeleton for the <code>ButtonFactory</code> class
+            should look something like this:<br>
+            <img src="images/bf01.png" class="inlineCenter" alt="The ButtonFactory skeleton">
+            Note that the only <code>import</code> statements we need are
+            <code>java.awt</code> and <code>javax.swing</code>,
+            and that the class doesn't <code>extend</code> anything. (If we wanted to use
+            the <code>ButtonFactory</code> class in many projects, though,
+            we'd probably stick it inside a package, so that it could be
+            imported.)
+        </p>
+    <h4>Method Header</h4>
+        <p> Now, let's write our method header. Remember that this will
+            be a <code>public static</code> method, and it will have to
+            return a <code>JButton</code>. Since our method doesn't
+            take any arguments, at this point, the method
+            should look like this:
+            <img src="images/bf02.png" class="inlineCenter" alt="The basic structure of the program.">
+        </p>
+    <h4>Manufacture the Object</h4>
+        <p> Next, inside the method, we'll use the regular <code>JButton</code>
+            constructor, to create the <code>JButton</code> we'll be
+            returning, like this:
+            <img src="images/bf03.png" class="inlineCenter" alt="Creating the local JButton object.">
+        </p>
+    <h4>Customizing the Object</h4>
+        <p> Next, use any of the normal methods to customize the object
+            as needed. In our case those customizations include a
+            blue foreground and a 14 point font:
+            <img src="images/bf04.png" class="inlineCenter" alt="Setting the button attributes.">
+        </p>
+    <h4>Deliver the Results</h4>
+        <p> The last step is to use the <code>return</code> statement to
+            send the spiffed up button back to the customer, like this:
+            <img src="images/bf05.png" class="inlineCenter" alt="Returning the button.">
+        </p>
+    <h3>Using getBigBlueButton()</h3>
+        <p> With your factory method, you can create your buttons
+            using <code>getBigBlueButton()</code> in place of using
+            <code>new</code>. Here's an ACM application,
+            <b>BlueButtons.java</b>, that creates three big
+            blue buttons using this method:
+            <img src="images/bb01.png" alt="The BlueButtons app" class="inlineCenter">
+            Notice how the class name, <code>ButtonFactory</code> is
+            used to call the <code>getBigBlueButton()</code> method.
+            Note also that we can use <b>any</b> <code>JButton</code> methods,
+            like <code>setLabel()</code>, on the returned objects.
+        </p>
+        <p> Here's what the program looks like when running:<br>
+            <img src="images/bb02.png" alt="Running the BlueButtons applet in appletviewer" class="inlineCenter">
+            You'll find the program in this chapter's code folder so once you
+            complete this much of <b>ButtonFactory.java</b> you can compile and
+            run it yourself.
+        </p>
+    <h3>But Why Bother?</h3>
+        <p> The real advantage of using a factory method like
+            <code>getBigBlueButton()</code>, instead of using
+            <code>new JButton(...)</code> and the <code>JButton</code>
+            methods, is that next week, when your job specs are changed
+            to require 14 point type instead of 18, or, when the boss
+            decides that buttons using the Jokerman font really aren't all
+            that hip, you have to change only <b>a single line of code</b>.
+        </p>
+        <p> Of course <code>getBigBlueButton()</code> would
+            be a lot more useful if you could tell it what text you wanted
+            to display, or even what color to use. Let's fix it!
+        </p>
+    <h2>Parameters Revisited and Reviewed</h2>
+        <p> As you learned earlier, <b>most methods</b> require
+            additional information to carry out their work. A method
+            that computes square roots, for instance, requires the number
+            to operate on.
+        </p>
+        <p> A method like <code>getBigBlueButton()</code>, would be much
+            more useful if you could specify the text it should contain or
+            other aspects of its behavior. Fortunately, that's very easy to
+            accomplish by writing your method so that it contains
+            <b>parameters</b>, and then <b>passing different argument
+            values</b> when you actually call the method.
+        </p>
+        <p> You first met parameters back in the aptly
+            named <i>Section 5.2&mdash;Passing Parameters</i>. Some of this
+            material is just a review of that information, but goes into
+            a little more depth.
+        </p>
+    <h3>What are Parameters?</h3>
+        <p> A <b>formal parameter</b> is a local variable, specifically
+            designed to store information that is sent to a method. A
+            regular local variable, you recall, is declared like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void anyMethod()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">int aLocalVar = 32;</span><br>
+            }<br>
+        </p>
+        <p> The variable <code>aLocalVar</code> is a "bucket" that holds
+            a temporary integer. The variable can only be seen inside the
+            method, and the memory used by the variable is reclaimed once
+            the method ends.
+        </p>
+        <p> A formal parameter works exactly like this local variable
+            <b>except that</b>:
+        </p>
+        <ul>
+            <li>it is declared <b>inside the parameter list</b>, instead of
+                inside the method body.
+            </li>
+            <li>it is <b>implicitly</b> initialized, rather than explicitly.
+            </li>
+        </ul>
+        <p> After adding a formal parameter to <code>anyMethod()</code>,
+            it would look like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void anyMethod(<span class="red">int aFormalParam</span>)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int aLocalVar = 32;<br>
+            }<br>
+        </p>
+    <h4>Initializing Formal Parameter</h4>
+        <p> To initialize the formal parameter <code>aFormalParam</code>,
+            you <b>pass</b> different values when <b>calling</b> the
+            method. These values are called <b>actual parameters</b>,
+            <b>actual arguments</b>, or just <b>arguments</b>.
+        </p>
+        <p> For instance, if you call <code>anyMethod()</code> like
+            this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            anyMethod(13);
+        </p>
+        <p> the value 13 is copied into the formal parameter,
+            <code>aFormalParam</code>, <b>just as if</b> the definition
+            of <code>anyMethod()</code> looked like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void anyMethod(int aFormalParam)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">aFormalParam = 13;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int aLocalVar = 32;<br>
+            }<br>
+        </p>
+        <p> Of course, the <b>big</b> difference is that <code>aLocalVar</code>
+            will have the <b>same</b> value each time the method is called,
+            but <code>aFormalParam</code> can take on a <b>different value</b>
+            each time.
+            This means that by calling <code>anyMethod()</code>
+            using different actual arguments, you can <b>customize</b> the way that
+            <code>anyMethod()</code> behaves.
+        </p>
+    <h3>Improving the ButtonFactory</h3>
+        <p> Let's see how this works by writing a few new and
+            improved versions of the <code>ButtonFactory()</code>
+            factory methods. We'll start with a single-parameter
+            method that allows users to specify the text displayed
+            by their custom buttons.
+        </p>
+        <p> Writing a method that has a single parameter is
+            as easy as 1-2-3. Here are the steps:
+        </p>
+    <h4>Step 1 : Method Header</h4>
+        <p> The first step is to modify your method header so
+            that you can supply the text necessary to customize your
+            buttons. That means you'll have to declare a
+            <code>String</code> variable to act as the formal
+            parameter in the <code>getBigBlueButton()</code> argument list.
+        </p>
+        <p> The previous definition of <code>getBigBlueButton()</code>
+            looked like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public static JButton getBigBlueButton()
+        </p>
+        <p> The new, improved version looks like this:</p>
+        <p class="code" style='font-size:1.25em;'>
+            public static JButton getBigBlueButton(<span class="red">String text</span>)
+        </p>
+    <h4>Step 2 : Method Body</h4>
+        <p> Inside the method, use the new formal parameter to
+            initialize the local <code>JButton</code> object. The previous
+            version looked like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton b = new JButton("I'm big, bad, &amp; blue");
+        </p>
+        <p> Using the formal parameter inside the method body,
+            the new version looks like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton b = new JButton(<span class="red">text</span>);
+        </p>
+    <h4>Step 3 : Call the Method</h4>
+        <p> When you call your method, pass the <b>actual</b> values you
+            want to use. The <b>BlueButtons</b> program, for instance,
+            used the <code>init()</code> method to change the text of
+            two <code>JButton</code>s like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            b1.setLabel("I'm FIRST");<br>
+            b2.setLabel("I'm BLUEST");
+        </p>
+        <p> Using the new, improved version of <code>getBigBlueButton()</code>
+            you can perform the initialization in the factory method,
+            like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JButton b1 = ButtonFactory.getBigBlueButton("I'm FIRST");<br>
+            JButton b2 = ButtonFactory.getBigBlueButton("I'm BLUEST");
+        </p>
+    <h3>Multiple-Parameter Methods</h3>
+        <p> When a method has multiple formal parameters, the syntax for
+            declaring those arguments is a little different than the syntax
+            for declaring multiple local variables.
+        </p>
+        <p> For instance, if your method contains two <code>int</code>
+            local variables named <code>x</code> and <code>y</code>,
+            you can declare those variables like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            int x = 3, y = 2;
+        </p>
+        <p> Note that the keyword <code>int</code> <b>is not</b> repeated
+            for each variable. When you declare two <code>int</code>
+            <b>parameters</b> named <code>x</code> and <code>y</code> however,
+            you <b>must supply a type for each parameter</b>, even if the type
+            of all parameters is the same. Here's an example:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            public void anyMethod(int x, int y)
+        </p>
+        <p> Each <b>type-name</b> pair is separated from the others by a
+            comma; thus, if you have two arguments, you need one comma,
+            if you have three arguments, you need two commas, and so on.
+        </p>
+    <h3>The getButton() Method</h3>
+        <p> Let's put this information to work creating a factory method
+            named <code>getButton()</code>, similar to
+            <code>getBigBlueButton()</code>, that can make buttons of any
+            color, using any font size.
+        </p>
+        <p> You already saw how to change <code>getBigBlueButton()</code>
+            so that each button it produced had a customized inscription.
+            What information do you need to pass to <code>getButton()</code>
+            so that it can perform these added tasks?
+        </p>
+        <p>You need to pass in three pieces of information:</p>
+        <ol>
+            <li>The text to display on the button. For that you'll
+                use a <code>String</code> parameter, just like in
+                <code>getBigBlueButton()</code>.
+            </li>
+            <li>The size of the font. For this, you'll use an
+                <code>int</code> formal parameter.
+            </li>
+            <li>The color of the text. For this, you'll use a <b>Color</b>
+                object.
+            </li>
+        </ol>
+        <p> Here's a version of <code>getButton()</code>  that meets those
+            requirements :
+            <img src="images/bf06.png" class="inlineCenter" alt="The getButton factory method.">
+            The red arrow points to the three formal parameters where they are
+            declared, and the blue arrows point to the locations where
+            each parameter is used.
+        </p>
+    <h3>MoreButtons.java</h3>
+        <p> Here's a short program
+            <b>MoreButtons.java</b>, that uses the <code>getButton()</code>
+            method to create a couple of different kinds of buttons and
+            then displays some information about them when clicked:<br>
+            <img src="images/mb01.png" class="inlineCenter" alt="The getButton factory method.">
+            You can find the code in this chapter's code folder so you can run it
+            once you've completed the <code>getButton()</code> method.
+            Here's what the program looks like running on my computer:<br>
+            <img src="images/mb02.png" class="inlineCenter" alt="Using the getButton factory method.">
+        </p>
+    <h2>The Singleton Pattern</h2>
+        <p><b><span class='cap2'>A</span>nother common use for a factory
+            method</b> is to restrict the number of objects of a given
+            class that can exist at any given time. The most common
+            restriction is when you want <b>only one instance</b> to
+            exist at any given time. You may want one object
+            (for instance a <code>Game</code> object), to coordinate
+            actions across the system.
+        </p>
+        <p> <img src='images/design-patterns.jpg' class='right' alt='The cover of Design Patterns.'>
+            The most common way to do that is to implement what is
+            known as <b>the singleton pattern</b>. I've mentioned before that
+            a pattern is just a recipe for commonly occurring design. In
+            software, one of the most influential books of the last
+            few years has been <b><i><a href='http://en.wikipedia.org/wiki/Design_Patterns' target='_blank'>
+            Design Patterns: Elements of Reusable Object-Oriented Software</a></i>
+            </b> by Gamma, Helm, Johnson and Vissides, (often referred to as
+            the "Gang of Four" or GOF).
+        </p>
+        <p> They identified 23 classic software
+            design patterns that had often been used in successful
+            object-oriented projects. Along with these designs the book
+            listed the pros and cons of using the design, along with tips
+            and sample code in Smalltalk and C++.
+        </p>
+    <h3>A Singleton Class</h3>
+        <p><img src='images/singleton.png' class='right' alt='A singleton UML diagram.'>
+            The singleton pattern is implemented by creating a class
+            with a method that creates a new instance of the class if
+            one does not exist. If an instance already exists, it simply
+            returns a reference to that object.
+        </p>
+        <p>
+            To make sure that the object cannot be instantiated any other
+            way, the constructor is made <code>private</code>.
+            (Some recommend making the class <code>protected</code> as shown
+            in the UML diagram here with the <code><b>#</b></code> symbol so
+            that the class can be extended and more easily tested.)
+        </p>
+        <p> Here is
+            the simple, traditional or classic version of the singleton code:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            public class Singleton  <br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private static final Singleton instance = new Singleton();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// Prevent instantiation from other classes</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private Singleton() { ... } <br>
+                <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// Return the single instance of the class</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public static Singleton getInstance() <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return instance;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        <p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Factory Method Summary
+        </p>
+        <ul>
+            <li>An object factory is a method that <b>creates and
+                returns</b> an object.
+            </li>
+            <li>Object factories are <b>used in place of constructors</b>
+                to simplify complex construction parameters.
+            </li>
+            <li>Object factory methods are <b>usually defined as
+                static methods</b> since the purpose of the method is
+                to construct and object, and static methods can be called
+                without first creating an object.
+            </li>
+            <li>An object factory first creates an instance of the class
+                desired, then customizes it before it is returned to the
+                caller of the method.
+            </li>
+            <li>A class <b>may have several</b> object factory methods,
+                each returning an instance customized in a special way,
+                such as the <code>NumberFormat</code> methods <code>getCurrencyInstance()</code>,
+                <code>getNumberInstance()</code> and <code>getPercentInstance()</code>.
+            </li>
+            <li>An object factory <b>may take parameters</b> to customize the
+                construction of the object returned.
+            </li>
+            <li>One use for an object factory is to design a <b>singleton
+                class</b>. This is a class that restricts the number of
+                instance that can exist to one. To create a singleton,
+                have the class create a private instance of itself as a
+                <code>static</code> field, provide a <code>private</code>
+                constructor so that instances cannot be created any other
+                way, and then provide a <code>getInstance()</code> method
+                to provide access to the single instance.
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

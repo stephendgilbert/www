@@ -1,0 +1,1384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+	<li> To be able to implement branches and loops </li>
+	<li> To learn how to compare integers, floating-point numbers, and strings
+		</li>
+	<li> To be able to use the Boolean data type </li>
+	<li> To avoid infinite loops and off-by-one errors </li>
+	<li> To understand nested branches and loops </li>
+	<li> To learn how to process text input </li>
+	<li> To implement approximations and simulations </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Control Flow </h1>
+<ul>
+	<li> Computers need to be able to make decisions (branch) </li>
+	<li> Computers are <strong>not</strong> smarter than humans </li>
+	<li> They are faster </li>
+	<li> Loops let us take advantage of this speed </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	The <tt>if</tt> statement </h1>
+<table> <tr>
+<td>
+	<ul>
+		<li> Used to implement a decision </li>
+		<li> Has two parts: a <i>condition</i> and a <i>body</i> </li>
+		<li> Example:
+<pre>if (area &lt; 0)
+   cout &lt;&lt; "Error: Negative area\n";</pre>
+		</li>
+		<li> Body is true <em>only</em> if condition is true </li>
+	</ul>
+</td>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig1.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 1</span> A Decision </p>
+	</div>
+</td>
+</tr> </table>
+</div>
+
+<div class='slide'>
+<h1> The <tt>if</tt> statement </h1>
+	<p> Body may have multiple statements: </p>
+<pre>if (area &lt; 0)
+{
+   cout &lt;&lt; "Error: Negative area\n";
+   length = 0;
+}</pre>
+<ul>
+	<li> <strong>Must</strong> be enclosed in curly braces <tt>{}</tt>
+		<ul>
+			<li> Called a <dfn>block statement</dfn> </li>
+		</ul>
+	</li>
+	<li> Executed sequentially </li>
+	<li> Curly braces may be used with a single statement
+		<ul>
+			<li> It's recommended </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The <tt>if/else</tt> statement </h1>
+<ul>
+	<li> To perform an action if test is true, and a different action in all
+		other cases </li>
+	<li> Add an <tt>else</tt> followed by a statement, or a block:
+<pre>if (area &gt;= 0)
+   cout &lt;&lt; "The side length is " &lt;&lt; sqrt(area) &lt;&lt; "\n";
+else
+   cout &lt;&lt; "Error: Negative area\n";</pre>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig2.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 2</span> <tt>if/else</tt> Statement </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : <tt>if</tt> Statement </h1>
+<div class='syntax'>
+<code>if (<i>condition</i>) <i>statement</i><sub>1</sub>
+if (<i>condition</i>) <i>statement</i><sub>1</sub> else <i>statement</i><sub>2</sub></code>
+	<h3> Example: </h3>
+<pre>if (x &gt;= 0) y = sqrt(x);
+if (x &gt;= 0) y = sqrt(x); else {y = 0; cout &lt;&lt; "Error";}</pre>
+	<h3> Purpose: </h3>
+		<p> Execute a statement if the condition is true. When paired with <tt>else</tt>,
+			execute the second statement if the condition is false. The statement
+			can be a simple statement (ending in a semicolon) or a block
+			statement. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+ : Block Statement </h1>
+<div class='syntax'>
+<code>{
+   <i>statement</i><sub>1</sub>
+   <i>statement</i><sub>2</sub>
+   ...
+   <i>statement<sub>n</sub></i>
+}</code>
+	<h3> Example: </h3>
+<pre>{
+   double length = sqrt(area);
+   cout &lt;&lt; area &lt;&lt; &quot;\n&quot;;
+}</pre>
+	<h3> Purpose: </h3>
+		<p> Group several statements into a block that can be controlled by
+			another statement. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+</h1>
+<h3> Tabs </h3>
+<ul>
+	<li> Use a new indent-level for each nested block </li>
+	<li> Use a tabstop of 2-4 spaces </li>
+	<li> Use an context-sensitive editor, with <i>auto indent</i> </li>
+	<li> Consider converting tabs to spaces when saving </li>
+	<li> Consider a good editor that could do this automatically
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> The Selection Operator </h3>
+<ul>
+	<li> C++'s only ternary operator (cannot be overloaded): 
+		<pre> <i>test</i> ? <i>value1</i> : <i>value2</i> </pre>
+	</li>
+	<li> It <em>is</em> an expression (has a value) </li>
+	<li> E.g.,
+		<pre>y = x &gt;= 0 ? x : -x;</pre>
+		is equivalent to
+<pre>if (x &gt;= 0) y = x;
+else y = -x;</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Relational Operators </h1>
+<ul>
+	<li> Used to compare numbers and strings </li>
+</ul>
+<table class='book'>
+	<tr>
+		<th> C++ </th> <th> Math Notation </th> <th> Description </th>
+	</tr>
+	<tr>
+		<td><tt>&gt;</tt></td> <td>&gt;</td> <td>Greater than</td>
+	</tr>
+	<tr>
+		<td><tt>&gt;=</tt></td> <td>&ge;</td> <td>Greater than or equal</td>
+	</tr>
+	<tr>
+		<td><tt>&lt;</tt></td> <td>&lt;</td> <td>Less than</td>
+	</tr>
+	<tr>
+		<td><tt>&lt;=</tt></td> <td>&le;</td> <td>Less than or equal</td>
+	</tr>
+	<tr>
+		<td><tt>==</tt></td> <td>=</td> <td>Equal</td>
+	</tr>
+	<tr>
+		<td><tt>!=</tt></td> <td>&ne;</td> <td>Not equal</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Relational Operators </h1>
+<ul>
+	<li> Return a <dfn>boolean</dfn> (true or false) </li>
+	<li> <strong>Note:</strong> <tt>=</tt> is used for assignment </li>
+	<li> <tt>==</tt> tests for equality </li>
+	<li> In C++, any zero value is <dfn>false</dfn>; all others are <dfn>true</dfn>
+		</li>
+	<li> Don't do this:
+		<pre>if (x  = 7) ...</pre>
+		<ul>
+			<li> Will <em>always</em> be true </li>
+			<li> <tt>x</tt> will have the value 7 afterwards </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Relational Operators (strings) </h1>
+<ul>
+	<li> These six operators work on instances of the <tt>string</tt> class
+	</li>
+	<li> Do <strong>not</strong> work (as intended) for C-strings
+		(<tt>char*</tt>)! </li>
+	<li> Computed using dictionary order (in a way).  This test:
+<pre>string name = "Tom";
+if (name &lt; "Dick") ...</pre>
+		fails </li>
+	<li> But, in ASCII, upper-case precede lower-case, so
+		<pre>if (name &lt; "dick")</pre>
+		is true </li>
+	<li> Just as in the dictionary, leading substrings appear first:
+		<pre>if (name &lt; "Tomorrow")</pre>
+		is true </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Compile with Zero Warnings </h3>
+<ul>
+	<li> Compiler emits 2 messages:  <i>errors</i> and <i>warnings</i> </li>
+	<li> Errors are fatal; no executable is produced </li>
+	<li> Warnings are not fatal </li>
+	<li> Do <strong>not</strong> accept a warning, unless you can explain and
+		justify it </li>
+	<li> Warnings usually indicate that your thinking isn't quite correct, and
+		may well cause your program to misbehave </li>
+	<li> Endeavor to write code that emits no warnings </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Comparison of Floating-Point Numbers </h3>
+<ul>
+	<li> Float types have limited precision </li>
+	<li> Rounding errors are unavoidable:
+		<pre>sqrt(2) * sqrt(2) == 2</pre>
+		is <dfn>false</dfn>.  
+		<ul>
+			<li> <tt>sqrt(2) * sqrt(2)</tt> is <tt>2.0000000000000004</tt> </li>
+			<li> The default display won't show this; it'll look like <tt>2</tt> </li>
+		</ul>
+	</li>
+	<li> To compare float-types <var>x</var> and <var>y</var>:
+	<div><tt> |<var>x</var> - <var>y</var>| &le; &epsilon; </tt></div>
+	</li>
+	<li> Choose &epsilon; based on magnitude of <var>x</var> and <var>y</var>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Multiple Alternatives </h1>
+<ul>
+	<li> Nested branching can be used to evaluate complex expressions </li>
+	<li> Consider translating a value on the Richter scale to a description:
+<pre>if (richter &gt;= 8.0)
+   cout &lt;&lt; "Most structures fall";
+else if (richter &gt;= 7.0)
+   cout &lt;&lt; "Many buildings destroyed";
+else if (richter &gt;= 6.0)
+   cout &lt;&lt; "Many buildings considerably damaged, some collapse";
+else if (richter &gt;= 4.5)
+   cout &lt;&lt; "Damage to poorly constructed buildings";
+else
+   cout &lt;&lt; "Generally no damage";</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Multiple Alternatives </h1>
+<table>
+	<tr>
+		<td style='vertical-align:top'>
+			<ul>
+				<li> Once a test succeeds, no other tests are performed </li>
+				<li> The final <tt>else</tt> is a default action, if <em>no</em>
+				preceding test is true </li>
+			</ul>
+		</td>
+		<td rowspan='2'>
+			<div class='center'>
+			<script type='text/javascript'>
+			//<![CDATA[
+				image( "fig4.png" )
+			//]]>
+			</script>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style='vertical-align:bottom; text-align:right'>
+			<p class='caption'><span class='blue'>Figure 4</span> Multiple
+			Alternatives </p>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> Multiple Alternatives (order) </h1>
+<ul>
+	<li> Order of tests is important </li>
+	<li> This doesn't work as intended:
+<pre>if (richter &gt;= 4.5)
+   cout &lt;&lt; "Damage to poorly constructed buildings";
+else if (richter &gt;= 6.0)
+   cout &lt;&lt; "Many buildings considerably damaged, some collapse";
+else if (richter &gt;= 7.0)
+   cout &lt;&lt; "Many buildings destroyed";
+else if (richter &gt;= 8.0)
+   cout &lt;&lt; "Most structures fall";
+else
+   cout &lt;&lt; "Generally no damage";</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Multiple Alternatives (<tt>else</tt> req'd) </h1>
+<ul>
+	<li> Independent <tt>if</tt> statements (without the <tt>else</tt>)
+	doesn't work so well in this example:
+<pre>if (richter &gt;= 8.0)
+   cout &lt;&lt; "Most structures fall";
+if (richter &gt;= 7.0)
+   cout &lt;&lt; "Many buildings destroyed";
+if (richter &gt;= 6.0)
+   cout &lt;&lt; "Many buildings considerably damaged, some collapse";
+if (richter &gt;= 4.5)
+   cout &lt;&lt; "Damage to poorly constructed buildings";</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3>The <tt>switch</tt> Statement</h3>
+<ul>
+	<li> Can be used in place of
+		<tt>if/else/else</tt> statements that
+		compare a <i>single integer value</i> for equality:
+<pre>int digit;
+...
+switch(digit)
+{
+   case 1: digit_name = "one"; break;
+   case 2: digit_name = "two"; break;
+   case 3: digit_name = "three"; break;
+   case 4: digit_name = "four"; break;
+   case 5: digit_name = "five"; break;
+   case 6: digit_name = "six"; break;
+   case 7: digit_name = "seven"; break;
+   case 8: digit_name = "eight"; break;
+   case 9: digit_name = "nine"; break;
+   default: digit_name = ""; break;
+}</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3>The <tt>switch</tt> Statement (cont.)</h3>
+<ul>
+	<li> Test cases must be constant integer-types </li>
+	<li> Cases tested in order </li>
+	<li> Selection over after a match is found </li>
+	<li> Use the <tt>break</tt> statement to get out of the
+		<tt>switch</tt> </li>
+	<li> Narrower application than
+		<tt>if</tt>/<tt>else</tt>/<tt>else</tt> statements </li>
+	<li> No faster in modern compilers </li>
+	<li> Only use if improves legibility </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> The Dangling <tt>else</tt> Problem </h3>
+<ul>
+	<li> <tt>else</tt> is matched to the closest preceding <tt>if</tt>
+		</li>
+	<li> Consider this code:
+<pre>double shipping_charge = 5.00; // $5 inside continental U.S.
+
+if (country == "USA")
+   if (state == "HI")
+      shipping_charge = 10.00; // Hawaii is more expensive
+else // Pitfall!
+   shipping_charge = 20.00; // as are foreign shipments</pre>
+	</li>
+	<li> Indentation suggests that the <tt>else</tt> is paired with the
+		test <tt>country == "USA"</tt> </li>
+	<li> Compiler ignores white space </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> The Dangling <tt>else</tt> Problem (cont.)</h3>
+<ul>
+	<li> Use an empty <tt>else</tt>:
+<pre>if (country == "USA")
+   if (state == "HI")
+      shipping_charge = 10.00; // Hawaii is more expensive
+   else;
+else 
+   shipping_charge = 20.00; // as are foreign shipments</pre>
+	</li>
+	<li> Or, use braces:
+<pre>if (country == "USA")
+{
+   if (state == "HI")
+      shipping_charge = 10.00; // Hawaii is more expensive
+}
+else 
+   shipping_charge = 20.00; // as are foreign shipments</pre>
+	</li>
+	<li> Braces are <em>always</em> recommended, to avoid this an other
+		problems </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Nested Branches </h1>
+<ul>
+	<li> Often necessary to nest an <tt>if/else</tt> statement inside
+		another, to decide across several categories </li>
+	<li> Consider the following example, for computing income tax: </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig5.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 5</span> Income Tax
+	Computation </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Nested Branches &mdash; <tt>tax.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "tax.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Boolean Operations </h1>
+<ul>
+	<li> Boolean operations (after George Boole) have Boolean
+		(<var>true/false</var>) expressions as operands </li>
+	<li> Modify or combine conditions into larger, more complex Boolean
+		expressions </li>
+	<li> Two binary operations in C++:
+		<dl>
+			<dt> <tt>&amp;&amp;</tt> </dt>
+				<dd> Logical <i>and</i> </dd>
+				<dd> Is <var>true</var> when both operands are <var>true</var> </dd>
+			<dt> <tt>||</tt> </dt>
+				<dd> Logical <i>or</i> </dd>
+				<dd> Is <var>true</var> when <em>either</em> operand is
+					<var>true</var> </dd>
+		</dl>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (examples) </h1>
+<ul>
+	<li> Following test is true only when both country is "USA", and the
+		weight is &lt; 1
+<pre>if (country == "USA" <span class='blue'>&amp;&amp;</span> weight &lt;= 1)
+   shipping_charge = 2.50;</pre>
+	</li>
+	<li> This test is true if state is either "HI" or "AK":
+<pre>if (state == "HI" <span class='blue'>||</span> state == "AK")
+   shipping_charge = 10.00;</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (flowcharts) </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig6.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 6</span> Flowcharts for
+	<tt>and</tt> and <tt>or</tt> Combinations </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (<tt>bool</tt> type) </h1>
+<ul>
+	<li> C++ has a Boolean type:  <tt>bool</tt> </li>
+	<li> Can be <tt>true</tt> or <tt>false</tt> </li>
+	<li> Useful for storing a value to be used later:
+<pre>bool discounted = country == "USA" &amp;&amp; weight &lt;= 1;
+...
+if (discounted)
+   ...</pre>
+	</li>
+	<li> Also makes the code more legible </li>
+	<li> C doesn't have a <tt>bool</tt> type; we used any integer type
+		(<tt>char</tt>, <tt>short</tt>, <tt>int</tt>, etc) </li>
+	<li> Note, for compatibility reasons, in C++ any nonzero value evaluates
+		to <var>True</var> </li>
+	<li> Be careful </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (<tt>not</tt> operator) </h1>
+<ul>
+	<li> The <tt>!</tt> operator (said "not") inverts the value of any
+		Boolean expression 
+		<pre>if (! discounted)</pre>
+		</li>
+	<li> Unary operator </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (lazy evaluation) </h1>
+<p> These two operators are evaluated <dfn>lazily</dfn> </p>
+<ul>
+	<li> Operands are evaluated left-to-right </li>
+	<li> Evaluation ends as soon as the truth value is determined </li>
+	<li> Given <tt>X</tt> is <var>true</var> and <tt>Y</tt> is
+		<var>false</var>:
+		<pre> X || Y </pre>
+		is <var>true</var>; <tt>Y</tt> is never evaluated
+		<pre> Y &amp;&amp; X </pre>
+		is <var>false</var>; <tt>X</tt> is never evaluated
+	</li>
+	<li> This is quite handy:
+		<pre> (n &gt; 0) &amp;&amp; (tot/n &lt; 0.9) </pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Boolean Operations (summary) </h1>
+<table class='book'>
+<tr> <th> A </th>   <th> B </th>   <th> A &amp;&amp; B </th> </tr>
+<tr>
+	<td> <code>true</code> </td>
+	<td> <code>true</code> </td>
+	<td> <code>true</code> </td>
+</tr>
+<tr>
+	<td> <code>true</code> </td>
+	<td> <code>false</code> </td>
+	<td> <code>false</code> </td>
+</tr>
+<tr>
+	<td> <code>false</code> </td>
+	<td> Any </td>
+	<td> <code>false</code> </td>
+</tr>
+</table>
+<br/>
+<table class='book'>
+<tr> <th> A </th>   <th> B </th>   <th> A || B </th> </tr>
+<tr>
+	<td> <code>true</code> </td>
+	<td> Any </td>
+	<td> <code>true</code> </td>
+</tr>
+<tr>
+	<td> <code>false</code> </td>
+	<td> <code>true</code> </td>
+	<td> <code>true</code> </td>
+</tr>
+<tr>
+	<td> <code>false</code> </td>
+	<td> <code>false</code> </td>
+	<td> <code>false</code> </td>
+</tr>
+</table>
+<br/>
+<table class='book'>
+<tr> <th> A </th>   <th> ! A </th> </tr>
+<tr>
+	<td> <code>true</code> </td>
+	<td> <code>false</code> </td>
+</tr>
+<tr>
+	<td> <code>false</code> </td>
+	<td> <code>true</code> </td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Multiple Relational Operators </h3>
+<pre>if (-0.5 &lt;= x &lt;= 0.5) // Error</pre>
+<ul>
+	<li> Makes sense in mathematics </li>
+	<li> Does <strong>not</strong> make sense in C++ </li>
+	<li> <tt>-0.5 &lt;= x</tt> evaluates to <tt>true</tt> or
+		<tt>false</tt> </li>
+	<li> You would then compare that Boolean value to an integer </li>
+	<li> Needs to be done this way:
+		<pre>if (-0.5 &lt;= x &amp;&amp; x &lt;= 0.5) ...</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "3" )
+		//]]>
+	</script>
+</h1>
+<h3> De Morgan's Law </h3>
+<p><code>!(A &amp;&amp; B) &equiv; !A || !B <br/>
+!(A || B) &equiv; !A &amp;&amp; !B </code></p>
+<ul>
+	<li> Use these to simplify expressions:
+<pre>if (!(country == "USA"
+      &amp;&amp; state != "AK"
+      &amp;&amp; state != "HI"))
+   shipping_charge = 20.00;</pre>
+	 becomes
+<pre>if (country != "USA"
+      || state == "AK"
+      || state == "HI")
+   shipping_charge = 20.00;</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	The <tt>while</tt> Loop </h1>
+<table>
+<tr><td>
+	<ul>
+		<li> To repeat an action, waiting on a condition </li>
+		<li> Consider the algorithm (Ch. 1) to find the number of years required
+			for an investment of $10,000 to grow, at a rate of 5%/yr, to $20,000<br/>
+			
+			<table class='book'>
+				<tr> <th> Year </th>   <th> Balance </th> </tr>
+				<tr> <td> 0 </td>   <td> $10,000 </td> </tr>
+			</table><br/>
+		</li>
+		<li> We know about variables, arithmetic, and printing tables </li>
+		<li> How do we repeat until we've reached $20,000? </li>
+	</ul>
+</td>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig8.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 8</span> Flowchart of a
+		<tt>while</tt> Loop </p>
+	</div>
+</td></tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1> The <tt>while</tt> Loop </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "doublinv.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : <tt>while</tt> Statement </h1>
+<div class='syntax'>
+<pre>while (<i>condition</i>)<i> statement</i></pre>
+	<h3> Example: </h3>
+		<pre>while (x &gt;= 10) x = sqrt(x);</pre>
+	<h3> Purpose: </h3>
+		<p> Execute the statement while the condition remains true. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+	The <tt>for</tt> Loop </h1>
+<ul>
+	<li> Loops that count are <em>very</em> common:
+<pre>i = <i>start</i>;
+while (i &lt;= <i>end</i>)
+{
+   ...
+   i++;
+}</pre>
+	</li>
+	<li> The <tt>for</tt> loop is intended for counting:
+<pre>for (i = <i>start</i>; i &lt; = <i>end</i>; i++)
+{
+   ...
+}</pre>
+	</li>
+	<li> Semantically identical to a <tt>while</tt> loop </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The <tt>for</tt> Loop </h1>
+<ul>
+	<li> You can declare the loop variable in the loop:
+<pre>for (int i = 1; i &lt;= 10; i++)
+{
+   ...
+}	// i no longer defined here</pre>
+		<ul>
+			<li> Local to that loop </li>
+		</ul>
+	</li>
+	<li> Any expression is fine.  Count backwards:
+		<pre>for (int i = 10; i &gt; 0; i--)</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> The <tt>for</tt> Loop &mdash; <tt>baltable.cpp</tt></h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "baltable.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> The <tt>for</tt> Loop &mdash; <tt>baltable.cpp</tt></h1>
+<p> Output: </p>
+<pre> 1: 10500.00
+ 2: 11025.00
+ 3: 11576.25
+ 4: 12155.06
+ 5: 12762.82
+ 6: 13400.96
+ 7: 14071.00
+ 8: 14774.55
+ 9: 15513.28
+10: 16288.95</pre>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+ : <tt>for</tt> Statement </h1>
+<div class='syntax'>
+<pre>for (<i>initialization_statement</i>; <i>condition</i>; <i>update_expression</i>)<i> statement</i></pre>
+	<h3> Example: </h3>
+		<pre>for (int i = 1; i &lt;= 10; i++) sum = sum + i;</pre>
+	<h3> Purpose: </h3>
+		<p> Repeatedly execute a statement, typically while updating a variable
+		in regular increments. The initialization statement is executed once.
+		While the condition remains true, the statement and the update
+		expression are executed. </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+</h1>
+<h3> Don't use != to Test the End of a Numeric Range </h3>
+<ul>
+	<li> Hidden danger:
+<pre>for (i = 1; i != nyear; i++)
+{
+   ...
+}</pre>
+	</li>
+	<li> If <tt>nyear</tt> is negative? </li>
+	<li> Always use the strongest test:
+		<pre>for (i = 0; i &lt; nyear; i++)</pre>
+	</li>
+	<li> Remember, never test float types for equality </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "8" )
+	//]]>
+	</script>
+</h1>
+<h3> Forgetting a Semicolon &mdash; Empty Loop Body </h3>
+<ul>
+	<li> Occasionally, all the work is done in the loop header:
+<pre>string filename; // e.g., hello.cpp
+string name;
+...
+for (i = 0; filename.substr(i, 1) != "."; i++)
+   ;
+name = filename.substr(0, i); // e.g., hello</pre>
+	</li>
+	<li> Consider the effect of forgetting the first semicolon (actually, not
+		disastrous in this example) </li>
+	<li> Write this as a <tt>while</tt> loop:
+<pre>int i = 0;
+while (filename.substr(i, 1) != ".")
+   i++;</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "8" )
+	//]]>
+	</script>
+	The <tt>do</tt> Loop </h1>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> Executes body at least once:
+<pre>do
+{
+   <i>statements</i>
+}
+while (<i>condition</i>);</pre>
+			</li>
+			<li> E.g., validating user input:
+<pre>do
+{
+   cout &lt;&lt; "Please enter a positive number;
+   cin &gt;&gt; x;
+} while (x &lt;= 0);</pre>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig10.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 10</span> Flowchart of a
+			<tt>do</tt> Loop </p>
+	</div>
+	</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+ : <tt>do</tt> Statement </h1>
+<div class='syntax'>
+<pre> do <i>statement</i> while (<i>condition</i>)</pre>
+	<h3> Example: </h3>
+		<pre> do x = sqrt(x); while (x &gt;= 10);</pre>
+	<h3> Purpose: </h3>
+		<p> Execute the statement, then test the condition, and repeat the
+			statement while the condition remains true. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "9" )
+	//]]>
+	</script>
+	Nested Loops </h1>
+<ul>
+	<li> E.g., print a triangle shape, of <var>n</var> rows:
+<pre>[]
+[][]
+[][][]
+[][][][]</pre>
+<pre>for (int i = 1; i &lt;= n; i++)
+{
+   <i>print triangle row</i>
+}</pre>
+	</li>	
+	<li> The <var>i</var><sup>th</sup> row has <var>i</var> boxes </li>
+	<li> To print the <var>i</var><sup>th</sup> row:
+<pre>for (int j = 1; j &lt;= i; j++)
+   cout &lt;&lt; "[]";
+cout &lt;&lt; "\n"; </pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Nested Loops &mdash; <tt>triangle.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "triangle.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "10" )
+	//]]>
+	</script>
+	Processing Inputs </h1>
+<ul>
+  <li> When processing a sequence of input values, you need some way of
+		knowing when you've reached the end </li>
+	<li> A special value used to signal termination is called a
+		<i>sentinel</i> </li>
+  <li> <em>Only</em> use a value as a sentinel if it's not valid input </li>
+	<li> Do not use arbitrary, but valid, values (999, 9999, etc) </li>
+	<li> Following program computes the average using Ð1 as sentinel </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Processing Inputs (using sentinels) </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "average.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Processing Inputs (input failures) </h1>
+<ul>
+	<li> If the input stream fails (e.g., entering a non-numeric string when
+		an integer is expected), it enters a <dfn>fail state</dfn> </li>
+	<li> To test:
+		<pre>if (cin.fail())</pre>
+	</li>
+	<li> The <dfn>EOF</dfn> (end of file) will also set the fail state </li>
+	<li> To signal EOF, use ctrl-D (on Unix and Mac), or ctrl-Z (on Windows)
+		</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Processing Inputs (input failures) </h1>
+<ul>
+	<li> If the object itself is evaluated as a Boolean, it will return its
+	state (<dfn>True</dfn> means that the stream is okay):
+		<pre>if (! cin)</pre>
+	</li>
+	<li> The <tt>&gt;&gt;</tt> operator returns the stream object (LHS)
+		</li>
+	<li> This is a common idiom:
+<pre>cout &lt;&lt; "Enter values, Q to quit.\n";
+while (cin &gt;&gt; values)
+{
+   sum = sum + input;
+   count++;
+}</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	</h1>
+<h3> Redirection of Input and Output </h3>
+<ul>
+	<li> Values (inputs) are often stored in a file </li>
+	<li> The shell (command line interface) on your system allows you to redirect
+	standard input, so that it is read from a file, rather than from the
+	keyboard:
+		<pre>average &lt; numbers.txt</pre>
+	</li>
+	<li> Similarly, output can be redirected to a disk file, rather than the
+	screen (console):
+		<pre>average &lt; numbers.txt &gt; output.txt</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "6" )
+		//]]>
+	</script>
+</h1>
+<h3> Clearing the Failure State of a Stream </h3>
+<ul>
+	<li> Once the fail bit is set, all further operations on that stream also
+		fail </li>
+	<li> Call the <tt>clear()</tt> method:
+<pre>cout &lt;&lt; "Enter values, Q to quit.\n";
+while (cin &gt;&gt; values)
+{
+   <i>process</i> input
+}
+cin.clear();</pre>	
+	</li>
+	<li>"Q" is still in the stream; must be (successfully) read from the
+		stream:
+<pre>string sentinel;
+cin &gt;&gt; sentinel;</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "11" )
+	//]]>
+	</script>
+	Simulations </h1>
+<ul>
+	<li> Computer can be used to simulate an activity </li>
+	<li> Consider the <dfn>Buffon needle experiment</dfn>:
+		<ul>
+			<li> Paper, ruled with lines 2 inches apart </li>
+			<li> Needle, 1 inch, dropped onto the paper </li>
+			<li> If it touches a line, count is as a <var>hit</var> </li>
+			<li> Buffon conjectured that <var>tries</var> / <var>hits</var> would
+			approximate &pi; </li>
+		</ul>
+	</li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig12.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 122</span> The Buffon Needle
+Experiment </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Simulation (random number generators) </h1>
+<ul>
+	<li> Need random numbers to simulate random drops of the needle </li>
+	<li> Need a <i>random number generator</i> (<dfn>RNG</dfn>)
+		<ul>
+			<li> <tt>rand()</tt> produces apparently random integers on the
+				interval [0, <tt>RAND_MAX</tt>] (typically 32767, or
+				2147483647) </li>
+			<li> Found in <tt>cstdlib</tt> header </li>
+			<li> It's a <em>pseudo</em>-RNG </li>
+		</ul>
+	</li>
+	<li> The following program produces the same random numbers each time it's
+		run </li>
+	<li> After debugging, you can <i>seed</i> the generator (just once!):
+<pre>Time now;
+int seed = now.seconds_from(Time(0, 0, 0));
+srand(seed);</pre>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Simulation &mdash; <tt>random.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "random.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Simulation (ranges of random integers) </h1>
+<ul>
+	<li> We want random integers on [<var>a</var>, <var>b</var>] </li>
+	<li> There are <var>b - a + 1</var> values between <var>a</var> and
+		<var>b</var> </li>
+	<li> To get values on [0, <var>b - a</var>]:
+		<pre>rand() % (b - a + 1)</pre>
+	</li>
+	<li> Add <var>a</var> to get values on [<var>a</var>, <var>b</var>]
+		<pre>int r = a + rand() % (b - a + 1);</pre>
+	</li>
+	<li> The following program simulates throwing a pair of dice </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Simulation &mdash; <tt>dice.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "dice.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Simulation (ranges of random floats) </h1>
+<ul>
+	<li> Dropping a needle has many possible outcomes </li>
+	<li> Position and orientation are not discrete values </li>
+	<li> To generate a floating-point number on [<var>a</var>, <var>b</var>]:
+		<pre>double r = a + (b - a) * (rand() * 1.0 / RAND_MAX);</pre>
+		<ul>
+			<li> 1.0 makes the numerator a <tt>double</tt>, rather than an
+				<tt>int</tt> </li>
+			<li> We want to avoid integer division </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Simulation (Buffon experiment) </h1>
+<table>
+<tr><td>
+	<ul>
+		<li> We need 2 random numbers:
+			<ol>
+				<li> Position (y-coordinate) of the lower end of the needle (assume it
+					lands on the paper, between 0 and 2) </li>
+				<li> The angle a between the needle and the x-axis [0&deg;,
+					180&deg;]</li>
+			</ol>
+		</li>
+		<li> We can then test if the needle touches a grid line
+			<p class='line'>
+				<var>y</var><sub>high</sub> = <var>y</var><sub>low</sub> +
+				sin<var>&alpha;</var>
+			</p>
+			</li>
+		<li> Do this 10,000 times </li>
+	</ul>
+</td>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig13.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 13</span> A Hit In the Buffon
+		Experiment </p>
+	</div>
+</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+<h1> Simulation &mdash; <tt>buffon.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "buffon.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> Simulation &mdash; <tt>buffon.cpp</tt> </h1>
+<ul>
+	<li> The point here is <em>not</em> to compute Pi
+		<ul>
+			<li> (We needed Pi to convert degrees to radians) </li>
+		</ul>
+	</li>
+	<li> Rather, to show how a physical experiment can be simulated on a
+	computer
+		<ul>
+			<li> (We do have other simulations that will yield Pi) </li>
+		</ul>
+	</li>
+	<li> Simulations can save time and money </li>
+	<li> Examples:
+		<ul>
+			<li> Traffic at an intersection </li>
+			<li> Lines of customers in a bank, or a grocery store </li>
+		</ul>
+	</li>
+	<li> Easy to try out different staffing, layouts, traffic light timings
+	</li>
+</ul>
+</div>
+
+</body>
+</html>

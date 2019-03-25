@@ -1,0 +1,632 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>3.1&mdash;Interactive Programs</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/a.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>Section 3.1</p>
+        <p id='lessonTitle'>Interactive Programs</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'><b><span class="cap">W</span>hile you <u>can</u> use assignment
+            to place values into your variables</b>,
+            often, you won't know what value should be used until the
+            program actually runs. Instead of you, the programmer, supplying
+            the values, you'll need to <b>ask the user</b> for some input,
+            and use that input to initialize your variables. That's the first
+            step towards creating <b>interactive</b> programs.
+        </p>
+        <p> <img src="images/b05.gif" class="right" alt="Dialog input.">
+            Getting input from the user can be done in several different
+            ways:
+        </p>
+        <ul>
+            <li>you can use a text-field and retrieve the information when
+                the user types in some data and presses a button (or the
+                Enter key).
+            </li>
+            <li>you can use an "input widget" like a drop-down list, a
+                checkbox, or a radio button.
+            </li>
+            <li>you can use a dialog box that asks for some text and
+                returns the text to your program when the user clicks
+                "OK".
+            </li>
+            <li>you can read <b>console</b> input from the keyboard,
+                and use that input to initialize your variables.
+            </li>
+        </ul>
+        <p> We'll use most of these techniques throughout this class.
+            In this chapter, we'll look at the process of reading user
+            input from the system console by using
+            the <code>Scanner</code> class that was added in Java 5.
+            Then, we'll look at reading input in ACM programs.
+        </p>
+    <h2>The Scanner Class</h2>
+        <p> In traditional console programs (those that make use of the
+            system console), the <b>standard input stream</b>, <code>System.in</code>
+            can be used to read from the console keyboard, just like
+            <code>System.out</code> can be used for console output.
+        </p>
+        <p> Unfortunately, there are two difficulties with this:</p>
+        <ul>
+            <li>the <code>System.in</code> object only knows how to read
+                raw bytes, not strings or numbers.
+            </li>
+            <li>because it is possible that an <b>input error</b> could occur,
+                Java requires code using <code>System.in.read()</code> to explicitly
+                handle any <b>exceptions</b> that can occur, something that is
+                a little too complicated for the first few chapters of this text.
+            </li>
+        </ul>
+        <p> To make up for these deficiencies in the standard input stream,
+            the <code>Scanner</code> class was added to Java 5 to make
+            reading data from the keyboard <b>easier</b> than in previous
+            versions of Java. The <code>Scanner</code> class uses of
+            the <b>standard input stream</b>, <code>System.in</code>, but
+            allows you to read strings and numbers without complications.
+        </p>
+    <h3>Interactive Scanners</h3>
+        <img src='images/interactions.gif' class='right' style='margin-top:-2em;' alt='The DrJava Interactions Pane.'>
+        <p>
+            To do a few experiments with the <code>Scanner</code> class,
+            I'm going to use <b>DrJava</b>'s Interactions
+            Pane. This will let me try out each individual programming
+            step, without having to write an entire program. To get the most out
+            of this, follow along on your computer.
+        </p>
+    <h4>Step 1: Create a Scanner Object</h4>
+        <p> Start by creating a <code>Scanner</code> variable.
+            I'll call my variable <code>cin</code> (which stands for
+            Console Input, and is the name of the console input object
+            in the Standard C++ library class).
+        </p>
+        <p> Once you create the variable, you need to initialize it by
+            calling its constructor. The <code>Scanner</code> constructor
+            needs a parameter, which tells it "what" to read&mdash;that is,
+            where to get the raw bytes that it will process. Pass
+            in the standard input stream, <code>System.in</code>,
+            like this:<br>
+            <img src='images/scanner01a.gif' class='inlineCenter' alt='The Scanner class.'>
+            This should look pretty familiar; it's almost exactly the
+            same as the examples shown at the bottom of <i>Section 2.3&mdash;Variables
+            and Values</i>, under the subhead <i>Object Variables</i>.
+            The only thing that's really changed are the <b>type</b> of
+            the object variable, and the kinds of <b>parameters</b> you
+            need to supply.
+        </p>
+        <p> Type this in and then press the <b>Enter</b>
+            key to <b>interpret and execute</b> the statement.
+        </p>
+        <div class='redbox' style='color:red;background-color:lightyellow;font-size:18pt;font-weight:bold;text-align:center'>
+            AAAARG! What's this?
+        </div>
+        <p> <img src='images/scanner03a.gif' class='inlineCenter' alt='An error message.'>
+            Well, <b class='ry'>don't worry</b>. That just brings us to Step 2. Before you
+            take that step though, <b>cancel</b> the "Auto Import Class"
+            dialog box. Although DrJava will try to help you by adding the
+            necessary code, I want <b>you</b> to recognize the
+            problem, and add the needed code yourself.
+        </p>
+    <h4>Step 2: Import the Scanner</h4>
+        <p> Before you can actually <b>create</b> a <code>Scanner</code>
+            variable or object, you have to make the <code>Scanner</code>
+            <b>class</b> "available" to your program. The class <b>isn't</b>
+            part of the <b>java.lang</b> package, like the <code>System</code>
+            class is, so you have to <code>import</code> it into your
+            program, just like you did with the <code>JOptionPane</code>
+            class, the <code>Applet</code> class, and the <code>ConsoleProgram</code>
+            class. The <code>Scanner</code> class is in the <code>java.util</code>
+            package, which, as its name suggests, contains <b>commonly used utility
+            classes</b>.
+        </p>
+        <p> To import a package into DrJava, you type an <code>import</code>
+            statement, just like you do in a regular Java program. The
+            only difference is, in a regular program, your <code>import</code>
+            statements <b>must appear before the class definition</b>. In
+            DrJava, you can type them in at any point in your session.
+        </p>
+        <p> Since we need to import the <code>Scanner</code> class, we can
+            use it's <b>fully qualified name</b> as shown in the first line below:<br>
+            <img src='images/scanner04a.gif' class='inlineCenter' alt='The Import Declarations button.'>
+            This first <code>import</code> line is called a <b>specific</b>
+            <code>import</code>, since it only refers to a single class.
+        </p>
+        <p> The second example shows a <b>wildcard</b> <code>import</code>
+            statement that makes <b>all of the classes</b> in the <code>java.util</code>
+            package available. Once either of
+            these <code>import</code> statements have been added, use the
+            <b>"up-arrow" to re-execute the previous statement</b>,
+            which creates the <code>Scanner</code> object without any errors.
+        </p>
+    <h4>Step 3: "Prompt" the User for Input</h4>
+        <p> When you ask the user for input, you have to first
+            <b>tell them what to type</b>. You don't want just a blank screen
+            with a blinking cursor! That's not user-friendly.
+        </p>
+        <p> Telling the user what input to type is called <b>prompting</b>
+            the user. You can use the <code>System.out</code> <code>print()</code>
+            and <code>println()</code> methods. If you use <code>print()</code>
+            then the user input on the same line as the
+            prompt, which is often the most natural.
+        </p>
+        <p> For instance, if we want to ask the user to enter their
+            name, we might write:
+        </p>
+        <p class='code'>
+            System.out.print("So, what's your name then? ");
+        </p>
+        <p> Notice the space following the prompt, so that the user input doesn't
+            start immediately after the question mark.
+        </p>
+        <div class='info'>
+        <p> This is an important concept when working with console I/O: <b>always</b> let
+            the user know <b>exactly</b> what kind of information they should enter.
+        </p>
+        </div>
+    <h4>Step 4: Read the Input</h4>
+        <p> To <b>read the name that the user enters</b>,
+            (as a <code>String</code>), you use the
+            <code>Scanner</code> class <code>next()</code> or
+            <code>nextLine()</code> method. If you want to get
+            just a <b>single word</b>, like the first name or last name,
+            then use the <code>next()</code> method. If you use
+            <code>nextLine()</code>, then the <code>Scanner</code> returns
+            everything on the line, no matter how many words the user types.
+        </p>
+        <p> When we receive input from the user, we'll need to
+            store it somewhere in memory. As you may have guessed, that means
+            we'll need to create a <b>variable</b>. Since we asked for the
+            user's <b>name</b>, that means we want a <code>String</code>
+            variable, not an <code>int</code> or <code>double</code>.
+        </p>
+        <p> Let's try it; type this into the Interactions Pane, making sure,
+            as you type each line, you <b>use Shift-Enter</b> to
+            end the line, so that DrJava doesn't interpret and execute
+            the line immediately:<br>
+            <img src='images/scanner06b.gif' class='inlineCenter' alt='Reading input into a variable.'>
+            This fragments consists of two executable lines:
+            one that asks the user to tell me their name, and one that
+            reads the user's response.
+        </p>
+        <p> Once you've typed this in, press
+            Enter all by itself to execute both lines.<br>
+            <img src='images/scanner07b.gif' class='inlineCenter' alt='Reading input into a variable.'>
+            When the code is executed, the program stops and waits for the user to
+            type in some text and then press the Enter key. (The technical
+            term for stopping like this is called <i>blocking</i>.) Once
+            the user presses Enter, the information supplied at the keyboard
+            is retrieved, and stored in the <code>userName</code> variable.
+        </p>
+        <div class='info'>
+        <p> In DrJava, as you can see, the input occurs in the Interactions
+            Pane, and DrJava puts a nice outline around where the user is
+            supposed to type in the response. When you do this in a
+            regular program, you won't get the outline. We'll look
+            at an example of that shortly.
+        </div>
+        <p> Once you've read the user's response into a variable, then you
+            can use that as part of your calculation or output. To print
+            the user's name as part of your output, you could add a
+            line like this:<br>
+            <img src='images/scanner08a.gif' class='inlineCenter' alt='Combining input with concatenation.'>
+        </p>
+    <h2>Numeric Input</h2>
+        <p> When a user types the number 123 from the keyboard, what is
+            <b>actually</b> stored in memory are the three binary values
+        </p>
+        <div class="box">
+                <b>
+                0000-0000 0011-0001<br>
+                0000-0000 0011-0010<br>
+                0000-0000 0011-0011
+                </b>
+        </div>
+        <p> representing the three Java character values
+            <b>'1'</b>, <b>'2'</b>, and <b>'3'</b>, stored in a Java
+            <code>String</code> object.
+        </p>
+
+        <p> If the user is entering values intended to be used in a
+            calculation, (and not a street address, for instance), those
+            three <code>char</code> values will have to be converted from
+            text to the binary 32-bit integer <b>123</b>, shown here:
+        </p>
+        <div class="box">
+            <b>
+            0000-0000 0000-0000 0000-0000 0111-1011
+            </b>
+        </div>
+        <p> This process&#8212;turning human-readable text, input from the keyboard
+            or a file, into binary numbers, (and its alter-ego, turning
+            binary numbers into human-readable text), is the job of
+            <b>parsing</b> or <b>conversion</b>. Later,
+            you'll learn how to use Java's <b>wrapper</b> classes to
+            parse <code>String</code> user input
+            and convert that input into integers, real numbers, and
+            even dates and times. For right now, though, we'll let
+            the <code>Scanner</code> class do the work for us.
+        </p>
+
+    <h3>Scanner Numeric Input</h3>
+        <p> In the previous section, you saw how to use the
+            <code>Scanner</code> class to read a line of text from
+            the user, (calling its <code>nextLine()</code> method),
+            and then store the line of text in a <code>String</code>
+            variable.
+        </p>
+
+        <p> The process for retrieving an <code>int</code>
+            or <code>double</code> is almost identical:
+        </p>
+        <ol>
+            <li class="d">Construct a <code>Scanner</code> variable,
+                using the <code>Scanner</code> constructor, passing
+                <code>System.in</code> as a parameter to the constructor.
+            </li>
+
+            <li class="d">Call the appropriate numeric input method,
+                <code>nextInt()</code> or <code>nextDouble()</code>,
+                and store the returned value in your variable.
+            </li>
+        </ol>
+    <h4>Scanner Example</h4>
+        <p> Let's continue with our Interactions Pane example, reading some
+            numeric values as well as text:<br>
+            <img src="images/scanner09a.gif" class='inlineCenter' alt='Reading numeric input.'>
+        </p>
+        <ul>
+            <li class="d">The user is prompted to enter their age and
+                gpa. I'm assuming the user will enter a whole number
+                for their age, and a real number for gpa.
+            </li>
+            <li class='d'> Next, the <code>int</code> variable
+                <code>age</code> is defined and the <code>Scanner
+                nextInt()</code> method is called to read an integer from
+                the keyboard. The characters that the user types in are
+                <b>automatically</b> converted from <code>String</code> to
+                an <code>int</code>, and the result is placed in the
+                variable <code>age</code>.
+            </li>
+            <li class="d">On the next line, the same process is repeated, except
+                a <code>double</code> variable, <code>gpa</code> is defined
+                and the <code>Scanner nextDouble()</code> method is used to
+                read a real number from the keyboard. This time, the
+                characters typed by the user are converted to a
+                <code>double</code>, and placed in the variable
+                <code>gpa</code>.
+            </li>
+            <li class="d">Finally, in the last statement, (spanning two lines),
+                the user's input is concatenated along with the program's output message.
+            </li>
+        </ul>
+        <p> If you run this code fragment you'll see some
+            output that looks a little like this:<br>
+            <img src="images/scanner10a.gif" class='inlineCenter' alt='Reading numeric input.'>
+            Notice that you can enter the two numbers on the same line, separated
+            by tabs or spaces. You can also press Enter after each number. Both
+            styles of input are processed correctly.
+        </p>
+    <h3>How Numeric Input Works</h3>
+        <p> Here's a picture that shows the characters I entered when I
+            ran the program. Notice that the first character is a space,
+            followed by a six and a zero. That is followed by another
+            space, a three, a period, a two and the Enter key or newline:<br>
+            <img src='images/input.png' class='inlineCenter' alt='My input.'>
+            When <code>cin.nextInt()</code> is encountered at runtime, the <code>Scanner</code>
+            object starts reading characters, looking for a character that
+            could be part of an integer (a digit or a sign character). Any
+            <i>whitespace</i> characters (spaces, tabs, newlines) are simply
+            discarded. In my example here, the first space character would be
+            read and then ignored. If any other characters are encountered,
+            an error occurs. (You can read about the errors in the next section.)
+        </p>
+        <p> When a character that makes up an integer is encountered,
+            (like the 6 in my input), <b>then</b> the <code>nextInt()</code>
+            method <b>keeps reading</b> characters, until a non-integer
+            character is found. In this case, it will read the 6 and the 0,
+            but because the space following the zero is <b>not</b> part of
+            an integer, <code>nextInt()</code> stops reading from
+            <code>System.in</code>. The characters read up to this point
+            are "marshaled" or collected in the <code>String</code>
+            "60", which is then converted
+            to an <code>int</code> value, and that is the value returned
+            and stored in the variable <code>age</code>.
+        </p>
+        <p> When the <code>cin.nextDouble()</code> on the following line
+            is encountered, the <code>Scanner</code> picks up
+            <b>exactly where the previous scan ended</b>, processing the
+            space character following the 0 in 60:<br>
+            <img src='images/input02.png' class='inlineCenter' alt='My input.'>
+            This was the non-integer
+            character that caused <code>nextInt()</code> to <b>stop</b>
+            reading. Like <code>nextInt()</code>, the <code>nextDouble()</code>
+            method skips or discards leading whitespace characters, looking
+            for a character that matches the pattern for a valid <code>double</code>
+        </p>
+        <p> When it encounters the 3, it starts assembling the characters into
+            a <code>String</code>. The decimal point is legal inside a double,
+            so that is added to the collection; likewise the 2 is legal as
+            part of a double following a decimal point. The newline character
+            that is encountered following that, though, <b>is not</b> a legal
+            <code>double</code> character and so reading stops.
+        </p>
+        <p> The characters that are assembled so far are converted to a
+            <code>double</code> by the <code>Scanner</code> method, and then
+            returned and stored in the <code>gpa</code> variable.
+        </p>
+        <p> The next input method that is called will pick up with the newline
+            character as its first input.<br>
+            <img src='images/input03.png' class='inlineCenter' alt='My input.'>
+        </p>
+    <h2>Input Errors</h2>
+        <p> What happens, if the user types in an unexpected
+            input value, say 60.5 for age, or perhaps "sixty",
+            or even just adds an extra comma separating the values
+            like this:<br>
+            <img src='images/scanner11a.gif' class='inlineCenter' alt='Bad user input.'>
+            In that case, the <code>Scanner</code> object reads the
+            <code>age</code> OK, stopping on the comma. However,
+            when the <code>nextDouble()</code> method is called, the
+            first character of input is the comma, <b>which does not</b>
+            match the pattern for characters allowed in a <code>double</code>.
+        </p>
+        <p> When this error is noticed by the <code>Scanner</code> object,
+            it prints an error message on the console, and terminates
+            the program.
+            This is called a <b>runtime error</b>, because it's detected when
+            your program runs, rather than when you compile it. (After all, the
+            compiler has no way of telling what the user will type in when
+            the program runs.)
+        </p>
+
+        <p> Because of the mechanism used to generate runtime errors in Java,
+            this kind of event is also called <b>throwing an exception</b>.
+            You'll learn about Java's different kinds of exceptions
+            later in the semester. At that time, you'll also learn how to
+            <b>catch</b> an exception, and perhaps give the user a second
+            chance to correct their input.
+        </p>
+        <p> For right now, though, your
+            best defense is to make your instructions (prompts) as explicit
+            as possible. Instead of saying something like "Enter the
+            number of miles:", you could write "Enter miles as a whole
+            number (25) :" or something similar.
+        </p>
+    <h3>String Input Errors</h3>
+        <p> You won't have an <b>input-mismatch</b> exception with
+            <code>String</code> variables, but you can still get some
+            unexpected input, especially when you mix <code>String</code>
+            and numeric input.
+        </p>
+        <p> Here's an example. Let's add one more prompt to ask the user
+            where they live, following the previous input, like this:<br>
+            <img src='images/scanner12a.gif' class='inlineCenter' alt='Reading another String following numeric input.'>
+            As before:
+        </p>
+        <ol>
+            <li class='d'>We <b>prompt</b> the user for some input, in this
+                case asking for the city that they live in.
+            </li>
+            <li class='d'>We the <b>read</b> the input, using the <code>Scanner</code>
+                <code>nextLine()</code> method, and store the user's response in
+                a <code>String</code> variable named <code>city</code>.
+            </li>
+            <li class='d'>Finally, we combine the user's input with some
+                concatenation to display an <b>output</b> message with
+                something complimentary about their home-town.
+            </li>
+        </ol>
+        <p> Doesn't look like there's any room for error, does it. Well,
+            go ahead and run it, and here's the output you should see:<br>
+            <img src='images/scanner12b.gif' class='inlineCenter' alt='Errors from mixed input.'>
+            <b class='ry'>Hmmmm. That seems to be a problem</b>. What's happening? Why doesn't
+            it stop when I call <code>nextLine()</code>?
+            Well, you remember the schematic I showed you, <b>after</b> the
+            GPA value was read?<br>
+            <img src='images/input03.png' class='inlineCenter' alt='My input.'>
+            When you do a <code>nextLine()</code> immediately following
+            numeric input, the newline character is the first character
+            that is read. Unfortunately, that's also the character that
+            "tells" <code>nextLine()</code> that <b>input is finished</b>
+            for this line of text.
+        </p>
+        <p> Because of that, the variable <code>city</code> is assigned the
+            <b>empty</b> <code>String</code>. To fix it, just add an extra
+            <code>readLine()</code> immediately between numeric and
+            line-oriented text input like this:<br>
+            <img src='images/scanner13a.gif' class='inlineCenter' alt='Errors from mixed input.'>
+        </p>
+        <div class='alert'>
+        <p> If you mix text and numeric input using the <code>Scanner</code>
+            class, you'll need to remember to add extra <code>nextLine()</code>
+            statements to remove the newline characters following numeric
+            input. You <b>don't</b> need to do this between numeric
+            input statements.
+        </p>
+        </div>
+        <div class='info'>
+        <p>
+            Just because your code has no syntax errors or no runtime errors,
+            that <b>doesn't</b> mean it is correct. Your program can still
+            contain <b>logic</b> errors, as my code fragment does here.
+            A logic error occurs when the <b>actual</b> output don't match
+            the <b>expected</b> output of your program.
+        </p>
+        </div>
+
+    <h2>ACM ConsoleProgram Input</h2>
+        <p> The ACM <code>ConsoleProgram</code> class also has methods
+            for <b>reading user input</b> from inside the ACM graphical console window.
+            These methods are similar to the input methods from the
+            <code>Scanner</code> class, but have slightly different names.
+        </p>
+        <p> Here's probably the simplest possible program named <b>ACMEcho</b> based on
+            the input methods from the <b>ConsoleProgram</b> class:<br>
+            <img src="images/acm-echo.gif" class='inlineCenter' alt="The ACMEcho program.">
+            (You can find the code in your Chapter03 folder as well.)
+            To read input from the user, the program simply calls the
+            <code>ConsoleProgram</code>'s <code>readLine()</code> method. When you
+            call <code>readLine()</code> the program stops running and waits for the
+            user to type in a line of text on the console.
+        </p>
+        <p> Like the <code>Scanner nextLine()</code> method, the
+            <code>readLine()</code> method is actually a <b>function</b>; that is,
+            it is a method that doesn't simply do something, but a method that <b>returns</b>
+            a value to the caller. As with <code>nextLine()</code>, you need to
+            <b>save</b> the value returned in a variable. Here, I've created
+            a <code>String</code> variable named <code>message</code> to
+            store the value returned from the <code>readLine()</code> function.
+        </p>
+        <p class='code' style='font-size:1.25em'>
+            String message = readLine("Enter a line of text: ");
+        </p>
+        <p> After the input line has run, the variable <code>message</code> will contain
+            the line of text entered by the user. The second line of code in
+            <b>ACMEcho</b> uses concatenation, along with two escape characters,
+            to print or echo whatever the user originally typed.
+        </p>
+
+        <p class='code'>
+            println("You entered: \"" + message + "\"");
+        </p>
+    <h4>Look Ma! No Prompt Line!</h4>
+        <p> There are actually <b>two</b> versions of the <code>readLine()</code>
+            method. The version I've used here allows you to pass a <code>String</code>
+            parameter which the program uses to "prompt" the user. When you
+            use the <code>Scanner</code>'s <code>nextLine()</code> method,
+            you need to print your prompt using <code>System.out.print()</code>.
+        </p>
+        <p> You can <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/%7Egilberts/applets/ACMEcho.html","","width=525,height=350,scrollbars=yes");'>
+            <b>click this link</b></a> to run the applet in your browser.<br>
+            <img src='images/ACMEchoInBrowser.gif' class='inlineCenter' alt='The ACMEcho program running in a browser.'>
+        </p>
+    <h3>ACM Numeric Input</h3>
+        <p> The ACM <code>ConsoleProgram</code> class also has a number of
+            numeric input methods. While the <code>Scanner</code> methods are
+            <code>nextInt()</code> and <code>nextDouble()</code>, the equivalent
+            ACM methods are called <code>readInt()</code> and <code>readDouble()</code>.
+        </p>
+
+        <p> Here's the ACM version of the a gas mileage calculator program,
+            named <b>ACMGasMileage.java</b>. You can see the use of the
+            <code>readInt()</code> method on line 21 and the
+            <code>readDouble()</code> method on line 23:<br>
+            <img src='images/acm-gas.gif' alt='The ACMGasMileage.java program'
+                class='inlineCenter'>
+            This program has a couple of advantages over the non-ACM,
+            <code>Scanner</code>-based version.
+            <img src='images/acmconsole.gif' class='right' alt='Error handling in the ACM numeric input routines.'>
+        </p>
+            <ul>
+                <li>It's a little smaller.
+                </li>
+                <li>It runs on pre-Java 5 versions of Java</li>
+                <li>You can run it as an applet, so you can post it
+                    <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/%7Egilberts/applets/ACMGasMileage.html","","width=400,height=325,scrollbars=yes");'>
+                    <b>on the Web</b></a> so it's easy for others
+                    to use.
+                </li>
+            </ul>
+        <p> The biggest advantage, though, is that the ACM libraries
+            automatically intercept input errors, and allow the user
+            to correct their mistakes, as you can see here.
+        </p>
+    <h3>Dialog Input and Output</h3>
+        <p> I want to explore one last kind of input and output: that based on
+            graphical <b>dialog boxes</b> like the picture shown below. In Chapter 1
+            you wrote a GUI program using the <code>JOptionPane</code> class,
+            to add a more modern input-output style to your programs.
+        </p>
+        <p> The only problem with using <code>JOptionPane</code> is that
+            the code is considerably more complex:
+        </p>
+        <ol>
+            <li>You can only get <code>String</code> input.</li>
+
+            <li>If you need to read
+                an <code>int</code> or <code>double</code> you need to read the
+                input into a temporary <code>String</code> variable first and
+                then use a <b>wrapper</b> class to convert the <code>String</code>
+                to the numeric type.
+            </li>
+            <li> You have to explicitly exit your program by using the
+                <code>System.exit()</code> method.
+            </li>
+        </ol>
+        <p> <img src='images/acmdialog.gif'
+            alt='An ACM DialogProgram version of the gas calculator.' class='right'>
+            Fortunately, there's a much easier way to create a dialog-based program
+            by using the ACM <b>DialogProgram</b> class. In fact, all we have to do
+            to convert <b>ACMGasMileage</b> to the dialog version is to replace the
+            phrase <code>extends ConsoleProgram</code> with the equivalent
+            <code>extends DialogProgram</code>.
+        </p>
+        <p> Like it's console-based cousin, you can run this dialog-based
+            version of the ACM program as an applet
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/%7Egilberts/applets/ACMDialogGasMileage.html","","width=400,height=325,scrollbars=yes");'>
+            <b>on the Web</b></a>, although it isn't quite as
+            seamless as the console version. You'll find the
+            application version in your Chapter 3 folder.
+        </p>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+            Interactive Program Summary
+        </p>
+        <ul>
+            <li> Interactive, or <b>IPO</b> programs <b>read external input</b> and
+                then store and process their input.
+            </li>
+            <li> <b>The <code>Scanner</code> class</b>, in the <code>java.util</code> package,
+                allows you to read both text and numbers in standard console programs.
+            </li>
+            <li> To create a <code>Scanner</code> objects, use the <b>constructor</b>,
+                passing <code>System.in</code> as a parameter; the parameter represents
+                the source of the bytes that the <code>Scanner</code> object will process.
+            </li>
+            <li> To <b>read a line of text</b> use the <code>cin.nextLine()</code> method,
+                where <code>cin</code> is the name of the <code>Scanner</code> variable
+                that you created. To read a <b>single word</b> (surrounded by spaces),
+                use <code>cin.next()</code>.
+            </li>
+            <li> <b>Before</b> reading input, you should tell the user <b>what kind of
+                data to enter</b>. This is called a <b>prompt</b>. In console programs,
+                you normally use <code>print()</code>, not <code>println()</code> to
+                display your prompt, so that user input is entered on the same line.
+            </li>
+            <li> When reading data, you must <b>store the returned value</b> in
+                a variable, so that you can process it.
+            </li>
+            <li> To read <b>numeric input</b> using the <code>Scanner</code> class, use
+                <code>cin.nextInt()</code> or <code>cin.nextDouble()</code>.
+            </li>
+            <li> You don't need a <code>Scanner</code> to <b>read input in ACM programs</b>.
+                Use the <code>ConsoleProgram</code> methods, <code>readLine()</code>,
+                <code>readInt()</code> or <code>readDouble()</code>. You <i>may</i> use
+                the receiver named <code>this</code>, but you don't have to.
+            </li>
+            <li> When calling ACM input methods, you can supply a <b>prompt parameter</b>
+                instead of using the <code>print()</code> method to display the prompt.
+            </li>
+            <li> By <b>changing the heading</b> of your ACM program to
+                <code>extends DialogProgram</code>, it will automatically use dialog-box
+                input, instead of the ACM console. Interaction with these programs is
+                not as seamless as with console programs.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

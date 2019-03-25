@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+    <title>CS 170 - Week 7 Exercises and Assignments</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner02">
+        <img id='lessonLogo' src='../images/b.png' alt='A decorative icon.'>
+        <p id='lessonSubtitle'>CS 170&mdash;Week 7</p>
+        <p id='lessonTitle'>Exercises and Assignments</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <b><span class='cap'>T</span>his week you should get more
+            practice writing your own classes</b> including those
+            that throw exceptions and those that contain
+            <code>static</code> methods.You'll also have an opportunity to
+            write your own unit tests and get some
+            practice writing classes with inheritance</b>.
+            You'll also work with some <code>ArrayList</code>
+            problems.
+            Here's the list of things you should do this week.</p>
+    <ol>
+        <li class='d'>
+            <b class='grn'>Assertions &amp; Exceptions&mdash;MyStudent</b>:
+            Implement a class <code>MyStudent</code>. For the purpose of this exercise,
+            a student has a name and a total quiz score. Supply an appropriate
+            constructor. (Remember, when you create a student, the total quiz score
+            will be 0, so you don't need to pass that as a parameter.) Also,
+            supply the following methods:
+            <p class='code' style='font-size:1.2em;'>
+                String getName()<br>
+                void addQuiz(int score)<br>
+                int getTotalScore()<br>
+                double getAverageScore()
+            </p>
+            To compute the last method, remember that you'll also need to keep track of how
+            many quizzes the student actually took.
+            <p> If a programmer passes an empty <code>String</code> or a <b>null String</b>
+                to the constructor, then throw an <code>IllegalArgumentException</code>.
+                Add an assertion to <code>getTotalScore()</code> to check that
+                the total is not negative.
+            </p>
+            <p> There is no <b>Check</b> program for this assignment.
+                You need to write your own unit test to check your code,
+                which is the next exercise. Click
+                <b><a href="../../movies/13-4-MyStudent/13-4-MyStudent.html" target="_blank">HERE</a></b>
+                to see a solution to the first part of the problem.
+            </p>
+        </li>
+
+        <li class='d'>
+            <b class='grn'>Unit Tests&mdash;MyStudentTest</b>:
+            In class you learned how to write a unit test for the
+            <code>PongScore</code> class. Using the lecture
+            (and the online text) as a model, write your own
+            tests for <b>MyStudent.java</b>n named <b>MyStudentTest</b>.
+            <p>Your unit tests should completely check every constructor
+            and method in the <code>MyStudent</code> class.
+            You should make sure:
+        <ul>
+            <li>Test pass rate: <b>all</b> of your tests should pass.</li>
+            <li>Code coverage: <b>every method</b> and <b>every branch</b>
+                inside every method should be covered.</li>
+            <li>Problem coverage: you should make sure that your inputs
+                cover legitimate values as well as boundary conditions.
+            </li>
+        </ul>
+        <p> You can look on the <b>Solutions</b> page if you get stuck on
+            this exercise.
+        </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Static Methods and Testing&mdash;Geometry</b>:
+            Write a class named <b><i>Geometry</i></b> that contains the following
+            <b>static</b> methods.
+            <ul>
+            <li><code>sphereVolume(double r)</code></li>
+            <li><code>sphereSurface(double r)</code></li>
+            <li><code>cylinderVolume(double r, double h)</code></li>
+            <li><code>cylinderSurface(double r, double h)</code></li>
+            <li><code>coneVolume(double r, double h)</code></li>
+            <li><code>coneSurface(double r, double h)</code></li>
+            </ul>
+            <p>Each will be a
+            <b>static</b> method that returns a double. Use Google to look
+            up the appropriate formulae. (For the coneSurface make sure you
+            include the entire surface area including the bottom of the cone,
+            and not just the lateral surface area.)
+            </p>
+
+            <p>Along with the <b><i>Geometry</i></b> class, implement a JUnit
+            Test Case class named <b><i>GeometryTest</i></b>, that tests
+            each of your methods.
+            </p>
+            <p> Click
+                <b><a href="../../movies/S11-Geometry/S11-Geometry.html" target="_blank">HERE</a></b>
+                to see a solution to this problem. I do <b class='ry'>not</b>
+                have a solution to the JUnit portion of the problem.
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Inheritance&mdash;the Triangle Class</b>:
+            The Chapter13 code folder contains a class named <b>GeometricObject</b>.
+            <b>Without modifying this class in any way</b>, <b>extend</b> it
+            to create a new class named <code>Triangle</code>. The
+            <code>Triangle</code> class contains:
+            <ul>
+                <li>an <b>array</b> of three <code>double</code> values,
+                    representing side1, side2, and side3. You must use an
+                    array; do not use individual instance variables. Each element
+                    should have default values of <code>1.0</code> to represent the
+                    three sides of the triangle.
+                </li>
+                <li>a <b>no-arg constructor</b> that creates a default <code>Triangle</code>
+                </li>
+                <li>a constructor that creates a <code>Triangle</code> with the three
+                    sides specified
+                </li>
+                <li>a third constructor that takes the three sides, the <code>Color</code>
+                    and whether or not the object should be filled.
+                </li>
+                <li>A method named <code>getArea()</code> that returns the area of
+                    the <code>Triangle</code>. (Look up the formula online.)
+                </li>
+                <li>A method named <code>getPerimeter()</code>.</li>
+                <li>A method named <code>toString()</code> that returns a <code>String</code>
+                    description of the Triangle. Here's what the description should
+                    look like for the default <code>Triangle</code>:<br>
+                    <img src='images/hw14_2.png' class='inline' alt='The toString() method.'>
+                    Note that your <code>Triangle</code> class will <b>only</b> supply the
+                    portion that begins with the word <code>Triangle</code>. Use the
+                    <b>inherited</b> <code>toString()</code> method to generate the
+                    first portion of the returned value.
+                </li>
+            </ul>
+            <p>The code folder also contains a simple test file
+                <b>TestTriangle.java</b> that creates three <code>Triangle</code> objects
+                and then calls some methods. The expected output is contained inside
+                the test program. Again, <b class='ry'>do not change</b>
+                the <code>GeometricObject</code> class in any way.
+            </p>
+            <p>Click
+                <b><a href="../../movies/14-2-Triangle/14-2-Triangle.html" target="_blank">HERE</a></b>
+                to see a solution to this problem.
+            </p>
+        </li>
+        <li class='d'>
+            <b class='grn'>Working with ArrayList&mdash;ArrayListsProblems</b>:
+            These problems are more complex functions that require
+            you to work with <code>ArrayList</code> objects. Complete
+            the following functions in <b>ArrayListProblems.java</b>.
+            <ul>
+                <li><b>scoreUp</b></li>
+                <li><b>mergeTwo</b></li>
+                <li><b>wordsWithoutList</b></li>
+                <li><b>copyEvens</b></li>
+                <li><b>copyEndy</b></li>
+            </ul>
+            <p> Use the <b>Check</b> program to check your progress. Click
+                <b><a href="../../movies/S11-ArrayListProblems/S11-ArrayListProblems.html" target="_blank">HERE</a></b>
+                to see a solution to these problems.
+            </p>
+        </li>
+    </ol>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

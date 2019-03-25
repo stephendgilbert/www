@@ -1,0 +1,2107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+	<meta name='Copyright' content=
+		' 2009 John Wiley & Sons, Inc.' />
+	<meta name='Description' content=
+		'Lecture Slides for Horstmann & Budd, _Big C++_, 2nd ed.' />
+	<meta name='Publisher' content='John Wiley & Sons, Inc.' />
+	<meta http-equiv='Content-Language' content='en-us' />
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+	<meta name='Date' content='2008' />
+	<script src='./config.js' type='text/javascript'></script>
+	<script src='../Scripts/pageFormat.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='screen, projection'
+		href='../Slidy/show.css' />
+	<script src='../Slidy/slidy.js' type='text/javascript'></script>
+	<link rel='stylesheet' type='text/css' media='print' href=
+		'../Slidy/print.css' />
+	<script type='text/javascript'><!-- // Set title on browser window
+	//<![CDATA[
+		title()
+		//]]>
+	//--></script>
+</head>
+
+<body>
+
+<div class='slide cover'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		titleSlide()
+	//]]>
+	</script>
+</div>
+
+<div class='slide'>
+<h1> Chapter Goals </h1>
+<ul>
+  <li> To be able to program functions and procedures </li>
+  <li> To become familiar with the concept of parameter passing </li>
+  <li> To recognize when to use value and reference parameters </li>
+  <li> To appreciate the importance of function comments </li>
+  <li> To be able to determine the scope of variables </li>
+  <li> To minimize the use of side effects and global variables </li>
+  <li> To develop strategies for decomposing complex tasks into 
+    simpler ones </li>
+  <li> To document the responsibilities of functions and their 
+    callers with preconditions </li>
+	<li> To learn the fundamental principles of testing and debugging </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Functions </h1>
+<ul>
+	<li> Fundamental Building Blocks of a program </li>
+	<li> Packages a Computation (or action) </li>
+	<li> Easily understood </li>
+	<li> Easily reused </li>
+	<li> Break up a complex task into smaller, simpler tasks </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "1" )
+	//]]>
+	</script>
+	Functions as Black Boxes </h1>
+<table><tr>
+	<td>
+	<ul>
+		<li> Some functions you've already used:
+			<ul>
+				<li> <tt>sqrt()</tt> </li>
+				<li> <tt>getline()</tt> </li>
+			</ul>
+		</li>
+		<li> Don't know how either does its job
+			<ul> 
+				<li> You don't need to </li>
+			</ul>
+		</li>
+		<li> Can be considered as <dfn>black boxes</dfn>
+			<ul>
+				<li> You pass in values (<dfn>arguments</dfn>) </li>
+				<li> Function returns an answer, or performs an action (or both) </li>
+			</ul>
+		</li>
+	</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig1.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 1</span> <tt>sqrt</tt>
+		Function as a Black Box </p>
+		</div>
+	</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+	<h1> Functions as Black Boxes </h1>
+<table><tr>
+	<td>
+		<ul>
+			<li> You pass an <dfn>argument</dfn> (some value) to <tt>sqrt</tt>
+				<ul>
+					<li> Can be <em>any</em> expression </li>
+				</ul>
+			</li>
+			<li> The caller (<tt>main()</tt>) is suspended </li>
+			<li> <tt>sqrt()</tt> becomes active, computes the answer </li>
+			<li> Returns answer to caller </li>
+			<li> Caller continues </li>
+			<li> Consider
+				<code> sqrt(b * b - 4 * a * c) </code>
+			</li>
+		</ul>
+	</td>
+	<td>
+		<div class='center'>
+		<script type='text/javascript'>
+		//<![CDATA[
+			image( "fig2.png" )
+		//]]>
+		</script>
+		<p class='caption'> <span class='blue'>Figure 2</span> Execution Flow
+		During a Function Call </p>
+		</div>
+	</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+	<h1> Functions as Black Boxes </h1>
+<ul>
+	<li> Some functions take more than one argument, or none
+		<ul>
+			<li> <tt>pow(x, y)</tt> computes <var>x<sup>y</sup></var> </li>
+		</ul>
+	</li>
+  <li> Many functions have <dfn>output</dfn> or <dfn>return</dfn>
+		<dfn>values</dfn>:
+    <ul>
+      <li> <tt>sqrt()</tt> returns the answer:
+				<code> y = sqrt(b * b - 4 * a * c) </code>
+			</li>
+			<li> <strong>One return value</strong>, at most </li>
+    </ul>
+  </li>
+  <li> Parameters (variables that hold arguments) and return values are
+		typed
+    <ul>
+      <li> You cannot compute <tt>sqrt(&quot;Harry&quot;);</tt> </li>
+      <li> You cannot assign <tt>string s = sqrt(5.5);</tt> </li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "2" )
+	//]]>
+	</script>
+	Implementing Functions </h1>
+<ul>
+	<li> A function is a piece of code, assigned to a name </li>
+	<li> Given a specification, write a function </li>
+	<li> E.g., given the interest rate <var>p</var>, compute the value of a
+		savings account with an initial balance of $1,000 after 10 years, given by
+		the formula
+	<i>b</i> = 1000 x (1 + <i>p</i>/100)<sup>10</sup>
+		<ul>
+			<li> Call it <tt>future_value</tt> </li>
+			<li> An example of its use:
+<code>
+cout &lt;&lt; "Please enter the interest rate in percent: ";
+double rate;
+cin &gt;&gt; rate;
+
+<span class='blue'>double balance = future_value(rate);</span>
+cout &lt;&lt; "After 10 years, the balance is "
+   &lt;&lt; balance &lt;&lt; "\n";</code>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions (<tt>future_value()</tt>) </h1>
+<ul>
+	<li> Single <dfn>parameter</dfn>, <tt>p</tt>, of type <tt>double</tt>
+	</li>
+	<li> Return value is also a <tt>double</tt>
+<code>
+double future_value(double p)
+{
+   &hellip;
+}</code>
+	</li>
+	<li> Compute the answer, and return it
+<code>
+double future_value(double p)
+{
+   double b = 1000 * pow(1 + p/100, 10);
+   return b;
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions (<tt>future_value()</tt>) </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig3.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 3</span> A Function Receiving
+a Parameter Value and Returning a Result </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions (placement) </h1>
+<ul>
+	<li> Compiler must know about a function before it is called </li>
+	<li> Functions must be <dfn>declared</dfn>, much like variables </li>
+	<li> The function definition declares the function </li>
+	<li> Place <tt>future_value</tt> above <tt>main</tt> for now </li>
+	<li> (See Advanced Topic 4.1) </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions &mdash; <tt>futval.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "futval.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "1" )
+	//]]>
+	</script>
+ : Function Definition </h1>
+<div class='syntax'>
+<code><i>return_type function_name</i>(<i>parameter</i><sub>1</sub>, ..., <i>parameter<sub>n</sub></i>)
+{
+   <i>statements</i>
+}</code>
+	<h3> Example: </h3>
+<code>double abs(double x)
+{
+   if (x &gt;= 0) return x;
+   else return -x;
+}</code>
+	<h3> Purpose: </h3>
+	<p> Define a function and supply its implementation. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions </h1>
+<ul>
+	<li> <tt>future_value</tt> isn't very useful </li>
+	<li> Starting balance and term (# of years) are <i>hard-wired</i> into
+	the code
+		<ul>
+			<li> Can't compute balance after 20 years </li>
+			<li> Can't explore other interest rates </li>
+		</ul>
+	</li>
+	<li> Not very reusable </li>
+	<li> Turn these values into parameters, to be passed in:
+<code>
+double future_value(double initial_balance, double p, int n)
+{
+   double b = initial_balance * pow(1 + p/100, n);
+   return b;
+}</code>
+	</li>
+	<li> To call:
+		<code>
+		double b = future_value(1000, rate, 10); </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Implementing Functions &mdash; benefits </h1>
+<ul>
+	<li> Abstract out an <i>idea</i> </li>
+	<li> More easily understood </li>
+	<li> Higher-level code reads like an outline </li>
+	<li> Avoids cookie-cutter mistakes </li>
+	<li> Originally, to save lines </li>
+	<li> Develop/test <strong>once</strong>; then reuse </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "3" )
+	//]]>
+	</script>
+	Function Comments </h1>
+<ul>
+	<li> State the purpose of the function </li>
+	<li> Describe the <i>preconditions</i> and the
+		<i>postconditions</i>:
+		<dl>
+			<dt> precondition </dt>
+			<dd> Anything that must be true before the function is called </dd>
+			<dd> Describe the type and legal values for the arguments </dd>
+			<dd> Any other requirements, such as global variables that must exist
+				(<strong>avoid this!</strong>) </dd>
+
+			<dt> postcondition </dt>
+			<dd> What will be true after the function executes (given that the
+				preconditions were met) </dd>
+			<dd> Describe the return value </dd>
+			<dd> Any other <i>side-effects</i> </dd>
+		</dl>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Function Comments </h1>
+<ul>
+	<li> For humans to read; compiler never sees them </li>
+	<li> Manual for anybody who wants to <em>use</em> the function
+		(<i>client</i>) </li>
+	<li> No standard layout </li>
+	<li> Think description/inputs/output/side-effects, or </li>
+	<li> description/preconditions/postconditions </li>
+    <li> We'll use <i>javadoc-style tags</i> in this book </li>
+	<li> Tools exist that will generate documentation (HTML, RTF, etc.) from
+		source </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Function Comments </h1>
+<ul>
+	<li> Here's the <tt>future_value</tt> function now:
+<code>
+/**
+   Computes the value of an investment with compound interest.
+   @param initial_balance the initial value of the investment
+   @param p the interest rate per period in percent
+   @param n the number of periods the investment is held
+   @return the balance after n periods
+*/
+double future_value(double initial_balance, double p, int n)
+{
+   double b = initial_balance * pow(1 + p / 100, n);
+   return b;
+}</code>
+	</li>
+	<li> Note, the special block-comment <tt>/**</tt> </li>
+	<li> Tags start with the <tt>@</tt> symbol </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Function Comments </h1>
+<ul>
+	<li> Good function and parameter names should still be chosen </li>
+	<li> Black-box description; not the code </li>
+	<li> Write the comments <em>before</em> writing the function
+		<ul>
+			<li> You understand the specs </li>
+			<li> The function follows the specs </li>
+			<li> (Rather than the specs following the code) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "4" )
+	//]]>
+	</script>
+	Return Values </h1>
+<table><tr>
+<td>
+	<ul>
+		<li> <tt>return</tt> statement specifies the result of a function </li>
+		<li> When the <tt>return</tt> statement is processed, the function exits 
+		<i>immediately</i> </li>
+		<li> This is convenient for handling exceptional cases:
+<code>
+double future_value(double initial_balance, double p, int n)
+{
+<span class='blue'>   if (n &lt; 0) return 0;
+   if (p &lt; 0) return 0;</span>
+   double b = initial_balance * pow(1 + p / 100, n);
+   return b;
+}</code>
+		</li>
+	</ul>
+</td>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig5.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 5</span> <tt>return</tt>
+	Statements Exit a Function Immediately </p>
+	</div>
+</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+	<h1> Return Values </h1>
+<ul>
+	<li> Return values can be any expression (of the right type) )
+<code>
+double future_value(double init_bal, double p, int n)
+{
+<span class='blue'>   return initial_balance * pow(1 + p / 100, n);</span>
+}</code>
+	</li>
+  <li> Every branch must return a value
+<code>
+double future_value(double init_bal, double p, int n)
+{
+   if (p &gt;= 0) 
+      return initial_balance * pow(1 + p / 100, n);
+   // Error
+}</code>
+	</li>
+	<li> Last statement should always be a <tt>return</tt> statement </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Return Values &mdash; predicates </h1>
+<p> Predicate functions </p>
+<ul>
+	<li> Return a truth value (<tt>bool</tt>) </li>
+	<li> Have no side effects </li>
+	<li> E.g., function to check if input is even:
+<code>
+bool is_even(int n)
+{
+   return n % 2 == 0;
+}</code>
+	</li>
+	<li> Can be used inside a test:
+	<code>
+	if (is_even(input)) &hellip; </code>
+	</li>
+	<li> You've already seen this:
+	<code>
+	if (cin.fail()) &hellip; </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "5" )
+	//]]>
+	</script>
+	Parameters </h1>
+<ul>
+	<li> Values passed into a function are called <i>arguments</i>, or
+		<i>parameter values</i> </li>
+	<li> The variable in a function that (initially) holds an input value
+		(argument) is called a <i>formal parameter</i>, <i>parameter
+		variable</i>, or just a <i>parameter</i> </li>
+</ul>
+<p> When a function is called: </p>
+<ul>
+	<li> All expressions (arguments) are evaluated <em>before</em> the
+	function is called </li>
+	<li> Parameters are initialized with these values (in order) </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Parameters </h1>
+<p> Consider this call: </p>
+<code> b = future_value(total / 2, rate, year2 - year1) </code>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig6.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 6</span> Parameter Passing </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1> Parameters </h1>
+<ul>
+	<li> Parameter variables behave much like local variables </li>
+	<li> Can be modified:
+<code>
+double future_value(double initial_balance, double p, int n)
+{
+   <span class='blue'>p = 1 + p / 100;</span>
+   double b = initial_balance * pow(p, n);
+   return b;
+}</code>
+	</li>
+	<li> Considered bad form by some </li>
+	<li> We won't do this </li>
+	<li> Except for <dfn>reference parameters</dfn> (soon) </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1 class='commonerror'> Common Error 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Type Mismatch </h3>
+<ul>
+	<li> Compiler checks types of return values and parameters against calls
+	</li>
+	<li> C++ is <i>strongly typed</i> </li>
+	<li> C++ does support some coercions: <tt>short</tt>&rarr;<tt>int</tt>,
+		<tt>int</tt>&rarr;<tt>float</tt>, etc. </li>
+	<li> <strong>Not</strong> <tt>float</tt>&rarr;<tt>int</tt>, nor
+		between <tt>string</tt>s and numbers </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "1" )
+		//]]>
+	</script>
+</h1>
+<h3> Function Declarations </h3>
+<p> Drawbacks of using definition as the declaration </p>
+<ul>
+	<li> Doesn't work for mutually-recursive functions </li>
+	<li> Ugly source.  Large projects should be broken into separate files
+		</li>
+</ul>
+<p> To fix </p>
+<ul>
+	<li> Declare using a <i>prototype</i> </li>
+	<li> Just the info the compiler needs to check types:
+		<code>
+		double future_value(double initial_balance, double p, int n); </code>
+	</li>
+	<li> Parameter names are not needed (nor do they need to be the same as in
+		the definition):
+		<code>
+		double future_value(double, double, int); </code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+ : Function Declaration (or Prototype) </h1>
+<div class='syntax'>
+<code><i>return_type function_name</i>(<i>parameter</i><sub>1</sub>, ..., <i>parameter<sub>n</sub></i>)
+</code>
+	<h3> Example: </h3>
+<code>double abs(double x);
+</code>
+	<h3> Purpose: </h3>
+	<p> Declare a function so that it can be called before it is defined. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "6" )
+	//]]>
+	</script>
+	Side Effects </h1>
+<p> Externally observable effect (other than the return value) caused by a
+function call.  Something in the state of the machine that changed since the
+function was called.  E.g.:
+<ul>
+	<li> Changing a global variable </li>
+	<li> Printing to the screen </li>
+	<li> Reading from the keyboard </li>
+	<li> Ending the program </li>
+	<li> Changing reference parameters (soon) </li>
+	<li> Erasing the hard-drive </li>
+	<li> Moving an arm on an assembly line </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Side Effects </h1>
+<ul>
+	<li> Note, <tt>future_value</tt> doesn't print the answer (or anything) to
+		the screen.  It just does its job </li>
+	<li> Printing error messages inside a function is extremely reprehensible
+		(unless that is the function's job) </li>
+	<li> These functions wouldn't work where <tt>cout</tt> doesn't exist </li>
+	<li> Limits reusability </li>
+	<li> Group I/O activity together
+		<ul>
+			<li> Abstract out (to functions) for larger programs </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Side Effects </h1>
+<ul>
+	<li> Endeavor to write functions without side effects </li>
+	<li> Side effects can't entirely be avoided </li>
+	<li> Some functions are implemented solely for their side effects </li>
+	<li> But, functions without side-effects make programming much simpler
+		<ul>
+			<li> A function without side effects <em>always</em> behaves the same
+			</li>
+			<li> <em>Much</em> easier to debug </li>
+		</ul>
+	</li>
+	<li> Most functions have no side effects </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "7" )
+	//]]>
+	</script>
+	Procedures </h1>
+<ul>
+  <li> A function without a return value is called a <dfn>procedure</dfn>
+		<code>
+		print_time(now);</code>
+	</li>
+	<li> This distinction is blurred in C++ </li>
+	<li> They're all functions in C++ </li>
+	<li> The missing return value is indicated by the keyword <tt>void</tt>
+<code>
+void print_time(Time t)
+{
+   cout &lt;&lt; t.get_hours() &lt;&lt; ":"
+      &lt;&lt; setw(2) &lt;&lt; setfill('0') &lt;&lt; t.get_minutes() &lt;&lt; ":"
+      &lt;&lt; setw(2) &lt;&lt; t.get_seconds() &lt;&lt; setfill(' ');
+}</code>
+	</li>
+	<li> Since a procedure does not have a return value, it must 
+    have a side effect </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Procedures </h1>
+<ul>
+	<li> A procedure might return a status </li>
+	<li> E.g., <tt>print_paycheck()</tt> might return a <tt>bool</tt> if it
+		printed successfully (paper in the tray, no jam, enough ink, etc.) </li>
+	<li> This return value is not the purpose of the procedure </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "8" )
+	//]]>
+	</script>
+	Reference Parameters </h1>
+<ul>
+	<li> Arguments (parameter values) are <em>copied</em> into the function,
+		by default
+		<ul>
+			<li> Called <i>pass by value</i> </li>
+			<li> Modifying the parameter in the function does not change the
+				argument in the caller </li>
+		</ul>
+	</li>
+	<li> For changes to a parameter to persist, we use a <i>reference
+		parameter</i>
+		<ul>
+			<li> Does not create a new variable </li>
+			<li> A reference to the argument is actually passed in </li>
+			<li> Modifying the parameter modifies the argument in the caller </li>
+			<li> Argument must be an <i>l-value</i> (something that can be
+				modified) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Reference Parameters </h1>
+<ul>
+	<li> Consider a function that raises an Employee's salary, by a given
+		percentage:
+<code>
+Employee harry;
+...
+raise_salary(harry, 5); // Now Harry earns 5 percent more</code>
+	</li>
+  <li> Reference parameters are indicated using an <tt>&amp;</tt> 
+    after the parameter's type:
+<code>
+void raise_salary(Employee<span class='blue'>&amp;</span> e, double by)
+{
+   double new_salary = e.get_salary() * ( 1 + by / 100);
+   e.set_salary(new_salary);
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Reference Parameters </h1>
+<ul>
+	<li> The parameter <tt>by</tt> is a value parameter; it's initialized with
+		a copy of the value supplied by the caller </li>
+	<li> <tt>e</tt> is a reference parameter; it actually refers to the
+		variable used in the call </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig7.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 7</span> Reference and Value
+Parameters </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1> Reference Parameters </h1>
+<ul>
+	<li> A reference parameter refers to different variables in different
+		calls </li>
+	<li> Here <tt>e</tt> refers first to <tt>harry</tt>, then to
+		<tt>charley</tt>
+<code>
+raise_salary(harry, 5 + bonus);
+raise_salary(charley, 1.5);</code>
+	</li>
+	<li> <tt>by</tt> should not be a reference parameter
+		<ul>
+			<li> It's not modified in the function </li>
+			<li> Reference parameters must be bound to a variable, so
+				<code>
+				raise_salary(harry, 5 + bonus) </code>
+				would be illegal
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Reference Parameters &mdash; <tt>raisesal.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "raisesal.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Constant References </h3>
+<ul>
+	<li> Passing large objects into functions is inefficient
+		<ul>
+			<li> Takes time to copy </li>
+			<li> Takes more space </li>
+		</ul>
+	</li>
+	<li> We can pass by reference, avoid the overhead </li>
+	<li> If there's no need for the function to modify the object, make it a
+	<i>const reference</i>
+<code>
+void print_employee(<span class='blue'>const</span> Employee<span class='blue'>&</span> e)
+{
+   cout &lt;&lt; "Name: " &lt;&lt; e.get_name()
+      &lt;&lt; " Salary: " &lt;&lt; e.get_salary() &lt;&lt; "\n";
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='advtopic'> Advanced Topic 
+	<script type='text/javascript'>
+		//<![CDATA[
+		taxonomy( "2" )
+		//]]>
+	</script>
+</h1>
+<h3> Constant References (cont.) </h3>
+<ul>
+	<li> Constant reference parameters can not be modified in a function </li>
+	<li> Only <tt>const</tt> methods may be called on <tt>const</tt> objects
+		</li>
+	<li> This decision should be made when the function is implemented </li>
+	<li> Can be gleaned from the specs </li>
+	<li> More on this subject (<dfn>const-correctness</dfn>) later </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "9" )
+	//]]>
+	</script>
+	Variable Scope and Global Variables </h1>
+<ul>
+	<li> Same variable name can be used in different functions </li>
+	<li> Consider:
+<code>
+double future_value(double initial_balance, double p, int n)
+{
+<span class='scope'>   <span class='blue'>double</span> r = initial_balance * pow(1 + p / 100, n);
+   return r;
+}</span>
+
+int main()
+{
+   cout &lt;&lt; "Please enter the interest rate in percent: ";
+<span class='scope'>   <span class='blue'>double</span> r;
+   cin &gt;&gt; r;
+   
+   double balance = future_value(10000, r, 10);
+   cout &lt;&lt; "After 10 years, the balance is "
+      &lt;&lt; balance &lt;&lt; "\n";
+   return 0;
+}</span></code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Variable Scope and Global Variables </h1>
+<ul>
+	<li> These variables <tt>r</tt> are independent of each other </li>
+	<li> Where a particular variable is visible is its <i>scope</i> </li>
+	<li> Variables defined inside a function:
+		<ul>
+			<li> Called <i>local</i> variables </li>
+			<li> Their scope extends from the definition to the end of the
+				enclosing block </li>
+		</ul>
+	</li>
+	<li> Variables defined outside functions are call <i>global</i>
+		<ul>
+			<li> Visible to all functions that are defined after it </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Variable Scope and Global Variables &mdash; <tt>global.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "global.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+</h1>
+<h3> Minimize Global Variables </h3>
+<ul>
+	<li> Some globals are convenient (<tt>cin</tt>, <tt>cout</tt>,
+		<tt>cwin</tt>) </li>
+	<li> Some globals are unavoidable </li>
+	<li> Avoid globals, whenever possible
+		<ul>
+			<li> Side effects </li>
+			<li> Code will be difficult to maintain </li>
+		</ul>
+	</li>
+	<li> Use <dfn>parameters</dfn> and <dfn>classes</dfn> to avoid globals
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "10" )
+	//]]>
+	</script>
+	Stepwise Refinement </h1>
+<ul>
+	<li> Break a problem into smaller, simpler tasks </li>
+	<li> Keep breaking the simpler tasks into even simpler ones </li>
+</ul>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9a.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> (Partial) Flowchart
+of Coffee-Making Solution </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1> Stepwise Refinement </h1>
+<div class='center'>
+<script type='text/javascript'>
+//<![CDATA[
+	image( "fig9b.png" )
+//]]>
+</script>
+<p class='caption'> <span class='blue'>Figure 9</span> Flowchart of
+	Coffee-Making Solution (cont.) </p>
+</div>
+</div>
+
+<div class='slide'>
+	<h1> Stepwise Refinement </h1>
+
+<ul>
+<li>Implement functions in this same outline form </li>
+</ul>
+<table><tr>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig10.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 10</span> Call Tree of
+		Coffee-Making Process </p>
+	</div>
+</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+	<h1 class='qualtip'> Quality Tip 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+</h1>
+<h3> Keep Functions Short </h3>
+<ul>
+	<li> Function should fit on the screen </li>
+	<li> Overview of what a function does should be evident  </li>
+	<li> If long, break it into smaller tasks, implement as
+		separate functions </li>
+	<li> Same applies to any statement body (loops, branches)
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "11" )
+	//]]>
+	</script>
+	Case Study: From Pseudocode to Code </h1>
+<ul>
+	<li> Before coding, we need a plan </li>
+	<li> State the problem </li>
+	<li> Apply stepwise refinement </li>
+	<li> The problem: turn a money amount into a text string
+		<ul>
+			<li> $274.15 becomes "two hundred seventy four dollars and 15 cents"
+			</li>
+		</ul>
+	</li>
+	<li> We need to write a function to do this:
+<code>
+/**
+   Turns a number into its English name.
+   @param n a positive integer &lt; 1,000,000
+   @return the name of n (e.g., "two hundred seventy four")
+*/
+string int_name(int n)
+</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code </h1>
+<p> Break the problem into sub-tasks and design functions </p>
+<code>/**
+   Turns a digit into its English name
+   @param n an integer between 1 and 9
+   @return the name of n (&quot;one&quot; ... &quot;nine&quot;)
+*/
+string digit_name(int n);
+
+/**
+   Turns a number between 10 and 19 into its English name.
+   @param n an integer between 10 and 19
+   @return the name of n (&quot;ten&quot;...&quot;nineteen&quot;)
+*/
+string teen_name(int n);
+
+/**
+   Gives the English name of a multiple of 10
+   @param n an integer between 2 and 9
+   @return the name of 10 * n (&quot;twenty&quot;...&quot;ninety&quot;)
+*/
+string tens_name(int n);</code>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code </h1>
+<ul>
+	<li> for 20-99, use <tt>tens_name()</tt> and <tt>digit_name()</tt> (if not
+		0) </li>
+	<li> For hundreds, show the digit name then write &quot;hundreds&quot; </li>
+	<li> For 100 - 999, put calls to functions above together 
+		to write number </li>
+	<li> For numbers over 1,000, call functions above to write 
+		the number of thousands, print "<tt>thousand</tt>", then call the above 
+		functions again to write the rest of the number </li>
+	<li> E.g., to convert 23,416, pull off the 23, convert it, print
+		"<tt>thousand</tt>", then convert 416 </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; Pseudocode </h1>
+<h3> Pseudocode </h3>
+<ul>
+	<li> Mixture of English and source code </li>
+	<li> Looks like C++ </li>
+	<li> Informal </li>
+	<li> Used in the early, planning stages </li>
+	<li> Create an outline </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; Pseudocode </h1>
+<code>string int_name(int n)
+{
+   int c = n; // The part that still needs to be converted
+   string r; // The return value
+
+   if (c &gt;= 1000) 
+   {
+      r = <span class='pseudo'>name of thousands in c</span> + "thousand";
+      <span class='pseudo'>remove thousands from c</span>;
+   }
+   if (c &gt;= 100) 
+   {
+      r = r + <span class='pseudo'>name of hundreds in c</span> + "hundred";
+      <span class='pseudo'>remove hundreds from c</span>;
+   }
+   if (c &gt;= 20) 
+   {
+      r = r + <span class='pseudo'>name of tens in c</span>;
+      <span class='pseudo'>remove tens from c</span>;
+   }
+   if (c &gt;= 10) 
+   {
+      r = r + <span class='pseudo'>name of c</span>;
+      c = 0;
+   }
+   if (c &gt; 0)
+      r = r + <span class='pseudo'>name of c</span>;
+
+   return r;
+}</code>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; Pseudocode </h1>
+<ul>
+  <li> Pseudocode is more concise than a verbal description </li>
+	<li> Shows flow, order of tests </li>
+	<li> The basic logic is in place, can be checked </li>
+	<li> Don't muddy the pseudocode with minor details
+		<ul>
+			<li> Spaces between the words in output </li>
+		</ul>
+	</li>
+	<li> Turn the vague statements (in italics) into function calls
+		<ul>
+			<li> Getting a feel for the design (inputs, return) </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; Pseudocode </h1>
+<p> The last 3 cases are easy; helper functions already exist: </p>
+<code>if (c &gt;= 20) 
+{
+   r = r + " " + tens_name(c / 10);
+   c = c % 10;
+}
+if (c &gt;= 10) 
+{
+   r = r + " " + teen_name(c);
+   c = 0;
+}
+if (c &gt; 0)
+   r = r + digit_name(c);</code>
+<p> Numbers 100 - 999 are also easy; <tt>c</tt> / 100 is a single digit </p>
+<code>if (c >= 100) 
+{
+   r = r + " " + digit_name(c / 100) + " hundred";
+   c = c % 100;
+}</code>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; Pseudocode </h1>
+<h3> For numbers &gt; 1000 </h3>
+<ul>
+	<li> Given that <tt>c</tt> is &lt; 1,000,000 </li>
+	<li> We can name <tt>c</tt>/1000
+		<ul>
+			<li> <tt>c</tt>/1000 &lt; 1,000 </li>
+			<li> Use existing functions </li>
+		</ul>
+	</li>
+	<li> Append <tt>" thousand"</tt> </li>
+</ul>
+   <code>if (c &gt;= 1000)
+   {
+      r = int_name(c / 1000) + " thousand";
+      c = c % 1000;
+   }</code>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; recursion </h1>
+<ul>
+	<li> C++ supports <dfn>recursion</dfn> </li>
+	<li> A function that calls itself, directly or indirectly </li>
+	<li> Useful when you can break a problem into similar but
+		<em>smaller</em> problems </li>
+	<li> Each recursive call <strong>must</strong> be on a strictly smaller
+		subproblem </li>
+	<li> More in Chapter 14 </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Case Study: from Pseudocode to Code &mdash; <tt>intname.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "intname.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "12" )
+	//]]>
+	</script>
+	Walkthroughs </h1>
+<ul>
+	<li> Manual simulation of program code </li>
+	<li> Use a stack of index cards, to write a <i>trace table</i>
+		</li>
+	<li> Write down the call you wish to study, with arguments </li>
+	<li> Write each of the local variables (and parameters, if they are
+		modified) </li>
+</ul>
+<table class='card'>
+	<tr> 
+		<td class='hdr' colspan="2"> 
+			<tt>int_name(n = 416)</tt>
+		</td>
+	</tr>
+	<tr> 
+		<td> <tt>c</tt> </td>
+		<td> <tt>r</tt> </td>
+	</tr>
+	<tr> 
+		<td> <tt>416</tt> </td>
+		<td> <tt>&quot;&quot;</tt> </td>
+	</tr>
+	<tr>
+		<td> &nbsp; </td>
+		<td> &nbsp; </td>
+	</tr>
+</table>
+</div>
+
+<div class='slide'>
+	<h1> Walkthroughs </h1>
+<ul>
+  <li> When your function calls another function, you can either 
+    start another card, or assume that it performs correctly
+<table><tr>
+<td>
+	<table class='card'>
+		<tr> 
+			<td class='hdr' colspan="2"> <tt>int_name(n = 416)</tt> </td>
+		</tr>
+		<tr> 
+			<td> <tt>c</tt> </td>
+			<td> <tt>r</tt> </td>
+		</tr>
+		<tr> 
+			<td> <tt>416</tt> </td>
+			<td> <tt>&quot;&quot;</tt> </td>
+		</tr>
+	</table>
+</td>
+<td>
+	<table class='card'>
+		<tr> 
+			<td class='hdr'> <tt>digit_name(n = 4)</tt> </td>
+		</tr>
+		<tr> 
+			<td> <tt><em>Returns</em>: &quot;four&quot; </tt> </td>
+		</tr>
+		<tr> 
+			<td> &nbsp; </td>
+		</tr>
+	</table>
+</td>
+</tr></table>
+	</li>
+	<li> Each complex function should have a walkthrough of its own </li>
+	<li> Walkthrough can be deferred until later </li>
+</ul>
+</div>
+
+<div class='slide'>
+	<h1> Walkthroughs </h1>
+<ul>
+  <li> As you trace through the function, update the variables </li>
+</ul>
+<table>
+<tr>
+	<td>
+		<ul>
+			<li> <tt>r</tt> becomes <tt>r + " " + digit_name(c / 100) + "
+			hundred"</tt>, so, <tt>" four hundred"</tt> </li>
+			<li> <tt>c</tt> becomes <tt>c % 100</tt>, so, <tt>16</tt>
+			</li>
+		</ul>
+	</td>
+	<td>
+	<table class='card'>
+    <tr> 
+      <td colspan='2' class='hdr'> <tt>int_name(n = 416)</tt> </td>
+    </tr>
+    <tr> 
+      <td> <tt>c</tt> </td>
+      <td> <tt>r</tt> </td>
+    </tr>
+    <tr> 
+      <td class='xout'> <tt>416</tt> </td>
+      <td class='xout'> <tt>&quot;&quot;</tt> </td>
+    </tr>
+    <tr> 
+      <td> <tt>16</tt> </td>
+      <td> <tt>&quot;four hundred&quot;</tt> </td>
+    </tr>
+  </table>
+	</td>
+</tr>
+<tr>
+	<td>
+		<ul>
+			<li> Now enter the branch <tt>c &gt;= 10</tt> </li>
+		</ul>
+	</td>
+	<td>
+  <table class='card'>
+    <tr> 
+      <td class='hdr' colspan='2'> <tt>int_name(n = 416)</tt> </td>
+    </tr>
+    <tr> 
+      <td> <tt>c</tt> </td>
+      <td> <tt>r</tt> </td>
+    </tr>
+    <tr> 
+      <td class='xout'> <tt>416</tt> </td>
+      <td class='xout'> <tt>&quot;&quot;</tt> </td>
+    </tr>
+    <tr> 
+      <td class='xout'> <tt>16</tt> </td>
+      <td class='xout'> <tt>&quot;four hundred&quot;</tt> </td>
+    </tr>
+    <tr> 
+      <td> <tt>0</tt> </td>
+      <td> <tt>&quot;four hundred sixteen&quot;</tt> </td>
+    </tr>
+  </table>
+	</td>
+</tr>
+</table>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+	</h1>
+<h3> Commenting Out a Section of Code </h3>
+<ul>
+	<li> You might want to ignore large chunks of code while developing or
+		debugging </li>
+	<li> Cutting the text out to another file is odious, and error-prone </li>
+	<li> Block comments do <strong>not</strong> <i>nest</i> in C++
+<code>
+<span class='hl'>/*</span>
+
+/**
+   Function Comments
+<span class='hl'>*/</span>
+string teen_name(int n)
+{
+   if (n == 11) return "eleven";
+   else ... 
+}
+   
+*/
+</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "4" )
+	//]]>
+	</script>
+	(cont.)</h1>
+<h3> Commenting Out a Section of Code </h3>
+<ul>
+	<li> Use <i>pre-processor directives</i>
+<code>
+<span class='hl'>#if 0</span>
+
+/**
+   Function Comments
+*/
+string teen_name(int n)
+{
+   if (n == 11) return "eleven";
+   else ... 
+}
+
+<span class='hl'>#endif</span></code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='prodhint'> Productivity Hint
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "5" )
+	//]]>
+	</script>
+	</h1>
+<h3> Stubs </h3>
+<ul>
+	<li> A function that is empty, and returns a trivial value
+<code>
+string digit_name(int n)
+{
+   return "mumble";
+}
+
+string teen_name(int n)
+{
+   return "mumbleteen";
+}
+
+string tens_name(int n)
+{
+   return "mumblety";
+}</code>
+	</li>
+	<li> Allows program to compile </li>
+	<li> Allows you to check logic; flow </li>
+	<li> Useful for developing or debugging other parts of a program </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "13" )
+	//]]>
+	</script>
+	Preconditions </h1>
+<ul>
+	<li> Anything that a function assumes upon invocation
+		<ul>
+			<li> Argument to <tt>sqrt</tt> is non-negative </li>
+			<li> Argument to <tt>cos</tt> is in radians </li>
+		</ul>
+	</li>
+	<li> Preconditions should be commented
+		<ul>
+			<li> If a precondition is not met, function can do what it wants </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Preconditions </h1>
+<ul>
+	<li> Sometimes a function can check a precondition
+		<ul>
+			<li> Is the argument non-negative? </li>
+		</ul>
+	</li>
+	<li> Sometimes not
+		<ul>
+			<li> Is this character array null-terminated? </li>
+			<li> Is that float measured in radians? </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Preconditions </h1>
+<p> If a function can determine inappropriate inputs, what
+	should it do? </p>
+<ul>
+	<li> Return default value
+		<ul>
+			<li> E.g., <tt>digit_name</tt> returns an empty string when called
+				with an unexpected value </li>
+			<li> This is a bad idea.  Even if a good sentinel (invalid output)
+				exists, we rely on the caller to check </li>
+		</ul>
+	</li>
+	<li> Terminate
+		<ul>
+			<li> Ugly, and not informative </li>
+		</ul>
+	</li>
+	<li> Throw an exception
+		<ul>
+			<li> Many functions in the <tt>cmath</tt> library throw an exception
+				if given an illegal value </li>
+			<li> Requires deeper study</li>
+		</ul>
+	</li>
+  <li> Use the <tt>assert()</tt> mechanism </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Preconditions &mdash; <tt>assert()</tt> </h1>
+<ul>
+	<li> Only useful in debugging </li>
+	<li> Given a condition that tests false, prints an error message, then
+		dumps the program </li>
+	<li> Otherwise, does nothing
+		<code> 
+		assert(x &gt;= 0); </code> </li>
+	<li> Behavior can be modified in released code, so that <tt>assert</tt>
+		statements are ignored entirely </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='syntax'> Syntax 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "6" )
+	//]]>
+	</script>
+ : Assertion </h1>
+<div class='syntax'>
+<code>assert(<i>expression</i>) </code>
+	<h3> Example: </h3>
+<pre>assert(x &gt;= 0);</pre>
+	<h3> Purpose: </h3>
+	<p> If the expression is true, do nothing. If it is false, terminate the
+	program, displaying an error message with the file name, line number, and
+	expression. </p>
+</div>
+</div>
+
+<div class='slide'>
+<h1> Preconditions &mdash; <tt>assert()</tt> </h1>
+<code>/**
+   Computes the value of an investment with compound interest.
+   @param initial_balance the initial value of the investment
+   @param p the interest rate in percent; must be &ge; 0
+   @param n the number of periods the investment is held; must be &gt;= 0
+   @return the balance after n periods
+*/
+double future_value(double initial_balance, double p, int n)
+{
+   <span class='hl'>assert(p &gt;= 0);
+   assert(n &gt;= 0);</span>
+
+   return initial_balance * pow(1 + p / 100, n);
+}
+</code>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "2" )
+	//]]>
+	</script>
+	</h1>
+<h3> The Therac-25 Incidents </h3>
+<ul>
+	<li> Computerized device that delivers radiation to cancer patients </li>
+	<li> 1985-87, delivered several serious overdoses </li>
+	<li> Killed patients </li>
+	<li> Written by
+		<ul>
+			<li> A single programmer </li>
+			<li> Subsequently left, couldn't be found </li>
+			<li> Of unknown, or unverifiable qualifications </li>
+		</ul>
+	</li>
+	<li> The FDA found that
+		<ul>
+			<li> The program was poorly documented </li>
+			<li> No design specification existed </li>
+			<li> No formal test plan existed </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "14" )
+	//]]>
+	</script>
+	Unit Testing </h1>
+<p> Testing can only show the presence of bugs, not their absence &mdash;
+	Edsger Dijkstra </p>
+<dl>
+	<dt> <dfn>block-box testing</dfn> </dt>
+	<dd> Test functionality of a program (or function) without consideration
+		of its internal structure </dd>
+	<dd> Can (should) be written from the specs, before the code is written
+		</dd>
+	<dd> Not possible (usually) to test all inputs </dd>
+
+	<dt> <dfn>white-box testing</dfn> </dt>
+	<dd> Look at internal structure </dd>
+	<dd> Exercise each code path </dd>
+	<dd> Test border conditions </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Unit Testing </h1>
+<ul>
+	<li> <i>Unit testing</i> &mdash; process of testing each function in
+		isolation </li>
+	<li> Write a <i>test harness</i> that calls a function with various
+	inputs
+<code>int main()
+{
+   assert(int_name(19) == "nineteen");
+   assert(int_name(29) == "twenty nine");
+   assert(int_name(1093) == "one thousand ninety three");
+   assert(int_name(30000) == "thirty thousand");
+}</code>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Unit Testing </h1>
+<ul>
+	<li> <dfn>Unit test frameworks</dfn> exist for larger programs </li>
+	<li> Easier to organize unit tests </li>
+	<li> Automates testing </li>
+	<li> More sophisticated </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Unit Testing &mdash; selecting cases </h1>
+<ul>
+	<li> Select "typical" inputs </li>
+	<li> Include <dfn>boundary cases</dfn>
+		<ul>
+			<li> Legitimate inputs </li>
+			<li> Examples for <tt>int_name</tt>: 1, 999999 </li>
+		</ul>
+	</li>
+	<li> Cover each branch (<dfn>test coverage</dfn>)
+		<ul>
+			<li> Each <tt>if</tt>/<tt>else</tt> branch, each loop </li>
+			<li> Examples for <tt>int_name</tt>: 1, 10, 19, 20, 27, 99, 100, 101,
+				115, 121, 999, 1000, 1003, 1021, 1221, etc.  </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Unit Testing </h1>
+<ul>
+	<li> Write test cases <em>before</em> implementing a function </li>
+	<li> It is common to add test cases for each but that is discovered and
+		fixed
+		<ul>
+			<li> Leave in the <dfn>test suite</dfn> </li>
+			<li> A bug often reappears after being "fixed" (<dfn>cycling</dfn>)
+			</li>
+		</ul>
+	</li>
+	<li> <i>regression testing</i> &mdash; testing against a set of
+	past failures </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1>
+	<script type='text/javascript'>
+	//<![CDATA[
+		section( "15" )
+	//]]>
+	</script>
+	The Debugger </h1>
+<ul>
+	<li> Helps you to find bugs </li>
+	<li> Allows you to control the execution of a program and observe (and
+		tweak) the state </li>
+	<li> Included in modern development environments </li>
+	<li> Superior to trace statements </li>
+	<li> Debuggers differ in usage, but functionality is much the same </li>
+	<li> Spend time to learn one </li>
+	<li> <em>Extremely</em> handy </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='ranfact'> Random Fact 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "3" )
+	//]]>
+	</script>
+	</h1>
+<h3> The First Bug  </h3>
+<ul>
+	<li> First bug was found in the Mark II, at Harvard (legend) </li>
+	<li> Huge, electromechanical computer </li>
+	<li> Moth was trapped in a relay switch </li>
+	<li> Maurice Wilkes wrote:
+		<blockquote> <p>Somehow, at the Moore School and afterwards, one had always
+		assumed there would be no particular difficulty in getting programs
+		right. I can remember the exact instant in time at which it dawned on me
+		that a great part of my future life would be spent finding mistakes in
+		my own programs.</p> </blockquote>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "15.1" )
+	//]]>
+	</script>
+Using a Debugger </h1>
+<ul>
+	<li> Make sure a debug version of your system is built
+		<ul>
+			<li> Builds in extra symbol information </li>
+			<li> Larger program </li>
+		</ul>
+	</li>
+	<li> Start the debugger </li>
+	<li> Set some <dfn>breakpoints</dfn> in your code </li>
+	<li> Run your program inside the debugger </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Using a Debugger &mdash; 3 useful commands </h1>
+<p> Three commands that will get you far </p>
+<dl>
+	<dt> <dfn>break</dfn> &mdash; "run until this line" </dt>
+	<dd> Execution pauses at (before) this line or function </dd>
+	<dd> Displays next line to be executed </dd>
+	<dd> Allows user to look at values of variables at this point </dd>
+
+	<dt> <dfn>step</dfn> &mdash; "execute current line, stop at next" </dt>
+	<dd> You can <strong>step</strong> into a function call, watch the
+		function execute, or </dd>
+	<dd> You can execute a function call as a single line, going to the
+		<strong>next</strong> line </dd>
+
+	<dt> <dfn>print</dfn> &mdash; "inspect variable" </dt>
+	<dd> While halted, debugger allows you to see the value of any variable
+	(in scope) </dd>
+	<dd> In fact, allows you to evaluate <em>any</em> valid expression </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "15.2" )
+	//]]>
+	</script>
+A Sample Debugging Session </h1>
+<p> Consider the following program to print primes, from 2 to <var>n</var> </p>
+<ul>
+	<li> <var>i</var> is prime if
+		<ul>
+			<li> <var>i</var> &gt; 1 </li>
+			<li> It is evenly divisible only by 1 and itself </li>
+		</ul>
+	</li>
+	<li> First few primes are
+		<dl><div> 2, 3, 5, 7, 11, 13, 17, 19 </div></dl>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session &mdash; <tt>primebug.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "primebug.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<p> Output from this program, when <tt>10</tt> is entered at the
+prompt: </p>
+<div class='output'>
+1
+3
+5
+7
+9
+</div>
+<ul>
+	<li> Appears to just be the odd numbers </li>
+	<li> We goofed somewhere </li>
+	<li> Fire up the debugger </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<ul>
+	<li> Set a breakpoint at line 12, inside the function
+<code>
+<span class="line"> 10 </span>bool isprime(int n)
+<span class="line"> 11 </span>{
+<span class="line"> 12 </span>   <span class='hl'>if (n == 2) return true;</span>
+<span class="line"> 13 </span>   if (n % 2 == 0) return false;
+<span class="line"> 14 </span>   int k = 3;
+<span class="line"> 15 </span>   while (k * k &lt; n)
+<span class="line"> 16 </span>   {
+<span class="line"> 17 </span>      if (n % k == 0) return false;
+<span class="line"> 18 </span>      k = k + 2;
+<span class="line"> 19 </span>   }
+<span class="line"> 20 </span>   return true;
+<span class="line"> 21 </span>}</code>
+	</li>
+	<li> Run program </li>
+	<li> Enter <tt>10</tt> at the prompt </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<ul>
+	<li> Check that the argument is 1
+		<ul>
+			<li> <dfn>print</dfn> <var>n</var> </li>
+		</ul>
+	</li>
+	<li> <i>step</i> a few times
+		<ul>
+			<li> Note, lines 12, 13, 14 and 15 are executed, then jumps right to
+			line 20 </li>
+			<li> <var>k</var> (print it); it is 3 </li>
+			<li> Skipped the while loop, returned <var>true</var> </li>
+		</ul>
+	</li>
+	<li> Re-write function to handle 1 as a special case </li>
+	<li> Test again </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<p> Why doesn't the program print 2? </p>
+<ul>
+	<li> Continue, as from above </li>
+	<li> <i>step</i> until <tt>isprime()</tt> is invoked again
+		<ul>
+			<li> Or <dfn>continue</dfn> </li>
+		</ul>
+	</li>
+	<li> Note the value of the argument
+		<ul>
+			<li> It's 3 </li>
+			<li> We don't know that <tt>isprime()</tt> is correct on input 2, but
+			</li>
+			<li> <tt>main()</tt> only tests odd numbers </li>
+		</ul>
+	</li>
+	<li> <tt>main()</tt> needs to be modified to try 2 </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<p> Finally, why did it print 9? </p>
+<ul>
+	<li> Continue to the breakpoint until the argument, <var>n</var> is 9
+	</li>
+	<li> Now, step through carefully
+		<ul>
+			<li> Note that the loop is skipped again </li>
+			<li> Inspect <var>k</var>, <var>k * k</var>, and <var>n</var> to see
+				why </li>
+		</ul>
+	</li>
+	<li> Boundaries on the loop aren't quite right </li>
+	<li> Test should be <tt>k * k &lt;= n</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session </h1>
+<p> So, we've found 3 bugs in the program </p>
+<ul>
+	<li> <tt>isprime()</tt> falsely claims 1 to be a prime </li>
+	<li> <tt>main()</tt> doesn't handle 2
+		<ul>
+			<li> (We never did test to see that <tt>isprime(2)</tt> is correct)
+			</li>
+		</ul>
+	</li>
+	<li> The test in <tt>isprime()</tt> should be <tt>while (k * k &lt;=
+		n)</tt> </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> A Sample Debugging Session &mdash; <tt>goodprime.cpp</tt> </h1>
+<script type='text/javascript'>
+	//<![CDATA[
+		wrapCode( "goodprime.cpp" )
+	//]]>
+</script>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "15.3" )
+	//]]>
+	</script>
+Stepping Through a Program </h1>
+<p> There are (at least) 2 <dfn>step</dfn> commands </p>
+<dl>
+	<dt> <dfn>step over</dfn> (<tt>next</tt>) </dt>
+	<dd> Executes an entire line of code </dd>
+	<dd> Stops at the next line </dd>
+
+	<dt> <dfn>step into</dfn> (<tt>step</tt>) </dt>
+	<dd> If the line contains a function call, will step into it, stopping at
+		the first line in the called function </dd>
+	<dd> Some debuggers have a <dfn>step up</dfn> command that will finish
+		that function, take you back to the next line in the caller </dd>
+	<dd> Rarely useful to step into system functions </dd>
+</dl>
+</div>
+
+<div class='slide'>
+<h1> Stepping Through a Program &mdash; breakpoints </h1>
+<ul>
+	<li> Programs in the debugger can be started in by stepping into it
+	(starting w/the first line in <tt>main()</tt>), OR </li>
+	<li> Setting a breakpoint
+		<ul>
+			<li> On a line number, a function, or a condition </li>
+		</ul>
+	</li>
+	<li> Program runs normally until a breakpoint is encountered </li>
+	<li> Then you may step, <dfn>continue</dfn> to the next breakpoint </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "15.4" )
+	//]]>
+	</script>
+Inspecting Objects </h1>
+<table><tr>
+<td>
+	<ul>
+		<li> Debuggers can display array and aggregate object values as well
+			</li>
+		<li> You might occasionally need to "open up" an object </li>
+		<li> E.g., consider the <tt>string</tt> variable <var>Harry</var>
+			<ul>
+				<li> The actual string value is stored in a member variable, like
+				<tt>_Ptr</tt> or <tt>_str</tt> or <tt>_M_p</tt> </li>
+			</ul>
+		</li>
+	</ul>
+</td>
+<td>
+	<div class='center'>
+	<script type='text/javascript'>
+	//<![CDATA[
+		image( "fig16.png" )
+	//]]>
+	</script>
+	<p class='caption'> <span class='blue'>Figure 16</span> Inspecting an
+	Object </p>
+	</div>
+</td>
+</tr></table>
+</div>
+
+<div class='slide'>
+<h1 class='subsect'> 
+	<script type='text/javascript'>
+	//<![CDATA[
+		taxonomy( "15.5" )
+	//]]>
+	</script>
+Debugging Strategies </h1>
+<ul>
+	<li> Debuggers are good at analyzing particular failures </li>
+	<li> Not so good for studying programs in general </li>
+	<li> Use a debugger when your program is doing
+		something wrong
+		<ul>
+			<li> Wrong output </li>
+			<li> Print garbage </li>
+			<li> Crashes </li>
+			<li> Doesn't seem to terminate </li>
+		</ul>
+	</li>
+</ul>
+<p> The following slides describe some strategies </p>
+</div>
+
+<div class='slide'>
+<h1> Debugging Strategies </h1>
+<h3> Reproduce the Behavior </h3>
+<ul>
+	<li> Need a place to start </li>
+	<li> Find out exactly how to <dfn>reproduce the behavior</dfn> </li>
+	<li> What inputs did you provide? </li>
+	<li> What other programs were running? </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Debugging Strategies </h1>
+<h3> Divide-and-Conquer </h3>
+<ul>
+	<li> Narrow down where the error was introduced </li>
+	<li> Decide in which function the error occurred </li>
+	<li> For a bunch of code, stop in the middle, look around
+		<ul>
+			<li> Did the error occur already?  Then error is between beginning and
+			here </li>
+			<li> Else, error is between here and the end </li>
+			<li> Cut the interesting piece of code in half; repeat </li>
+		</ul>
+	</li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Debugging Strategies </h1>
+<h3> Understand What the Program <em>Should</em> Do </h3>
+<ul>
+	<li> Debugger tells you what a program <em>is</em> doing, not what it
+		<em>should</em> do </li>
+	<li> E.g., before going through a loop, know when it should end </li>
+	<li> Know what a function should return </li>
+	<li> Before you look at a variable, know what it should be </li>
+</ul>
+</div>
+
+<div class='slide'>
+<h1> Debugging Strategies </h1>
+<h3> Understand the Cause of the Error </h3>
+<ul>
+	<li> Avoid "Band-Aid" solutions
+		<ul>
+			<li> Don't fudge </li>
+			<li> Also known as a <dfn>kluge</dfn>, or <dfn>workaround</dfn> </li>
+		</ul>
+	</li>
+	<li> Will probably cause trouble elsewhere </li>
+	<li> Understand the cause of the problem </li>
+	<li> Understand what each piece of the program you touch should be doing
+		</li>
+	<li> If a bug just keeps moving around, you might need to revisit the
+		design </li>
+</ul>
+</div>
+
+</body>
+</html>
