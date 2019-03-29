@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/c.jpg" alt="CS 170 Lesson C logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class='cap'>A</span>s you've seen</b>, every
+            class definition is divided into two parts&#8212;the things that
+            instance of the class (objects) know how
+            to do, and the data the those objects contain.
+        </p>
+        <p> In a procedural program,
+            the procedures that make up the program, and the data that those
+            procedures operate on, are separate. In an object-oriented program,
+            <b>they are combined</b>. This process of wrapping up procedures and data
+            together is called <b>encapsulation</b>.
+        </p>
+        <p>
+        <img src="images/encapsulation.gif" alt="With encapsulation, data is hidden from direct access" align="right">
+
+            In this sense, the <code>MethodBall</code> class used
+            encapsulation, because it contained both data and methods
+            (like <code>draw()</code>) that used the data. In the more
+            important sense, though, <code>MethodBall</code> <b>violates
+            the principle of encapsulation</b> because it allows
+            unrestricted outside access to its data elements.
+        </p>
+        <p> In this sense, encapsulation is used to enforce the principle of
+            <b>data hiding</b>. With <b>proper encapsulation</b>, the fields
+            defined inside a class are accessible to all the methods defined
+            inside the same class, but <b>cannot be accessed by methods
+            outside that class</b>, (like the <code>init()</code> method
+            in the <code>AppletBounce3</code> program).
+        </p>
+        <p> Before OOP, if you had two procedures that needed to operate
+            on the same piece of information, you had to either make the
+            data publicly accessible&#8212;and risk accidental data corruption
+            as a result of a bug in someone else's code&#8212;or you had to pass
+            the data as an argument to each of the functions that operated
+            on it, a tedious and error-prone practice.
+        </p>
+        <p> With encapsulation, all of the methods in your object can
+            get to the data, but it is still protected from outside access.
+        </p>
+    <h4>Encapsulation in the Real World</h4>
+        <p> When you first start programming, or, if you come from a language
+            that has more liberal rules on data access, like C, you might find
+            encapsulation a fairly strange idea. After all, why make it
+            <b>harder</b> for your programs to access their data?
+        </p>
+        <p> In fact, out in the real world, all of us are familiar with the
+            ideas of encapsulation. Let me give you a few examples.<br>
+            <center>
+            <img src='images/encapsulate.gif' class='inline' alt='Real-world examples of encapsulation'>
+            </center>
+
+        </p>
+        <ul>
+            <li><b>Today's automobiles</b> are very complex engineering accomplishments;
+                much more complicated than Henry Ford's original Model-T. Despite
+                this added complexity, though, <b>driving</b> today's car is similar to,
+                if not simpler than, driving a Model-T.
+                <p>That's because, as the
+                cars got more complex, that complexity was <b>hidden</b> behind
+                a <b>simpler</b> interface: the ignition (key), steering wheel,
+                accelerator and brakes. Internal changes, such as the change from
+                carburetors to fuel injections and from gasoline to hybrid don't
+                require drivers to take a new class. That's because those details
+                are <b>encapsulated</b>.
+            </li>
+            <li><b>Your computer</b> is another modern, complex marvel that all of you use
+                every day. Unless you are a hardware tech, though, you never open up
+                the system unit and try to operate it by shorting the pins with a
+                paper-clip. Instead, you use the computer's <b>interface</b>&#8212;the mouse,
+                and keyboard&#8212; to control the thousands of complex working parts that it
+                contains.
+            </li>
+            <li> Finally, think about <b>your TV</b>. Technologically, it's probably at least
+                as complex as your car or your computer, but you don't need a license
+                or a degree to operate one. Thanks to the magic of encapsulation,
+                exemplified by the <b>remote control</b>, every child in the country
+                can harness that power.<br clear='all'>
+
+            </li>
+        </ul>
+        <p> Just as with automobiles, computers and TVs, when it comes to
+                programming, instead of making things more difficult encapsulation
+                will actually make your objects both safer <b>and</b> easier to use.
+        </p>
+    <h3>Private Fields</h3>
+        <p> The <b>key</b> to properly encapsulating your code is to use the
+            Java <b>access modifier</b>, <code>private</code>. As a rule,
+            you should <b>always</b> use <code>private</code> in front of
+            <b>every</b> field definition.
+        </p>
+        <p class='note'>Some of you may note that the Java class libraries
+            don't always follow this advice. Specifically, the <i>measuring</i>
+            classes, like <code>Rectangle</code>, all have <code>public</code>
+            fields. The designers of Java generally regard the decision to
+            make these fields <code>public</code> a real mistake that lead
+            to performance problems in later versions of Java. If you'd
+            like to read more about this, just Google "Joshua Bloch" + "public fields".
+        </p>
+    <h4>EncapsulatedBall</h4>
+        <p> To try this out, we'll create a new ball class,
+            <code>EncapsulatedBall</code> by copying and renaming
+            <b>MethodBall.java</b> as shown here:<br>
+            <img src='images/eb01.gif' class='inline' alt='Starting EncapsulatedBall.java.'>
+            After you have the new file, modify <b>each</b> of the fields by
+            changing the <code>public</code> access specifier to
+            <code>private</code> as shown on the right.
+        </p>
+    <h4>AppletBounce4</h4>
+        <p> To create the fourth version of <b>AppletBounce</b>, just make
+            a copy of version 3 and rename it to <b>AppletBounce4.java</b>.
+            Then, change the <code>ball</code> variable, so that it uses
+            the new <code>EncapsulatedBall</code> class as shown here:<br>
+            <img src='images/ab4a.gif' class='inline' alt='The AppletBounce4 program.'>
+            As you can see, things didn't go so smoothly this time. Now that
+            all of the ball's fields are <code>private</code>, your applet
+            can no longer modify them in its <code>init()</code> method.
+            <img src='images/ab4b.gif' class='inline' alt='The AppletBounce4 init() method.'>
+        </p>
+        <p> There are two solutions to this problem; the first solution
+            we'll look at involves adding <b>accessors</b> and
+            <b>mutators</b> to the class.
+        </p>
+    <h3>Accessors, Mutators, Effectors</h3>
+        <p> When you think about objects and methods, there are generally
+            three different kinds:
+        </p>
+        <ul>
+            <li><b>Mutator</b> methods change the state of an object,
+                by changing the values stored in one of the fields. In
+                the <code>MethodBall</code> class, <code>move()</code>,
+                <code>bounceHorizontal</code> and <code>bounceVertical</code>
+                are all mutator methods.
+            </li>
+            <li><b>Accessor</b> methods are methods that return some
+                information about an object, but don't change the object.
+                Accessor methods are those like <code>length()</code> or
+                <code>charAt()</code> in the <code>String</code> class.
+            </li>
+            <li><b>Effector</b> methods perform an action, but don't
+                modify the object or return a value. The <code>draw()</code>
+                method in the <code>MethodBall</code> class, is an
+                example of this kind of method.
+
+            </li>
+        </ul>
+        <p class='note'>There is no offical computer-science
+            term for methods like this; I've used the term effector
+            because it seems useful to describe an instance method
+            that isn't an accessor or mutator.
+        </p>
+    <h4>Getters and Setters</h4>
+        <p> Simple accessors and mutators usually return information about,
+            or change one field inside the object. In Java, these are called
+            <b>getters</b> and <b>setters</b>, since the method names start
+            with <code>get</code> or <code>set</code> by convention.
+        </p>
+        <p class='note'>The convention for <code>boolean</code> getter methods
+            is to start with the word <code>is</code> rather than <code>get</code>.
+        </p>
+        <p> To see what a mutator and accessor look like, let's add both of
+            them for the <code>color</code> field in the <code>EncapsulatedBall</code>
+            class. (The pictures show <code>MethodBall</code>, but just
+            ignore that.)
+        </p>
+    <h5>The color Accessor</h5>
+        <p> Here's what the accessor method looks like:<br>
+            <img src='images/getColor.gif' class='inline' alt='The getColor method.'>
+            Notice that:
+        </p>
+        <ul>
+            <li>the methods starts with the word <b>get</b>.</li>
+            <li>the name contains the attribute you want access to,
+                capitalized. Our field is named <code>color</code>,
+                so the second half of the name is <code>Color</code>.
+            </li>
+            <li>the method returns the requested field.</li>
+        </ul>
+        <p> Notice also that the Javadoc includes both a description line
+            and an <code>@return</code> tag containing a description of
+            the value returned. Often these have exactly the same verbiage,
+            but you still need to include them both. They are used in
+            different places when the documentation is generated.
+        </p>
+    <h5>The color Mutator</h5>
+        <p> Here is the mutator method:<br>
+            <img src='images/setColor.gif' class='inline' alt='The getColor method.'>
+            Notice that:
+        </p>
+        <ul>
+            <li>the naming is almost identical to that used for the
+                accessor, <b>except</b> the word <code>set</code> has
+                been substituted for <code>get</code>.
+            </li>
+            <li>the mutator needs to supply a new value for the field; in this
+                case that's the <b>parameter variable</b> named <code>color</code>.
+            </li>
+            <li>inside the method, the new value (from the parameter) is assigned
+                to the field of the same name.
+            </li>
+        </ul>
+        <p> With mutators, it's common to name the parameter the same as the
+            field that it is going to replace. When you do this, inside the
+            method, the variable name refers <b>only</b> to the parameter.
+            To assign the value, you must use the keyword <code>this</code>
+            to indicate that you want to store the parameter value into the
+            <b>field</b> named <code>color</code>, and not back into itself.
+        </p>
+        <p> If you use different names for your mutator parameters, though,
+            (perhaps <code>newColor</code> in this case), then you <b>don't</b>
+            need to use <code>this</code> to refer to the field named
+            <code>color</code>; you could simply write:
+        </p>
+        <p class='code'>
+            color = newColor;  <span class='cmt'>// color is the <i>field</i> color in this case</span>
+        </p>
+    <h5>Fixing an Error</h5>
+        <p> After you've added the <code>setColor()</code> mutator, you can
+            fix the last error inside the <code>AppletBounce4.init()</code>
+            method, by changing:
+        </p>
+        <p class='code'>
+            ball.color = Color.YELLOW;
+        </p>
+        <p>to</p>
+        <p class='code'>
+            ball.setColor(Color.YELLOW);
+        </p>
+    <h4>A Cool Shortcut</h4>
+        <p> One of the nice things about working with a full-featured
+            Integrated Development Environment, like Eclipse or NetBeans,
+            is that it will do most of the work for you.
+        </p>
+        <p> In this case, I used Eclipse to actually write all of the code
+            for the two methods you've just seen, like this:<br>
+            <img src='images/eclipse.gif' class='inline' alt='Using Eclipse to generate getters and setters.'>
+            To do this, you just:
+        </p>
+        <ul>
+            <li>Choose <b>Generate Getters and Setters</b> from the Eclipse
+                <b>Source</b> menu, as shown on the left.
+            </li>
+            <li>Select the fields you want to generate methods for. In this
+                case, I've expanded the <code>color</code> field and have
+                selected both <code>getColor()</code> and <code>setColor()</code>.
+            </li>
+            <li>Select where you want the methods to appear, how they should be
+                grouped (all getters followed by setters, or paired getters
+                and setters), and whether you want automatic comments generated.
+            </li>
+        </ul>
+        <p> The results are what you've just seen. A word of warning, though.
+            <b>Don't generate unncessary getters and setters.</b> As we'll
+            see in the next lesson, one of the principles of object-oriented
+            programming is to use encapsulation to hide unnecessary complexity.
+            Having a lot of getters and setters tends to frustrate that goal.
+        </p>
+    <h4>Finishing EncapsulatedBall</h4>
+        <p> So, exactly what accessors and mutators does
+            <code>EncapsulatedBall</code> actually <b>need</b> to work?
+            One way to find out is to <b>look at the code that uses the
+            class</b>:
+            <img src='images/ab4c.gif' class='inline' alt='AppletBounce4 init() errors.'>
+            If you look at <code>AppletBounce4</code>, you'll see that we
+            now have four errors (since you fixed one of those errors by
+            adding the <code>setColor()</code> method.).
+        </p>
+        <p> We actually only need mutators, not accessor methods. You can
+            write them using any of the techniques in the last section,
+            or, you can make use of another Eclipse shortcut, known as
+            <b>Quick Fix</b>.
+            <img src='images/ab4d.gif' class='right' alt='AppletBounce4 quickfix.'>
+        </p>
+    <h5>A Quick Fix</h5>
+        <p> Whenever a syntax error occurs, and you hover your mouse over
+            the underlined error in Eclipse, the IDE will pop-up a small
+            window contining suggestions for fixing the problem.
+            Here, you can see that one of the suggestions is to <b>add
+            getters and setters</b> to the code.
+        </p>
+        <p> To <b>use</b> the Quick Fix popup, just click the underlined
+            hyperlink, and you'll be taken to a window that looks like this:<br>
+            <img src='images/ab4e.gif' class='inline' alt='AppletBounce4 quickfix.'>
+            Notice that:
+        </p>
+        <ul>
+            <li>you must add <b>both</b> getters and setters when you use the
+                Quick Fix feature. If you use <b>Generate Getters and Setters</b>
+                on the Eclipse <b>Source</b> menu, you can which
+                accessors or mutators you want to add.
+            </li>
+            <li>Quick Fix defaults to modifying all of the direct field access
+                inside your class as well (which clutters up the code in my
+                opinion). If you don't like this, then you need to click the
+                radio button that says "keep field reference" as shown here.
+            </li>
+        </ul>
+        <p> When you use Quick Fix, you can see what changes will be written into
+            your source code by clicking the <b>Preview</b> button. Here's what
+            the preview looks like when using Quick Fix to generate getters and
+            setters for the <code>location</code> field:<br>
+            <img src='images/ab4f.gif' class='inline' alt='AppletBounce4 quickfix.'>
+        </p>
+    <h4>Setting the Speed</h4>
+        <p> <img src='images/speed.png' class='right' alt='A speedometer for illustration.'>
+            As I mentioned at the end of the last lesson, you don't <b>have</b>
+            to add both acccessors and mutators for each field. In fact,
+            you <b>probably don't want to</b>. Adding getters and setters
+            for each and every field is only a little better than making
+            the fields <code>public</code>.
+        </p>
+        <p> Instead, you should attempt to <b>only</b> provide those methods
+            that are needed. In our case, it looks like we need the
+            mutator methods to initialize the initial location, color and
+            so forth, but we really don't need to let the applet
+            <b>read</b> that information. That means that we can
+            just delete the <code>getRadius()</code> field automatically
+            created by the Eclipse Wizard.
+        </p>
+        <p> Sometimes, though, you want a mutator that sets several fields
+            at once. For instance, instead of allowing Eclipse to automatically
+            create the <code>setDX()</code> and <code>setDY()</code> methods,
+            why not just add a <b>single</b> mutator method that
+            changes both fields: <code>setSpeed()</code>.
+        </p>
+        <p> When you do this, you <b>can't use</b> the Eclipse help
+            features; neither Source->Generate Getters and Setters,
+            or the Quick Fix will automatically write a two-field
+            mutator; you have to do it yourself.
+        </p>
+        <p> Fortunately, it's not much more difficult than writing any
+            of the methods you practiced on during the first half of the
+            class:<br>
+             <img src='images/eb03.gif' class='inline' alt='The setSpeed() mutator method.'>
+        </p>
+        <ol>
+            <li class='d'>Start with the keywords <code>public void</code>. Mutator
+                methods modify the current object, so they <i>usually</i>
+                don't have a returned value. (It is acceptable to
+                return a <code>boolean</code> flag, though, so you can
+                signal if the mutator was unable to change the object;
+                it's just not very common.)
+            </li>
+            <li class='d'>Mutator methods will start with <code>set</code> and then
+                the object attribute that you are changing. Note that
+                object attributes don't <b>have</b> to correspond to fields
+                defined inside the object. Fields are used to <b>implement</b>
+                object attributes, but are not the attributes themselves.
+                In our case, the attribute we'll be changing is the <b>speed</b>
+                of the ball.
+            </li>
+            <li class='d'>Mutators will often (perhaps most of the time) have parameters
+                that are used to change the object attribute. In our case,
+                we want two parameters: a new value for <code>dx</code>
+                and a new value for <code>dy</code>.
+            </li>
+            <li class='d'> Inside the mutator, use the parameters to change the
+                <b>actual fields</b> used to represent the object's
+                attributes. In our case, we'll use the <b>parameter</b>
+                <code>dx</code> to modify the <b>field</b> <code>dx</code>.
+                Since both the parameter and the field have the same
+                name, don't forget you'll need to include the
+                keyword <code>this</code> as a prefix to the field
+                reference.
+            </li>
+        </ol>
+        <p> Once you've finished this mutator, the <code>AppletBounce4</code>
+            <code>init()</code> method can be finished up like this:<br>
+            <img src='images/ab4g.gif' class='inline' alt='The finished AppletBounce4 init() method.'>
+        </p>
+        <p> You can download and run the finished versions of
+            <a href='AppletBounce4.java' target='_blank'>
+            <b>AppletBounce4</b></a> and
+            <a href='EncapsulatedBall.java' target='_blank'>
+            <b>EncapsulatedBall</b></a> by clicking the links in
+            this sentence.
+        </p>
+
+    <h3>Coming Next...</h3>
+    <p> In this lesson you learned about <b>encapsulation</b>: <b>making
+        your fields private</b> and then writing <b>accessor</b> and
+        <b>mutator</b> methods to provide any necessary access.
+    </p>
+    <p> In the next lesson, we'll tackle another class-creation topic:
+        how to write <b>constructors</b> so that you can initialize
+        your objects when they are created.
+    </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

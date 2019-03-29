@@ -1,0 +1,692 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p>
+            <b><span class="cap">E</span>arlier in the course, you learned
+            about the concept of <i>variables</i></b>, and were introduced to
+            the <i>difference</i> between primitive types, and objects.
+            In this lesson, we'll concentrate on <b>creating object
+            variables</b>. To do this, we'll explore a couple classes in the
+            <code>java.awt</code> package that you'll make use of
+            when you write applets or graphical applications.
+        </p>
+        <p>
+            The theme of this lesson is <b><i>constructing and
+            using</i></b> objects. You'll learn:
+        </p>
+        <ul><img src="images/b06.gif" class="right" alt="A watercolor set.">
+            <li>how to use different <code>Color</code> constructors</li>
+            <li>two ways to use your <code>Color</code> objects</li>
+            <li>how to create transparent colors</li>
+            <li>how to use <b>class variables</b></li>
+            <li>how to use Java's <code>Random</code> class</li>
+        </ul>
+        <p> Let's start, though, by <b>reviewing</b> a section of material
+            from an earlier lesson on <b>how to create object variables</b>.
+            We'll start
+            our exploration by examining the <code>Color</code>
+            class. Instead of using the "built-in" objects like you
+            briefly saw in the last lesson (like <code>Color.RED</code>
+            and <code>Color.BLACK</code>), you'll learn how to create your
+            own <b>custom</b> <code>Color</code> objects.
+        </p>
+        <p> Puce and chartreuse anyone?</p>
+
+    <h3>Object Variables</h3>
+        <p> As you saw in the first portion of the course, Java really has
+            <b>two</b> major ways of representing data: <b>primitive
+            types</b> like numbers and characters, and <b>object types</b>
+            like fonts and buttons and strings. In this lesson, we'll
+            concentrate on creating and using <b>objects</b>.
+        </p>
+        <p> You create an object variable, just like a primitive variable,
+            by explicitly describing three things:
+        </p>
+        <ul>
+            <li> What kind (type) of thing will be stored in the variable</li>
+            <li> What name you want to use for the variable</li>
+            <li> What initial value the variable should have</li>
+        </ul>
+        <p> To store a value in your variable you use the <b>assignment
+            operator</b>, as you've seen. The assignment operator copies the
+            value on its right, and stores it in the object on its left.
+            To create a local variable of type <b>Color</b>, for instance,
+            you would write something like this:<br>
+            <img src='images/color-var.gif' class='inline' alt='Creating a Color variable.'>
+            As you can see, the type is <code>Color</code>, the name is
+            <code>background</code>, but how do we provide a value?
+        </p>
+    <h4>Constructing Objects</h4>
+        <p> At this point, we're kind of in a quandry. How do we create an
+            object? What do we put on the right-hand-side of the assignment
+            operator? If our variable was a number, for instance, we'd expect
+            to do something like this:
+        </p>
+        <p class="code">
+
+            int someNumber = 27;
+        </p>
+        <p> Since <code>background</code> is an <b>object</b>, however,
+            we need to learn how to construct an object; we can't just use
+            a literal value like 27. Fortunately, constructing an object
+            is easy. To construct an object&#8212;any object&#8212;you just
+            use a <b>constructor</b> method, along with the keyword
+            <code>new</code>. A <b>constructor</b> is simply a method
+            that initializes objects.
+        </p>
+
+        <p class="pullquote">If a class represents a blueprint that describes
+            the attributes and methods of an object, then the constructor is
+            the factory that creates the goods.
+        </p>
+        <p> To make things even easier, constructors <b>always</b> have the same
+            name as the thing you're trying to create. Since we're trying
+            to create a <code>Color</code> object, we know that the
+            constructor is a method named <code>Color()</code>. Now we can
+            finish what we started:
+        </p>
+        <p class="code">
+            public void init()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Color background = <span style="background: transparent; color: red;">
+            new Color( . . .);</span><br>
+            }
+        </p>
+    <h4>Constructor Parameters</h4>
+        <p> Well, more or less finish. Notice that constructor <b>parameter
+            list</b> is empty&#8212;there's nothing inside the parentheses.
+            Most objects have several constructors, each one taking a
+            different number or type of parameters. Parameters allow a
+            constructor&#8212;<i>or any other method</i>&#8212;to customize its
+            operation.
+        </p>
+        <p> You'll look at the different <code>Color</code> constructors
+            later in this lesson. Before we do that, though, let's review
+            an important concept from an earlier lesson: <b>how programs
+            store data</b>. This is important so you'll understand why
+            we use the <code>new</code> operator for <b>some</b> variables,
+            (objects), and not for others, (primitives).
+        </p>
+    <h3>How Programs Store Data</h3>
+        <p> Back in Unit 1, you learned a little bit about
+            how computers use <i>memory</i>. As we studied the history
+            of computing, for instance, you learned about John von Neumann's
+            development of the <b>stored program concept</b>: that memory
+            could be partitioned, with one part storing data, and another
+            part storing program instructions.
+        </p>
+        <p> Modern computers take this idea even further. When a program
+            is running, we can divide its data section up into three
+            <b>general categories</b>:
+        </p>
+        <ul>
+            <li>The <b><u>static storage area</u></b>. When a program
+                runs, there are some data elements that can be created
+                and stored in memory for the entire time that the program
+                is running. Constant data elements, such as string literals
+                are one example of this kind of data. Variables shared throughout
+                the entire program are another.
+            </li>
+            <li><img src="images/b08.gif" class="right" alt="The stack">
+                The <b><u>stack-based storage area</u></b>. When you create
+                a local variable inside a method, the memory used to store that
+                variable isn't set aside <b>until</b> the method is called
+                and the local variable declaration is encountered. That means
+                that if a particular method isn't called when you run your
+                program, no memory is set aside for those variables.<br><br>
+                Stack-based variables are stored right next to each other
+                in memory. This is called <b>contiguous</b> storage. One
+                way to think of contiguous storage is to picture a stack of
+                dinner plates in a restaraunt like the Soup Planation. (This
+                is where the name <i>stack</i> came from.)<br><br>
+                When you create a local variable inside a method, the
+                memory for the variable is set aside on "the top" of the
+                stack. When the method is finished, all of the variables
+                placed on the stack are automatically removed, so the
+                memory can be used for other purposes.
+            </li>
+            <li>The <b><u>heap or "free-store"-based storage area</u></b>.
+                Stack-based storage is very efficient, but it has some real
+                limitations. Because elements are "stacked" on top of each
+                other, all of the elements need to be pretty much the same
+                size, (or some multiple of that size). Also, since memory
+                used for local variables is automatically reclaimed whenever
+                a method ends, stack-based variables don't work very well
+                for sharing information between methods.<br><br>
+                The third area of memory, <b>the heap</b>, is used to
+                get around these limitations. The heap is used to
+                store the "data part" of <b>reference types</b>.
+            </li>
+        </ul>
+        <img src="images/b01b.gif" class="inline" alt="The stack and heap.">
+        <h4>Reference Types</h4>
+        <p> Reference type variables, (which include everything in Java <b>except</b>
+            for the primitive types we covered in the last unit),
+            are divided into <b>two pieces</b>:
+        </p>
+        <ul>
+            <li>the reference or object <b>variable</b></li>
+            <li>the actual object itself</li>
+        </ul>
+        <p> The <b>object variable</b> is the variable that you deal with
+            in your program; this is the part that you provide an
+            identifier for. The object variable may be stored on
+            the stack or in the static storage area, as shown below:
+            <img src="images/b04.gif" class="inline" alt="Variables on the heap">
+            The actual object itself is <b>unnamed</b>, and is
+            <b>stored on the heap</b>. Heap based variables are created
+            by using the <b><code>new</code></b> operator, which allocates
+            the necessary memory from the heap, and then calls the
+            class <i>constructor</i> to initialize the object.
+        </p>
+        <p> When the <code>new</code> operator and the constructor are
+            <i>finished</i>, they return the <b>address in memory</b>
+            where the new object is located. It's this address that is
+            stored in the object variable. If the object couldn't be
+            created, for some reason, the special value <b><code>null</code></b>
+            is stored in the variable instead.
+        </p>
+    <h4>Assignment</h4>
+
+        <p> <img src="images/b02.gif" class="right" alt="Two independent value types.">
+            Primitive types, (like <code>int</code> and <code>char</code>),
+            are called <b>value types</b>, (as opposed to <b>reference</b>
+            types, like objects). This just means that a primitive variable
+            is a "bucket" in memory that contains an actual value.
+        </p>
+        <p> When you create two primitive variables, like this:</p>
+        <p class="code">
+            int a = 32, b;  	<span class="cmt">// Two independent variables</span>
+        </p>
+        <p> then each variable is an <b>independent</b> storage area; the
+            variables <code>a</code> and <code>b</code> are not "linked"
+            in any way.
+        </p>
+    <h5>Value Assignment</h5>
+        <p> When you use <i>assignment</i> with value types, the result is
+            duplicate, independent copies of the values that the variables
+            contain. Consider this example:
+        </p>
+        <p class="code">
+            b = a;		<span class="cmt">// Two independent values</span>
+        </p>
+        <p> When this code is executed, it first makes a copy of the value
+            stored in the variable <code>a</code>, and then places that
+            copy in the variable named <code>b</code>:
+            <img src="images/b03.gif" class="inline" alt="Copying two value types.">
+            This is called a <b>deep copy</b>, and we say that
+                <code>a</code> and <code>b</code> exhibit <b>value semantics</b>.
+        </p>
+        <p class="note">In Java, <b>only</b> primitive types exhibit value semantics.
+            That's not true of all object-oriented langauges. C++, for instance,
+            is designed to allow user-defined types, (classes), to act in the
+            same way by defining a copy constructor and an assignment operator.
+            You'll study this in CS 250, C++ Programming II.
+        </p>
+    <h5>Reference Assignment</h5>
+        <p> As you saw earlier, an object variable, (sometimes called a
+            <i>handle</i>), contains the <b>address</b> of an object, but
+            not the actual object itself.
+        </p>
+        <p> If you have some code that looks like this:</p>
+        <p class="code">
+            Button a = new Button("The One and Only");<br>
+            Button b = a;
+        </p>
+        <p> the assignment copies <b>only the address</b>, not the object.
+            The result is that the object variable <code>b</code> refers
+            to the same object as the variable <code>a</code>; the two
+            variables are <b>aliases</b>, not independent variables:
+            <img src="images/b05.gif" class="inline" alt="Reference assignment.">
+            This kind of assignment, where only the address is copied, but
+            not the underlying object, is called a <b>shallow copy</b>, and
+            we say that types that exhibit this behavior have <b>reference
+            semantics</b>. In Java, <b>all</b> types other than primitives,
+            have reference semantics.
+        </p>
+        <p> With that understanding of the difference between reference
+            and object types, let's pick up where we left off, by
+            <b>constructing or creating</b> <code>Color</code> objects.
+        </p>
+    <h3>Creating Color Objects</h3>
+        <p> Internally, <code>Color</code> objects in Java are represented
+            by a single 32-bit number, that can be broken down into three
+            or four pieces. You, however, don't really worry about the
+            <b>internal</b> representation; instead, you'll use the public
+            constructors and methods to create and manipulate <code>Color</code>
+            objects.
+        </p>
+        <p> Logically, the <code>Color</code> class uses three numbers to represent
+            the portion of red, green, and blue that make up a color on
+            your computer. This is called <b>RGB</b> color; knowing this
+            will help you remember that red goes first, green second, and
+            blue last.
+        </p>
+        <p> Look up the <code>Color</code> class in the <b>JavaDocs</b>.
+            Scroll down until you find the section titled <b>Constructor
+            Summary</b>, and then look through the seven constructors
+            until you find the one shown here:
+            <img src="images/e01b.gif" alt="The Color(int, int, int) constructor" class="inline">
+            As you can see, the red, green, and blue values each must
+            be between 0 and 255. If set the value to 255, then the
+            particular color is completely <b>on</b>; if you set the
+            value to 0, then the color is completely <b>off</b>.
+        </p>
+        <p>Here's our example again, (from earlier in this lesson), this time
+            setting the variable <code>background</code> to an opaque green:
+        </p>
+        <p class="code">
+            public void init()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Color background = new
+                Color(<span class="red">0, 255, 0</span>);<br>
+            }
+        </p>
+        <p> Note that red and blue are both off (0), while green, the value
+            in the middle, is completely on.
+        </p>
+    <h3>Using Color Objects</h3>
+        <p>Once you've created a <code>Color</code> object, you can
+            use it in two ways:
+        </p>
+        <ol>
+            <li>you can temporarily change the color of the
+                <code>Graphics</code> pen used in the <code>paint()</code>
+                method, or, </li>
+            <li>you can change the background or foreground of the
+                applet (or any other component), so that the drawing
+                will take place in this new color.</li>
+        </ol>
+        <p> Let's start by changing the color used by the
+            <code>Graphics</code> pen that draws the shapes
+            and text. Inside the <code>paint()</code> method, you can
+            call the <code>Graphics setColor()</code> method like this:
+        </p>
+        <p class="code">
+            public void paint(Graphics pen)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Color penColor = new Color(0, 255, 0);<br>
+            <span class="red">
+            &nbsp;&nbsp;&nbsp;&nbsp;pen.setColor(penColor);<br></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;pen.drawString("I'm in green!", 25, 25);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+            }
+        </p>
+        <p>The phrase "I'm in green!", will, indeed, be printed in
+            green because of the call to <code>setColor()</code>. If
+            you won't use the variable <code>penColor</code> again, you
+            can just construct the <code>Color</code> object when you call
+            <code>setColor()</code> like this:
+        </p>
+        <p class="code">
+            pen.setColor(<span class="red">new Color(0, 255, 0)</span>);
+        </p>
+    <h4>Background and Foreground</h4>
+        <p> You can also use <code>Color</code> objects as arguments
+            to the <code>Component setBackground()</code>, and
+            <code>setForeground()</code> methods. Note that these are
+            <b>not</b> <code>Graphics</code> methods, so they must be
+            sent to a graphical <code>Component</code> object, such as a
+            your applet or the buttons and labels we'll study in
+            weeks to come. Since you're already <b>inside</b> your
+            applet, you don't have a <b>receiver</b> name when you
+            call the method. In such cases, you can use the keyword
+            <code>this</code>, or simply dispense with the receiver
+            altogether, like this:
+        </p>
+        <p class="code">
+            this.setForground(new Color(128, 255, 128)); <span class='cmt'>// OK</span><br>
+            setBackground(new Color(112, 75, 233));  <span class='cmt'>// Also OK</span>
+        </p>
+        <p> When you call <code>setForeground()</code> and
+            <code>setBackground()</code> you change the applet's "permanent" copy
+            of the <code>Graphics</code> object used for painting. Because
+            of this, you usually want to put such method calls inside
+            the <code>init()</code> method, instead of inside the <code>
+            paint()</code> method, as the examples you've seen so far.
+        </p>
+        <p> Here's an example applet that sets its background to yellow
+            and then does all of its drawing in red:<br>
+            <img src='images/ForegroundBackground.gif' class='inline' alt='Setting and using the foreground and background colors.'>
+        <p class="note"><b>Remember</b> : Use <code>setColor()</code> inside
+            the <code>paint()</code> method to temporarily change the painting
+            color. Use <code>setBackground()</code> or <code>setForeground()</code>
+            inside the <code>init()</code> method, to permanently change the
+            background or foreground color of your applet.
+        </p>
+    <h3>Creating Transparent Colors</h3>
+        <p>In <b>Java 2</b>, an additional value was added to the <code>Color</code> class,
+            called the <b>alpha channel</b> to control <b>opacity</b>. This new
+            model is sometimes called <b>ARGB</b>, but the constructor
+            used to create such colors puts the alpha argument last,
+            as you can see here:
+            <img src="images/e03b.gif" alt="The Color(r,g,b,a) constructor" class="inline">
+            As with the red, green, and blue values, you supply an
+            <code>int</code> value between 0 and 255 to specify
+            the opacity: 255 is completely opaque, while 0 is
+            completely transparent (and thus invisible).
+        </p>
+        <p> Here's a sequence of <code>setColor()</code> and
+            <code>fillRect()</code> calls draws an opaque purple
+            rectangle, and then overlays it with a partially
+            transparent blue rectangle:
+            <img src="images/e02b.gif" alt="The AlphaColor applet source code" class="inline">
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/AlphaColor.html","","width=475,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. Here's what the applet looks like when it runs (if you don't
+            have Java installed on the machine you're currently using.)
+            <img src="images/e04b.gif" alt="Running the AlphaColor applet" class="inline">
+        </p>
+    <h3>Color Constants and Class Variables</h3>
+        <p> Although only simple primitive types, like <code>int</code> have
+            literals, (along with the special case of the <code>String</code>
+            class, of course), <b>some</b> classes create <b>public class constants</b>
+            that you can use in the same way. The <code>Color</code>
+            class has defined several such constants for the most
+            common "plain" colors.
+        </p>
+        <p> Here's what the constant definitions
+            look like in the <b>JavaDocs</b>.
+            (You can also find them in Table 1 on page 68 in
+            Chapter 2 of your textbook.)
+            <img src="images/e05.gif" alt="The Color class constants" class="inline">
+            Such <b>class constants</b> are objects created inside the
+            <code>Color</code> class itself, using code that looks something
+            like this: (we'll look at class definitions in the upcoming weeks).</p>
+            <p class="code">
+                public class Color<br>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;/**<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;* The color blue.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;public final static Color blue 	= new Color(0, 0, 255);<br>
+                }
+            </p>
+        <p> The modifier <code>public</code> means that anyone can access the
+            field, the modifier <code>final</code> means that those accessing
+            the field cannot change it (it is constant), and the modifier
+            <code>static</code> means that the field is associated with the
+            <b>class</b> rather than with an individual object.
+        </p>
+        <p class='redbox'>The important thing to understand with with these class
+            constants, is that they are <code>Color</code> <b>objects</b> that
+            <b>live inside</b> the <code>Color</code> class.
+        </p>
+        <p> To use such <b>class variables</b> you use the <b>class</b> name before the
+            variable name, like this:</p>
+            <p class="code">
+                g.setColor(<span style='color:red'>Color.BLUE</span>);<br>
+                Color background = <span style='color:red'>Color.GREEN</span>;
+            </p>
+        <p> Note that when you use a class constant to initialize an
+            object variable (<code>background</code> in this case), you
+            <b>do not</b> use the <code>new</code> operator.
+        </p>
+        <p class="note">
+            You may have noticed that all of the <code>Color</code> constants
+            have both lowercase and uppercase variations. The lowercase
+            constants are the originals, however may people complained to
+            Sun that the Java convention for constant names required
+            uppercase names for constants. In SDK 1.4, Sun added the uppercase
+            names to be consistent with the standard Java naming conventions.
+        </p>
+
+        <p>
+    <h3>The java.util Package</h3>
+        <p> The <code>java.util</code> package is a collection of useful
+            classes that manipulate dates and times and provide facilities
+            for basic data structures as well as a more sophisticated and
+            complete random-number generating class than the one
+            you've been using from the <code>Math</code> class.
+        </p>
+        <p> To use the classes in <code>java.util</code>, you must
+            <code>import</code> the package, unlike the classes included
+            in <code>java.lang</code>.
+        </p>
+
+    <h4>Dates</h4>
+        <p> The <code>java.util.Date</code> class which represents
+            <b>numeric</b> time, that is, dates and times that can be
+            added, subtracted, and otherwise manipulated.
+        </p>
+        <p> <img src='images/e04c.gif' class='right' alt='Aztec Calendar.'>
+            As with numbers, formatting dates and times in
+            human readable form is not really part of the basic concept of
+            dates. The same moment in time, represented as a number, can be
+            displayed in different ways depending upon the calendar in use.
+        </p>
+
+        <p>
+            To facilitate this translation between human (cultural)
+            conventions and the "raw-facts" of dates and times, the
+            <code>java.util</code> package includes the <code>Calendar</code>
+            class that provides generic functionality. The generic
+            <code>Calendar</code>, however, is of limited use-it defines
+            what <b>needs</b> to be done, but can't perform the work
+            itself. (Such classes are called <b>abstract</b>
+            classes, and you'll study them in later chapters.)
+        </p>
+        <p> Java's <code>java.util</code> package also includes a
+            <b>concrete</b> implementation of a <code>Calendar</code>,
+            the <code>GregorianCalendar</code> class. The Gregorian calendar
+            is the calendar that is used throughout much of the world today.
+            (We're using it, for instance, to establish the deadlines
+            for this class.) We won't be covering the
+            <code>GregorianCalendar</code> or the <code>Date</code> classes,
+            in depth, but you may see them on a homework assignment, and
+            they are covered in your textbook.
+        </p>
+    <h4>The Random Class</h4>
+        <p> Using the <code>java.util.Random</code> class is not quite
+            as easy as using the <code>Math.random()</code> method:
+        </p>
+        <ul>
+            <li>First, of course, you have to import the <code>java.util</code>
+                package. You don't have to import anything to use the
+                <code>Math</code> class.
+            </li>
+            <li>Second, you must create a
+                <code>Random</code> object. The methods of the
+                <code>Random</code> class are not <code>static</code>
+                functions like those of the <code>Math</code> class.
+                Instead, they are <i>accessor</i> functions, like
+                those you used with the <code>String</code> class.
+            </li>
+        </ul>
+        <p> Despite this extra work, however, creating a <code>Random</code>
+            object, and using its methods to generate your random numbers,
+            can often prove beneficial. Let's start by creating a
+            <code>Random</code> object.
+        </p>
+    <h4>Creating Random Objects</h4>
+        <p> Up to now, we've been creating all of our variables inside
+            the <code>run()</code>, <code>paint()</code> or
+            <code>init()</code> methods. When you create a
+            <code>Random</code>, object, though, you <b>do not</b>
+            want to create it inside a method; instead, you'll always
+            define any <code>Random</code> objects in your program
+            as <b>instance variables</b> or <b>fields</b>. You define
+            an instance variable <b>outside</b> of all methods, but
+            <b>inside</b> the class definition.
+        </p>
+        <p> In addition, you generally want to share only a single
+            <code>Random</code> object with all of the instances
+            in your class. That's because the <code>Random</code> class
+            is really a <b>random-number generator</b>. By using a
+            single <b>Random</b> object, you ensure that the sequence
+            of numbers is really random, and not inadvertently duplicated
+            in your program.
+        </p>
+        <p> When you construct a <code>Random</code> object you have
+            your choice of two <code>Random</code> constructors: one that
+            takes no argument and one that takes a single <code>long</code>
+            as the random number generator <b>seed</b>. You can use
+            either one of these (but you won't use both):
+        </p>
+        <p class="code">
+            private static Random randGen = new Random(); <span class='cmt'> // OR...</span><br>
+            private static Random randGen = new Random(10L);
+        </p>
+        <p> Notice that:</p>
+        <ol>
+            <li class='d'>This definition must appear outside of
+                a method. That means that they need an <b>access specifier</b>,
+                like our methods have. Since we'll only use this random
+                generator inside our applet, we make it <code>private</code>, not
+                <code>public</code>.
+            </li>
+            <li class='d'>We also use the <code>static</code> modifier,
+                which signifies that we will be sharing this random number
+                generator with any objects created from this class.
+            </li>
+        </ol>
+        <p> If you use the first constructor, the <i>seed</i> (or starting
+            number) used for the random number generator is taken from the
+            current computer system time. If you use the second constructor,
+            the numbers generated will be <i>randomly distributed</i>, but
+            the <b>same sequence</b> will always repeat in exactly the same
+            order, every time the program is run.
+        </p>
+
+        <p> This is often useful for testing. You run the
+            program using a predefined seed during the test phase, and
+            then switch to a more truly random seed when you ship your
+            product.
+        </p>
+    <h4>Generating Numbers</h4>
+        <p> To generate a random number, you send messages to
+            your <code>Random</code> object, asking it to manufacture a
+            new number for you. Here are some of the random numbers you
+            can ask for:
+        </p>
+        <ul>
+            <li><b><code>nextDouble()</code></b> returns a <code>double</code>
+                between 0.0 and 1.0. This method has exactly the same
+                characteristics as calling <code>Math.random()</code>.
+            </li>
+            <li><b><code>nextFloat()</code></b> works like
+                <code>nextDouble()</code> but the result is a
+                <code>float</code>.
+            </li>
+            <li><b><code>nextInt()</code></b> and <b><code>nextLong()</code></b>
+                return an <code>int</code> and a <code>long</code>,
+                repectively, that is uniformly distributed over the entire
+                range of <code>int</code> or <code>long</code>. That means,
+                <code>nextInt()</code> could return a number anywhere from
+                around two-billion to around minus two-billion.
+            </li>
+            <li><b><code>nextInt(int max)</code></b> returns an
+                <code>int</code> that is uniformly distributed between <b>0</b>
+                (inclusive), and <b>max</b> (exclusive). This is
+                probably the most useful method in the class.
+            </li>
+
+            <li><b><code>nextGaussian()</code></b> returns a <code>double</code>
+                like <code>nextDouble()</code>, but rather than being
+                uniformly distributed between 0.0 and 1.0, the number is
+                "<i>the next pseudorandom, Gaussian ("normally") distributed
+                double value with mean 0.0 and standard deviation 1.0 from this
+                random number generator's sequence</i>." This means that
+                <code>nextGausian()</code> delivers both positive and negative
+                numbers, and that those numbers can be larger than 1.0.
+            </li>
+        </ul>
+        <p> Once you've generated a random number using one of
+            these methods, you may have to manipulate it, as you did
+            earlier, to make sure it falls within the range of acceptable
+            values.
+        </p>
+    <h4>Let 'em Roll</h4>
+        <p> <img src='images/e05b.gif' class='right' alt='A Let Em Roll lottery ticket.'>
+            Because the return values are a little different,
+            the manipulations are also. For instance suppose you
+            wanted to simulate an extremely hard-to-win lottery game
+            called <b>Let 'em Roll</b>, where the winner
+            must guess six random numbers between 39 and 173 (inclusive
+            on both ends).
+        </p>
+        <p> This time, let's use the <code>Random</code> class, and the
+            <code>nextInt()</code> method to generate our numbers. As with
+            the year picking example, you'll need some variables to store
+            each of the six picks. Then, use the <code>nextInt()</code>
+            method to generate a random number of each pick; but before
+            storing it in the variable, manipulate it like this:
+        </p>
+        <ol>
+            <li>Restrict the random number to the
+                values 39 to 173 (inclusive). To do this, first find
+                the range (number of numbers), and then pass the range
+                to your generator's <code>nextInt()</code> method.
+                (173-39+1 is 135 total values.)
+            </li>
+            <li>The result of using <code>gen.nextInt(range)</code>
+                will be a positive number from 0-134, so you have to add
+                39 (<code>min</code>) for your final answer.
+            </li>
+        </ol>
+        <p>Here's what these steps look like in code:</p>
+        <p class="code">
+            <span class='cmt'>// Defined outside of any method</span><br>
+            private static Random gen = new Random();<br>
+            <br>
+            <span class='cmt'>// Inside a method</span><br>
+            int min = 39;<br>
+            int max = 173;<br>
+            int range = max - min + 1;<br>
+            <br>
+            <span class='cmt'>// Generate the random numbers</span><br>
+            int[] nums = new int[6];<br>
+            for (int i = 0; i &lt; nums.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nums[i] = gen.nextInt(range) + min;
+        </p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned about how reference types and
+            primitive types are stored in memory. You also learned how
+            to create and use <code>Color</code> objects and how
+            to create a random-number generator to use in your
+            programs.
+        </p>
+        <p> In the next lesson you'll learn how to use the <code>Font</code>
+            class, and how to recognize and use <b>accessor</b> and
+            <b>mutator</b> methods.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075,<script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

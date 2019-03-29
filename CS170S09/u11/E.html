@@ -1,0 +1,668 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class='cap'>O</span>ne problem with using POA, (plain-old-arrays)</b>,
+            is that they
+            aren't resizable, and, when you use a partially-filled array, such as
+            those we employed for insertion and deletion, you need to keep track
+            of the number of elements in use separately, like this:<br>
+            <img src='images/b21.gif' class='inlineCenter' alt='Inserting and deleting elements.'>
+            That sounds like a job for a class, doesn't it?
+        </p>
+        <p> If you look back at the program
+            <a href='javascript:var%20w=window.open("InputArray.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>InputArray</b></a> from last week, you'll see that we used
+            a partially-filled array of <code>double</code> values, along with two additional
+            variables, <code>capacity</code> and <code>size</code>, to keep track
+            of how many elements are actually used.
+            <img src='images/confused.png' class='right' alt='A confused programmer.'>
+        </p>
+        <p> The real problem is that the <b>code is a little complex</b>, and so, when you're
+            given a program where a partially-filled array would really be the ideal solution,
+            you're likely to look for an easier way to get the job done, even if the
+            result is not as good.
+        </p>
+        <p> After all, a program that works poorly is better than
+            one that doesn't work at all. And, you figure, "if I have to remember how
+            partially-filled arrays work, it's likely that my program won't work at all!"
+        </p>
+    <h3>A Simple Array Class</h3>
+        <p> That's where the OOP principle of <b>encapculation</b> comes to
+            the rescue; we can <b><u>hide</u></b> all of those messy details behind
+            an easy to use interface. Just take the variables we used in the
+            <b>InputArray</b> program, and turn them into <b><u>instance variables</u>
+            </b>, like this:
+            <img src="images/c04.gif" class="inline" alt="Instance variables in the SimpleArrayClass.">
+            Then, instead of the <b>user</b> keeping track of how many elements
+            there are, the <b>class</b> can do it, by providing a method like
+            <code>isFull()</code> shown here:
+            <img src="images/c05.gif" class="inline" alt="The isFull() method in the SimpleArrayClass.">
+            The user doesn't need to know that the variable <code>size</code> exists;
+            <b>all</b> they need to know is "can I add an element to this array, or
+            is it full?".
+        </p>
+        <p class="note">Note that in the <code>isFull()</code> method, I've checked
+            to see if <code>size &gt;= capacity</code>, when, technically, the array
+            is full when <code>size == capacity</code>. This is an example of
+            <i>defensive</i> programming; making sure that if I make a mistake
+            elsewhere, accidentally setting <code>size</code> greater than
+            <code>capacity</code>, it won't crash my program. I'm <b>not</b>
+            a great fan of defensive programming, though, because it
+            misleads those who read the code into believing that <code>size</code>
+            could have a valid value greater than <code>capacity</code>,
+            which is not the case.
+        </p>
+    <h4>Adding Values</h4>
+        <p> Because the actual array is a <code>private</code> instance variable, the
+            elements are "hidden" from the users of the <b>SimpleArray</b> class.
+            To allow the user to add an item to the array, we can write an
+            <code>add()</code> method, that works like this:
+            <img src="images/c06.gif" class="inline" alt="The SimpleArrayClass add() method.">
+            Note that the method:
+        </p>
+        <ol>
+            <li class="d">Checks to see if there is still room in the array by
+                using the <code>isFull()</code> method. (Note the use of the
+                NOT operator in the condition.)
+            </li>
+            <li class="d">If the array <i>isn't</i> full, then we simply add
+                the element at the correct position, (using the <code>size</code>
+                instance variable), update the variable, and return <code>true</code>
+                to signal that the element was added successfully.
+            </li>
+            <li class="d">If there wasn't enough room for the element, then the
+                method returns <code>false</code> and doesn't modify either the
+                array or the other instance variables.
+            </li>
+        </ol>
+        <p> As you can see, the user of your class doesn't have to know about the
+            <code>size</code> and <code>capacity</code> variables to use the class
+            at all.
+        </p>
+    <h4>Displaying Values</h4>
+        <p> To display the individual values, we could write a <code>getElement()</code>
+            method, that allowed use to extract a particular value. I'll leave that
+            as "an exercise for the reader". Instead, let's just <b>overload</b> the
+            <code>toString</code> method (<b>inherited</b> from the <code>Object</code>
+            class), to "print" the entire array, element by element,
+            like this:
+            <img src="images/c07.gif" class="inline" alt="The toString() method.">
+            The version of <code>toString()</code> shown here returns a representation
+            similar to one that could be used to initialize the array in the first place.
+            You can click the link in this sentence to open
+            <a href='javascript:var%20w=window.open("SimpleArrayClass.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>SimpleArrayClass.java</b></a> in your own browser.
+        </p>
+    <h4>Testing the Class</h4>
+        <p> To test the <b>SimpleArrayClass</b>, let's recreate the <b>InputArray</b>
+            program from the last lesson. The program
+            <a href='javascript:var%20w=window.open("InputSimpleArrayClass.java.html","","width=675,height=750,scrollbars=yes");'>
+            <b>InputSimpleArrayClass.java</b></a> uses the class you just wrote,
+            instead of a plain-old-array, to hold up to 100 numbers input by the
+            user, and then print them out.
+        </p>
+        <p> Here's how the program starts:
+            <img src="images/c08.png" class="inline" alt="Lines 14-25 in InputSimpleArrayClass.java.">
+            Note that this version of the program creates a <code>Scanner</code> object
+            to capture the user's input, just as the previous one did, but then, instead
+            of creating an array variable, it creates a <b>SimpleArrayClass</b> object
+            instead.
+        </p>
+        <p> Next, we ask the user to input 100 real numbers. In the earlier program,
+            we used the <code>length</code> of the array to tell the user how many
+            numbers to enter; which the <b>SimpleArrayClass</b> though, we can't do
+            that, because the internal array is <code>private</code>, and we didn't
+            provide a <code>length()</code> method, (although we easily could have).
+            <img src="images/c09.png" class="inline" alt="Lines 26-45 in InputSimpleArrayClass.java">
+            The main loop is similar to the earlier program, with these
+            differences:
+        </p>
+        <ol>
+            <li class="d">Instead of checking for a specific value, the loop call's
+                the <code>isFull()</code> method to determine whether to continue
+                going. If <b>ar</b> is <i>not</i> full, then we enter the loop.
+                This, you'll recall, is the loop's <i>necessary</i> bounds.
+            </li>
+            <li class="d">Inside the loop, we read the value, using the <code>Scanner</code>
+                object, and then use the <code>add()</code> method to add it to
+                the array, if it is a positive number.
+            </li>
+            <li class="d">After the loop ends, instead of using another loop to
+                print the contents of the array, (something that we couldn't do anyway,
+                given the design of our class, the test program just uses concatenation
+                to print the contents of <b>ar</b>; the <code>toString()</code> method
+                added to <b>SimpleArrayClass</b> provides the formatting.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when it runs:
+            <img src="images/c10.png" class="inlineCenter" alt="Running InputSimpleArrayClass.java">
+        </p>
+    <h3>Resizable Arrays</h3>
+        <p> You could easily continue to expand <b>SimpleArrayClass</b>, adding methods to
+            access, insert, find, sort, and delete elements, often simply by
+            employing the "built-in" methods supplied by the <b>Arrays</b> class.
+            You'd certainly want to add a constructor, so users could create
+            <code>SimpleArrayClass</code> objects using sizes other than 100.
+        </p>
+        <p> <img src='images/worst-case.png' class='right' alt='The worst case.'>
+            But, while the <b>SimpleArrayClass</b> hides <b><u>some</u></b> of the complexity
+            behind using partially-filled arrays, it doesn't address another problem:
+            the need to <b>plan for the worst case</b> when deciding how big to make your
+            array. Because the size of an array is <b>fixed</b>, once it's been created,
+            the user has to rely on the <code>isFull()</code> method to know if its
+            safe to add elements to the array, or to check the value returned from
+            the <code>add()</code> method, to make sure that the element was added
+            to the array.
+        </p>
+        <p> Even though arrays aren't resizable, though, that doesn't mean that
+            <b>your class has to act that way</b>. By automatically creating a new,
+            larger internal array each time the existing array fills up, and then
+            copying the elements from the existing array into the new storage, you
+            can make your array class <b>appear to the user</b> as a resizable
+            array.
+        </p>
+    <h4>The ResizableArrayClass</h4>
+        <p> The
+            <a href='javascript:var%20w=window.open("ResizableArrayClass.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>ResizableArrayClass</b></a> program is very similar to the
+            <b>SimpleArrayClass</b> with the changes shown here.
+        </p>
+        <ol>
+            <li class="d">Instead of setting <code>capacity</code> to 100,
+                this class sets it to 1. (You <b>wouldn't</b> do this in "real life".
+                Instead, you'd start with some more reasonable starting value; 10,
+                16, and 32 are often used):
+                <img src="images/c11.gif" class="inline" alt="The ResizableArray instance variables">
+            </li>
+            <li class="d">Because the array is now resizable, there's no need to
+                return a "success report" from the <code>add()</code> method;
+                we can change the return type to <code>void</code>. Inside the
+                method, we still need to check and see if the array is full. When it
+                is, however, instead of returning <code>false</code> to indicate that
+                the element couldn't be added, we just call the internal
+                <code>expand()</code> method, and then insert the element in
+                the new space that's created
+                <img src="images/c12.gif" class="inline" alt="The revised add method.">
+            </li>
+            <li class="d">To expand the array, the method increments <code>capacity</code>,
+                allocates a new array, copies the old array elements into the new array,
+                and then assigns the instance variable <code>ar</code> to "point to" the
+                newly allocated (and larger) memory.
+                <img src="images/c13.gif" class="inline" alt="Expanding the array.">
+                As you can see here, I expand the array by a single element each time
+                a new value is added. Again, you <b>wouldn't do this</b> in "real life",
+                but would double the size or add some other, larger, fixed size. I've
+                expanded by one just to show the effect.
+            </li>
+        </ol>
+    <h4>Using The ResizableArrayClass</h4>
+        <p> The program
+            <a href='javascript:var%20w=window.open("InputResizableArrayClass.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>InputResizableArrayClass</b></a> is a modification of the
+            test program you wrote for the simple array class. As you can see, though,
+            it's both shorter and simpler:
+            <img src="images/c14.png" class="inlineCenter" alt="The InputResizableArrayClass.java program.">
+            The program
+        </p>
+        <ol>
+            <li class="d">Creates a <code>ResizableArrayClass</code> object, rather than
+                a <code>SimpleArrayClass</code> object, as you'd expect.
+            </li>
+            <li class="d">Instead of telling the user to enter 100 numbers, (and adding
+                a corresponding loop test), the program prompt asks them to enter any
+                number of positive integers. The program will no longer stop when a
+                particular number of input values have been entered.
+            </li>
+            <li class="d">Rather than using a "loop-and-a-half", with the necessary
+                bounds and the <code>if</code> statement controlling the user's
+                exit decision, we can use a simpler <b>inline test</b> to read
+                the user's input, store it in a variable, and check it against
+                zero, all on one line.
+            </li>
+            <li class="d">If the user enters a positive number, the body of the
+                loop now contains a single statement that adds the number to
+                the resizable array.
+            </li>
+        </ol>
+        <p> The printout works just the same way, (as do the other parts of the
+            program.)
+        </p>
+    <h3>Generic Collections and the ArrayList Class</h3>
+        <p><b><span class='cap'>I</span>n addition to arrays</b>, the Java Class Libraries include
+            many built-in classes designed to store data elements and to manipulate them
+            in different ways. The general term for these kinds of classes are known as
+            <b>data structures</b>.
+            If you're a Computer Science major, you'll even take a course devoted entirely to
+            these data structures.<br>
+            <img src='images/datastructures.png' class='inlineCenter' alt='Some Java Collection classes.'>
+            In Java, these data structure classes are known as the <b>Java Collection classes</b>.
+        </p>
+    <h4>Unsafe Collections</h4>
+        <p> Before the Java Collection classes were introduced, Java had a set of rudimentary
+            data structures designed to store generic <code>Object</code> references. The most commonly
+            used of these was the <code>Vector</code> class.
+        </p>
+        <p> <img src='images/vector.png' class='right' alt='Vector from Sonic the Hedgehog.'>
+            You probably know the difference between bitmap and <i>vector graphics</i>,
+            have heard the term <i>disease vector</i> related to a potential
+            bird flu epidemic, or referred to wind vectors while sailing,
+            or in a physics class.
+            You might even be familiar with the video-game character <i>Vector</i>,
+            from <i>Sonic the Hedgehog</i>, shown here.
+        </p>
+        <p> What, you might wonder, do all of these have in common with Java's
+            <code>Vector</code> class? Good question.
+            <br>The answer is:
+            <b><span style='color:red;background:none;'>not a thing!</span></b>
+        </p>
+        <p> The <code>Vector</code> class implements an <b>"automatic" array</b>,
+            similar to the one that you created at the end of the last section.
+            Like the class that you wrote, when you add an eleventh element to a ten-element
+            <code>Vector</code>, the <code>Vector</code> will automatically
+            resize itself.
+        </p>
+         <p> When you place an item in a
+            <code>Vector</code>, though, the <code>Vector</code> itself doesn't keep track of what
+            "kind" of thing you stored, (unlike your hand-written resizable array class, which can
+            <b>only</b> store <code>doubles</code>. Instead, it is up to you as a programmer to
+            <b>cast</b>each element to the actual correct type after retrieving it from the
+            collection, but <b>before</b> using it.
+        </p>
+        <p> Because this leads to many different kinds of runtime errors, these earlier
+            collection classes, like <code>Vector</code> are known as <b>unsafe collections</b>.
+            Today, the javac compiler will usually warn you not to use them.
+        </p>
+    <h4>Generic Collections and the ArrayList</h4>
+        <p> Starting with Java 5 a new breed of data structures was introduced that allowed
+            you to <b>specify the type</b> of element stored in a collection, by using
+            a <b>type parameter</b>. This facility is known as <b>generics</b>. The generic
+            collection class that's most similar to the regular array class
+            is called the <code>ArrayList</code>, and that's what we'll look at in
+            the remainder of this lesson.
+        </p>
+        <p class='note'> Remember, though, that if you compile your code using the new
+            generic classes, your code <b>won't run</b> on pre-Java 5 Virtual Machines.
+            This is a Java 5 and up feature.
+        </p>
+        <p> As you saw in this lesson, one of the problems with using arrays,
+            is that they are fixed-size. If you plan for ten elements when you
+            create your array, you can't change your mind after the program is
+            running, and add an eleventh element.
+        </p>
+        <p> <img src='images/arraylist.png' class='right' alt='The ArrayList class.'>
+            You can get around that, though, by creating your own class, like the
+            <code>ResizableArrayClass</code>, that hides those details with a
+            <code>private</code> internal array and then writing code to
+            reallocate a new array and copy the old elements when the
+            original array elements are filled.
+        </p>
+        <p>
+            The <code>ResizableArrayClass</code> isn't a perfect solution, though,
+            because you have to create a <b>separate</b> <code>ResizableArrayClass</code>
+            for <b>each kind of element</b> you want to store, unlike regular arrays,
+            where you can store any kind of object or primitive type.
+            Fortunately, the new Java 5 collection classes change this.
+        </p>
+        <p> The Java <b>generic growable array class</b> is called the <code>ArrayList</code>.
+            With the ArrayList:
+        </p>
+        <ul>
+            <li> you can store <b>any kind</b> of object-based element. You can have an
+                <code>ArrayList</code> of <code>String</code>, <code>Card</code>, <code>Integer</code>,
+                and so on.
+            </li>
+            <li><img src='images/autoboxing.png' class='right' alt='A set of boxes.'>
+                while you can store any kind of object-based element, you <b>can't</b>
+                store primitive values, like you can with regular arrays. If you want to
+                create an <code>ArrayList</code> of <code>int</code>, you have to use the
+                <code>Integer</code> <b>wrapper class</b> type instead. Then, when you
+                store and retrieve <code>int</code> values in the collection, they are
+                <b>automatically converted</b> to and from the wrapper type. This process
+                is called <b>auto boxing</b>.
+            </li>
+        </ul>
+        <p> Because of this "boxing", using <code>ArrayList</code>s to store
+            primitive types is <b>much less efficient</b> than using arrays. Even
+            for object types, using <code>ArrayList</code> may be a little slower
+            than the equivalent built-in array.
+        </p>
+        <p> Also, you may find that <b>using</b> the <code>ArrayList</code> is
+            a little <b>less convenient</b> because instead of using
+            bracketed subscripts to store and retrieve elements, you have to use
+            a <code>set()</code> or <code>get()</code> method instead.
+            Usually, though, the small loss in efficiency and convenience is more
+            than made up by the <b>greater convenience</b> of auto-sizing and by the
+            large number of built-in methods that can considerable reduce the amount
+            of code you need to write.
+        </p>
+    <h3>ArrayList Syntax</h3>
+        <p> The <code>ArrayList</code> class is not built in to the
+            Java language like the array type is. Also, the <code>ArrayList</code> is not
+            part of the automatically included <code>java.lang</code> package, like the
+            <code>String</code> and <code>Math</code> classes are.
+        </p>
+        <p> The <code>ArrayList</code> is part of the <code>java.util</code> package,
+            so to use them in your programs, you'll need to add one of these
+            <code>import</code> statements to each file that use <code>ArrayList</code> class:
+        </p>
+        <p class='code'>
+            import java.util.ArrayList; <span class='cmt'>// class-specific import</span><br>
+            import java.util.*; <span class='cmt'>// wild-card package import</span>
+        </p>
+    <h4>Creating an ArrayList</h4>
+        <p> You <b>create</b> an <code>ArrayList</code> object using syntax
+            that is <b>similar</b> to the syntax for creating other object
+            variables and then calling an object constructor. Since
+            <code>ArrayList</code>s are automatically sized, you <b>don't</b>
+            need to specify their size when creating them, like you do with
+            an array constructor:<br>
+            <img src='images/arraylist02.png' class='inlineCenter' alt='Creating an ArrayList.'>
+            The biggest difference between a regular object constructor and
+            a <b>generic type constructor</b>, like <code>ArrayList</code>,
+            is the <code>ArrayList</code> <b>type parameter</b>, which must appear
+            <b>right after the name</b> <code>ArrayList</code>, enclosed in
+            angle brackets, kind of like an HTML tag.
+        </p>
+        <p> When you supply a type parameter like this, it actually defines
+            an entirely new class, such as <code>ArrayList&lt;Integer&gt;</code> or
+            <code>ArrayList&lt;Double&gt;</code>. The type parameter
+            <b>actually becomes part of the class name</b>, used both when you
+            declare the variable <b>and</b> when you invoke the constructor.
+        </p>
+    <h3>The Deck Example</h3>
+        <p><img src='images/deck02.png' class='right' alt='A deck of cards.'>
+            Rather than just giving you a list of syntax, let's <b>put the
+            <code>ArrayList</b> to work</b>. In an earlier lesson, you used
+            inheritance and composition (along with enumerated types), to build
+            a reusable <code>PlayingCard</code> class.
+        </p>
+        <p> Now, let's
+            <b>create a <code>Deck</code> class</b> and use an internal <code>ArrayList</code>
+            to store the <code>PlaingCard</code> objects.
+            To get started:</p>
+        <ol>
+            <li class='d'>Using Eclipse, <b>add a new class</b> named <code>Deck</code> to your
+                project. Make sure you click the checkbox that says <i>generate
+                comments</i> when you complete the New Class dialog.
+            </li>
+            <li class='d'>Inside the class, <code>add an instance variable</code> named
+                <code>cards</code> that is an <code>ArrayList</code> containing
+                <code>PlayingCard</code> objects. Just create the instance
+                variable itself; don't initialize it.
+                <p class='note'>If Eclipse shows you
+                    an error at this point, you can use the Quick-Fix feature to
+                    add the necessary <code>import</code> statement.
+                </p>
+            </li>
+            <li class='d'>Now, <b>write a constructor</b> for your class. It doesn't
+                have to take any parameters. Inside the constructor, initialize
+                the field named <code>cards</code> using the <code>ArrayList</code>
+                constructor.
+            </li>
+        </ol>
+        <p> If you've done everything right, your class should compile with no
+            little red squigglies, and it should look something like this:<br>
+            <img src='images/deck01.png' class='inlineCenter' alt='The Deck skeleton.'>
+            Now, it's on to adding elements to the <code>Deck</code>.
+        </p>
+    <h4>Adding ArrayList Elements</h4>
+        <p> When you first create an <code>ArrayList</code>, it has the <b>potential</b>
+            for holding <b>ten elements</b>, without being resized. This is known as
+            the <code>ArrayList's</code> <b>capacity</b>. However, even though your
+            list has an initial capacity of ten elements, it doesn't actually contain
+            <b>any</b> elements; instead, <b>it is completely empty</b>.
+        </p>
+        <p> The number of valid elements actually stored in the list is known as the
+            <code>ArrayList</code>'s <b>size</b>. With arrays, size and capacity are
+            identical, but with <code>ArrayList</code>s they are separate concepts.
+            Most of the time, you don't need to worry about capacity at all, since
+            the list will resize itself as needed.
+        </p>
+    <h5>Adding Elements</h5>
+        <p> Instead of using subscripts to place element in the predefined
+            "slots", like you do with an array, you actually <b>add</b> the
+            element to the list, which does <b>two things</b>:
+        </p>
+        <ul>
+            <li>It first <b>creates the appropriate slot</b></li>
+            <li>and then, <b>places the element into it</b>.</li>
+        </ul>
+        <p> There are actually <b>two versions</b> of the <code>ArrayList add()</code>
+            method. The first version, <code>add(&lt;T&gt;)</code>, adds the element
+            (<code>&lt;T&gt;</code>) to the <b>end</b> of the <code>ArrayList</code>, <b>after</b>
+            the last valid element. If you exhaust the capacity of the <code>ArrayList</code>
+            when calling the <code>add()</code> method, then the list is <b>automatically
+            expanded</b> as necessary.
+        </p>
+    <h5>Inserting Elements</h5>
+        <p> The second version of add, <code>add(index, &lt;T&gt;)</code>, really
+            <b>should</b> be named <code>insert()</code>, since it places an
+            element <b>at a particular index position</b>. When you use this "insert"
+            version of the <code>add()</code> method, the element that <b>was originally</b>
+            in the position specified is moved one position to the right, the element
+            in <b>that</b> position is moved to right, and so on.
+        </p>
+        <p> As with the
+            first version of <code>add()</code>, the <code>ArrayList</code>
+            capacity is expanded when you insert additional elements.
+        </p>
+    <h5>How Many Elements?</h5>
+        <p> When working with partially-filled arrays, we had to keep track of the
+            current card by using a variable. We don't have to do that with the
+            <code>ArrayList</code> class, though, because the class <b>automatically</b>
+            keeps track of <b>how many elements</b> the list contains.
+            You can retrieve that information by calling the <code>size()</code> method.
+        </p>
+        <p> If we want to find out if our deck is empty, for instance, we can use
+            <code>size()</code>. If <code>cards.size()</code> is 0, then the deck
+            is empty. The <code>ArrayList</code> also has an <code>isEmpty()</code>
+            method that does the same thing.
+        </p>
+    <h4>More Deck Methods</h4>
+        <p> Rather than populating the <code>ArrayList</code> in our
+            <code>Deck</code> constructor, we'll leave it empty so that we
+            can use the same class for several different games. After all,
+            not all games require just the 52 cards of the standard deck.
+        </p>
+        <p> To allow the <b>user</b> of the <code>Deck</code> class to populate
+            it, we'll need to supply an <code>addCard()</code> method, along with a
+            couple other methods that make working with the <code>Deck</code>
+            class a little easier.
+        </p>
+        <p> Here are the methods you should add to <code>Deck</code>:</p>
+        <ul>
+            <li>the <code>addCard()</code> method takes a single <code>PlayingCard</code>
+                as it's parameter and then uses the <code>ArrayList add()</code> method
+                to place it at the end of the <code>cards ArrayList</code>:<br>
+                <img src='images/deck03.png' class='inline' style='margin-left:-2em;' alt='Deck addCard() method.'>
+            </li>
+            <li>the <code>getCardsRemaining()</code> method returns the number of
+                <code>PlayingCard</code>s remaining in the deck. You can use the
+                <code>ArrayList size()</code> method to determine this value:<br>
+                <img src='images/deck04.png' class='inline'  style='margin-left:-2em;' alt='Deck getCardsRemaining() methods.'>
+            </li>
+            <li>the <code>hasMore()</code> method returns <code>true</code> if
+                there are more cards left. You can use the <code>getCardsRemaining()</code>
+                method to generate the return value for this method, or you can use
+                <code>size()</code> or <code>isEmpty()</code> as I've done here:<br>
+                <img src='images/deck05.png' class='inline'  style='margin-left:-2em;' alt='Deck hasMore() method.'>
+            </li>
+        </ul>
+        <p> Once you've written these three methods, make sure your class compiles
+            (no squigglies), and we'll look at accessing the cards we've added to
+            the deck.
+        </p>
+    <h4>Accessing ArrayList Elements</h4>
+        <p> With arrays, you use a <b>subscripted array name</b> on the
+            left-hand-side of an assignment expression to place a value into
+            a specific slot in the array. With an <code>ArrayList</code>, though,
+            the square-bracket "subscript operator" doesn't work; you have to
+            <b>call a method instead</b>.
+        </p>
+        <p> The easiest way to see how this works is to compare an array assignment
+            to the equivalent operation with an <code>ArrayList</code>.
+        </p>
+    <h5>Storing Objects</h5>
+        <p> If you wand to <b>store</b> a <code>PlayingCard</code> object named
+            <code>card</code> in the <code>cards</code> list, instead of writing
+        </p>
+        <p class='code'>cards[idx] = card; </p>
+        <p>like you would when using an array, you use the <code>set()</code>
+            method, like this:
+        </p>
+        <p class='code'>cards.set(idx, card);</p>
+        <p class='note'> Note that the <b>relative positions</b> of the words <code>cards</code>,
+                <code>idx</code>, and <code>card</code> <b>are the same in both cases</b>.
+        </p>
+    <h5>Retrieving Elements</h5>
+        <p> Similarly, to <b>retrieve an element</b>, instead of using a
+            subscripted array name on the right of an assignment, like this:
+        </p>
+        <p class='code'>card topCard = cards[2];</p>
+        <p> you use the <code>ArrayList get()</code> method, passing in the
+            appropriate index value for the element you want to select, like this:
+        </p>
+        <p class='code'>PlayingCard topCard = cards.get(2);</p>
+        <p>Please note that the <code>get()</code> method
+            <b>does not remove</b> the specific element from the <code>ArrayList</code>,
+            but simply <b>returns a reference</b>. If you want to remove the element
+            from the list after retrieving it, you need to use the <code>ArrayList
+            <code>remove()</code> method like this:
+        </p>
+        <p class='code'>PlayingCard topCard = cards.remove(2);</p>
+        <p> The <code>remove()</code> method returns a reference to the list element,
+            removes the reference from the list, and then "closes up" the remaining
+            elements by shifting those to the right of the removed element towards
+            the beginning of the list.
+        </p>
+    <h4>Other ArrayList Methods</h4>
+        <p> Although storing and retrieving objects in an <code>ArrayList</code>
+            requires more code that when using an array, many common operations
+            that you have to perform "by hand" when using arrays <b>are automatic</b>
+            when using <code>ArrayLists</code>. That means that using
+            <code>ArrayLists</code> can actually <b>make your code much simpler</b>,
+            rather than more complex.
+        </p>
+        <p>For instance:</p>
+        <ul>
+            <li>Since you don't have to explicitly <b>size</b> an <code>ArrayList</code>,
+                all of the complex code required to process partially-filled arrays is
+                eliminated. This also saves you memory, because you don't need to always
+                include unneeded elements just in case.
+            </p>
+            <li>To see if a particular item is contained in an <code>ArrayList</code>,
+                you don't need to use a loop and search through the list manually;
+                instead, you can just call the <code>contains()</code> method.
+            </li>
+            <li>If you already know that a particular object is located in an
+                <code>ArrayList</code>, you can retrieve its position using
+                <code>indexOf()</code>, just like you could with <code>String</code>s.
+            </li>
+            <li>To randomly order the elements in an <code>ArrayList</code>, you can
+                use the <code>static shuffle()</code> method from the <code>Collections</code>
+                class.
+            </li>
+            <li>Finally, you can <b>remove all of the elements</b> from an
+                <code>ArrayList</code> with the <code>clear()</code> method.
+        </ul>
+        <p> When you wrote your own array classes, like those at the beginning of this
+            lesson, these were all things that <b>you had to do on your own</b> by
+            writing various loops and comparisons.
+        </p>
+    <h4>Even More Deck Methods</h4>
+        <p>OK, let's put these methods to work by adding a few more methods to our
+            <code>Deck</code> class.
+        </p>
+        <ul>
+            <li>Every deck needs to <b>deal cards</b>, right? The <code>dealCard()</code>
+                method takes <b>the top card</b> off the deck and returns it. You can
+                use the <code>ArrayList remove()</code> method to both get a reference
+                to the top card, and to remove it from the <code>ArrayList</code>.
+                If the cards list is empty, then the <code>dealCard()</code> method
+                should return <code>null</code>. Here's what your code should look like:<br>
+                <img src='images/deck06.png' class='inline'  style='margin-left:-2em;' alt='Deck dealCard() method.'>
+            </li>
+            <li>The <code>removeAllCards()</code> method empties the deck. You can
+                do this by using a single <code>ArrayList</code> method like this:<br>
+                <img src='images/deck07.png' class='inline'  style='margin-left:-2em;' alt='Deck removeAllCards() method.'>
+            </li>
+            <li>The <code>shuffle()</code> method <b>shuffles</b> the deck. (Surprise!)
+                You can do this by simply calling <code>Collections.shuffle()</code> and
+                passing the <code>cards ArrayList</code> instance variable as a parameter.
+                (Of course, you have to have the <code>Collections</code> class imported.)
+                Here's what the <code>shuffle()</code> method should look like:<br>
+                <img src='images/deck08.png' class='inline'  style='margin-left:-2em;' alt='Deck shuffle() method.'>
+            </li>
+        </ul>
+    <h4>CardDeckDemo</h4>
+        <p><img src='images/deck09.png' class='right' alt='The CardDeckDemo program.'>
+            When you're done, you can download the
+            <a href='CardDeckDemo.java' target='_blank'><b>CardDeckDemo</b></a>
+            program by clicking the link in this sentence. Add it to your project,
+            making sure that you have <b>acm.jar</b> and an <b>images</b> folder
+            containing the playing card images. (If you want to use a <b>cards</b>
+            folder instead, make sure you modify the <code>PlayingCard</code> class
+            to add the prefix <b>"cards/"</b> to the generated filename in the
+            <code>PlayingCard getCardImage()</code> method.
+        </p>
+        <p> In addition to the card images, the program also uses the additional
+            image file of an empty deck named <a href='e.gif' target='_blank'>
+            <b>e.gif</b></a>. Download it by clicking the link in this paragraph
+            and adding it to the folder containing the other card images.
+        </p>
+        <p> Finally, to get the demo program to run, we need to add a
+            <code>flip()</code> method to the <code>PlayingCard</code> class
+            (<b>not</b> to the <code>Deck</code> class).
+            This method simply grabs the image on the bottom of the card,
+            and brings it to the top, like this:<br>
+            <img src='images/deck10.png' class='inline' alt='PlayingCard flip() method.'>
+        </p>
+        <p> Go ahead and run <b>CardDeckDemo</b>, and have fun.</p>
+
+     <h3>Coming Up . . .</h3>
+        <p> That's it for this week. Head on over to the exercises page
+            and make sure you've graded all of the assignments, and taken
+            the quiz for this week. When you come back in the next unit,
+            we'll look at abstract classes, interfaces and polymorphism.
+        </p>
+
+    </div>
+
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

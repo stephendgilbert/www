@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>Java Style Guide</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="lessons.css">
+    <script type="text/javascript" src="general.js"></script>
+</head>
+<body>
+    <div class="title">
+        <img hspace="15" src="images/a.gif" align="left" 
+            alt="CS 170 Lesson A logo" border="1" width="80" height="100">
+            <br>
+        <strong><span style="font-size: larger; background-color: transparent;">
+                    CS 170</span><br>
+        <span style="font-size: x-large; background-color: transparent;">
+            Programming Styleguide</span></strong>
+        <br clear="all">
+    </div>
+<div class="content">    
+    <H2>Introduction</H2>
+    
+    <P><b><span class="cap">T</span>his coding style guide</b> 
+        is a simplified version of one that has been
+        used with good success both in industrial practice and for college
+        courses. This is a modification of 
+        <a href="http://www.horstmann.com/bigj/style.html" target="_blank">
+        <b>the style guide</b></a> written by <b>Cay Horstmann</b> at 
+        <b>San Jose State University</b>.
+    </P>
+    
+    <P>A style guide is a set of <b>mandatory</b> requirements for layout and
+      formatting. Uniform style makes it easier for you to read code from your
+      instructor and classmates. A style guide makes you a more productive programmer because it <I>
+      reduces gratuitous choice.</I> If you don't have to make choices about
+      trivial matters, you can spend your energy on the solution of real
+      problems. </P>
+    
+    <P>In these guidelines, several constructs are plainly outlawed. That
+      doesn't mean that programmers using them are evil or incompetent. It does
+      mean that the constructs are not essential and can be expressed just as
+      well or even better with other language constructs. </P>
+    
+    <P>If you already have programming experience, in Java or another language,
+      you may be initially uncomfortable at giving up some fond habits. However,
+      it is a sign of professionalism to set aside personal preferences in minor
+      matters and to compromise for the benefit of your group. </P>
+    
+    <P>These guidelines are necessarily somewhat dull. They also mention
+      features that you may not yet have seen in class. Here are the most
+      important highlights: </P>
+    <UL>
+      <LI>Tabs are set every four spaces.</LI>
+      <LI>Variable and method names are lowercase, with occasional upperCase
+        characters in the middle.</LI>
+      <LI>Class names start with an Uppercase letter</LI>
+      <LI>Constant names are UPPERCASE, with an occasional UNDER_SCORE.</LI>
+      <LI>There are spaces after keywords and surrounding binary operators.</LI>
+      <LI>Braces must line up vertically and code must be indented in a block.</LI>
+      <LI>No magic numbers may be used.</LI>
+      <LI>Every method, except for <span class='inlinecode'>main</span> and overridden library
+        methods, must have a comment.</LI>
+      <LI>Use, at most, 30 lines of code per method.</LI>
+      <LI>All non-<span class='inlinecode'>final</span> instance variables must be private.</LI>
+    </UL>
+    
+    <H2>Source Files</H2>
+    
+    <P>Each Java program is a collection of one or more source files. The
+      executable program is obtained by compiling these files. Organize the
+      material in each file as follows: </P>
+    <UL>
+      <LI><span class='inlinecode'>package</span> statement, if appropriate</LI>
+      <LI><span class='inlinecode'>import</span> statements</LI>
+      <LI>A comment explaining the purpose of this file</LI>
+      <LI>A <span class='inlinecode'>public</span> class</LI>
+      <LI>Other classes, if appropriate</LI>
+    </UL>
+    
+    <P>The comment explaining the purpose of this file should be in the format
+      recognized by the <span class='inlinecode'>javadoc</span> utility. Start with a <span class='inlinecode'>/**</span>,
+      and use the <span class='inlinecode'>@author</span> and <span class='inlinecode'>@version</span> tags: 
+    </P>
+    <p class='code'>
+        /**<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Classes to manipulate widgets. <i>(put purpose here)</i><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Solves CS 170 homework assignment #3<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;@author Claudia Coder <i>(use your name)</i><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;@version 1.01 2002-09-15 <i>(add the date submitted)</i><br>
+        */
+    </p>
+    
+    <H2>Classes</H2>
+    
+    <P>Each class should be preceded by a class comment explaining the purpose
+      of the class.</p>
+    </p>Use the following order for items in the class:</P>
+    <OL>
+      <LI>Static Fields (<span class='inlinecode'>public static</span> only)</LI>
+      <LI>Instance Fields</LI>
+      <LI>Constructors</LI>
+      <LI>Instance Methods</LI>
+      <LI>Static Methods</LI>
+      <LI>Inner classes</LI>
+    </OL>
+    
+    <P>Leave a blank line after every method. </P>
+    
+    <P>All non-<span class='inlinecode'>final</span> variables must be private. 
+      Methods and final variables can be either public or private, as
+      appropriate. </P>
+    
+    <P>All features must be tagged <span class='inlinecode'>public</span>,
+       <span class='inlinecode'>private</span>, or <span class='inlinecode'>protected</span>.
+      Do not use the default visibility (that is, package visibility). </P>
+    
+    <H2>Methods</H2>
+    
+    <P>Every method (except for <span class='inlinecode'>main</span>) starts with a comment in
+      <span class='inlinecode'>javadoc</span> format, similar to this: </P>
+      <p class='code'>
+            /**<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Convert calendar date into Julian day.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Note: This algorithm is from Press et al., Numerical Recipes<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;in C, 2nd ed., Cambridge University Press, 1992<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param day day of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param month month of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@param year year of the date to be converted<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@return the Julian day number that begins at noon of the<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;given calendar date.<br>
+            */</br>
+            public static int dat2jul(int day, int month, int year)<br>
+            { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;. &nbsp;.&nbsp; .<br>
+            }
+        </p>
+    <P>Methods must have at most 30 lines of code. The method header,
+      comments, blank lines, and lines containing only braces are not included
+      in this count. This rule forces you to break up complex computations into
+      separate methods. </P>
+    
+    <H2>Variables and Constants</H2>
+    
+    <P>Do not define all variables at the beginning of a block: </P>
+    <p class='code'>
+        {  <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;double xold; // Don't<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;double xnew;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;boolean more;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;. &nbsp;. &nbsp;.<br>
+        }
+    </p>
+    
+    <P>Instead, define each variable just before it is used for the first time: </P>
+    <p class="code">
+        { <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;double xold = Integer.parseInt(input);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;boolean more = false;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;while (more)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{  <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double xnew = (xold + a / xold) / 2; // OK<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+        }
+    </p>
+    
+    <P>Do not define two variables on the same line: </P>
+    <p class="code">
+        int dimes = 0, nickels = 0; // Don't
+    </p>
+    
+    <P>Instead, use two separate definitions:</P>
+    <p class="code">
+        int dimes = 0; // OK<br>
+        int nickels = 0; 
+    </p>
+    
+    <P> In Java, constants must be defined with the keyword 
+        <span class='inlinecode'>final</span>.
+        If the constant is used by multiple methods, declare it as 
+        <span class='inlinecode'>static final</span>. 
+    </P>
+    
+    <P>Do not use <b> magic numbers!</b> A magic number is a numeric constant
+      embedded in code, without a constant definition. Any number except -1, 0,
+      1, and 2 is considered magic: </P>
+    <p class="code">
+        if (p.getX() &lt; 300) // Don't
+    </p>
+    
+    <P>Use <span class='inlinecode'>final</span> variables instead: </P>
+    <p class="code">
+        final double WINDOW_WIDTH = 300;<br>
+        . . .<br>
+        if (p.getX() &lt; WINDOW_WIDTH) // OK
+    </p>
+    
+    <P>Even the most reasonable cosmic constant is going to change one day. You
+      think there are 365 days per year? Your customers on Mars are going to be
+      pretty unhappy about your silly prejudice. Make a constant </P>
+    <p class="code">
+        public static final int DAYS_PER_YEAR = 365;
+    </p>
+    <P>so that you can easily produce a Martian version without trying to find
+      all the 365s, 364s, 366s, 367s, and so on, in your code. </P>
+    
+    <P>When declaring array variables, group the <span class='inlinecode'>[]</span> 
+        with the type,  not the variable. </P>
+    <p class="code">
+        int[] values; // OK<br>
+        int values[]; // Ugh--this is an ugly holdover from C
+    </p>
+    
+    <H2>Control Flow</H2>
+    
+    <H3>The if Statement</H3>
+    
+    <P>Avoid the &quot;<span class='inlinecode'>if</span> ... <span class='inlinecode'>if</span> ... <span class='inlinecode'>else</span>&quot;
+      trap. The code </P>
+    <p class="code">
+        if ( ... )<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+        else ...;<br>
+    </p>
+    <P>will not do what the indentation level suggests, and it can take hours
+      to find such a bug. Always use an extra pair of <span class='inlinecode'>{</span> ...
+      <span class='inlinecode'>}</span> when dealing with &quot;<span class='inlinecode'>if</span> ... <span class='inlinecode'>if</span>
+      ... <span class='inlinecode'>else</span>&quot;: </P>
+    <p class="code">
+        if ( ... )<br>
+        {  <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+        } // {...} are necessary<br>
+        else ...;<br>
+        <br>
+        if ( ... )<br>
+        {  <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if ( ... ) ...;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;else ...;<br>
+        } // {...} not necessary, but they don't hurt
+    </p>
+    <H3>The for Statement</H3>
+    
+    <P> Use <span class='inlinecode'>for</span> loops only when a variable runs from 
+        somewhere to somewhere with some constant increment/decrement: </P>
+    <p class="code">
+        for (int i = 0; i &lt; a.length; i++)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);
+    </p>
+    <P>Do not use the <span class='inlinecode'>for</span> loop for weird constructs such as </P>
+    <p class="code">
+       for (a = a / 2; count &lt; ITERATIONS; System.out.println(xnew))
+       &nbsp;&nbsp;&nbsp;&nbsp;; // Don't
+    
+    <P>Make such a loop into a <span class='inlinecode'>while</span> loop. That way, the sequence
+      of instructions is much clearer. </P>
+    <p class="code">
+        a = a / 2;<br>
+        while (count &lt; ITERATIONS) // OK<br>
+        {  . . .<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(xnew);<br>
+        }
+    </p>
+    
+    <H2>Lexical Issues</H2>
+    
+    <H3>Naming Convention</H3>
+    
+    <P>The following rules specify when to use upper- and lowercase letters in
+      identifier names. </P>
+    <UL>
+      <LI>All variable and method names and all data fields of classes are in
+        lowercase (maybe with an occasional upperCase in the middle); for
+        example, <span class='inlinecode'>firstPlayer</span>.
+        <br>&nbsp;
+    </LI>
+      <LI>All constants are in uppercase (maybe with an occasional
+        UNDER_SCORE); for example, <span class='inlinecode'>CLOCK_RADIUS</span>.
+        <br>&nbsp;</LI>
+      <LI>All class and interface names start with uppercase and are followed
+        by lowercase letters (maybe with an occasional UpperCase letter); for
+        example, <span class='inlinecode'>BankTeller</span>.
+    </LI>
+    </UL>
+    
+    <P>Names must be reasonably long and descriptive. Use <span class='inlinecode'>firstPlayer</span>
+      instead of <span class='inlinecode'>fp</span>. No drppng f vwls. Local variables that are
+      fairly routine can be short (<span class='inlinecode'>ch</span>, <span class='inlinecode'>i</span>) as long as
+      they are really just boring holders for an input character, a loop
+      counter, and so on. Also, do not use <span class='inlinecode'>ctr</span>, <span class='inlinecode'>c</span>,
+      <span class='inlinecode'>cntr</span>, <span class='inlinecode'>cnt</span>, <span class='inlinecode'>c2</span> for variables in
+      your method. Surely these variables all have specific purposes and can be
+      named to remind the reader of them (for example, <span class='inlinecode'>current</span>,
+      <span class='inlinecode'>next</span>, <span class='inlinecode'>previous</span>, <span class='inlinecode'>result</span>, . . . ).
+    </P>
+    
+    <H3>Indentation and White Space</H3>
+    
+    <P>Use tab stops every four columns. That means you may need to change
+      the tab stop setting in your editor! </P>
+    
+    <P>Use blank lines freely to separate parts of a method that are logically
+      distinct. </P>
+    
+    <P>Use a blank space around every binary operator: </P>
+    <p class="code">
+        x1 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);  // Good<br>
+        <br>
+        x1=(-b-Math.sqrt(b*b-4*a*c))/(2*a);//Bad
+    </p>
+    <P>Leave a blank space after (and not before) each comma or semicolon. Do
+      not leave a space before or after a parenthesis or bracket in an
+      expression. Leave spaces around the <span class='inlinecode'>( . . . )</span> 
+      part of an <span class='inlinecode'>if</span>, <span class='inlinecode'>while</span>, 
+      <span class='inlinecode'>for</span>, or <span class='inlinecode'>catch</span> statement.</P>
+    <p class="code">
+        if (x == 0) y = 0;<br>
+        <br>
+        f(a, b[i]);
+    </p>
+    <P>Every line must fit on 80 columns. If you must break a statement, add an
+      indentation level for the continuation: </P>
+    <p class="code">
+        a[n] = ..................................................<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;+ .................;
+    </p>
+    
+    <P>Start the indented line with an operator (if possible). </P>
+    
+    <P>If the condition in an <span class='inlinecode'>if</span> or <span class='inlinecode'>while</span>
+      statement must be broken, be sure to brace the body in, <I> even if it
+      consists of only one statement:</I> </P>
+    <p class="code">
+        if ( .........................................................<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; ..................<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;|| .......... )<br>
+        {  <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;. . .<br>
+        }
+    </p>
+    
+    <P>If it weren't for the braces, it would be hard to separate the
+      continuation of the condition visually from the statement to be executed.
+    </P>
+    
+    <H3>Braces</H3>
+    
+    <P>Opening and closing braces must line up, either horizontally or
+      vertically: </P>
+    <p class="code">
+        while (i &lt; n) { System.out.println(a[i]); i++; }<br>
+        <br>
+        while (i &lt; n)<br>
+        {   <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+        }
+    </p>
+    
+    <P>Some programmers don't line up vertical braces but place the 
+        <span class='inlinecode'>{</span> behind the key word: </P>
+    <p class="code">
+        while (i &lt; n) {   // DON'T DO THIS<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(a[i]);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+        }
+    </p>
+    <P>Doing so makes it hard to check that the braces match. </P>
+</div>
+  </BODY>
+</HTML>

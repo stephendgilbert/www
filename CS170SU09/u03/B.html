@@ -1,0 +1,674 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][2].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src="images/e01c.gif" class="right" alt="Complex calculations.">
+            <b><span class="cap">I</span>n earlier lessons you looked at Java's
+            arithmetic operators</b>, and learned how to write <i>expressions</i>.
+            Many calculations, however, require <i>more</i> than a simple expression.
+            To meet this need, most programming languages have
+            <i>libraries</i>, collections of reusable <b>functions</b> that
+            are used to build more complex software.
+        </p>
+        <p> In this lesson you'll look at the <b>java.lang.Math</b> class which
+            contains functions for numeric operations such as calculating
+            roots, sines and exponents.
+        </p>
+        <p> You'll also be introduced to the Java primitive type designed to
+            hold characters, the <code>char</code> data type.
+        </p>
+        <p>Let's start with the functions in the <code>Math</code> class.</p>
+    <h3>The java.lang.Math Class</h3>
+        <p> <img src='images/magic8ball.jpg' class='left' width='150' alt='The magic 8 ball.'>
+            The <code>java.lang.Math</code> class
+            contains a set of <b>functions</b> for basic numeric operations.
+            What is a function? A function is a programming command that
+            <b>returns a value</b>. You can use functions in place of literal
+            values, variables or expressions in your programs.
+        </p>
+        <p> Think of a function as "calculating black
+            box", kind of like the magic eight-ball. You ask it a question
+            (that's the <i>input</i> to the function) and it "answers" you
+            by giving you back or <b>returning</b> a result.
+        </p>
+        <p> Normally, you'll create a variable to store the result returned
+            from a function, but you can also print the value, or pass it as
+            a parameter to another method. Calling a function without storing
+            or otherwise using the returned value is a common <b>logical error</b>
+            in many programs.
+        </p>
+    <h4>Using Math Functions</h4>
+        <p> Object-oriented libraries are called <b>class libraries</b>, and in Java,
+            these class libraries are organized into smaller "family" groups
+            called <b>packages</b>. To use the code in a package, you <b>import</b>
+            the package, like we've been doing for the classes in the <code>acm.program</code>
+            package.
+        </p>
+        <p> The functions in the <code>Math</code> class are part of the
+            <code>java.lang</code> package. This package is automatically
+            loaded and referenced by your Java Virtual Machine. You don't
+            <b>have</b> to add any <code>import</code> statments to use any of the
+            classes contained in <code>java.lang</code>.
+        </p>
+        <p class='note'>Actually, you don't have to use import statements to
+            access any class in any Java library. Instead, you can use the
+            <i>fully qualified name</i>, like <code>acm.program.ConsoleProgram</code>
+            in your code, and skip the <code>import</code> statements altogether.
+            All the <code>import</code> statement does is make your code simpler,
+            and easier to read.
+        </p>
+        <p> Since Java 5 came out, the easiest way to use the functions in
+            the <code>Math</code> class is to add a <code>static import</code>
+            statement to the top of your program like this:
+        </p>
+        <p class='code'>
+            import static java.lang.Math.*;
+        </p>
+        <p> After doing this, to call one of the <code>Math</code> functions,
+            (like the square root function shown here), you just write:
+        </p>
+        <p class='code'>
+            double root = sqrt(value);
+        </p>
+        <p> In this case:</p>
+        <ul>
+            <li><b>sqrt()</b> is the function you are calling.</li>
+            <li><b>value</b> is the parameter you are passing to the function.
+                For the <code>sqrt()</code> function, value should be a number.
+            </li>
+            <li><b>root</b> is a variable used to store the answer <b>returned</b>
+                by the <code>sqrt()</code> function. If you don't store or otherwise
+                use the answer, the square root is still calculated, but nothing
+                is done with the returned value.
+            </li>
+        </ul>
+        <p> Simply using the value like this is perfectly fine:</p>
+        <p class='code'>
+            println(sqrt(value)); <span class='cmt'>// Pass the returned value to another function</span><br>
+            double amount = sqrt(value) * PI; <span class='cmt'>// Use the value in an expression</span>
+        </p>
+        <p> This, however, is <i>always</i> a <b>logical error</b> when it comes to functions:</p>
+        <p class='code'>
+            sqrt(value); <span class='cmt'>// Returned value is discarded or ignored.</span>
+        </p>
+    <h4>Static Method Syntax</h4>
+        <p> All of the functions in the <code>Math</code> class are known
+            as <b>class</b> or <code>static</code> methods. Before Java 5
+            introduced the <code>static import</code> statement, the only way
+            to use a <code>static</code> method was to send a message to
+            the <b>class that contains it</b> instead of sending a message to
+            an <b>object</b> (like you did with the <code>println()</code> message
+            and the <code>System.out</code> object).
+        </p>
+        <p> To use this alternative syntax to call a method in the <code>Math</code>
+            class, you just use the name of the class like this:
+        </p>
+        <p class="code">
+            double root = Math.sqrt(value);
+        </p>
+    <h4>Math Functions</h4>
+        <p> The <code>Math</code> class contains the normal set of functions
+            that you'd expect in a rudimentary math library. Java doesn't have a
+            exponential operator, for instance, but it does have a function
+            named <code>pow()</code> that will raise any number to a power.
+            Here's its signature:
+        </p>
+        <p class="code">
+            double pow(double a, double b)
+        </p>
+        <p> The method returns <b>a</b> raised to the <b>b</b><sup>th</sup>
+            power as a <code>double</code>. Both parameters are of type double, but you can
+            pass <code>int</code> parameters as well.
+        </p>
+        <p> Another method you may commonly use is the <code>sqrt()</code> method, which
+            returns the square root of its argument. You may also want to make use of the
+            <code>static final</code> (class) constants: <code>E</code> and
+            <code>PI</code>. (If you <i>don't</i> add the <code>static import</code>
+            statement, you'll need to refer to these as <code>Math.E</code> and
+            <code>Math.PI</code>).
+        </p>
+        <p> There are also <code>min()</code> and <code>max()</code> functions for
+            finding the minimum and maximum of two values, and <code>abs()</code> function
+            for finding the absolute value of a number, and a <code>round()</code>
+            function for converting a floating-point number to its closest integer value.
+        </p>
+        <p> Less frequently used methods (depending upon your interests, of course) include
+            the methods for performing logarithm and trigonometric functions. You'll find a
+            list in your text which I've included here: <br>
+            <img src='images/mathfunctions.gif' class='inline' alt='The Math class functions.'>
+        </p>
+    <h4>Math.random()</h4>
+        <p> One very useful function generates "random" numbers. To use it,
+            you call the <code>Math.random()</code> method like this:
+        </p>
+        <p class="code">
+            double rand = random();
+        </p>
+        <p> After you've done this, the <code>double</code> variable
+            <code>rand</code> will contain a number between <b>0.0</b>
+            and <b>1.0</b>. (The number will always be less than 1.0,
+            but it may include 0.0.)
+        </p>
+        <p> The number returned by <code>random()</code> is called a
+            <b>pseudorandom</b> number, because the numbers produced by
+            the function repeat themselves if given the same starting
+            value (called the <b>seed</b>).
+        </p>
+        <p> A number between 0.0 and 1.0 might not seem very
+            useful by itself, but it is easy to "massage" the results into
+            a form you can use, by using some of the calculations
+            you studied in the Unit 2. Here's a possible application,
+            for instance.
+        </p>
+    <h5>Pick a Year, Any Year</h5>
+        <p> <img src="images/e03.jpg" class="right" alt="Gene Autry, Singing Cowboy.">
+            Suppose you need to pick a random year from a particular
+            decade; you might be writing a Trivia application like
+            the greatest country music hits from the 1950s,
+            for instance, or something similar.
+        </p>
+        <p> To do this, you need to know two pieces of information:</p>
+        <ol>
+            <li class="d">How many <b>possible</b> numbers are there?</li>
+            <li class="d">What's the lowest possible number?</li>
+        </ol>
+        <p> For the "greatest hits" application, there are ten possible
+            numbers, (1950, 1951,...1959), and the lowest possible number
+            is 1950. Let's create a couple of constants to represent
+            those two values:
+        </p>
+        <p class="code">
+            final int RANGE = 10;<br>
+            final int FLOOR = 1950;
+        </p>
+        <p> Once we've done that, we can use <code>Math.random()</code> to
+            generate a random number for our featured year,
+            but before storing it in the variable, we'll manipulate it like this:
+        </p>
+        <ol>
+            <li class="d">Multiply the result by RANGE because we have 10 possiblities.</li>
+            <li class="d">Because <code>Math.random()</code> can return 0.0,
+                but never 1.0, add FLOOR to the result.
+            </li>
+            <li class="d">Because each year must be an integer value, cast
+                the result to an <code>int</code>.
+            </li>
+        </ol>
+        <p>Here's what these steps look like in code:</p>
+        <p class="code">
+            int year = (int) (Math.random() * RANGE) + FLOOR;
+        </p>
+        <p> The <code> + FLOOR</code> portion of the expression can go
+            inside or outside of the parentheses, but the multiplication
+            and the call to <code>Math.random()</code> <b>must be
+            inside the parentheses</b>. If you fail to do this, your
+            "random" numbers will <b>all</b> be the year 0, which
+            is probably not what you want.
+        </p>
+    <h3>ACM GMath Functions</h3>
+        <p> We haven't yet started working with graphics, but when we do you'll find
+            that computing the coordinates of a graphical design can sometimes
+            require the use of simple trigonometric functions. Although functions like
+            <code>sin</code> and <code>cos</code> are defined in Java’s standard
+            <code>Math</code> class, you'll probably find them confusing in
+            graphical applications because of inconsistencies in the way angles
+            are represented.
+        </p>
+        <p> In Java’s graphics libraries, angles are measured in <b>degrees</b>; in the
+            <code>Math</code> class, angles must be given in <b>radians</b>. To minimize
+            this confusion, the <b>acm.graphics</b> package includes a class
+            called <b>GMath</b>, which contains the additional trigometric and polar
+            conversion functions shown here:<br>
+            <img src='images/gmathfunctions.gif' class='inline' alt='Functions in the ACM GMath class.'>
+        </p>
+        <p> To use these functions in your program, make sure that the <b>acm.jar</b> file is
+            part of your project, and then include this line at the top of your file:
+        </p>
+        <p class='code'>
+            import static acm.graphics.GMath.*;
+        </p>
+        <p>
+            Most of these functions are simply degree-based versions of the
+            standard trigonometric functions, but the distance, angle, and
+            round methods are also worth noting.
+
+        </p>
+        <p> <img src='images/ambiguous2.gif' class='right' alt='Using an ambiguous import.'>
+            If you import both the <code>Math</code>
+            and <code>GMath</code> functions in your program, you then have <b>two</b>
+            versions of the <code>round()</code> function, and Java can't figure out
+            which one to use, as you can see in the picture on the right.
+        </p>
+        <p> The solution to an <b>ambiguous</b> function is to <b>explicitly</b> say
+            which one you want to use like this:
+        </p>
+        <p class='code'>
+            println(GMath.round(2.345));<br>
+            println(Math.round(2.345));
+        </p>
+        <p> Of course, since the <code>GMath</code> class is in the <code>acm.graphics</code>
+            package, you'll also need to add the line:
+        </p>
+        <p class='code'>
+            import acm.graphics.*;  <span class='cmt'> // or </span><br>
+            import acm.graphics.GMath;
+        </p>
+        <p> to the top of your file. The <code>static import</code> statement you added
+            earlier isn't enough. You don't need to add anything for the <code>Math.round()</code>
+            line to work, though, because the <code>Math</code> class is automatically
+            imported as part of the <code>java.lang</code> package.
+        </p>
+    <h2>Java and Characters</h2>
+        <p><img src="images/f01.gif" class="right" alt="A telegraph key.">
+            <b><span class="cap">A</span>s you saw in Unit 1</b>,
+            computers store <i>character data</i> by using an
+            agreed-upon correspondence or mapping between a number and
+            a character, similar to the encoding used in Morse Code.
+        </p>
+        <p> Rather than use Morse-Code, invented for the telegraph,
+            computer makers invented new codes. One of these was
+            <a href="http://jargon.net/jargonfile/e/EBCDIC.html" target="_blank">
+            <b>EBCDIC</b></a>, invented by IBM for use
+            on their mainframe computers.
+        </p>
+        <p> IBM considered EBCDIC a <i>proprietary</i> technology, so
+            so the American Standards Institute (ANSI), created an
+            "open source" alternative, called ASCII (The American Standard
+            Code for Information Interchange), which has been, more or
+            less, the standard in the PC and Unix worlds.
+        </p>
+    <h4>ASCII</h4>
+        <a href='javascript:var%20w=window.open("images/z03.gif","","width=585,height=630");'>
+        <img class="right" style="border-width: 0pt;" src="images/z04.gif" alt="ASCII Chart. (Click image to enlarge.)">
+      </a>
+        <p> ASCII uses 7 bits to store its characters. In
+            ASCII for instance, the number 65 stands for the capital A.
+            Here is a chart showing the standard ASCII characters and their
+            numeric representations. (If your eyesight is getting a little
+            blurry, as mine is, click the image and you can see the chart
+            full-size.)
+        </p>
+        <p> Because ASCII only uses 7 bits, each character can be stored in
+            a single byte, with room left over for some additional information.
+            This additional bit has been put to a variety of uses. The early
+            CPM/PC word processor, WordStar, used the extra bit to embed
+            "soft" line breaks. With the introduction of the IBM PC, the
+            extra bit was used to provide an additional 128 characters,
+            including some widely used line-drawing characters.
+            <br clear="all">
+        </p>
+        <p> Many, however found that they didn't need that extra bit after all,
+            and that seven bits were more than enough. Do a search on ASCII
+            using your favorite search engine, and you'll see what I mean.
+            (The ASCII image appearing here is supposed to be a cow blowing bubbles,
+            as far as I can tell.)
+        </p>
+    <div class="box" style="line-height: 75%;">
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )&nbsp;</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~(^^^^)~</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+) @@ \~_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |\</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/&nbsp;&nbsp;&nbsp;&nbsp; | \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+\~/</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+( 0&nbsp; 0&nbsp; ) \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hey</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+---___/~&nbsp; \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hiya</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/'__/ |&nbsp;&nbsp; ~-_____/
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Doin?</tt></b> <br>
+        <b><tt>&nbsp;&nbsp; o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _&nbsp;&nbsp; ~----~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ___---~</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;
+O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+((~\&nbsp; _|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Oops! I mean MOOOOOOO</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o&nbsp; O //-_ \/ |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~&nbsp; |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^&nbsp;&nbsp; \_ /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+~&nbsp; |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp; ~ |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp; \&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /\</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/ -_____-\&nbsp;&nbsp; \ ~~-*&nbsp;</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \&nbsp;
+\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .==.</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/ /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /
+/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; |</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/~&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //~&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |__|&nbsp;</tt></b> <br>
+        <b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+~~~~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~~~~</tt></b>
+    </div>
+    <h4>Unicode</h4>
+        <p> Although ASCII met a real need for a quasi-universal
+            character encoding during the first half-century of the
+            computer age, today ASCII is really showing its age. The
+            computer world is now much larger than it was in the past,
+            especially with the Internet explosion. Not only are computer
+            users using non-English languages, but their languages are often
+            written using non-Roman alphabets; alphabets that <b>won't</b>
+            fit into ASCII's seven or eight bits, no matter how much
+            they are shoe-horned.
+        </p>
+        <p> Several alternative character encoding schemes
+            have been suggested to replace ASCII, and as a programmer you
+            might have to deal with some of them, (such as DBC, and MBCS).
+            By now, however, it looks like the winner in the race to
+            succeed ASCII is the <b>Unicode</b> character set, which is,
+            as you might suspect, is used by Java to represent characters.
+            You can find more about Unicode at:
+        </p>
+        <p class="screen">
+            <a href="http://www.unicode.org/" target="blank">
+            <b>http://www.unicode.org</b></a>
+        </p>
+    <h3>The char Data Type</h3>
+        <p>Java stores characters using the <code>char</code>
+            primitive data type. Unlike the integer and floating-point types,
+            the <code>char</code> family has only one member. Each
+            <code>char</code> variable, (or literal), uses <b>two bytes</b>
+            of storage. Each character is stored as an <b>unsigned binary
+            integer</b>, and is interpreted by using the Unicode character set.
+        </p>
+        <p> By now, the pattern you use to create a <code>char</code>
+            variable should look familiar; it's the same one you used to
+            create <code>int</code> and <code>double</code> variables.
+            You create <code>char</code> variables like this:
+        </p>
+        <p class="code">
+            char middleInitial = &lt;initial value here&gt;;<br>
+            char controlA &nbsp;&nbsp;&nbsp;&nbsp; = &lt;initial value here&gt;;<br>
+            char horizontalTab = &lt;initial value here&gt;;<br>
+            char backSlash&nbsp;&nbsp;&nbsp;&nbsp; = &lt;initial value here&gt;;<br>
+            char copyright&nbsp;&nbsp;&nbsp;&nbsp; = &lt;initial value here&gt;;<br>
+        </p>
+        <p> Each of the variables shown here requires a slightly different
+            form of initialization, even when we use <b>character literals</b>.
+        </p>
+    <h4>A Literal D</h4>
+        <p> Let's start with the first, and easiest of these examples.
+            How do you write a literal <b>D</b>? <i>(That's my middle
+            initial.)</i> If you try simply inserting the character&#8212;which
+            is what you did with literal integers and floating point
+            numbers&#8212;you end up with this:
+        </p>
+        <p class="code">
+            char middleInitial = D;<br>
+        </p>
+        <p> At first, this looks OK, but it turns out to have a fatal flaw.
+            How does the compiler know whether you want the <b>character
+            literal</b> D, or the <b>variable named</b> D? Since D is a
+            valid name for a variable, the compiler goes searching for it,
+            comes up empty, and issues a stern rebuke.
+        </p>
+        <p> The solution is easy. To placate the Java compiler,
+            we simply have to add some <b>punctuation</b> to our character to
+            let the compiler know that it is, in fact, a character literal.
+            The punctuation you use is the single quote (') character.
+            With this new-found knowledge, it's obvious that our definition
+            should be written as:
+        </p>
+        <p class="code">
+            char middleInitial = <span class="red">'D'</span>;<br>
+        </p>
+        <p> When you write a character literal, you can only enclose
+            <b>one</b> single character at a time; also, make sure you
+            use the single quotes, not the double quotes. These are both
+            illegal:
+        </p>
+        <p class="code">
+            char initials1 = 'SDG'; <span class="cmt">// Too many characters</span><br>
+            char initials2 = "D"; <span class="cmt">&nbsp;&nbsp;// A String literal, not a char</span>
+        </p>
+        <p> Notice that even though the second example contains only a single
+            character, it <b>is not</b> a <code>char</code> literal, but a
+            <code>String</code> literal. Strings are <b>objects</b>, not primitive
+            types, and so Java won't permit this assignment.
+        </p>
+    <h4>Other Literals</h4>
+        <p> Writing a literal D proved to be quite simple, but
+            how about the other characters? Let's start with <b>controlA</b>.
+        </p>
+        <p> The first 128 characters in the Unicode character set
+            are the same as those used by ASCII. In ASCII, (and in
+            Unicode), the first 32 characters are called <b>control
+            characters</b>. These are non-printing characters that
+            were given the name control characters because they were used
+            to control terminals and printers during the early days of
+            computing.
+        </p>
+        <p> To produce a control character, you hold down the Ctrl key on
+            your keyboard (much like you would with the Shift key),
+            and press one of the alphabetic characters A-Z. This yields the
+            control characters whose ASCII/Unicode values are 1-26.
+        </p>
+        <p class="note">
+            Control characters <b>still</b> are used to control the
+            programs you run. If you open your word processor and start
+            typing, when you type Ctrl+S, instead of inserting the
+            character with the Unicode value 19 (Ctrl-S), your word processor
+            is likely to <b>save</b> your file instead.
+        </p>
+        <p> As you may have guessed, you can initialize <b>controlA</b>
+            by just using its integer Unicode value like this:
+        </p>
+        <p class="code">
+            char controlA = 1; <span class="cmt">// Unicode 1 is Control-A</span>
+        </p>
+        <p> A better way, (because it makes your intentions clearer),
+            is to use a <b>Unicode escape sequence</b>,
+            which you'll meet in the next few sections.
+        </p>
+    <h4>"Special" Control Characters</h4>
+        <p> The next character we need to initialize is called
+            <b>horizontalTab</b>. If you look back at the ASCII chart, or
+            at the first page of the Unicode character charts, you'll see
+            that many of the control characters have names, which allude
+            to their functions under traditional computer systems. For
+            instance, the character Unicode 7 (Ctrl-G) is also
+            called the <b>BEL</b> character, because it produced audible
+            output on the early teletypes.
+        </p>
+        <p> Using the same scheme, Unicode character 8 was the <b>BS</b>
+            (back-space) character, and Unicode character 9 was the
+            horizontal tab character, or <b>HTAB</b>, the character
+            produced by pressing the Tab key on your keyboard.
+        </p>
+        <p> Rather than remembering which code belonged to which key,
+            however, programmers came up with a shorthand for these keys
+            called an <b>escape sequence</b>. Here's a short explanation,
+            repeated from Lesson 2D, where the concept was first introduced:
+        </p>
+    <div class="box">
+        <center><span style="background:transparent; font-size: larger;">
+        <b>What is an Escape Sequence?</b><br>
+        </span></center>
+        <p> An escape sequence is a method of writing "difficult"
+            characters, that is, characters that are invisible or that
+            are used, normally to delimit other characters.
+        </p>
+        <p> The first part of an escape sequence is to designate one
+            character as the "<b>escape character</b>". When that character
+            is encountered&#8212;in a character literal or in a group of
+            characters, called a <code>String</code>&#8212;the compiler treats
+            it as a flag that means:
+        </p>
+        <p> </p><center><span style="background:transparent; color: blue; font-size: larger;">
+            "Look out! The next character is special."
+            </span></center>
+        <p></p>
+        <p> In Java, the escape character is the <b>backslash</b>.
+            Whenever a backslash appears in a character constant, the
+            following character is set aside for special treatment.
+        </p>
+    </div>
+        <p> Java maintains "special notation" for several of the
+            common control characters, as escape sequences, which
+            you also met back in Unit 2.
+            These include:
+        </p>
+        <center>
+        <table width="80%" border="1" cellpadding="5">
+        <tbody>
+            <tr>
+                <th class="tcode">\n</th>
+                <td class="tdata">The newline character (Unicode 10)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\r</th>
+                <td class="tdata">The carriage-return (ENTER) (Unicode 13)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\t</th>
+                <td class="tdata">The horizontal tab character (Unicode 9)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\f</th>
+                <td class="tdata">The form-feed character (Unicode 12)</td>
+            </tr>
+            <tr>
+                <th class="tcode">\b</th>
+                <td class="tdata">The backspace character (Unicode 8)</td>
+            </tr>
+        </tbody>
+        </table>
+        </center>
+        <p> With this information, it's easy to see how to initialize the
+            <b>horizontalTab</b> variable, using one of the special
+            escape characters:
+        </p>
+        <p class="code">
+            char horizontalTab = <span class="red">'\t'</span>;
+        </p>
+        <p class="note">Notice that when you use an escape sequence to
+            initialize a <code>char</code> variable, that you use single
+            quotes around the whole sequence. The compiler turns the
+            compiled code into a single character.
+        </p>
+    <h4>Unicode Escapes</h4>
+        <p> In addition to using one of the special escape values shown
+            here, you can use an escape sequence to represent <b>any
+            character</b> in the Unicode character set. A Unicode escape
+            sequence starts with a backslash-u, like this:
+        </p>
+        <p class="code">
+            char copyright = <span class="red">'\u . . .'</span>;
+        </p>
+        <p> and is followed by the four-digit, hexadecimal Unicode
+            value, which you can look up at the
+            <b><a href="http://www.unicode.org/charts/" target="_blank">
+            Unicode Consortium</a></b>. (These are the PDF charts, I usually
+            prefer the GIF charts, but they seem to have disappeared from
+            the site. There is
+            <a href="http://macchiato.com/unicode/chart/" target="_blank">
+            <b>a JavaScript utility</b></a> available for finding
+            Unicode characters, which you may prefer.)
+        </p>
+        <p> Once you have the completed value, you put the whole thing in
+            single quotes, just like a regular character literal.
+        </p>
+        <p>Here are some examples:</p>
+        <p class="code">
+            char controlA &nbsp;= <span class="red">'\u0001'</span>;<br>
+            char tradeMark = <span class="red">'\u2122'</span>;<br>
+            char copyright = <span class="red">'\u00A9'</span>;
+        </p>
+        <p class="redbox">
+            <b><span class="red">Glyphs vs Characters</span></b><br>
+            Java allows you to use any of the Unicode characters in your
+            programs, by simply following the examples above. However, you
+            may be disappointed to find that not all of the characters
+            show up in your applets.
+            <br><br>
+            That's because even though Java stores
+            the characters internally using Unicode, when it displays the
+            characters, it uses the <b>glyphs</b> of your operating system's
+            native font. If the native font is Unicode aware, (that is, if it
+            has "pictures" [glyphs] for all of the Unicode characters), your
+            applet will display correctly. If, however, it only contains the
+            basic ASCII characters, then the others will not display.
+            </p><center>
+            <img src="images/f02.gif" class="inline" alt="Several different representations of a lowercase a.">
+            </center>
+            In the example shown here, for instance, <b>each</b> of these
+            characters has <b>exactly</b> the same Unicode value, (97
+            for the lowercase 'a'), but the glyphs are completely
+            different for each one.
+            <br><br>
+            This is further complicated when it comes to Java's widget
+            sets. Even if you use a Unicode font in your applet, your
+            platform's widgets, (like the AWT <code>Label</code> and
+            <code>Button</code> classes), may not support
+            Unicode. The more modern widgets, like the JFC
+            <code>JLabel</code> and <code>JButton</code> usually <b>do</b>
+            support Unicode, however.
+        <p></p>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you looked at using mathematical functions
+            in Java. You looked at the <code>Math</code> class in the
+            Java class libraries <code>java.lang</code> package, and
+            the math functions available in the ACM <code>GMath</code>
+            class. Finally, you finished up by learning about how
+            <b>characters</b> are represented in Java.
+        </p>
+        <p> In the next lesson, you'll take a look at the
+            functions in the <code>String</code> class. You'll
+            also take a quick look at the <b>JavaDoc</b> API
+            documentation for the class and learn to find your
+            way around.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

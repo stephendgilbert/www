@@ -1,0 +1,71 @@
+<h3>Inheritance: Syntax and Semantics</h3>
+    <p> It's really tempting to dive right in and start by extending some
+        of the ACM classes, making a new <b>ImageBall</b> or <b>PlayingCard</b>
+        class, or perhaps fill in some of the missing geometric shapes;
+        anyone up for a new <b>GHexadecagon</b> class?
+    </p>
+    <p> The only problem with that strategy is that inheritance actually brings
+        quite a few new possiblities into your programs, and each of those
+        possibilities needs to be handled in a specific way. If we start with
+        a more complex class, even though it might be more interesting, it's
+        easy to miss the details that you really <b>must</b> master to make
+        effective use of the object-oriented technique of inheritance.
+    </p>
+    <p> So, instead of working with fun stuff, like card games and shooting
+        down aliens, in this lesson I'll return to the old, boring
+        finger-exercises type of examples that let you concentrate on
+        one piece of the inheritance puzzle at a time.
+    </p>
+<h4>Step 1: Extending a Class</h4>
+    <p> When you create a new class using inheritance, you use the
+        <code>extends</code> keyword to specify the parent or
+        <b>superclass</b> when you define the child or <b>subclass</b>.
+        For our first example, let's look at a simplest possible class
+        that represents people: the <code>Person</code> class. Then,
+        we'll create a new <b>kind</b> of <code>Person</code>, the
+        <code>Student</code>.
+    </p>
+    <p> Here's the UML (Unified Modeling Language) class diagram for
+        the two classes we'll start with:<br>
+        <img src='images/person01-uml.png' class='inline' alt='The first version of the Person and Student classes.'>
+        Here's what you should notice about each of these classes.
+    </p>
+<h5>The Person Class</h5>
+    <p> The <b>Person</b> class has a single attribute, <code>name</code>
+        which is stored as a <code>String</code>. The minus sign preceding
+        <code>name</code> tells us that the instance variable used to
+        store this attribute will be marked <code>private</code>.
+    </p>
+    <p> The class has one mutator, <code>setName()</code> that allows
+        us to change the name of the <code>Person</code>. There is also
+        one accessor method, <code>getName()</code> which is a "getter"
+        method that allows us to read the value of the attribute. The
+        plus sign appearing before the method says that the method is
+        <code>public</code>. The <code>void</code> appearing at the
+        end of the entry is the method return type.
+    </p>
+    <p> The <code>toString()</code> method is inherited from the <code>Object</code>
+        class, which the <code>Person</code> class <b>implicitly</b> inherits
+        from. Every class without an explicit <code>extends</code> clause
+        implicitly <code>extends Object</code>. The <code>Person</code> class
+        <b>overrides</b> the inherited implementation, which allows us to
+        print the person's name, instead of the address in memory where the
+        <code>Person</code> object is stored.
+    </p>
+<h5>The Student Class</h5>
+    <p> The <b>Student</b> class is a <b>subclass</b> of <code>Person</code>.
+        The hollow-headed arrow pointing from <code>Student</code> to
+        <code>Person</code> says that <code>Student</code> <b>inherits
+        from</b> or (in Java) <code>extends</code> the <code>Person</code>
+        class.
+    </p>
+    <p> <code>Student</code> also has one private attribute, the
+        <code>studentID</code> which will be stored as a <code>long</code>.
+        The class has a mutator to get the studentID, but no methods to
+        set the ID. While a student might change their name (because of
+        marriage, for instance) they can never change their ID.
+    </p>
+    <p> Like <code>Person</code>, the <code>Student</code> class also
+        overrides the inherited <code>toString()</code> method.
+    </p>
+

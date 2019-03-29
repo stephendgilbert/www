@@ -1,0 +1,411 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + " " + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src="images/z07sm.gif" alt="The CS101 logo." class="right">
+        <b><span class="cap">T</span>he <code>for</code>
+            loop makes
+            writing counted loops very easy</b> because it puts the pieces
+            you need&#8212;a place to initialize your counter, a place to test
+            your counter, and a place to update your counter&#8212;all within
+            easy reach.
+        </p>
+        <p> You <b>can</b>, however, do exactly the same thing with Java's
+            simpler, but more general-purpose <code>while</code> loop; that's
+            what your textbook does when it first explains how to use a loop
+            on page 104. In my mind, though, using a <code>while</code> loop
+            is just not quite as convenient.
+        </p>
+    <h3>The while Loop Syntax</h3>
+        <p> The <code>while</code> loop, which you can see in the
+            illustration below, only has three parts:
+        </p>
+        <ul>
+            <li>the keyword <code>while</code></li>
+            <li>a <code>boolean</code> test</li>
+            <li>a loop body</li>
+        </ul>
+        <center>
+        <img src="images/x01.gif" alt="The while syntax" class="left">
+        </center>
+        <br clear="all">
+        <p> To use the <code>while</code> statement to build
+            a counted loop, you must do three things:
+        </p>
+        <ol>
+            <li>Create a counter variable, and initialize it before
+                the loop starts. This takes the place of the
+                <b>initialization expression</b> in the <code>for</code> loop.
+            </li>
+            <li>Test the counter variable inside the <code>while</code>
+                condition.
+            </li>
+            <li>Update your counter at the <b>end</b> of the loop body.
+                This takes the place of the <b>update expression</b> in the
+                <code>for</code> loop.
+            </li>
+        </ol>
+        <p> Here's the basic skeleton for a counted loop, written
+            with <code>while</code>:
+        </p>
+        <p class="code">
+            <span class="cmt">// A Counted Loop Skeleton with while</span><br>
+            <br>
+            int counter = 0;<br>
+            while ( counter &lt; 10 )<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Loop body statements</span><br>
+            &nbsp;&nbsp;&nbsp; // Update loop counter<br>
+            &nbsp;&nbsp;&nbsp; counter++;<br>
+            }
+        </p>
+    <h4>Caveats</h4>
+        <p> There are three common errors that often occur when
+            writing counted loops using <code>while</code>. By learning what
+            they are, and then checking for each one when you write your
+            loops, you increase your chances of writing a correct loop the
+            first time.
+        </p>
+    <h5>Expired Counters</h5>
+        <p> When using the <code>for</code> loop, you usually create
+            and initialize your counter variables inside the initialization
+            expression of the <code>for</code> loop. If you forget to do so,
+            the <code>for</code> loop condition usually looks "empty", which
+            acts as a reminder.
+        </p>
+        <p> With the <code>while</code> loop, however, you must define
+            and initialize your counter <b>outside</b> the
+            <code>while</code> loop. This has several implications:
+        </p>
+        <ul>
+            <li>In the <code>for</code> loop, the scope of the counter
+                variable is restricted to the body of the loop. That is not
+                true for the <code>while</code> loop.
+            </li>
+            <li>If you have several <code>while</code> loops, and each
+                of them use the same counter variable name, then you cannot
+                redeclare the variable for each new loop. All of your loops
+                will use <b>the same variable</b>.
+            </li>
+            <li>You must, however, remember to <b>reinitialize</b>
+                the counter before each loop, even though you can't
+                <b>redefine</b> it. Forgetting to do this often leads to
+                the case of the <b>expired counter</b>. If a counted
+                <code>while</code> loop is preceded by another, and both
+                use the same counter variable, you may forget to reinitialize
+                the counter for the second loop. This doesn't create a
+                syntax error, but it does give you the wrong answer.
+            </li>
+        </ul>
+        <p> There are two possible solutions to the expired counter
+            problem.
+        </p>
+        <ol>
+            <li>If you give all of your counters unique names, you
+                won't run into the problem. Sometimes, however, this is hard
+                to do. Thinking up a new name when you really want to use
+                the common counter names like <b>i</b>, <b>idx</b>, or
+                <b>counter</b>, can be difficult.
+            </li>
+            <li>A better solution is to train yourself to <b>always
+                initialize your counter on the line immediately preceeding
+                the while condition</b>. After a bit, a missing
+                initialization starts to look as "empty" as the missing
+                initialization section in a <code>for</code> loop.
+            </li>
+        </ol>
+    <h5>Endless Loops</h5>
+        <p> An <b>endless</b> loop is a loop that doesn't end, because the
+            loop test condition always evaluates to false. Although
+            endless loops are sometimes intentionally, most of the time
+            they are the result of a mistake that you've made when specifying
+            the loop's exit condition or bounds.<br>
+            <img src='images/endless-loop.png' class='inlineCenter' alt='An M.C. Escher endless loop.'>
+            The problem of endless loops is not unique to counted
+            <code>while</code> loops. You can create endless loops in a
+            variety of ways. Still, a counted <code>while</code> loop lends
+            itself to endless loops in a way that the others don't. Because the
+            <code>while</code> loop places the counter update expression at
+            the <b>bottom</b> of the loop&#8212;which may be far removed from the
+            <code>while</code> loop condition by the time all of the
+            intervening statements have been added&#8212;it is easy to forget it.
+        </p>
+        <p> With the <code>for</code> loop, leaving out the update
+            expression creates an "empty" looking loop condition, but not
+            with the <code>while</code> loop.
+        </p>
+        <p> The easiest solution to this problem is to use
+            the loop-building strategy presented in the previous unit.
+            If you start by first writing the "mechanics" of the loop&#8212;bounds,
+            precondition, and update&#8212;you are less likely to get distracted
+            by the "real" statements and forget to add the update expression
+            at the end of the loop.
+        </p>
+    <h5>Phantom Semicolon</h5>
+        <p> This last problem is also not restricted to <code>while</code>
+            loops; it affects selection statements and <code>for</code>
+            loops as well.
+        </p>
+        <p> If you put a semicolon after the condition of a <code>while</code>
+            (or <code>for</code>) loop, the body of the loop becomes the
+            <b>null</b> statement. Here's an example:
+        </p>
+        <p class="code">
+            while (cups &lt; 10);<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Can NEVER get here if cups is &lt; 10</span><br>
+            }
+        </p>
+        <p> Because of the semicolon, you are saying:</p>
+        <p class="pullquote">
+            As long as <code>cups</code> is less than ten, do nothing.
+        </p>
+        <p>This creates two problems:</p>
+        <ol>
+            <li>If <code>cups</code> was originally less than ten, you
+                will have an endless loop. Because nothing in the <b>null</b>
+                body changes the value of <code>cups</code>, it will
+                remain at its intial value.
+            </li>
+            <li>If <code>cups</code> was greater-than or equal-to ten,
+                you will not have an endless loop, but the statements that
+                were intended to be executed as part of the loop body will
+                be executed exactly once.
+            </li>
+        </ol>
+    <h4>Where To Now?</h4>
+        <p> After reading the preceding section, you might be
+            wondering why anyone would bother with <code>while</code> at all.
+            The <code>for</code> loop seems so much more capable.
+        </p>
+        <p> That's true for counted loops; if you are going
+            to write loops that are controlled by a counter, you should
+            probably use the <code>for</code> loop. But, not all loops, or
+            even most loops, are counter-controlled. Event controlled loops
+            are much more common, and there, the <code>while</code>
+            loop reigns.
+        </p>
+    <h3>Indefinite Loops</h3>
+        <p><img src="images/z07sm.gif" alt="The CS101 logo." class="right">
+            <span class="cap"><b>I</b></span><b>n this section</b>, you'll
+            learn how to write loops that monitor events, rather than loops
+            that use a simple counter to control their execution. To
+            accomplish this, you'll use the <code>while</code> loop
+            which you met at the beginning of this lesson.
+            Although the <code>for</code> loop is the undisputed champ
+            in the counted-loop arena, the <code>while</code> loop <i>really</i> comes
+            into its own when the loop test condition is a little less clear-cut.
+        </p>
+        <p> Let's look at an example.
+            Here's a condensed fragment of code from an applet named
+            <b>Indefinite.java</b> that uses a simple "event-testing" loop
+            similar to the one shown here. Take a look at this loop, and see
+            if you can guess how many times it will execute.
+            <img src="images/d02.gif" class="inline" alt="A fragment of Indefinite.java.">
+        </p>
+        <p> In the <b>Indefinite</b> program, the character
+            variable, <code>randomChar</code>, is assigned a value between 0
+            and 127, calculated by using the <code>Math.random()</code>
+            method. In the loop that follows, <code>randomChar</code>
+            is tested, and, if it is not equal to the character <b>'Q'</b>,
+            then the loop body is entered, where the number of repetitions
+            is incremented and displayed.
+        </p>
+        <p> After you've looked it over,
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/Indefinite.html',0,0,500,200);">
+            <b>run the applet</b></a> by clicking the link in this sentence.
+            When the applet appears, press its
+            <b>Start</b> button, and see if you were right! When you press the button, the
+            <b>Indefinite</b> applet will execute the loop as shown here.
+            </p><center>
+            <img src="images/x02a.gif" alt="Running the Indefinite applet" class="inline">
+            </center>
+        <p></p>
+        <p> Unless you have some kind of psychic powers, <span style="background: transparent; color: red; ">
+            <b>you can't know how many times the loop will run</b></span>.
+            That's why this kind of loop is called
+            an <b>indefinite</b> loop. You can't tell by reading the source
+            code how many repetitions it will make.
+        </p>
+        <p> Even though this is not a counted loop, the body
+            of the loop must <b>still</b> contain code that advances the
+            loop's bound. If it does not, then, once entered, the loop will
+            repeat forever. In this example, we advance toward the loop's
+            bound by calculating a new random character for
+            <code>randomChar</code>.
+        </p>
+    <h3>Sentinel Bounds</h3>
+        <p> This particular indefinte loop is an example of a <b>sentinel</b>
+            loop. A sentinel loop is a loop that looks <b>through its input</b>
+            for some special value to end the loop. The special value is
+            called the <b>sentinel</b>. As mentioned earlier, sentinels are
+            commonly used in two situations:
+        </p>
+        <ul>
+            <li>When searching through text to find a character or word.</li>
+            <li>When used as an "out-of-bounds" value that marks the end of input.</li>
+        </ul>
+        <p> In this example, the sentinel is the letter 'Q',
+            generated by the random number generator, and it is used to mark
+            the end of valid input.
+        </p>
+    <h4>Another Sentinel Example</h4>
+        <p> A sentinel doesn't necessarily have to be a single value, like
+            the letter "Q" in the example just shown; it may include a range of values.
+            When we wrote <b>GradeCalculator</b> in the last lesson, we had to
+            know ahead of time how many grades the teacher would enter, so
+            we could use the <code>for</code> loop. With the <code>while</code>
+            loop, though we can solve the problem like this, to allow
+            for any non-positive number to act as a <b>sentinel</b> to end the input:
+        </p>
+        <p class="note"><b>Calculate a Positive Mean</b><br>
+            Accept integer numbers from the user until a negative number is entered.
+            Display the sum, count and average of the numbers entered.
+        </p>
+
+        <p> Rather than just reading ahead, see if you can apply what you learned
+            in the lesson "Introducing Loops", to create a <b>loop plan</b>
+            that meets these requirements.
+        </p>
+        <p> Here are the questions you should ask yourself:</p>
+        <ol>
+            <li class='d'>What is the loop's bounds?</li>
+            <li class='d'>What are the necessary bounds preconditions?</li>
+            <li class='d'>What are the necessary actions to advance toward the bounds?</li>
+            <li class='d'>What is the goal?</li>
+            <li class='d'>What are the goal preconditions?</li>
+            <li class='d'>What actions are necessary in the body to carry out the goal?</li>
+            <li class='d'>What postcondition actions are necessary to carry out the goal?</li>
+        </ol>
+        <p>When you're done, come on back here and we'll tackle it together.</p>
+    <h4>A Solution</h4>
+        <p> Let's look through the answers together:</p>
+    <h5>1. What is the loop's bounds?</h5>
+        <p>The loop's bound is that a negative number was entered.
+            The Java loop condition should look like this:
+        </p>
+        <p class="code">while (num &gt;= 0)</p>
+    <h5>2. What are the bounds preconditions?</h5>
+        <p> The only precondition is that <code>num</code> holds a
+            value. The value could come from reading a network stream,
+            could be entered from the keyboard, or could be generated by
+            a random number generator. The only hard-and-fast requirement
+            is that <code>num</code> must be initialized in such a way
+            that it is possible to either enter <b>or</b> to avoid the loop.
+        </p>
+        <p> Here's some code that meets those requirements.</p>
+        <p class="code"> int num = readInt("Enter next number: "); </p>
+    <h5>3. What advances the loop?</h5>
+        <p> Inside the loop body, the value of <code>num</code> <span style="color: red;">
+            <b>must</b></span> change. To do that, you
+            could generate another random number, input a value from the
+            network stream, or, as we've done here, read another number from the keyboard.
+        </p>
+        <p> At this point, you should be able to test the <b>mechanics</b> of
+            your loop, and make sure that it "works." Once the loop works,
+            you can turn your attention to the loop's goal.
+        </p>
+    <h5>4. What is the goal?</h5>
+        <p> The loop's goal is simple. It should display the <b>count</b> of the
+            non-negative integers entered, the <b>sum</b> of the integers, and their
+            <b>average</b>.
+        </p>
+    <h5>5. What are the goal preconditions?</h5>
+        <p> To meet the goal, you must have a counter, and a variable that
+            can hold the sum. The counter should be an <code>int</code>, but
+            the sum can be an <code>int</code> or a <code>double</code>.
+        </p>
+    <h5>6. What actions advance the goal?</h5>
+        <p> Each positive number should be added to the sum of
+            the numbers. Then, the count should be incremented for
+            each number entered.
+        </p>
+    <h5>7. What postconditions must be considered?</h5>
+        <p> You must first check for a count of zero. If count
+            is zero then no numbers were entered and you can't compute
+            the average or sum.
+        </p>
+        <p> If count is greater than zero, then compute and display
+            the sum, average, and count of numbers entered.
+        </p>
+    <h4>The Solution in Code</h4>
+        <p> Here's an application, <a href='PositiveMean.java' target='_blank'>
+        <b>PositiveMean.java</b></a>, that follows this strategy to
+            calculate the average of a sequence of numbers input from
+            the keyboard. Click the hyperlink in the previous sentence
+            if you want to download it and run it on your computer.
+            <img src='images/positivemean.gif' class='inline' alt='The PositiveMean program.'>
+        </p>
+        <p> Notice that:</p>
+        <ol>
+            <li class="d">The <b>precondition</b> section sets up both the
+                counter and accumulators, as well as reading in the initial
+                value from the user. Before you encounter the loop test,
+                you <b>must</b> make sure that the tested value (<code>num</code>
+                in this case) has a legitimate value.
+            </li>
+            <li class="d">Rather than checking a counter or looking for a single
+                value, the <b>loop bounds</b> is controlled by a more general Boolean
+                <b>condition</b>. The loop will continue while <code>num</code>
+                is greater than, or equal to 0.
+            </li>
+            <li class="d">Inside the loop body, the three <b>loop operations</b>
+                take place: the current count is incremented,
+                the current number is added to the running total, and the
+                next number is generated to advance the loop. Remember,
+                if we didn't read a new number, then we'd be stuck inside an
+                endless loop!
+            </li>
+            <li class="d">Finally, after the loop is finished, the count value
+                is checked in the loop's <b>postcondition</b> to make sure it's
+                "safe" to calculate the average.If no positive numbers were
+                entered, an error message is displayed instead.
+            </li>
+        </ol>
+        <p> You can download and run the program on your own computer. Here are
+            two different runs on my machine:<br>
+            <img src="images/indefinite02.gif" alt="Running the PositiveMean program." class="inline">
+        </p>
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson you learned how to use Java's <code>while</code>
+            loop to write both <b>counted</b> and <b>sentinel loops</b>. In the
+            next lesson you'll learn more about processing
+            indefinite loops.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

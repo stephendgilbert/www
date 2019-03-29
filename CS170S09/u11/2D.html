@@ -1,0 +1,454 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>Notes:</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+h3
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:Arial;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US>
+
+<div class=Section1>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Hi Folks. Welcome to the CS 170, Java
+Programming 1 lecture on Multidimensional arrays.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>When you declare an array, the elements can be
+of any type. Java also allows you to create array variables that refer, not to
+Button objects or int values, but to other arrays. These are called multidimensional
+arrays. Since we'll only be working with two dimensions in this class, I'll
+refer to these as 2D arrays, although you can have as many dimensions as you
+like. You can think of them as arrays that contain rows and columns like the
+Tic-Tac-Toe board shown here.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>To create a 2D array, just extend the syntax
+you've already learned for 1D arrays. For instance, in the example shown here:
+int[] d1 = new int[5]; the variable d1 is an int[] (int array) that refers to 5
+int values. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Since that's true, perhaps you can figure out
+what the code shown here means:  int[][] d2;</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>The variable d2 is an array variable, just the
+like the variable d1 in the first example. But, each of the elements contained
+in the d2 array is not an int, but an int[]— that is, an int array variable. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Of course, just like with 1D arrays, an array
+variable doesn't actually &quot;point to&quot; anything, until you allocate
+some memory by using new and an array constructor. The syntax for doing this
+with a 2D array is very similar to that used for a single-dimension array:
+int[][] grid = new int[2][4]; </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>This piece of code creates a variable (grid),
+that refers to a two-element array. Each element in that two-element array
+(grid[0] and grid[1]) is an int[], that is, an int array variable.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>The easiest way to think of a 2D array is to think
+of rows and columns. A spreadsheet is a useful mental model because it's
+composed of rows and columns. In reality, though, a 2D array is composed of arrays
+of arrays. On the next slide you'll see what that really looks like.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Here's a memory layout that shows you what
+things look like in memory.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>The
+statement int[][] grid creates an array variable that doesn't refer to any
+array elements.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>The
+statement grid = new int[2][4] creates a two element array containing array
+variables, and then &quot;points&quot; the grid variable to those elements.
+Since each element in grid is an array variable, grid[0] points to one array
+and grid[1] points to another four-element array.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Rather than thinking of 2-D arrays as shown in
+the previous illustration, (even though that is how the arrays are actually
+implemented in memory), it is usually easier to think of them as an actual grid
+composed of rows and columns, like a spreadsheet. The only difference is that a
+spreadsheet has columns labeled A, B, C and so on, and rows starting at 1. In a
+2-D array, both the columns and rows used numbers and the first column and the
+first row are numbered starting at 0. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Thinking of 2-D arrays in this way makes it easy
+to remember where the individual elements are located. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>To access an individual element, instead of
+providing one subscript enclosed in brackets, you supply two subscripts, each
+enclosed in its own set of brackets. (You cannot put both subscripts in the
+same set of brackets, as you can do in Pascal, or C#). </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>The
+first subscript represents the row in the array. </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>The
+second subscript represents the column of the element you want. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Remember that both subscripts are zero based. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>If you know a little C or C++, I should warn you
+that in Java, subscripts do not &quot;wrap around&quot; as they do in those
+languages. You cannot access scores[1][0] by using the notation scores[0][3].
+That's because, in reality, you are accessing an individual array variable, as
+shown in the earlier illustration. </span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>You can initialize 2D arrays by using loops and
+storing values in each element, just as you can with a one-dimensional array.
+Of course, when accessing 2D arrays, you'll usually use a pair of nested for
+loops with indexes for the row and column. Notice when you do this, each row
+has its own length field. Of course if you instantiate your array using the
+notation you've seen, all of the rows will have the same length. It's possible,
+though to instantiate each row separately, thus ending up with a different
+number of columns in each row. I won't ask you to do that.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Just as with 1D arrays, you can create and
+initialize a 2D array in one statement by providing a list of initial values in
+an initializer list. When you do this, you supply a separate initializer list
+for each of the subarrays. Each of these sub-array initializers is enclosed in
+its own set of braces, and separated from the others by commas. Here's an
+example that creates a 3 x 2 array of int variables.  When you use automatic
+initialization like this, you must remember to match the number of brackets and
+initializers. </span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>The way that Java 2D arrays are implemented
+makes it very easy to write methods which take 2D arrays as arguments. You just
+have to remember to declare the formal arguments using two brackets instead of
+one. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Here's the header for a void method that takes a
+2D array of ints.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Since each 2D array is actually a 1D array
+containing other 1D array elements, you can pass those elements, which
+represent the individual rows of the array, to a method that processes 1D
+arrays. To pass a single row, your actual parameter should use a single
+subscript like this. If you wanted to pass the entire array, you wouldn't use a
+subscript at all. To pass a single int value in the array, you'd use a pair of
+subscripts.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>OK, that's the 2D theory. Let's try some
+exercises.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Start a new section in your IC document. Then
+open the file Array2DPractice which contains a 2D int array named values
+declared like this in the run() method. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>For Exercise 1, define a method named average
+that takes a single 2D int array parameter. The method should average all of
+the numbers contained in the array and return the average.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Once you've added the average() method to the
+Array2DPractice class, uncomment the code that calls average and prints out the
+returned value. Compile and run the program, and shoot me a screenshot of the
+results.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>OK, now you've written an average method that
+can average the numbers in a 2D int array. Now, add a second average method to
+the class that only averages the elements of a 1D int array. In the run method,
+add a statement that passes the second row from the values array to the new
+average method and then prints the result. (The easiest way to do that is to
+copy and modify the code used to print the output for Exercise 1.)</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Run it and snap a screenshot. Paste the picture
+into your IC document as Exercise 2.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Let's try another average method, one that
+averages all of the numbers in one column of the array. For this version of
+average, you'll pass two parameters: the 2D array variable and the column
+number to average. Then, in the body of your method, just sum and then average
+the numbers in the specified column.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Once you've written this third average method,
+add a statement to run() that calls the method and prints the average of the
+values in the second column of values. Run it and shoot a screenshot. Paste it
+into your IC document as Exercise 3.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Now let's try something a little more difficult.
+Here's the same array, values, that we saw before. </span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>If you picture this in your mind, you can see
+the first row containing 2 and 5. Underneath the two and five are the second
+row 6 and 7, and underneath that, in the third row are 3 and 9 like this.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Now imagine we push this &quot;block&quot; over
+on it's side like this so that the first column becomes the first row of the
+new array. Notice that we can't just move elements around, since the shape of
+the finished array changes from 3 x 2 to 2 x 3.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>To do this, write a method named rotateRight. As
+you can see from the JavaDoc I've added for the method in Eclipse, it takes a
+single 2D array as a parameter, and returns the new array. Here's what you need
+to put inside it.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Arial;color:black'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>Create
+a temporary array in the method. Use the length of the first array as the
+number of columns for the temp array. Use the length of the first row in the
+original array (that is, the columns from the original array) as the number of
+rows in the temp array.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Arial;color:black'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>Now,
+write a nested loop that processes the first array and copies the values into
+the second array. Notice that if process the first array column by column,
+starting at the bottom (the 3), you can copy the values across to the first
+row.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>When you're done, add one final print statement
+to the run method that rotates values and prints out the values in the new
+array. Make sure that values is unchanged after you do this. Run and paste into
+your IC document as Exercise 4.</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>If you look inside a photographic image, what
+you'll find is a 2D array of integers. With the GImage class in the ACM
+libraries, we can extract those pixels using the getPixelArray() method like
+this. Then, we can use a loop to modify the pixels we're interested in. Once
+we've modified the array, we can turn it back into a new image using one of the
+GImage constructors, like this.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>For the last few exercises, let's do something
+fun, so you can get a feel for how 2D arrays are actually used in the real
+world. To do that, we'll write a few little image filter programs, like the
+filters found in programs like PhotoShop. Open the file ImageManip.java, and
+then locate the section that handles the code for the darken button. (I've
+added a #1 comment). The code in this section will be called when the user
+clicks the program's Darken button. Here's how to make it work.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>I've already handled initializing the pixel
+array and have taken care of reconstructing and displaying the image after you
+modify the array. All you have to do is write a loop that visits every element
+in the array pixels. Inside the body of the loop:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>construct
+a local Color object, passing the pixel element to the one-int-parameter
+constructor.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>call
+the Color object's darker() method and save the result back in the Color object</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>call
+the Color object's getRGB() method to extract the int value from the Color
+object and store it back into the pixels array.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>When you've made these changes, run the program
+and click the Darken button a few times to make sure it works. Then, paste your
+code into your IC document for Exercise 5.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>&nbsp;</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>For Exercise 6, follow the same pattern. Write a
+nested loop that visits every element in the pixels array pixels. Inside the
+body of the loop:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>extract
+the int from the pixels array and use it to construct a Color object</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>use
+the getRed(), getGreen() and getBlue() methods to extract the red, green and
+blue portions from the Color object and then use those (after some
+modification) to construct a new Color object. I'll talk about how to modify
+those in a moment.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>use
+the getRGB() method to place a new value in the pixels array.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>I want you to try two different methods for
+graying out the image. For the first, simply average the red, green and blue
+portions when constructing the new object. For the second, multiply each of the
+color values by the luminance factors I've supplied as comments, and then add
+the results together. Run each version and make sure it works. Then shoot me a
+screenshot and copy the code into your IC document for Exercise 6. (You'll have
+two screen-shots and two code fragments for Exercise 6.)</span></p>
+
+<h3 style='margin-bottom:6.0pt'>Notes:</h3>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>OK, now instead of modifying the pixel elements,
+let's try moving them around. For Exercise 7, we'll create a mirror image of
+the picture. Here's how. Locate the section that says mirrorBtn and then add
+code that:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>uses
+a nested loop to visit each element, but instead of visiting every column, go
+only halfway across. That is, if the length of the first row is 1000 pixels, go
+only to element 499. To get this number, which you should store in a variable
+like nCols, you can just divide pixels[0].length by 2.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;text-indent:-.25in'><span style='font-size:10.0pt;font-family:
+Symbol;color:black'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.0pt;font-family:Arial;color:black'>read
+each element at pixels[r][c] and copy the pixel to pixels[r][nCols – 1 – c].
+This copies the first pixel in the row to the last pixel in the row, the second
+pixel to the second-to-last pixels and so on, creating a mirror effect.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Run the program and shoot me a screenshot. Then
+paste your code in for Exercise 7.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>The last two exercises, 8 and 9, are
+&quot;challenge&quot; exercises, which may take you a little more time to
+finish. Instead of giving you specific instructions, I'll let you work them
+out. Remember, though, if you get stuck, you can always check on the solutions
+page.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>For Exercise 8, I want you to rotate the pixels
+array to the right. You'll have to use the same kind of code you used for
+Exercise 4. Remember that to rotate an array, you'll first have to allocate a
+new array using the original array (pixel's) column value for the number of
+rows and the original array's row value for the number of columns. Then, you'll
+copy the values from the original array (pixels) to the appropriate position in
+the new array. If you've done Exercise 4 correctly, you'll use exactly the same
+code here. Finally, you need to assign the new array to the variable pixels.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>Exercise 9 is similar, but this time I want you
+to shrink the picture. To do that allocate an array that has half the number of
+rows and columns as pixel. Then, loop through the pixels array visiting every
+other row and column and assign the pixel you find there to the new array.</span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt'><span style='font-size:10.0pt;
+font-family:Arial;color:black'>When you're done, shoot me screenshots for both
+exercises and show me your code.</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+        <style type='text/css'>
+            li {
+                margin-bottom:.5em;
+            }
+        </style>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/g.jpg" alt="CS 170 Lesson G logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p><b><span class="cap">T</span>o create your own Java programs</b>,
+            you follow a <b>mechanical process</b>, a well-defined
+            set of steps called the <b>edit-compile-run</b> cycle
+            that looks like this:
+        </p>
+        <a href="images/edit-comp-run-lg.gif" target="_blank">
+            <img src="images/edit-comp-run-sm.gif" alt="The edit-compile-run cycle. (click to enlarge)" align="right" border="0" hspace="15" vspace="15"><br>
+        </a>
+        <ol>
+            <li>Create your source code</li>
+            <li>Compile the code to produce object, or bytecode</li>
+            <li>If syntax errors occur, return to your editor to fix them</li>
+            <li>Run your program using appletviewer or the Java interpreter</li>
+            <li>If runtime errors occur, return to your editor to fix them</li>
+        </ol>
+        <p> Learning this process is <b>not</b> the
+            same as learning how to program; you must master the
+            process--that is necessary--but mastering the process
+            doesn't mean you'll write correct and elegant programs.
+        </p>
+    <p>Here are the steps in the process:</p>
+    <h4>Edit</h4>
+        <p> When you write a program in a high-level language,
+            you write your instructions--in the form of programming
+            language statements--using a text editor. The document
+            you produce at this stage is called <b>source code</b>.
+        </p>
+    <h4>Compile</h4>
+        <p>Once you've written your program, you <b>
+            compile</b> it by using a software program called,
+            (surprise!), a <b>compiler</b>. The compiler turns
+            your source code into machine language and produces
+            another document called <b>object code</b>. If your
+            program fails to compile, (if you have "grammatical"
+            or <b>sytnax</b> errors in your source code), then
+            you must re-edit the code until it compiles correctly.
+        </p>
+        <p>Once a program compiles without errors,
+            it is <b>syntactically</b> correct. It still may
+            contain runtime or logic errors, however.
+        </p>
+    <h4>Run</h4>
+        <p>Once your program compiles, you <b>run</b>
+            it. All high-level languages require a significant
+            amount of additional machine-language code--in
+            addition to the code you've written--before your
+            program will actually run. How this additional code
+            is added to your program varies from language to
+            language and from system to system. Generically,
+            this is called <b>linking</b>. Today, this often
+            happens behind the scenes, and you don't really have
+            to worry about it.
+        </p>
+        <p>When you run your program, the first thing
+            you'll want to do is to verify that it runs as you
+            expect it. This process is called <b>testing</b>. It
+            is not uncommon to find that your program has some
+            logic errors that can only be discovered when the
+            program runs. These errors may even make your program
+            "crash". These kinds of errors are called <b>runtime
+            errors</b>
+        </p>
+        <p>To fix a runtime error, you go back to the
+            very first step--your source code--and make changes
+            there, repeating the edit-compile-run cycle until
+            the program runs correctly.
+        </p>
+    <h4>The SDK Tools</h4>
+        <p>Although the SDK comes with a compiler, interpreter, and
+            appletviewer, it doesn't come with an editor to create
+            source code. To start out, we'll use a simple text editor
+            called <b>SciTE</b>. Later on in the semester we'll use
+            the <b>BlueJ</b> and <b>Eclipse</b> IDEs, (or
+            <b>Integrated Development Environment</b>),
+        </p>
+        <p> You really don't need
+            an IDE to compile and run Java programs--the command line
+            works just fine, especially when you're just starting out.
+            Each of the IDEs, though, offers different
+            features that make Java programming a little easier. On the
+            other hand, those extra features <b>add complexity</b>, and
+            can be harder to learn than using the "bare metal" approach.
+            My advice is to install both of them, (if you have the time and
+            inclination), and decide which one you like best.
+        </p>
+        <p> Let's start our "bare metal" approach, which we'll use for
+            the first few weeks of the class, by looking at the topic
+            of <b>text editors</b>
+        </p>
+    <h2>Using Your Text Editor </h2>
+        <p><b>When</b> you write Java programs or HTML pages, you'll use a
+            <b>text editor</b>. A text editor is a little bit like a word
+            processor--say Microsoft Word or WordPad--but without
+            all of the formatting options. While this might not seem like an
+            important distinction, it really is.
+        </p>
+        <p> When you create a document with a word processor,
+            the word processor saves special formatting characters in your
+            file, along with the content of your document. Often, you can
+            tell your word processor to save only the text, and no
+            formatting information, but it's easy to forget to do that.
+        </p>
+        <p>
+            Let's take a look at some of those formatting characters:<br>
+            <img class="right" src="images/textedit01.gif" alt="Windows menu with WordPad hightlighted." border="1">
+        </p>
+    <div class="box">
+        <ol>
+            <li>Open Microsoft <b>WordPad</b> from your Start menu. It's under
+                the <b>Accessories</b> submenu. (If you're using the
+                Mac, then open <b>TextEdit</b>, which you'll find in
+                the Applications folder. If you're using Linux or
+                Solaris, use OpenOffice or some other word processor.)
+            <br>&nbsp;
+            </li>
+            <li>Type in a little text;<i>"Here's a line of text from
+                WordPad"</i>, for instance.
+            <br>&nbsp;
+            </li>
+            <li>Save your file in the C:\TEMP folder, using the file
+                name <b>TEXTTEST.DOC</b>. If the C:\TEMP folder doesn't
+                exist, use Windows Explorer to create it. (On the
+                Mac or Unix, you can use the \tmp directory or your
+                home folder.)
+            <br>&nbsp;
+            </li>
+            <li>Now, open an MS-DOS window,
+                and display your file using the
+                <b>DOS</b> commands:<br>&nbsp;<br>
+                <div class="code5">
+                    CD \TEMP<br>
+                    TYPE TEXTTEST.DOC
+                </div><br>&nbsp;<br>
+                If you're using Unix or the Mac, open a Terminal
+                or Shell window, navigate to the folder where
+                you've saved the file, and use this command
+                to view your text:<br>&nbsp;<br>
+                <div class="code5">
+                    cat TESTTEXT.DOC
+                </div>
+            </li>
+        </ol>
+    </div>
+    <br clear="all">
+        <p class="note"> <b>NOTE: </b>In Windows 2000, ME, and XP, the MS-DOS window is called a
+            "Command Prompt" and is located on the <b>Accessories</b>
+            menu, as you can see in the screenshot. If you don't feel comfortable
+            using the command line, or Windows Explorer for file management, then
+            please work through Cay Horstmann's Windows Shell tutorial at
+            <a href='http://www.cs.sjsu.edu/faculty/horstman/CS46A/windows/tutorial.html' target='_blank'>
+            http://www.cs.sjsu.edu/faculty/horstman/CS46A/windows/tutorial.html</a>.
+            <br>You don't have to turn in your answers, but make sure you check your
+            answers against the solution I've posted on the Exercises pages.
+        </p>
+        <p> You should see something that looks very much like one
+            of the screenshots shown here:
+        </p>
+        <img src="images/textedit02b.gif" alt="RTF output displayed using DOS" border="1" hspace="20">
+        <p> The first example, (above), shows the
+            output of the Windows XP version of WordPad, called "Rich
+            Text Format" or RTF. As you can see, it includes plain text
+            along with special formatting codes.
+        </p>
+        <p>    <img src="images/textedit02.gif" alt="Displaying a binary file using DOS" align="right" border="1" hspace="20">
+            The second example, created with pre-XP version of WordPad,
+            uses the MS Word 6 file format, and it is even less
+            readable, consisting of nothing but "happy-face" type
+            characters.
+        </p>
+        <p>
+            The third example, below, shows the same file
+            saved using the TextEdit application on the Mac,
+            using Word format.
+        </p>
+        <br clear="all">
+        <p> <img src="images/textedit02c.gif" alt="Displaying a binary file on the Mac" align="right" border="1" hspace="20">
+            In each of these cases, your Java compiler will have
+            a big problem if you attempt to feed it
+            source code written using a word processor instead of a text editor,
+            because it doesn't know how to make sense of the special
+            formatting codes.
+        </p>
+        <p> Similarly, your Web browser expects HTML files
+            to contain <b>nothing</b> but plain text and HTML formatting codes, not
+            binary word-processor codes.
+        </p>
+        <p> If you are still determined to use Word,
+            WordPad, then make sure you select <b>Save As Text</b>,
+            <b>each time</b> you save your document, like this:<br>
+            <img src="images/textedit03.gif" alt="Saving a file as text in WordPad" border="1" vspace="10">
+        </p>
+    <h3>Which Editor?</h3>
+        <p> Most operating systems come with a built-in text editor. In
+            Microsoft Windows, that's the <b>Notepad</b> program, which
+            is also available from the <b>Accessories</b> menu. <b>Notepad</b>
+            is a fairly rudimentary editor, that has a tendency to rename
+            its files, appending a superfulous ".txt" to whatever filename
+            you specify. To avoid this, put double-quotes around your filename
+            whenever you save a file using <b>Notepad</b>.
+        </p>
+        <p> For most of this class, I'll assume that you're using the
+            <b>Scintilla Text Editor</b>, or
+            <a href="http://www.scintilla.org/SciTE.html" target="_blank">
+            <b>SciTE</b></a>. This is my
+            favorite editor on Windows and Linux. (On Mac OS X, you can recompile
+            the source code and get it to run under X-Windows, but it seems
+            kind of clunky, so I don't do that. On OS X, I use Vim or TextWrangler2,
+            which is discussed in the Other Editors sidebar below).
+            SciTE a an open-source, free text editor that includes syntax
+            highlighting (for Java, HTML, and a variety of other languages) and the
+            ability to run your compiler from within the text editor.
+        </p>
+        <p class="note">On the <a href="http://scintilla.sourceforge.net/SciTEDownload.html" target="_blank"><b>SciTE download page</b></a>, I recommend the single-file
+            download for Windows users, called <b>Sc1.exe</b>. This file is
+            only about 400K, so you can easily carry it around on a floppy,
+            a USB thumb-drive, or email it to yourself.
+        </p>
+    <div class="box" style="padding: 30px; margin-left: -20px;">
+        <h4>Other Editors</h4>
+        <p> If you're serious about programming, you'll probably want to
+            get an editor that's designed specifically for the task.
+            You can spend a lot of money on a text editor; take a look
+            through the ads in programmer's magazines like Dr. Dobbs'
+            Journal. You can also get several extremely powerful editors
+            for free, just by searching the Web.
+        </p>
+        <p>I'm somewhat fond of the <b><a href="http://www.vim.org/" target="_blank">Vim</a>
+           </b> [vi improved] editor, for instance, because vi is the editor
+            I use in Unix, and I can get versions of Vim for Windows, Unix,
+            and the Mac. On the other hand, vi is an acquired taste; many an
+            undergraduate CS student has decided to leave the field entirely,
+            rather than spend another minute working with vi.
+        </p>
+        <p class="note"><b>Historical Note : </b>
+            [For those of you who are interested, vi was written by
+            Bill Joy, one of the co-founders of Sun Microsystems, while he
+            was an undergraduate CS major at UC Berkeley. Of course, in his
+            spare time he also rewrote the UNIX operating system, [BSD],
+            and later went on to found Sun Microsystems, so
+            I guess a little editor is no big deal.]
+        </p>
+
+        <p>If you're programming on the Mac, you can use the
+            <b>TextEditor</b> application that came with your operating
+            system (OSX), or you can use the free programmer's editor
+            developed by BareBones software, called
+            <a href="http://www.barebones.com/products/textwrangler/index.shtml" target="_blank">
+            <b>TextWrangler 2.0</b></a>.
+        </p>
+    </div>
+    <h3>Getting Ready</h3>
+        <p>Let's go ahead and set up a working environment, so that you can
+        experiment with Java as you work though this lesson, and do the
+        exercises this week. Here are the
+        steps to follow:
+
+        </p><h4>Create a Home Directory</h4>
+        <p> Use Windows Explorer to create a directory (folder) to hold your
+            CS 170 assignments, homework and experiments. I'll call this your
+            <b>CS 170 home directory</b>, or just your <b>home</b> folder.
+            (On Unix or the Mac, create this folder inside
+            your personal home directory.)
+        </p>
+        <p> Name your home directory something like <b>cs170home</b> that's
+            easy to remember, and self-explanitory so you can find it when necessary.
+        </p>
+        <p class="note"><b>NOTE :</b>You can create this inside your
+            "My Documents" folder, but you'll have a slightly easier time if
+            you create it so that it is accessible directly from
+            the C:, D:, or, in the OCC Computing Center, U: drives.
+            (You'll find that having spaces in the path <i>sometimes</i>
+            makes things more difficult.)
+        </p>
+        <p>For example, here's my CS 170 home directory (named cs170home)
+            on my C: drive, which I've created in a folder called <b>docs</b>.
+            This way I don't have to deal with spaces when working at the
+            command line:<br>
+
+        <img src="images/textedit04.gif"
+            alt="Creating a home directory for CS 170." vspace="15" hspace='10'>
+            <br>Inside your CS 170 home directory, you can create other folders
+            as you like. For instance, in the picture I have a folder called
+            <b>tbcode</b> that contains the source code for all of the
+            programs in the textbook. I also usually create a new folder for
+            the small programs that I write during the week. You can see the
+            <b>unit01</b> folder in the screenshot.
+        </p>
+        </p><h4>Editor Basics</h4>
+        <p> Whichever editor you choose, you need to have some basic
+            editing skills. I'm going to assume that you already
+            know how to do each of the following tasks. Go through this
+            checklist and make sure. If you don't know how to do
+            something, then be sure and use the discussion list to see
+            if anyone can help you out.
+        </p>
+        <ul>
+            <li> Start your editor</li>
+            <li> Add new text</li>
+            <li> Replace some existing text with new text</li>
+            <li> Delete text</li>
+            <li> Cut, Copy, and Paste text</li>
+            <li> Save your file</li>
+            <li> Save your file using a different name</li>
+        </ul>
+        <p> Once you've run through this checklist, you're ready to
+            create your first Java program.
+        </p>
+
+    <h2>Hands-On : Your First Java Program</h2>
+        <p> Other than setting up your computer's <b>path</b> to "point to"
+            the folder containing the Java compiler, (<b>javac</b>), which
+            you did in the last lesson, you really don't have to do
+            <b>anything</b> special to use the SDK from the command line.
+        </p>
+        <p class="note">If you're using the Mac, of course, you don't even
+            need to set the path variable at all. If you're using Linux
+            or Solaris, follow the installation instructions on the
+            Sun Website to set the path variable.
+        </p>
+        <p> You don't even need the <b>SciTE</b> text editor. You can
+            use <b>Notepad</b>, (or <b>TextEdit</b> on the Mac),
+            to create the source code for <b>FirstApp.java</b>, and
+            then compile and run it from the command line by
+            following the steps shown here:
+        </p>
+    <div class="box" style="padding-left: 25px; padding-right:40px; margin-left: -20px;">
+    <h5>Step 1: Create the Source Code</h5>
+        <ol>
+            <li>Open a DOS window, (or Command Prompt)<br>
+                <img src="images/j2se12.gif" alt="Open a DOS window"
+                border="1" vspace="10" hspace='15'><br>
+            </li>
+            <li>Change to your home directory<br>
+                <img src="images/j2se13.gif"
+                    alt="Change to your home directory" vspace="10" hspace='15'>
+                <br>Note that in the first line, I use the <b>cd</b> command and that
+                the directory name (<b>\docs\cs170home</b>) starts with a backslash.
+                That means "look in the directory named <b>docs</b> that is located
+                on the "root" or main directory. In the second command, the directory
+                name (<b>unit01</b>) does not start with a backslash. That means
+                "look in the current directory for unit01". Note how the command
+                prompt itself lets me know what directory I'm working in once I've
+                finished changing directories.
+            </li>
+            <li> Use <b>Notepad</b> to create the file <b>FirstApp.java</b>.<br>
+                <img src="images/j2se14.gif"
+                alt="Creating the file FirstApp.java" vspace="10" hspace='15'><br>
+                Make sure you type the command <b>exactly</b> as shown;
+                case matters. Answer "Yes" when asked if you want to create
+                the new file.
+            <br>&nbsp;
+            </li>
+            <li>Type the code shown below in <b>Notepad</b> and save your file<br>
+                <img src="images/j2se15.gif"
+                alt="Typing the source for FirstApp.java" vspace="10" hspace='15'>
+                <p class="redbox">Pay close attention to capitalization
+                in the example above. The "F" and "A" in FirstApp are
+                capitalized, as are the "S" in String and in System.
+                All the other letters are lower case, (except for the
+                words inside the double-quotes.) Also, the word "println"
+                ends in the characters el-en, <b>not</b> one-en.
+                </p>
+            </li>
+        </ol>
+    <h5>Step 2: Compile the Code</h5>
+        <ol>
+            <li><b>Save your work</b>, and then return to the command window and
+                compile <b>FirstApp.java</b>
+                using the <b>javac</b> compiler, located in your SDK <b>bin</b>
+                directory like this:<br>
+                <img src="images/j2se16b.gif"
+                    alt="Compiling FirstApp.java" vspace="10" hspace='15'><br>
+                Notice that you <b><u>must</u></b> use the <b>.java</b> extension
+                when specifying the file to compile.
+            <br>&nbsp;
+            </li>
+            <li>If you didn't see any error messages, it means that all
+                went well. Use the <b>dir</b> command to make sure the
+                compiler created the file <b>FirstApp.class</b>:<br>
+                <img src="images/j2se18.gif"
+                alt="Checking for the .class file after compiling"
+                    vspace="10" hspace='15'><br>
+                If error messages <b>did</b> appear on the screen, you'll need
+                to fix the errors in Notepad, save your changes, and then
+                compile your code again until no errors appear, and the
+                class file is produced.
+            </li>
+        </ol>
+    <h5>Step 3: Run the Program</h5>
+        <ol>
+            <li>Run the <b>FirstApp.class</b> file by using the
+               <b>java</b> interpreter like this:<br>
+                <img src="images/j2se17.gif"
+                alt="Running the program with the Java interpreter"
+                vspace="10" hspace='15'><br>
+                Note that when you compile your program with <b>javac</b>, you
+                have to supply the full name of your Java source file, including the
+                <b>.java</b> file extension. When you run your program with the
+                interpreter, <b>java</b>, you don't supply the <b>.class</b> file
+                extension.
+            </li>
+        </ol>
+        <div class="redbox">
+            If you get an error message when you try to run your
+            program, it may be that another program has set the
+            <b>CLASSPATH</b> environmental variable. (Quicktime for
+            Java does this, as well as some Oracle tools.)
+            <p>You can find out by typing:
+            <b>echo %CLASSPATH%</b> at the command prompt. If
+            the system responds with anything other than %CLASSPATH%,
+            then the classpath has been set and you'll need to "unset it"
+            by typing <b>SET CLASSPATH=</b> at the command prompt
+            and then trying to run your program again.
+            <p>As an alternative,
+            you can use the <b>cp switch</b> when invoking the Java
+            interpreter. Just use <b>java -cp ./ FirstApp</b> to include
+            the "current directory" (the dot, followed by the forward
+            slash) in the program's classpath.
+        </div>
+    </div>
+    <p> You can also run Java applets from the command line, by invoking
+        the <b>appletviewer.exe</b> program, also located in your JDK's
+        <b>bin</b> directory.
+    </p>
+    <h3>Compiling and Running with SciTE</h3>
+        <p> As I mentioned earlier, you can compile and run your
+            Java programs from
+            within the Scintilla Text Editor, (<b>SciTE</b>). This works
+            much better than using Notepad, because SciTE:
+        </p>
+        <ul>
+            <li>compiles your program without leaving the editor</li>
+            <li>allows you to click on error messages and "jump" to
+            the offending line of code
+            </li>
+        </ul>
+        <p> You can compile your programs from within <b>SciTE</b> by
+            following these instructions:
+        </p>
+        <div class="box" style="padding-left: 25px; padding-right:40px; margin-left: -20px;">
+        <ol>
+            <li>If you haven't already done so, download the single-file
+                version of the Scintilla Text Editor,
+                <a href="http://prdownloads.sourceforge.net/scintilla/Sc1.exe" target="_blank">
+                (<b>Sc1.exe</b></a>), which is about a 400K download.
+                Put it in your CS 170 home folder, or on your desktop.
+                (Note: if you're working in the Computing Center, <b>don't</b>
+                put it on your desktop. It will be gone when you come back.)
+                <br>&nbsp;
+            </li>
+            <li>Double-click <b>Sc1.exe</b> to open the editor, and
+                then use File|Open, on the main menu, to open
+                <b>FirstApp.java</b> like this.
+                (You can use the View and Options menu to turn on
+                line numbers&#151;as I've done here&#151;or add a toolbar
+                with buttons instead of using the menu.)<br>
+                <img src="images/scite01.gif" alt="Opening FirstApp.java in Sc1.exe" vspace="15">
+            </li>
+            <li>On the Tools menu, select Compile, (or press
+                Ctrl-F7), and SciTE will launch the Java compiler
+                for you as shown here.
+                (You can change the compile window so that it
+                appears below, rather than to the side, from
+                the Options menu.)
+                <br>
+                <img src="images/scite03.gif" alt="Compiling FirstApp.java in Sc1.exe" vspace="15"><br>
+            </li>
+            <li>If you've made a mistake when writing your
+                program, (called a "syntax error"), SciTE will
+                display an error message, (instead of Exit code: 0).
+                You can double-click the error message, as shown
+                here, and SciTE will place your cursor on the
+                offending line of code. (It won't correct the
+                program, of course; you'll have to do that yourself.).<br>
+                <img src="images/scite04.gif" alt="Compile errors in FirstApp.java in Sc1.exe" vspace="15"><br>
+            </li>
+            <li>To run your program, choose "Go" from the Tools
+                menu, or press F5. Your program's output will
+                be shown in SciTE's window as shown here:<br>
+                <img src="images/scite05.gif" alt="Running FirstApp.java in Sc1.exe" vspace="15"><br>
+        </li></ol>
+        </div>
+    <h4>Additional Configuration</h4>
+        <p> One of the nice things about <b>SciTE</b> is that it's
+            highly, and easily, configurable. When the SciTE first
+            starts up, it looks for a text file named
+            <b>SciTEGlobal.properties</b> in the same directory as
+            <b>Sc1.exe</b>, and it reads the settings from this file.
+            You can find complete documentation about what goes into
+            SciTEGlobal.properties at
+            <a href="http://scintilla.sourceforge.net/SciTEDoc.html" target="_blank">
+            <b>http://scintilla.sourceforge.net/SciTEDoc.html</b></a>.
+        </p>
+        <p> Instead of starting "from scratch", though, you can download
+            <a href="SciTEGlobal.properties" target="_blank">
+            <b>my SciteGlobal.properties configuration file</b></a>
+            as a starting point. Just place it in the same folder
+            as <b>Sc1.exe</b>, and restart SciTE. (If your browser adds
+            an extra ".txt" on to the end of the file, then rename it
+            back to the original name, shown here.) To make changes to
+            the properties file, (or to simply browse
+            through it and see what it contains), choose <b>Open
+            Global Options File</b> from the <b>Options</b> menu.
+        </p>
+        <p> Along with the configuration file, you may want to download
+            and install the <b>Artistic Style</b> reformatting program
+            to automatically indent your code. You can get the program
+            <a href="http://astyle.sourceforge.net/" target="_blank">
+            <b>from SourceForge</b></a>. Download the Windows binary
+            version, and install <b>astyle.exe</b> in the same folder
+            as <b>Sc1.exe</b>.
+        </p>
+    <h4>Exercise</h4>
+    <div class="exercise">
+        <p> Open up the program <b>FirstApp.java</b> from this lesson,
+            and try out a few experiments. Then tell me what happens
+            when you:
+        </p>
+        <ol>
+            <li>Change the word <code>main</code> in <b>FirstApp.java</b> to
+                <code>Main</code>. Does the program compile? If not, what
+                error messages do you get. If it compiles, can you run it?
+            </li>
+            <li>Change the program back and then change the file name to
+                <b>FirstApplication.java</b> using Windows Explorer.
+                 Does the program compile? If not, what
+                error messages do you get. If it compiles, can you run it?
+            </li>
+            <li>Change the file name back and then change the word
+                "FirstApp" to "Firstapp", (lowercase a).
+                 Does the program compile? If not, what
+                error messages do you get. If it compiles, can you run it?
+            </li>
+            <li>Change the file name back and then change the word
+                "args" to "ARGUMENTS", in the third line. Before you
+                try, make a guess; do you think that the program will
+                compile? If it does, do you think it will run?
+            </li>
+            <li>Try it and see. Does the program compile? If not, what
+                error messages do you get. If it compiles, can you run it?
+            </li>
+        </ol>
+    </div>
+
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

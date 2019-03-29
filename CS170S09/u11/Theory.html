@@ -1,0 +1,528 @@
+<p>"In the Olympic Games, Greeks ran races, hurled the biscuits,
+    and threw the java," according to the students of Richard Lederer,
+    an English teacher and the author of a best-selling compilation
+    of similar misunderstandings called Anguished English.
+</p>
+<p> Whether we can attribute the development of java-hurling to the
+    ancient Greeks is questionable, but many of us, like Mr. Lederer’s
+    students, have shared the experience of using the right word in
+    the wrong way. This is especially true when learning a programming
+    language. As a beginner, you may have spent weeks or months learning
+    the correct Java syntax, relying on the javac compiler to tell you
+    the error of your ways, only to discover that a syntactically
+    correct program doesn’t always do what you meant it to do. The real
+    difficulty lies in writing programs that "say what you mean."
+</p>
+<p> In no place is that difficulty more apparent than when first dealing
+    with inheritance, interfaces, and abstract classes. Java provides
+    all these mechanisms for expressing relationships between classes.
+    But how do you know which one to use, and where to use it? At first
+    glance, each of them seems to do, roughly, the same thing. When
+    writing a new class, you can derive it from an existing class,
+    thus using inheritance, or you can use composition, combining
+    several classes to create a new class.
+</p>
+<p> In both cases, you are basing your design on an existing class
+    (or classes). Which of these is better? Should you make an
+    abstract class, or use abstract methods? Or maybe you should
+    forget inheritance, and implement an interface instead. Are
+    there any rules that will help you to decide what to do?
+</p>
+<p> Yes, there are. Each reuse mechanism provided by Java—inheritance,
+    abstract classes, and interfaces—carries with it a specific meaning
+    and is intended to model a particular class relationship. For
+    instance, when you use inheritance to create a new class, you
+    are saying that the new class is a "kind of" an existing class.
+    If you disregard this meaning, using inheritance to create a
+    new class simply because you want to reuse some of the functionality
+    in an existing class, you may create a syntactically correct
+    program, but the program won’t "say what you mean."
+    To select the correct method for the job at hand, you must
+    first understand what that mechanism means, and then understand
+    how to apply it to your situation.
+</p>
+<p> In this lesson, you will study different ways you can implement
+    relationships between classes. You will learn:
+</p>
+<ul>
+    <li>About the three different types of inheritance relationships
+        between classes: simple extension, specification, and
+        polymorphic inheritance
+    </li>
+    <li>How to create new classes by using Java’s inheritance mechanism,
+        for purposes of generalization and specialization
+    </li>
+    <li>How to use Java interfaces to create new classes for purposes
+        of specification
+    </li>
+    <li> How to use abstract classes and methods to create
+        hierarchies that combine default behavior as well as
+        mandatory specification
+    </li>
+    <li>When to use each different inheritance mechanism, as well
+        as the drawbacks and pitfalls of using an inappropriate mechanism
+    </li>
+</ul>
+<h3>From Encapsulation to Inheritance</h3>
+<p> Classification is one of the primary mechanisms that we
+    use to understand the natural world around us. Starting
+    as infants we begin to recognize the difference between
+    categories like food, toys, pets, and people. As we mature,
+    we learn to divide these general categories or classes into
+    subcategories like siblings and parents, vegetables and
+    dessert. When faced with a new object, we try to understand
+    it by fitting it into the categories with which we’re
+    acquainted: Does it taste good? Perhaps it’s dessert. Is
+    it soft and fuzzy? Maybe it’s a pet. Otherwise, it’s
+    most certainly a toy of some sort!
+</p>
+<p> Encapsulation—the specification of attributes and behavior
+    as a single entity—allows us to build on this understanding
+    of the natural world as we cre ate software. By creating
+    classes and objects that model categories in the "real world,"
+    we have confidence that our software solutions closely track
+    the problems we are trying to solve. Rather than think in
+    terms of computer files and variables, our programs can be
+    expressed in terms of Customers, Invoices, and Products.
+</p>
+<p> Inheritance adds to encapsulation the ability to express
+    relationships between classes. Think back to the categories
+    "desserts" and "vegetables." Cherry pie and broccoli are both,
+    at least arguably, edible items; for humans, they belong to
+    the food class. Yet most of us recognize that, in addition
+    to belonging to the food class, cherry pie is a kind of
+    dessert, whereas broccoli is a kind of vegetable. If you
+    ponder this for a second, you’ll realize that you can
+    draw three conclusions:
+</p>
+<ul>
+    <li>Although both cherry pie and broccoli are kinds of food,
+        the food class itself consists of, thankfully, more than
+        just these two items. Cherry pie and broccoli are just
+        two small subsets of all possible food types. Thus, the
+        relationship between the food class and the cherry pie
+        class is one of superset (food) and subset (cherry pie).
+        In object-oriented terminology, we call this the
+        superclass-subclass relationship.
+    </li>
+    <li>Superclasses and subclasses can be arranged in a hierarchy,
+        with one superclass divided into numerous subclasses, and
+        each subclass divided into more specialized kinds of
+        subclasses. That’s what we find with the food class.
+        It can be divided into desserts, vegetables, soups,
+        salads, and entrees. Each category can be further divided
+        into more specialized kinds of food.
+    </li>
+    <li>A classification hierarchy represents an organization based on
+        generalization andspecialization. The superclasses in such
+        a hierarchy are very general, and their attributes few; the
+        only thing that a class must do to qualify as food, for
+        instance, is to provide nutrients. As you move down the
+        hierarchy, the subclasses become more specialized, and
+        their attributes and behavior become more specific. Thus,
+        although broccoli qualifies as food (it is, after all,
+        digestible), it lacks the necessary qualifications to
+        make it into the dessert class.
+    </li>
+</ul>
+<h3>THE VALUE OF INHERITANCE: REUSE AND ORGANIZATION</h3>
+<p> In object-oriented programming, inheritance gives you a
+    way of taking existing classes and using them to make
+    new and different classes. Rather than build a ImageBall
+    class from scratch, for instance, you can use the GImage
+    class you already have and just write code for the aspects
+    that are different. Your new ImageBall class will silently
+    and invisibly inherit all the fields and methods from its
+    superclass, GImage; you don’t have to do any extra work at all.
+</p>
+<p> In addition to giving you the ability to reuse the classes
+    you’ve already written, inheritance gives you a basis for
+    organizing your classes into class hierarchies, libraries
+    of reusable objects that you can use to build new programs.
+    Imagine trying to build a new Java program without using
+    any of the pre-built classes from the Java Class Libraries!
+</p>
+<h3>THREE KINDS OF INHERITANCE RELATIONSHIPS</h3>
+<p> Inheritance means that you can take an existing class and create
+    a more specialized subclass based on the existing class. When
+    you do this, the new class is a kind of the existing class, as you
+    can see in this picture.
+    <img src='images/ood-sm.png' align='right'>
+    Here, the CoffeeMachine class is-a-kind-of VendingMachine.
+    Informally, this is often called the isA relationship, because
+    every subclass isA subset of the superclass.
+</p>
+<p> When you begin to actually design inheritance hierarchies,
+    however, you’ll quickly discover that there’s not just one,
+    but three forms of this isA relationship:
+</p>
+<ul>
+    <li>An extension relationship. A subclass may extend an existing
+        class, so that all the data members and all the methods of
+        the superclass are left intact, and only new methods or
+        fields are added. This extension or strict-subtype relationship
+        involves the inheritance of the interface (or public methods)
+        of the superclass, as well as its implementation.
+    </li>
+    <li>An extension relationship. A subclass may extend an existing
+        class, so that all the data members and all the methods of the
+        superclass are left intact, and only new methods or fields are
+        added. This extension or strict-subtype  relationship involves
+        the inheritance of the interface (or public methods) of the
+        superclass, as well as its implementation.
+    </li>
+    <li>A specification relationship. In constrast to the extension
+        relationship, a superclass may specify a set of responsibilities
+        that a subclass must fulfill, but not provide any actual
+        implementation. In this case, the only thing inherited is
+        the interface from the superclass.
+    </li>
+    <li>A combination of extension and specification. The final form of
+        inheritance, and by far the most common, combines the first two.
+        In this form, the subclass inherits the interface of the
+        superclass, as it does in specification, but it also inherits a
+        default implementation of, at least, some of its methods. The
+        subclass may override an inherited method to provide specialized
+        behavior, or it may be required to provide an implementation
+        for a particular method, which could not be provided in the
+        superclass. We’ll call this form polymorphic inheritance,
+        because its principal value lies in its ability to provide
+        specialized behavior in response to the same messages.
+    </li>
+</ul>
+<h3>DISCOVERING INHERITANCE RELATIONSHIPS</h3>
+<p> After you decide on the classes and objects in your system,
+    and after you decide which objects cooperate together to
+    form association relationships, you are ready to begin looking
+    at the class relationships in your system. As with most design
+    activities, you can go about this task in several ways.
+</p>
+<p> You may discover that many objects in your system share data
+    or behavior, leading you to start at the bottom of your system
+    and work up. Or you may start with your more general classes
+    and find that you need more specialized instances in certain
+    cases, finding yourself working from the more abstract to the
+    more concrete. In most systems, however, you’ll need to do both:
+    Your inheritance hierarchy will evolve from iterative rounds
+    of top-down specialization and bottom-up generalization.
+</p>
+<h4>Specialization</h4>
+<p> Specialization is what we normally mean when we say that one class
+    is-a-kind-of another class. In specialization, every class can
+    inherit both data and methods from its parent—its superclass.
+    As you saw in the previous picture, the CoffeeMachine class is
+    a specialized form of the more general VendingMachine class.
+    Notice, however, that the data fields and methods specified in the
+    VendingMachine class aren’t redefined inside the CoffeeMachine
+    class. Nevertheless, those fields and methods exist as inherited
+    (albeit implicit) members of the new class. Figure 9.2 shows how the
+    CoffeeMachine class really contains both a totalReceipts field—defined
+    only in the VendingMachine class—as well as a collectMoney() and
+    makeChange() method.
+</p>
+<h4>Substitutability and Subtyping</h4>
+<p> When you decide that one class is a specialization of another,
+    you need to see whether it’s a subtype. Having one class as a
+    subtype of another means that you can use the new, more specialized
+    type anywhere an object of the original type would appear.
+</p>
+<p> This test—called the Liskov Substitution Principle, after Barbara
+    Liskov who originally proposed it—is especially important when
+    you’re designing class hierarchies. Nothing in the Java language
+    prohibits you from creating a subclass that redefines every
+    method defined in its superclass. Thus, theoretically, you could
+    have a class with two methods—add() and subtract()—defined like this:
+</p>
+<pre>
+public class SuperClass
+{
+  public int add(int a, int b) { return a + b; }
+  public int subtract(int a, int b) { return a - b; }
+}
+</pre>
+<p> You would then be free to create a subclass and
+    override those methods like this:
+</p>
+<pre>
+public class SubClass extends SuperClass
+{
+  public int add(int a, int b) { return a - b; }
+  public int subtract(int a, int b) { return a + b; }
+}
+</pre>
+<p> Even though the Java language doesn’t prohibit this, it’s a
+    violation of the meaning of inheritance and specialization. If every
+    SubClass object is, indeed, a SuperClass object, the SubClass
+    must uphold the implied contract that the SuperClass
+    creates. That contract means that every instance of SuperClass
+    and all its subclasses will add when told to add(), and not do
+    something else.
+</p>
+<p> In strict subtyping, you have the additional requirement that
+    not only does every subclass have to carry out the meaning of
+    the interface defined in the superclass, but it must also rely
+    on the methods already defined in the superclass to do so.
+    The new class isn’t free to redefine superclass methods at all;
+    it can only add to them. Later in this unit, you’ll see how
+    to do this in Java.
+</p>
+<h4>Generalization</h4>
+<p> Sometimes when working on an inheritance hierarchy, you’ll
+    notice that several classes have data and methods in common.
+    If you’ve worked in a procedural language, you might see this
+    as an opportunity to create a new function, or perhaps even
+    a module. However, in the object-oriented world, this is a
+    clue to look for generalization.
+</p>
+<p> Generalization is not a different kind of inheritance—it is
+    just the "flip-side" of specialization. When looking at the
+    superclass in a such a relationship, you can call it a
+    generalization. When looking from the other direction, it’s
+    a specialization. The only difference is in the way the
+    relationship is originally discovered. If you were writing
+    a Java application for a catering company, you might find
+    yourself creating classes for CoffeeMachines, SodaMachines, and
+    CandyMachines. Later in your design, you might notice that
+    those classes had some common factors, and you could use
+    those factors to create a new, generalized superclass that
+    encapsulated the shared information.
+</p>
+<h4>Specification</h4>
+<p> Specialization and generalization allow you to design classes
+    that share both an interface and an implementation. Sometimes,
+    however, that doesn’t really provide all the expressive power
+    you need to really "say what you mean." Sometimes, you know exactly
+    what a subclass should do, but you simply have no idea how
+    it should do it. In this case, you want to specify
+    what the subclass should do, and then let the compiler make
+    sure that each subclass complies.
+</p>
+<p> If you were writing a BoardGame class, for instance, you might
+    have some code that looks something like this:
+</p>
+<pre>
+public class BoardGame
+{
+  // Fields and other methods
+  public play()
+  {
+    while (! finished())
+    {
+      currentPlayer.move();
+      currentPlayer = nextPlayer();
+    }
+  }
+}
+</p>
+<p> You could then use this class to create classes like ChessGame,
+    Checkers, Parcheesi, and so on. All your subclasses would
+    inherit the code for play() from BoardGame. The currentPlayer
+    object used by play() would be an object derived from a subclass
+    of the GamePiece  class, such as a ChessPiece or Checker.
+</p>
+<p> At this point, however, things start to break down. You know
+    that every GamePiece object must be able to move(). You simply
+    have no idea how it should go about doing it! Obviously, a Checker
+    has very different moves than a Bishop, and a Bishop has
+    different moves than a Knight or a Rook. The declaration of the
+    move() method in the GamePiece class is thus a stipulation that
+    all subclasses inherit the move() specification, but no
+    associated implementation.
+</p>
+<h4>Specialization and Specification</h4>
+<p> When you have a class that needs to specify some behavior
+    that a subclass must perform, and yet has some behavior of
+    its own to pass on to its subclasses, you find yourself needing
+    a combination of specialization and specification. In Java, this
+    is accomplished by making the superclass method abstract.
+</p>
+<p> When you "mark" a method as abstract (by adding the abstract
+    keyword before the declaration and replacing the method body
+    with a semicolon), you create a requirement that all subclasses
+    must fulfill. In this picture, for instance, the VendingMachine
+    class creates a requirement that any subclass must supply a
+    dispenseItem() method.
+</p>
+<p> Because the actual mechanisms for dispensing candy vary
+    considerably from those required for brewing java, the
+    VendingMachine class is obviously in no position to provide
+    any sort of implementation at all. On the other hand, by
+    writing code that uses references to VendingMachine
+    objects, programmers can simplify their code considerably;
+    they’re freed from the necessity of treating CoffeeMachines
+    differently than CandyMachines. When a programmer tells a
+    VendingMachine object to dispenseItem(), the actual object—a
+    CandyMachine or CoffeeMachine—"knows" how to take the
+    appropriate actions.
+</p>
+<h4>Pure Specification</h4>
+<p> After taking care of specialization, generalization, and
+    specification, you may find remaining places where you want
+    to factor out common behavior. The problem is that the objects
+    sharing that common behavior are otherwise unrelated. When
+    this happens, Java has a facility for writing pure specifications:
+    the Java interface.
+</p>
+<p> The interface mechanism differs from the forms of inheritance
+    we have discussed so far in three important ways:
+</p>
+<ul>
+    <li>When a class implements an interface, it doesn’t receive
+        any method implementations or nonfinal fields from the
+        interface. Interfaces can be used to define inherited constants,
+        but they can’t be used to define nonconstant data. Any
+        fields defined within an interface are implicitly final.
+    </li>
+    <li>Unlike inheritance, a class may implement several interfaces.
+        This facility can be used to simulate multiple inheritance,
+        where a subclass inherits behavior from each of several
+        superclasses. This is the only way to model this kind of
+        relationship in Java, which supports only single inheritance
+        (every class other than Object has exactly one direct ancestor).
+    </li>
+    <li>Classes that implement the same interface don’t need to be
+        substitutable in the Liskov sense, except with respect to
+        the interface they implement. Thus, if a class implements the
+        Runnable interface, it isA Runnable object, and it can be used
+        anywhere a Runnable object is expected. Runnable objects don’t
+        have to be otherwise related, however. Because they implement
+        Runnable, they must have a run() method; otherwise their class
+        wouldn’t have compiled. There’s no guarantee they’ll have any
+        other methods or fields in common.
+    </li>
+<h4>Inheritance of Implementation: Contraction</h4>
+<p> You should be aware of one last form of inheritance, although
+    you should avoid using it in your designs. For an exaggerated
+    example, suppose you have a class that models a virtual automobile
+    called, perhaps, Cadillac. This class has an exceptionally fine
+    stereo system, which required a lot of effort to implement and
+    of which you're especially proud. Now you discover that you need
+    to create a iPod class, for sale over the Web. Because you’ve
+    already gone to all the work of creating the Cadillac class, why
+    not just create a new subclass, and then eliminate all the methods
+    that have nothing to do with playing music, transforming the car
+    into a mere sound system?
+</p>
+<p> This practice, called contraction, is an especially easy trap to
+    fall into when you begin maintaining an existing system. Because
+    the class hierarchy is already in place, you may feel a lot of
+    pressure not to "tear things up." So, in an effort to reuse the
+    code you’ve already written, you replace drive(), accelerate(),
+    and all the other methods from the Cadillac class with empty
+    braces. In traditional computer-science terms, you replace
+    them with a NOP (No OPeration). You should avoid doing this
+    in your designs for two reasons:
+</p>
+<ul>
+    <li>Because you’re violating the substitutability rule, you
+        will undoubtedly break some code that relied on all Cadillac
+        objects carrying out a certain set of operations. Because,
+        according to your new hierarchy, an iPod isA Cadillac, you
+        are obligated by the Cadillac "contract" to perform those
+        operations.
+    </li>
+    <li>It’s more work than doing the right thing! If you really
+        want to use a Cadillac object as a super sound system, simply
+        use composition: Add a Cadillac object as one of the fields
+        in your BoomBox class. Now you not only have avoided the
+        semantic pitfalls of saying one thing and doing another,
+        you’ve also saved yourself the work of overriding all those
+        useless methods.
+    </li>
+</ul>
+<p> You might find yourself tempted to use contraction in one last
+    place—when you have misidentified an isA relationship and don’t
+    want to go back to square one. Scott Meyers, in his excellent book
+    Effective C++, calls this the
+</p>
+<ol>
+    <li>All Birds Can Fly</li>
+    <li>Penquins are Birds</li>
+    <li>Penguins can fl—-  Uhhoh!</li>
+</ol>
+<p> problem. Meyers offers no quick fix however. In Java, as
+    in C++, the only solution is to go back to the drawing board
+    and revise the class relationships.
+</p>
+<h3>JAVA’S INHERITANCE MECHANISMS</h3>
+<p> Learning which of these three relationships—extension,
+    specification, or polymorphic inheritance—is the best one to
+    use in a particular situation is a skill that takes years
+    of practice and is, still, more an art than a science. Along
+    with learning to distinguish between specification and
+    extension relationships, you’ll also have to learn how to
+    implement those relationships in Java; fortunately, the
+    latter is considerably easier than the former. Java has
+    several different mechanisms that can be used, alone and
+    in combination, to model each of the three forms of the
+    isA relationship. Matching up these inheritance relationships
+    with Java’s inheritance mechanisms is, thankfully, fairly
+    straightforward. Nevertheless, the similarities between
+    each mechanism can lead to easily avoided design mistakes.
+</p>
+<p> To make sure that you understand the correct application of
+    each of Java’s inheritance mechanisms, I'll give you at the
+    end of this lesson a simple checklist that you can follow to
+    help you decide which mechanism is most appropriate. And as
+    we go through the code examples, we’ll point out which
+    mechanism was chosen for each example, and why. But for
+    right now, let’s take a quick look at each basic form of the
+    isA relationship, and how you can use Java’s language features
+    to implement it.
+</p>
+<h4>Simple Extension</h4>
+<p> To implement a simple extension relationship in Java, you use the
+    extends keyword to create your new subclass. Also, all the methods
+    in the superclass should be marked final. You’ll use an extension
+    relationship when you want to allow extension to your existing
+    class but don’t want the base class implementation changed in any way.
+</p>
+<p> A simple extension relationship is an assertion that, although
+    more functionality can be added to an existing class, the
+    implementation that exists must remain invariant. Simple
+    extension is the inheritance of a mandatory interface as well
+    as a mandatory implementation.
+</p>
+<h4>Specification</h4>
+<p> To implement a specification relationship between classes, you
+    use the interface/implements mechanism. When a class declares
+    that it implements a particular interface, it’s promising to
+    implement all the methods contained in the interface. The
+    interface itself provides no implementation but provides
+    method signatures that the subclass must implement. If a
+    subclass fails to implement a required method, the compiler
+    will catch the omission.
+</p>
+<h4>Polymorphic Inheritance</h4>
+<p> Polymorphic inheritance is implemented by using the extends
+    keyword, as with extension. You can also use the final and
+    abstract keywords, along with extends, to explicitly define
+    which parts of the extended class may be further modified,
+    which parts must be modified, and which parts cannot
+    be modified. In polymorphic inheritance
+</p>
+<ul>
+    <li>Some methods may be invariant, as with simple extension.
+        These methods should be marked final. The subclass inherits
+        both a mandatory interface and a mandatory implementation.
+    </li>
+    <li>Some methods may be overridden, allowing subclass objects
+        to behave in a specialized manner. Because subclasses may
+        redefine these methods, these methods should not be marked as
+        final. Of course, a subclass doesn’t have to override a
+        method defined in its superclass—most of the time it won’t,
+        but will, instead, use the method that it has inherited.
+        Nonfinal methods in a superclass mean that a subclass
+        inherits a mandatory interface and an optional implementation.
+    </li>
+    <li>Some methods may be specified in the superclass yet have no
+        default implementation defined there. To do this, you include the
+        abstract keyword as the first word of the method declaration
+        (in the superclass), and then end the declaration with a
+        semicolon rather than a method body. When a subclass is created,
+        the subclass must implement the method. For these methods,
+        the subclass inherits only a mandatory interface; no default
+        implementation is provided.
+    </li>
+</ul>
+

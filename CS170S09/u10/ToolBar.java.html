@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Toolbar.java</title>
+<meta name="Generator" content="SciTE - www.Scintilla.org" />
+<style type="text/css">
+.S0 {
+	color: #808080;
+}
+.S2 {
+	font-family: 'Consolas';
+	color: #007F00;
+	font-size: 10pt;
+}
+.S3 {
+	font-family: 'Consolas';
+	color: #3F703F;
+	font-size: 10pt;
+}
+.S4 {
+	color: #007F7F;
+}
+.S5 {
+	font-weight: bold;
+	color: #00007F;
+}
+.S6 {
+	color: #7F007F;
+}
+.S10 {
+	font-weight: bold;
+	color: #000000;
+}
+.S18 {
+	font-family: 'Consolas';
+	color: #804020;
+	font-size: 10pt;
+}
+span {
+	font-family: 'Consolas';
+	color: #000000;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<span><span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>awt<span class="S10">.*;</span><br />
+<span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>awt<span class="S10">.</span>event<span class="S10">.*;</span><br />
+<span class="S5">import</span><span class="S0"> </span>javax<span class="S10">.</span>swing<span class="S10">.*;</span><br />
+<br />
+<span class="S3">/**</span><br />
+<span class="S3">&nbsp;* Toolbar.java. Illustrates using arrays of object variables.</span><br />
+<span class="S3">&nbsp;*</span><br />
+<span class="S3">&nbsp;* </span><span class="S18">@author</span><span class="S3"> Stephen Gilbert</span><br />
+<span class="S3">&nbsp;* </span><span class="S18">@version</span><span class="S3"> 3.0, 2009</span><br />
+<span class="S3">&nbsp;*/</span><br />
+<br />
+<span class="S5">public</span><span class="S0"> </span><span class="S5">class</span><span class="S0"> </span>Toolbar<span class="S0"> </span><span class="S5">extends</span><span class="S0"> </span>JApplet<span class="S0"> </span><span class="S5">implements</span><span class="S0"> </span>ActionListener<br />
+<span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// Attributes</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span>String<span class="S0"> </span>slogan<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S6">"CS 170 : Java, Java Java!!!"</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span>JButton<span class="S10">[]</span><span class="S0"> </span>toolBar<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>JButton<span class="S10">[</span><span class="S4">5</span><span class="S10">];</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span>JPanel<span class="S0"> </span>canvas<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>JPanel<span class="S10">();</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S3">/**</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Initialize the toolbar and layout the applet.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>init<span class="S10">()</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 1. Toolbar Panel</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>JPanel<span class="S0"> </span>p<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>JPanel<span class="S10">();</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>p<span class="S10">.</span>setLayout<span class="S10">(</span><span class="S5">new</span><span class="S0"> </span>FlowLayout<span class="S10">(</span>FlowLayout<span class="S10">.</span>LEFT<span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>p<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>lightGray<span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 2. Create the toolBar Buttons</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S10">[]</span><span class="S0"> </span>captions<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S6">"Red"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"Blue"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"Green"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"Yellow"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"Black"</span><span class="S0"> </span><span class="S10">};</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 3. Create each button</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">for</span><span class="S0"> </span><span class="S10">(</span><span class="S5">int</span><span class="S0"> </span>i<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">0</span><span class="S10">;</span><span class="S0"> </span>i<span class="S0"> </span><span class="S10">&lt;</span><span class="S0"> </span>toolBar<span class="S10">.</span>length<span class="S10">;</span><span class="S0"> </span>i<span class="S10">++)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>toolBar<span class="S10">[</span>i<span class="S10">]</span><span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>JButton<span class="S10">(</span>captions<span class="S10">[</span>i<span class="S10">]);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>toolBar<span class="S10">[</span>i<span class="S10">].</span>addActionListener<span class="S10">(</span><span class="S5">this</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>p<span class="S10">.</span>add<span class="S10">(</span>toolBar<span class="S10">[</span>i<span class="S10">]);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 5. Add the Panel to the top of the applet</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Container<span class="S0"> </span>c<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">this</span><span class="S10">.</span>getContentPane<span class="S10">();</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>c<span class="S10">.</span>setLayout<span class="S10">(</span><span class="S5">new</span><span class="S0"> </span>BorderLayout<span class="S10">());</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>c<span class="S10">.</span>add<span class="S10">(</span>p<span class="S10">,</span><span class="S0"> </span>BorderLayout<span class="S10">.</span>NORTH<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>c<span class="S10">.</span>add<span class="S10">(</span>canvas<span class="S10">,</span><span class="S0"> </span>BorderLayout<span class="S10">.</span>CENTER<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S3">/**</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Paint the slogan on the the screen.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* </span><span class="S18">@param</span><span class="S3"> pen is the Graphics pen used to paint with.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>paint<span class="S10">(</span>Graphics<span class="S0"> </span>pen<span class="S10">)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">super</span><span class="S10">.</span>paint<span class="S10">(</span>pen<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>height<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>getHeight<span class="S10">();</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>width<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>getWidth<span class="S10">();</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>pen<span class="S10">.</span>setFont<span class="S10">(</span><span class="S5">new</span><span class="S0"> </span>Font<span class="S10">(</span><span class="S6">"Serif"</span><span class="S10">,</span><span class="S0"> </span>Font<span class="S10">.</span>BOLD<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>Font<span class="S10">.</span>ITALIC<span class="S10">,</span><span class="S0"> </span><span class="S4">36</span><span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>FontMetrics<span class="S0"> </span>fm<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>pen<span class="S10">.</span>getFontMetrics<span class="S10">();</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>strWidth<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>fm<span class="S10">.</span>stringWidth<span class="S10">(</span>slogan<span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>x<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>width<span class="S0"> </span><span class="S10">/</span><span class="S0"> </span><span class="S4">2</span><span class="S0"> </span><span class="S10">-</span><span class="S0"> </span><span class="S10">(</span>strWidth<span class="S0"> </span><span class="S10">/</span><span class="S0"> </span><span class="S4">2</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>y<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>height<span class="S0"> </span><span class="S10">/</span><span class="S0"> </span><span class="S4">2</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>fm<span class="S10">.</span>getHeight<span class="S10">()</span><span class="S0"> </span><span class="S10">/</span><span class="S0"> </span><span class="S4">2</span><span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>pen<span class="S10">.</span>setColor<span class="S10">(</span>Color<span class="S10">.</span>white<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>pen<span class="S10">.</span>drawString<span class="S10">(</span>slogan<span class="S10">,</span><span class="S0"> </span>x<span class="S10">,</span><span class="S0"> </span>y<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S3">/**</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Handle the clicks on the different buttons in the toolBar array.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* </span><span class="S18">@param</span><span class="S3"> ae is the ActionEvent parameter</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>actionPerformed<span class="S10">(</span>ActionEvent<span class="S0"> </span>ae<span class="S10">)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 1. Retrieve source of click</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Object<span class="S0"> </span>obj<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>ae<span class="S10">.</span>getSource<span class="S10">();</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 2. Match it with toolBar Button</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>clicked<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">for</span><span class="S0"> </span><span class="S10">(</span>clicked<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">0</span><span class="S10">;</span><span class="S0"> </span>clicked<span class="S0"> </span><span class="S10">&lt;</span><span class="S0"> </span>toolBar<span class="S10">.</span>length<span class="S10">;</span><span class="S0"> </span>clicked<span class="S10">++)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">if</span><span class="S0"> </span><span class="S10">(</span>obj<span class="S0"> </span><span class="S10">==</span><span class="S0"> </span>toolBar<span class="S10">[</span>clicked<span class="S10">])</span><span class="S0"> </span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 3. Take action based upon Button pressed</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">switch</span><span class="S0"> </span><span class="S10">(</span>clicked<span class="S10">)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">case</span><span class="S0"> </span><span class="S4">0</span><span class="S10">:</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>canvas<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>RED<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">case</span><span class="S0"> </span><span class="S4">1</span><span class="S10">:</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>canvas<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>BLUE<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">case</span><span class="S0"> </span><span class="S4">2</span><span class="S10">:</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>canvas<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>GREEN<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">case</span><span class="S0"> </span><span class="S4">3</span><span class="S10">:</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>canvas<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>YELLOW<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">case</span><span class="S0"> </span><span class="S4">4</span><span class="S10">:</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>canvas<span class="S10">.</span>setBackground<span class="S10">(</span>Color<span class="S10">.</span>BLACK<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">break</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>repaint<span class="S10">();</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<span class="S10">}</span><br />
+<span class="S0"></span></span>
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/c.jpg" alt="CS 170 Lesson C logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src='images/widget01.gif' class='right' alt='Buttons in programs.'>
+            <b><span class='cap'>I</span>n the last two lessons you've done graphical
+            programming</b>
+            using <code>Graphics</code> class to draw pictures on your
+            applets, and the object-oriented ACM Graphics classes, like
+            <code>GImage</code> and <code>GRect</code> in your applications.
+        </p>
+        <p> You haven't yet worked with graphical "interactors" or GUI
+            components, like buttons and labels. In this lesson, you'll
+            learn how to add buttons and labels to your programs. That way
+            the users of your video Blackjack program will be able to tell
+            you whether they want to hit or stand, and you'll be able to
+            tell them when they've won or lost.
+        </p>
+        <p> Before we do that, though, let's take a look at that intriguing
+            term, <b>widget</b>.
+        </p>
+    <h3>What are Widgets?</h3>
+        <p><img src="images/g02.jpg" class="right" alt="A rotation widget.">
+            Michael Gleicher, in his
+            1994 Carnegie Mellon Computer Science Thesis,
+            <a href="http://www.cs.wisc.edu/graphics/Papers/Gleicher/Thesis/" target="_blank">
+            <i><b>A Differentital Approach to Graphical Interaction</b></i></a>,
+            discusses the use of numerical constraint solving as a basis for the
+            creation of direct manipulation graphical interfaces. In the
+            paper he describes, and illustrates, the <b>rotation
+            widget</b> pictured to the right.
+        </p>
+        <p> <img src="images/g03.jpg" class="left" style='margin-right:2em;' alt="Widget the book.">
+            Six years later, on September 5, 2001, Lyn Rossiter McFarland,
+            wrote her book about <b>Widget</b>, a wet, stray, homeless Westie,
+            who masquerades as a kitten to be accepted into a family
+            of six well-fed cats.
+        </p>
+        <p> <b><i>Our</i></b> widgets, though, have <i>nothing</i> to do with lost
+            dogs or mathematical constraints. For us, widget is a generic
+            term that, in the programming world, has come to mean a
+            control or component used to construct a Graphical User
+            Interface (GUI). Widget refers to the graphical controls
+            that are used to capture user input and to display your computer's
+            output. This includes things like pushbuttons, checkboxes,
+            radio buttons, labels, scrollbars, menus, text areas and so on.
+        </p>
+    <h4>Java Widget Toolkits</h4>
+        <p> Now you've probably noticed that these widgets often look
+            <i>different</i> on <i>different platforms</i>. The buttons and labels on a
+            Mac look a lot different than those on Windows. Even on the
+            <i>same</i> platform, though, the widgets can take on a different look
+            and feel. In Windows XP, for instance, you can choose whether
+            all of the controls will use the XP look, or the Windows
+            Classic look<br>
+            <img src='images/widget02.gif' class='inline' alt='Different widget styles on Windows.'>
+            A collection of widgets is commonly called a <b>toolkit</b>.
+            Java actually has <b>two</b> different toolkits that you can use.
+            The "orginal" Java widgets are called the <b>AWT</b> components;
+            <b>AWT</b> stands for <b>A</b>bstract <b>W</b>indow <b>T</b>oolkit.
+            When Java 2 came out, a second widget toolkit was added to the
+            Java class libraries. This toolkit is officially named the <b>JFC</b>, which
+            stands for the <b>J</b>ava <b>F</b>oundation <b>C</b>lasses, but
+            it's almost universally referred to by the code name in use
+            when the classes were developed: <b>Swing</b>.
+        </p>
+        <p class='note'> While the Java Class Libraries include both the AWT and Swing
+            toolkits, there's nothing to stop you from using an entirely
+            different set of widgets. That's what Eclipse does; the folks
+            at IBM who originally created Eclipse didn't especially like
+            either Swing or the AWT and so they developed the <b>Standard
+            Widget Toolkit</b> or <b>SWT</b>. While you <i>can</i> use the SWT in your
+            programs, you'll have to distribute the SWT library along
+            with your program classes, just like Eclipse does.
+        </p>
+        <p> You can also
+            think of the graphical ACM classes we used in the last lesson
+            as a toolkit of sorts. The AWT <code>Label</code> class, for
+            instance, is similar (in ways) to the <code>GLabel</code> class you
+            used in the last lesson.
+        </p>
+    <h4>AWT and Swing</h4>
+            To get started, let's take a look at some of the main "players"
+            in the AWT/JFC family tree" of classes:<br>
+            <img src="images/g01.gif" class='inline' style='margin-left:-2em;' alt="The widget family tree.">
+            The diagram shown here is an <b>inheritance hierarchy</b> that
+            shows the relationships between the different GUI classes.
+            In Java, the <code>Object</code> class is ultimate superclass
+            for all classes, not just the GUI classes. Although it's an
+            important class, for the AWT and Swing toolkits, the
+            <code>Component</code> class is probably more important.
+        </p>
+
+        <p> <b><code>Component</code></b> is the <b><u>direct</u></b>
+            superclass for almost all AWT
+            GUI "widgets" such as <code>Label</code>, <code>Button</code>,
+            and <code>TextField</code>, as you can see from the illustration.
+            (These are the classes highlighted in green.)
+        </p>
+    <h4>Heavyweight and Lightweight</h4>
+
+        <p> As you can see from the picture above, for every component in the
+            AWT, such as <code>Button</code> or <code>Label</code>, there is a
+            similar Swing component that starts with J: the <code>JButton</code>
+            and the <code>JLabel</code>, for instance. This continuity allows
+            you to build on what you already know, while adding new functionality.
+        </p>
+        <p> In addition to these "replacement" components, there are also new
+            components available that are not available in the AWT. These
+            include the <code>JSlider</code> class, the <code>JProgressBar</code>
+
+            class, and the <code>JToolBar</code> class, as well as more complex
+            and sophisticated components such as trees, grids, and editors.
+        </p>
+        <p> You might wonder why the JFC didn't simply <b>improve</b> the
+            existing <code>Button</code> class instead of adding a whole new
+            class. There is an important reason for this, and it underlies the
+            basic difference between the AWT and Swing:
+        </p>
+        <ul>
+
+            <li>In the AWT, all components are created by the underlying
+                operating system using a system of "parallel objects"
+                known as <b>peers</b>. Because of these operating-system
+                created peers, AWT widgets are called <b>heavyweight</b>
+                components.
+            </li>
+            <li>In the JFC, all components, (except for <code>JFrame</code>
+                and a few others, are <b>lightweight</b> components--they
+                don't involve the operating-system created peers that
+                underly the AWT.
+            </li>
+
+        </ul>
+        <p>Two important consequences follow from this underlying difference:</p>
+        <ul>
+            <li>In the AWT, the user interface will take on the look of
+                the operating system that the program is running on, since the
+                components are actually created by the host operating system.
+                The same Java program will appear as a Windows program when run
+                on Windows, and as a Mac program when run on the Mac.
+                <br><br>
+                With Swing, that's not necessarily true; a Swing program
+                <b>can</b> look the same on the Mac, Solaris, and Windows by
+                using a "cross-platform look and feel". Swing programs can
+                also emulate the host look and feel, but the components are
+                not created using native widgets, but are "drawn" by the
+                Java runtime.
+            </li>
+            <li>Swing and AWT components don't "mix and match" very well.
+                Because of their different underlying architectures, you should
+                try and use <b>only</b> Swing components or <b>only</b> AWT
+                components; not half-and-half. That's why the <code>Button</code>
+
+                class wasn't simply improved; it's because Swing is a
+                fundamentally different animal than the AWT.
+            </li>
+        </ul>
+        <p class='note'>My recommendation is to use the AWT components for
+            applets, which should be as accessible as possible, and to use
+            Swing for Java applications, where you can ship a Java runtime
+            with your program if necessary. For your ACM graphics programs,
+            we'll use the Swing components.
+        </p>
+        <p> This doesn't mean, however, that the AWT has gone away. In fact,
+            as you can see from the picture above, all of the new Swing
+            components are derived from <code>java.awt.Container</code>, (which is,
+            itself, derived from <code>java.awt.Component</code>, so all of
+            the time you spent learning how to use Java's <code>Component</code>
+            class is time well spent. In addition, all of the <code>Graphics</code>
+            methods in the AWT have been retained, and many of them have been
+            enhanced in the Java 2D packages.
+        </p>
+    <h3>Using Widgets</h3>
+        <p> In this class, we'll be using the <b>JFC</b> (or <b>Swing</b>)
+            components inside our ACM graphics programs. The JFC components
+            <b>are not</b> part of the ACM libraries though, like the
+            <code>GImage</code> and <code>GRect</code> classes are. The
+            JFC widgets are part of the standard Java class libraries.
+        </p>
+        <p> That means that the JFC components will work <b>exactly</b>
+            the same way when you use them in a "regular" Java GUI program.
+            The only difference is that with the ACM programs, it's a little
+            easier to make the widgets look good when you add them to your
+            program. In a regular Java GUI program, there's quite a bit of
+            code required to set up the "container" part of your program,
+            and to place the widget where you want it to go; this is code
+            that the ACM <code>GraphicsProgram</code> class supplies for you.
+        </p>
+    <h4>Basic Widgets</h4>
+        <p> You can really write quite a few programs by learning to use
+            just a few different components. At a minimum, you'll need
+            controls for <b>input, processing and output</b>: the basic
+            operations of every computer program. The components we'll
+            use for that are:<br>
+            <img src='images/swingcomponents.gif' class='inline' alt='Swing components.'>
+        </p>
+        <ul>
+            <li>The <code>JButton</code> widget, which you'll use to trigger
+                the processing step in your program. When someone clicks a
+                button, you'll take a particular action.
+            </li>
+            <li>The <code>JLabel</code> widget, which you'll use to display
+                the results of your processing back to the user.
+            </li>
+            <li>The <code>JTextField</code> widget, which will handle the input side
+                of the IPO equation.
+            </li>
+        </ul>
+    <h4>Importing the Swing Package</h4>
+        <p>To use any of these widgets in your program, you'll need to
+            add a new <code>import</code> statement at the top of every
+            program that uses them. All of these widgets are in the
+            <code>javax.swing package</code>, so just add:
+        </p>
+        <p class='code'> import javax.swing.*; </p>
+        <p> to the top of your file. The <b>x</b> in <b>javax</b> means
+            that the classes are a <b>standard extension</b> to the base Java
+            class libraries. Of course, since they're included in the
+            Java Class libraries themselves, the word extension doesn't
+            have much meaning. When Swing was originally released, these
+            extension classes were included in a separate JAR file, just
+            like the ACM classes are now.
+        </p>
+        <p class='note'>
+            Although all of the JFC widgets are included in the
+            <code>javax.swing</code> package, you still will usually
+            need to import the <code>java.awt</code> package as well,
+            so that you can use classes like <code>Color</code> and
+            <code>Font</code>.
+        </p>
+    <h4>A Widget Checklist</h4>
+        <p> To use <b>any kind</b> of widget in your program, whether it's a
+            <code>JButton</code>, a <code>JTextField</code> or a
+            <code>JLabel</code>, you'll always follow
+            these <b>three basic steps</b>. Think of them as a checklist
+            or a recipe:
+            <img src='images/checklist.gif' class='right' alt='Checklist illustration.'>
+        </p>
+        <ol>
+            <li class='d'>First, <b>create a widget instance variable</b>.
+                You don't need to initialize it.
+            </li>
+            <li class='d'>Next, use a <b>widget constructor to create
+                a widget object</b>. Often, however, the widget constructor
+                won't complete all of the required initialization. You
+                may want to change the size or color of the widget.
+                You'll normally create your object and perform this
+                additional initialization will go inside your
+                program's <code>init()</code> method. (If you're writing
+                a non-ACM program, you can put it inside your program's
+                constructor instead.)
+            </li>
+            <li class='d'>Finally, you need to <b>place the widget on the
+                surface of the program</b>, so that the user can see and
+                interact with it.
+            </li>
+        </ol>
+
+        <p> Here's the what each of these steps looks like in code:<br>
+            <img src='images/widgetworld.gif' class='inline' alt='The widget checklist.'>
+        </p>
+        <p> In ACM Graphics programs, you can add
+                the component to one of the borders of the program (that is,
+                on the north or south) or you can place it on the graphics
+                canvas itself. In an applet or a regular non-ACM program,
+                you'd normally create a panel and then add the widget
+                to that. As I mentioned earlier, though, the ACM method
+                is a little easier.
+        </p>
+        <p> If all of this sounds familiar, it should! It's almost exactly
+            what you did when you worked with the ACM graphical shapes in
+            the last lesson.
+        </p>
+    <h4>Step 1: Instance Variables</h4>
+        <p> In the example shown here, the widget is created
+            as an <b>instance variable</b>, or <b>field</b>. You
+            should make your widgets instance variables whenever you have to
+            use them later in other parts of your program.
+        </p>
+        <p> Instance variables, or <b>fields</b> were introduced back in
+            Lesson 2A, but they aren't covered until Chapter 3 in
+            your textbook. We'll be looking at instance variables in
+            depth in the next unit when you learn how to create classes
+            or user-defined types. Since we haven't actually <b><u>used</u></b>
+            instance variables until now, I've repeated the information
+            here.
+        </p>
+        <p> In Java, variables created <b>outside</b> of a method are
+            officially called <b>fields</b>. However, in the real world,
+            you'll more often see them called <b>instance variables</b>,
+            which is a more general object-oriented term.<br>
+            <img src='images/fields.gif' class='inline' alt='Instance variables.'>
+            Instance variables <b>can be used inside any method in the class</b>.
+            Normally, instance variables are created using the <b>access
+            modifier</b> <code>private</code>, so that the variable cannot
+            be used outside of the class. Occassionally, fields will
+            use the modifier <code>protected</code>, so that subclasses
+            created from the class may directly access the fields.
+        </p>
+        <p class='note'>It doesn't matter <i>where</i> inside the class
+            the instance variable is created. Some programmers and textbooks
+            like to put them at the bottom of the program, while others
+            place them at the top.
+        </p>
+        <p> In very rare instances, programmers will use the
+            <code>public</code> modifier to allow unrestricted access
+            to an object's instance variables. This is almost always a
+            poor idea, as the designers of Java's <code>Point</code>,
+            <code>Dimension</code>, and <code>Rectangle</code> classes
+            discovered after-the-fact.
+        </p>
+        <p> Unlike local variables, instance variables are automatically
+            given a value (initialized), even when you don't provide an
+            initial value. Numeric variables (like <code>int</code>) are
+            initialized to the value 0, while object variables are given
+            the special value <code>null</code>. In the example here,
+            the field <code>velocity</code> starts with the value
+            0.0. Everytime the <code>move()</code> method is called,
+            <code>velocity</code> increased by .2.
+        </p>
+    <h4>Step 2: Instantiation and Initialization</h4>
+        <p> Inside the <code>init()</code> method, or your program's
+            constructor, you'll <b>instantiate</b> widgets for each of
+            your widget instance variables. Remember that creating an
+            object variable <b>does not</b> create the actual object.
+            When you create the actual object, use the name of the
+            instance variable, but <b>don't</b> precede the name
+            with the widget type. That would create a <b>local</b>
+            widget object, and not instantiate your instance variable.<br>
+            <img src='images/widget03.gif' class='inline' alt='Instantiating the widget.'>
+            In addition, if you need to do any additional widget
+            initialization, you can do it right after you've created the
+            widget object. Here I've set the background property for my
+            widget to yellow.
+        </p>
+        <p> If a widget is <b>only</b> used for display (like most
+            <code>Label</code> objects, for instance), you should make
+            the widget either a <b>local variable</b>, inside the
+            <code>init()</code> method, or simply construct and pass
+            the widget to the <code>add()</code>
+            method, (inside the <code>init()</code> method), like this:<br>
+            <img src='images/widget04.gif' class='inline' alt='Local and anonymous widgets.'>
+            In the example shown here, <code>myWidget2</code> is a local variable
+            that can't be accessed outside of the <code>init()</code> method.
+            Because it's a <i>local</i> variable, it <b>doesn't</b> use the
+            <code>private</code> modifier. (In fact, it <b>can't</b> use the
+            <code>private</code> modifier, which is legal only for instance
+            variables and methods.)
+        </p>
+        <p> Line 33 creates an unnamed (or anonymous)
+            <code>Widget</code> object, rather than a local variable. You
+            can use an anonymous object if you aren't going to make any
+            changes at all to the object, once it's created. You'll often
+            do this for purely descriptive labels, for instance.
+        </p>
+    <h4>Step 3: Adding Your Widgets</h4>
+        <p> When you create widget object using the <code>new</code>
+            operator, it's constructed and stored in memory, but it isn't
+            yet visible to the user of your program. To make a GUI
+            component visible, you need to <b>add it to some kind of
+            container</b>.
+        </p>
+        <p> In this case, that's your ACM <code>GraphicsProgram</code> itself.
+            To add a component to a container, you use, naturally, the method
+            named <code>add()</code>. (This is true in all Java GUI programs,
+            not just ACM programs).
+        </p>
+        <p> <img src='images/widget05.gif' class='right' alt='Location for widgets.'>
+            In ACM programs, though, you can tell the component which border
+            location you want to place it into, using the constants
+            <code>NORTH</code>, <code>SOUTH</code>, <code>EAST</code>
+            or <code>WEST</code>. When using these, remember that they
+            are all upper-case.
+        </p>
+        <p> In a <code>GraphicsProgram</code> you can also place widgets on
+            the canvas area as well. To do this you:
+        </p>
+        <ul>
+            <li>Retrieve the <code>GCanvas</code> object that makes up the
+                center of an ACM graphics program.
+            </li>
+            <li>Add the widget to the canvas, supplying parameters for
+                the x,y location of the widget.
+            </li>
+        </ul>
+        <p> Here's what that looks like in code:<br>
+            <img src='images/widget06.gif' class='inline' alt='Positioning a widget on the canvas.'>
+        </p>
+    <h3>The JLabel Class</h3>
+         <p> Of course, there <b>is no Widget class</b>. Now that you've
+            seen the pattern, though, you can apply it to the first,
+            and one of the simplest, of the real <b>JFC</b> core components,
+            the <code>JLabel</code>.
+        </p>The <code>JLabel</code> class defines a set of objects that: <p></p>
+        <ul>
+            <li> can hold a single line of text.</li>
+            <li> know how to display themselves</li>
+            <li> can be positioned and moved around the screen.</li>
+            <li> contains a surprising amount of information about their appearance,
+                such as font size, text color, alignment, and so on.
+            </li>
+        </ul>
+        <p> The <code>JLabel</code> is <b>very similar</b> to the ACM <code>GLabel</code>
+            class, but with a few differences: a <code>JLabel</code> has a background
+            and can display images, for instance. Also, <code>JLabel</code> objects
+            use their upper-left corner for positioning, while <code>GLabel</code>
+            object use the <i>text baseline</i>, like the <code>drawString()</code>
+            method does.
+        </p>For our first example, let's take our "pattern", and simply
+            replace each instance of the word "Widget" with the word
+            "JLabel". Here's what you get:<br>
+            <img src='images/widget07.gif' class='inline' alt='Adding JLabels.'>
+        </p>
+    <h4>JLabel Constructors</h4>
+        <p> If you run the <b>JLabelWorld</b> program, you'll see that it
+            compiles and runs just fine. The only problem is, it doesn't
+            look like much, since we've used the no-argument constructor
+            for each of the <code>JLabel</code> objects.
+        </p>
+        <p class='note'>
+            To run <a href='JLabelWorld.java' target='_blank'>
+            <b>JLabelWorld.java</b></a> on your own machine, click the
+            link in this sentence to download the source code. You'll
+            also need the the image file: <a href='images/car1.gif'
+            target='_blank'> <b>car1.gif</b></a> and the cards images
+            from the last lesson. Once you've downloaded the
+            image file, just drag and drop it in your
+            current Eclipse project, along with JLabelWorld.java.
+        </p>
+        <p>The <code>JLabel</code> class has six different constructors.
+           The first three are used for creating labels that display
+           text values:</p>
+        <p class="code">
+            JLabel()<br>
+            JLabel(String message)<br>
+            JLabel(String message, int alignment)
+        </p>
+        <p> Use the first constructor, the one that takes no parameters, if
+            you intend to modify the message displayed as your program
+            runs, but don't have a valid message when the program first
+            starts up. If your <code>JLabel</code> object is going to
+            display the results of a calculation, for instance, you
+            might not want to display <b>anything</b> until the calculation
+            is complete.
+        </p>
+        <p> The second constructor is the most common. Simply provide
+            a message when you construct your <code>JLabel</code>, and the
+            object itself will take care of the painting chores.
+        </p>
+        <p> Using this info, we can change our sample code so that it
+            actually displays something by rewriting the label-creation
+            line as so:<br>
+            <img src='images/widget08.gif' class='inline' alt='The JLabel(String) constructor.'>
+        </p>
+    <h5>Where's the Background?</h5>
+        <p> One difference between the Swing <code>JLabel</code> and its AWT cousin, is that
+            Swing labels don't automatically have an opaque background. If you want the
+            label's background color to show up, you need to use the <code>setOpaque()</code>
+            method, as I've done here:
+            <img src='images/widget09.gif' class='inline' alt='The JLabel(String) constructor.'>
+        </p>
+
+    <h4>JLabel Alignment</h4>
+        <p> The last constructor allows you to change the alignment of the
+            message within the <code>JLabel</code> object itself. You do
+            that by passing a second argument, which must be one of these
+            <b>class constants</b>:</p>
+            <ul>
+                <li><code>JLabel.LEFT</code></li>
+                <li><code>JLabel.CENTER</code></li>
+                <li><code>JLabel.RIGHT</code></li>
+            </ul>
+        <p> Be careful with the spelling of these constants. Note that the
+            class name is proper-case, while the constant name is upper-case.
+            You must spell the constant correctly for this to work.
+            If you use either of the other two constructors, they
+            automatically use the <code>JLabel.LEFT</code> alignment.
+        </p>
+        <p class="note">Students are frequently frustrated when trying to
+            use the alignment constants because they don't do exactly what
+            you'd expect. Specifying <code>JLabel.CENTER</code>, for instance,
+            does <b>not</b> center the label on the program; instead, it
+            centers the text inside the label. Since the <code>JLabel</code>
+            objects normally size themselves according the text they
+            display, the effect is very hard to see. If you make the
+            label very wide, however, it becomes apparent.
+        </p>
+    <h4>JLabels with Images</h4>
+        <p> In addition to the three "text-only" constructors, three
+            additional constructors let you create <code>JLabel</code>s that
+            incorporate images, either alone or along with some text:
+        </p>
+        <p class='code'>
+            JLabel(Icon icon)<br>
+            JLabel(Icon icon, int alignment)<br>
+            JLabel(String message, Icon icon, int alignment)
+        </p>
+        <p> Note that each of these requires you to supply an <code>Icon</code>
+            parameter, <b>not a <code>String</code></b> like you did with
+            the <code>GImage</code> class.
+        </p>
+        <p> So, how do you create an <code>Icon</code> object. It's actually
+            pretty easy using Java's <code>ImageIcon</code> class, although
+            it <b>is</b> more complicated than using <code>GImage</code>
+            which hides some of the complexity from you.
+        </p>
+    <h5>ImageIcon</h5>
+        <p> The <code>ImageIcon</code> class makes creating images
+            easy by preloading the images automatically. There are nine
+            <code>ImageIcon</code> constructors, but the one which you'll
+            use most often is this one:
+        </p>
+
+        <p class='code'>
+            ImageIcon(String filename);
+        </p>
+        <p> Using this constructor, creating an <code>ImageIcon</code> is as
+            easy as:
+        <p>
+        <p class='code'>
+            ImageIcon one = new ImageIcon("car1.gif");<br>
+            ImageIcon two = new ImageIcon("images/car2.gif");
+        </p>
+        <p> The first example loads the image from a file
+            in the current directory, while the second loads the image from the
+            <b>images</b> subdirectory, immediately beneath the current directory
+            where your program is running.
+        </p>
+        <p class='note'>Note the use of forward slashes, even on machines, such as
+            Windows and Mac, which use different path separators.
+        </p>
+        <p> This constructors assumes that your application's
+            images are stored as "standalone" files. "Real" Java applications,
+            though, usually "zip up" all of their files into a Java Archive, or
+            JAR file. When you do that, the <code>ImageIcon</code> constructor
+            shown here stops working.
+            In those cases, you can use this "magic incantation" which searches
+            through the program's class path (including inside JAR files),
+            and loads the image if it can be found:
+        </p>
+        <p class='code'>
+
+            new ImageIcon(getClass().getResource("Car1.GIF"));
+        </p>
+        <p> Since this code works equally well for stand-alone images as
+            for those packaged inside JAR files, you should probably use
+            this code for all of your <code>ImageIcon</code> constructors.
+            The <code>GImage</code> class uses some code like this
+            "under the hood".
+        </p>
+        <p> Here's a change to the <b>JLabelWorld</b> program so that
+            <code>myWidget2</code> uses the three-parameter constructor
+            to display both an image as well as a description of the
+            image, while the anonymous <code>JLabel</code> uses the
+            "icon only" constructor to display an image of a playing card:
+            <img src='images/widget10.gif' class='inline' alt='Using images in JLabels.'>
+            <img src='images/widget11.gif' class='right' alt='Displaying the labels with images.'>
+            Notice that when the program runs, the panel that contains the
+            <code>JLabel</code> <b>expands</b> to contain the largest label
+            (the label using the "Ace of Spades" image).
+        </p>
+        <p> Note also that the label with the opaque background also expands
+            so that it is the same height as the other labels.
+        </p>
+    <h4>Image and Text Alignment</h4>
+        <p> The <code>JLabel</code> class has the ability to specify
+            <b>both</b> the horizontal and vertical alignment of the label
+            contents. In addition, you can specify the horizontal and
+            vertical position of the text (relative to the image), and the
+            spacing that should appear between the text and the image
+            (if any).
+        </p>
+        <p> To see how this works, lets rearrange the contents of
+            the Range Rover <code>JLabel</code>:<br>
+            <img src='images/widget13.gif' class='inline' alt='Aligning the car label.'>
+        </p>
+        <ol>
+            <img src='images/widget12.gif' class='right' alt='Displaying the aligned label.'>
+            <li class='d'> We can align the
+                <b>icon</b> at the top and center of the <code>JLabel</code>,
+                using <code>setVerticalAlignment()</code> and
+                <code>setHorizontalAlignment()</code>.
+            </li>
+            <li class='d'> Then, we can align the text separately by using the
+                <code>setHorizontalTextPosition()</code> and
+                <code>setVerticalTextPosition()</code> methods.
+            </li>
+            <li class='d'> Finally, we can set the spacing between the text and the image on the
+            <code>JLabel</code> by using the <code>setIconTextGap()</code> method.
+            </li>
+        </ol>
+        <p> Now, let's turn our attention to a second component. Let's face
+            it, the <code>JLabel</code> really doesn't know a whole lot of
+            tricks. The <code>JButton</code>'s middle name, by contrast,
+            is <b>action</b>. If you want something to happen in your Java
+            program, you use a <code>JButton</code> object
+            to start it off and then you write a method to carry out the
+            action you want performed.
+        </p>
+    <h3>JButtons</h3>
+        <p> Creating buttons is actually a <b>little easier</b> than creating
+            labels, since there is no concept of "alignment". That means you
+            only have to learn four constructors, instead of six:
+        </p>
+        <p class='code'>
+            JButton(); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// the default constructor</span><br>
+
+            JButton(Icon); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// displays an image</span><br>
+            JButton(String);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// displays text</span><br>
+            JButton(String, Icon);&nbsp;<span class='cmt'>// displays both text and an image</span>
+        </p>
+        <p> While there <i>is</i> a no-parameter <code>JButton</code> constructor, it
+            isn't as useful as the <code>JLabel</code> constructor,
+            since you rarely want to create such an "empty" button.
+        </p>
+        <p> The other three constructors allow you to
+            specify the text, icon, or combination of text and icon that
+            will appear on the button. You use the <code>ImageIcon</code>
+            class to create an icon for a <code>JButton</code>, just as
+            you did for the <code>JLabel</code> class.
+        </p>
+
+        <p> Here's a fragment of the
+            <b>JButtonWorld</b> program that creates three buttons
+            using each of the last three constructors.<br>
+            <img src='images/widget14.gif' class='inline' alt='Creating JButtons.'>
+            The first button (<b>btn1</b>)
+            has only an icon, the second, (<b>btn2</b>) has only text, while the
+            third, (<b>btn3</b>) has both.
+        </p>
+    <h4>Mnemonics and ToolTips</h4>
+        <p> <code>JButtons</code> <i>automatically</i> handle "mnemonic" key
+            identifiers ("shortcuts" or "hot-keys" for us mere mortals), as well
+            as tool-tips. Here's the section of <b>JButtonWorld</b>
+            (lines 35-40) that activates both of those features:<br>
+            <img src='images/widget15.gif' class='inline' alt='JButtons tooltips and mnemonics.'>
+            The <code>setMnemonic()</code> method is used to assign an
+            <b>Alt+Key</b> keyboard shortcut to a particular button. If the button
+            contains text, then the shortcut character will be underlined.
+        </p>
+        <p> <img src='images/widget16.gif' class='right' alt='Using the setMnemonic method.'>
+            Line 37 uses <code>btn2.setMnemonic('P');</code> to assign
+            the keyboard shortcut <b>Alt+P</b> to the plain text
+            <code>JButton</code>. When the button is displayed, the 'P' in
+            "Plain Text" is underlined as shown here.
+        </p>
+        <p> You can use keyboard shortcuts that <b>don't</b> generate a
+            printable character code by using the <b>virtual key constants</b>
+            in the <code>KeyEvent</code> class. In our program, <b>btn1</b> is
+            assigned to the <b>Alt+F1</b> function key combination on line 39.
+        </p>
+    <h5>Tool-Tips</h5>
+        <p>
+            Adding a "tool-tip"&#151;the small help message that appears when your mouse
+            hovers over a component for a few seconds&#151;is even easier than setting
+            a keyboard shortcut.
+        </p>
+        <p> You just call the method <code>setToolTipText()</code>,
+            like this:
+        </p>
+        <p class='code'>
+            btn1.setToolTipText("Click here to order a red Range Rover");
+        </p>
+        <p><img src='images/widget17.gif' class='right' alt='Creating tooltips.'>
+            The tool-tip displays your message <b>and</b> the keyboard shortcut
+            (if you've assigned one) when it pops up.
+        </p>
+        <p> To run <a href='JButtonWorld.java' target='_blank'>
+            <b>ButtonWorld.java</b></a> on your own machine, click the
+            link in this sentence to download the source code. You'll
+            also need the two image files: <a href='images/car1.gif'
+            target='_blank'> <b>car1.gif</b></a> and
+            <a href='images/car2.gif' target='_blank'>
+            <b>car2.gif</b></a>. Once you've downloaded the
+            two image files, just drag and drop them in your
+            current Eclipse project, along with JButtonWorld.java.
+        </p>
+    <h4>What about the Clicks?</h4>
+        <p> I started this section by saying that the <code>JButton</code>'s
+            middle name was <b>action</b>, but we haven't actually talked
+            about making something happen when you click your button.
+        </p>
+        <p> In fact, that's such a big subject, that we'll take the whole
+            next lesson to cover it. For right now, though, let's look at
+            the last of our IPO GUI widgets: the <code>JTextField</code>.
+        </p>
+    <h3>JTextField</h3>
+        <p> <img src='images/textfield.gif' class='right' alt='An application that uses TextFields.'>
+            <b>A <code>JButton</code></b> object is useful when you
+            want to carry out an action, and a <code>JLabel</code> object
+            is useful when you want to impart some information to your user.
+            When you need to <b><u>get</u></b> some information, however, nothing
+            beats a <code>JTextField</code>, and its sibling, the
+            <code>JTextArea</code>.
+        </p>
+
+        <p> The <code>JTextField</code> is our first GUI <b>input component</b>.
+            A <code>JTextField</code> object is a single-line
+            input area that allows your users to supply
+            data to your program as it runs, such as the mileage,
+            and number of gallons used in the gas-mileage calculator
+            shown here.
+        </p>
+        <p> That means you can start
+            writing programs that are actually useful.
+        </p>
+    <h4>Constructing JTextFields</h4>
+
+       <p>   Let's get started
+            by looking at the methods you'll use to create
+            <code>JTextField</code> objects.
+            The <code>JTextField</code> class has five different
+            constructors, but you'll normally use one of these four:
+        </p>
+        <p class="code">
+            JTextField()<br>
+            JTextField(int numChars)<br>
+            JTextField(String initialText)<br>
+            JTextField(String initialText, int numChars)
+        </p>
+        <ul>
+            <li>The first of these, <code>JTextField()</code>, creates an
+                empty field, usually big enough to hold one or two characters.
+                Its behavior varies widely among different platforms, though,
+                so you shouldn't use this one unless you plan on setting a
+                size for your component separately.
+            </li>
+            <li>The second, <code>JTextField(int numChars)</code>, creates a
+                field big enough to hold <code>numChars</code>, <b>average-width</b>
+                characters. (This is the one you'll normally use).
+            </li>
+            <li>The <code>JTextField(String initialChars)</code> constructor
+                makes a field holding the <code>String initialChars</code> passed as an
+                argument; the field is sized accordingly. You may, occassionally use
+                this constructor. It's useful if you want to pre-fill a field with
+                a default value, where every value is the same width, (such as
+                a 2-character "state" field).
+            </li>
+            <li>The constructor <code>JTextField(String initialString, int numChars)</code>
+                acts like a combination of the last two. It sizes the
+                field so that it will be able to hold <code>numChar</code> characters,
+                but fills the on-screen control with the <code>String
+                initialString</code>. You'll normally use this constructor
+                when your field has a default initial value.
+            </li>
+        </ul>
+        <p>Let's look at an example, so you can see all four <code>JTextField</code>
+            constructors at work.
+        </p>
+    <h4>TextFields By Example</h4>
+        <p> This program, <b>JTextFieldWord.java</b></a> creates
+            four <code>JTextField</code> objects, named <code>oneTF</code>,
+            <code>twoTF</code>, <code>threeTF</code>, and <code>fourTF</code>:
+            (Imaginative names, huh?).<br>
+            <img src="images/widget19.gif"
+                alt="The source code for JTextFieldWorld.java"
+                class='inline'>
+            <img src='images/widget18.gif' class='right' alt='Running JTextFieldWorld.java'>
+            Here's what the program looks like when it runs.
+            Notice that the first two fields have no initial text.
+            That's the most common situation with a <code>JTextField</code>;
+            after all, you're using them to get <b>input</b>, not to display
+            <b>output</b>. Note also, that since I didn't explicitly size
+            the first field, the program did it for me. As you can see,
+            it's a little too small for text input.
+        </p>
+        <p> The fields created by the last two constructors
+            are similar; the last is <b>explicitly</b> sized, while
+            <code>threeTF</code> is <b>implicitly</b> sized.
+        </p>
+        <p> Instead of adding the fields to the north or south part of
+            the application, I've actually added them to the canvas itself,
+            using this code:<br>
+            <img src='images/widget20.gif' class='inline' alt='Adding text fields to the canvas'>
+            For each text field, I've also added an anonymous <code>JLabel</code>
+            to identify the text field.
+        </p>
+    <h4>TextField Methods</h4>
+        <p> The most oft-used method in the <code>JTextField</code> class is
+            the one that <b><u>retrieves the information entered by the user</u></b>.
+            Normally, a user types information into a <code>JTextField</code>,
+            and you use the <code>getText()</code> method to retrieve the
+            information, and to store it in a <code>String</code>, like
+            this:
+        </p>
+
+        <p class="code">
+            String oneStr = oneTF.getText();
+        </p>
+        <p> You can also use the <code>setText()</code> method to change
+            the text contained in a text field. If you had a guessing game,
+            for instance, and you wanted to "zero out" the <code>JTextField</code>
+            where the user entered the guess, you could use this code:
+        </p>
+        <p class="code">
+            theGuess.setText( "" );
+        </p>
+        <p> The pair of double-quotes, without any space or characters
+            inside, is called the <b>empty string</b>. Setting
+            the text of a component to the empty string is how you say
+            "remove all of characters in this component".
+        </p>
+    <h4>Numeric Input</h4>
+        <p> Note that <b>all</b> <code>JTextField</code> input is
+            <b>textual</b> input. If you want to let your users enter
+            <b>numeric</b> data, then you have to:
+        </p>
+        <ul>
+            <li>grab the input as a <code>String</code> and store it
+                in a variable.
+            </li>
+            <li>then using the various <b>parsing</b> methods (
+                such as <code>Integer.parseInt()</code> or
+                <code>Double.parseDouble()</code>) to convert
+                the <code>String</code> to the numeric value
+                you need.
+            </li>
+        </ul>
+        <p> The only problem with doing this (other than the
+            extra work, of course), is that if the user types something
+            that <b>isn't</b> parseable (like the word "cat"),
+            then your program "crashes" with a runtime error.
+            To get around this problem, the <code>acm.util</code> package
+            includes two additional varieties of <code>JTextField</code>:
+            <code>IntField</code> and <code>DoubleField</code>.
+        </p>
+        <p> In addition to the <code>setText()</code> and <code>getText()</code>
+            methods, these classes also have <code>setValue()</code> and
+            <code>getValue()</code> methods that automatically convert the
+            input value for you.
+        </p>
+    <h4>JTextField Alignment</h4>
+        <p> With <code>JTextField</code> you can use the method:
+        </p>
+        <p class='code'>
+
+            myTF.setHorizontalAlignment(JTextField.TRAILING);
+        </p>
+        <p>to <b>right-align</b> the text in a text-field. Often, users
+            will find this much more natural, when then have to input
+            numeric data, since the input fields will line up just like
+            the output fields.
+        </p>
+        <p class='note'>You can specify <code>JTextField.LEFT</code> and
+            <code>JTextField.RIGHT</code> instead of <code>JTextField.LEADING</code>
+            and <code>JTextField.TRAILING</code>. The LEADING/TRAILING identifiers
+            allow your code to work correctly if the applet is used with
+            right-to-left reading languages, instead of the left-to-right
+            that you're probably comfortable with.
+        </p>
+
+        <p> <img src='images/g11.gif' class='right' alt='The first version of SwingMileage.java'>
+            Here's a Java application that calculates gas mileage,
+            written as a regular Swing application. Each of the input fields
+            has the horizontal alignment to the right. You can check out the code for
+            <a href='javascript:var w=window.open("SwingMileage1.java.html","","width=660,height=625,scrollbars=yes");'>
+            <b>SwingMileage.java</b></a> by clicking the link
+            in this sentence.
+        </p>
+        <p> Note, though, that even though the input labels are
+            nicely right-aligned, (and look a whole lot better),
+            the user can still skip a value or input invalid data
+            which makes the program blow up. Using the ACM fields
+            would fix this problem.
+        </p>
+        <p class='note'>You might have noticed that the buttons in
+            the <b>SwingMileage</b> application look a little diffferent
+            than the Swing programs we've used before; specifically, it's
+            taken on the Windows XP "look and feel" instead of the
+            "Java look". Some versions of Java will do this automatically,
+            (such as Apple's JVM). For the rest, though, you can force your
+            application to adopt a native dress by adding these lines to your
+            <code>main()</code> method:<br>
+            <img src='images/g12.gif' hspace='15' vspace='15' alt='Setting the system look and feel.'>
+        </p>
+    <h3>Coming Up...</h3>
+        <p> In this lesson, you learned how to use three of Java's
+            Swing GUI widgets: the <code>JLabel</code> to display text and
+            images, the <code>JTextField</code> to get user input, and
+            the <code>JButton</code> to trigger some processing when the
+            user clicks "GO".
+        </p>
+        <p> Of course, <b>nothing</b> happens when your buttons are clicked,
+            so you really can't write a working application yet. We'll remedy
+            that in the next lesson as you learn how to <b>handle events</b>.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>

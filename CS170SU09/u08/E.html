@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/f.jpg" alt="CS 170 Lesson F logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p><b><span class='cap'>L</span>earning how to handle events</b>,
+            like you did in the last lesson, allows you to create
+            <b>interactive</b> programs that respond to user input.
+            <b>Animation</b>, the topic of this lesson, will let you
+            write programs that are visually exciting. <br>
+            <img src='images/animate01.gif' class='inline' alt='Egyptian animation.'>
+            And, when you <b>combine</b> interactivity and animation, you'll have
+            everything you need to create your own video game empire.
+        </p>
+        <p> So, just what <b>is</b> animation? Here's a description from the
+            JTF tutorial, along with a couple of illustrations from Wikipedia.</p>
+        <p> <img src='images/animate02.gif' class='right' alt='Animation frames.'>
+            In computer graphics, the process of updating a graphical
+            display so that it changes over time is called animation.
+            Implementing animation typically involves displaying an initial
+            version of the picture and then changing it slightly over time
+            so that the individual changes appear continuous from one
+            version of the picture to the next.
+        </p>
+        <p> <img src='images/animate03.gif' class='left' style='margin-right: 2em;' alt='A gif animation.'>
+            This strategy is analogous to classical film animation in which
+            cartoonists break up the motion of the scene into a series of
+            separate frames. The difference in time between each frame is
+            called a time step and is typically very short. Movies, for
+            example, typically run at 30 frames a second, which makes the
+            time step approximately 33 milliseconds.
+        </p>
+        <p> If you want to obtain smooth motion in Java, you need to use a
+            time step around this scale or even faster.
+        </p>
+    <h3>ACM Graphics Animation</h3>
+        <p> Let's start out by writing the <b>traditional bouncing ball</b>
+            program. Unlike the short GIF animation from Wikipedia, the
+            traditional bouncing-ball program is more like bouncing a
+            ball around a billards table, assuming that there is no
+            gravity or friction to slow things down.
+        </p>
+        <p> Even though it's simple, I still get kind of excited when
+            I see the ball start bouncing! To make things a little more
+            interesting, instead of changing the <code>x</code> and
+            <code>y</code> coordinates of the ball separately, we'll make
+            use of the ACM <code>GObject</code> method <code>movePolar()</code>
+            and write our code in terms of <b>direction</b> and
+            <b>distance</b>.
+        </p>
+    <div class='redbox' style='padding-left:2em;'>
+        <h4>Polar Coordinates?</h4>
+        <p> <img src='images/polarcoords.gif' class='right' alt='Polar coordinates.'>
+            What <i>are</i> polar coordinates? Here's an explanation
+            from Wikipedia.
+        </p>
+        <p> In mathematics, the polar coordinate system
+            is a two-dimensional coordinate system in which each point
+            on a plane is determined by an angle and a distance.
+        </p>
+        <p> The polar coordinate system is especially useful in
+            situations where the relationship between two points
+            is most easily expressed in terms of angles and distance;
+            in the more familiar Cartesian or rectangular coordinate
+            system, such a relationship can only be found through
+            trigonometric formulation.
+        </p>
+        <p> Of course, that's just what we need to model our bouncing ball!</p>
+    </div>
+    <h4>The Basic Structure</h4>
+        <p> The basic structure for <b>every</b> animation program that
+            uses the ACM class libraries is always the same:<br>
+            <img src='images/animator.gif' class='inline' alt='The basic structure for an animated program.'>
+            Here's what the parts do:
+        </p>
+        <ol>
+            <li class='d'><b>Instance variables</b>: the objects that you're
+                going to move need to be defined as instance variables,
+                since you'll interact with them inside several different
+                methods. You'll also normally initialize the frame rate,
+                as I've done here: 20 milliseconds means that the animation
+                will be drawn at around 50 frames per second.
+            </li>
+            <li class='d'><b>Initialization</b>: the <code>init()</code>
+                method is used to set up the initial state of your objects,
+                and to intialize the parameters for your animation, such
+                as speed and direction.
+            </li>
+            <li class='d'><b>Running</b>: the <code>run()</code> method
+                is used to animate the program. Usually, however, you'll
+                use <i>exactly the same</i> version of the method, which
+                consists of an endless loop. The real work of animating
+                the objects is done inside your <code>advanceOneFrame()</code>
+                method. The <code>pause()</code> method is used to make
+                sure that the frame stays on screen for a certain amount of
+                time.
+            </li>
+            <li class='d'><b>Draw a Frame</b>: the <code>advanceOneFrame()</code>
+                method is responsible for moving each of the animated objects,
+                and adjusting their state (such as speed or direction) as
+                necessary.
+            </li>
+        </ol>
+        <p> Now, let's look at each of these in terms of our
+            <a href='PolarBounce.java' target='_blank'><b>PolarBounce</b></a>
+            program. (As usual, you can click the link in the preceding
+            sentence to download the source code to your own computer,
+            where you can run it.)
+        </p>
+    <h4>Instance Variables</h4>
+        <p> Here are the instance variables used in the
+            <b>PolarBounce</b> program:<br>
+            <img src='images/animate04.gif' class='inline' alt=''>
+            Notice that:
+        </p>
+        <ul>
+            <li>A <code>GOval</code> object is used for the ball that
+                will be bounced around the screen.
+            </li>
+            <li>Both the distance the ball travels and the direction
+                (as a polar angle between 0 and 360 degrees) are
+                represented as <code>double</code> variables.
+            </li>
+        </ul>
+        <p> As with the "skeleton" code, the frame time is defined
+            as a constant integer. Remember that twenty milliseconds
+            will result in a nominal fifty-frames-per-second animation.
+        </p>
+    <h4>Initialization</h4>
+        <p> The first part of the initialization method initializes the
+            screen itself:<br>
+            <img src='images/animate05.gif' class='inline' alt='Initialize the background. Add a label.'>
+            In addition to setting the background color to black,
+            I added a <code>JLabel</code> to the top panel, so that
+            the user knows to kick off the animation by clicking the
+            mouse.
+        </p>
+        <p> The next part to be initialized is the ball itself. I want
+            a 50-pixel solid yellow ball:<br>
+            <img src='images/animate06.gif' class='inline' alt='Create and intialize the ball.'>
+            After the ball is created, its added to the center of
+            the screen.
+        </p>
+        <p> The last part to be initialized is the direction and
+            distance:<br>
+            <img src='images/animate07.gif' class='inline' alt='Initialize direction and distance.'>
+            I've used random numbers to initialize both of these values.
+            To start with a <b>random direction</b>, I initialized that to
+            a value between 0 and 360. To make sure that the ball is always
+            moving, even if slowly, I used an expression that will always be
+            between 2 and 12.
+        </p>
+    <h4>Running</h4>
+        <p> The <b>running</b> loop is almost exactly like the one
+            I showed you in the animation skeleton earlier:<br>
+            <img src='images/animate08.gif' class='inline' alt='Running the animation.'>
+            The only difference is the use of the ACM <code>waitForClick()</code>
+            method before entering the loop. You can call this method without
+            activating any of the other event-handling steps.
+        </p>
+    <h4>Advancing the Frame</h4>
+        <p> To animate the ball, we first need to move it, and then check
+            for the results. If our move results in a collision with either
+            the walls (on the sides) or the floor or ceiling, then we need
+            to adjust the direction in which we're moving in anticipation
+            of the next frame, coming up 20 milliseconds from now.
+        </p>
+        <p> The code to move the ball is pretty straightforward; it just
+            uses the <code>movePolar()</code> method as I discussed before:<br>
+            <img src='images/animate09.gif' class='inline' alt=''>
+        </p>
+        <p> To see if we "hit the wall", the calculations are a little
+            easier to read, if we create variables for the left, top, right
+            and bottom edges of the ball. You can write the code without
+            these extra variables, but then your Boolean conditions are
+            a little "noisy":
+            <img src='images/animate10.gif' class='inline' alt=''>
+        </p>
+        <p> With the variables, the conditions are pretty simple. If you've
+            hit the left wall (<code>left &lt; 0</code>) or the right
+            wall (<code>right &gt;= getWidth()</code>), then you need
+            to adjust the angle by subtracting the current directions
+            from 180:<br>
+            <img src='images/animate11.gif' class='inline' alt=''>
+            Of course that means you may end up with a negative angle
+            (when the current direction is greater than 180), but the
+            <code>movePolar()</code> method is smart enough to handle
+            that, and automatically adds 360.
+        </p>
+        <p> When you hit the floor or the ceiling, you perform a similar
+            calculation, only instead of subtracting from 180, you
+            subtract from 360.
+        </p>
+    <h5>Try it Out!</h5>
+        <p> You can run the
+            <a href='javascript:popUpWindow("http://faculty.orangecoastcollege.edu/sgilbert/applets/PolarBounce.html",10, 10, 550, 450);'>
+            <b>PolarBounce</b></a> applet in a separate window by clicking
+            the link in this sentence.
+        </p>
+    <h4>Adding Interactivity</h4>
+        <p> You can interact with the bouncing ball by using the event
+            handling you learned about in the last lecture. If you add
+            the line:
+        </p>
+        <p class='code'>
+            addMouseListeners();
+        </p>
+        <p> to the end of the <code>init()</code> method, and then add
+            a <code>mousePressed()</code> method, like this:<br>
+            <img src='images/animate12.gif' class='inline' alt='Handling a mouse event.'>
+            then whenever you click on the ball, it will head off in
+            a random direction.
+        </p>
+        <p class='note'>The code fragment shown here first creates a
+            <code>GPoint</code> object using the mouse location reported
+            by the event parameter, before seeing if the ball's bounding
+            rectangle contains the point. This is necessary because the
+            ball (and all ACM <code>GObjects</code>) use <code>doubles</code>
+            to represent their coordinates, while the normal coordinates
+            used by the event parameter are stored as <code>int</code>.
+        </p>
+    <h5>Making the Ball Listen</h5>
+        <p> Instead of checking to see if the ball's bounding rectangle
+            contains the mouse point, a better alternative is to have only
+            the ball itself listen for mouse events. Instead of adding the
+            "generic" <code>addMouseListeners()</code> code to the bottom
+            of your <code>init()</code> method, replace it with this:<br>
+            <img src='images/animate13.gif' class='inline' alt='The ball as an event listener.'>
+            Once you've done this, you no longer need to check to see if
+            the mouse click is contained inside the ball. The event-handler
+            will <b>only</b> be called when the ball is clicked.
+        </p>
+    <h3>Traditional Applet Animation</h3>
+        <p> To animate a traditional, non-ACM applet, you follow the same
+            basic pattern, with these few differences:
+        </p>
+        <ul>
+            <li>Use the regular applet <code>paint()</code> method <b>instead of</b>
+                the <code>advanceOneFrame()</code> method from the ACM version.
+            </li>
+            <li> Instead of <code>run()</code>, you'll place the "pause" statement
+                at then end of the <code>paint()</code> method, and, following the
+                pause, you'll call the applet's <code>repaint()</code> method
+                to advance to the next frame.
+            </li>
+        </ul>
+        <p> Let's take a quick look at <a href='AppletBounce.java' target='_blank'>
+            <b>AppletBounce</b></a> that creates a traditional applet version
+            of the bouncing-ball program. I'll follow the same basic structure
+            as the previous example, so it will be easy for you to compare
+            the two programs.
+        </p>
+    <h4>Instance Variables</h4>
+        <p> Let's start by comparing the instance variables used in
+            <b>PolarBounce</b> with those of <b>AppletBounce</b> shown here:<br>
+            <img src='images/applet01.gif' class='inline' alt='Applet instance variables.'>
+        </p>
+        <ul>
+            <li>Since we aren't using the ACM classes, we have no graphical
+                <code>GRect</code> object to represent the ball. Instead,
+                we'll use an <code>awt.Rectangle</code> object to represent
+                the <b>bounding box</b> that will enclose our ball when
+                we paint it on the screen.
+            </li>
+            <li>Also, since we aren't using the <code>GObject</code> class,
+                we don't have a <code>movePolar()</code> method. That means
+                that to animate our ball, we'll need to adjust the position
+                of the rectangle. The two variables <code>dx</code> and
+                <code>dy</code> will contain the distance used to move
+                in each of the two axis.
+            </li>
+        </ul>
+        <p> Note also that since the applet graphics units are in pixels,
+            I've used <code>int</code> for the variable types.
+        </p>
+    <h4>Initialization</h4>
+        <p> The initialization of the two programs is also similar. Here's
+            the code for the applet version:<br>
+            <img src='images/applet02.gif' class='inline' alt='Initializing the applet.'>
+        </p>
+        <ol>
+            <li class='d'>The applet background is also set to black, but, since there
+                is no <code>waitForClick()</code> method, I didn't bother to
+                put up a <code>JLabel</code>. Also, instead of filling the
+                <code>GRect</code> with yellow, I set the foreground to
+                yellow instead, so that the ball will automatically be
+                painted in that color.
+            </li>
+            <li class='d'> To create the ball, I just create a <code>Rectangle</code>
+                object, positioned in the center just like with the ACM version. Since
+                my ball is not a visible component, I don't have to add it to
+                the surface of the applet, like I did with the <code>GRect</code>
+                version of the ball.
+            </li>
+            <li class='d'>Finally, instead of initializing distance and
+                direction, I need to initialize the <code>dx</code> and
+                <code>dy</code> variables. The calculations shown here
+                seem to result in reasonable speed, but you can
+                adjust them as you see fit.
+            </li>
+        </ol>
+    <h4>Painting</h4>
+        <p> To display the ball, we first use the <code>Rectangle translate()</code>
+            method to adjust the position of the ball's bounding box like this:<br>
+            <img src='images/applet03.gif' class='inline' alt='Painting the ball.'>
+            Then, a regular <code>fillRect()</code> just draws the ball.
+        </p>
+        <p> To see if the ball hits the edges, the applet version also uses a
+            pair of <code>if</code> statments, comparing the values in the
+            bounding box with the width and height of the applet. In this
+            version, though, instead of changing the direction, we just
+            reverse the values of <code>dx</code> or <code>dy</code> so that
+            the next frame moves the ball in the opposite direction.
+        </p>
+    <h5>Pausing</h5>
+        <p> Finally, to move to the next frame, we have to pause the animation
+            using the constant <code>PAUSE_TIME</code> defined earlier. Unfortunately,
+            the <code>Applet</code> class <i>doesn't</i> have a <code>pause()</code>
+            method, like the ACM <code>GraphicsProgram</code> class does.
+        </p>
+        <p> Instead, you have to use the <code>sleep()</code> method in the
+            <code>Thread</code> class. As you can see, that requires you to
+            surround the method with some strange looking code, called a
+            <code>try-catch</code> block, like this:<br>
+            <img src='images/applet04.gif' class='inline' alt='Advancing to the next frame.'>
+            The ACM <code>pause()</code> method actually uses <code>Thread.sleep()</code>
+            in exactly the same manner, but just hides the required
+            exception-handling code so that you don't have to see it.
+            We'll cover exception-handling and the <code>try-catch</code>
+            near the end of the semester.
+        </p>
+        <p> Once you've waited for the current frame to paint itself, you
+            can move on to the next frame by simply adding a <code>repaint()</code>
+            to the bottom of the method.
+        </p>
+        <p class='note'>Make sure you <b>never use a loop</b> inside the
+            <code>paint()</code> method, like you did in the ACM <code>run()</code>
+            method. The <code>paint()</code> method <b>draws a single frame</b>
+            of an animation, not a series of frames.
+        </p>
+    <h5>Try it Out!</h5>
+        <p> You can run the
+            <a href='javascript:javascript:popUpWindow2("http://faculty.orangecoastcollege.edu/sgilbert/applets/AppletBounce.html",400, 0, 550, 450);'>
+            <b>AppletBounce</b></a> applet in a separate window by clicking
+            the link in this sentence. Compare it to <b>PolarBounce</b> and
+            see if you can tell the difference.
+        </p>
+    <h4>Flickering</h4>
+        <p> One difference you might see, if you run the two programs
+            next to each other, is that the applet version seems to "flicker"
+            more than the ACM version. That's because every time you paint
+            the oval on the screen, the <code>paint()</code> method first
+            erases the previous frame by using the equivalent of a
+            <code>fillRect()</code> that covers the entire applet.
+        </p>
+        <p> Thus as each oval is drawn, your eye sees first a blank as the
+            background is erased, and then the yellow oval is drawn over it.
+            Even worse, since each frame last for such a short time, often
+            only part of the oval is drawn before the erasing for the next
+            frame begins.
+        </p>
+        <p> The solution is to use something called <b>double buffering</b>,
+            which is what the ACM program uses behind the scenes.
+            <center>
+            <img src='images/double-buffer.gif' class='inline' alt='Double-buffering.'>
+            </center>
+            Double-buffering involves painting all the portions of your
+            frame onto an <b>offscreen canvas</b>, and then "blasting"
+            that offscreen image onto the screen in a single painting
+            operation.
+        </p>
+        <p> The code to do this is relatively complex, and really beyond
+            what you're expected to know in this class. If you want to
+            see how it works, though, I've created a third version of
+            the bouncing ball program, <a href='BufferedBounce.java' target='_blank'>
+            <b>BufferedBounce</b></a> that you can download and examine
+            at your leisure.
+        </p>
+        <p>You can run the
+            <a href='javascript:javascript:popUpWindow2("http://faculty.orangecoastcollege.edu/sgilbert/applets/BufferedBounce.html",400, 0, 550, 450);'>
+            <b>BufferedBounce</b></a> applet in a separate window by clicking
+            the link in this sentence and compare it to the other
+            two versions of the bouncing-ball program.
+        </p>
+    <h3>Coming Up Next...</h3>
+        <p> In this lesson, you learned to <b>animate</b> ACM graphical
+            shapes by moving and pausing them from inside the <code>run()</code>
+            method. You also learned how to animate shapes in an applet
+            as well.
+        </p>
+
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

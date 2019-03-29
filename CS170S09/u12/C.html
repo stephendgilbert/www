@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p> <img src="images/f10.gif" class="right" alt="The Tic Tac Toe Game.">
+            <b><span class="cap">W</span>elcome back to <i>more</i>
+            arrays!</b> In this lesson, you'll examine a potpourii
+            of different array topics and applications.
+        </p>
+        <p> You'll learn:</p>
+        <ul>
+            <li>How to process the array of <b>command-line arguments</b>
+                that are passed to every application.
+            </li>
+            <li>How to use arrays to write methods that take a <b>variable
+                number of arguments</b>.
+            <p></p>
+            </li><li>How to create and process <b>multi-dimensional</b> arrays.
+            </li>
+        </ul>
+        <p> Along with each of these topics, there's one last homework
+            assignment that will give you a little more practice
+            with the topic.
+        </p>
+    <h3>Command-line Arguments</h3>
+        <p> One of the most common uses of <code>String</code> arrays
+            is when you create an application and you need to pass information
+            into that application when you run it.
+            With applications, both GUI <i>and</i> console-mode, arguments
+            are passed to your program via the operating system shell
+            <b><u>command line</u></b>,
+            similar to those you supply when you use <b>javac</b> to compile
+            your Java code from the terminal window.
+        </p>
+        <p> When you manually compile your code, you type in the word
+            <b><i>javac</i></b>, and then follow that with the name
+            of the program you want to compile, like this:
+            <img src="images/f11.gif" class="inline" alt="Compiling from the command line.">
+            The program file name you supply, <b>VoteCounter.java</b> in the screenshot
+            shown here, is an example of a command line argument.
+        </p>
+    <h4>Processing the Command Line</h4>
+        <p> As you'll recall, when a Java application begins, it starts with the
+            <code>main()</code> method. The <code>main()</code> method is passed
+            a single argument from the operating system, an array of
+            <code>String</code>, traditionally called <code>args</code>.
+            (Of course, you <i>can</i> name it anything you like.)
+        </p>
+        <p> Inside your <code>main()</code> method, you can check the field
+            <code>args.length</code> to see how many arguments were passed.
+            If no arguments were passed to your application, then
+            <code>args.length</code> will be 0.
+        </p>
+        <p> Since <code>args.length</code> tells you how many arguments there are, the
+            situation practically <i><b>begs</b></i> for a <code>for</code> loop,
+            right? Here's an simple console mode application that you can use to
+            see how this works.
+        </p>
+<pre class='code'><span style="background: transparent; color: red;"><b>// Args.java</b></span>
+public class Args
+{
+    public static void main(String[] args)
+    {
+        for (int i = 0; i &lt; args.length; i++)
+            System.out.println(args[i]);
+    }
+}
+</pre>
+        <p> Since <b>Args</b> is a console mode application, it doesn't need to
+            extend anything, it just needs to have a <code>main()</code>
+            method. Inside the <code>main()</code> method, the program simply loops
+            through the array (<code>args</code>) and prints each command
+            line argument to the console.
+        </p>
+
+        <p> Here's what the program looks like as it runs:
+            <img src="images/f12.gif" class="inline" alt="Running the Args program from the command line.">
+            As you can see, Java separates each word into a separate element of the
+            <code>args</code> array: the first word becomes element 0, the second
+            becomes element 1, and so on. When you enclose several words in quotes,
+            like "Three Four" in the example, the entire phrase is treated as a single
+            element of the array.
+        </p>
+        <p class="redbox"><b>Remember:</b> command-line arguments are passed as
+            <code>Strings</code>, not numbers. That means that
+            if you want to process <b>numbers</b>, you'll need to <i>convert</i>
+            the numbers, using a method like <code>Integer.parseInt()</code>.
+        </p>
+    <h3>Variable-Length Parameter Lists</h3>
+        <p> Variable-length parameter lists are a feature introduced with Java 5
+            that allows you to create methods that take, as the name
+            suggests, a variable number of parameters. Suppose, for
+            instance, that you wrote a method that returned the
+            maxium of two doubles, like this:
+        </p>
+        <p class="code">
+        public double max(double a, double b)<br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return a &lt; b ? b : a;<br>
+        }
+        </p>
+        <p> This is fine for two numbers, but when you need to find
+            the maximum of three numbers, or four, you'll need to
+            write overloaded methods for each of
+            those cases, like this:
+        </p>
+        <p class="code">
+            public double max(double a, double b) { ... }<br>
+            public double max(double a, double b, double c) { ... }<br>
+            public double max(double a, double b, double c, double d) { ... }
+        </p>
+        <p> Of course, the code in each method is going to be
+            different, to handle the differing number of arguments.
+            Variable-length parameter-lists allow you to write a
+            <b>single</b> method that can be used in all of those cases.
+            Here's how it works.
+        </p>
+    <h4>Parameter Definition</h4>
+        <p> A variable-length formal parameter is really a way of
+            defining a special kind of <b>array</b> parameter. When defining
+            the formal parameter, use an ellipsis (three dots) <i>instead</i>
+            of the square brackets you'd use for a normal array declaration.
+        </p>
+        <p> Here's an example using the <code>max()</code> method:</p>
+        <p class="code">
+        public double max(double ... nums) { ... }
+        </p>
+        <p> Inside the <code>max()</code> method, you treat <code>nums</code>
+            as a regular array of double. That means that you can use the
+            standard array-processing algorithm for finding the largest
+            value, and then return that, as shown here.
+        </p>
+        <p class="code">
+        public double max(double ... nums) <br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;double largest = nums[0];<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;for (double n : nums)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (n &gt; largest)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;largest = n;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return largest;<br>
+        }
+        </p>
+    <h4>Using the Method</h4>
+        <p> The big difference between a variable-length parameter method,
+            and one that takes a regular array as a formal parameter, is
+            that, for the variable-length variety, Java will create the
+            array <b>for</b> you; with the "regular" version, its up to
+            the caller to create the array before calling the method.
+        </p>
+        <p> Here's an example:</p>
+        <p class="code">
+        int d1 = max(10, 20); <span class="cmt">// 2 arguments</span><br>
+        int d2 = max(10, 20, 30, 50, 70); <span class="cmt">// 5 arguments</span>
+        </p>
+        <p> Constructors can also be
+            written to accept variable numbers of parameters. You can
+            combine a variable-length parameter with regular parameters,
+            but the variable-length parameter must come last. You <b>can't</b>
+            have more than one variable-length parameter per method.
+        </p>
+    <h3>2D Arrays</h3>
+        <p>When you declare an array,
+            the elements can be of <b><u>any</u></b> type. You can create an array of
+            <code>Button</code> references like this:
+        </p>
+        <p class="code">Button[] buttons = new Button[5];</p>
+        <p>and, you can create an array <code>int</code> variables like this:</p>
+        <p class="code">int[] pieces = new int[10];</p>
+        <p><img src="images/f02.gif" class="right" alt="An Excel worksheet.">
+            The variables <code>buttons</code> and <code>pieces</code> are
+            both <b>array variables</b> that refer to a collection of
+            <code>Button</code> references or to a collection of
+            <code>int</code> values.
+        </p>
+        <p>
+            Java also allows you to create array variables that refer, not
+            to <code>Button</code> objects or <code>int</code> values, but
+            to <b>other arrays</b>. These are called <b>multidimensional
+            arrays</b>. Since we'll only be working with two dimensions in
+            this class, I'll refer to these as <b>2D arrays</b>, although
+            you <i>can</i> have as many dimensions as you like.
+        </p>
+        <br clear="all">
+        <p> The easiest way to think of a 2D array is to think of rows and
+            columns. A grid or a spreadsheet is a useful mental model. In
+            reality, though, a 2D array is composed of <b>arrays of
+            arrays</b>. You'll see what that <b>really</b> looks
+            like shortly.
+        </p>
+        <p> To create a 2D array, just extend the syntax you've already
+            learned for 1D arrays. For instance, in the example shown
+            here:
+        </p>
+        <p class="code">int[] d1 = new int[5];</p>
+        <p> the variable <code>d1</code> is an <code>int[]</code>
+            (<code>int</code> array) that refers to 5 <code>int</code>
+            values.
+        </p>
+        <p> Since that's true, perhaps you can figure out what
+            the code shown here means:
+        </p>
+        <p class="code">int[][] grid;</p>
+        <p> The variable <code>grid</code> <b>is</b> an array variable,
+            just the like the variable <code>d1</code> in the earlier
+            example. But, each of the elements contained in the
+            <code>grid</code> array is <b>not</b> an <code>int</code>, but an
+            <code>int[]</code>&#8212; that is, an <code>int</code> array variable.
+        </p>
+    <h4>Allocating Memory</h4>
+        <p> Of course, just like with 1D arrays, an <b>array variable</b> doesn't
+            actually "point to" anything, until you allocate some memory
+            by using <code>new</code> and an array constructor. The
+            syntax for doing this with a 2D array is very similar to that
+            used for a single-dimension array:
+        </p>
+        <p class="code">int[][] grid = new int[2][4];
+        </p><p> This piece of code creates a variable (<code>grid</code>), that
+            refers to a two-element array. Each element in that two-element
+            array (<code>grid[0]</code> and <code>grid[1]</code>) is
+            an <code>int[]</code>, that is, an <b><code>int</code> array
+            variable</b>, as shown here:
+            </p><center>
+            <img src="images/f03.gif" alt="The memory layout of a 2D array" class="inline">
+            </center>
+            In this case, both <code>grid[0]</code> and <code>grid[1]</code>
+            refer to separate four-element <code>int</code> arrays.
+            The illustration should help you to visualize
+            the relationships between the various pieces.
+        <p></p>
+    <h4>Using 2-D Elements</h4>
+        <p> Rather than thinking of 2-D arrays as shown in the previous
+            illustration, (even though that is how the arrays are
+            <i>actually</i> implemented in memory), it is usually
+            easier to think of them as an actual grid composed of rows and
+            columns, labeled starting at 0, like this:
+            </p><center>
+            <img src="images/x02.gif" alt="The logical layout of an array in memory" class="inline">
+            </center>
+            Thinking of 2-D arrays in this way makes it easy to
+            remember where the individual elements are located.
+        <p></p>
+        <p> To access an individual element, instead of providing <b>one</b>
+            subscript enclosed in brackets, you supply <b>two subscripts</b>, each
+            enclosed in its own set of brackets. (You cannot put both
+            subscripts in the same set of brackets, as you can do in Pascal).
+        </p>
+        <ul>
+            <li>The first subscript represents the <b>row</b> in the array.</li>
+            <li>The second subscript represents the <b>column</b> of the
+            element you want.
+            </li>
+        </ul>
+        <p> Remember that both subscripts are <b>zero based</b>.
+        </p>
+        <p class="note"><b>C/C++ Note</b> : In Java, subscripts <b>do
+            not</b> "wrap around" as they do in some other languages such
+            as C. You cannot access <code>scores[1][0]</code> by using the
+            notation <code>scores[0][3]</code>. That's because, in reality,
+            you are accessing an individual array variable, as shown in the
+            earlier illustration.
+        </p>
+    <h4>Initializing 2D Arrays</h4>
+        <p> You can initialize 2D arrays by using loops and storing values
+            in each element, just as you can with a  one-dimensional array.
+            Of course, when accessing 2D arrays, you'll usually use a
+            <b>pair</b> of nested <code>for</code> loops with indexes for
+            the row and column.
+        </p>
+        <p> Just as with 1D arrays, you can create and initialize a 2D array
+            in one statement by providing a list of initial values in an
+            <b>initializer list</b>. When you do this, you supply a separate
+            initializer list for each of the subarrays. Each of these
+            subarray initializers is enclosed in its own set of braces, and
+            separated from the others by commas.
+        </p>
+        <p> <img src="images/f08.gif" class="right" alt="Creating a 2D array of keyCaps.">
+            Here's an example that creates a 4 x 3 array of <code>String</code>
+            that imitates the layout of a standard numeric keypad.
+        </p>
+        <p> When you use automatic initialization like this, you must
+            remember to match the number of brackets and initializers.
+            If you have only a single bracket after <code>String[]</code>
+            your program won't compile.
+        </p>
+    <h4>Processing 2D Arrays</h4>
+        <p> As I previously mentioned, you'll normally process a 2D array by
+            using a pair of <b>nested</b> <code>for</code> loops with
+            indices for the rows and columns. This is pretty straightforward.
+        </p>
+        <p> Here's some code that processes the array <code>keyCaps</code>,
+            from the last section, to create a set of <code>Button</code>:
+        </p>
+        <p class="code">
+            for (int row = 0; row &lt; 4; row++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int col = 0; col &lt; 3; col++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add(new Button(keyCaps[row][col]));
+        </p>
+        <p> Of course, if you want to avoid hard-coding the sizes of the
+            rows and columns, Java allows you to make a perfectly generic
+            traveral loop by using each "sub-array"'s <code>length</code>
+            field like this (assuming an array named a):
+        </p>
+        <p class="code">
+            for (int r = 0; r &lt; a.length; r++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int c = 0; c &lt; <span class="red">a[r].length</span>; c++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Process a[r][c] here</span>
+        </p>
+        <p> Notice that each row in a 2D array can be treated as a
+            1D array in its own right. Thus for the inner loop in this
+            example, (when processing the columns), we could test against
+            <code>a[r].length</code>, because each subarray has its <b>own</b>
+            <code>length</code> field.
+        </p>
+        <p> Here is the source code for an applet
+            <a href='javascript:var%20w=window.open("NumPad.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>NumPad.java</b></a> which uses this code to create a
+            simple numeric keypad. You can
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/NumPad.html',0,0,500,550);">
+            <b>run the applet</b></a> by clicking the link
+            in this sentence, or, you can just take my word for it, and
+            look at the nice picture shown here:
+            </p><center>
+            <img src="images/f09.gif" alt="Running the NumPad applet" class="inline">
+            </center>
+        <p></p>
+    <h4>2D Arrays and Methods</h4>
+        <p> The way that Java 2D arrays are implemented makes it very easy
+            to write methods which take 2D arrays as arguments. You just
+            have to remember to declare the formal arguments using <b>two
+            brackets</b> instead of one.
+        </p>
+        <p> Here's an example of a method that takes a 2D array of
+            <code>double</code> and returns the sum of all the numbers.
+        </p>
+        <p class="code">
+            <span class="red">//The sum2D() Method</span><br>
+            <br>
+            double sum2D(double[][] ar)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double sum = 0.0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int r=0; r &lt; ar.length; r++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int c=0; c &lt; ar[r].length; c++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += ar[r][c];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return sum;<br>
+            }
+        </p>
+    <h5>Returning 2D Arrays</h5>
+        <p> Just as with 1D arrays, you can <b>return</b> 2D arrays
+            from your methods. If, for instance, you're certain that every
+            row in your 2D array has the same number of elements, you could
+            return a 2D array containing the sum of each row and column like
+            this:
+        </p>
+        <p class="code">
+            <span class="red">//The sum2DAR() Method</span><br>
+            <br>
+            double[][] sum2DAR(double[][] ar)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double[][] ans;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ans[0] = new double[ar.length]; <span class="cmt">// rows</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ans[1] = new double[ar[0].length];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int r=0; r &lt; ar.length; r++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int c=0; c &lt; ar[r].length; c++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ans[0][r] += ar[r][c]; <span class="cmt">// Add each row total;</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ans[1][c] += ar[r][c]; <span class="cmt">// Sum of each column</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ans;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// ans[0] contains sum of each row</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// ans[1] contains sum of each col</span><br>
+            }
+        </p>
+    <h4>Ragged Arrays</h4>
+        <p> The array returned from <code>sum2DAR()</code> is called a
+            <b>ragged array</b>, because the two 1D arrays
+            <code>ans[0]</code> and <code>ans[1]</code> normally will
+            have different lengths. If you pass a 2D array that has
+            20 columns and only 5 rows, then the returned array will
+            have 5 elements in the the first array <code>ans[0]</code>
+            and 20 elements in the second array <code>ans[1]</code>.
+        </p>
+        <p> To create a ragged array, you have to allocate space for
+            each row of the 2D array independently, as is done inside
+            <code>sum2DAR() </code>with this code:
+        </p>
+        <p class="code">
+            double[][] ans;<br>
+            ans[0] = new double[ar.length]; <br>
+            ans[1] = new double[ar[0].length];
+        </p>
+    <h3>Coming Up Next ...</h3>
+        <p> That's it for arrays! Now let's turn our attention to one last
+            topic you've already met. In Unit 10 you learned how to
+            <b>throw</b> exceptions; in the next lesson, you'll learn
+            how to <b>handle</b> them.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

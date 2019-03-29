@@ -1,0 +1,678 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">W</span>e've already covered <i>some</i> of
+            the material from Chapter 6 in your text</b>. In this lesson,
+            we'll pick up a couple more pieces, and finish up the chapter
+            in the next few units, when we talk about inheritance and
+            polymorphism.
+        </p>
+        <p> The topics we'll discuss in this lesson all deal, either
+            directly or indirectly, with "class design" and
+            "writing methods". The specific topics we'll discuss are:</p>
+        <ul>
+            <li><b>Variable scope</b>: which variables are visible from where?</li>
+            <li><b>Static members</b>: what are <code>static</code> fields
+                and <code>static</code> methods, and when do you use them?
+            </li>
+        </ul>
+        <p> Along the way, we'll also revisit the topics of argument massing
+            and method design. Let's start, though, by looking at
+            method <b>scope</b>.
+        </p>
+    <h3>Static Members</h3>
+        <p> <img src="images/f02.gif" class="right" alt="Captain Static cartoon character.">
+            A <code>static</code> object
+            is one that persists as long as your program is running.
+            In Java, we have both <b>static fields</b> and
+            <b>static methods</b>.
+        </p>
+        <p> Let's start by looking at <code>static</code> fields.</p>
+    <h4> Static Fields</h4>
+        <p> Static fields are <b>shared</b> fields. You can think
+            of them as <i>semi-global</i> variables; they're <b>not</b>
+            accessible everywhere in your program, but they <b>are</b>
+            shared among all the objects in a class.
+        </p>
+        <p> A <code>static</code> is often called a
+            <b>class variable</b>, as opposed to an <b>instance
+            variable</b>. You can think of it as belonging to the class
+            as a whole, rather than to any individual object.
+        </p>
+        <p> When you create an object from a class, that object gets a
+            <b>copy</b> of each of the instance variables defined by the
+            class. The same object, however, does <b>not</b> get a copy
+            of the class variables; there is only <b>one</b> copy of each
+            class variable, "living" inside the class.
+        </p>
+        <div class="sidebar" style="background: ghostwhite none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <p style="border-bottom: 1px solid silver; font-size: larger; font-weight: bold; text-align: center; color: navy;">
+        A Useful Analogy
+        </p>
+        <p> Here's an analogy that I read in a discussion group, and that I
+            thought was very useful. Suppose that you're building a piece of
+            software that simulates an iPod factory. Each iPod would have
+            certain data associated with it, and one of those pieces of data
+            would be the individual iPod <i>serial number</i>. In your program,
+            <code>serialNumber</code> would be an <b>instance variable</b> because
+            each iPod would have a unique value and that value should be
+            attached to the individual iPod object.
+        </p>
+        <p> In the iPod constructor, you'd want to initialize the serial
+            number field, but you'd also have to make sure that no two iPods
+            had the <u>same</u> serial number. How would you do that?
+        </p>
+        <p> The easiest way is for the iPod class itself to keep a "master
+            serial number" that individual iPod objects can access, and that
+            gets updated to "the next number" whenever the current one is
+            used by an iPod object.
+        </p>
+        <p> If you think of a class as a "factory" for producing objects,
+            then the <code>serialNumber</code> belongs to the individual
+            iPod, while the <code>masterSerialNumber</code> data belongs
+            to the iPodFactory.
+        </p>
+        </div>
+    <h5>Defining Class Variables</h5>
+        <p> To define a class variable, you just add the keyword
+            <code>static</code> as one of the modifiers appearing before
+            the variable type. There are no rules about the order of
+            modifiers, as long as it comes before the type.
+        </p>
+        <p> Here's an example that illustrates shows both a class variable
+            and an instance variable. (This is from a "SpaceWars" type game.)
+        </p>
+        <p class="code">
+            public class XFighter extends Fighter<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private int serialNo; <span class="cmt">// Instance variable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private <span class="red">static</span> int numShips = 0; <span class="cmt">// Class variable</span><br>
+            }
+        </p>
+        <p> The class variable <code>numShips</code> is an example of a
+            <b>population counter</b>. In the "SpaceWars" game, each
+            <code>XFighter</code> object would get its own
+            <code>serialNo</code>  value, but all of the
+            <code>XFighters</code> would share the single copy of
+            <code>numShips</code>.
+        </p>
+        <p> The constructor would be responsible for giving each ship
+            a serial number, and incrementing the total number of
+            ships:
+        </p>
+        <p class="code">
+            public XFighter(int serialNo)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.serialNo = serialNo; <span class="cmt">// set the serial number</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips + 1; <span class="cmt">// increase the number of ships</span><br>
+            }
+        </p>
+        <p> When the ship was destroyed, a method could decrease the
+            total number of <code>XFighter</code> objects in existence,
+            like this:
+        </p>
+        <p class="code">
+            public void dieDieDIE()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Make neat explosion noises, etc.</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips - 1; <span class="cmt">// decrease the number of ships</span><br>
+            }
+        </p>
+    <h4> Static Methods</h4>
+        <p> While the counter <code>numShips</code> works fine for keeping
+            track of the number of <code>XFighter</code> objects, it has
+            one nagging problem: only <code>XFighter</code> objects can
+            find out how many <code>XFighter</code> exist! How does the
+            <b>UniversalOverlord</b> object find out if he (or she!) needs
+            to create more <code>XFighters</code>?
+        </p>
+        <p> A regular method won't work in this case. Assume that you
+            had a method named <code>getNumShips()</code>, defined like this:
+        </p>
+        <p class="code">
+            public int getNumShips() { return numShips; }
+        </p>
+        <p> How does the <code>UniversalOverlord</code> use the class?
+            Like this?
+        </p>
+        <p class="code">
+            XFighter temp = new XFighter(0);<br>
+            int numXFighters = temp.getNumShips() - 1;<br>
+            temp.dieDieDIE();
+        </p>
+        <p> Well, that's <span style="background: transparent none repeat scroll 0% 0%; color: red; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><b>
+            stupid!</b></span> We had to create, and destory, a dummy
+            <code>XFighter</code>, just to find out how many fighters
+            exist. Then we had to subtract one from the result just
+            to eliminate the dummy variable we created. (Not to mention
+            putting up with the pyrotechnics generated by <code>dieDieDIE()</code>.
+            <b>This</b> is where we need the <code>static</code> method.
+        </p>
+    <h5>Defining and Using a Static Method</h5>
+        <p> To define a <code>static</code> method, just add the word
+            <code>static</code> as one of the modifiers; it must go
+            before the return type, but does not have to go before
+            the access specifier (<code>public</code> or <code>private</code>).
+        </p>
+        <p class="code">
+            public <span class="red">static</span> int getNumShips() { return numShips; }
+        </p>
+        <p> Inside the body of the static method, you <b>cannot</b> refer
+            to any instance variables. You may create local variables, and
+            you can refer to <code>static</code> fields, but not
+            instance variables. Since the <code>getNumShips()</code>
+            method only refers to the <code>static</code> variable
+            <code>numShips</code>, the code it contains is fine.
+        </p>
+        <p> To use a <code>static</code> method, you use the name of the
+            <b>class</b>, instead of the name of an object, when
+            calling the method. Here's the code that <code>UniversalOverlord</code>
+            would use to call the method:
+        </p>
+        <p class="code">
+            int numXFighters = <span class="red">XFighter</span>.getNumShips();
+        </p>
+        <p> Note that we need neither create, nor destroy, an <code>XFighter</code>
+            object, to find out how many exist.
+        </p>
+    <h5>More Static Methods</h5>
+        <p> The <code>Math</code> class, which consists of methods that perform
+            arithmetic, (as you'd expect), consists entirely of <code>static</code>
+            methods. Write static methods whenever you need a method that
+            will work without first creating an object.
+        </p>
+    <h4>Scalar and Structured Types</h4>
+        <p> <img src='images/user-defined-types.gif' class='right' alt='Two user-defined types.'>
+            We can divide user-defined types into types that contain a
+            single value, called <b>scalar types</b>, and types that combine
+            multiple data items into a larger unit, which are generally
+            known as <b>structured</b> types.
+        </p>
+        <p> The <code>Weekday</code> user-defined type picture to the right
+            is an example of a <i>scalar</i> type that contains only a
+            single simple value, while the <code>Date</code> type illustrated
+            here is a <i>structured</i> type, consting of a month, day and
+            year.
+        </p>
+
+        <p> All of the built-in, primitive data types&#8212;<code>int</code>, <code>char</code>,
+            <code>boolean</code> and <code>double</code>&#8212;are <b>scalar</b>
+            data types</b>. Java's class types, such as <code>String</code>,
+            are <b>structured</b> types.
+        </p>
+        <p> In addition to the built-in primitive types, Java lets you define
+            your own scalar type, called an <b>enumerated type</b>. Let's
+            look at that now.
+        </p>
+    <h3> Enumerated Types</h3>
+        <p> To create your own scalar, enumerated types in Java, you have
+            to do two things:
+        </p>
+        <ul>
+            <li>Supply a name for your new type in an <code>enum</code>
+                definition. This is similar to a <code>class</code> definition
+                which we'll study in the next lesson.
+            </li>
+            <li>Provide a <b>list of all possible values</b> that the type
+                can contain. These are not integer literals, but names
+                that represent the different values a variable could take
+                on.
+            </li>
+        </ul>
+        <p> Let's look at a simple example: the days of the week:<br>
+An enum type is a type whose fields consist of a fixed set of constants. Common examples include compass directions (values of NORTH, SOUTH, EAST, and WEST) and the days of the week.
+
+Because they are constants, the names of an enum type's fields are in uppercase letters.
+
+In the Java programming language, you define an enum type by using the enum keyword. For example, you would specify a days-of-the-week enum type as:
+
+    public enum Day {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY
+    }
+
+You should use enum types any time you need to represent a fixed set of constants. That includes natural enum types such as the planets in our solar system and data sets where you know all possible values at compile time—for example, the choices on a menu, command line flags, and so on.
+
+Here is some code that shows you how to use the Day enum defined above:
+
+    public class EnumTest {
+    	Day day;
+
+    	public EnumTest(Day day) {
+    		this.day = day;
+    	}
+
+    	public void tellItLikeItIs() {
+    		switch (day) {
+    			case MONDAY: System.out.println("Mondays are bad.");
+    					     break;
+
+    			case FRIDAY: System.out.println("Fridays are better.");
+    					     break;
+
+    			case SATURDAY:
+    			case SUNDAY: System.out.println("Weekends are best.");
+    					     break;
+
+    			default:	 System.out.println("Midweek days are so-so.");
+    					     break;
+    		}
+    	}
+
+    	public static void main(String[] args) {
+    		EnumTest firstDay = new EnumTest(Day.MONDAY);
+    		firstDay.tellItLikeItIs();
+    		EnumTest thirdDay = new EnumTest(Day.WEDNESDAY);
+    		thirdDay.tellItLikeItIs();
+    		EnumTest fifthDay = new EnumTest(Day.FRIDAY);
+    		fifthDay.tellItLikeItIs();
+    		EnumTest sixthDay = new EnumTest(Day.SATURDAY);
+    		sixthDay.tellItLikeItIs();
+    		EnumTest seventhDay = new EnumTest(Day.SUNDAY);
+    		seventhDay.tellItLikeItIs();
+
+
+    	}
+    }
+
+
+The output is:
+
+    Mondays are bad.
+    Midweek days are so-so.
+    Fridays are better.
+    Weekends are best.
+    Weekends are best.
+
+Java programming language enum types are much more powerful than their counterparts in other languages. The enum declaration defines a class (called an enum type). The enum class body can include methods and other fields. The compiler automatically adds some special methods when it creates an enum. For example, they have a static values method that returns an array containing all of the values of the enum in the order they are declared. This method is commonly used in combination with the for-each construct to iterate over the values of an enum type. For example, this code from the Planet class example below iterates over all the planets in the solar system.
+
+    for (Planet p : Planet.values()) {
+        System.out.printf("Your weight on %s is %f%n",
+                              p, p.surfaceWeight(mass));
+    }
+
+    Note: All enums implicitly extend java.lang.Enum. Since Java does not support multiple inheritance, an enum cannot extend anything else.
+
+In the following example, Planet is an enum type that represents the planets in the solar system. They are defined with constant mass and radius properties.
+
+Each enum constant is declared with values for the mass and radius parameters. These values are passed to the constructor when the constant is created. Java requires that the constants be defined first, prior to any fields or methods. Also, when there are fields and methods, the list of enum constants must end with a semicolon.
+
+    Note: The constructor for an enum type must be package-private or private access. It automatically creates the constants that are defined at the beginning of the enum body. You cannot invoke an enum constructor yourself.
+
+In addition to its properties and constructor, Planet has methods that allow you to retrieve the surface gravity and weight of an object on each planet. Here is a sample program that takes your weight on earth (in any unit) and calculates and prints your weight on all of the planets (in the same unit):
+
+    public enum Planet {
+        MERCURY (3.303e+23, 2.4397e6),
+        VENUS   (4.869e+24, 6.0518e6),
+        EARTH   (5.976e+24, 6.37814e6),
+        MARS    (6.421e+23, 3.3972e6),
+        JUPITER (1.9e+27,   7.1492e7),
+        SATURN  (5.688e+26, 6.0268e7),
+        URANUS  (8.686e+25, 2.5559e7),
+        NEPTUNE (1.024e+26, 2.4746e7);
+
+        private final double mass;   // in kilograms
+        private final double radius; // in meters
+        Planet(double mass, double radius) {
+            this.mass = mass;
+            this.radius = radius;
+        }
+        private double mass()   { return mass; }
+        private double radius() { return radius; }
+
+        // universal gravitational constant  (m3 kg-1 s-2)
+        public static final double G = 6.67300E-11;
+
+        double surfaceGravity() {
+            return G * mass / (radius * radius);
+        }
+        double surfaceWeight(double otherMass) {
+            return otherMass * surfaceGravity();
+        }
+        public static void main(String[] args) {
+            double earthWeight = Double.parseDouble(args[0]);
+            double mass = earthWeight/EARTH.surfaceGravity();
+            for (Planet p : Planet.values())
+               System.out.printf("Your weight on %s is %f%n",
+                                 p, p.surfaceWeight(mass));
+        }
+    }
+
+If you run Planet.class from the command line with an argument of 175, you get this output:
+
+    $ java Planet 175
+    Your weight on MERCURY is 66.107583
+    Your weight on VENUS is 158.374842
+    Your weight on EARTH is 175.000000
+    Your weight on MARS is 66.279007
+    Your weight on JUPITER is 442.847567
+    Your weight on SATURN is 186.552719
+    Your weight on URANUS is 158.397260
+    Your weight on NEPTUNE is 199.207413
+
+    <h4> Creating Variables</h4>
+    <h4> Assigning Values</h4>
+    <h4> Flow of Control </h4>
+    <h4> Input and Output </h4>
+        <h4>The Need for Enumerated Types</h4>
+        <p> Do you remember how to create a font? You use one of the
+            <code>Font</code> constructors, like this example from
+            Unit 7:<br>
+            <img src='images/font.gif' class='inline' alt='Creating a Font object.'>
+            When you call the <code>Font</code> constructor, you pass three
+            parameters. The last two parameters, <code>style</code> and
+            <code>size</code> are both of type <code>int</code>.
+        </p>
+        <p> When you use this constructor, instead of passing an arbitrary
+            <code>int</code> for the style, you'll use one of the predefined
+            <code>Font</code> class constants, like <code>Font.PLAIN</code>
+            or <code>Font.BOLD</code>. That causes two problems, however:
+        </p>
+        <ul>
+            <li>Because both the second and third parameter are type <code>int</code>,
+                the compiler <b>can't</b> warn you if you accidentally switch
+                the order of the parameters, like this:<br>
+                <p class='code'>
+                Font bigFont = new Font("Monospaced", 36, Font.BOLD);
+                </p>
+            </li>
+            <li> You don't even get a runtime error, like you do if
+                you pass an "out of range" int to the <code>Color</code>
+                constructor. All you get is itsy-bitsy font in an unknown
+                style. (That's because the actual value used for
+                <code>Font.BOLD</code> is simply the integer 1.
+                (<code>Font.PLAIN</code> is the value 0, while
+                <code>Font.ITALIC</code> is the value 2). When we
+                pass 64 to the second (<code>style</code>) parameter,
+                it's simply ignored, since it <b>is</b> a valid <code>int</code>
+                value.
+            </li>
+        </ul>
+        <p> Things would be a whole lot better if we could rewrite the
+            <code>Font</code> constructor so that the second parameter was
+            a different type entirely, something like this:
+        </p>
+        <p class='code'>
+            Font(String name, FontStyle style, int size)
+        </p>
+        <p> Then, if we called the constructor with the parameters in the
+            wrong order, the compiler would tell us that we'd made a mistake,
+            just as if we tried to use an integer for the font name.
+        </p>
+        <p> Unfortunately, it's too late for the <code>Font</code> class,
+            which was developed before the Java language permitted user-defined
+            enumerated types. Your programs and classes don't have to
+            suffer in this way though.
+        </p>
+    <h3> Advanced Enumerated Types</h3>
+    <h4> Constructors and Secondary Values</h4>
+    <h4> Additional Methods</h4>
+
+
+        <p><b><span class="cap">W</span>e've already covered <i>some</i> of
+            the material from Chapter 6 in your text</b>. In this lesson,
+            we'll pick up a couple more pieces, and finish up the chapter
+            in the next few units, when we talk about inheritance and
+            polymorphism.
+        </p>
+        <p> The topics we'll discuss in this lesson all deal, either
+            directly or indirectly, with "class design" and
+            "writing methods". The specific topics we'll discuss are:</p>
+        <ul>
+            <li><b>Variable scope</b>: which variables are visible from where?</li>
+            <li><b>Static members</b>: what are <code>static</code> fields
+                and <code>static</code> methods, and when do you use them?
+            </li>
+        </ul>
+        <p> Along the way, we'll also revisit the topics of argument massing
+            and method design. Let's start, though, by looking at
+            method <b>scope</b>.
+        </p>
+    <h3>Scope and Identifiers</h3>
+        <p> <img src="images/f01.gif" class="right" alt="A young man using binoculars.">
+            Most of us are pretty attuned to the sound of our names.
+            If you are at a party, and you hear someone call out "Sam!",
+            you'll probably look around and see if someone is trying to
+            get your attention. (Assuming your name is Sam, of course.)
+        </p>
+        <p> On the other hand, if you hear the name "Sam" in a movie, or
+            on TV, you're unlikely to do the same thing, because the
+            context makes it clear that <i>you're</i> not the Sam under discussion.
+        </p>
+        <p> Variable names work in a similar way; the same name can mean
+            different things, depending upon the context. As I'm sure you
+            remember, a variable is simply a <b>named</b>
+            memory location that stores a value. You'll also remember that
+            instance variables are different than local variables.
+            One of the things differentiating instance variables and local
+            variables is the <b>scope of variable names</b>.
+        </p><p>
+        </p><p> Scope is word that simply means "visibility", or ...
+        </p>
+        <p class="pullquote">...where is the name of a variable visible?</p>
+        <p> In this section, we'll look
+            at two kinds of scope: <b>local scope</b> and <b>class scope</b>.
+        </p>
+    <h4>Local Scope</h4>
+        <p> Variables created inside a method, or inside a method "block"
+            have <b>local scope</b>. (A method block is the part of a method
+            enclosed in braces; normally a method block is the body of a
+            loop or of a selection statement.) Formal arguments to a
+            method also have local scope.
+        </p>
+        <p> Here are several examples that illustrate the rules Java
+            uses for local scope.
+        </p>
+    <h5>Same Scope</h5>
+        <p> Two variables in the same scope <b>may not</b> have the same name:</p>
+        <p class="code">
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 5; <span class="cmt">// <span class="red">ERROR</span>, x already in this scope</span><br>
+            }<br>
+        </p>
+        <p> In Java, you cannot "hide" one local variable by creating a
+            new local variable inside a nested block. (This is different
+            than C/C++, which does allow this.) Here's an example,
+            using the body of an <code>if</code> statement to create a
+            local nested block. (You'll meet the <code>if</code>
+            statement in the next unit.)
+        </p>
+        <p class="code">
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = 5; <span class="cmt">// <span class="red">ERROR</span>, cannot nest local scopes in Java</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        </p>
+    <h5>Different Scope</h5>
+        <p> Variables in different local scopes may have the same name.
+            Here's an example that is OK:
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { int x = 5; }<br>
+            }
+        </p>
+        <p> The variable <b>x</b> defined inside <code>methodOne()</code>
+            is different than the variable <b>x</b> defined inside
+            <code>methodTwo()</code>. The body of <code>methodOne()</code>
+            is a <b>different</b> local scope than the body of
+            <code>methodTwo()</code>.
+        </p><p>
+        </p><p> Variables in different local scopes are <b>invisible</b> to each
+            other, and may not be accessed from another local scope.
+            Here's an example that illustrates this:
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { x = 5; } <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <span class="red">ERROR</span>, x from methodOne() is invisible in methodTwo()</span><br>
+            }
+        </p>
+
+    <h5>Formal Arguments</h5>
+        <p> Formal arguments to a method have local scope for the entire
+            method. That is, you cannot have a local variable that has
+            the same name as one of the method's formal arguments.
+        </p>
+        <p> In the example shown here, <code>methodOne()</code> is illegal
+            because the formal argument <b>x</b>, and the local variable
+            <code>x</code> have the same name.
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne(int x) { int x = 3; } <span class="red">// ERROR</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo(int y) { int x = 5; } <span class="cmt">// OK, different names</span><br>
+            }
+        </p>
+    <h4>Class Scope</h4>
+        <p> Class scope refers to the scope rules that apply to instance
+            variables (fields). The scope of an instance variable is the
+            class it is defined in.
+            This means you <b>cannot</b> have two
+            instance variables with the same name, in the same class, just
+            like you cannot have two local variables with the same name
+            in the same method.
+        </p>
+        <p class="note">Scope is also affected by the access
+            modifiers <code>public</code>, <code>private</code>, and
+            <code>protected</code>. We'll ignore that complication for
+            right now and just look at basic visiblity.
+        </p>
+    <h5>Different Classes</h5>
+        <p> What happens when two instance variables, in two different
+            classes, have the same name, like this?
+        </p>
+        <p class="code">
+            public class A { int x = 3; }<br>
+            public class B { double x = 3.3; }
+        </p>
+        <p> This is fine. Both <code>class A</code>, and <code>class B</code>
+            are different class scopes, so
+            the names don't clash with each other at all. That means,
+            just like with local variables, <b>methods</b> in <code>class A</code> cannot
+            access the instance variable <b>x</b> in <code>class B</code>, and vice-versa.
+        </p><p>
+    </p><h5>Inherited Classes</h5>
+        <p> What happens if we change the picture slightly, and make
+            <code>class B</code> a subclass of <code>class A</code>?
+            Then we end up with this piece of code:
+        </p>
+        <p class="code">
+            public class A { int x = 3; }<br>
+            public class B extends A { double x = 3.3; }
+        </p>
+        <p> Surprisingly, this also is fine; however in this case the
+            instance variable <b>x</b>,
+            defined in <code>class B</code>, "<b>shadows</b>" or
+            "<b>hides</b>" the variable <b>x</b>
+            declared in <code>class A</code>.
+        </p>
+        <p> When a superclass instance variable is shadowed by a
+            subclass instance variable, the <b>more local</b> variable
+            takes precedence. In this case, if a method in <code>class B</code>
+            wished to make changes to the instance variable <b>x</b> declared
+            in <code>class A</code>, it would have to use the <code>super</code>
+            keyword like this:
+        </p>
+        <p class="code">
+            public class B extends A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 3.3;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 5.2; &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// This is in class B</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.x = 7; <span class="cmt">// This is from class A</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+    <h5>Instance and Local Variables</h5>
+        <p> Instance variables and local variables exist in different scopes,
+            so a local variable may have the <b>same name</b> as an instance
+            varible. When that happens, the <b>most local</b> variable name
+            takes precedence.
+        </p>
+        <p>Here's an example:</p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 2.2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">&nbsp;&nbsp;// OK; in local scope, hides field x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 7; <span class="cmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// This is the <b>local variable</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.x = 5.5; <span class="cmt">// This is the <b>field</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Just like with inherited instance variables, the <b>most local</b>
+            identifier takes precedence. That means that the local variable
+            <b>x</b> "wins out" over the field <b>x</b>. If the method needs
+            to access the <b>field</b> x, it can do so by prefixing the word
+            <code>this</code> as in the last line of <code>methodOne()</code>.
+        </p>
+        <p class="note">Remember, if an inherited field is hidden, you use the
+            keyword <code>super</code> to access the hidden inherited
+            field If a field is hidden
+            by a local variable, you use the keyword <code>this</code> to
+            access the field. Hiding a field with a local variable is a common
+            source of errors, so that's one of the things we had Eclipse warn us
+            about when we configured its compiler.
+        </p>
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, we looked at two topics from Chapter 6: method scope,
+            and <code>static</code> methods. In the next unit, we'll <i>apply</i>
+            these concepts as you learn about <i>factory</i> and
+            <i>overloaded</i> methods.
+        </p>
+        <p> In the meantime, though, there are a <u><b>lot</b></u> of looping
+            exercises in this unit, so you'll want to make sure you
+            get them finished. Good luck!
+        </p>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div></body></html>

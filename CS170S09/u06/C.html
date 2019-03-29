@@ -1,0 +1,731 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src="images/grades01.gif" class="right" alt="An array variable.">
+            <b><span class="cap2">A</span>n array variable and the actual
+            array where the array elements are stored</b>, are two different things,
+            as this picture, which illustrates the memory layout of the code fragment
+            below, shows. In this example,
+            the <i>array variable</i>, <code>grades</code>, <i>refers to</i> the
+            <b><u>actual</u></b> array elements 'A', 'B' and 'C', located "somewhere else"
+            in memory.
+        </p>
+        <p> This "somewhere else" is an area known as the <b>heap</b>,
+            and it's the same memory area used to store objects. The array <b>variable</b>
+            <code>grades</code> is stored in a different area of memory, and contains
+            a <b>reference</b> to the actual array.
+            When you use <code>grades</code> as part of a subscripted variable name,
+            like this:<br>
+            <img src="images/grades02.gif" class='inline' alt="A fragement of code manipulating an array.">
+            you are <b>not</b> modifying the variable <code>grades</code>, but <b>are</b>
+            changing the value in the second element of the <b>actual array</b>
+            elements that <code>grades</code> "points to", or, more technically,
+            <b>refers to</b>.
+        </p>
+        <p> Although high-level languages are designed to hide many of the
+            lower-level details like this, you can't really escape knowing
+            about this difference between <b>value</b> types and <b>reference</b>
+            types, and the implications that this language-design decision has
+            for you as a programmer.
+        </p>
+        <p> Let's look at that now.</p>
+    <h3>Value and Reference Types</h3>
+        <p> Back in Unit 1, you learned a little bit about
+            how computers use <i>memory</i>. As we studied the history
+            of computing, for instance, you learned about John von Neumann's
+            development of the <b>stored program concept</b>: that memory
+            could be partitioned, with one part storing data, and another
+            part storing program instructions.
+        </p>
+        <p> Modern computers take this idea even further. When a program
+            is running, we can divide its data section up into three
+            <b>general categories</b>:
+        </p>
+        <ul>
+            <li>The <b><u>static storage area</u></b>. When a program
+                runs, there are some data elements that can be created
+                and stored in memory for the entire time that the program
+                is running. Constant data elements, such as string literals
+                are one example of this kind of data. Variables shared throughout
+                the entire program are another.
+            </li>
+
+            <li><img src='images/b08.gif' class='right' alt='The stack'>
+                The <b><u>stack-based storage area</u></b>. When you create
+                a local variable inside a method, the memory used to store that
+                variable isn't set aside <b>until</b> the method is called
+                and the local variable declaration is encountered. That means
+                that if a particular method isn't called when you run your
+                program, no memory is set aside for those variables.<br><br>
+                Stack-based variables are stored right next to each other
+                in memory. This is called <b>contiguous</b> storage. One
+                way to think of contiguous storage is to picture a stack of
+                dinner plates in a restaraunt like the Soup Planation. (This
+                is where the name <i>stack</i> came from.)<br><br>
+
+                When you create a local variable inside a method, the
+                memory for the variable is set aside on "the top" of the
+                stack. When the method is finished, all of the variables
+                placed on the stack are automatically removed, so the
+                memory can be used for other purposes.
+            </li>
+            <li>The <b><u>heap or "free-store"-based storage area</u></b>.
+                Stack-based storage is very efficient, but it has some real
+                limitations. Because elements are "stacked" on top of each
+                other, all of the elements need to be pretty much the same
+                size, (or some multiple of that size). Also, since memory
+                used for local variables is automatically reclaimed whenever
+                a method ends, stack-based variables don't work very well
+                for sharing information between methods.<br><br>
+                The third area of memory, <b>the heap</b>, is used to
+                get around these limitations. The heap is used to
+                store the "data part" of <b>reference types</b>, including
+                objects and arrays.
+            </li>
+        </ul>
+
+        <img src='images/heap-stack.gif' class='inline' alt='The stack and heap.'>
+        <h4>Reference Types</h4>
+        <p> Reference type variables, (which include everything in Java <b>except</b>
+            for the primitive numeric types along with <code>char</code> and
+            <code>boolean</code> types),
+            are divided into <b>two pieces</b>:
+        </p>
+        <ul>
+
+            <li>the reference (object or array) <b>variable</b></li>
+            <li>the actual object or array itself</li>
+        </ul>
+        <p> The <b>object or array variable</b> is the variable that you deal with
+            in your program; this is the part that you provide an
+            identifier for. The variable (such as the array variable <code>a</code>
+            shown below) may be stored on the stack or in the static storage area:
+            <img src='images/stack-heap02.gif'
+                class='inline'
+                alt='Variables on the heap'>
+            The actual object or the array itself is <b>unnamed</b>, and is
+            <b>stored on the heap</b>. Heap based variables are created
+            by using the <b><code>new</code></b> operator, which allocates
+            the necessary memory from the heap. In the case of an <b>object</b>
+            type, the <b>constructor</b> is then run to initialize that
+            particular instance. In the case of an <b>array</b> the array
+            constructor is used to determine the number of elements to
+            <b>allocate</b> on the heap; it doesn't initialize those elements.
+        </p>
+
+        <p> When the <code>new</code> operator and the constructor are
+            <i>finished</i>, they return the <b>address in memory</b>
+            where the new object is located. It's this address that is
+            stored in the object variable. If the object couldn't be
+            created, for some reason, the special value <b><code>null</code></b>
+            is stored in the variable instead.
+        </p>
+
+    <h4>Assignment</h4>
+
+        <p> <img src='images/b02c.gif' class='right' alt='Two independent value types.'>
+            Primitive types, (like <code>int</code> and <code>char</code>),
+            are called <b>value types</b>, (as opposed to <b>reference</b>
+
+            types, like objects). This just means that a primitive variable
+            is a "bucket" in memory that contains an actual value.
+        </p>
+        <p> When you create two primitive variables, like this:</p>
+        <p class='code'>
+            int a = 32, b;  	<span class='cmt'>// Two independent variables</span>
+        </p>
+        <p> then each variable is an <b>independent</b> storage area; the
+            variables <code>a</code> and <code>b</code> are not "linked"
+            in any way.
+        </p>
+
+    <h5>Value Assignment</h5>
+        <p> When you use <i>assignment</i> with value types, the result is
+            duplicate, independent copies of the values that the variables
+            contain. Consider this example:
+        </p>
+        <p class='code'>
+            b = a;		<span class='cmt'>// Two independent values</span>
+        </p>
+
+        <p> When this code is executed, it first makes a copy of the value
+            stored in the variable <code>a</code>, and then places that
+            copy in the variable named <code>b</code>:
+            <img src='images/b03c.gif'
+                class='inline'
+                alt='Copying two value types.'>
+            This is called a <b>deep copy</b>, and we say that
+                <code>a</code> and <code>b</code> exhibit <b>value semantics</b>.
+        </p>
+
+        <p class='note'>In Java, <b>only</b> primitive types exhibit value semantics.
+            That's not true of all object-oriented langauges. C++, for instance,
+            is designed to allow user-defined types, (classes), to act in the
+            same way by defining a copy constructor and an assignment operator.
+            You'll study this in CS 250, C++ Programming II.
+        </p>
+    <h5>Reference Assignment</h5>
+        <p> As you saw earlier, an object variable, (sometimes called a
+            <i>handle</i>), contains the <b>address</b> of an object, but
+            not the actual object itself.
+        </p>
+
+        <p> If you have some code that looks like this:</p>
+        <p class='code'>
+            int[] a = {3, 15, 0, -2, 7};<br>
+            int[] b = a;
+        </p>
+        <p> the assignment copies <b>only the address</b>, not the object or
+            actual array.
+            The result is that the array variable <code>b</code> refers
+            to the same array elements as the variable <code>a</code>; the two
+            variables are <b>aliases</b>, not independent variables:
+            <img src='images/assignment.gif'
+                class='inline'
+                alt='Reference assignment.'>
+            This kind of assignment, where only the address is copied, but
+            not the underlying object or array, is called a <b>shallow copy</b>, and
+            we say that types that exhibit this behavior have <b>reference
+            semantics</b>. In Java, <b>all</b> types other than primitives,
+            have reference semantics.
+        </p>
+        <p> With that understanding of the difference between reference
+            and primitive types, let's look at the problem of copying
+            and comparing arrays. We'll look at copying other object types
+            later in the semester.
+        </p>
+    <h3>Making Array Copies</h3>
+        <p> Many times, a shallow copy of an array is good enough; it's certainly
+            more efficient than making a complete copy of all of the array
+            elements every time you need to use the array in a different
+            context.
+        </p>
+        <p> Sometimes, though, you may want to modify the elements of your
+            array copy, while leaving the original elements unchanged. To
+            do that, you need to make a deep copy. (Note that you don't need
+            to worry about this with <code>String</code> variables, since
+            the <code>String</code> class is <i>immutable</i>; you <b>can't</b>
+            change the elements in a <code>String</code> so this sharing
+            behavior is perfectly safe.
+        </p>
+        </p> Since the assignment operator only makes a shallow copy,
+            or alias, how do you go about making a deep copy? There are several
+            different ways to do it.
+        </p>
+    <h4>The Loop Method</h4>
+        <p> To copy an array using a loop, actually takes two steps. Before you
+            can apply the loop, you first have to <b>allocate</b> enough room
+            to hold the copy's elements, like this:<br>
+            <img src='images/loop-copy01.gif' class='inline' alt='Allocating an array copy.'>
+            Use the <code>length</code> of the first array to decide how
+            many elements the second array should contain.
+        </p>
+        <p> Once the copy exists, you can use the regular <b>array traversal
+            algorithm</b> to copy each element from the original to the copy
+            like this:
+            <img src='images/loop-copy02.gif' class='inline' alt='Copying the array elements.'>
+        </p>
+    <h4>Cloning the Original Array</h4>
+        <p> Many reference types, including arrays, have a <code>clone()</code>
+            method that allows you to both <b>allocate and copy</b> the elements
+            in one simple step. Here's how you could make a copy of the array using
+            the <code>clone()</code> method:<br>
+            <img src='images/copy02.gif' class='inline' alt='Copying an array with clone().'>
+            The cloned array will be the same size and contain the same
+            elements in the same order as the original.
+        </p>
+    <h4>Using the Arrays Class</h4>
+        <p> <img src="images/c02.gif" class="right" alt="The heading for the Arrays class.">
+            The <b>Arrays</b> class in the <code>java.util</code> package is a
+            class that "contains various methods for manipulating arrays,
+            (such as sorting and searching)", according to the introductory
+            heading in the JavaDocs.
+        </p>
+        <p class="note"> It's easy to miss this class, because there's also an <code>Array</code>
+            interface that deals with SQL, and an <code>Array</code> class that
+            deals with <i>reflection</i>. The one that we want has an "s" on the
+            end.
+        </p>
+        <p> The <code>copyOf()</code> method is useful, because it allows you to
+            easily make a copy <b>that is a different size</b> than the original.
+            If you make the copy larger, then the extra elements are initialized
+            to 0. If you make the copy smaller, then the extra elements are simply
+            discarded.
+
+        </p>
+        <p> <img src='images/copy03.gif' class='inline' alt='Copying an array with Arrays.copyOf().'>
+            <img src='images/copy04.gif' class='right' alt='Two Arrays.copyOf() arrays.'>
+            Here's an example that makes two more array copies, <code>d</code> and
+            <code>e</code>, using the <code>Arrays.copyOf()</code> method. The array
+            that <code>d</code> refers to is twice the size of <code>a</code>, while
+            the array that <code>e</code> refers to is half the size.
+        </p>
+        <p> If we were to display the contents of each of these arrays
+            (which you'll see how to do shortly), they would look like this.
+            Note how <code>d</code> is padded with 0s, and how <code>e</code> is
+            <i>truncated</i> to two elements (half of 5).
+        </p>
+    <h5>The copyOfRange() Method</h5>
+        <p> The <code>Arrays.copyOf()</code> method allows you to grow or
+            shrink an existing array, but it doesn't allow you to extract
+            just a portion in the middle. That's where the <code>copyOfRange()</code>
+            method comes in. The method takes three parameters:
+        </p>
+        <ul>
+            <li>The <b>source array</b> that contains the elements you want to copy.</li>
+            <li>An <b>initial index</b>. This is the location of the first element to
+                be copied. You can specify the length of the original array (in which
+                case no elements will be copied), but other wise, the starting element
+                must be between 0 and the length.
+            </li>
+            <li>An <b>ending index</b>. This works a little like the <code>substring()</code>
+                method. The ending index is <b>not copied</b> into the output. Unlike
+                <code>substring()</code> though, you <b>can</b> specify an ending index
+                larger than the size of the original array. The ending index <b>must</b>
+                be at least as large as the starting index.
+            </p>
+        </ul>
+        <p> There are several ways you can use <code>copyOfRange()</code>. Here
+            are three examples: <br>
+            <img src='images/copy06.gif' class='inline' alt='Copying an array with Arrays.copyOfRange().'>
+            As you can see:
+            <img src='images/copy05.gif' class='right' alt='Copying an array with Arrays.copyOfRange().'>
+        </p>
+        <ul>
+            <li>The first example uses 0 for the starting index and <code>a.length</code> as
+                the ending index, thus copying the entire array.
+            </li>
+            <li>The second example (<code>g</code>) uses <code>a.length / 2</code> as the
+                starting index and <code>a.length - 1</code> as the ending index, thus copying
+                two elements from the original array.
+            </li>
+            <li>The final example uses <code>a.length / 2</code> as the starting index
+                once again, but sets the second index past the end of the original
+                array. When the new array is created, these additional elements will
+                be filled with 0.
+            </li>
+        </ul>
+    <h4>System.arraycopy()</h4>
+        <p> Finally, you may want to copy from one portion of an existing array
+            and place the output into a portion of another array. This is common
+            when manipulating portions of images in memory. The best way to do
+            this is to use the <code>System.arraycopy()</code> method, which is
+            written in highly optimized native code as part of the JVM for your
+            platform. Using <code>System.arraycopy()</code> will almost always
+            be faster than writing your own loop. (No, I don't know why it's
+            not called <code>System.arrayCopy()</code>.)
+        </p>
+        <p> Unfortunately, a first look at the method's documentation can
+            be daunting. <code>System.arraycopy()</code> takes five arguments:
+        </p>
+        <ol>
+            <li>The name of the <b>source</b> array (copy <b>from</b> here)</li>
+            <li>The source element to start with (use 0 to start at the beginning)</li>
+            <li>The name of the <b>destination</b> array (copy <b>to</b> here)</li>
+            <li>The desination element to start with (use 0 to start at the beginning)</li>
+            <li>The number of elements to copy</li>
+        </ol>
+        <p> Unlike the <code>Arrays</code> copying methods, if you make a mistake in
+            these arguments (if, for instance, the destination array is not large
+            enough to receive the elements you want to copy), then the JVM
+            <b>will throw an exception</b>. Fortunately, when copying an entire array, it's not
+            hard to get them right. Simply do this:
+        </p>
+        <p class="code">
+            double[] copy = new double[nums.length];<br>
+            System.arraycopy(nums, 0,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            copy, 0,&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            nums.length);
+        </p>
+        <p> That wasn't too hard, was it?
+        </p>
+    <h3>Comparing Arrays</h3>
+        <p> How do you tell if two arrays are equal. Let's see. What do you think
+            this program prints out?<br>
+            <img src='images/compare01.gif' class='inline' alt='Comparing three arrays.'>
+            You should notice:
+        </p>
+        <ul>
+            <li>The contents of all three arrays (were we to print them) would
+                be identical.
+            </li>
+            <li>We can use both <code>==</code> and <code>!=</code> with
+                array variables.
+            </p>
+        </ul>
+        <p> <img src='images/compare02.gif' class='right' alt='Comparing three arrays.'>
+            If we run the program, though, the results might not be what you
+            expected. Arrays work the same way that <code>String</code> variables
+            do when it comes to comparison. When we print the results, you see
+            that <code>first</code> is <b>not</b> equals to <code>second</code>,
+            because the value of the reference (that is, the <b>address of the
+            actual array elements</b>) is different in each case.
+        </p>
+        <p> When we compare <code>second</code> and <code>third</code>, though,
+            we find that they <b>are</b> equal. This is <b>not</b> because
+            they have the same values in the array elements, but because
+            <b>both array variables refer to exactly the same actual array</b>.
+            (Of course, that <i>does</i> mean that they both have the same
+            contents, since they are exactly the same array.)
+        </p>
+        <p> As with <code>String</code>s, we are <i>rarely</i> interested in
+            this kind of "identity" comparison. Most of the time we are interested
+            in comparing the actual values stored in the array. There are
+            two ways to do that.
+        </p>
+    <h4>Using a Loop</h4>
+        <p> You can use Boolean expressions, <code>if</code> statements and loops
+            to compare two arrays to see if they are equal. Here's the code to compare
+            <code>first</code> and <code>second</code> to see if they have
+            the same values:<br>
+            <img src='images/compare03.gif' class='inline' alt='Comparing arrays for values.'>
+            Note that:
+        </p>
+        <ol>
+            <li class='d'>First, we need to determine if the two arrays have
+                the same length. If they don't, then they aren't equal.
+            </li>
+            <li class='d'>Next, we need to <b>traverse</b> the entire array.
+                At each element, we compare the corresponding elements in
+                the two arrays.
+            </li>
+        </ol>
+        <p> Now, what should we do if they match? Well if that's the case, we
+            check the next one. If they <b>don't</b> match, though, we don't
+            have to go any further: the two arrays are <i>not</i> equal.
+        </p>
+        <p> When this occurs, we set the Boolean flag to <code>false</code>.
+            Since nothing ever sets it to true again, that's all we really
+            need. However, since there's no <b>point</b> in comparing any
+            of the remaining elements, you can use the <code>break</code>
+            statement to exit the loop when that's determined.
+        </p>
+    <h4>Using Arrays.equals()</h4>
+        <p> This code is not difficult, but it is kind of annoying to have
+            to do this each time you want to compare two arrays. Isn't there
+            an easier way?
+        </p>
+        <p> Yes, there is!</p>
+        <p> The <code>Arrays</code> class has an <code>equals()</code> method
+            that works pretty much like <code>String.equals()</code>. Here's
+            the same comparison using this method:<br>
+            <img src='images/compare04.gif' class='inline' alt='Using Arrays.equals().'>
+
+        </p>
+
+    <h3>Arrays and Methods</h3>
+        <p> Although you <b>cannot</b> use an actual array as an argument to a
+            method, you <b>can</b> pass array variables as arguments. You can
+            also write methods that return array variables.
+        </p>
+        <p>Lets see how that works.</p>
+        <p> To pass an array variable as an argument, you first have to know
+            how to write the formal argument.
+        </p>
+        <p> Suppose, for instance that you write a method that sums the
+            values in a <code>double</code> array, (of any size), and
+            returns the result as a <code>double</code>.
+            Using the method, you can calculate the sum of the elements in
+            the <code>double</code> array named <code>nums</code> like this:
+        </p>
+        <p class="code">double total = sum(nums);</p>
+        <p> When you write the method, the formal argument <b>can't</b> be a
+            <code>double</code>; it <b>must</b> be an <b>array of double</b>.
+            You write the method   header like this:
+        </p>
+        <p class="code">
+            public double sum(double[] list) { }
+        </p>
+        <p> Here's the entire method<br>
+            <img src='images/function01.gif' class='inline' alt='A function to sum the elements in an array.'>
+            Notice that:
+        </p>
+        <ul>
+            <li> You can pass any size array to this method. It uses the enhanced
+                <code>for</code> loop to traverse the array.
+            </li>
+            <li> If you wanted to use a traditional <code>for</code> loop, you
+                would use the the array parameter's <code>length</code> field
+                as the loop bounds.
+            </li>
+        </ul>
+    <h4>Printing Arrays</h4>
+        <p> The <code>sum()</code> method I just showed you is a <i>function</i>, but
+            you can pass array parameters to procedures as well. For instance, to
+            print an array, you might be tempted to write code like this:<br>
+            <img src='images/function02.gif' class='inline' alt='Printing an array with concatenation.'>
+            As you can see on the right, what gets printed is the notation that
+            Java uses to indicate that this is an integer array (<code>[I</code>) and
+            that it is located at address 291aff.
+        </p>
+        <p> That's certainly fascinating, but I'm sure you're more interested in
+            seeing the <b>contents</b> of the array that <code>a</code> refers to,
+            right? One, very easy way to do that is to use the <code>Arrays.toString()</code>
+            method, which displays the results like this:<br>
+            <img src='images/function03.gif' class='inline' alt='Printing an array with Arrays.toString().'>
+            That's certainly an improvement, but if you want to change the
+            output display, it's easy enough by writing your own
+            <b>output procedure</b>.
+        </p>
+    <h5>A printList() Procedure</h5>
+        <p> Here's a <code>printList()</code> procedure that uses the same format as
+            <code>Arrays.toString()</code>, but surrounds the array with braces instead
+            of brackets, so it looks similar to the Java intialization syntax:<br>
+            <img src='images/function04.gif' class='inline' alt='An array printing procedure.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>A set of curly braces are printed surrounding the
+                array elements. If the array is empty, then this is all that is
+                printed.
+            </li>
+            <li class='d'>If there is at least one element, then the first
+                element is printed following the opening brace.
+            </li>
+            <li class='d'>All of the remaining elements (starting at index 1)
+                are printed preceded by a comma and a space.
+            </li>
+        </ol>
+        <p> Here's how you'd use a procedure like this. Notice that since it
+            is not a function, like <code>Arrays.toString()</code> you can't
+            use it as part of an expression. The call to the <code>printList()</code>
+            method has to stand alone like any other procedure call:<br>
+            <img src='images/function05.gif' class='inline' alt='Using printList().'>
+        </p>
+    <h3>Modifying Array Parameters</h3>
+        <p> When an array variable (named <code>nums</code> in the picture below)
+            is passed to a method, a copy of <b>the variable</b> <code>nums</code>
+            is made and that copy is placed into the formal parameter <code>ar</code>,
+            as you can see in this figure:<br>
+            <img src="images/z02.gif" alt="How arrays are passed to methods" vspace="15" hspace="15">
+            <br>
+            This is the same as with any variable. <b>All</b> method
+            parameters are passed by value in Java&#8212;a copy of the actual
+            parameter is made for use inside  the method.
+        </p>
+        <p> However, with an array, the effect might not be what you expect.
+            Because both <code>nums</code> and <code>ar</code> (in this example),
+            refer to the <b>same actual array elements</b>, any changes made to the
+            elements of the array <code>ar</code> inside the method
+            will apply to the elements of the array variable <code>nums</code> as
+            well. To reiterate, both <code>nums</code> and <code>ar</code> refer to
+            the <b>same actual array</b>, even though <code>ar</code> is a copy
+            of the array variable <code>nums</code>.
+        </p>
+        <p> Here's a method that shows you how that works. The method
+            <code>doubleIt()</code> doubles every element in the array
+            passed to it:
+        </p>
+        <p class="code">
+            <span class="red"><b>// Modifying Array Elements in a Method</b></span><br>
+            <br>
+            public void doubleIt(double[] ar)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i &lt; ar.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ar[i] *= 2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+    <h4>Output Parameters</h4>
+        <p> This means that arrays <b>can</b> act as <b>output parameters</b> as in
+            this example which gets a sequence of temperatures from the
+            user and then prints the number of days that are above average:<br>
+            <img src='images/output02.gif' class='inline' alt='A procedure that uses output parameters.'>
+            Of course to calculate this, we need to first read all of the elements,
+            then calculate the average, and only then can we count the number of
+            days that are above average.
+        </p>
+        <p> Instead of putting all of that code into the <code>run()</code> method,
+            instead we call a procedure for intput and another procedure for
+            output. Notice that:
+        </p>
+        <ol>
+            <li class='d'>We ask the user for the number of days to input. Later, we'll
+                see how to use a sentinel value and the <code>ArrayList</code> class to
+                avoid having to "pre-size" our array.
+            </li>
+            <li class='d'>Next, we create the array variable. This is where the user
+                will place the answers.
+            </li>
+            <li class='d'>Next, we call the two methods, <code>readData()</code> and
+                <code>printResults()</code>, passing the array variable
+                <code>temps</code> to each of them.
+            </li>
+        </ol>
+    <h5>The readData() Method</h5>
+        <p> Here's what the <code>readData()</code> method looks like:<br>
+            <img src='images/output03.gif' class='inline' alt='A procedure that uses output parameters.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>We use the <code>length</code> field of the
+                array variable <code>a</code> to ask the user how many temperatures
+                to enter.
+            </li>
+            <li class='d'>Then, we use a loop and read the values directly into the
+                elements of the formal array parameter <code>a</code>. Even though
+                our loop goes from 0 to <code>a.length - 1</code>, when we prompt
+                the user we want to print out #1, #2 and so on.
+            </li>
+        </ol>
+        <p> Since the array parameter <code>a</code> contains a reference that
+            points to exactly the same elements as the array variable
+            <code>temps</code> in the main <code>run()</code> method, filling
+            in the elements in <code>a</code> is <b>exactly</b> like reading
+            values into the elements in <code>temps</code>.
+
+        </p>
+        <p> When the procedure ends, the values you've entered will be
+            <b>returned through the parameter list</b>, not through a separate
+            <code>return</code> statement. Thus, we say that in the <code>readData()</code>
+            method, the formal parameter <code>a</code> is an <b>output</b> procedure:
+            that is, it is used only to hold data that is generated inside the procedure
+            and communicated back to the caller; any initial values inside the
+            parameter are ignored. Data only flows <b>out</b> of the procedure.
+        </p>
+    <h5>The printResults() Method</h5>
+        <p> Here's the code for the <code>printResults()</code> procedure:<br>
+            <img src='images/output04.gif' class='inline' alt='A procedure that uses input parameters.'>
+            <img src='images/output01.gif' class='right' alt='A procedure that uses input parameters.'>
+            In <code>printResults()</code>, the parameter <code>a</code> is an
+            <b>input</b> parameter; that is, with <code>a</code> the information flows <b>into</b>
+            the procedure and not <b>out</b> of it. (Unlike the parameter <code>a</code>
+            in the <code>readData()</code> method.)
+        </p>
+        <p> Here's what you should notice about this procedure:</p>
+        <ol>
+            <li class='d'> The first loop calculates the average of all of the
+                temperatures.
+            </li>
+            <li class='d'>Now that we have the average, the second loop allows
+                us to count the number of days greater than the average. I've used
+                the enhanced for loop for each of these, since both only
+                require a forward, read-only traversal of the entire array.
+            </li>
+            <li class='d'>Finally, a few <code>print()</code> statements display
+                the results of the calculations.
+            </li>
+        </ol>
+        <p> On the right you can see what the program looks like when it runs.
+
+        </p>
+    <h3>Returning Array Variables</h3>
+        <p> Java allows you to easily write methods that return array
+            variables. As with passing array variables to a method, the
+            only "trick" is in knowing how to declare the return type.
+        </p>
+        <p> Suppose, for instance, you wanted to write a method that
+            returned an array of random <code>double</code> values. Your method header would
+            look like this:
+        </p>
+        <p class="code">
+            public double[] makeRandom(int howMany) {}
+        </p>
+        <p> Notice that the return type is declared as <code>double[]</code>
+            and <b>not</b> <code>double</code>.
+        </p>
+    <h4>Creating the Returned Array</h4>
+        <p> Once you've figured out how to write the return type, the next
+            question that arises is "How do you get the array variable to
+            return?" The answer is simple&#8212;you create a <b>local</b> array
+            variable inside your method, and then return the local variable.
+        </p>
+        <p> Here's the rest of the <code>makeRandom()</code> method that
+            shows you how:
+        </p>
+        <p class="code">
+            <span class="red"><b>// Returning an Array Variable from a Method</b></span>
+            <br><br>
+            double[] makeRandom(int howMany)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 1. A local array variable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int[] ar = new double[ howMany ];<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 2. Fill it with random numbers</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(int i = 0; i &lt; ar.length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ar[i] =  Math.random();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// 3. Return a copy of the local ar</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ar;<br>
+            }
+        </p>
+        <div class="redbox">
+            <h5>A Note to C/C++ Programmers</h5>
+            <p> If you've ever programmed in C or C++, returning a local
+                array variable probably makes you a little woozy! Much of a
+                C/C++ course is spent teaching you to avoid doing this at
+                all possible costs.
+            </p>
+            <p> In C/C++, if you return a local array from a function, the
+                local array is "gone" by the time the function returns. In
+                Java, however, all you are returning is a variable that
+                refers to the array. The actual array is "out there"
+                somewhere.
+            </p>
+            <p> Of course, you could do the same thing in C/C++ by creating
+                an array on the heap and then returning a pointer to it, but
+                then you risk a memory leak. Because Java has automatic
+                memory management, that's not an issue  here.
+            </p>
+        </div>
+     <h3>Coming Up . . .</h3>
+        <p> In this lesson you learned a little bit more about processing
+            arrays. To start out, you learned about the differences between
+            <b>reference</b> types (like arrays), and <b>value</b> types. Then,
+            you saw several different methods to <b>copy</b> and <b>compare</b>
+            array values. Finally, you learned how to <b>write methods</b> that
+            take <b>array input parameters</b> and <b>output parameters</b>. You
+            finished up by learning how to write <b>functions</b> that <b>return
+            array</b> values.
+        </p>
+        <p> That's it for arrays this week, and the end of the <b>Programming Fundamentals</b>
+            portion of the course. After the midterm, we'll switch gears and start focusing
+            on <b>Object-Oriented Programming</b> or <b>OOP</b>. In anticipation of that
+            switch over, the last online lesson this week will return to Chapter 2 in your
+            textbook and introduce you to the concepts and vocabulary you'll need to
+            know.
+        </p>
+
+    </div>
+
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

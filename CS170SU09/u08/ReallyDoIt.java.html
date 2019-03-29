@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> *  ReallyDoIt.java</span>
+<span class="linenum">03: </span><span class="comment"> *</span>
+<span class="linenum">04: </span><span class="comment"> *  Adds a button to an applet, and hooks it up</span>
+<span class="linenum">05: </span><span class="comment"> *</span>
+<span class="linenum">06: </span><span class="comment"> *  @author Stephen Gilbert</span>
+<span class="linenum">07: </span><span class="comment"> *  @version 2.0, Fall 2005</span>
+<span class="linenum">08: </span><span class="comment"> */</span>
+<span class="linenum">09: </span>
+<span class="linenum">10: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">11: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">12: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">13: </span>
+<span class="linenum">14: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">ReallyDoIt</span> <span class="keyword">extends</span> <span class="normal">Applet</span>
+<span class="linenum">15: </span><span class="cbracket">{</span>
+<span class="linenum">16: </span>    <span class="keyword">private</span> <span class="normal">Button</span> <span class="normal">doItBtn</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Button</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">17: </span>    <span class="keyword">private</span> <span class="type">int</span> <span class="normal">timesPressed</span> <span class="symbol">=</span> <span class="number">0</span><span class="symbol">;</span>
+<span class="linenum">18: </span>
+<span class="linenum">19: </span>
+<span class="linenum">20: </span>    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">21: </span>    <span class="cbracket">{</span>
+<span class="linenum">22: </span>        <span class="normal">doItBtn</span><span class="symbol">.</span><span class="function">setLabel</span><span class="symbol">(</span>
+<span class="linenum">23: </span>            <span class="string">"I'm a lonely button that's never been pressed. "</span><span class="symbol">+</span>
+<span class="linenum">24: </span>            <span class="string">"Click me you fool!"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">25: </span>        <span class="keyword">this</span><span class="symbol">.</span><span class="function">add</span><span class="symbol">(</span><span class="normal">doItBtn</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">26: </span>        <span class="normal">doItBtn</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">ButtonListener</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">27: </span>    <span class="cbracket">}</span>
+<span class="linenum">28: </span>
+<span class="linenum">29: </span>    <span class="comment">/**</span>
+<span class="linenum">30: </span><span class="comment">     *  ButtonListener</span>
+<span class="linenum">31: </span><span class="comment">     *  Handles button events for ReallyDoIt</span>
+<span class="linenum">32: </span><span class="comment">    */</span>
+<span class="linenum">33: </span>    <span class="keyword">private</span> <span class="keyword">class</span> <span class="normal">ButtonListener</span> <span class="keyword">implements</span> <span class="normal">ActionListener</span>
+<span class="linenum">34: </span>    <span class="cbracket">{</span>
+<span class="linenum">35: </span>        <span class="keyword">public</span> <span class="type">void</span> <span class="function">actionPerformed</span><span class="symbol">(</span><span class="normal">ActionEvent</span> <span class="normal">e</span><span class="symbol">)</span>
+<span class="linenum">36: </span>        <span class="cbracket">{</span>
+<span class="linenum">37: </span>            <span class="normal">timesPressed</span><span class="symbol">+</span><span class="symbol">+</span><span class="symbol">;</span>
+<span class="linenum">38: </span>            <span class="normal">String</span> <span class="normal">btnText</span> <span class="symbol">=</span> <span class="string">"I've been pressed "</span> <span class="symbol">+</span> <span class="normal">timesPressed</span> <span class="symbol">+</span>
+<span class="linenum">39: </span>                             <span class="string">" times"</span><span class="symbol">;</span>
+<span class="linenum">40: </span>            <span class="normal">doItBtn</span><span class="symbol">.</span><span class="function">setLabel</span><span class="symbol">(</span><span class="normal">btnText</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">41: </span>        <span class="cbracket">}</span>
+<span class="linenum">42: </span>    <span class="cbracket">}</span>
+<span class="linenum">43: </span>
+<span class="linenum">44: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

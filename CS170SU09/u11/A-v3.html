@@ -1,0 +1,1665 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+    <body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p>
+            <b><span class='cap'>C</span>lassification is one of the
+            primary mechanisms</b> that we
+            use to understand the natural world around us. Starting
+            as infants we begin to recognize the difference between
+            <b>categories</b> like food, toys, pets, and people.
+            <img src='images/pet.png' class='right' alt='A child and a chicken.'>
+            As we mature,
+            we learn to divide these general categories or classes into
+            <b>subcategories</b> like siblings and parents, vegetables and
+            dessert.
+        </p>
+        <p> When faced with a <b>new</b> object, we try to understand
+            it by fitting it into the categories with which we’re
+            acquainted:
+        </p>
+        <ul>
+            <li>Does it taste good? Perhaps it’s dessert.
+            <li>Is it soft and fuzzy? Maybe it’s a pet.
+            <li>Otherwise, it’s most certainly a toy of some sort!
+        </ul>
+        <p> <b>Encapsulation</b>—the specification of attributes and behavior
+            as a single entity—allows us to build on this understanding
+            of the natural world as we create software. By creating
+            classes and objects that <b>model categories</b> in the "real world,"
+            we have confidence that our software solutions closely track
+            the problems we are trying to solve.
+        </p>
+        <p> Once we've learned how to design our own classes, instead of
+            thinking in terms of computer files and variables, our
+            programs can be expressed in terms of <b>Customers</b>,
+            <b>Invoices</b>, and <b>Products</b>.
+        </p>
+    <h3>Introducing Inheritance</h3>
+        <p> <img src='images/pie.png' class='right' alt='Broccoli and pie.'>
+            <b>Inheritance</b> adds to encapsulation the ability to express
+            <b>relationships between classes</b>. Think back to the categories
+            "desserts" and "vegetables." Cherry pie and broccoli are both,
+            at least arguably, edible items; for humans, they belong to
+            the <b>food</b> class.
+        </p>
+        <p> Yet most of us recognize that, in addition
+            to belonging to the food class, cherry pie is a <b>kind of
+            dessert</b>, whereas broccoli is a <b>kind of vegetable</b>.
+            Both <b>desert</b> and <b>vegetable</b> represent subcategories
+            of foods.
+        </p>
+        <p> If you ponder this for a moment, you’ll realize that you can
+            draw three conclusions:
+        </p>
+        <ul>
+            <li>Although both cherry pie and broccoli are kinds of food,
+                the food class itself consists of, thankfully, <b>more</b> than
+                just these two items. Cherry pie and broccoli are just
+                two small <b>subsets</b> of all possible food types.
+                Thus, the <b>relationship</b> between the food class and
+                the cherry pie class is one of <b>superset</b> (food)
+                and <b>subset</b> (cherry pie).
+                In object-oriented terminology, we call this the
+                <b>superclass-subclass relationship</b>.
+            </li>
+            <li><img src='images/food.png' class='right' alt='The food pyramid.'>
+                Superclasses and subclasses can be arranged in a
+                <b>hierarchy</b>, with one superclass divided into
+                numerous subclasses, and each subclass divided into
+                more specialized kinds of subclasses. That’s what we
+                find with the food class.
+            </p>
+            <p> It can be divided into desserts, vegetables, soups,
+                salads, and entrees. Each category can be further divided
+                into <b>more specialized</b> kinds of food.
+            </li>
+            <li>A classification hierarchy represents an organization based on
+                <b>generalization and specialization</b>. The superclasses in such
+                a hierarchy are very general, and their attributes few; the
+                only thing that a class must do to qualify as food, for
+                instance, is to provide nutrients.
+                <p>As you move down the
+                hierarchy, the subclasses become more specialized, and
+                their attributes and behavior become more specific. Thus,
+                although broccoli qualifies as food (it is, after all,
+                digestible), it lacks the necessary qualifications to
+                make it into the dessert class.
+            </li>
+        </ul>
+
+        <p> <img src='images/wheel02.png' class='right' alt='Reinventing the wheel.'>
+            <b><span class="cap">I</span>n the last few units</b>, you've
+            learned how to build and then test your own
+            <b>user-defined custom classes</b>.
+            In this unit, we'll take that a little further and you'll
+            learn how to build more complex classes by <b>extending</b>
+            and <b>combining</b> classes from the Java and ACM class
+            libraries. That way, instead of constantly "reinventing the wheel",
+            you'll be able to build on the work of the programmers who've
+            gone before you.
+        </p>
+        <p> In this lesson you'll learn:</p>
+        <ul>
+            <li>about inheritance and the <b>is-a</b> class relationship</li>
+            <li>how to <b>extend</b> an existing class to create a new class</li>
+            <li>how to create a new class by <b>combining</b> existing types</li>
+            <li>how to create new <b>single-value scalar types</b></li>
+        </ul>
+        <p> We'll start by first looking at two different strategies
+            you can use to create a new component using existing components
+            as a starting point.
+        </p>
+    <h3>Introducing Inheritance</h3>
+        <p> When you create your own new, reusable components, there are really
+            three different strategies you can use:
+        </p>
+        <ul>
+            <li> You can build your component completely from scratch,
+                like we did with the various versions of the <code>Ball</code>
+                class in Unit 9.
+            </li>
+            <li> You can <b>combine</b> simpler parts together, such as
+                a <code>JLabel</code> and a <code>JTextField</code>, to
+                create a more complex component.
+            </li>
+            <li>You can <b>extend</b> a more basic component by adding
+                new features or behaviors.
+            </li>
+        </ul>
+        <p> Since you've alread learned how to build a class from scratch,
+            in this lesson we'll take a look at these last two techniques.
+            We'll start by <b>extending</b> an existing component to
+            create a new class that <b>inherits</b> methods and fields
+            from its superclass.
+        </p>
+    <h4>Has-A and Is-A</h4>
+        <p> These two different strategies are used to express two different
+            kinds of "class relationships":
+        </p>
+        <ul>
+            <li>The <b>has-a</b> relationship, when one class is a combination
+                of other objects. We can say that a <code>JLabel</code>
+                object <b>has-a</b> background color property. In this kind of
+                <b>has-a</b> relationship one component is composed of different
+                parts. A <code>Bicycle</code> class thus may contain two instances
+                of the <code>Wheel</code> class.
+            </li>
+            <li>            <img src='images/inheritance01.png' class='right' alt='Bicycles and inheritance.'>
+
+            The <b>is-a</b> relationship, when one class is an extension
+                or "kind of" another class. The <b>is-a</b> relationship occurs
+                when members of one class form a <b>subset</b> of another class,
+                like the Animal, Mammal, Rodent example we discussed back
+                in Unit 8. This is also called an <b>inheritance</b>
+                relationship. In the inheritance relationship shown here,
+                we'd say that a <code>MountainBike</code> <b>is-a</b>
+                <code>Bicycle</code>.
+            </li>
+        </ul>
+        <p> Back in Unit 9 we used the original applet version of a "bouncing
+            ball" program to develop, step-by-step, a bouncing-ball <b>class</b>;
+            one that contained constructors, accessors, and mutators, and that
+            "knew" how to bounce around the screen. The bouncing ball class that
+            we developed, though, doesn't work inside ACM graphics programs,
+            because it wasn't a member of the <code>GObject</code> family,
+            like all of the other ACM graphical objects.
+        </p>
+        <p> Later in this lesson, we'll create two versions of the bouncing-ball
+            class, both designed to work with ACM graphics programs. One will
+            use <b>inheritance</b>, and one will use <b>composition</b>.
+            Before we do that, though, let's look at how inheritance works
+            in Java.
+        </p>
+    <h2>Inheritance: Syntax and Semantics</h2>
+        <p> <img src='images/nonagon.png' class='right' alt='A nonagon with all 36 edges connected.'>
+            <b><span class='cap'>I</span>t's really tempting to dive right
+            in</b> and start by extending some of the ACM classes, making
+            a new <b>ImageBall</b> or <b>PlayingCard</b>
+            class, or perhaps fill in some of the missing geometric shapes;
+            anyone up for a new <b>GNonagon</b> class?
+        </p>
+        <p> The only problem with that strategy is that inheritance actually
+            <b>introduces quite a few new possiblities</b> into your programs,
+            and each of those possibilities needs to be handled in a
+            very specific way. Starting with a more complex class, even though
+            it might be more interesting, makes it easy to miss some of the
+            details that you really <b>must</b> master to make
+            effective use of the object-oriented technique of inheritance.
+        </p>
+        <p> So, instead of working with fun stuff, like card games and shooting
+            down aliens, in this lesson I'll return to the old, boring
+            finger-exercises type of examples that let you concentrate on
+            one piece of the inheritance puzzle at a time.
+        </p>
+    <h3>Topic 1: Extending a Class</h3>
+        <p> <img src='images/inheritance02.png' class='right' alt='Classes in Inheritance01.java.'>
+            <b>When you create a new class using inheritance</b>, you use the
+            <code>extends</code> keyword to specify the parent or
+            <b>superclass</b> when you define the child or <b>subclass</b>.
+            For our first example, let's look at a simplest possible class
+            that represents people: the <code>Person</code> class. Then,
+            we'll create a new <b>kind</b> of <code>Person</code>, the
+            <code>Student</code>.
+        </p>
+        <p> To the right is the UML (Unified Modeling Language) class diagram for
+            the two classes we'll start with. You can download the source
+            code for the Java program that contains these classes,
+            <a href='Inheritance01.java' target='_blank'><b>Interitance01.java</b></a>
+            by clicking the link in this sentence.
+        </p>
+        <p class='note'> As we develop these classes,
+            instead of placing them in their own files, I'll put both classes
+            in a single file, along with a public test class. That way I
+            won't have to change the names or projects, since we'll have several
+            different versions. However, for the versions that you download,
+            I <b>have</b> changed the names of the classes to <code>Student1</code>
+            and <code>Person1</code>, so that you can run them all in the same
+            project, without getting an error.
+        </p>
+        <p> Here's what you should notice about each of these classes.
+        </p>
+    <h4>The Person Class</h4>
+        <p> <img src='images/person01b.png' class='right' alt='The Person UML diagram.'>
+            The <b>Person</b> class has a single attribute, <code>name</code>
+            which is stored as a <code>String</code>. The minus sign preceding
+            <code>name</code> tells us that the instance variable used to
+            store this attribute will be marked <code>private</code>.
+        </p>
+        <p> The class has one mutator, <code>setName()</code> that allows
+            us to change the name of the <code>Person</code>. There is also
+            one accessor method, <code>getName()</code> which is a "getter"
+            method that allows us to read the value of the attribute. The
+            plus sign appearing before the method says that the method is
+            <code>public</code>. The <code>void</code> appearing at the
+            end of the entry is the method return type.
+        </p>
+    <h4>The Student Class</h4>
+        <p> <img src='images/student01b.png' class='right' alt='The Student UML diagram.'>
+            The <b>Student</b> class is a <b>subclass</b> of <code>Person</code>.
+            The hollow-headed arrow pointing from <code>Student</code> to
+            <code>Person</code> says that <code>Student</code> <b>inherits
+            from</b> or (in Java) <code>extends</code> the <code>Person</code>
+            class.
+        </p>
+        <p> <code>Student</code> also has one private attribute, the
+            <code>studentID</code> which will be stored as a <code>long</code>.
+            To initialize both the student's name and their ID, the class
+            has a public constructor that takes two paraemters.
+        </p>
+        <p> The class has an accessor or "getter" method to retrieve the
+            value stored in the <code>studentID</code> field. There are no
+            methods to set or change the ID. While a student might change
+            their name (because of marriage, for instance) they can never
+            change their student ID.
+        </p>
+    <h4>Inherited Methods and Fields</h4>
+        <p> Let's create an object of the <code>Student</code> class,
+            and then call some of the methods:<br>
+            <img src='images/inherit01a.png' class='inline' alt='Creating a student and calling methods.'>
+            <img src='images/inherit01c.png' class='right'  alt='Calling inherited and new methods.'>
+            Notice that when I create the <code>Student</code> object named
+            <code>steve</code>, I can call the <code>getID()</code> method,
+            which was defined in the <code>Student</code> class.
+        </p>
+        <p>
+            However, I can <b>also</b> call the <code>setName()</code>
+            and <code>getName()</code> methods which were not defined
+            in <code>Student</code>, but in <code>Person</code>. More
+            importantly, I'm also able to access the <code>name</code>
+            field in the <code>Person</code> class if I use these
+            methods. Why is that?
+        </p>
+        <p> When we create <code>Student</code> objects, each subclass
+            object contains <b>all of the attributes and methods
+            of its superclass</b>. If we were to look at a "logical"
+            diagram of the student class, it would look something like
+            that shown here:<br>
+            <img src='images/student01.png' class='inlineCenter' alt='The "virtual" Student class'>
+            However, (<i>and this is very important</i>), <b>most</b> of the
+            fields, and some of the methods <b>will not be accessible</b>
+            to the subclass object, because they were declared
+            <code>private</code> in the superclass.
+        </p>
+        <p> So, for instance,
+            if we were to change the <code>Student</code> constructor
+            so that it attempted to set the <code>private name</code>
+            field directly, (instead of using the <code>setName()</code>
+            method), we'd get an error like this:<br>
+            <img src='images/inherit01b.png' class='inline' alt='Trying to access a private field from a subclass.'>
+            Even though you can't access the <code>private name</code> field
+            from the subclass, the field is are there nonetheless. You know
+            that because the <b>inherited</b> <code>setName()</code> and
+            <code>getName()</code> methods work correctly.
+        </p>
+        <p> Those methods (and fields) that are not declared <code>private</code>
+            in the superclass are called <b>inherited</b> methods (and fields).
+            An object may use its inherited methods and fields without any
+            further qualification, exactly as if they were defined inside
+            the object's own class (as I've done in the example here.)
+        </p>
+    <h4>Specialization and Extension</h4>
+        <p> Normally, a subclass <code>extends</code> an existing
+            class by <b>adding</b> additional fields or methods. That is
+            because logically, a subclass represents <b>specialization</b>.
+            The <code>Elephant</code> class represents a specialized form of
+            <code>Mammal</code>, and the <code>Mammal</code> class represents
+            a specialized form of <code>Animal</code>.
+        </p>
+        <p> In our case, the <code>Student</code> class added one new
+            field and one new method, along with a constructor.
+        </p>
+    <h4>Implicit Inheritance</h4>
+        <p> Every class without an explicit <code>extends</code> clause
+            <b>implicitly</b> inherits from the Java <b>root</b> class
+            named <code>Object</code>. Just as with explicit inheritance,
+            the implicit subclass (<code>Person</code>) <b>inherits</b>
+            several fields and methods from its superclass.
+        </p>
+        <p> One of these is the <code>toString()</code> method. Even though
+            neither the <code>Person</code> nor the <code>Student</code>
+            class <b>have not defined</b> a <code>toString()</code> method, we can
+            <b>call</b> the <code>toString()</code> method <b>inherited</b> from
+            the <code>Object</code> class like this:<br>
+            <img src='images/inherit01d.png' class='inline' alt='The inherited toString() method.'>
+            Of course, as you can see, the results are not very satisfying.
+            The <code>Object</code> version of <code>toString()</code> just
+            prints out the name of the class followed by the <b>memory
+            address</b> where the actual object is located in memory.
+        </p>
+        <p class='note'>The example shown here <b>explicitly</b> calls
+            the inherited <code>toString()</code> method. The code can be
+            made even simpler, like this:<br>
+            <img src='images/inherit01e.png' class='inline' alt='The implicit toString() method.'>
+            When you use any kind of object with string concatenation like
+            I've done here, Java <b>implicitly</b> call's the object's
+            <code>toString()</code> method to perform the concatenation.
+        </p>
+        <p> Of course, as you can see, in this case the inherited method
+            really doesn't work the way we'd like. Which brings us to
+            the second inheritance topic: <b>method overriding</b>.
+        </p>
+    <h3>Topic 2: Method Overriding</h3>
+        <p> When an inherited method doesn't do exactly what you want,
+            you can write a replacement method. This is called
+            <b>overriding</b> the method. The new version of the
+            method can either <b>completely replace</b> the existing version,
+            or you can <b>add some new actions</b> to the original. (You
+            <b>can't</b> however, just use <i>some</i> of the existing
+            behavior.)
+        </p>
+        <p> To illustrate this, we'll add <code>toString()</code> methods
+            to both of our demo classes. You can find the finished code
+            in <a href='Inherit02.java' target='_blank'><b>Inherit02.java</b></a>,
+            which you can download by clicking the link in this sentence.
+            The first change just adds <code>toString()</code> to the
+            <code>Person</code> class like this:<br>
+            <img src='images/inherit02a.png' class='inline' alt='The Person.toString() method.'>
+            When you override a method like <code>toString()</code> you must:
+        </p>
+        <ol>
+            <li class='d'>Use <b>exactly</b> the same number and type of
+                parameters as the original method in the superclass. There
+                are no conversions between <code>int</code> and <code>double</code>
+                for instance.
+            </li>
+            <li class='d'>Return <b>exactly</b> the same type as the original
+                method.
+            </li>
+            <li class='d'>Use an access specifier that is <b>at least</b> as
+                permissive as the superclass method. In other words, you can't
+                override a <code>public</code> method with a <code>private</code>
+                method.
+            </li>
+        </ol>
+        <p> With this new version of <code>toString()</code> our <b>Inherit02</b>
+            sample code looks like this when it runs:<br>
+            <img src='images/inherit02b.png' class='inline' alt='Using the Person toString() method.'>
+            Note that the variable <code>pete</code> prints out the name as
+            you'd expect (since <code>pete</code> is a <code>Person</code>
+            object). The variable <code>steve</code> <b>also</b> uses the
+            new overridden <code>toString()</code> method defined in <code>Person</code>,
+            <b>instead</b> of the original version defined in the <code>Object</code>
+            class.
+        </p>
+        <p> When we replaced <code>toString()</code> for the <code>Person</code>
+            class, we <b>also</b> replaced it for <b>all of its subclasses</b>.
+        </p>
+    <h4>Writing Student toString()</h4>
+        <p> Now, let's override <code>toString()</code> in the <code>Student</code>
+            class as well. Here's a first attempt:<br>
+            <img src='images/inherit02c.png' class='inline' alt='Student toString() attempt 1.'>
+            As you can see, though, the field <code>name</code> is <b>not
+            accessible</b>. This is the same problem we had earlier trying
+            to access <code>name</code> from the <code>Student</code> constructor.
+        </p>
+        <p> There we were able to get around the problem by using the inherited
+            <code>getName()</code> accessor method, and we can do the same thing
+            here, like this:<br>
+            <img src='images/inherit02d.png' class='inline' alt='Student toString() attempt 2.'>
+            While this works, though, it doesn't take advantage of the fact
+            that we've <b>already written</b> the <code>toString()</code>
+            code for the <code>Person</code> class. Essentially, in the
+            <code>Student</code> version of <code>toString()</code>, we're
+            writing exactly the same code again.
+        </p>
+        <p> Isn't there some way we can run the original version of the
+            <code>toString()</code> method, and just <b>add on</b> the
+            new parts we want, like printing the student ID? Isn't there
+            someway we can <b>combine</b> inherited and overridden methods?
+        </p>
+        <p> <b>Yes</b>, there is.</p>
+    <h4>Calling Superclass Methods</h4>
+        <p> As you saw earlier, the <code>Student</code> class automatically
+            <b>inherited</b> both the <code>getName()</code> and the
+            <code>toString()</code> methods from the <code>Person</code>
+            class. When we created a <code>Student</code> object, we could
+            use both of those methods just as if they were defined in the
+            student class.
+        </p>
+        <p> Furthermore, when we defined new methods in the <code>Student</code>
+            class, we could <b>call</b> those inherited methods (such as
+            <code>getName()</code>), just as if they were defined inside
+            the <code>Student</code> class.
+        </p>
+        <p> Let's see if we can put that to work by calling the <b>inherited</b>
+            version of <code>toString()</code>, which already prints the
+            object's name, from inside the new overridden <code>toString()</code>
+            method. Here's what that looks like, and here's what happens:<br>
+            <img src='images/inherit02e.png' class='inline' alt='Student toString() attempt 3.'>
+            The good news is that doing this is <b>not</b> syntactically
+            incorrect. The bad news is that your program blows up with
+            a <code>StackOverflowError</code> when you try to run it.
+        <p>
+        <p> The reason your program crashes is because when you call the
+            <code>toString()</code> method from inside a class that has
+            a definition for a <code>toString()</code> method, then the
+            overridden or <code>Student</code> version is used; it has
+            <b>replaced</b> the inherited <code>Person</code> version.
+            You are, in effect, calling the <code>Student</code> version
+            of <code>toString()</code> <b>from inside itself</b>. This
+            is called <b>recursion</b> and while it can be a powerful
+            problem-solving technique, doing it accidentally like this
+            usually results in a program crash.
+        </p>
+    <h5>The super Modifier</h5>
+        <p> This problem is similar to the one we encountered when we
+            had instance variables and local variables that both had
+            the same name. When that happened, we were able to use the
+            special identifier named <code>this</code> to differentiate
+            between the two variables.
+        </p>
+        <p> In this case we have an <b>inherited</b> superclass method named
+            <code>toString()</code> and an <b>overridden</b> subclass method
+            named <code>toString()</code>.
+            We can differentiate between them by using the special
+            identifier named <b>super</b>, like this:
+            <img src='images/inherit02f.png' class='inline' alt='Student toString() attempt 4.'>
+            Now, the overriden <code>toString()</code> method calls the
+            superclass <code>toString()</code> method to do a portion of
+            its work.
+        </p>
+        <p class='note'>Don't confuse method <b>overriding</b> (which is
+            what we're doing here), with method <b>overloading</b>. With
+            overloading, two or more methods have the same name, but different
+            parameter lists. Overloaded methods can exist in the same class
+            or in a subclass. (This is different than C++). Overriding methods
+            can only exist in a subclass and they must have exactly the
+            same parameters and return type as the method that they are
+            replacing.
+        </p>
+    <h3>Topic 3: Inheritance and Constructors</h3>
+        <p> The last thing you'll need to master to work with inheritance
+            is how it affects constructors. You remember that a class
+            constructor <b>must</b> have the same name as the class. That
+            means that when you create a new class, the new class
+            <b>doesn't inherit any of the superclass constructors</b>.
+            Instead, it needs to define new constructors of its own.
+        <p>
+        <p> To see how that works, let's add two constructors to the
+            <code>Person</code> class, which currently uses only the
+            <b>default</b> constructor that is automatically written
+            by Java, when you don't supply any explicit constructors:<br>
+            <img src='images/inherit03a.png' class='inline' alt='Two constructors for the Person class.'>
+            Both constructors just print a message so we can keep track of
+            when they've been called. The working constructor uses its
+            <code>String</code> parameter to initialize the <code>name</code>
+            instance variable in addition to printing a diagnostic message.
+            I've also added a similar diagnostic message to the
+            <code>Student</code> class constructor.
+        </p>
+        <p> The test program creates two objects, one <code>Person</code> and
+            one <code>Student</code>, and prints out their info, just like
+            the previous example. When we run the test code in
+            <a href='Inherit03.java' target='_blank'>
+            <b>Inherit03.java</b></a> (which you can download by clicking the
+            link in this sentence), you'll see that instead of two constructors,
+            <b>both</b> <code>Person</code> constructors have been called,
+            along with the <code>Student</code> constructor:<br>
+            <img src='images/inherit03b.png' class='inline' alt='Running the Inherit03 sample program.'>
+            Why is that?
+        </p>
+    <h4>Constructor Chaining</h4>
+        <p> When you call a subclass constructor, before the constructor
+            can do <b>any</b> of its work, it first needs to make sure that
+            its superclass constructor has been called. This happens
+            <b>before</b> the first line in the subclass constructor
+            ever runs.
+        </p>
+        <p> You don't have to do anything special to make this happen.
+            When your constructor runs, if implicitly calls the <b>no-arg</b>
+            constructor in the superclass as its first line of code, and that
+            constructor calls <b>its</b> superclass constructor, and so on,
+            all the way up to the <code>Object</code> class. This is called
+            <b>constructor chaining</b>.
+        </p>
+        <p> So, consider for a second, the <code>Student</code> class
+            constructor shown here:<br>
+            <img src='images/inherit03c.png' class='inline' alt='The Student constructor.'>
+            Even though you don't see it in the code,
+            <b>in reality</b> the following set of commands are run
+            when the <code>Student</code> construct is invoked
+            (after memory has been allocated and all instance variables
+            have been initialized):
+        </p>
+        <ol>
+            <li class='d'>call the <code>Object</code> no-arg constructor</li>
+            <li class='d'>call the <code>Person</code> no-arg constructor</li>
+            <li class='d'>assign the parameter to the instance variable</li>
+            <li class='d'>call the <code>setName()</code> inherited method</li>
+            <li class='d'>print the diagnostic message</li>
+        </ol>
+        <p> That's why we saw three diagnostic messages in the sample program,
+            when we only created two objects. When we created the <code>Student</code>
+            object named <code>steve</code>, the <code>Student</code> constructor
+            <b>first</b> called the <b>no-arg</b> constructor for the <code>Person</code>
+            class. If the <code>Object</code> class no-arg constructor printed out
+            diagnostic messages, like our constructors do, then you won't have seen
+            two of those as well: one for the <code>Student</code> object and
+            one for the <code>Person</code> object.
+        </p>
+    <h4>Default and No-Arg Constructors</h4>
+        <p> What happens if we <b>remove</b> the no-arg constructor from the
+            <code>Person</code> class? If you comment it out, you'll see that
+            it doesn't affect the <code>Person</code> class at all, but the
+            <code>Student</code> constructor stops working:<br>
+            <img src='images/inherit03d.png' class='inline' alt='The Student constructor with no explicit Person constructor.'>
+            As the Eclipse error message points out, every time you extend a class,
+            the superclass <b>must</b>:
+        </p>
+        <ol>
+            <li class='d'>have a <b>no-arg constructor</b> like <code>Person()</code>, or</li>
+            <li class='d'>have a <b>default</b> constructor which is automatically
+                written if the superclass has <b>no</b> explicit constructors, or</li>
+            <li class='d'>the <b>subclass</b> (<code>Student</code> in this case) must
+                <b>explicitly</b> call <b>another</b> constructor.
+            </li>
+        </ol>
+        <p> That's what we want to look at now. How exactly do you explicitly call
+            a superclass constructor?
+        </p>
+    <h4>Calling super()</h4>
+        <p> You remember when you wrote overloaded constructors in Unit 9, that
+            you could <b>invoke one constructor from another</b> by using the special
+            syntax <code>this()</code>. When you use <code>this()</code> to call
+            another constructor, it needed to appear on the first line of the
+            method.
+        </p>
+        <p> With inheritance, instead of calling another, overloaded constructor
+            in the same class, you can <b>call a constructor in your immediate
+            superclass</b>. Instead of using <code>this()</code>, you use
+            <code>super()</code> in a similar manner. As with <code>this()</code>,
+            <code>super()</code> must appear on the first line of the constructor
+            body. Of course that means you can use <code>this()</code> or
+            <code>super()</code>, not both.
+        </p>
+        <p> Here's how you'd modify the <code>Student</code> constructor to call
+            the <code>Person(String)</code> constructor, instead of using
+            the <code>setName()</code> method, as we've done up until now:<br>
+            <img src='images/inherit03e.png' class='inline' alt='Using super() with the Student constructor.'>
+            Notice that the <code>setName()</code> method can be removed alltogether
+            once you do this. This is the <b>normal way to write subclass constructors</b>.
+        </p>
+        <p> Now, when we run our sample program, instead of implicitly calling the
+            <code>Person</code> no-arg constructor (which no longer exists), we
+            <b>explicitly</b> chain to the <code>Person(String)</code> constructor
+            to initialize the <code>name</code> field:<br>
+            <img src='images/inherit03f.png' class='inline' alt='Explicit constructor chaining.'>
+        </p>
+        <p> Well that's it for the boring finger exercises. Let's get back to the fun stuff.</p>
+    <h3>Simple Inheritance</h3>
+     <img src='images/pb01.png' class='right' alt='The original PolarBounce.'>
+        <p> Let's start this lesson by returning to the bouncing ball program,
+            <a href='PolarBounce.java' target='_blank'>
+            <b>PolarBounce</b></a>, from the <b>Lesson 8E: Introducing
+            Animation.</b> (You can download the original version by clicking the
+            link in the previous paragraph.)
+            We'll write several different versions of the application,
+            gradually turning it into an object-oriented program that
+            applies the principle of <b>inheritance</b> and
+            <b>composition</b>.
+        </p>
+
+        <p> By writing
+            several different versions, you'll come to appreciate
+            how inheritance saves you work by letting you reuse
+            existing, already-debugged code.
+        </p>
+    <h4>The Original PolarBounce</h4>
+        <p> The original version of <b>PolarBounce</b> basically did
+            three things:
+        </p>
+        <ul>
+            <li>It defined instance variables to represent the ball
+                and it's current state on the screen.
+            </li>
+            <li>It initialized each of the instance variables inside
+                the <code>init()</code> method.
+            </li>
+            <li>Inside the <code>advanceOneFrame()</code> method, it
+                moved the <code>GOval</code> object and then checked
+                to see if the ball collided with the side of the
+                canvas.
+            </li>
+        </ul>
+        <p> Our original program also responded to mouse events to
+            change its direction. That's not directly applicable to
+            the current lesson, so we'll leave that for a little later.
+        </p>
+<!--
+    <h5>Instance Variables</h5>
+        <p><b>PolarBounce</b> defined three instance variables: a
+            <code>GOval</code> which we used to represent our <b>ball</b>,
+            and two <code>doubles</code> to represent the
+            <b>distance</b> and <b>direction</b> (in polar coordinates)
+            that the ball should move during each animation frame.<br>
+            <img src='images/animate04.gif' class='inline' alt='Defining the original PolarBounce instance variables.'>
+            As with our other animation examples, the program also
+            used a constant for the <b>frame rate</b>.
+        </p>
+    <h5>Initialization</h5>
+        <p> As with other ACM <code>GraphicsPrograms</code>,
+            <b>PolarBounce</b> uses the <code>init()</code> method to set up
+            the background and other user-interface elements. The method
+            is also used to <b>instantiate and initialize</b> the
+            <code>GOval</code> object that represents the bouncing ball,
+            like this:<br>
+            <img src='images/animate06.gif' class='inline' alt='Initializing the original PolarBounce instance variables.'>
+            In addition to the ball, the <code>init()</code> method
+            also set <code>direction</code> and <code>distance</code>
+            to a pair of random values as shown here:<br>
+            <img src='images/animate07.gif' class='inline' alt='Initializing the original PolarBounce distance and direction.'>
+        </p>
+    <h5>Moving the Ball</h5>
+        <p> <b>PolarBounce</b> uses the standard ACM animation skeleton:
+            an endless loop in the <code>run()</code> method containing
+            a call to <code>advanceOneFrame()</code> and <code>pause()</code>.
+            The actual work of moving the ball and checking for collisions
+            happens in the <code>advanceOneFrame()</code> method.
+        </p>
+        <p> Inside <code>advanceOneFrame()</code> the <code>GOval</code>
+            object is first moved by calling its <code>movePolar()</code>
+            method like this:<br>
+            <img src='images/animate09.gif' class='inline' alt='Moving the ball.'>
+            Then, to see if we "hit the wall", we first calcuate values for
+            each of the four sides of the ball, given its current location.
+            (These calculations assume that the <b>anchor point</b> for the
+            ball is its center.)<br>
+            <img src='images/animate10.gif' class='inline' alt=''>
+            Once we know the center of the ball, we compare it's position to
+            the dimensions of the <code>GCanvas</code> that contains it. We
+            get those dimensions with the <code>getWidth()</code> and
+            <code>getHeight()</code> methods.
+            If you've hit the left wall (<code>left &lt; 0</code>) or the right
+            wall (<code>right &gt;= getWidth()</code>), then you need
+            to adjust the angle by subtracting the current directions from 180:<br>
+            <img src='images/animate11.gif' class='inline' alt=''>
+            Of course that means you may end up with a negative angle
+            (when the current direction is greater than 180), but the
+            <code>movePolar()</code> method is smart enough to handle
+            that, and automatically adds 360.
+        <p> When you hit the floor or the ceiling, you perform a similar
+            calculation, only instead of subtracting from 180, you
+            subtract from 360.
+        </p>
+-->
+    <h4>The SimpleGBall Class</h4>
+        <p> <img src='images/soccerball.gif' class='right' alt='A soccer ball image.'>
+            For our first sequel to <b>PolarBounce</b>, instead of using a
+            <code>GOval</code> and separate fields or local variables
+            for the attributes of our bouncing ball, we'll
+            <b>create our own class to represent our ball</b>, just like
+            we did with the <code>SimpleBall</code> class in
+            <b>Lesson 9A: Defining Fields</b>.
+        </p>
+        <p> As we did back there, to keep confusion to a minimum,
+            we'll start the <b>simplest class definition</b> possible.
+            Since our class will be part of the <code>GObject</code>
+            family, we'll call it <b>SimpleGBall</b>.
+        </p>
+
+    <h4>The Class "Skeleton"</h4>
+        <img src='images/sgb02.png' class='right' style='margin-top:-1em;' alt='The SimpleGBall class skeleton.'>
+        <p> Create the <b>SimpleGBall</b> class <b>exactly like</b> you
+            create a regular Java class, <b>except</b> that when you
+            fill in the Eclipse Class Wizard screen, have it
+            <code>extend</code> the <code>acm.graphics.GOval</code>
+            class as shown here!
+        </p>
+        <p> Here's what the basic code for the <code>SimpleGBall</code>
+            class should look like. Be sure to add a class comment at the
+            top as I've done here:<br>
+
+        </p>
+    <h4>Data Attributes</h4>
+        <p> To define the fields for your class, you have to decide
+            what data elements you'll need to represent objects of
+            the class. If were were defining a <b>Car</b> class,
+            like the illustration shown earlier, we might want to have
+            fields for <b>Serial Number</b>, <b>Color</b>, <b>Engine
+            Size</b> and <b>Body Style</b>.
+        </p>
+
+        <p> In our case, we <i>could</i> use a <code>java.awt.Rectangle</code>,
+            like the original <b>AppletBounce</b> program did. One of the
+            advantages of object-oriented programming, though, is that it lets
+            you think in more "natural" terms. Rather than thinking in
+            terms of rectangles, let's model our ball using:
+        </p>
+        <ul>
+            <li><b>radius</b>: how big the ball is.</li>
+
+            <li><b>location</b>: where the ball is located.</li>
+            <li><b>dx,dy</b>: the velocity of the ball.</li>
+            <li><b>color</b>: the color used to paint the ball.</li>
+        </ul>
+        <p> This doesn't look that much different than the previous
+            example, of course; but there's one <b>major difference</b>:
+        </p>
+
+        <p class='pullquote'>
+            The data elements are packaged now packaged inside our class,
+            not "lying loose" inside our program.
+        </p>
+
+        <img src="images/y01.gif" alt="An inheritance heirarchy" align="right" hspace="15" vspace="15">
+        <p> Here's that "real world" inheritance example from Unit 8.
+            Suppose that all of the
+            animals in the world could be lumped together into the class
+            <code>Animal</code>. If we took all of the animals and divided
+            them into different groups, we might find that some were
+            mammals, (which we'd assign to the <code>Mammal</code> class),
+            some were insects, etc. Each of these groupings would be a
+            <b>subset</b> of the entire class of <b>Animal</b>.
+        </p>
+        <p> Such a subset (<code>Mammal</code>, <code>Insect</code>,
+            <code>Amphibian</code>) is called a <b>subclass</b>, and, as
+            you might expect, the superset (<code>Animal</code>) is
+            called the <b>superclass</b>.
+        </p>
+
+        <p> This relationship is called an <b>is-a</b> relationship because
+            if an object belongs to a subclass, (<b>brenda</b> and
+            <b>jumbo</b> in the <code>Elephant</code> class, for instance),
+            that object is simultaneously a member of each of <b>all</b>
+            its <b>ancestor</b> classes as well. Thus, we can say that
+            Jumbo "<b>is-a</b>" <code>Elephant</code>, but, by virtue of
+            being an <code>Elephant</code>, he is, simultaneously, a
+            <code>Mammal</code> and an <code>Animal</code> as well.
+        </p>
+        <p> Let's use this somewhat artifical inheritance hierarchy to
+            look at the <b>syntax</b> and <b>semantics</b> of inheritance.
+            Once you know how inheritance works, we'll come back and put
+            it to work in a more practical example.
+        </p>
+    <h4>The Syntax of Inheritance</h4>
+        <p> Let's start with the <a href='Animal.java' target='_blank'>
+            <b>Animal</b></a> class shown below. This is an independent class
+            similar to the ones you wrote in Unit 9, except that it is
+            probably simpler:
+            <img src='images/animal01.png' class='inlineCenter' alt='The Animal class.'
+        </p>
+    <h4>Substitutablility</h4>
+        <p> Because every <code>Elephant</code> is also a
+            <code>Mammal</code>, any time a <code>Mammal</code> is required,
+            you can use <b>any kind of <code>Mammal</code></b>. You can supply an
+            <code>Elephant</code> to meet the need, if that's what you have.
+            For instance, this is permissible:
+        </p>
+        <p class="code">
+            Mammal fred = new Elephant();
+        </p>
+        <p>as is this:</p>
+        <p class="code">
+            public void feed(Mammal m)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// General Mammal feeder</span><br>
+            }<br>
+            . . .<br>
+            Elephant jumbo = new Elephant();<br>
+            feed(jumbo);
+        </p>
+        <p> You can pass an <code>Elephant</code> to any method that requires
+            a <code>Mammal</code>, because every <code>Elephant</code> is
+            a "kind of" <code>Mammal</code>. This is called the
+            <b>principle of substitutability</b>. You can always substitute
+            a subclass object when a superclass object is needed.
+        </p>
+        <p> The reverse is not true, however, you cannot pass a
+            <code>Mammal</code> object to a method that expects to
+            get an <code>Elephant</code>. All <code>Elephants</code> are
+            <code>Mammals</code>, but not all <code>Mammals</code> are
+            <code>Elephants</code>. This, therefore, is illegal:
+        </p>
+        <p class="code">
+            public void feed(Elephant e)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Specialized Elephant feeder</span><br>
+            }<br>
+            . . .<br>
+            Mammal tom = new Mammal();<br>
+            feed(tom); <span class="cmt">// OOPS! tom is not an Elephant!</span></p>
+    <h4>Single Inheritance</h4>
+        <p> There is one last thing you should note about Java's inheritance
+            model. Each subclass can have only one immediate superclass.
+            This is called <b>single inheritance</b>. Because of this, you
+            cannot create a subclass that combines the characteristics of
+            two classes using inheritance. Such a facility is called
+            <b>multiple inheritance</b>.
+        </p>
+        <p> Java has other facilities for achieving this goal, however.
+            You can use composition, or another Java feature called
+            <b>the interface</b>.
+        </p>
+    <h3>Hands-on Inheritance: Creating a New Widget Class</h3>
+        <p> For the rest of this lesson, we'll explore Java's inheritance
+            facilities by using them to create our own graphical component,
+            that fits into the Java "family", so to speak. Back in Section 4.5
+            of your text, you created graphical objects, but they really weren't
+            part of Java's component hierarchy, and were treated differently
+            than Java's built-in buttons and labels.
+        </p>
+        <p> The class that we'll create, the <b>Dot</b>, is very similar to the
+            <code>Circle</code> class on page 182. The big difference is that
+            <code>Dot</code> objects will <b>inherit</b> all of the methods
+            and fields from the <code>Component</code> class, so the
+            <code>Dot</code> class will be both <b>simpler</b> than the
+            <code>Circle</code>, yet have more features.
+        </p>
+        <p> As always, you'll learn more if you break out the keyboard and
+            compiler, and type along.
+        </p>
+    <h4>Canvas and Component</h4>
+        <p> Creating a subclass is easy. You've been doing it since you wrote
+            your first program. For this project, however, you're going to
+            be creating <b>two</b> new classes.
+        </p>
+        <ul>
+            <li>One class, <code>TestDots</code> will extend the
+                <code>Applet</code> class, as all of your previous applets have done.
+                You'll use this class as a "test-bed" or "test-harness" for your
+                new widget class.
+            </li>
+            <li>Your second class, <code>Dot</code>, will extend
+                one of the built-in classes, the class named
+                <code>Component</code>.
+            </li>
+        </ul>
+        <p>In the original version of Java, (1.0), there was only one way to
+            do this: by using the <code>Canvas</code> class. The
+            <code>Canvas</code> class provides,...well, a "blank canvas",
+            that you can extend to create your own widgets. The advantages
+            of using <code>Canvas</code> as the basis for your own
+            widgets are:
+        </p>
+        <ul>
+            <li>Your custom widgets will work in Java 1.0 as well as Java
+                1.1 browsers.
+            </li>
+            <li>The code is <i>slightly</i> simpler than that required by
+                the alternative methods.
+            </li>
+        </ul>
+        <p> There are disadvantages as well. Each of your
+            <code>Canvas</code>-based components uses a native "window peer".
+            It is because of the use of these native peers that
+            <code>Canvas</code>-based widgets are called "heavyweight"
+            components.
+        </p>
+        <p>The disadvantages of using heavyweight components are:</p>
+        <ul>
+            <li>Your O/S normally has a limited number of window peers, so
+                using them for buttons and labels depletes system resources.
+            </li>
+            <li>The heavyweight window peer is <b>opaque</b>, so all of
+                your controls must appear to be rectangular.
+            </li>
+        </ul>
+        <p> In Java 1.1 and later, you can also directly extend the
+            <code>Component</code> class to create "lightweight" components.
+            Lightweight components do not require a native peer, and so
+            use fewer resources (theoretically) than heavyweights.
+        </p>
+        <p> Lightweight components can also contain transparent regions, so
+            you can create round or irregularly shaped components. Our
+            <code>Dot</code> objects will be circular, that's why we'll use
+            <code>Component</code> instead of <code>Canvas</code> as
+            our <code>Dot</code> superclass.
+        </p>
+    <h4>Step 1: The Test Harness</h4>
+        <p> Start up your Eclipse, and create a new Java class.
+            Whenever I have to create a new "standalone" class,
+            I always create a <b>test-harness</b> first. We'll
+            follow that here. Instead of starting with the
+            <b>Dot</b> class, we'll create a program
+            that <b>uses</b> the <b>Dot</b> class.
+        </p>
+        <p> Use <code>java.applet.Applet</code> as the base class, and
+            then use the code shown here:
+            <img src="images/e01.gif" class="inline" alt="The TestDots program, version 1.">
+            Notice that this is a simple applet that works like this:
+        </p>
+        <ol>
+            <li class="d">
+                To start out, I've set the background to yellow, and the
+                layout manager to null. This will make it easier to check our
+                sizing, positioning, and painting methods, when create the
+                <code>Dot</code> class. I've also created a random number
+                generator, and two local variables, <code>width</code> and
+                <code>height</code> that I'll use to position each of my
+                <code>Dot</code> objects, later in the program.
+            </li>
+            <li class="d">The loop at the end of the <code>init()</code> method
+                repeats ten times, and each time through, it creates a
+                <code>Dot</code> object, using the default constructor.
+            </li>
+            <li class="d">Because our <code>Dot</code> <b>is-a</b> <code>Component</code>,
+                unlike the <code>Circle</code> class of Chapter 4, we can use the
+                <code>Component</code> class <code>add()</code> method to add each
+                <code>Dot</code> to the applet.
+            </li>
+            <li class="d">Because every <code>Dot</code> <b>is-a</b> <code>Component</code>,
+                we can also use the inherited <code>setLocation()</code> and
+                <code>setForeground()</code> methods, with out doing any extra work in
+                the <code>Dot</code> class. Like all inherited methods, we get the
+                extra functionality, "for free".
+            </li>
+            <li class="d">Finally, we can add <b>new</b> functionality. The
+                <code>Component</code> class knows nothing about a radius, but we'll
+                give our <code>Dot</code> class a <i>specialized</i>
+                <code>setRadius()</code> method, which we'll call from
+                line 40.
+            </li>
+        </ol>
+        <p> Now, because the <code>Dot</code> class does not yet exist, <b>your code
+            will not compile at this point</b>. You can download
+            <a href='javascript:var%20w=window.open("TestDots01.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>TestDots.java</b></a> by clicking the hyperlink in this
+            sentence.
+        </p>
+    <h4>Step 2 : The New Class</h4>
+        <p> Now, create a new Java class called
+            <a href='javascript:var%20w=window.open("Dot01.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>Dot.java</b></a>,
+            and add the new class definition shown here:
+            <img src="images/e02.gif" alt="Source code for the first version of Dot.java" class="inline">
+            Note the following things about this code:
+        </p>
+        <ol>
+            <li class="d">We only import <code>java.awt</code> not
+                <code>java.applet</code> like we've done for our applets.
+                The new class then <b>extends</b> <code>Component</code>, not
+                <code>Applet</code>
+            </li>
+            <li class="d">There is an instance variable, <code>radius</code>, which
+                we set to a default value of 10. We also added a
+                <i>mutator</i> method, <code>setRadius()</code>,
+                which allows us to change the value of the radius.
+            </li>
+            <li class="d">Finally, there is a <code>paint()</code> method,
+                just like those you've used in your applets, that
+                draws the bounds of the dot, based on its size.
+            </li>
+        </ol>
+        <img src="images/e03.gif" class="right" alt="Running the first version of TestDots.java">
+    <h5>Compile and Run</h5>
+        <p>
+            Once you've completed this second file,
+            save both <b>TestDots.java</b> and <b>Dots.java</b>.
+            Both files should compile without problems, and then
+            run <b>TestDots</b> as an applet.
+        </p>
+        <p>
+            What do you see? Why, do you suppose?</p>
+        <p> The <code>Dot</code> class is fairly Spartan; it
+            doesn't look like there's a lot of room for something to
+            go wrong, but even the simple <code>paint()</code> method doesn't
+            appear to be working. Note, though, that even though your
+            dots appear "invisible", the <code>Dot</code> class actually
+            "knows" how to do quite a few things, despite the inauspicious
+            start. Notice that you didn't get any error messages with
+            the <code>add()</code>, <code>setLocation</code>, or
+            <code>setForeground()</code> messages.
+        </p>
+        <p>Let's tackle the "invisibility" problem first.</p>
+    <h4>How Big is that Dot?</h4>
+        <p> Even though we set the radius of each of our <code>Dot</code> objects,
+            we really haven't considered how our <code>Dot</code> class "fits in"
+            with all of the other components. When you extend a class, you need
+            to carefully examine each of your ancestor classes and see how your
+            new fields and methods affect them.
+        </p>
+        <p> In this case, the problem is quite simple; we're changing our <code>Dot's</code>
+            radius, be we <b>aren't</b> passing that information on to the rest of
+            the family. We can fix that by calling the inherited <code>setSize()</code>
+            and <code>setPreferredSize()</code> methods whenever we change our
+            object's <code>radius</code>.
+        </p>
+        <p> Here's the modified <code>setRadius()</code> method:
+            <img src="images/e04.gif" class="inline" alt="The modified setRadius() method.">
+            and here's a <b>constructor</b>, which makes sure our objects start out
+            life with the correct size as well. In addition, I've set the default
+            foreground and background color of each <code>Dot</code> also.
+            <img src="images/e06.gif" class="inline" alt="The second Dot class constructor.">
+        </p>
+        <p> <img src="images/e05.gif" class="right" alt="The TestDots applet.">
+            You can examine the modified source code for this version of
+            <a href='javascript:var%20w=window.open("Dot02.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>Dot.java</b></a> by clicking the link in this sentence.
+        </p>
+        <p>
+            Save the code and run <b>TestDots</b> again, and
+            you'll see that this time, the dots are spread out
+            across your applet, just like the picture shown
+            at the right.
+        </p>
+        <br clear="all">
+    <h4>Lessons Learned</h4>
+        <p>There are three lessons we can draw from this program:</p>
+        <ol>
+            <li class="d">We can create <code>Dot</code> variables and objects
+                just like we can create <code>Label</code>
+                or <code>Button</code> variables and objects:
+                <p class="code">
+                    Label myLabel = new Label("Hi Mom"); <span class="cmt">// OK</span><br>
+                    Dot aDot = new Dot(); <span class="cmt">// also OK</span>
+                </p>
+                To add more functionality, we could add more constructors or
+                methods.
+            </li>
+            <li class="d">A <code>Dot</code> object <b>is-a</b>
+                <code>Component</code>, <b>just like the built-in
+                components that come with the Java 2 Platform</b>.
+                We can add them to the surface of our applets just
+                like we can add <code>Button</code> or <code>Label</code>
+                objects:
+                <p class="code">
+                    this.add(myLabel);<br>
+                    this.add(aDot);
+                </p>
+            </li>
+            <li class="d">We can automatically use the <code>Component</code> methods,
+                <code>setForeground()</code> and <code>setLocation()</code>
+                without doing <b>any extra work at all</b>. The
+                <code>Dot</code> class inherits them "for free."
+                <p class="code">
+                    myLabel.setBackground(Color.red);<br>
+                    aDot.setBackground(Color.red);
+                </p>
+            </li>
+        </ol>
+        <p> Of course, unlike <code>Button</code> or <code>Choice</code> objects,
+            the <code>Dot</code> is a pretty <i>poor</i> Widget. Sure, we can change
+            its size and color, but, like the <code>Label</code> class, it more or
+            less just sits there.
+        </p>
+<hr ALIGN=LEFT NOSHADE WIDTH="100%"><font color="#B85886">Composite Objects</font>
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="100%"></h2>
+<b><font size=+3>I</font></b>nheritance, which you first met in Unit 2,
+is a simple and powerful way to reuse and extend existing software components.
+As you'll see in the next Unit, inheritance lets you define your own version
+of existing classes, customized for your special needs.
+<p>Suppose that your corporate policy requires that all applications use
+14-point <b>TextFields</b> and 18-point bold <b>Labels</b>. Using inheritance,
+you can simply create a pair of new classes by extending the <b>TextField</b>
+and <b>Label</b> classes, and avoid the extra work of sending the <i><u>setFont()</u></i>
+
+message to every <b>TextField</b> and <b>Label</b> object in your entire
+application.
+<p>Inheritance isn't the right solution for every situation, however. What
+if you need a component that combines both a <b>Label</b> and a <b>TextField</b>
+object? Inheritance doesn't help in this situation. If you try to write&nbsp;
+<br>&nbsp;
+<center><table CELLPADDING=10 COLS=1 WIDTH="90%" BGCOLOR="#F0FFF0" >
+
+<tr>
+<td><b><tt><font color="#000099">public class LabeledTextField&nbsp;</font></tt></b>
+<br><b><tt><font color="#000099">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+extends Label, TextField&nbsp;</font></tt></b>
+<br><b><tt><font color="#000099">{&nbsp;</font></tt></b>
+<br><b><tt><font color="#000099">}</font></tt></b></td>
+</tr>
+</table></center>
+
+<p>Java goes ballistic. It won't even compile your code. Java's hard-and-fast&nbsp;
+rule is that each class can extend only a single superclass.&nbsp;
+
+<p>Fortunately, there is a simple solution. You can bundle both your <b>Label</b>
+and your <b>TextField</b> together in a single class, making each of them
+fields. This technique is called composition.
+<p>The idea of a composition relationship is really quite simple: In the
+composition relationship, an object is composed of other objects, which
+are its "parts." That's why it's called a HASA relationship, because we
+say:
+<ul>
+<li>
+A car has a motor, or</li>
+
+<li>
+A bicycle has a seat, or</li>
+
+<li>
+A computer has a CPU</li>
+</ul>
+You've already used composition, When building applets that contain both
+<b>Labels</b>
+and <b>TextFields</b>. These components are part of the applet; they "live"
+only as long as the applet lives, and they exist only to serve the purposes
+of the applet.
+<h3>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="100%">The LTextField Class
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="100%"></h3>
+For the rest of this lesson, we're going to use composition to build a
+labeled text field class in several stages. Our first few attempts won't
+be very impressive, but stick with it, and you'll be rewarded.
+<p>By themselves, text fields are not very useful. The purpose of a text
+field is to get input from your users. But, without a label, your users
+don't know what information to put into each field. If you look at any
+"business style" application, almost every text field has a label attached
+to it.
+<p>Let's see if we can combine two of Java's built-in AWT classes, the
+
+<b>TextField</b>
+class and the <b>Label</b> class, to create a new labeled text field. For
+right now, we'll use an applet to "hold" the parts together.&nbsp;
+<p>As we work through the example, it will help if you are able to follow
+along on your own computer.
+<h4>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%">The LTextField1 Class
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%"></h4>
+Here are the steps to follow:
+<ol>
+<li>
+Create a new applet named <u>LTextField1</u>. Remember that this must be
+in a file named <i>LTextField1.java</i>, and contain a single <b>public
+class</b> named <u>LTextField1</u> that <b>extends</b> the <b>Applet</b>
+
+class.</li>
+
+<br>&nbsp;
+<li>
+Remember to <b>import</b> the <u>java.awt</u> package and the <u>java.applet</u>
+package.</li>
+
+<br>&nbsp;
+<li>
+Add two fields: a <b>Label</b> field called <u>theLabel</u>, and a <b>TextField</b>
+called <u>theText</u>. You don't have to initialize either field.</li>
+
+<br>&nbsp;
+<li>
+
+Add an <i><u>init()</u></i> method to initialize both of your fields:</li>
+
+<br>&nbsp;
+<ul>
+<li>
+Initialize your <b>Label</b> to say "Name:". Make the <b>Label</b> right
+aligned.</li>
+
+<br>&nbsp;
+<li>
+Initialize your <b>TextField</b> with a width of 40.</li>
+
+<br>&nbsp;</ul>
+
+<li>
+Add both fields to your applet, using the <i><u>add()</u></i> method</li>
+
+<br>&nbsp;
+<li>
+Create <u>LTextField1.html</u>. Set HEIGHT to 50 and WIDTH to 400.</li>
+</ol>
+When you're finished, compile and run your program in appletviewer. As
+you can see, it looks pretty good:
+<center><img SRC="LTextField1_1.gif" ALT="The LTextField1 applet" HSPACE=10 VSPACE=10 height=119 width=408></center>
+What happens, though, if you try to resize the applet? Oops! As you can
+see, when added as individual components to an applet, the <b>Label</b>
+and the <b>TextField</b> really don't act like pieces of a single, cohesive
+whole.
+
+<center><img SRC="LTextField1_2.gif" ALT="The LTextField1 applet after resizing the window. Label and TextField portions move independently." HSPACE=10 VSPACE=10 height=136 width=326></center>
+
+<h4>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%">Using LTextField1 Objects
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%"></h4>
+Since <u>LTextField1</u> is an applet, it's common for use to think of
+it as a "program." But, Java really doesn't have "programs" like other
+programming languages. All Java has is classes and objects.&nbsp;
+<p>When you load <u>LTextField1.html</u> into <i>appletviewer</i>, what
+
+<i>appletviewer</i>
+does is to create an <b>LTextField1</b> object, and then call its <i><u>init()</u></i>
+method. If the <i>appletviewer</i> program can create an <b>LTextField1</b>
+object and start it running, perhaps other classes could contain <b>LTextField1</b>
+
+objects as well.
+<p>Let's see by creating an applet that uses <b>LTextField1</b> objects.
+As with the previous section, you'll learn more if you follow along instead
+of just reading.&nbsp;
+<p>Here are the steps you should follow:
+<ol>
+<li>
+Create a program that will use <b>LTextField1</b> objects. Call the applet
+<u>User1</u>,
+and extend <b>Applet</b>. Make sure <b>User1.java</b> is in the same directory
+as <b>LTextField1.class</b></li>
+
+<br>&nbsp;
+<li>
+Add two <b>LTextField1</b> objects as fields inside the <b>User1</b> class.
+You can name them <u>first</u> and <u>second</u>. Initialize them "in place"
+using <b>new LTextField1()</b>.</li>
+
+<br>&nbsp;
+<li>
+Add an <i><u>init()</u></i> method to <b>User1</b>. Inside your <i><u>init()</u></i>
+method use <i><u>add()</u></i> to put both <u>first</u> and <u>second</u>
+
+on to the surface of the applet.</li>
+
+<br>&nbsp;
+<li>
+Create the <u>User1.html </u>file that loads <b>User1</b>. Set the <u>HEIGHT</u>
+to 200 and the <u>WIDTH</u> to 400.</li>
+
+</ol>
+Compile <u>User1.java </u>and then run <u>User1.html</u> in appletviewer.
+What do you see? Does this look familiar?
+<center><img SRC="user1_1.gif" ALT="The User1 applet. [Fields do not appear]" VSPACE=10 height=187 width=406></center>
+
+<h4>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%">Fixing User1
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%"></h4>
+If you read back over the description of how <i>appletviewer</i> or your
+Web browser runs your applet, you might notice that the <b>User1</b> class
+is missing one of the steps. Although <i>appletviewer</i> is sending the
+
+<i><u>init()</u></i>
+message to the <b>User1</b> object, the <b>User1</b> object is failing
+to send the <i><u>init()</u></i> message to its two <b>LTextField</b> objects.
+<p>Remedy that by adding the following two lines to the <b>User1</b> <i><u>init()</u></i>
+
+method:
+<br>&nbsp;
+<center><table CELLPADDING=10 COLS=1 WIDTH="90%" BGCOLOR="#F0FFF0" >
+<tr>
+<td><b><tt><font color="#000099">public void init()</font></tt></b>
+<br><b><tt><font color="#000099">{</font></tt></b>
+<br><b><tt><font color="#000099">&nbsp; </font><font color="#FF0000">first.init();</font></tt></b>
+<br><b><tt><font color="#FF0000">&nbsp; second.init();</font></tt></b>
+<br><b><tt><font color="#000099">&nbsp; add(first);</font></tt></b>
+
+<br><b><tt><font color="#000099">&nbsp; add(second);</font></tt></b>
+<br><b><tt><font color="#000099">}</font></tt></b></td>
+</tr>
+</table></center>
+
+<p>Recompile <u>User1.java</u>, and then rerun <u>User1.html</u> in appletviewer.
+You should see something that looks like this. Go ahead and resize it to
+your heart's content.&nbsp;
+<center><img SRC="user1_2.gif" ALT="The User1 applet" VSPACE=10 height=143 width=392></center>
+It sure looks like the <b>Label</b> and <b>TextField</b> objects that make
+up an <b>LTextField</b> object are bound together to make up a new component.
+
+<h3>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="100%">What Have You Learned?
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="100%"></h3>
+You should now be convinced that applets are objects, just like <b>Button</b>
+objects or <b>Label</b> objects. You should also be convinced that, if
+you have an object, you can embed that object as a field inside a class.
+<p>As far as the <b>LTextField1</b> class itself, it's really not all that
+useful. Here are just a few of its shortcomings:
+<ul>
+<li>
+
+Because the browser only calls the <i><u>init()</u></i> method on the applet
+it loads, when you use an <b>LTextField1</b> object, you have to send it
+the <i><u>init()</u></i> message. Other object fields don't require this,
+so why should the <b>LTextField1</b> class?</li>
+
+<br>&nbsp;
+<li>
+
+The <b>LTextField1</b> class is not customizable. Every <b>LTextField1</b>
+object is always labeled "Name." That's like having a <b>Label</b> class
+that always says "Hi Mom." It's occassionally useful, but lacks universal
+applicability.</li>
+
+<br>&nbsp;
+<li>
+The <b>LTextField1</b> class can't <b><i>do</i></b> much. It doesn't repsond
+to many messages. You can't, for instance, change the text by sending one
+of your <b>LTextField1</b> objects the <i><u>getText()</u></i> or <i><u>setText()</u></i>
+
+message.</li>
+</ul>
+
+<h4>
+
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%">Improving LTextField1
+<hr ALIGN=LEFT SIZE=1 NOSHADE WIDTH="50%"></h4>
+The best way to fix <b>LTextField1</b> is to "<i>design it by using it</i>."
+Ask yourself the question "How would I use an ideal <b>LTextField</b> object?"
+Your answers will give you some ideas about how the <b>LTextField</b> class
+
+<i>should</i>
+work.
+<p>Here are the answers that I came up with. I want to be able to:
+<ul>
+<li>
+Specify both the text to be used in the <b>Label</b> part and a width to
+be used for the <b>TextField</b> part, like this:</li>
+
+<br>&nbsp;
+<center><table CELLPADDING=10 COLS=1 WIDTH="90%" BGCOLOR="#F0FFF0" >
+
+<tr>
+<td><b><tt><font color="#000099">LTextField name = new LTextField("Name:",
+30);</font></tt></b></td>
+</tr>
+</table></center>
+</ul>
+
+<ul>
+<li>
+Have a built-in or default value for the width, so I wouldn't have to specify
+it if I only wanted to specify the <b>Label</b> portion like this:</li>
+
+<br>&nbsp;
+<center><table CELLPADDING=10 COLS=1 WIDTH="90%" BGCOLOR="#F0FFF0" >
+
+<tr>
+<td><b><tt><font color="#000099">LTextField ssn = new LTextField("SocSec#");</font></tt></b></td>
+</tr>
+</table></center>
+</ul>
+
+<ul>
+<li>
+Finally, I'd like to be able to just specify the width of the <b>TextField</b>
+portion, and have the <b>Label</b> portion default to an empty <b>Label</b>
+
+like this:</li>
+
+<br>&nbsp;
+<center><table CELLPADDING=10 COLS=1 WIDTH="90%" BGCOLOR="#F0FFF0" >
+<tr>
+<td><b><tt><font color="#000099">LTextField addr2 = new LTextField(35);</font></tt></b></td>
+</tr>
+</table></center>
+
+<p>[Of course, I could just use a <b>TextField</b> in this case, but then
+I'd lose any of the other great improvements I plan on adding to the <b>LTextField</b>
+
+class].&nbsp;</ul>
+To add this functionality, we need to add some new methods to the <b>LTextField1</b>
+class. These new methods are called <i>constructors</i>. You'll learn how
+to build a basic constructor in the next lesson.
+<p>
+        <p> <img src='images/user-defined-types.gif' class='right' alt='Two user-defined types.'>
+            <b><span class='cap'>W</span>e can divide user-defined types into
+            types that contain a
+            single value</b>, called <b>scalar types</b>, and types that combine
+            multiple data items into a larger unit, which are generally
+            known as <b>structured</b> types.
+        </p>
+        <p> The <code>Weekday</code> user-defined type picture to the right
+            is an example of a <i>scalar</i> type that contains only a
+            single simple value, while the <code>Date</code> type illustrated
+            here is a <i>structured</i> type, consting of a month, day and
+            year.
+        </p>
+
+        <p> All of the built-in, primitive data types&#8212;<code>int</code>, <code>char</code>,
+            <code>boolean</code> and <code>double</code>&#8212;are <b>scalar</b>
+            data types</b>. Java's class types, such as <code>String</code>,
+            are <b>structured</b> types.
+        </p>
+        <p> In addition to the built-in primitive types, Java lets you define
+            your own scalar type, called an <b>enumerated type</b>. Let's
+            look at a situation where having your own user-defined
+            scalar types like this would be really useful.
+        </p>
+    <h3>The Need for Enumerated Types</h3>
+        <p> Do you remember how to create a font? You use one of the
+            <code>Font</code> constructors, like this example from
+            Unit 7:<br>
+            <img src='images/font.gif' class='inline' alt='Creating a Font object.'>
+            When you call the <code>Font</code> constructor, you pass three
+            parameters. The last two parameters, <code>style</code> and
+            <code>size</code> are both of type <code>int</code>.
+            When you use this constructor, instead of passing an arbitrary
+            <code>int</code> for the style, you'll use one of the predefined
+            <code>Font</code> class constants, like <code>Font.PLAIN</code>
+            or <code>Font.BOLD</code>. That causes two problems, however:
+        </p>
+        <ul>
+            <li>Because both the second and third parameter are type <code>int</code>,
+                the compiler <b>can't</b> warn you if you accidentally switch
+                the order of the parameters, like this:<br>
+                <p class='code'>
+                Font bigFont = new Font("Monospaced", 36, Font.BOLD);
+                </p>
+            </li>
+            <li> You don't even get a runtime error, like you do if
+                you pass an "out of range" int to the <code>Color</code>
+                constructor. All you get is itsy-bitsy font in an unknown
+                style. (That's because the actual value used for
+                <code>Font.BOLD</code> is simply the integer 1.
+                (<code>Font.PLAIN</code> is the value 0, while
+                <code>Font.ITALIC</code> is the value 2). When we
+                pass 64 to the second (<code>style</code>) parameter,
+                it's simply ignored, since it <b>is</b> a valid <code>int</code>
+                value.
+            </li>
+        </ul>
+        <p> Things would be a whole lot better if we could rewrite the
+            <code>Font</code> constructor so that the second parameter was
+            a different type entirely, something like this:
+        </p>
+        <p class='code'>
+            Font(String name, FontStyle style, int size)
+        </p>
+        <p> Then, if we called the constructor with the parameters in the
+            wrong order, the compiler would tell us that we'd made a mistake,
+            just as if we tried to use an integer for the font name.
+        </p>
+        <p> Unfortunately, it's too late for the <code>Font</code> class,
+            which was developed before the Java language permitted user-defined
+            enumerated types. Your programs and classes don't have to
+            suffer in this way though.
+        </p>
+        <p> Let's look at the process for creating Java's <code>enum</code>
+            types.
+        </p>
+
+    <h4>Creating Enumerated Types</h4>
+        <p> To create your own scalar, enumerated types in Java, you have
+            to do two things:
+        </p>
+        <ul>
+            <li>Supply a name for your new type in an <code>enum</code>
+                definition. The syntax for this is very similar to a
+                <code>class</code> definition.
+            </li>
+            <li>Provide a <b>list of all possible values</b> that the type
+                can contain. These are not integer literals, but names
+                that <b>represent</b> the different values a variable could
+                take on.
+            </li>
+        </ul>
+        <p> Let's look at a simple example, one you've already worked with,
+            the <b>Suits</b> in a deck of playing cards.
+        </p>
+        : the days of the week:<br>
+An enum type is a type whose fields consist of a fixed set of constants. Common examples include compass directions (values of NORTH, SOUTH, EAST, and WEST) and the days of the week.
+
+Because they are constants, the names of an enum type's fields are in uppercase letters.
+
+In the Java programming language, you define an enum type by using the enum keyword. For example, you would specify a days-of-the-week enum type as:
+
+    public enum Day {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY
+    }
+
+You should use enum types any time you need to represent a fixed set of constants. That includes natural enum types such as the planets in our solar system and data sets where you know all possible values at compile time—for example, the choices on a menu, command line flags, and so on.
+
+Here is some code that shows you how to use the Day enum defined above:
+
+    public class EnumTest {
+    	Day day;
+
+    	public EnumTest(Day day) {
+    		this.day = day;
+    	}
+
+    	public void tellItLikeItIs() {
+    		switch (day) {
+    			case MONDAY: System.out.println("Mondays are bad.");
+    					     break;
+
+    			case FRIDAY: System.out.println("Fridays are better.");
+    					     break;
+
+    			case SATURDAY:
+    			case SUNDAY: System.out.println("Weekends are best.");
+    					     break;
+
+    			default:	 System.out.println("Midweek days are so-so.");
+    					     break;
+    		}
+    	}
+
+    	public static void main(String[] args) {
+    		EnumTest firstDay = new EnumTest(Day.MONDAY);
+    		firstDay.tellItLikeItIs();
+    		EnumTest thirdDay = new EnumTest(Day.WEDNESDAY);
+    		thirdDay.tellItLikeItIs();
+    		EnumTest fifthDay = new EnumTest(Day.FRIDAY);
+    		fifthDay.tellItLikeItIs();
+    		EnumTest sixthDay = new EnumTest(Day.SATURDAY);
+    		sixthDay.tellItLikeItIs();
+    		EnumTest seventhDay = new EnumTest(Day.SUNDAY);
+    		seventhDay.tellItLikeItIs();
+
+
+    	}
+    }
+
+
+The output is:
+
+    Mondays are bad.
+    Midweek days are so-so.
+    Fridays are better.
+    Weekends are best.
+    Weekends are best.
+
+Java programming language enum types are much more powerful than their counterparts in other languages. The enum declaration defines a class (called an enum type). The enum class body can include methods and other fields. The compiler automatically adds some special methods when it creates an enum. For example, they have a static values method that returns an array containing all of the values of the enum in the order they are declared. This method is commonly used in combination with the for-each construct to iterate over the values of an enum type. For example, this code from the Planet class example below iterates over all the planets in the solar system.
+
+    for (Planet p : Planet.values()) {
+        System.out.printf("Your weight on %s is %f%n",
+                              p, p.surfaceWeight(mass));
+    }
+
+    Note: All enums implicitly extend java.lang.Enum. Since Java does not support multiple inheritance, an enum cannot extend anything else.
+
+In the following example, Planet is an enum type that represents the planets in the solar system. They are defined with constant mass and radius properties.
+
+Each enum constant is declared with values for the mass and radius parameters. These values are passed to the constructor when the constant is created. Java requires that the constants be defined first, prior to any fields or methods. Also, when there are fields and methods, the list of enum constants must end with a semicolon.
+
+    Note: The constructor for an enum type must be package-private or private access. It automatically creates the constants that are defined at the beginning of the enum body. You cannot invoke an enum constructor yourself.
+
+In addition to its properties and constructor, Planet has methods that allow you to retrieve the surface gravity and weight of an object on each planet. Here is a sample program that takes your weight on earth (in any unit) and calculates and prints your weight on all of the planets (in the same unit):
+
+    public enum Planet {
+        MERCURY (3.303e+23, 2.4397e6),
+        VENUS   (4.869e+24, 6.0518e6),
+        EARTH   (5.976e+24, 6.37814e6),
+        MARS    (6.421e+23, 3.3972e6),
+        JUPITER (1.9e+27,   7.1492e7),
+        SATURN  (5.688e+26, 6.0268e7),
+        URANUS  (8.686e+25, 2.5559e7),
+        NEPTUNE (1.024e+26, 2.4746e7);
+
+        private final double mass;   // in kilograms
+        private final double radius; // in meters
+        Planet(double mass, double radius) {
+            this.mass = mass;
+            this.radius = radius;
+        }
+        private double mass()   { return mass; }
+        private double radius() { return radius; }
+
+        // universal gravitational constant  (m3 kg-1 s-2)
+        public static final double G = 6.67300E-11;
+
+        double surfaceGravity() {
+            return G * mass / (radius * radius);
+        }
+        double surfaceWeight(double otherMass) {
+            return otherMass * surfaceGravity();
+        }
+        public static void main(String[] args) {
+            double earthWeight = Double.parseDouble(args[0]);
+            double mass = earthWeight/EARTH.surfaceGravity();
+            for (Planet p : Planet.values())
+               System.out.printf("Your weight on %s is %f%n",
+                                 p, p.surfaceWeight(mass));
+        }
+    }
+
+If you run Planet.class from the command line with an argument of 175, you get this output:
+
+    $ java Planet 175
+    Your weight on MERCURY is 66.107583
+    Your weight on VENUS is 158.374842
+    Your weight on EARTH is 175.000000
+    Your weight on MARS is 66.279007
+    Your weight on JUPITER is 442.847567
+    Your weight on SATURN is 186.552719
+    Your weight on URANUS is 158.397260
+    Your weight on NEPTUNE is 199.207413
+
+    <h4> Creating Variables</h4>
+    <h4> Assigning Values</h4>
+    <h4> Flow of Control </h4>
+    <h4> Input and Output </h4>
+    <h3> Advanced Enumerated Types</h3>
+    <h4> Constructors and Secondary Values</h4>
+    <h4> Additional Methods</h4>
+
+
+    <h3>Coming Up ...</h3>
+        <p> In the next lesson, we'll liven things up a bit by making our <code>Dot</code>
+            "mouse-sensitive", so that we can drag it around the screen or
+            have it change colors when we hover over it with the mouse.
+        </p>
+        <p> To do that, we'll need to learn a little about <b>abstract classes</b> and
+            <b>interfaces</b>. Abstract classes are covered on page 455 in your
+            textbook, and interfaces are covered on page 308. While you'll find
+            more information in those sections, I <i>won't</i> expect you to know more
+            on these topics than what I present in the next lesson.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

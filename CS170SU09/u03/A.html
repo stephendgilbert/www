@@ -1,0 +1,552 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p>
+            <b><span class="cap">W</span>hen you use the addition operator
+            to add two numbers together</b>, like this:
+        </p>
+        <p class="code">
+            int sum = num1 + num2;
+        </p>
+
+        <p> <!-- <a href="http://www.thesideeffect.com/" target="_blank"> -->
+            <img src="images/sideeffect.jpg" class="right" style="border-width: 0pt;" alt="TheSideEffect.com. I have no idea who these people are; I just liked the picture.">
+            <!-- </a> -->
+            the <i>operands</i>, <code>num1</code> and <code>num2</code>,
+            are not changed at all; the variable <code>sum</code>, which
+            stores the results of the calculation, <b>is</b> changed,
+            however. This kind of change is called a <b>side effect</b>.
+        </p>
+
+        <p class="pullquote">
+            Side effects occur whenever an expression changes the value
+            of one of its operands.
+        </p>
+        <p> The <b>assignment</b> operator produces
+            a side effect, as do the <b>increment</b> and <b>decrement</b>
+            operators, and the various <b>shorthand assignment</b> operators.
+        </p><p>
+
+        </p><p> Modifying an operand's value isn't always, or even normally,
+            desirable. To avoid such modifications, some operations create
+            temporary copies of a variable or value, and use the modified
+            temporary value in their calculations. These are called
+            <b>conversions</b> or <b>casts</b>.
+        </p>
+        <p> Let's start by first looking at assignment.</p>
+    <h3>Assignment</h3>
+        <p>A variable, you'll recall, is a memory location
+            that contains a value. So, the most common thing you'll do with
+            your variables is to <b>change the value</b> that they contain.
+        </p>
+        <p> You do this through <b>assignment</b>.
+        </p>
+        <p> Here is an example of an assignment statement that creates a
+            variable named <b>x</b> using the initial value <b>5</b>, and
+            then uses the <b>assignment operator</b> to store the value
+            <b>23</b> into the variable <b>x</b>:
+        </p>
+
+        <p class="code">
+            int x = 5; <span class="cmt">// initialize to 5</span><br>
+            x = 23;&nbsp;&nbsp;&nbsp; <span class="cmt">// assign (copy or store) the value 23 in x</span>
+        </p>
+        <p> The <b>assignment operator</b> is a binary operator whose
+            operation is to:
+        </p>
+
+        <p class="pullquote">
+            Copy the value on the right into the variable on the left, and
+            return the result copied as its value
+        </p>
+        <p> This means that, for the assignment operator, the operand
+            on the left <b>must be a variable</b>; it <b>cannot</b> be a
+            constant or a method invocation.
+        </p>
+    <div class="box" style="background: rgb(238, 249, 255) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <center>
+
+        <span style="background: transparent none repeat scroll 0% 0%; font-size: larger; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <b>Assignment is NOT Equality</b><br>
+        </span>
+        </center>
+        <p> You might find this confusing because in math the "equals"
+            sign used in an equation does not mean "copy"; instead it
+            means that the value on the left and the value on the
+            right <b>are</b> identical.
+        </p>
+        <p>Here's an example. In Algebra, you could <b>never</b> say</p>
+
+        <blockquote>&nbsp;<b><code>x = x + 1</code></b></blockquote>
+        <p>because for every value of <b>x</b>, <b>x + 1</b> is
+        <b>never</b> equal to x. In Java, however, this statement
+        simply means to add x and 1 together, and then store the result
+        of the operation back into the variable x.
+        </p>
+        <p> This works both ways. In Algebra, the following is legal </p>
+
+        <blockquote><b><code>13 = a + b</code></b></blockquote>
+        <p> because there are several values for a and b that equal 13.
+            In Java, though, it is illegal (and nonsense), because 13
+            is not a variable that can be changed.
+        </p>
+    </div>
+    <h4>The Value of Assignment</h4>
+        <p> Unlike Pascal or Visual Basic, assignment in Java is an
+            expression, not a statement. The assignment operator not
+            only copies the value on its right into the variable on its
+            left, but it also <b>produces a value</b>; the value produced
+            by an assignment is <b>the value copied into the variable
+            on the left</b>.
+        </p>
+
+        <p class="note">Technically the fact that the variable on the
+            left is modified by the assignment operation is considered
+            a <b>side effect</b>. Of course, most of us use the assignment
+            operator <b>only</b> for this side effect and don't give much
+            thought to the value that is produced.
+        </p>
+        <p> Because assignment first examines the expression on its right
+            before copying it to the variable on its left, we say that
+            assignment is <b>right associative</b>. This simply means it
+            works from right-to-left, instead of left-to-right like most
+            of the other binary operators.
+        </p>
+    <h4>Chained Assignment</h4>
+
+        <p> Because assignment is right associative, we can
+            "chain" assignment statements  together like this:
+        </p>
+        <p class="code">
+             x = y = z = 10;
+        </p>
+        <p> This expression first applies the assignment operation to the
+            variable <b>z</b>, copying the value <b>10</b> into the variable.
+            The expression <code>z = 10</code> produces a value, (<b>10</b>),
+            which is used as the right-hand operand in the next assignment,
+            where <b>10</b> is copied into <b>y</b>. In the same way,
+            assigning <b>10</b> to <b>y</b> produces a value (<b>10</b>),
+            and that value is used as the right-hand operand for the final
+            assignment to <b>x</b>.
+        </p>
+
+        <p> There is one potential pitfall you may encounter when doing
+            this: it does not work when defining a new variable, only on
+            variables that already exist. That means you cannot write:
+        </p>
+        <p class="code">
+            int x = y = z = 10; <span class="cmt"> // Not OK</span>
+        </p>
+        <p> Instead, to get the desired effect, you must write:
+        </p>
+
+        <p class="code">
+            int x = 10, y = 10, z = 10; <span class="cmt"> // Initialization</span>
+        </p>
+    <h4>Shorthand Assignment</h4>
+        <p> Many times, when you perform an operation on
+            a variable, you store the result of that operation right back
+            in the same variable. If you are summing up the total in a
+            checkbook, for instance, this would be a common expression:
+        </p>
+        <p class="code">
+
+            balance = balance - checkAmount;
+        </p>
+        <p> What we <b>really</b> want to do is just subtract
+            <code>checkAmount</code> from <code>balance</code>, and
+            leave the result in the <code>balance</code> variable. The
+            shorthand-assignment operators give us a concise way to
+            do that.
+        </p>
+
+        <p>Using these operators we could write the previous expression as:</p>
+        <p class="code">
+            balance -= checkAmount;
+        </p>
+        <p> There are shorthand assignment operators corresponding to
+            most of the basic numeric operators. Here is what each of
+            them mean:
+        </p>
+        <center>
+        <table width="500" border="1" cellpadding="5">
+        <tbody>
+
+            <tr style="background: navy none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">
+                <th class="thead">Original</th>
+                <th class="thead">Shorthand</th>
+            </tr>
+            <tr>
+                <th class="tcode">a = a + b</th>
+                <th class="tcode">a += b;</th>
+
+            </tr>
+            <tr>
+                <th class="tcode">a = a - b</th>
+                <th class="tcode">a -= b;</th>
+            </tr>
+            <tr>
+                <th class="tcode">a = a / b</th>
+
+                <th class="tcode">a /= b;</th>
+            </tr>
+            <tr>
+                <th class="tcode">a = a * b</th>
+                <th class="tcode">a *= b;</th>
+            </tr>
+            <tr>
+
+                <th class="tcode"> a = a % b</th>
+                <th class="tcode">a %= b;</th>
+            </tr>
+        </tbody>
+        </table>
+        </center>
+    <h3>Increment and Decrement</h3>
+
+        <p> One common operation in most computer programs is to
+            add or subtract <b>one</b> from a variable and then store the
+            result back into the same variable. This is called
+            <b>incrementing</b> or, (when subtracting), <b>decrementing</b>
+            the variable.
+        </p>
+        <p> This is easily done using the operators you've met already
+            (addition, subtraction, and assignment) like this:
+        </p>
+
+        <p class="code">
+            int a = 5;<br>
+            a = a + 1; <span class="cmt">// Increment</span><br>
+            a = a - 1; <span class="cmt">// Decrement</span>
+        </p>
+        <p> One problem with this solution is that the expression
+            <code>a + 1</code> produces a temporary value (like all
+            expressions) that must be stored before it is finally
+            copied back into the variable <code>a</code> by the
+            assignment operator.
+        </p>
+
+        <p> Since most computer hardware contains special instructions
+            to add one to, (or subtract one from), a variable "in
+            place" (that is, without creating a temporary variable),
+            Java provides operators that use these more efficient
+            instructions.
+        </p>
+    <h4>The Operators</h4>
+        <p> The increment (<code>++</code>) and decrement (<code>--</code>)
+            operators are <b>unary</b> operators that can <b>only</b> be
+            applied to a <b>variable</b>; you can't use them with literals,
+            constants, or method calls. When you use the increment operator
+            like this
+        </p>
+
+        <p class="code">
+            ++a;
+        </p>
+        <p> the value that was, previously, stored in <code>a</code> is
+            incremented by 1. You could not write
+        </p>
+        <p class="code">
+            ++10;
+        </p>
+
+        <p>because 10 is not a variable; it would be illegal.</p>
+        <p> Since the increment operator modifies its operand, like the
+            assignment operator, this behavior is called a <b>side effect</b>.
+            In addition to this side effect, the increment operator also
+            produces a value, which has some interesting properties, as
+            you'll see next.
+        </p>
+    <h4>Pre and Post</h4>
+        <p> Even though increment and decrement are unary operators,
+            they can be used in two different ways: they can be placed
+            before or after a variable like this:
+        </p>
+        <p class="code">
+
+            ++a; <span class="cmt">// pre-increment</span><br>
+            b++; <span class="cmt">// post-increment</span>
+        </p>
+        <p> When placed before the variable, it is called a pre-increment
+            (or decrement, depending upon the operator) expression. When
+            placed after the variable, it is called a post-increment
+            (or decrement) expression.
+        </p>
+        <p> As far as the side effect is concerned <b>it doesn't make a bit
+            of difference whether the operator is placed in front
+            of, or after, a variable</b>. In both cases, the variable is
+            left holding a value one greater (or less) than it was before.
+        </p>
+
+        <p> The value <b>produced</b> by an increment or decrement, however,
+            depends on whether it is a post or pre expression.
+        </p>
+        <p> In pre-increment (decrement), the variable is first modified
+            and the result of the expression is the new (or expression) value.
+            In post-increment (decrement), the value of the expression is
+            the value the variable had <b>before</b> it was changed.
+        </p>
+        <p> This can be confusing, so here are some examples:</p>
+
+        <p class="code">
+            int c = 5; <span class="cmt">// Initial value</span><br>
+            int d = 5; <span class="cmt">// Initial value</span><br>
+            <br>
+            int a = ++c; <span class="cmt">// a is 6, c is 6</span><br>
+            int b = d++; <span class="cmt">// b is 5, d is 6</span>
+
+        </p>
+        <p> After these operations, the variables <code>c</code> and
+            <code>d</code> both have the value <b>6</b>. Changing the value
+            stored in <code>c</code> and <code>d</code> is a <b>side
+            effect</b> of the increment, and that remains the same
+            whether you use pre or post increment.
+        </p>
+
+        <p> The variable <code>a</code> also has the value <b>6</b>, because
+            the expression <code>++c</code> means "first change <code>c</code>
+            and then return the changed value as the result of the expression".
+            The variable <code>b</code>, however has the value <b>5</b>,
+            because the expression <code>d++</code> means "change the value
+            of <code>d</code>, but use the value that <code>d</code>
+
+            had <b>before</b> the change, as the result of the expression".
+        </p>
+    <h3>Mixed-Type Operations</h3>
+        <p> Not all expressions involve integers.
+            You can also have expressions using floating-point numbers,
+            characters, and <code>Strings</code>. You can even have
+            expressions that involve <b>all</b> of the above.
+        </p>
+        <p> Remember, every expression produces a value, and each value
+            produced by an expression has a particular type. When you add
+            or subtract two integers, for instance, the result of that
+            expression is an integer. When you add or subtract two
+            floating-point numbers, the result is a floating point number.
+            If you perform an operation with a character, the result is a
+            character, and with a a <code>String</code>, the result is a
+            <code>String</code>.
+        </p>
+
+        <p class="pullquote">Simple, but . . . </p>
+        <p>What happens when you write this?</p>
+        <p class="code">
+            a = 5 * 3.0;
+        </p>
+        <p><b>Whoa!</b> Now we've got a problem. You know that the
+            literal <b>5</b> is an <code>int</code>. You also know that
+            the floating-point literal <b>3.0</b> is a
+            <code>double</code> (because it doesn't have the <b>F</b> suffix).
+            What you don't know is the <b>result</b> of multiplying
+            <code>5 * 3.0</code>, or <b>what type</b> the variable
+            <code>a</code> is.
+        </p>
+        <p> Let's look at both those questions.</p>
+
+    <h4>The Data Hierarchy</h4>
+        <p> Not all numeric types are created equal. A <code>short</code>
+            can hold more information (a greater range of values) than a
+            <code>byte</code>, and an <code>int</code> can hold more
+            information than a <code>short</code>. Likewise, a
+            <code>double</code> can hold more information than a
+            <code>float</code>&#8212;it is more precise.
+        </p>
+
+        <p> When Java encounters an expression that uses different types
+            of operands, it first determines the most precise of the
+            operands using this data hierarchy. Then, it creates temporary,
+            unnamed variables of the most precise type, intitializing those
+            temporary variables using the less-precise values. This
+            process is called <b>promotion</b>or, a <b>widening
+            conversion</b>.
+        </p>
+        <p> Let's look at our example again. Of our two values, <b>5</b>
+            and <b>3.0</b>, <b>3.0</b> has greater precision&#8212;it is higher
+            in the data hierarchy. To perform the calculation, Java
+            creates an unnamed temporary <code>double</code> variable
+            that contains <b>5.0</b>, to take the place of the
+            <code>int</code> value <b>5</b> during the calculation.
+            The <code>int</code> value <b>5</b> is not changed in any way
+            by this.
+        </p>
+
+        <p> Finally, the multiplication is performed using the
+            <code>double</code> values <b>3.0</b> and <b>5.0</b> and the
+            result is the <code>double</code> value <b>15.0</b>.
+        </p>
+
+    <h4>Conversion and Assignment</h4>
+        <p> Operations like mixed-type multiplication and addition
+            are pretty straightforward, but what about assignment?
+            What value is stored in the variable <code>a</code>, and
+            <b>what type</b> of variable must <code>a</code> be for
+            the code to work?
+        </p>
+        <p> <img src="images/f03.gif" class="right" alt="Widening conversions in Java.">
+            When it comes to mixed-type arithemtic, assignment is special
+            among the operators, because Java will not allow you to store a
+            "more precise value" in a "less precise" bucket. Java will
+            <b>only</b> permit widening conversions, as shown in
+            the figure here.
+        </p>
+        <p> What this means for our example is that Java will refuse to
+            compile it unless the variable <code>a</code> is a
+            <code>double</code> variable. If a were an <code>int</code> or
+            a <code>long</code> or even a <code>float</code>, information
+            would (potentially) be lost by storing the <code>double</code>
+            value <b>15.0</b> in the less precise variable.
+        </p>
+        <p> On the other hand, if the variable is of a higher (more precise)
+            type than the value being stored, Java will perform the
+            assignment without so much as a pause. For instance,
+        </p>
+        <p class="code">
+            double b = 123.45F;
+        </p>
+        <p> is perfectly OK because the less-precise
+            <code>float</code> value is easily stored in the more-precise
+            <code>double</code> variable. However, the reverse is not true.
+            The expression
+        </p>
+
+        <p class="code">
+            float f = 123.45;
+        </p>
+        <p> will not compile because the literal <b>123.45</b> is of
+            type <code>double</code> and Java will not store it in a
+            <code>float</code> variable.
+        </p>
+
+        <p>Here's another, similar example, using integers:</p>
+        <p class="code">
+            int x = 123;<br>
+            byte b = x;&nbsp;&nbsp;<span class="red">// Not OK</span><br>
+            long l = x;&nbsp;&nbsp;&nbsp;<span class="cmt">// OK</span>
+        </p>
+
+    <h4>Narrowing Conversions</h4>
+        <p> <img src="images/f04.gif" class="right" alt="Narrowing conversions in Java.">
+            Narrowing conversions, such as those depicted here,
+            are those where the conversion <b>might</b>
+            cause some information to be lost. When
+            you attempt to perform an assignment that
+            causes a narrowing conversion, Java won't
+            compile your code, (as you saw in the last
+            section.)
+        </p>
+        <p> Why we all appreciate Java's efforts to protect our
+            data, sometimes we really do want to store the value
+            <b>15.0</b> in an <code>int</code>, or even a <code>byte</code>
+            variable, because <b>we know</b> that no information will be
+            lost, even if Java doesn't. When you want to do this, you need
+            to perform a <b>type cast</b>, usually shortened to <b>cast</b>.
+        </p>
+
+        <p> A cast tells Java to "try" to store the value, despite its
+            reservations. The syntax for the cast operator is:
+        </p>
+        <p class="box">
+            <code><b>(type) original-value</b></code>
+        </p>
+        <p> Java creates a temporary unnamed variable when you do this;
+            it does not change original-value in any way.
+        </p>
+        <p> Here's an example that uses a type-cast to assign the
+            <code>int</code> value 123 to a <code>byte</code> variable:
+        </p>
+
+        <p class="code">
+            int x = 123;<br>
+            byte b&nbsp; = (byte) x;&nbsp;&nbsp;<span class="cmt">// OK</span>
+        </p>
+    <h5>Watch Out</h5>
+        <p> The problem with casts is that they always "succeed" in
+            the sense that Java will store something. It may not have the
+            effect you desire, however. Here are two examples. Can you tell
+            what happens?
+        </p>
+
+        <p class="code">
+            byte b&nbsp; = (byte) 256;&nbsp;&nbsp; <span class="cmt">// OK???</span> <br>
+            int n&nbsp;&nbsp; = (int) .999;&nbsp;&nbsp; <span class="cmt">// OK???</span>
+
+        </p>
+        <p> In the first example, the result is zero, because the bit
+            pattern for the <code>int</code> <b>256</b> is
+        </p>
+        <div class="box">
+            <code><b>
+            0000-0000-0000-0000-0000-0001-0000-0000
+            </b></code>
+
+        </div>
+        <p> but when stored in a <code>byte</code>, only the right-most
+            eight bits are used. The bit in position 8, (numbered starting
+            at zero from the right), is simply discarded.
+        </p>
+        <p> A similar situation occurs when you attempt to cast the
+            <code>int</code> value <b>250</b> to a <code>byte</code>.
+            Although a <code>byte</code> contains enough bits to
+            represent the number <b>250</b> as an <b>unsigned</b> number,
+            as a signed number it doesn't, so the cast results in a negative
+            number, as you can see here:<br>
+
+            <img src="images/z07.gif" alt="Casting the number 250 to a byte" vspace="15" border="1" hspace="15">
+        </p>
+        <p> Finally, in the last example, the <code>double</code> value
+            <b>.999</b>, when converted to an <code>int</code> is
+            zero, because an <code>int</code> is incapable of representing
+            a fractional number. When converted, the fractional part is
+            not <b>rounded</b>, but simply discarded or <b>truncated</b>.
+        </p>
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, you learned about the <b>side-effect operators</b>:
+            assignment, short-hand assignment, and the increment and decrement
+            operators. You also learned about <b>conversions</b> between primitive
+            numeric types including <b>implicit</b> conversions (promotions),
+            and <b>explicit</b> conversions (type-casting).
+        </p>
+        <p> In the next lesson, you'll learn about the methods in the
+            <code>Math</code> class and the <code>char</code> primitive
+            type.
+        </p>
+
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

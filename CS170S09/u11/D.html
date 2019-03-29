@@ -1,0 +1,526 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/d.jpg" alt="CS 170 Lesson D logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src='images/user-defined-types.gif' class='right' alt='Two user-defined types.'>
+            <b><span class='cap'>W</span>e can divide user-defined types into
+            types that contain a
+            single value</b>, called <b>scalar types</b>, and types that combine
+            multiple data items into a larger unit, which are generally
+            known as <b>structured</b> types.
+        </p>
+        <p> The <code>Weekday</code> user-defined type picture to the right
+            is an example of a <i>scalar</i> type that contains only a
+            single simple value, while the <code>Date</code> type illustrated
+            here is a <i>structured</i> type, consting of a month, day and
+            year.
+        </p>
+
+        <p> All of the built-in, primitive data types&#8212;<code>int</code>, <code>char</code>,
+            <code>boolean</code> and <code>double</code>&#8212;are <b>scalar</b>
+            data types</b>. Java's class types, such as <code>String</code>,
+            are <b>structured</b> types.
+        </p>
+        <p> In addition to the built-in primitive types, Java lets you define
+            your own scalar type, called an <b>enumerated type</b>. Let's
+            look at a situation where having your own user-defined
+            scalar types like this would be really useful.
+        </p>
+    <h3>The Need for Enumerated Types</h3>
+        <p> Do you remember how to create a font? You use one of the
+            <code>Font</code> constructors, like this example from
+            Unit 7:<br>
+            <img src='images/font.gif' class='inline' alt='Creating a Font object.'>
+            When you call the <code>Font</code> constructor, you pass three
+            parameters. The last two parameters, <code>style</code> and
+            <code>size</code> are both of type <code>int</code>.
+            When you use this constructor, instead of passing an arbitrary
+            <code>int</code> for the style, you'll use one of the predefined
+            <code>Font</code> class constants, like <code>Font.PLAIN</code>
+            or <code>Font.BOLD</code>. That causes two problems, however:
+        </p>
+        <ul>
+            <li>Because both the second and third parameter are type <code>int</code>,
+                the compiler <b>can't</b> warn you if you accidentally switch
+                the order of the parameters, like this:<br>
+                <p class='code'>
+                Font bigFont = new Font("Monospaced", 36, Font.BOLD);
+                </p>
+            </li>
+            <li> You don't even get a runtime error, like you do if
+                you pass an "out of range" int to the <code>Color</code>
+                constructor. All you get is itsy-bitsy font in an unknown
+                style. (That's because the actual value used for
+                <code>Font.BOLD</code> is simply the integer 1.
+                (<code>Font.PLAIN</code> is the value 0, while
+                <code>Font.ITALIC</code> is the value 2). When we
+                pass 64 to the second (<code>style</code>) parameter,
+                it's simply ignored, since it <b>is</b> a valid <code>int</code>
+                value.
+            </li>
+        </ul>
+        <p> Things would be a whole lot better if we could rewrite the
+            <code>Font</code> constructor so that the second parameter was
+            a different type entirely, something like this:
+        </p>
+        <p class='code'>
+            Font(String name, FontStyle style, int size)
+        </p>
+        <p> Then, if we called the constructor with the parameters in the
+            wrong order, the compiler would tell us that we'd made a mistake,
+            just as if we tried to use an integer for the font name.
+        </p>
+        <p> Unfortunately, it's too late for the <code>Font</code> class,
+            which was developed before the Java language permitted user-defined
+            enumerated types. Your programs and classes don't have to
+            suffer in this way though.
+        </p>
+        <p> Let's look at the process for creating Java's <code>enum</code>
+            types.
+        </p>
+
+    <h4>Creating Enumerated Types</h4>
+        <p> To create your own scalar, enumerated types in Java, you have
+            to do two things:
+        </p>
+        <ul>
+            <li>Supply a name for your new type in an <code>enum</code>
+                definition. The syntax for this is very similar to a
+                <code>class</code> definition.
+            </li>
+            <li>Provide a <b>list of all possible values</b> that the type
+                can contain. These are not integer literals, but names
+                that <b>represent</b> the different values a variable could
+                take on.
+            </li>
+        </ul>
+        <p> Rather than walking through all of the enumeration syntax, let's create a
+            simple, reusable composite class that represents playing cards. As we walk
+            through the development of this class, you'll learn about some alternatives
+            to enumerations, and then see how to create your own <code>enum</code>
+            type, step-by-step.
+        </p>
+    <h3>The PlayingCard Class</h3>
+        <p> To create our class we'll use <b>inheritance</b>
+            (from the <code>GCompound</code> ACM class), along with <b>composition</b>,
+            (combining two <code>GImage</code> objects for the front or back of the card).
+            This part is pretty much review. Using Eclipse, you can:
+        </p>
+        <ul>
+            <li>create a new class</li>
+            <li>extend <code>GCompound</code></li>
+            <li>add two <code>GImage</code> instance variables (<code>face</code>
+                and <code>back</code>)
+            </li>
+            <li>and write a constructor that initializes the face and back
+                and adds them to the surface of the component.
+            </li>
+        </ul>
+        <p> Here's what your code should look like after doing that:<br>
+            <img src='images/pc01.png' class='inlineCenter' alt='The PlayingCard class skeleton.'>
+            Notice how:
+        </p>
+        <ol>
+            <li class='d'><b>Inheritance</b> is used to extend the <code>GCompound</code> class</li>
+            <li class='d'><b>Composition</b> is used to add the two <code>GImage</code> objects
+                as <b>parts</b> of the <code>PlayingCard</code>.
+            </li >
+            <li class='d'>The <b>constructor</b> initializes both of the parts and adds
+                them to the surface of the new component, with the back of the card
+                lying on top of the front of the card.
+            </li>
+        </ol>
+        <p> This simple starter class uses a "starter version" of a <code>private</code>
+            method named
+            <code>getRandomCardImage()</code> to pick one of the playing card images I've
+            placed in the project's images folder. Here's what that method looks like:<br>
+            <img src='images/pc02.png' class='inlineCenter' alt='The getRandomCardImage() method.'>
+            This starter method first creates two <code>String</code> variables,
+            representing the characters in the <code>suits</code> and the <code>ranks</code>.
+            Then, I pick one random character from each <code>String</code> and
+            combine it with the file extension ".gif" to pick the random
+            card image.
+        </p>
+        <p> Here's a test program (<a href='TestCard01.java' target='blank'><b>TestCard01</b></a>)
+            that shows how to use the new class to add a single card to the center of an application.
+            If you're following along, you can use this to test your new class at this
+            point.<br>
+            <img src='images/pc03.png' class='inlineCenter' alt='The TestCard01 program.'>
+            Of course, the <code>PlayingCard</code> class <b>doesn't really do much</b>
+            yet. The cards just sort of lie there, with the back covering up the card's
+            face. Before we start adding methods to make these <code>PlayingCard</code>
+            objects <b>act</b> more like real playing cards, we want to think a little
+            bit about how to make them more accurately <b>represent</b> real playing
+            cards.
+        </p>
+        <p> What we reallly have now, is a class that contains playing card <b>pictures</b>.
+            We need a class that encapsulates the <b>essense</b> of both the state
+            and behavior of a playing card&#8212;not simply a class that looks like a playing
+            card&#8212;before we can start writing games that use the <code>PlayingCard</code>
+            class.
+        </p>
+    <h4>Representing Cards</h4>
+        <p> <img src='images/cards.png' class='right' alt='Four playing cards.'>
+            What really <b>is</b>the essense of a playing card? Is it the picture?
+            No, not really. You may have seen card games that are purely text based.
+        </p>
+        <p> Instead of the image, the essential part of a playing card is the
+            two data elements that make up its <b>state</b>. A standard playing cards
+            (using the so-called <i>French</i> deck you're all familar with), belongs
+            to one of four suits: <b>Clubs</b>, <b>Spades</b>, </b>Hearts</b> and <b>Diamonds</b>.
+        </p>
+        <p> Each card also has a value, called its <b>rank</b>. The rank of a set of cards consist
+            of the numbers two through ten as well as the "face cards": Jack, Queen, King, and
+            Ace. (We'll just ignore the Joker for right now.)
+        </p>
+        <p> The new idea we want to look at is how best to <b>represent the suit and rank</b>
+            in each of our new <code>PlayingCard</code> objects.
+        </p>
+    <h4>The String Option</h4>
+        <p> One possibility is to use <code>String</code> variables to represent the
+            two data elements like this:<br>
+            <img src='images/pc04.png' class='inlineCenter' alt='Representing rank and suit as Strings.'>
+            Then, when you wanted to create a <code>PlayingCard</code> object, you'd use
+            a working constructor, like this:
+        </p>
+        <p class='code'>
+            PlayingCard card = new PlayingCard("Ace", "Spades");
+        </p>
+        <p> And, the code in the <code>PlayingCard</code> working constructor would
+            look up the correct image to use based on the values passed when creating
+            it like this:<br>
+            <img src='images/pc05.png' class='inlineCenter' alt='The working constructor with Strings.'>
+            The only problem with this, is that the class is <b>extremely fragile</b>.
+            What happens if the person using your card class types either of these instead?
+        </p>
+        <p class='code'>
+            PlayingCard card2 = new PlayingCard("2", "Dimonds");<br>
+            PlayingCard card3 = new PlayingCard("10", "Cubs");<br>
+            PlayingCard card4 = new PlayingCard("Spades", "Queen");
+        </p>
+        <ul>
+            <li> In the first case, the filename "2d.gif" is generated correctly,
+                but a <b>misspelled suit name</b> is stored in your instance variable.
+                The constructor displays your image alright, but the object is really
+                in an inconsistent state, since other methods may count on having
+                the suit names spelled correctly.
+            </li>
+            <li> In the second case, the suit is again misspelled. Also, this
+                time, the generated filename is "1c.gif" which
+                <b>isn't</b> one of the names of our card image files. The
+                Java compiler <b>doesn't warn us</b> that this is a problem,
+                though, since all the compiler checks is the type of the
+                parameters. This generates a <b>runtime error</b>.
+            </li>
+            <li>The same problem occurs with <code>card3</code>. Since both
+                parameters are the <b>correct type</b>, it doesn't notice that
+                you've actually switched the parameter order, even though
+                you've spelled each one correctly. The resulting filename,
+                "sq.gif" doesn't match the expected "qs.gif" and you get an error:<br>
+                <img src='images/pc06.png' class='inlineCenter' alt='A runtime error.'>
+            </li>
+        </ul>
+        <p> The important point to notice about this, is that using <code>String</code>
+            variables to represent <code>rank</code> and <code>suit</code> always
+            <b>defers error checking to run-time</b>, even if you add error-checking
+            code to your program.
+        </p>
+        <p class='note'> You can download <a href='TestCard02.java' target='_blank'>
+            <b>TestCard02.java</b></a> if you are making these changes to your
+            <code>PlayingCard</code> class as you read
+            the lesson, and you want to try them out.
+        </p>
+    <h4>The static int Option</h4>
+        <p> Another favorite way to represent these kinds of types is to use
+            class constants, which is <b>certainly</b> better than using
+            <code>String</code> variables.
+            With class constants, you define a <code>public static final</code>
+            field for each field you want to represent like this:<br>
+            <img src='images/pc07.png' class='inlineCenter' alt='The class constants.'>
+            The constants are defined as consecutive <code>int</code> values,
+            starting at 0. The <code>rank</code> and <code>suit</code> fields
+            are both changed from <code>String</code> to <code>int</code>, and
+            inside the constructor, a <code>private</code> method named
+            <code>getCardImage()</code> is used to grab the image based
+            on the values stored in the fields <code>suit</code> and <code>rank</code>
+            like this:<br>
+            <img src='images/pc09.png' class='inlineCenter' alt='Grabbing the card images.'>
+            Since the values for <code>suit</code> are 0 to 4, you can use them to index
+            into the <code>String</code> variable named <code>suits</code> and return
+            the corresponding character to build the resulting filename. Getting the
+            character for the rank works similarly.
+        </p>
+    <h5>Creating Cards</h5>
+        <p> When calling the <code>PlayingCard</code> constructor using this new
+            scheme, the user <b>passes the class constants</b> instead of typing in
+            the <code>String</code> literals. <br>
+            <img src='images/pc10.png' class='inlineCenter' alt='Eclipse tooltips.'>
+            Using constants like this is much better because:
+        </p>
+        <ul>
+            <li>The <b>compiler</b> notices if you misspell a constant name, and</li>
+            <li>The Eclipse IDE <b>knows</b> about the constants, and pops up a tooltip
+                help when you try to create a new <code>PlayingCard object</code>.
+            </li>
+        </ul>
+        <p> Nevertheless, there are still a few drawbacks, as you can see from
+            these examples:<br>
+            <img src='images/pc08.png' class='inlineCenter' alt='Creating new cards.'>
+        </p>
+        <ol>
+            <li class='d'>This first example works perfectly.</li>
+            <li class='d'>This case <b>doesn't</b> cause a compiler or a runtime error.
+                It <b>does</b> contain a logic error though. Because the range for the
+                suits runs from 0 to 4 and the range for the ranks runs from 0 to 13,
+                there are certain values that overlap. In this example, <b>the rank
+                and suit parameters are interchanged</b>. Because both are <code>int</code>
+                parameters, though, this doesn't cause a compiler error. Because both
+                values used here are inside the ranges for both suits and ranks, it
+                also doesn't cause a runtime error. The only problem is, you <b>aren't</b>
+                getting the card that you expect!
+            </li>
+            <li class='d'>Finally, because the range for ranks and suits are different,
+                it's possible to interchange them inadvertently, and end up with a
+                <b>runtime</b> error, as in this example. Of course, that really is
+                better than <code>card3</code>, where you might never notice the error
+                at all!
+            </li>
+        </ol>
+        <p class='note'> You can download <a href='TestCard03.java' target='_blank'>
+            <b>TestCard03.java</b></a> if you are making these changes to your
+            <code>PlayingCard</code> class as you read
+            the lesson, and you want to try them out.
+        </p>
+    <h3>The enum Solution</h3>
+        <p> <img src='images/pc11.png' class='right' style='margin-top:-2em;' alt='Creating a new enumerated type.'>
+            Although both <code>String</code>s and class constants <b>can be</b>
+            used to represent a set of specific values with a fixed range,
+            a <b>much better</b> solution to this problem is to use Java's
+            <b>enumerated type</b> facility to create a new, single-valued type
+            for both suits and ranks. This will allow the compiler to warn you
+            about all of the errors that our earlier versions let slip through.
+        </p>
+        <p> To do that,
+            first create a new class in Eclipse, but, instead of just pressing the
+            "new class" button, click the little down-arrow beside it, and choose
+            <b>Enum</b> from the drop-down menu.
+        </p>
+        <p> On the <b>New Enum Type</b> Wizard screen, just fill in the name
+            (<b>Suit</b>), click the <b>Generate comments</b> checkbox, and
+            press the <b>Finish</b> button:<br>
+            <img src='images/pc12.png' class='inlineCenter' alt='Creating the Suit type.'>
+        </p>
+    <h4>Specifying Values</h4>
+        <p> Inside the <code>enum</code> definition, instead of adding fields
+            and methods, you simply provide a <b>list of named values</b>, each
+            one separated by commas. Here is what the body of <code>Suit enum</code>
+            looks like, with the four members added:<br>
+            <img src='images/pc13.png' class='inlineCenter' alt='The Suit type.'>
+            When you define the values for the new type:
+        </p>
+        <ul>
+            <li>Each value is <b>not</b> a <code>String</code>. Notice that there are
+                no quotes around the names. In this case <code>CLUBS</code> is a
+                <b>value literal</b>, just like <b>3</b> is a literal value in
+                the <code>int</code> type.
+            </li>
+            <li>Each value is <b>not</b> a field or instance variable. You don't
+                <b>give values</b> to the <code>enum</code> members; the members
+                <b>are</b> values.
+            </li>
+            <li>Notice that there are <b>no access modifiers</b>. All enumerated
+                values are implicitly <code>public</code>.
+            </li>
+            <li>By convention, since enumeration members represent constant values,
+                the member names are usually capitalized.
+            </li>
+        </ul>
+        <p> You don't <b>need</b> to end the list with a semicolon, but you can.
+            It's actually a good habit to get into, since you do need the semicolon
+            if you want to create more advanced enumerated types with methods and
+            constructors (which we won't do here; read the Java tutorial online
+            if you are interested.).
+        </p>
+    <h5>Javadoc</h5>
+        <p> You'll probably notice the little Checkstyle warning next to the
+            list of members in my example. Because the members are public,
+            you <b>should</b> document each one with a Javadoc comment. There
+            are no special comment tags, though, so the easiest layout looks
+            like this:<br>
+            <img src='images/pc14.png' class='inlineCenter' alt='The Suit type with Javadoc comments.'>
+        </p>
+    <h4>Using the Suit Type</h4>
+        <p> Here are some of the ways you can use the new <code>Suit</code> type.
+            First, you can create new variables, and assign values to the
+            variable like this:
+        </p>
+        <p class='code'>
+            Suit s; <span class='cmt'>// an enum variable</span><br>
+            s = Suit.HEARTS; <span class='cmt'>// assign a value to the variable</span>
+        </p>
+        <p> As you can see, the varible <code>s</code> is declared just like an
+            <code>int</code> or <code>double</code> variable. When you assign
+            a value to the variable, you can't use <code>int</code> or
+            <code>String</code> values, though; you must use one of the
+            values defined in the <code>Suit</code> type, <b>and nothing else</b>.
+            As you can see, to use one of the values, you use its
+            <b>fully-qualified name</b>, such as <code>Suit.HEARTS</code>.
+        </p>
+    <h5>Comparing Suit Values</h5>
+        <p> You can use the <b>equality operators</b> (<code>==</code> and <code>!=</code>)
+            to compare <code>Suit</code> values and variables. You <b>cannot</b> use
+            the inequality operators, <code>&gt;</code>, <code>&gt;=</code>,
+            <code>&lt;</code> or <code>&lt;=</code>. Here's how you'd use
+            the equality operators, assuming the <code>Suit</code> variable
+            <code>s</code> has been defined and initialized:
+        </p>
+        <p class='code'>
+            if (s == Suit.CLUBS) ...
+        </p>
+    <h5>Switching on Suit Members</h5>
+        <p> One of the neat things about enumerated types is that <code>enum</code>
+            variables can be used as <code>switch</code> <b>selectors</b>, like
+            this:
+        </p>
+        <p class='code'>
+            switch(s)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case CLUBS:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='cmt'>// case block bodies not shown</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case SPADES:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case DIAMONDS:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case HEARTS:<br>
+            }
+        </p>
+        <p> Notice that when you do this, you <b>don't</b> have to use the
+            fully-qualified name for the members of the enumeration; just using
+            the <code>Suit</code> variable as the <code>switch</code> selector
+            is enough to qualify the case labels.
+        </p>
+    <h5>Member Order</h5>
+        <p> Just as with the built-in types, <code>char</code> and <code>int</code>,
+            the enumerated types that you create are also <b>ordinal</b>; that means
+            that each member has a particular <b>position</b> or <b>order</b> in
+            the list of values.
+        </p>
+        <p> To find the ordinal value for a <code>Suit</code> variable, you call it's
+            built-in <code>ordinal()</code> method. This means that even though you
+            can't use the greater-than or less-than operators with <code>enum</code>
+            variables, you <b>can</b> compare those variables's ordinal values like
+            this, assuming that <code>s</code> and <code>c</code> are initialized
+            <code>Suit</code> variables:
+        </p>
+        <p class='code'>
+            if (s.ordinal() > c.ordinal)
+        </p>
+        <p> You can also use the ordinal value as an index or subscript for an
+            array, like this:
+        </p>
+        <p class='code'>
+            String[] descriptions = { "Clubs", "Spades", "Diamonds", "Hearts" };<br>
+            String suitDesc = descriptions[s.ordinal()];
+        </p>
+    <h5>The values() Array</h5>
+        <p> Finally, each enumerated type has a built-in method named <code>values</code>
+            that returns an array containing each of the members. You can use that
+            like this:
+        </p>
+        <p class='code'>
+            Suit[] suits = Suit.values(); <span class='cmt'>// array of all suits</span><br>
+            int len = suits.length;  <span class='cmt'>// number of members in the enumeration</span><br>
+            for (Suit s : suits);   <span class='cmt'>// loop through all members in array</span>
+        </p>
+    <h4>The Rank Enumerated Type</h4>
+        <p> To complete our <code>PlayingCard</code> class we'll need a separate enumeration
+            for the playing card ranks. Let's just call it <code>Rank</code>. Follow the
+            same steps you did for <code>Suit</code>, using members <code>TWO</code>,
+            <code>THREE</code>, and so on. Notice that you <b>can't</b> use numbers,
+            like <code>2</code> as an enumeration member.
+        </p>
+        <p> You can download the finished enumerated types,
+            <a href='Rank.java' target='_blank'><b>Rank.java</b></a>
+            and <a href='Suit.java' target='_blank'><b>Suit.java</b></a>
+            by clicking the links in this sentence, but you should probably type them
+            in yourself, just to get the practice.
+        </p>
+    <h4>Finishing PlayingCard</h4>
+        <p> OK, now let's finish up our basic playing card class. Start by
+            changing the instance variables, <code>suit</code> and <code>rank</code>
+            to <code>Suit</code> and <code>Rank</code> enumerated types, like
+            this:<br>
+            <img src='images/pc15.png' class='inlineCenter' alt='The PlayingCard enumerated type instance variables.'>
+            Next, change the working constructor, so that the two parameter
+            variables use the enumerated types, instead of <code>int</code> or <code>String</code>
+            like this:<br>
+            <img src='images/pc16.png' class='inlineCenter' alt='The PlayingCard constructor.'>
+            In my case, I commented out the <code>getCardImage()</code> method, since it
+            used <code>String</code>, and then <code>int</code> values for the <code>suit</code>
+            and <code>rank</code>. With the method commented out, though, the constructor
+            shows an error, so let's tackle that method next. Here's what the modified
+            <code>getCardImage()</code> method should look like:<br>
+            <img src='images/pc17.png' class='inlineCenter' alt='The getCardImage() method.'>
+            As you can see, this is almost identical to the previous version of the
+            method. The only difference is that the <code>ordinal()</code> method is
+            used as the index to the <code>charAt()</code> method used to construct
+            the file name.
+        </p>
+        <p> <b>The big difference</b>, though, is that now, because of the addition of
+            enumerated types, <b>you can't get a runtime error</b> (unless you don't have
+            the card images available, of course). All typing errors will be cause by
+            the Java compiler instead<br>
+            <img src='images/pc17.png' class='inlineCenter' alt='The getCardImage() method.'>
+        </p>
+        <p> You can download the finished <a href='PlayingCard.java' target='_blank'>
+            <b>PlayingCard</b></a> class, along with another simple test program,
+            <a href='TestCard04.java' target='_blank'><b>TestCard04.java</b></a>,
+            by clicking the links in this sentance, so you can run the programs
+            on your own computer. You'll also need the playing card images, <b>placed
+            in a folder named images</b> in the project, as well as <b>acm.jar</b>
+            for the program to run.
+        </p>
+     <h3>Coming Up . . .</h3>
+        <p> In this lesson, you learned how to create your own <b>user-defined,
+            scalar types</b> by using the Java <b>enum</b> facility.
+        </p>
+        <p> In the last lesson this week, we'll return to the topic of
+            inheritance, and look at <b>abstract classes</b> and I'll
+            introduce you to <b>interfaces</b>.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,821 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src="images/genie.jpg" class="right" alt="The magic of programming.">
+            <b><span class="cap2">I</span>n the on-campus lab this week</b>, you used
+            the Eclipse IDE to enter, compile, and run both Java applications and
+            Java applets, treating your computer keyboard much like Aladdin's magic lamp.
+            You typed in the incantation, and, if you did it <b>just right</b>, the compiler
+            accepted it, and your program ran.
+        </p>
+        <p> Of course, programming really <b>isn't</b> magic; instead of
+            memorizing a dusty volume of "Open Sesame", in this class, you'll
+            learn the <b>meaning</b> behind each of the phrases that make
+            up your Java programs. (I have to admit, though, that there <b>will</b>
+            still be times when I'll wave my hands, and say something that
+            sounds suspiciously like "Abracadabara". But those
+            times will get much rarer as the semester goes on.)
+        </p>
+        <h3>Java Mechanics</h3>
+        <p>To create your own Java programs,
+            you follow a <b>mechanical process</b>, a well-defined
+            set of steps called the <b>edit-compile-run</b> cycle
+            that looks like this:
+        </p>
+        <a href="images/edit-comp-run-lg.gif" target="_blank">
+            <img src="images/edit-comp-run-sm.gif" alt="The edit-compile-run cycle. (click to enlarge)" align="right" border="0" hspace="15" vspace="15"><br>
+        </a>
+        <ol>
+            <li>Create your source code</li>
+            <li>Compile the code to produce object, or bytecode</li>
+            <li>If syntax errors occur, return to your editor to fix them</li>
+            <li>Run your program using appletviewer or the Java interpreter</li>
+            <li>If runtime errors occur, return to your editor to fix them</li>
+        </ol>
+        <p> Learning this process is <b>not</b> the
+            same as learning how to program; you must master the
+            process&#8212;that is necessary&#8212;but mastering the process
+            doesn't mean you'll write correct and elegant programs.
+        </p>
+    <p>Here are the steps in the process:</p>
+    <h4>Edit</h4>
+        <p> When you write a program in a high-level language,
+            you write your instructions&#8212;in the form of programming
+            language statements&#8212;using a text editor. The document
+            you produce at this stage is called <b>source code</b>.
+        </p>
+    <h4>Compile</h4>
+        <p> Once you've written your program, you <b>
+            compile</b> it by using a software program called,
+            (surprise!), a <b>compiler</b>. The compiler turns
+            your source code into machine language and produces
+            another document called <b>object code</b>. If your
+            program fails to compile, (if you have "grammatical"
+            or <b>sytnax</b> errors in your source code), then
+            you must re-edit the code until it compiles correctly.
+        </p>
+        <p> <img src='images/syntax-error.gif' class='right' alt='A syntax error in Eclipse.'>
+            One of the nice things about the Eclipse IDE is that the
+            compiler runs automatically whenever you save your source code.
+            If you've made a syntax error, then Eclipse can't compile
+            your code, and, instead, it underlines your error like this,
+            where I've forgotten to capitalize the <b>System</b> class.
+        </p>
+        <p>Once a program compiles without errors,
+            it is <b>syntactically</b> correct. It still may
+            contain runtime or logic errors, however. <b>Runtime</b> errors
+            are errors that cause your program to "crash" when it runs, usually
+            displaying a nasty error message on the screen. <b>Logic</b> errors
+            occur when your program produces the <b>wrong output</b>; it may give
+            the wrong answer or carry out an action at the wrong time, like
+            giving you a "C" when your percentage grade in the class is exactly 80%.
+            (This kind of logic error is called a <b>fencepost</b> error).
+        </p>
+    <h4>Run</h4>
+        <p>Once your program compiles, you <b>run</b>
+            it. All high-level languages require a significant
+            amount of additional machine-language code&#8212;in
+            addition to the code you've written&#8212;before your
+            program will actually run. This additional code is contained
+            in collections of classes known as <b>libraries</b>. In Java,
+            these different libraries are placed in special zip files
+            known as Java Archives or <b>JAR</b> files.
+        </p>
+        <p> How this additional code
+            is added to your program varies from language to
+            language and from system to system. Generically,
+            this is called <b>linking</b>, when library code is combined
+            with the code you've written to produce and <b>executable image</b>
+            in memory that can be run. With Java, this happens behind the
+            scenes as part of the process of compiling your program, and then,
+            again, when you run your program. There is no separate explicit
+            linking step that you have to worry about.
+        </p>
+        <p> Internally, Java uses
+            something called the <b>classpath</b> (or <b>build path</b>) to know
+            which libraries or folders to search for additional classes.
+            Eclipse will normally take care of this for you when you use only
+            the classes available with the JRE. When you use additional library
+            classes (like we'll do with the ACM JTF class libraries), you'll
+            have to explicitly adjust the build path inside Eclipse.
+        </p>
+        <p> When you <b>run</b> your program, the first thing
+            you'll want to do is to verify that it runs as you
+            expect it. This process is called <b>testing</b>. It
+            is not uncommon to find that your program has some
+            logic errors that can only be discovered when the
+            program runs. These errors may even make your program
+            "crash". These kinds of errors are called <b>runtime
+            errors</b>
+        </p>
+        <p> To fix a runtime error, you go back to the
+            very first step&#8212;your source code&#8212;and make changes
+            there, repeating the edit-compile-run cycle until
+            the program runs correctly.
+        </p>
+    <h3>Java Program Organization</h3>
+        <p>As you saw in class this week:
+        </p><ul>
+            <li> Every Java program is a class definition.</li>
+            <li> A class definition is a blueprint that is used to construct
+                objects; in the case of an applet or application, you may want
+                to think of that object as a "program object."
+            </li>
+        </ul>
+        <p> Not every Object-Oriented language works like this. In C++, for
+            instance, every program consists of a <code>main()</code> function that
+            may, or may not create different kinds of objects. In Java,
+            there are no separate program entities; there are <b>only</b>
+            classes and objects.
+        </p>
+    <h4>Basic Structure</h4>
+        <p>The basic structure for <b>every</b> Java program looks like this:
+        </p>
+        <p class="code">
+            &#8230;some stuff <br>
+            public class SomeClassName<br>
+            {<br>
+            &nbsp;&nbsp; &#8230; some more stuff<br>
+            }
+        </p>
+        <p>The <b>file name</b> for this program <b>must</b> be
+            <b>SomeClassName.java</b> and the file can contain only
+            one <b>public</b> class definition. (You can define other
+            helper classes in the same file, but they cannot be
+            <b>public</b> classes.)
+        </p>
+        <p class="note"><b>Note :</b> This is different from many other
+            programming languages where the program name and the name of
+            the file are not related. In Java, the name of the file and
+            the name of the program <b>must</b> be identical
+            (including case). The file name and the <b>public class</b>
+            it contains must match exactly.
+        </p>
+        <p> A class definition has two parts: a <b> class header</b> and
+            a <b> class body</b>. The header "declares" or "announces" the
+            class for the compiler; think of it as a formal introduction.
+        </p>
+    <h4>Braces and Blocks</h4>
+        <p> The class body, (the portion of the class in braces <b>{ }</b>),
+            is where the attributes and methods for the class are defined.
+            In Java, braces <code>{}</code> are used to mark the beginning and end
+            of the class body. Braces are also used to surround (or
+            <b>delimit</b>) the body of a method, as well as the bodies of
+            loops and selection statements. Just think of braces as
+            punctuation that says:
+        </p>
+        <p class="pullquote">{ "this is the beginning of a section"<br>
+              } "and, this is the end of a section"
+        </p>
+        <p> In programming, a delimited "section" of code like this is called a <b>block</b>.
+            Braces, along with indentation, allow you to quickly
+            see and understand the general structure or "shape" of a program.
+            To facilitate this, every time you use a set of braces,
+            the "stuff" inside the braces should be indented, by one tab stop, as well.
+        </p>
+
+    <h3>The Class Header</h3>
+        <p>Let's start by examining the <b>header</b> for
+            <a href="javascript:popUpWindow('images/FirstApp.java.gif',0,0,615,500);">
+            <b>FirstApp.java</b></a> and then we'll come back to the body. (Click the
+            hyperlink in the previous sentence to open the source-code for the program
+            in a separate window.) Keep the window open while we study the
+            code.
+        </p>
+        <p> The class header for <b>FirstApp</b>, on line 8, looks like this:
+            <img src="images/d01.gif" alt="The class header for FirstApp.java.">
+        </p>
+        <p> The first part of the header is the <b>declaration</b> <code><b>public class</b></code>.
+            The class declaration simply says to the compiler:</p>
+            <p class="pullquote">
+                <b>"May I introduce a class definition?"</b>
+            </p>
+            so the compiler knows how to interpret the words that follow.
+            Both <b>public</b> and <b>class</b> are two of the fifty-or-so
+            Java <b>keywords</b>. Keywords, (also sometimes called <b>reserved
+            words</b>), are the built-in vocabulary of a language. In Java:
+        <p></p>
+        <ul>
+            <li> all keywords are lowercase
+            </li>
+            <li> you cannot use keywords as <b>identifiers</b>, (names you
+                make up and then use to describe classes, objects, methods,
+                and attributes)
+            </li>
+            <li>You must spell the keywords correctly and use them in the
+                correct context. If you use a keyword inappropriately, or
+                if you misspell it, you will generate a <b>syntax error</b>:
+                a violation of Java's internal rules of grammar.
+            </li>
+        </ul>
+        <p class="note"> You'll find a list of the Java keywords in Appendix F
+            of your textbook.
+        </p>
+    <h4>Name of the Class</h4>
+        <p>When you write the declaration <b>public class</b>, this puts
+            the Java compiler into such a state of anticipation, that it won't
+            be satisfied unless you tell it exactly what class is about to be
+            described. Thus, the next part of the class header must be <b>the
+            class name</b>. Here we've named our class <b>FirstApp</b>.
+            (Remember, also, that this class <b>must</b> be located in a file
+            that matches the classname <b>exactly</b>, and that has the extension
+            <b>.java</b>.)
+        </p>
+        <p> While <b>public</b> and <b>class</b> are keywords, the
+            word <b>FirstApp</b> is a different kind of beast; this
+            is called an <b>identifier</b>.
+            An identifier is a name that you make up to label classes,
+            attributes, methods, and variables. You can use any name you
+            like, as long as you follow a few simple rules:
+        </p>
+        <ol>
+            <li>you can use letters, digits, and the underscore character</li>
+            <li>your identifier <b>cannot start</b> with a digit</li>
+            <li>identifiers are <b>case sensitive</b></li>
+            <li>you cannot use keywords as identifiers</li>
+        </ol>
+        <p class="note"><b>Remember : </b>Unlike keywords, (which are all
+            lowercase), you may use uppercase as well as lowercase in your
+            identifiers. But, the identifiers cat, Cat, and CAT <b>are not</b>
+            the same!
+        </p>
+    <div class="box" style="background: aliceblue none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <center><b>What's a Letter?</b></center>
+        <p> If you've programmed in another language, such as C, Pascal, or
+            Visual Basic, these rules don't seem too different. The biggest
+            difference (when it comes to identifiers) between Java and these
+            other languages is not readily apparent, but pops to the surface
+            when you ask the question, "What's a letter?"
+        </p>
+        <p> Unlike these other languages Java isn't limited to using the ASCII
+            character set (the most widely used computer-character encoding
+            scheme). Instead, it uses <b>Unicode</b>, the international
+            character set that provides some 65,000 different characters.
+            So, although Java identifiers are limited to characters and
+            digits, those characters and digits can be any valid
+            <b>Unicode</b> character or digit. (In other words, you can
+            use Japanese, Russian, or Sanscrit characters when creating
+            your identifiers.)
+        </p>
+    </div>
+    <h4>Naming Conventions</h4>
+        <p> In programming, as in dining, what is legal is not always
+            appropriate. While it is usually not illegal to eat with your
+            hands, it's often ill-advised, and so most of us obey a
+            set of <b>social conventions</b>.
+        </p>
+        <p> Much like social conventions, <b>identifier naming conventions</b>
+            allow you to infer a great deal about an object by the way it
+            is named. Also like social conventions, identifier naming
+            conventions can become prissy and pedantic, ignoring the more
+            important considerations of clarity and simplicity.
+        </p>
+        <p> It is always more important to make sure that your variable names
+            impart meaning to your audience, (that is, other programmers trying
+            to read your code), than that they adhere to some
+            rigid naming rule. To that end, you should follow the "golden
+            rules" that are true in any programming language:
+        </p>
+        <ul>
+            <li> Try to make your names understandable</li>
+            <li> Use names that accurately describe what your identifier does.
+                 For instance, the variable names:
+                <p class="code"> quarterlySales = quarterlySales + monthlySales;</p>
+                are much easier to understand than
+                <p class="code">x = x + x2;</p></li>
+        </ul>
+        <div class="box" style="background: aliceblue none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+           <center><b>Other Recommendations</b></center><br>
+            Before we get to the normal conventions, I should mention two
+            other recommendations. Java allows you to begin a name with an
+            underscore as well as a dollar sign ($), but you should avoid
+            doing so. Java itself uses the dollar sign to create names for
+            "inner classes". To avoid some unusual and hard to find bugs,
+            you should avoid using the dollar sign ($) in your names at all.
+            <br><br>
+            It is also legal to start an identifier with an underscore, but
+            you should avoid that as well. It is just too easy to miss a
+            leading underscore when you are reading code, and if you use them
+            you'll spend many more fruitless hours staring at code that
+            "should" work, but doesn't for some reason.
+        </div>
+        <p> Here are the more-or-less agreed upon naming
+            standards in the Java world: </p>
+        <ul>
+            <li> Class names: <b>CapitalizeEveryWord</b></li>
+            <li> Method and field names: <b>startLowThenCaps</b></li>
+            <li> Constants: <b>CAPS_WITH_UNDERSCORES</b></li>
+        </ul>
+    <h4>What Does extends ConsoleProgram Mean?</h4>
+        <p> So far, we've taken care of three of the five words in
+            the <b>FirstApp</b> header; only two to go.
+        </p>
+        <p> The next word, <b>extends</b>, is a keyword like <b>public</b>
+            and <b>class</b>. The <b>extends</b> keyword means that what
+            precedes it (in this case the <b>public class FirstApp</b>),
+            adds something to, or builds upon, what follows it
+            (in this case, something called <b>ConsoleProgram</b>).
+        </p>
+        <p> That makes sense. If a header is supposed to introduce
+            a class, this part of the header is introducing its lineage.
+            Sort of like:
+        </p>
+        <p class='pullquote'>
+                This is Steve, and his parents are...
+        </p>
+        <p> The real question is, "What's a <b>ConsoleProgram</b>, and
+            where does it come from?" We can tell right away that
+            <b>ConsoleProgram</b> isn't a keyword like <b>public</b>
+            or <b>class</b> or <b>extends</b>, because we know that
+            <b><u>all</u></b> of the keywords are lowercase, and
+            <b>ConsoleProgram</b> is capitalized.
+        </p>
+        <p> Perhaps, your knowledge of <i>convention</i> might help?
+            And, indeed it does. If you look back at the convention for
+            identifiers, you'll see that only <b>classes</b> begin with
+            a capital (like <b>ConsoleProgram</b>) followed by lowercase
+            characters. In fact, <b>ConsoleProgram</b> <i>is</i> a class,
+            one of the classes supplied with the <b>ACM Class Libraries</b>.
+            (You can read more about the ACM Class Libraries at the very
+            end of this lesson.)
+        </p>
+    <h4>Packages and Qualified Names</h4>
+        <p> The <b>ConsoleProgram</b> class actually has quite a pedigree,
+            which you can discover by looking at its
+            <a href='http://www-cs-faculty.stanford.edu/~eroberts/jtf/javadoc/student/acm/program/ConsoleProgram.html'
+                target='_blank'><b>Java Documentation</b></a>:
+        </p>
+        <p>
+            <img src='images/ConsoleProgramLineage.gif' alt='The ConsoleProgram JavaDocs.'>
+        </p>
+        <p> As you can see, the <b>fully qualified name</b> of this class is:
+            <blockquote>
+            <b>acm.program.ConsoleProgram</b>
+            </blockquote>
+        </p>
+        <p> Now, if you've been following along carefully, you may be a little
+            confused. Was the dot (.) a valid character inside a class name or
+            other identifier? No, it wasn't. Instead, the name,
+            <b>acm.program.ConsoleProgram</b> describes a class that is
+            contained inside a Java <b>package</b>.
+        </p>
+        <p> In Java, a package describes the place where the specific class
+            we want to use is stored. In this case, the <b>ConsoleProgram</b>
+            class is in the package, <b>acm.program</b>. These classes are
+            stored in the archive (or zip) file, <b>acm.jar</b> that I've
+            included in the Eclipse project when I created it. Package names
+            that begin with <b>java</b> or <b>javax</b> are part of the core
+            Java packages included with the JRE, and you are not permitted
+            to modify them. This was one of the issues in the Sun-Microsoft
+            suit.
+        </p>
+    <h4>Importing Classes</h4>
+        <p> If you look back at the class organization at the start of
+            this lesson, you'll see that it starts with the statement:
+        </p>
+        <p class='code'>
+            ...some stuff
+        </p>
+        <p> As you undoubtedly surmised, this was just a placeholder,
+            waiting until the time was right for its explication.
+            The time is right.
+        </p>
+        <p> What goes in place of "...some stuff" is <i>another</i> Java
+            keyword: <b>import</b>. The import statement tells the Java
+            compiler which packages to look in when it is trying to locate a
+            class.
+        </p>
+        <p> Specifically, since we told the compiler that <b>FirstApp
+            extends ConsoleProgram</b>, we must also tell it where to find
+            the <b>ConsoleProgram</b> class. We could do that explicitly by writing:
+        </p>
+        <p class='code'>
+            public class FirstApp extends acm.program.ConsoleProgram
+        </p>
+        <p> but that would quickly become tedious. Instead, we added this
+            line to the top of our class file: <br>
+            <img src='images/import.gif' alt='Importing the program classes.'>
+        </p>
+        <p> Now, when the Java compiler encounters the name <b>ConsoleProgram</b>,
+            it will look first in the <b>acm.program</b> package to locate the
+            class. If it can't find it there, then it issues an error.
+        </p>
+        <p> This particular form of the <b>import</b> statement is called a
+            <b>wildcard</b> import because it makes <b>all</b> of the classes in
+            the packagage accessible to your program. Instead, you coule use a
+            <b>specific</b> import statement like this:
+        </p>
+        <p class='code'>
+            import acm.program.ConsoleProgram;
+        </p>
+        <p> to make sure that only the <b>ConsoleProgram</b> was imported. Many
+            programmers prefer to use specific rather than wildcard imports. However,
+            if your program uses a lot of classes from the same package, it does
+            make the <b>import</b> section of your program fairly large.
+        </p>
+    <h3>Introducing Methods</h3>
+        <p> Now that you've learned about the general structure of a
+            Java program, and have learned how to define
+            the <b>class header</b>, let's move on and take a look
+            look at the class body, where you'll define the <b>attributes</b>
+            and <b>methods</b>.
+        </p>
+        <p> We'll study attributes later in the coures. Methods are
+            where the real action takes place in your Java programs.
+        </p>
+    <h4>What is a Method?</h4>
+        <p> A method is:</p>
+        <p class="pullquote">a named piece of code that performs an
+            action, <br>or that calculates a value.
+        </p>
+        <p> Methods appear in two places in your Java programs: </p>
+        <ul>
+            <li>when you <b>define</b> a method, you write the Java
+                instructions (called statements)
+                to carry out a particular task, and then associate those
+                statements with a particular name.
+            </li>
+            <li>when you <b>invoke</b> or <b>call</b> a method, you use the
+                name to perform the predefined actions as your program runs.
+            </li>
+        </ul>
+    <h4>Calling a Method</h4>
+        <p> Each method is (usually) attached to a particular object.
+            When you want to tell the object to perform an action, you
+            "<b>send it a message</b>" as in this example:
+        </p>
+        <p class="code">println("Won't you tell me your name?");</p>
+        <p> This line of code sends the <b>println</b> message to
+            the currently executing program. In this example:
+        </p>
+        <ul>
+            <li>The message name is <b>println</b>.</li>
+            <li>The message is sent to the <b>FirstApp</b> object
+                that was created when your program started running. Next
+                week you'll see how to send messages to different objects.
+            </li>
+        </ul>
+        <p> To carry out your request, the <b>FirstApp</b> object will
+            use a <b>method</b>, and the method will be named
+            <b>println</b>. Every time you send a message to an object,
+            that object <b>must</b>:
+        </p>
+        <ul>
+            <li>have a method of the same name as the message, <b>or</b></li>
+            <li>have an ancestor class (superclass) containing such a method. </li>
+        </ul>
+        <p> Now, since there doesn't seem to be a definition for the
+            <b>println</b> method inside the <b>FirstApp</b> class that we wrote,
+            that means the program <b>inherited</b> the method from one of its
+            ancestors, in this case, the <b>ConsoleProgram</b> class where
+            <b>println</b> is <b>defined</b>.
+        </p>
+        <p> Since "messages" and "methods" are so closely related, the terms
+            "<b>sending a message</b>" and "<b>invoking (or calling) a
+            method</b>", usually mean the same thing, and I'll frequently
+            use them interchangeably.
+        </p>
+
+    <h4>Different Kinds of Methods</h4>
+        <p> There are several different kinds of methods. Some methods just perform
+            an action, like printing text on the console or changing the font used
+            by a button. In other languages, the these methods are called <b>commands</b>
+            or <b>procedures</b>. In Java, they are known as <b>void</b> methods.
+        </p>
+        <p> Often, methods <b>perform a calculation</b> when they are called.
+            These kinds of methods can be used inside <b>expressions</b>, where
+            the calculated value is <b>returned</b> to the object that sent the
+            message. In other languages these kinds of methods are usually
+            called <b>functions</b>.
+        </p>
+        <p> Many, (maybe <i>most</i>), methods require extra information that permits
+            the method to customize its behavior. This extra information is
+            passed to the method as one or more <b>arguments</b> or
+            <b>parameters</b>. In the example you just saw, the quoted
+            chunk of text, "Won't you tell me your name!", is the argument
+            or parameter <b>passed</b> to the <b>println()</b> method. Such chunks
+            of text (enclosed in double-quotes) are known as a <b>String</b> in Java.
+        </p>
+    <h3>Defining a Method</h3>
+        <p> When you create a new class, you'll have
+            <b>define</b> the methods that give the class its distinctive
+            behavior. If you don't define any methods, then your
+            program just won't do anything!
+        </p>
+        <p>All ACM program have to define one such method, the method named
+            <b>run()</b>. Let's take a look at it now.
+        </p>
+           <img src="images/d04.gif" alt="FirstApp.java run method.">
+        <p>
+            Notice that a method definition, like a class definition,
+            consists of both a <b>header</b>, and a <b>body</b>, and
+            that the method definition is placed <b>inside</b> the class
+            definition.
+        </p>
+    <h4>The Method Header</h4>
+        <p>This <b>run</b> method header consists of these four pieces:</p>
+        <ul>
+            <li><code class='hilite'>public</code> : This is called the <b>access
+                specifier</b> and it means that objects from different
+                classes are free to ask the <code>FirstApp</code> class
+                to perform this action. If the method were
+                <code>private</code>, then only other <code>FirstApp</code>
+                objects would be able to invoke the method, and we
+                couldn't run the program. You'll make almost all of
+                your methods <code>public</code>.
+            </li>
+            <li><code class='hilite'>void</code> : The access specifier is followed by
+                the <b>method return type</b>. Every method can,
+                potentially, produce a single value. If the <code>run()</code>
+                method produced a value, we'd put the type of
+                that value (number, character, etc) here. If a method
+                produces no value&#8212;like <code>run()</code>&#8212;you have to
+                say so by using a return type of <code>void</code>.
+            </li>
+            <li> <code class='hilite'>run</code> : This is the <b>name</b> of the method.
+                Because the ACM program startup code looks for a method named
+                <code>run()</code> when you try to run your program, you must
+                be careful to spell this exactly as shown.
+                Writing <code>Run()</code> or <code>RUN()</code>
+                <b><u>will not create a compile-time or syntax error</u></b>, but
+                your method won't be called when you try to run the program either,
+                and so none of your instructions will be carried out.
+            </li>
+            <li> <code class='hilite'>()</code> : Every method definition has a
+                set of parentheses following the method name. If a method
+                requires <b>parameters</b> (also known as <i>arguments</i>),
+                here's where the <b>definitions</b> for those
+                parameters are placed. The <code>run()</code> method
+                doesn't have any arguments or parameters, but we still
+                need to include the parentheses.
+            </li>
+        </ul>
+        <p code="redbox">
+            In reality, it's kind of early in the course to be dropping all of
+            these details on you. For now, I'd simply treat the syntax of the
+            <code>run()</code> method as an <i>incantation</i> that has to
+            be typed in a particular manner, and leave it at that. If you
+            understand that <code>run</code> is where a Java ACM program
+            <b>starts running</b>, then you're doing fine.
+        </p>
+    <h4>The Method Body</h4>
+        <p> Like the class body, the begin and end of a method body are
+            marked by <b>braces</b>. Inside the braces are <b>statements</b>
+            that perform actions or create objects. Each time the method is
+            activated (called or invoked), all of the statements inside
+            the method body are performed, in order, one after another.
+        </p>
+        <p>
+            <b>FirstApp</b>'s <b>run()</b> method contains three statements;
+            one <code>print()</code> statement that prints the characters
+            "Hello " on the display, followed by two <code>println()</code>
+            statements that print "I love you!" and "Won't you tell me your name?".
+        </p>
+        <p> When the <code>print()</code> method displays its message on the
+            console window, it leaves the cursor sitting at the end of the
+            text it printed. When the second statement is executed, it's
+            <code>println()</code> displays "I love you!" on the same line
+            as the "Hello. " generated by the <code>print()</code> statement.
+        </p>
+        <p> The <code>println()</code> method, used in the second two statement,
+            add a <b>newline</b> character to the end of any message you print.
+            Thus, when the third statement is executed, it doesn't follow the
+            words "I love you!", but starts on a new line.
+        </p>
+    <h3>Java Style Issues</h3>
+        <p> Let's look at a couple of style issues you'll need to
+            understand when you write your own Java programs.
+            Java is a free-form language. That means that statements
+            <b>may</b> span several lines, like this</p>
+        <p class="code">
+            public<br>
+            class<br>
+            FirstApp<br>
+            extends<br>
+            ConsoleProgram<br>
+            {<br>
+            print<br>
+            (<br>
+            "Hello. "<br>
+            )<br>
+            }
+        </p>
+        <p> Or, you can scrunch up all the code on a single line or two, like
+            the examples on page 17 in your textbook.
+        </p>
+        <p> You probably <b>don't</b> want to write code like this, however,
+            and you <b>certainly</b> don't want to <b>read</b> code
+            written using this style. You should use whitespace such as
+            blank lines and indenting to <b>improve</b> the readability of your
+            programs, not reduce the readability.
+        </p>
+        <p> Try to group related statements together into "paragraphs", and separate
+            such groups from unrelated groups of statement by inserting blank lines
+            and comments.
+        </p>
+        <p class="note">For a more exhaustive treatment of programming style,
+            make sure you read the <b><a href="../styleguide.html" target="_blank">
+            CS 170 Programming Styleguide</a></b> which will be used to evaluate
+            your homework assignments.
+        </p>
+        <p class='notes'>
+            Fortunately, the Eclipse IDE makes formatting your code correctly pretty
+            easy. Just use <b>Format</b> from the <b>Source</b> menu and your code
+            will be laid-out according to the rules for this class.
+        </p>
+    <h4>The Role of the Semicolon</h4>
+        <p> Since statements can span multiple lines, you may be wondering
+            how the Java compiler tells when a statement is done. Java uses
+            the semicolon (<code class='hilite'>;</code>) to mark the
+            <b>end of a statement</b>, just like C and C++. Note that this
+            is different than Pascal, where a semicolon is used to
+            <b>separate</b> multiple statements, and Visual Basic where the
+            end of the line marks the end of a statement. It's also different
+            from JavaScript where semicolons are optional.
+        </p>
+    <h4>Comments</h4>
+        <p> Lines that begin with two forward slashes, <code class='hilite'>//</code>,
+            are <b>comment lines</b>, lines added for the benefit of the
+            <b>human</b> readers of your program; both the slashes and
+            anything following them on the same line are ignored by the
+            compiler. (Make sure you don't insert a space between
+            the two slashes, however, because that confuses the compiler).
+        </p>
+        <p class='note'>
+            In Eclipse, you can quickly comment and uncomment lines of code by
+            selecting the lines and then using the keyboard shortcut <b>Ctrl + /</b>
+            or choosing <b>Toggle Comment</b> from the <b>Source</b> menu.
+        </p>
+        <p> You can also create comments that span multiple lines by
+            using the delimiter <code class='hilite'>/*</code> (a forward slash,
+            immediately followed by an asterisk) to start the comment, and the delimiter
+            <code class='hilite'>*/</code>
+            (an asterisk immediately followed by a forward slash) to end the comment.
+            You cannot have multi-line comments inside other multi-line comments, (called
+            <b>nested</b> comments), but
+            you can put any number of single-line comments inside a multi-line comment.
+        </p>
+
+        <p> A third type of comment is called a <b>JavaDoc</b> or <b>Documentation</b>
+            comment. These comments begin with the symbol
+            <code class='hilite'>/**</code>, and end with a <code class='hilite'>*/</code>
+            just like a regular multi-line comment. These special comments can be used
+            to automatically create Java documentation, using the <b>javadoc</b> program.
+            There are several types of JavaDoc comments that you'll learn about
+            throughout the semester. For right now, let's look at the introductory
+            comment that appears at the beginning of every file.
+        </p><p>
+        </p><p><b>JavaDoc</b> comments use the <code class='hilite'>@</code> symbol
+            to create specific <b>tags</b> used to generate documentation. Every file
+            you create should start with a <b>JavaDoc</b> comment using the
+            <b>@author</b> and the
+            <b>@version</b> tags to identify yourself and
+            the date and version of the program you're working on.
+        </p>
+        <p>Here's an example of a <b>JavaDoc</b> comment at the beginning of
+            <b>FirstApp.java</b> as it appears in <b>Eclipse</b>:<br>
+            <img src="images/d05.gif" alt="JavaDoc comments." vspace="15" hspace="15">
+        </p>
+        <p> Well, that's it for the basic structure of a Java program. As I mentioned
+            earlier though, let me finish up with some background material on the
+            ACM class libraries that we used for this first program.
+        </p>
+    <h3>The ACM Class Libraries</h3>
+
+        <p>Today, Java is the most popular language for
+        teaching computer science, especially for introductory classes like
+        CS 170.
+        <img src='images/acm.gif' class='right' alt='A program created with the ACM class libraries.'>
+        In 2003-2004, the College Board moved the Advanced Placement Computer
+        Science program to Java, from C++. Most universities, (UCI, Berkeley, Stanford,
+        etc.) use Java for at least some, (if not the majority), of their courses.
+        </p>
+
+        <p> Many schools, though, have discovered that Java, which was designed with the
+            commercial marketplace in mind, isn't really ideal for teaching beginning
+            programmers the fundamental concepts they'll need to master. Specifically,
+            instructors have complained that Java is too complex, and too unstable.
+        </p>
+        <p> Responding to these complaints, the Education Board of the Association for
+            Computing Machinery, (ACM),
+            set up the ACM Java Task Force (JTF) in Fall 2003, and charged them with the task of:
+        </p>
+
+        <ul>
+            <li>reviewing the Java language, APIs, and tools from the perspective
+                of introductory computing education.
+            </li>
+            <li>developing a stable collection of pedagogical resources to make it
+                easier to teach Java to first-year computing students without having
+                those students overwhelmed by its complexity.
+            </li>
+        </ul>
+        <p> Under the leadership of Eric Roberts from Stanford, the JTF released the
+            first version of the ACM libraries in February 2005. We'll be using the
+            "beta" of version 2.0 in this class. As we go through the
+            semester, I'll show you how to use some of these libraries to create
+            some interesting programs.
+            We'll start, though, by looking at the ACM <b>program</b>
+            package of classes.
+        </p>
+
+        <p class='note'>
+            <b><img src='images/acmlogo.gif' class='right' alt='The ACM logo.'>
+                <i>What is the ACM?</i></b><br>
+                "The ACM, the Association for Computing
+                Machinery, is an international scientific and educational organization
+                dedicated to advancing the arts, sciences, and applications of
+                information technology. With a world-wide membership of more than 80,0000,
+                ACM is a leading resource for computing professionals and students
+                working in the various fields of Information Technology, and for
+                interpreting the impact of information technology on society."
+                <br><br>
+                Visit the ACM Web site, <a href='http://www.acm.org/' target='_blank'>
+                <b>http://www.acm.org</b></a> for more information, or to join up.
+                Student memberships start at about $20 a year.
+        </p>
+
+    <h4>The ACM Program Classes</h4>
+        <p> When you first start programming in Java, there are certain concepts
+            that are fairly natural and easy to explain, and others that are
+            difficult to grasp, even after you are fairly proficient in the
+            language. One of those difficult-to-grasp topics is the fact that
+            Java <b>doesn't</b> have a separate facility for <b>programs</b>.
+            Instead, you can stick a <code>main()</code> method into any class,
+            and turn that class into a program, (kind of). (This is what your
+            textbook does in the first chapter.)
+        </p>
+        <p> When you add a <code>main()</code> method to a class, though,
+            that class doesn't <b>really</b> turn into a program. The
+            <code>main()</code> method can't access any of the instance
+            variables in the class, or call any of the regular (non <code>static</code>)
+            methods; it's really a very awkward mechanism, that isn't
+            at all object-oriented.
+        </p>
+
+        <p> Applets, on the other hand, <b>are</b> very object-oriented: your browser
+            creates an instance of your class. All of the methods you write have
+            access to both the class instance variables and to the other methods
+            in the class. The problem with applets, though, is that you have to
+            run them through a Web browser and have to create an extra source
+            file, the HTML page that loads the applet.
+        </p>
+        <p> "Wouldn't it be nice", the JTF folks said, "if we could have programs
+            that were as simple as applets, and that worked when run as both
+            an application and as an applet?"
+        </p>
+        <p> The ACM program classes, shown here, do just that:</p>
+        <p><img src='images/acm06.gif' alt='The ACM program hierarchy.'></p>
+        <p> This hierarchy of classes allows you to easily write programs
+            the can run both as an applet, and as an application. Also, by
+            changing just one line of code, you can change the "input style"
+            from console-mode to dialog-based. (You can
+            <a href='http://www-cs-faculty.stanford.edu/~eroberts/jtf/javadoc/student/index.html'
+            target='_blank'><b>read the documentation</b></a> for all of the
+            classes in the ACM Library on the
+            <a href='http://www-cs-faculty.stanford.edu/~eroberts/jtf/index.html'
+            target='_blank'><b>Java Task Force Web site</b></a>.)
+        </p>
+    <h3>Coming up...</h3>
+        <p>That's it for this week. Make sure you complete all of the exercises
+        and take the quiz before the deadline. Next week we'll take a closer
+        look at <b>Input, Output, and Strings</b> in Java.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

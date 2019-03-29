@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][2].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/c.jpg" alt="CS 170 Lesson C logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p>
+            <b><span class="cap">Y</span>ou can purchase the greatest</b>,
+            most impressive, most expensive DVD home theater system in the world,
+            but, without a DVD to watch, it's just an expensive doorstop.
+            The same thing's true with your computer&#8212;hardware's nice, but
+            it's <b>nothing</b> without <b>software</b>.
+            <img class='right' src='images/theater.gif' alt='A home theater system.'>
+        </p>
+        <p> In this lesson, we'll look at the two types of software:
+            the kind that "does things for your computer"&#8212;called the
+            <b>operating system</b>, and the kind that "does things for you"&#8212;called
+            <b>application programs</b>.  We'll also take a look at how computer
+            programs work "under the hood."
+        </p>
+        <p>Here are the topics we'll cover:</p>
+        <ul>
+            <li>computer programs</li>
+            <li>systems software and applications software</li>
+            <li>the basic components that make up your processor or CPU</li>
+            <li>the registers that hold information for the CPU to process</li>
+            <li>the four steps of the machine cycle that control how your CPU works</li>
+        </ul>
+        <p> Let's start by looking at how you run and install programs.
+        </p>
+    <h3>Running and Installing Programs</h3>
+    <p> What is a computer program? It's simply <b>"a set of instructions
+        that tells the computer what to do."</b> You can think of a
+        program as an "automated" recipe for accomplishing a particular task.
+    </p>
+    <p> Microsoft Word is a program, as is Microsoft Excel. Quicken,
+        Doom, iTunes, and your Web Browser are all programs. Even
+        Windows XP is a program, (or, technically, a collection of programs.)
+    </p>
+    <h4>Running Programs</h4>
+    <p> <img src="images/run.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="Running a program from memory">
+        To watch the latest DVD release that you've rented at Blockbuster,
+        you have to <b>load it</b> into your DVD player, and press <b>play</b>.
+        Software is very similar.
+    </p>
+    <p> You <b>play</b> a DVD, but you <b>run</b> or <b>execute</b> a program.
+        To run a program, you transfer it from your hard disk, or over the
+        network, and load it into memory. Once the program is loaded, you tell
+        the CPU where the instructions start, and your computer takes over
+        from there.
+    </p>
+    <h5>Installing Programs</h5>
+    <p> There is one big difference between running a program and
+        playing a DVD. Your DVD player works <i>directly</i> from the
+        disc you rent, loading only as much of the movie as is needed
+        into memory at any one time.
+    </p>
+    <p> <img src="images/install.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="Loading a program from the CD">Since many computer programs are delivered on CDs or DVDs, you
+        might think that they'd work the same way, but usually they don't.
+        Instead of running your program directly from the CD, you
+        almost always copy it first to your computer's hard disk;
+        then, when you want to run the program, you'll load it
+        from the hard disk instead.
+    </p>
+    <p> This is called <b>installing</b> the software.
+        There are two reasons why software is usually installed to
+        a hard disk, instead of being run directly from a CD:
+    </p>
+    <ul>
+        <li>First, hard-disks are much much faster than CDs, so programs
+            are much more responsive when run from a hard-disk.
+        </li>
+        <li>Second, most of us customize the programs that we run,
+            changing the settings to reflect the way we want to work.
+            Having the program installed on the hard-drive, which
+            is a read-write medium, instead of on a read-only CD,
+            makes that process easier.
+        </li>
+    </ul>
+    <p> Installation also performs other tasks, such as creating desktop
+        icons and menu entries, and performing product activation. One of
+        the down-sides of program installation, is that it can make it
+        very hard to move the location of a program on the hard disk,
+        if you decide to reorganize your computer, or if you want to
+        move the program to a new computer. I, personally, prefer programs
+        that don't require a complex installation step, and that keep all
+        of their files in a single folder.
+    </p>
+    <h4>Talking to your Programs</h4>
+    <p> With your DVD player, you "talk to your movie" by using the
+        <b>play</b> and <b>pause</b> buttons on your remote control.
+        How do you talk to your computer programs? Exactly how do you
+        tell your computer that you want to run the latest Star Trek game?
+    </p>
+    <p><img src="images/startrek4.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="Hello Computer from Star Trek 4">
+        You could try just talking to your computer like Scotty did when
+        he first met a Macintosh in Star Trek 4 (<b>"Hello Computer!"</b>),
+        but it's unlikely to work for a few years yet. Just like your
+        DVD remote control allows you to communicate with your DVD player,
+        your computer has a <b>user interface</b> that allows you to send
+        commands to your software.
+    </p>
+    <p> With a <b>graphical</b> user interface, or GUI, like Windows XP or
+        Mac OS X, you interact with your programs in the form of small graphical
+        images, called <b>icons</b>, and other features such as pull-down menus.
+        To run a program with a GUI, for instance, you <b>point</b> to it using
+        the <b>mouse pointer</b>, and <b>double-click</b> the mouse button.
+    </p>
+    <p class="note"><img src="images/wimp.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="The Wimp interface.">
+        This is sometimes called the WIMP interface, for
+        Window, Icon, Mouse, and Pointer; it's mostly called that by
+        old gray-headed computer folk, like me, who remember when we
+        had to talk to our computers using nothing but ones and zeros.
+        Of course, when things got tough and supplies ran low,
+        we skipped the zeros.
+    </p>
+    <p> The GUI is also responsible for controlling the different ways
+        you'll enter data, providing <b>input widgets</b> such as text
+        fields, text areas, sliders and buttons, and for controlling
+        the display of information, translating things like the plain
+        text code that make up a Web page into the printed type and
+        graphics that you see on the page in front of you.
+    </p>
+    <p> Most modern operating systems also have a <b>command-line</b> interface,
+        where you "talk" to your computer using simple English-like (sometimes)
+        commands. The command-line often allows you to use your computer more
+        efficiently, but it's not as easy to remember or to learn. In this class,
+        you'll complete some lab assignments using the command line.
+    </p>
+    <p> If you've never encountered the command-line before, and think that
+        it's a relic of some bygone age, you might want to read Neal Stephenson's
+        essay, <a href="http://www.cryptonomicon.com/beginning.html" target="_blank">
+        <b>In the Beginning was the Command Line</b></a> for a different
+        perspective.
+    </p>
+    <h3>Computer Software</h3>
+    <p>  <img src="images/tron_large_warner.jpg" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="The Master Control Program">
+        There are two general categories of computer programs. The first
+        kind of program we call <b>system software</b>. System software
+        is the software that "runs" your computer. In the old 1970s
+        Sci-fi movie TRON, systems software was personified by David Warner,
+        the notorious Master Control Program, that controlled all access
+        to memory and hardware.
+    </p>
+    <p> Your computer <b>really does</b> have a master control program,
+        called the <b>operating system</b>, and the operating system
+        <b>really does</b> control all access to your hardware. Your
+        hard disk, for instance, is made up of concentric magnetic recording
+        areas called tracks and sectors. Most of us, however, <b>never</b>
+        deal with tracks and sectors directly. Instead, our operating
+        system allows us to "pretend" that our hard disk contains
+        files and folders.
+    </p>
+    <p> You don't load and run the operating system in the same way you
+        do other programs. Instead, the operating system loads automatically
+        when your computer first starts, and continues running, (in the
+        "background"), as long as your computer is turned on.
+    </p>
+    <h4>Application Software</h4>
+    <p> When you hear the term software, you probably automatically think of
+        <b>application software</b>, programs that perform a specific
+        job&#8212;software that does something <b>for you</b>, rather than
+        software that does something for your computer.
+    </p>
+    <p> <img src="images/applications.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="Application programs in a store.">
+        There are different application programs for every different kind
+        of job, industry, business, and hobby you can imagine. You can
+        purchase application software at stores like Fry's or Micro Center
+        just like buying cornflakes down at Stater Brothers.
+    </p>
+    <p> This kind of "pre-packaged" software is called <b>shrink-wrap</b> or
+        <b>horizontal-market</b> software, so-called because your local
+        dentist probably uses the same kind of software as that used by
+        General Motors; it's not specific to one kind of business.
+        Shrink-wrap software includes things like word processors,
+        spreadsheets, database software, and presentation software.
+    </p>
+    <p> You can also have application software <b>custom made</b> to meet
+        the exact needs of your business. This might seem exotic, kind of like having
+        custom-made shoes or shirts, but it's really very common; it's more
+        like ordering dinner in a restaurant. Most applications software, in fact, is
+        custom made, or <b>vertical-market</b> software.
+    </p>
+    <p class='note'>I should also mention another, common catagory of software,
+        that may be even more common: <b>embedded software</b>. Embedded
+        software is code that runs "behind the scenes", kind of like the
+        operating system, on your mobile phone, your TV tuner, your music
+        player, your automobile and maybe even your toaster. And with new
+        platforms like the iPhone and Google's Android, this market will
+        only get bigger.
+    </p>
+    <h4>Computer Programmers</h4>
+    <p> Shrink-wrap software, custom software, applications programs,
+        and operating systems; all of these are created by
+        <b>computer programmers</b>. Programmer is the general purpose
+        name we give to anyone who develops applications or system software.
+    </p>
+    <p> <img src='images/programmer.gif' class='right' alt='A computer programmer.'>
+        Of course, that's a little like using the term <i>scientist</i> to
+        describe a wide variety of different jobs, and so the computing
+        professions have developed more specific terms. You may hear
+        programmers called <i>software developers</i>, <i>system analysts</i>,
+        <i>software architects</i>, <i>software engineers</i>,
+        <i>magicians</i>, <i>code monkeys</i>, or <i>digital gurus</i>.
+    </p>
+    <p> In the end, though, a software developer is <b>really</b> like an
+        author or songwriter; the programmer produces a tangible document,
+        (called the program's <b>source code</b>), which contains instructions
+        that the computer is able to follow. (For a really simple example of
+        source code, just choose <b>View Source</b> from your Web browser's
+        menu, and you'll see the instructions the Web programmer (me in
+        this case), wrote to create this Web page.)
+    </p>
+    <p> In this class, you'll learn to write computer programs
+        (source code) using the Java programming language. Once you've
+        written your programs, you'll use different software tools, such as
+        those found in the Java Development Kit and those supplied as part
+        of the Eclipse IDE (Integrated Development Environment), to
+        <b>compile</b> your source code into a special kind of <b>machine
+        language</b> known as <b>bytecode</b> which can be understood
+        or "played" by an ideal computer known as the <b>Java Virtual Machine</b>
+        or <b>JVM</b>. When you want to <b>run</b> your program, you'll start
+        up the JVM and it will convert your program into the <b>native</b>
+        machine language which will be executed by your computer's hardware CPU.
+    </p>
+    <p> We'll turn to writing Java programs shortly, but let's start out by
+        seeing how the CPU works!
+    </p>
+    <h2>How Programs Work</h2>
+        <p> <img src="images/a01.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="The CPU block diagram.">
+            The Central Processing Unit, also known as the
+            <b>CPU</b> or simply <b>the processor</b>, is the
+            "brains" inside your computer. The CPU interprets
+            and carries out the basic instructions that operate
+            the computer.
+        </p>
+        <p> We can divide the CPU itself into two main subsystems:</p>
+        <ul>
+            <li>The <b><u>Control Unit</u></b> coordinates all of the
+                operations of the CPU. When the CPU needs to "talk" to
+                memory, for instance, the CU issues the commands to
+                retrieve or store the necessary bytes or instructions.
+            </li>
+            <li>When it comes to actual calculation or decision making,
+                however, the CU turns that over to the
+                <b><u>Arithmetic-Logic Unit</u></b> or <b>ALU</b>. All
+                math, comparison, or logical operations are performed
+                by the ALU.
+            </li>
+        </ul>
+        <p> When you run an application program, like Excel, the CPU
+            doesn't deal with the entire program at once. Instead,
+            it processes each instruction or piece of data sequentially.
+            When you start Excel, the program is loaded into memory,
+            but the instructions and data are fed to the CPU one piece at
+            a time.
+        </p>
+        <p class='note'> Even though the CPU and memory are the main players in the
+            computing game, they don't work alone: <b>input devices</b>
+            are necessary to capture data for processing by the CPU,
+            and <b>output devices</b> are necessary if you want to see
+            the information thatresults. Finally, all three of these
+            components&#8212;instructions, data, and output&#8212;are written to,
+            and read from storage devices during the processing cycle.
+        </p>
+    <h3>Registers</h3>
+        <p> At the beginning of this lesson, I said that programs were
+            instructions, stored in memory, that are <b>executed</b>
+            or <b>run</b> by the CPU. That's really only <b>partly</b>
+            true. The CPU can't actually do <b>anything</b> with
+            instructions or data while it is stored in memory. Instead,
+            it has to <b>fetch</b> the instruction and place it in
+            a <b>register</b>, before it can get "worked on".
+        </p>
+        <p> A register is just a temporary, high-speed storage area,
+            located on the CPU, that holds data and instructions while
+            processing occurs. Different processors have different names,
+            sizes, and numbers of registers, but all processors use
+            registers to:
+        </p>
+        <ul>
+            <li>store the address of the next instruction to be executed</li>
+            <li>store the instruction itself while the it is being decoded</li>
+            <li>store the data that the ALU uses while processing</li>
+            <li>store the results of the ALU's calculations</li>
+        </ul>
+        <p> To see how this works, we'll turn back to our old friend Debug,
+            and take a look at the PC's registers, just like we were using
+            a microscope.
+        </p>
+        <h4>Viewing Registers</h4>
+        <p> To view the registers on your PC, start Debug and then type
+            the <b>r</b>, (for <b>registers</b>) command. (Remember that
+            you can start Debug just by opening a Command window and
+            then typing the word <b>debug</b> followed by the Enter key.)
+            <br>
+            <img src="images/a02.gif" alt="The debug Registers screen" border="1" hspace="15" vspace="15">
+            <br>
+            The debug Registers screen shows you three lines of information:
+        </p>
+        <ul>
+            <li>line one contains the general registers</li>
+            <li>line two contains information about the segments, instruction and flags in use</li>
+            <li>line three contains information about the next instruction</li>
+        </ul>
+        <p>Let's look at each of these.</p>
+        <h5>General Registers</h5>
+        <p> Line one contains the <b>general registers</b>. These are
+            registers used for arithmetic and comparisons. Each one can
+            hold a 16-bit value.
+            <br>
+            <img src="images/a03.gif" alt="The general registers." border="1" hspace="15" vspace="15">
+            <br>
+        </p>
+
+        <p> Some of the general registers have a
+            specific job, in addition to their work as general registers.
+            For instance the <b>CX</b> or <b>Count</b> register is used
+            whenever the CPU needs to measure the number of bytes to
+            read or write.
+        </p>
+        <h5>Specialized Registers</h5>
+        <p>
+            Line two contains three groups of specialized registers. The first four
+            registers are called the <b>segment registers</b>. These are
+            used to calculate addresses for code and data as your program runs.
+            <br>
+            <img src="images/a04.gif" alt="The segment registers." border="1" hspace="15" vspace="15">
+            <br>
+        </p>
+        <p> In the middle is the <b>instruction pointer</b> or <b>IP</b>
+            register. This is used to store the address of the next
+            instruction to be executed by the CPU. Understanding the IP is
+            <b>the key to understanding</b>
+            how programs are executed by the CPU. All makes and models of CPU have an
+            instruction pointer, even if the number and types of their other
+            registers differ. (Only Intel CPUs have segment registers,
+            for instance).
+            <br>
+            <img src="images/a05.gif" alt="The Instruction Pointer." border="1" hspace="15" vspace="15">
+            <br>
+        </p>
+        <p> At the far right is the contents of the <b>flags register</b>. The
+            flags register is used by programs to control the results of
+            comparisons and access to memory.
+            <br>
+            <img src="images/a06.gif" alt="The contents of the Flags register." border="1" hspace="15" vspace="15">
+            <br>
+        </p>
+        <h5>The Current Instruction</h5>
+        <p> The third line of the display provides some short-hand
+            information about the <b>next instruction</b> that the CPU
+            will execute.
+            <br>
+            <img src="images/a07.gif" alt="The current instruction." border="1" hspace="15" vspace="15">
+            <br>
+            The numbers on the left-hand side represent
+            the address where the next command is located. This address
+            is composed of the contents of the CS (Code Segment)
+            register and the IP (Instruction Pointer) register.
+            <br>
+            <img src="images/a08.gif" alt="The address of the current instruction." border="1" hspace="15" vspace="15">
+            <br>
+        </p>
+        <p> Following the address you'll find the complete <b>machine
+            language instruction</b> that will be executed next.
+            <br>
+            <img src="images/a09.gif" alt="The machine language instruction." border="1" hspace="15" vspace="15">
+            <br>
+            To your
+            processor, this instruction will make perfect sense, but for
+            we non-mechanical humans, Debug shows us the same instruction
+            using a mnemonic form of machine language called
+            <b>assembly language</b>.
+            <br>
+            <img src="images/a10.gif" alt="The assembly language instruction." border="1" hspace="15" vspace="15">
+            <br>
+            The assembly language instruction
+            shown here says to copy, (or MOV) the value stored in address
+            120 into the lower half of the AX register.
+        </p>
+        <p> Finally, the right-hand side of the third line shows the memory
+            address for any data that is affected by the instruction.
+            <br>
+            <img src="images/a11.gif" alt="The data affected by the instruction." border="1" hspace="15" vspace="15">
+            <br>
+            In
+            this case, the address is the combination of the DS (Data Segment)
+            register and the offset 120, and the current value stored at that
+            address is 35 hex.
+        </p>
+    <h3>The Machine Cycle</h3>
+        <p> In some ways, your CPU is really a very simple machine&#8212;you plug
+            it in, and it starts "crunching" data. While the actual
+            instructions that can be carried out by the CPU may change from
+            processor to processor, the internal workings of all CPUs are
+            remarkably similar, consisting of four basic operations. We
+            call these four operations the <b>machine cycle</b>.<br>
+            <img src="images/a12.gif" alt="The machine cycle." border="1" hspace="15" vspace="15">
+            <br>
+            The machine cycle begins by <b>retrieving</b> a machine language
+            instruction from memory. What instruction? The instruction
+            located at the address contained in the IP or Instruction Pointer
+            register. Once the instruction is retrieved, or <b>fetched</b>,
+            the instruction pointer is automatically ratcheted forward to
+            point to the <b>next</b> instruction in memory.
+        </p>
+        <p> Once the instruction has moved from memory over to the CPU's
+            Control Unit, the CU examines it to see what kind of instruction
+            it is. In the last slide you saw a picture of a machine language
+            instruction: <b>A02001</b>, an instruction that says to copy a
+            value from address 0120 into the AL register. When the CU sees
+            the A0, it then treats the next instruction as an address and
+            goes and fetches the data that's required. This part of the
+            cycle is called <b>decoding</b> the instruction.
+        </p>
+        <p> Ultimately, all programs involve arithmetic, logic, or
+            comparisons at some point, and when one of those instructions
+            arrive, the CU hands off the code to the ALU, which
+            <b>executes</b> the instruction.
+        </p>
+        <p> Finally, once the ALU calculates a value, that value is normally
+            <b>stored</b> back into memory. In the picture shown here, it
+            looks like the ALU is responsible for writing the results back to
+            memory, but that's not really correct. The Control Unit handles
+            all reading and writing from memory.
+        </p>
+        <p> Now let's look
+            at how the machine cycle gets started.
+        </p>
+        <h4>Following the Code</h4>
+        <p> Start Debug, and then type <b>-d FFFF:0000</b>. If that
+            looks familiar, it should! It's almost the same instruction that
+            we used in the previous lesson to view your computer's BIOS revision date.
+        </p>
+        <p> The only difference is that then, we looked at address
+            <b>FFFF:0005</b>. The value at <b>FFFF:0000</b> is special,
+            because it is the address that contains the <b>first</b>
+            instruction that is fetched and executed on every PC in the
+            world. We say that this address is <b>hardwired</b> into
+            the CPU.
+            <br>
+            <img src="images/a13.gif" alt="The first BIOS instruction" border="1" hspace="15" vspace="15">
+            <br>
+            Since the BIOS date starts at the sixth byte, the first instruction
+            executed by your CPU is <b>EA 5B E0 00 F0</b>, and I'm <b>sure</b>
+            you all know <b><i>exactly</i></b> what that means.
+        </p>
+        <p> No?</p>
+        <p> Me neither. To make sense of the code, we'll have to <b>decode</b>
+            it, just like the CPU does. To decode the instruction for our
+            purposes, we can use debug's <b>unassemble</b> command, which turns
+            machine language into (sort of) human-readable <b>assembly language</b>.
+        </p>
+        <p> Type in <b>-u FFFF:0000</b> and press Enter, and you'll see that
+            the first instruction is <b>JMP F000:E05B</b>.
+            <br>
+            <img src="images/a14.gif" alt="Disassembling the first BIOS instruction" border="1" hspace="15" vspace="15">
+            <br>
+            This instruction
+            just means to load the address F000:E05B into the IP register,
+            and then go and fetch the instruction at that location.
+            This process continues, relentlessly, instruction after instruction,
+            until you turn off the power to your computer.
+        </p>
+        <p> There's one last, very important thing that you should notice about
+            this picture. Do you see the assembly language instructions following
+            the JMP command? As the note says, <b>those are not really instructions</b>.
+            The assembly language that you see printed out is the code that would
+            be produced <b>if</b> we treated the BIOS date as instructions.
+        <p>
+        <p> "Well", I'm sure you're saying, "can't the computer tell which parts
+            are instructions and which parts are data? Why does it get confused?"
+        </p>
+        <p> That's a really good question, and that's the main point of this lesson
+            and the last:
+            <div style='padding:1em;color:red;font-size:1.5em;font-weight:bold;background:light-yellow;margin:1em;border:3px dashed red;text-align:center;'>
+                There is no difference in memory between data, instructions, characters,
+                images, or sounds.<br><span style='font-size:3em;background:none;'>Bits is bits.</span>
+                <object width="425" height="344">
+                    <param name="movie" value="http://www.youtube.com/v/OTzLVIc-O5E&hl=en&fs=1"></param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowscriptaccess" value="always"></param>
+                    <embed src="http://www.youtube.com/v/OTzLVIc-O5E&hl=en&fs=1"
+                        type="application/x-shockwave-flash"
+                        allowscriptaccess="always"
+                        allowfullscreen="true" width="425" height="344">
+                    </embed>
+                </object>
+            </div>
+            That's right; the bits that make up instructions look exactly the same
+            to the computer as the bits that make up data. The only difference is
+            where those bits are placed, and how your program interprets them.
+            If you "point" your CPU's Instruction Pointer at a GIF image, for instance,
+            it will treat the bits it contains as instructions, and try to carry
+            them out.
+        </p>
+        <p> Most of the time, when this happens, your computer will "crash"
+            almost immediately, since the instructions won't make any sense. Sometimes,
+            though, a clever hacker may craft a specially prepared piece of data, and
+            take advantage of a programming error to get the CPU to execute the data
+            and take over the computer. This kind of vulnerability is known as a
+            <b>buffer overflow</b>.
+        </p>
+    <h3>Coming Up Next...</h3>
+        <p> That's it for the CPU and Debug; <b>use the -q command to quit</b>.</p>
+        <p> In the next section, let's turn back in time, and learn about
+            how computer programming got started. You'll also meet a few
+            of the <b>programming languages</b> that your parents studied when
+            they were your age.
+        </p>
+
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

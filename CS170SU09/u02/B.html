@@ -1,0 +1,490 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][2].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">W</span>hen you pass arguments (or parameters)
+            to a method</b>, you supply <u>information</u> that the method
+            uses to carry out its, actions. Here are some method calls used to
+            draw and fill rectangles in a graphical applet. (You'll learn
+            how to do this next week). When you write:</p>
+        <p class="code">
+            pen.drawRect( &nbsp;&nbsp;0, &nbsp;&nbsp;0, 100, 100);<br>
+            pen.fillRect( 102, &nbsp;&nbsp;0, 100, 100);<br>
+            pen.fillRect( &nbsp;&nbsp;0, 102, 100, 100);<br>
+            pen.clearRect(102, 102, 100, 100);<br>
+        </p>
+        <p> the <code>drawRect()</code>, <code>fillRect()</code>, and
+            <code>clearRect()</code> methods use the <b><u>values</u></b> you
+            supply&#8212;<b>0</b>, <b>100</b>, and <b>102</b>&#8212;to
+            carry out the action of displaying your rectangles on the screen,
+            just like the <code>println()</code> method uses the values you
+            supply to print a message on the console.
+            The values passed in this example are called <b>literals</b>,
+            because the values you use
+            appear <b>literally</b> in your source code.
+        </p>
+        <p> Unfortunately, using literal values like this is less than
+            ideal, for several reasons:</p>
+        <ul>
+            <li>No <i>meaning</i> is associated with each number. A reader
+                unfamiliar with the <code>drawRect()</code> method, can't
+                easily tell the difference between the two uses of the
+                literal <code>100</code> in the first line of code. For
+                this reason, such literals are called <b>magic numbers</b>.
+            </li>
+            <li>If you want to make changes to a section of code, such as
+                changing the width of each of the rectangles shown above
+                to 95 pixels (from 100), using literals makes your work
+                much more difficult and error-prone. You can't just change
+                every 100 to 95, because other values (like 102 in the
+                example), depend on the original 100.
+            </li>
+            <li>Literals only work for simple primitive types, like numbers
+                characters and text. If you want to use object types, like
+                <code>Color</code> and <code>Font</code>, you have to use
+                <b>variables</b>, rather than literals.
+            </li>
+        </ul>
+        <p>In this lesson you'll learn:</p>
+        <ul>
+            <li>how to create <b>variables</b> for simple (primitive) types</li>
+            <li>how to <b>assign</b> a value to a variable</li>
+            <li>how to create <b>named constants</b> you can use instead of
+                literals
+            </li>
+            <li>how to create <b>object variables</b> and initialize them
+                using a <b>constructor</b>.
+            </li>
+        </ul>
+        <p>We'll start by looking at the code you need to <b>create</b>
+            variables.
+        </p>
+    <h3>Creating Variables</h3>
+        <p>The formal definition of a variables is: </p>
+        <p class="pullquote">
+            A named storage area that holds a value
+        </p>
+        <p>To create a variable, you <b>define</b> it by using a
+            special kind of Java statement called a <b>declaration</b>
+            or <b>definition</b> statement. In Java,
+            <b>all</b> variables must be defined
+            before you can use them. (This is different than some other
+            languages, such as Visual Basic, which permit <i>implicit
+            variable definition</i>.)
+        </p>
+        <p>The <b>syntax</b> (or rule) for defining variables looks like this:
+        </p><p class="box">
+            <span class="inlinecode">
+            [modifiers] type name[ = initializer];
+            </span>
+        </p>
+        <p> The syntax elements appearing in brackets [] are optional. The
+            brackets are not part of the syntax. We'll cover the first
+            optional element, modifiers, a little later.
+        </p>
+        <p>Here are some example defintions:</p>
+        <p class="code">
+            int width; // no modifiers or initializer<br>
+            int height = 95; // uses initializer<br>
+            private Color background; // private modifier<br>
+            public static final int SIZE = 35; // all modifiers
+        </p>
+
+        <p> Definition tells the compiler what <b>kind</b>
+            of value the storage location will contain (<code>int</code>,
+            <code>Color</code>), the name of the storage
+            location, (<code>width</code>, <code>height</code>,
+            <code>background</code>, and <code>SIZE</code>), and,
+            optionally, an initial value to store in the location.
+        </p>
+    <h3>Variable Scope</h3>
+        <p>You can define variables in two places: <b>inside a method</b>,
+            or inside the class, but <b>outside of any method</b>.
+            Variable that are defined <i>inside</i> a method are called
+            <b>local variables</b>, and variables defined <i>outside</i>
+            of a method, but <i>inside</i> the class, are called
+            <b>instance variables</b>.
+        </p>
+        <p> We'll use local variables for most of the first
+            half of the class, and learn how to create and
+            use instance variables after the midterm. For right now,
+            though, let's quickly examine some of the differences.
+        </p>
+    <h4>Local Variables</h4>
+        <p> Local variables, (those defined <i>inside</i> of a method),
+            can <b>only</b> be used
+            <b>inside the method where they were created</b>. The variable
+            <code>keys</code> defined inside the
+            <b>PianoKeys</b></a> program:<br>
+            <img src="images/b01.gif" alt="The PianoKeys.java program." vspace="15" hspace="15">
+            <br>and the
+            variable <code>sides</code> defined inside the <b>Geometry</b></a>
+            program, are examples
+            of local variables.<br>
+            <img src="images/b02.gif" alt="The Geometry.java program." vspace="15" hspace="15">
+        </p>
+        <p> Local variables are <b>not</b> given an initial value when
+            they are created; you must provide an initial value explictly,
+            or <b>assign</b> a value before you use the variable. If you
+            attempt to use an <b>uninitialized</b> local variable, the
+            compiler will refuse to compile your code.
+        </p><p></p>
+        <p> Local variables also don't use modifiers like <code>static</code>,
+            <code>public</code>, or <code>private</code>. You can, though,
+            use the modifier <code>final</code> to make a local variable
+            <b>constant</b>. We'll discuss doing that shortly.
+        </p>
+    <h4>Instance Variables</h4>
+        <p> Your textbook doesn't talk about instance variables until
+            Chapter 7, and we won't cover that until after
+            the Midterm Exam, but I want you to have a little preview of what's
+            coming up. In Java, variables created <b>outside</b> of a method are
+            officially called <b>fields</b>. However, in the real world,
+            you'll more often see them called <b>instance variables</b>,
+            which is a more general object-oriented term.
+        </p>
+        <p> Instance variables can be used inside any method <b>in the class</b>.
+            Normally, instance variables are created using the <b>access
+            modifier</b> <code>private</code>, so that the variable cannot
+            be used outside of the class. Occassionally, fields will
+            use the modifier <code>protected</code>, so that subclasses
+            created from the class may directly access the fields.
+        </p>
+        <p> In very rare instances, programmers will use the
+            <code>public</code> modifier to allow unrestricted access
+            to an object's instance variables. This is almost always a
+            poor idea, as the designers of Java's <code>Point</code>,
+            <code>Dimension</code>, and <code>Rectangle</code> classes
+            discovered after-the-fact.
+        </p>
+        <p> Unlike local variables, instance variables are automatically
+            given a value (initialized), even when you don't provide an
+            initial value. Numeric variables (like <code>int</code>) are
+            initialized to the value 0, while object variables are given
+            the special value <code>null</code>.
+        </p>
+    <h4>Constants</h4>
+        <p> Which of these two lines of code for calculating the total price
+            of a purchase are easier to understand?</p>
+<pre>totalPrice = price + price * SALES_TAX_RATE;
+totalPrice = price + price * .875;
+</pre>
+        <p> Obviously, in the second instance, you have no hint as to
+            what the number .875 actually <b>means</b>; it might be a
+            tax, a markup, a surcharge, or something else. You might use a
+            comment to let readers know that you're adding the sales
+            tax, and that would certainly help.
+        </p>
+        <p> A comment <i>won't</i> help you, though, when the tax rate
+            changes from  8¾% to 7¼% (we can always hope,
+            huh?) and you have to change all of your programs. When that
+            happens, you'll find yourself searching through your source
+            code looking for the number .875 and asking yourself, "Is
+            this the sales-tax-rate, or something else?". You're also
+            likely to change some, and miss a few others.
+        </p>
+        <p> Rather than using <b>magic numbers</b>, you should always
+            use <b>constants</b>. A constant is just like a variable,
+            (that is, it is a named storage area that holds a value),
+            but Java prevents you from accidentally changing it
+            by assigning it a different value.
+        </p>
+    <h5>Defining Constants</h5>
+        <p> To define a constant, you use the keyword <code>final</code>
+            as a modifier before the type name, and provide a value
+            using the <i>initializing</i> assignment operator. (Since
+            constants can't be changed, you <b>can't</b> give it a
+            value later using the regular assignment operator.)
+        </p>
+        <p> The program <b>TempConverter.java</b></a>
+            defines two constants, <code>BASE</code> and
+            <code>CONVERSION_FACTOR</code>:<br>
+            <img src="images/b03.gif" alt="The TempConverter program." vspace="15" hspace="15">
+            <br>
+            To make it clear which names represent variables, (and thus can
+            be changed), and which represent constants, the <b>TempConverter</b>
+            program CAPITALIZES the names of the two constants. This is a
+            convention that almost all Java programs follow, (and certainly
+            one that we'll follow in this class.)
+        </p>
+    <h3>Initializing Variables</h3>
+        <p> A variable is a named "chunk" of memory, but <b>most</b>
+            of the time, we don't care about the chunk of memory
+            at all&#8212;what we care about is <b>what's inside</b> the
+            memory. The number stored inside a variable is
+            called the variable's <b>value</b>. As your program
+            runs, you can store <b>different numbers</b> inside
+            the same piece of memory. (That's why we call it a
+            <i>variable</i>, since its value can vary as the
+            program runs.)
+        </p>
+        <p> To put a new value in a variable, you use the
+            <b>assignment statement</b> like this:
+</p><pre class="code">int sides = 7;  // declaration with initialization
+sides = 10;     // assignment statement
+</pre>
+            The assignment statement kind of looks like an
+            equation in algebra, but it works a bit differently.
+            The assignment statement <b>copies</b> the value on its
+            right, and stores the copy in the named memory
+            location (the variable) on its left.
+        <p></p>
+        <p class="note"><b>Technical Note : </b>There are
+            two different uses of the assignment operator.
+            In the first line shown here, the assignment operator
+            should <i>really</i> be called the <b>initalization
+            operator</b>, because you are writing a definition or
+            declaration statement, not an executable assignment statement.
+            <b>Executable assignment</b> means giving a value to a variable that
+            already exists, not to provide an initial value to a newly
+            created variable. Executable assignment statements must
+            appear inside a method, while initialization statements
+            can occur outside a method when an instance variable is
+            defined.
+        </p>
+    <h4>How Assignment Works</h4>
+        <p> <img src="images/c03.gif" class="right" alt="A mailbox.">
+            If you think of a variable as a mailbox, then
+            assignment is something like putting a letter inside
+            the mailbox. With memory, though, each "mailbox: is
+            just big enough to hold exactly one value. When you
+            put a second value into a variable, the one that's
+            there is replaced. (The computer science term for this
+            is a <i>destructive copy</i>.)
+        </p>
+        <p> Here are some examples using two variables,
+            <code>myAge</code> and <code>kathysAge</code>.
+            (Kathy is my wife, so you'll understand that she isn't
+            too happy when I add a few years to her age.)
+        </p>
+        <ul>
+            <li>The statement <code>myAge = 59;</code> puts a copy of
+                the <u>value</u> 59 into the <u>variable</u>
+                named <code>myAge</code>.
+            </li>
+            <li>The statement <code>kathysAge = myAge</code>
+                makes a copy of the <u>value</u> 59 that is
+                currently stored in the variable <code>myAge</code>,
+                and then stores that copy in the <u>variable</u>
+                <code>kathysAge</code>. There is no <b>transfer</b> of
+                the value stored in <code>myAge</code>; the variable
+                <code>myAge</code> still has its own copy of the
+                number 59.
+            </li>
+            <li>The statement <code>kathysAge = 57</code>, replaces
+                the value 59 that the variable previously held with the
+                <b>new value</b> 57. The old value 59 is
+                <b>overwritten</b> or <b>replaced</b>, not saved.
+            </li>
+        </ul>
+        <p> Notice that the variable <code>kathysAge</code>
+            <b>varies</b> as the program runs. At one point it
+            contains the number 59, and, later in the program's
+            execution, it contains the value 57. This similar to
+            the <b>Geometry</b> program that appears earlier in
+            this lesson, where the variable <code>sides</b> changes
+            value from 7 to 10 to 12.
+        </p>
+        <p> Notice also that the variable <code>myAge</code>
+            contains the value 59 for the entire length of the
+            program. Assigning <code>myAge</code> to
+            <code>kathysAge</code> in line 2 doesn't change
+            <code>myAge</code> at all.
+        </p>
+    <h4>Types of Values</h4>
+        <p> When we store values in a variable, we can classify
+            each value by the <b>kind of thing</b> that it is,
+            just like you can classify the beverages you can
+            purchase at 7-11. There, for instance, you can get
+            hot drinks, like coffee or hot chocolate, and cold
+            drinks, like soda and Slurpies.
+        </p>
+        <p> The computer world works in a similar fashion.
+            Instead of hot and cold, we can store <b>text</b> or
+            <b>numbers</b> in a variable. We call the <b>kind
+            of value</b> the value's <b>type</b>.
+        </p>
+        <p> Here are some examples:
+</p><pre class="code">PI = 3.14159;
+myAge = 59;
+myStreetNumber = "575";</pre>
+            The values stored in <code>PI</code> and <code>myAge
+            </code> are both <b>numbers</b>, but they are
+            <b>different kinds</b> of numbers, just like coffee
+            and hot-chocolate are both hot drinks, but different
+            kinds of hot drinks. <code>PI</code> contains a
+            <b>real number</b>, with a fractional part, while
+            <code>myAge</code> holds a <b>whole number</b> with
+            no fractional part.
+        <p></p>
+        <p> In contrast, the variable named <code>myStreetNumber</code>
+            <b>does not</b> contain a number. Instead, it contains
+            a <b>sequence of three characters</b>: the character "5"
+            followed by the character "7" followed again by the
+            character "5". In programming, we call such a sequence of
+            text characters, enclosed in double quotes, a
+            <b>string literal</b>.
+        </p>
+        <p> The major difference between the numeric types
+            stored in the variables <code>PI</code> and <code>
+            myAge</code>, and the string types stored in the
+            variable <code>myStreetNumber</code>, is that you
+            can't use <code>myStreetNumber</code> as part of an
+            arithmetic formula or expression.
+        </p>
+        <p> We'll look at Java's integer (whole number) types and
+            Java's real (floating-point) numbers in upcoming lessons. There,
+            you'll learn a little more about how to create varibles
+            of the specific types available in Java.
+        </p>
+    <h3>Object Variables</h3>
+        <p> Java really has two major ways of representing data: <b>primitive
+            types</b> like numbers and characters, and <b>object types</b>
+            like fonts and buttons strings. You can read a little more
+            about this in Chapter 2 of your textbook, but we won't be
+            really focusing on objects until the second half of the course. For
+            right now, though, I want to introduce you to the process of
+            <b>creating object variables</b>, since you'll need to do that
+            this week.
+        </p>
+        <p> You create an object variable, just like a primitive variable,
+            by explicitly describing three things:
+        </p>
+
+        <ul>
+            <li> What kind (type) of thing will be stored in the variable</li>
+            <li> What name you want to use for the variable</li>
+            <li> What initial value the variable should have</li>
+        </ul>
+        <p> To store a value in your variable you use the <b>assignment
+            operator</b>, as you've seen. The assignment operator copies the
+            value on its right, and stores it in the object on its left.
+            To create a local variable of type <b>Fraction</b> (a
+            class that I've defined), you would write something like this:
+        </p>
+
+        <p class="code">
+            Fraction oneHalf = ?????;
+        </p>
+        <p>As you can see, the type is <code>Fraction</code>, the name is
+            <code>Fraction</code>, but how do we provide a value?
+        </p>
+    <h4>Constructing Objects</h4>
+        <p> At this point, we're kind of in a quandry. How do we create an
+            object? What do we put on the right-hand-side of the assignment
+            operator? If our variable was one of Java's primitive
+            numeric types we could use a <b>literal value</b>
+            to do something like this:
+        </p>
+        <p class="code">
+            int someNumber = 27;
+        </p>
+        <p> Since <code>oneHalf</code> is an <b>object</b> or <b>reference</b>
+            type, however, we need to learn how to <b>construct</b> an
+            object; we can't just use a literal value like 27. Fortunately,
+            constructing an object is easy. To construct an
+            object&#8212;any object&#8212;you just use a <b>constructor</b>
+            method, along with the keyword <code>new</code>.
+            A <b>constructor</b> is simply a method that initializes objects.
+        </p>
+
+        <p class="pullquote">A class represents a blueprint that describes
+            the attributes and methods of an object and the constructor is
+            the factory that creates the goods.
+        </p>
+        <p> To make things even easier, constructors <b>always</b> have the same
+            name as the thing you're trying to create. Since we're trying
+            to create a <code>Fraction</code> object, we know that the
+            constructor is a method named <code>Fraction()</code>. Now we can
+            finish what we started:
+        </p>
+        <p class="code">
+            Fraction oneHalf = new Fraction( . . . );<br>
+        </p>
+    <h4>Constructor Parameters</h4>
+        <p> Well, more or less finished. Notice that constructor <b>parameter
+            list</b> is empty&#8212;there's nothing inside the parentheses.
+            Most objects have several constructors, each one taking a
+            different number or type of arguments. Parameters (or
+            arguments) allow a constructor&#8212;or any other method&#8212;to
+            <b>customize</b> its operation.
+        </p>
+        <p> One version of the <code>Fraction</code> class takes two <code>int</code>
+            parameters, representing the numerator and denominator. Here
+            is code to create
+            three <code>Fraction</code> variables:
+        </p>
+        <p class="code">
+            Fraction a = new Fraction(1, 2);<br>
+            Fraction b = new Fraction(1, 2);<br>
+            Fraction c = b;
+        </p>
+        <p> <img src="images/a04.gif" class="right" alt="Creating three Fractions.">
+            and here's what those three variables, along with
+            the objects created by the constructors, look like
+            in memory.
+        </p>
+        <p> The biggest difference between <b>object</b> and <b>primitive</b>
+            variables is that with primitives, the variable you create
+            contains a <b>value</b>. With <b>objects</b>, the variable
+            that you create only <b>refers to</b> the object. That's why
+            in my example here, the two variables <code>b</code> and
+            <code>c</code> both refer to (or <b>share</b>) the same
+            <code>Fraction</code> object.
+        </p>
+        <p> Again, we'll cover this in greater depth later in the
+            semester. For the first half of the course, we'll
+            concentrate on programming fundamentals, using mostly
+            the primitive numeric types. The <i>reason</i> you need
+            to learn how to construct an object at this point is because
+            you'll need it for <b>reading console input</b>.
+        </p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned to <b>declare</b> variables,
+            and how to <b>initialize</b> those variables using <b>literals</b>.
+            You also learned how to create <b>constants</b> that you
+            can use to replace literal values in your code. Finally,
+            you learned how to create <b>object variables</b>, and to
+            initialize those variables using a <b>constructor</b>.
+        </p>
+        <p> In the next lesson you'll learn about Java's two numeric
+            primitive types: integers and floating-point numbers.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

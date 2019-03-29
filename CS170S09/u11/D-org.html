@@ -1,0 +1,785 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/d.jpg" alt="CS 170 Lesson D logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src="images/d02.gif" class="right" alt="An application that uses object arrays.">
+            <b><span class="cap">T</span>his lesson will teach you</b> how to
+            create and use arrays that contain <b>objects</b> instead of
+            those that contain primitive values. Instead of using individual
+            <code>Button</code> objects in your applets, you may want to
+            use <i>arrays</i> of <code>Buttons</code>, like those
+            pictured in the applet here.
+        </p>
+        <p> In addition, you'll learn to work two
+            array-like classes, <code>Vector</code> and <code>ArrayList</code>,
+            that are especially designed to hold objects. Unlike the
+            <b>SimpleArrayClass</b> that you built in the last unit,
+            which could store only a single type, both of these classes
+            can hold <i>any type</i> of object.
+        </p>
+        <p> And, like the <b>ResizableArrayClass</b> that you also worked
+            on, both <code>Vector</code> and <code>ArrayList</code> will
+            automatically resize themselves as new elements are added,
+            unlike the built-in arrays.
+        </p>
+        <p> Let's start, though, by looking at storing objects in POA (Plain
+            Old Arrays).
+        </p>
+    <h3>Arrays Of Objects</h3>
+        <p> You create an array of objects using exactly the same syntax
+            you use to create an array of primitive types.
+            Here, for instance, is how you create an array of
+            <code>Button</code> objects for the toolbar that appears
+            at the top of the applet pictured at the beginning of this
+            lesson:
+        </p>
+        <p class="code">
+            private Button[] toolBar = new Button[5];
+        </p>
+        <p> Up to this point, objects and primitive arrays work just the
+            same. Now, however, the two diverge.
+        </p>
+    <h4>Initializing the Elements</h4>
+        <p>If <code>toolBar</code> were an array of <code>double</code>
+            or <code>int</code>, each element would automatically
+            be initialized to 0, so you could use the array immediately.
+            With object arrays, however, each element is initialized to
+            the special value <code>null</code> like this:<br>
+            <img src="images/z04.gif" alt="Creating an instance of an object array" vspace="15" border="0" hspace="15">
+            <br>The value <code>null</code> is not very useful in its own
+            right. Actually, its not useful <b>at all</b>. Before you
+            can use <code>toolBar</code> you have to fill each element
+            with a valid <code>Button</code> reference by using the
+            <code>new</code> operator on each element in the array
+            like this:
+        </p>
+        <p class="code">
+            int len = toolBar.length;<br>
+            for (int i=0; i &lt; len; i++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;toolBar[i] = new Button(""+(i+1));<br>
+            }
+        </p>
+        <p> Once you're finished, each element in the <code>toolBar</code>
+            array points to a new <code>Button</code> object, as this
+            illustration shows:<br>
+            <img src="images/z05.gif" alt="The toolBar array after initialization" vspace="15" border="0" hspace="15">
+        </p>
+        <p> As you can see, every object array requires three steps to be
+            useful:
+        </p>
+        <ol>
+            <li>Declare an array variable.</li>
+            <li>Create the array object.</li>
+            <li>Create objects for each element in the array.</li>
+        </ol>
+        <p> Here's a little longer example you can study to make sure you
+            understand how to create and use arrays of objects. Rather than
+            showing you the entire listing for
+            <a href='javascript:var%20w=window.open("ToolBar.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>ToolBar.java</b></a>, we'll just look at a few
+            snippets. To view the entire listing, just click the link in
+            the previous sentence.
+        </p>
+     <h4>The ToolBar init() Method</h4>
+        <p> The <code>init()</code> method of <b>Toolbar.java</b> shows how
+            to create a series of <code>Button</code> for a
+            <code>Button[]</code> array, using a loop and <b>a second array</b> of
+            <code>String</code> objects for the <code>Button</code> captions:
+            <img src="images/z06.gif" alt="The ToolBar.java init() method" class="inline">
+            Inside the loop, these three things occur for each element of
+            the <code>Button[]</code> array <code>toolBar</code>:
+        </p>
+        <ol>
+            <li class="d">Each element in the <code>String</code> array,
+                <code>captions</code>, is passed as an argument to the
+                <code>Button</code> constructor creating the
+                <code>Button</code> objects for the <code>toolBar</code> array.
+            </li>
+            <li class="d">Each <code>toolBar</code> element is attached to an
+                <code>ActionListener</code> as it is created. This is in an
+                instance of event-handling class named <code>ColorSelector</code>,
+                that is created on line 36.
+            </li>
+            <li class="d">A <code>Panel</code> object, here named <code>p</code>, is
+                used to keep all of the <code>Button</code> objects together
+                visibily. Inside the loop, each <code>Button</code> object is
+                added to the <code>Panel</code> as it is created.
+            </li>
+        </ol>
+        <p class="note">The <code>captions</code> array, which works in concert with
+            the <code>toolBar</code> array is known as a <i>parallel array</i>.
+            Parallel arrays are used when multiple, related values need to
+            be processed for each element in a collection. In this case, each
+            <code>Button</code> needs its own caption value, so storing those
+            captions in a separate array is one solution.
+        </p>
+    <h4>The ColorSelector Class</h4>
+        <p> Since each <code>Button</code> object is attached to the same
+            <code>ColorSelector</code> object in the <code>init()</code> method,
+            you have to find a way to tell <b>exactly which</b>
+            <code>Button</code> was clicked, when the <code>actionPerformed()</code>
+            method is called.
+        </p>
+        <p> Using an array of objects makes that quite easy. Using
+            individual objects, instead of an array, you'd have to use an
+            <code>if-else-if-else</code> structure. With an array, you can
+            use a <code>for</code> loop as explained here.
+        </p>
+    <h5>Step 1: Who Fired?</h5>
+        <p> The first step is to retrieve the <code>Object</code> that
+            generated the event. To do this, you call the <code>ActionEvent
+            getSource()</code> method, using the <code>ActionEvent</code>
+            object passed to the <code>actionPerformed()</code>
+            method as its argument.
+            <img src="images/z09.gif" alt="Retrieving the object that clicked" class="inline">
+        </p>
+    <h5>Step 2: Match It Up</h5>
+        <p>Create an <code>int</code> variable&#8212;here I've named it
+           <code>clicked</code>&#8212;outside of your <code>for</code> loop.
+           It's important you don't create this variable in the
+           initializer section of your <code>for</code> loop, because
+           you need to reference it <b><u>after</u></b> the loop terminates.
+           <img src="images/z10.gif" alt="Matching the object and its button" class="inline">
+            Write a <code>for</code> loop that steps through each
+            element in your <code>toolBar</code> array, and compares
+            the element to the <code>Object</code> that generated the
+            event. When you locate the correct object, simply
+            <code>break</code> out of the loop.
+        </p>
+    <h5>Step 3: Take Action</h5>
+        <p>Now, you have an <code>int</code> variable you can use in a
+            <code>switch</code> statement to take the appropriate action.
+           <img src="images/z11.gif" alt="Taking action based upon the button clicked" class="inline">
+            You can
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/ToolBar.html',0,0,575,450);">
+            <b>run the applet</b></a> by clicking the link in
+            this sentence. If you don't want to run the applet, then
+            here's a snapshot for your perusal:
+            </p><center>
+            <img src="images/z08.gif" alt="Running the ToolBar applet" class="inline">
+            </center>
+        <p></p>
+
+    <h3>The Vector Class</h3>
+        <p>
+            <b>One of the problems with using arrays</b>,
+            is that they are <b>fixed-size</b>. If you plan for ten elements when
+            you create your array, you can't change your mind after the program
+            is running, and add an eleventh element.
+            A <code>Vector</code> object, however, lets you do just that.
+        </p>
+        <img src="images/vector5.gif" class="right" alt="A vector logo.">
+        <p>
+            You probably know the difference between bitmap and <i>vector graphics</i>,
+            have heard the term <i>disease vector</i> related to a potential
+            bird flu epidemic, or referred to wind vectors while sailing,
+            or in a physics class.
+            You might even be familiar with the video-game character <i>Vector</i>,
+            from <i>Sonic the Hedgehog</i>, shown here.
+        </p>
+        <p> What, you might wonder, do all of these have in common with Java's
+            <code>Vector</code> class? Good question.
+            <br>The answer is:
+            <b><span style="background: transparent none repeat scroll 0% 0%; color: red; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">not a thing!</span></b>
+        </p>
+
+        <p>
+            The <code>Vector</code> class implements an <b>"automatic" array</b>,
+            similar to the one that you created at the end of the last lesson.
+            Like the class that you wrote,
+            when you add an eleventh element to a ten-element
+            <code>Vector</code>, the <code>Vector</code> will automatically
+            resize itself.
+        </p>
+        <p> One difference between your class, which stored primitive values,
+            and the <code>Vector</code> class, is that <code>Vectors</code>
+            can only hold <b>objects</b>; if you want to store primitive types in a <code>Vector</code>,
+            you have to "wrap" each primitive value up in one of Java's
+            wrapper classes (<code>Integer</code>, <code>Double</code>, etc.).
+        </p>
+        <p class="note"> The term <i>vector</i> is used in the physics world to mean an
+            object that has both a magnitude and a direction; this physics definition
+            is the one used with vector graphics, disease propogation,
+            and weather analysis. Mathematicians, though, also use the word vector to
+            refer to an array, and it is this variant of the term that the
+            Java programmers adopted, (along with the authors of the C++
+            Standard Template Library), as the name of the original array class.
+        </p>
+    <h4>Using Vectors</h4>
+        <p> Let's look at the various steps you follow to use a
+            <code>Vector</code>. Then, when you're finished, we'll revisit
+            <b>ToolBar.java</b>, using a <code>Vector</code> to make it a
+            little more flexible.
+        </p>
+        <p> The <code>Vector</code> class is in the <b><code>java.util</code></b>
+            package, so you have to remember to add:
+        </p>
+        <p class="code"> import java.util.*;  </p>
+        <p>to any programs that use <code>Vectors</code>, just as when using
+            the <code>Date</code> or <code>Random</code> classes.
+        </p>
+        <p> Since <code>Vector</code> is a class, and not a built-in language
+            feature like arrays, you use a regular constructor to create a
+            <code>Vector</code> object. Here are three examples:
+        </p>
+        <p class="code">
+            Vector v1 = new Vector();<br>
+            Vector v2 = new Vector(100);<br>
+            Vector v3 = new Vector(100, 25);
+        </p>
+    <h5>Capacity</h5>
+        <p> When you create a <code>Vector</code> using the default
+            constructor, like the <code>Vector v1</code> in this example,
+            it can initially hold 10 elements. This is called the
+            <code>Vector</code>'s <b>capacity</b>. If you like, you can
+            supply an initial capacity as <code>Vector v2</code> does.
+        </p>
+        <p>Once you've added ten elements to <code>v1</code>, or one-hundred
+            elements to <code>v2</code>, adding an additional element causes
+            the <code>Vector</code> to <b>grow</b>. Both <code>v1</code>
+            and <code>v2</code> will grow by <b>doubling their capacity</b>.
+            After adding an 11<sup>th</sup> element to <code>v1</code>, its
+            new capacity will be 20. After adding a 101<sup>th</sup>
+            element to <code>v2</code>, its new capacity will be 200.
+        </p>
+        <p> If this strategy of doubling each time a <code>Vector</code>
+            grows causes problems you may specify a third constructor, used
+            for the <code>Vector</code> <code>v3</code>. This constructor
+            allows you to supply <b>both</b> an initial capacity as
+            well as a growth factor. Each time the <code>Vector</code>
+            <code>v3</code> grows, it will simply increase by 25 elements,
+            no matter how large it gets.
+        </p>
+    <h4>Adding Elements</h4>
+        <p> You can add objects to a <code>Vector</code> using one of two
+            methods. Here's an example that shows both methods using two
+            <code>Button</code> objects, named one and zero.
+        </p>
+        <p class="code">
+            Button one = new Button("One");<br>
+            Button zero = new Button("Zero");<br>
+            v1.addElement(one);<br>
+            v1.insertElementAt(zero, 0);
+        </p>
+    <h5>addElement() and add()</h5>
+        <p> The <code>addElement()</code> method adds the new element to the
+            end of the <code>Vector</code>. <b>Vectors</b> are indexed, just
+            like arrays, starting at zero. After adding the
+            <code>Button</code> <u>one</u> to the <code>Vector</code>
+            <code>v1</code>, the <code>Button</code> <u>one</u> is in
+            position 0.
+        </p>
+        <p> In Java 2, the <code>add()</code>
+            method, which is part of the <code>List</code> interface, was
+            retrofitted to the <code>Vector</code> class. Using <code>
+            add()</code> instead of <code>addElement()</code> allows your
+            <code>Vector</code> to interact with other Java 2 collection
+            classes.
+        </p>
+    <h5>insertElementAt() and add()</h5>
+        <p> The second method for adding elements to a <code>Vector</code>,
+            <code>insertElementAt()</code>, allows you to specify which
+            position the new element should occupy. When you use
+            <code>insertElementAt()</code> the new element does not replace
+            what was previously at that location. Instead, all of the elements
+            in the <code>Vector</code> are shifted "up" one to make room for
+            the new arrival.
+        </p>
+        <p> After inserting the <code>Button</code>
+            <code>zero</code> at position 0, the <code>Button</code>
+            <code>one</code> is moved to position 1.
+        </p>
+        <p> In Java 2, you can use the <code>add(Object, int)</code> method
+            to do the same thing. As with the simpler version of the
+            <code>add()</code> method, this allows your <code>Vector</code>
+            objects to interact with other Java 2 collection classes.
+        </p>
+    <h4>Using Vector Elements</h4>
+        <p> Arrays are easy to use because you can use simple assignment
+            to replace or retrieve the value stored in a particular element.
+            You can't do that with the <code>Vector</code> class. Instead,
+            you have to use one method to replace the current value in an
+            element:
+        </p>
+        <p class="code">setElementAt(Object o, int index); <span class="cmt">// Java 1.1 on</span><br>
+                        set(int index, Object o); <span class="cmt">// Java 2 only</span>
+        </p>
+        <p>and another to retrieve the element:</p>
+        <p class="code">elementAt(int index); <span class="cmt">// Java 1.1 on</span><br>
+                        get(int index);  <span class="cmt">// Java 2 only</span>
+        </p>
+        <p class="note">Note that the Java 2-only code is, again, simpler than the
+            original version. Note also that the <code>setElementAt()</code> and
+            <code>set()</code> methods use a <b>different order</b> for their
+            arguments. The revised methods are designed to "correspond to" the
+            same order as assignment, and read a little more naturally.
+        </p>
+        <p> Also, because <code>Vectors</code> really hold <code>Object</code>
+            references, and <b>not</b> <code>Button</code> or
+            <code>Label</code> references, you have to cast the
+            <code>Object</code> reference returned from <code>elementAt()</code>
+            to the correct "real" type before you use it, like this:
+        </p>
+        <p class="code">
+            Button first = (Button) (toolBarV.elementAt(0));<br>
+            <span class="cmt">// This won't work -&gt;&gt; Button first = toolBarV.elementAt(0);
+            </span>
+        </p>
+        <p> Although storing and retrieving objects in a <code>Vector</code>
+            is more work than using an array, many common operations that you
+            have to perform "by hand" when using arrays are automatic when
+            using <code>Vectors</code>.
+        </p>
+        <p> For instance:</p>
+        <ul>
+            <li>To find out if a particular object is contained in
+                a <code>Vector</code>, you can use the <code>contains()</code>
+                method.
+            </li>
+            <li>If you already know that a particular object is located
+                in a <code>Vector</code>, you can retrieve its position using
+                <code>indexOf()</code>.
+            </li>
+            <li>You can remove an object from a <code>Vector</code> using
+                <code>removeElementAt()</code>. When you do this, the other
+                objects move "down" to close up the gap left by the departee.
+            </li>
+        </ul>
+        <p> When you wrote your own array classes, these were all things that
+            you had to do on your own by writing various loops.
+        </p>
+    <h4>The ToolBarV Example</h4>
+        <p> Here as promised is <b>ToolBar.java</b> converted so that it uses
+            a <code>Vector</code> instead of an array. The most important
+            changes in
+            <a href='javascript:var%20w=window.open("ToolBarV.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>ToolBarV.java</b></a> are explained below. You can view the
+            source code for the entire applet by clicking the link in the
+            preceding sentence.
+        </p>
+    <h5>Fields and Imports</h5>
+        <p>The simplest changes are shown here:
+            <img src="images/z12.gif" alt="The imports and fields of ToolBarV.java" class="inline">
+        </p><ul>
+            <li>The <code>java.util</code> package was added to the list of
+                imports.
+            </li>
+            <li>The <code>toolBar</code> field was changed from a
+                <code>Button[]</code> array to a <code>Vector</code>.
+            </li>
+        </ul>
+    <h5>Adding Buttons</h5>
+        <p> When adding the <code>Button</code> objects to the
+            <code>Vector</code> in the <code>init()</code> method, a
+            temporary <code>Button</code> (named <code>b</code>) was
+            created to facilitate connecting the <code>ColorSelector
+            </code> object and adding the <code>Button</code> to the
+            <code>Panel</code> as shown here:
+            <img src="images/z13.gif" alt="Adding buttons to the ToolBarV applet" class="inline">
+            Without this temporary object, we'd
+            need to use a <i>really</i> ugly cast to replace <code>toolBar[i]</code>
+            like this:
+        </p>
+        <p class="code">((Button)(toolBar.getElementAt(i)));</p>
+        <p> The loop that adds the individual <code>Button</code>
+            objects to the array has been changed so that it looks at
+            the number of <code>Strings</code> in the <code>captions</code>
+            array, rather than using the <code>length</code> field of
+            the <code>toolBar</code> array.
+        </p>
+        <p class="note"> This actually fixes an
+            annoying dependency in the array-based version. With the
+            array version, you had to be careful to make sure that
+            the size of the <code>captions</code> array was the same
+            size as your <code>Button[]</code> array. With the
+            <code>Vector</code>, you just add a new <code>String</code>
+            literal to the <code>captions</code> array and you've got
+            a new <code>Button</code> on the <code>toolBar</code>.
+            (Of course, you still have to change your
+            <code>switch</code> statement in <code>actionPerformed()</code>
+            to do the right thing.)
+        </p>
+    <h5>The ColorSelector Class</h5>
+        <p> Inside the <code>ColorSelector actionPerformed()</code> method, the
+            entire loop that we used in <b>ToolBar.java</b> to search through
+            the array for the <code>Button</code> which was
+            clicked, is replaced by the <b><u>single line</u></b>
+            shown here:
+            <img src="images/z14.gif" alt="The ToolBarV.java actionPerformed() method" class="inline">
+            This is one of those cases where a built-in
+            <code>Vector</code> method can simplify code you
+            needed when using an array.
+        </p>
+        <p>You can
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/ToolBarV.html',0,0,575,450);">
+            <b>run the applet</b></a>, as usual, by clicking the link
+            in this sentence. Or, if you like, you can just look at the
+            picture here:
+            </p><center>
+            <img src="images/z15.gif" alt="Running the ToolBarV applet" class="inline">
+            </center>
+        <p></p>
+    <h3>The ArrayList Class</h3>
+        <p> There are several reasons that people might prefer an array to a
+            class like <code>Vector</code>: <code>Vectors</code> are a little
+            less convenient (since you can't use subscript notation), they
+            are generally less efficient (since you can't store primitive
+            values).
+        </p>
+        <p> <code>Vectors</code> are also intrinsically "unsafe", since they
+            don't keep track of what <i>kind</i> of elements they actually
+            store. As far as the <code>Vector</code> class is concerned,
+            <b>everything</b> is an <code>Object</code>.
+        </p>
+        <p> The new Java 5 collection classes change this. In Java 5,
+            you can specify the <b><i>type</i></b> of element stored in
+            a collection, by using a <b><i>type parameter</i></b>, a
+            facility that is known as <b><u>generics</u></b>. The collection
+            class that's most similar to the <code>Vector</code> class
+            is called the <code>ArrayList</code>.
+        </p>
+        <p class="redbox">Remember, if you compile your code using the new generic
+            classes, your code won't run on pre-Java 5 Virtual Machines.
+            This is a Java 5 only feature.
+        </p>
+    <h4>Creating an ArrayList</h4>
+        <p> The example program,
+            <a href='javascript:var%20w=window.open("ToolBarAL.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>ToolBarAL.java</b></a>, is almost exactly the same as the version
+            that used the <code>Vector</code> class, but we've used the
+            <code>ArrayList</code> class instead.
+        </p>
+        <p> Here's the most important difference. When we create the
+            variable <code>tooBar</code>, on line 23, we specify that
+            <code>toolBar</code> can only include <code>Button</code> objects,
+            by supplying the additional parameter type like this:
+            <img src="images/d03.gif" class="inline" alt="Creating the ArrayList toolBar.">
+            Note that the parameter type appears attached to the end of the class
+            name, and is enclosed in angle-brackets. Note also that when you
+            construct the object, you need to use the complete, parameterized
+            name, with the constructor.
+        </p>
+        <p> Now, if you try to put a <code>Label</code> or <code>TextField</code> into
+            the <code>toolBar</code> collection, the <b>compiler</b> will notice the
+            problem, and warn you. With the <code>Vector</code> class, you wouldn't
+            find out there was any difficulty until it came time to run your program.
+        </p>
+        <p> The rest of the methods in the <code>ArrayList</code> class are almost
+            identical to those from the <code>Vector</code> class. (Although, technically,
+            some of the original Java 1.0 deprecated methods, such as
+            <code>addElement()</code> have been dropped.)
+        </p>
+    <h4>Exercises</h4>
+    <div class="exercise">
+        <p> Now that you know how to handle object arrays, ere are a
+            couple of exercises that will give you some practice
+            working with them.
+        </p>
+        <h5>Shopping Cart</h5>
+        <p> In this exercise you will complete a class that
+            implements a shopping cart as an array of items.
+            The program <b><i>Item.java</i></b> (below) contains
+            a class that models an item one would purchase. An
+            item has a name, price, and quantity (the quantity
+            purchased). The program <b><i>ShoppingCart.java</i></b>
+            implements the shopping cart as an array of Item objects.
+        </p>
+        <ol>
+            <li class="d">Complete the <i>ShoppingCart</i> class by doing the
+                following:
+                <ol>
+                    <li>Declare an instance variable <i>cart</i> to be
+                        an array of Items and instantiate <i>cart</i>
+                        in the constructor to be an array holding
+                        <i>capacity</i> Items.
+                    </li>
+                    <li>Fill in the code for the <i>increaseSize()</i> method.
+                        Your code should be similar to that in Listing 7.8
+                        of the text but instead of doubling the size just
+                        increase it by 3 elements.
+                    </li>
+                    <li>Fill in the code for the <i>addToCart()</i> method.
+                        This method should add the item to the cart
+                        and update the <i>totalPrice</i> instance variable (
+                        note this variable takes into account the quantity).
+                    </li>
+                    <li>Compile your class.</li>
+                </ol>
+            </li>
+            <li class="d">Write a program that simulates shopping. The
+                program should have a loop that continues as long as
+                the user wants to shop. Each time through the loop read
+                in the name, price, and quantity of the item the user
+                wants to add to the cart. After adding an item to the cart,
+                the cart contents should be printed. After the loop print a
+                "Please pay ..." message with the total price
+                of the items in the cart.
+            </li>
+        </ol>
+<div style="border: 1px dashed forestgreen; margin: 1em; padding: 1em; background: white none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" ;="">
+<span class="SBODY"><span class="S2">// ***************************************************************</span><br>
+<span class="S2">// &nbsp;&nbsp;Item.java</span><br>
+<span class="S2">//</span><br>
+<span class="S2">// &nbsp;&nbsp;Represents an item in a shopping cart.</span><br>
+<span class="S2">// ***************************************************************</span><br>
+<br>
+<span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>text<span class="S10">.</span>NumberFormat<span class="S10">;</span><br>
+<br>
+<span class="S5">public</span><span class="S0"> </span><span class="S5">class</span><span class="S0"> </span>Item<br>
+<span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span>String<span class="S0"> </span>name<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>price<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>quantity<span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;Create a new item with the given attributes.</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span>Item<span class="S0"> </span><span class="S10">(</span>String<span class="S0"> </span>itemName<span class="S10">,</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>itemPrice<span class="S10">,</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>numPurchased<span class="S10">)</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>name<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>itemName<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>price<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>itemPrice<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>quantity<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>numPurchased<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;&nbsp;Return a string with the information about the item</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span>String<span class="S0"> </span>toString<span class="S0"> </span><span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>NumberFormat<span class="S0"> </span>fmt<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>NumberFormat<span class="S10">.</span>getCurrencyInstance<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">return</span><span class="S0"> </span><span class="S10">(</span>name<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">"\t"</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>fmt<span class="S10">.</span>format<span class="S10">(</span>price<span class="S10">)</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">"\t"</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>quantity<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">"\t"</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">+</span><span class="S0"> </span>fmt<span class="S10">.</span>format<span class="S10">(</span>price<span class="S10">*</span>quantity<span class="S10">));</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;&nbsp;Returns the unit price of the item</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>getPrice<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">return</span><span class="S0"> </span>price<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;&nbsp;Returns the name of the item</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span>String<span class="S0"> </span>getName<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">return</span><span class="S0"> </span>name<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;&nbsp;Returns the quantity of the item</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>getQuantity<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">return</span><span class="S0"> </span>quantity<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<span class="S10">}</span><br>
+<span class="S0"></span></span>
+</div>
+<div style="border: 1px dashed forestgreen; margin: 1em; padding: 1em; background: white none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" ;="">
+<span class="SBODY"><span class="S2">// **********************************************************************</span><br>
+<span class="S2">// &nbsp;&nbsp;ShoppingCart.java</span><br>
+<span class="S2">//</span><br>
+<span class="S2">// &nbsp;&nbsp;Represents a shopping cart as an array of items</span><br>
+<span class="S2">// **********************************************************************</span><br>
+<br>
+<span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>text<span class="S10">.</span>NumberFormat<span class="S10">;</span><br>
+<br>
+<span class="S5">public</span><span class="S0"> </span><span class="S5">class</span><span class="S0"> </span>ShoppingCart<br>
+<span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>itemCount<span class="S10">;</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// total number of items in the cart</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>totalPrice<span class="S10">;</span><span class="S0"> &nbsp;</span><span class="S2">// total price of items in the cart</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>capacity<span class="S10">;</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// current cart capacity</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -----------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;Creates an empty shopping cart with a capacity of 5 items.</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -----------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span>ShoppingCart<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>capacity<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">5</span><span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>itemCount<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">0</span><span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>totalPrice<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">0.0</span><span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;Adds an item to the shopping cart.</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>addToCart<span class="S10">(</span>String<span class="S0"> </span>itemName<span class="S10">,</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>price<span class="S10">,</span><span class="S0"> </span><span class="S5">int</span><span class="S0"> </span>quantity<span class="S10">)</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;Returns the contents of the cart together with</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;summary information.</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// -------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span>String<span class="S0"> </span>toString<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>NumberFormat<span class="S0"> </span>fmt<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>NumberFormat<span class="S10">.</span>getCurrencyInstance<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S0"> </span>contents<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S6">"\nShopping Cart\n"</span><span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>contents<span class="S0"> </span><span class="S10">+=</span><span class="S0"> </span><span class="S6">"\nItem\t\tUnit Price\tQuantity\tTotal\n"</span><span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">for</span><span class="S0"> </span><span class="S10">(</span><span class="S5">int</span><span class="S0"> </span>i<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">0</span><span class="S10">;</span><span class="S0"> </span>i<span class="S0"> </span><span class="S10">&lt;</span><span class="S0"> </span>itemCount<span class="S10">;</span><span class="S0"> </span>i<span class="S10">++)</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>contents<span class="S0"> </span><span class="S10">+=</span><span class="S0"> </span>cart<span class="S10">[</span>i<span class="S10">].</span>toString<span class="S10">()</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">"\n"</span><span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>contents<span class="S0"> </span><span class="S10">+=</span><span class="S0"> </span><span class="S6">"\nTotal Price: "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>fmt<span class="S10">.</span>format<span class="S10">(</span>totalPrice<span class="S10">);</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>contents<span class="S0"> </span><span class="S10">+=</span><span class="S0"> </span><span class="S6">"\n"</span><span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">return</span><span class="S0"> </span>contents<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// ---------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// &nbsp;Increases the capacity of the shopping cart by 3</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// ---------------------------------------------------------</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">private</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>increaseSize<span class="S10">()</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<span class="S10">}</span><br>
+<span class="S0"></span></span>
+</div>
+        <h5>Shopping Cart Using the ArrayList Class</h5>
+        <p> In this exercise you will implement a shopping cart using the
+            <i>ArrayList</i> class. Use the <i>Item.java</i> class from
+            the previous exercise. The program <i>Shop.java</i> (below)
+            is an incomplete program that models shopping.
+        </p>
+        <ol>
+            <li class="d">Complete <b>Shop.java</b> as follows:
+                <ol>
+                    <li>Declare and instantiate a variable <i>cart</i>
+                        to be an empty <i>ArrayList</i>
+                    </li>
+                    <li>Fill in the statements in the loop to add an
+                        item to the cart and to print the cart contents
+                        (using the default <i>toString</i> in the
+                        <b>ArrayList</b> class). Comments in the code
+                        indicate where these statements go.
+                    </li>
+                    <li>Compile your program and run it.</li>
+                </ol>
+            </li>
+            <li class="d">You should have observed two problems with
+                using the default printing for the cart object:
+                <ul>
+                    <li>the output doesn't look very good and </li>
+                    <li>the total price of the goods in the cart is not
+                        computed or printed.
+                    </li>
+                </ul>
+                Modify the program to correct these problems
+                by replacing the print statement with a loop that does
+                the following:
+                <ol>
+                    <li>gets each item from the cart and prints the item</li>
+                    <li>computes the total price of the items in the cart
+                        (you need to use the <i>getPrice</i> and
+                        <i>getQuantity</i> methods of the Item class).
+                        The total price should be printed after the loop.
+                    </li>
+                </ol>
+            </li>
+            <li class="d">Compile and run your program. </li>
+        </ol>
+
+<div style="border: 1px dashed forestgreen; margin: 1em; padding: 1em; background: white none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" ;="">
+<span class="SBODY"><span class="S2">// ***************************************************************</span><br>
+<span class="S2">// &nbsp;&nbsp;Shop.java</span><br>
+<span class="S2">//</span><br>
+<span class="S2">// &nbsp;&nbsp;Uses the Item class to create items and add them to a shopping</span><br>
+<span class="S2">// &nbsp;&nbsp;cart stored in an ArrayList.</span><br>
+<span class="S2">// ***************************************************************</span><br>
+<br>
+<span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>util<span class="S10">.</span>ArrayList<span class="S10">;</span><br>
+<span class="S5">import</span><span class="S0"> </span>java<span class="S10">.</span>util<span class="S10">.</span>Scanner<span class="S10">;</span><br>
+<br>
+<span class="S5">public</span><span class="S0"> </span><span class="S5">class</span><span class="S0"> </span>Shop<br>
+<span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">static</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>main<span class="S0"> </span><span class="S10">(</span>String<span class="S10">[]</span><span class="S0"> </span>args<span class="S10">)</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ArrayList<span class="S10">&lt;</span>Item<span class="S10">&gt;</span><span class="S0"> </span>cart<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>ArrayList<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Item<span class="S0"> </span>item<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S0"> </span>itemName<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>itemPrice<span class="S10">;</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">int</span><span class="S0"> </span>quantity<span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Scanner<span class="S0"> </span>scan<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S5">new</span><span class="S0"> </span>Scanner<span class="S10">(</span>System<span class="S10">.</span>in<span class="S10">);</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S0"> </span>keepShopping<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S6">"y"</span><span class="S10">;</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">do</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>System<span class="S10">.</span>out<span class="S10">.</span>print<span class="S0"> </span><span class="S10">(</span><span class="S6">"Enter the name of the item: "</span><span class="S10">);</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>itemName<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>scan<span class="S10">.</span>nextLine<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>System<span class="S10">.</span>out<span class="S10">.</span>print<span class="S0"> </span><span class="S10">(</span><span class="S6">"Enter the unit price: "</span><span class="S10">);</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>itemPrice<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>scan<span class="S10">.</span>nextDouble<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>System<span class="S10">.</span>out<span class="S10">.</span>print<span class="S0"> </span><span class="S10">(</span><span class="S6">"Enter the quantity: "</span><span class="S10">);</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>quantity<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>scan<span class="S10">.</span>nextInt<span class="S10">();</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// *** create a new item and add it to the cart</span><br>
+<br>
+<br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// *** print the contents of the cart object using println</span><br>
+<br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>System<span class="S10">.</span>out<span class="S10">.</span>print<span class="S0"> </span><span class="S10">(</span><span class="S6">"Continue shopping (y/n)? "</span><span class="S10">);</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>keepShopping<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>scan<span class="S10">.</span>nextLine<span class="S10">();</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">while</span><span class="S0"> </span><span class="S10">(</span>keepShopping<span class="S10">.</span>equals<span class="S10">(</span><span class="S6">"y"</span><span class="S10">));</span><br>
+<br>
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br>
+<span class="S10">}</span><br>
+<span class="S0"></span></span>
+</div>
+    </div>
+     <h3>Coming Up . . .</h3>
+        <p> In the next lesson, we'll fill in a few final holes in your array knowlege when
+            we discuss two-dimensional arrays, command-line arguments, and
+            variable length argument lists.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

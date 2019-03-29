@@ -1,0 +1,629 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" align="left" border="1" width="80" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p><b><span class="cap">T</span>he classes you've used so
+            far&#8212;ordinary classes, if you will&#8212;are called
+            <i>concrete</i> classes.</b> Java also allows you to
+            create a <i>second</i> kind of class, called an
+            <b>abstract</b> class.
+        </p>
+        <p> <img src="images/e16.gif" class="right" alt="The no-abstract-object logo.">
+            An abstract class is usually an <b><u>incomplete</u></b> class,
+            a class that contains certain methods that are <b><u>specified</u></b>,
+            but not <b><u>implemented</u></b> in the definition of the class.
+            Because the abstract class contains these incomplete methods, it
+            <b>cannot</b> be used to create objects&#8212;it can only be used as a
+            superclass when defining other classes. That is, it <b>only</b>
+            makes sense in the context of <i>inheritance</i>.
+        </p>
+    <h4>Two Types of Inheritance</h4>
+        <p> Back in the first unit of this lesson, you learned that inheritance is
+            a form of <b>specialization</b> with the new subclass <b>inheriting</b> both
+            the methods and the instance variables from it's superclass, while
+            optionally adding more of both. Thus we can say that the subclass
+            <b>isA</b> specialized form of the more generic superclass.
+        </p>
+        <p> There's actually a second form of inheritance, though, called
+            <b>specification</b> inheritance. In constrast to the extension
+            relationship, which we've been using up to this point,
+            a superclass may simply <b>specify a set of responsibilities</b>
+            that a subclass <b>must fulfill</b>, but not provide any actual
+            implementation.<br>
+            <img src='images/spec01.png' class='inlineCenter' alt='A specification.'>
+            In this case, the only thing inherited is
+            <b>the interface</b> (or method signatures) from the superclass.
+        </p>
+        <p> The most common way that this specification relationship is
+            used is <b>in combination</b> with regular extension.
+            In this form,
+        </p>
+        <ul>
+            <li> the subclass inherits the interface of the
+                superclass, as it does in specification,
+            </li>
+            <li> but it also inherits a <b>default implementation</b> of,
+                at least, some of its methods.
+            </li>
+        </ul>
+        <p> In this form of inheritance, the
+            subclass may override an inherited method to provide specialized
+            behavior, <b>or</b> it may be required to provide an implementation
+            <b>for a particular method</b>, which could not be provided in the
+            superclass. This form of inheritance is often called
+            <b>polymorphic inheritance</b>, because its principal value lies
+            in its ability to provide specialized behavior in response to
+            the same messages.
+        </p>
+    <h4>Polymorphic Inheritance</h4>
+        <p> <img src="images/e17.gif" class="right" alt="The Shape class hierarchy.">
+            Suppose, for instance, that you want to create a drawing
+            program, like Visio, that can draw all kinds of shapes.
+            When writing your program, you might have an abstract <code>Shape</code>
+            superclass that doesn't have the faintest notion of how to
+            implement its abstract <code>draw()</code> method, yet it knows that
+            each of its concrete children will need to do so.
+        </p>
+        <p> Only the <b>concrete</b>
+            classes derived from <code>Shape</code>&#8212;<code>Circle</code>,
+            <code>Square</code>, and <code>Star</code>&#8212;for instance,
+            possess the necessary knowledge to actually <code>draw()</code>
+            themselves.
+        </p>
+        <p> So, <b>abstract classes</b> provide a way of <b>guaranteeing</b>
+            that an object of a given type will understand a given
+            message. In that sense, they specify a set of responsibilities
+            that a subclass must fulfill. This is important,
+            because a Java program that tries to send a message to an object
+            that doesn't understand the message will malfunction.
+        </p>
+        <p> Interfaces perform a similar role, and you'll learn more about
+            them in the next section. Interfaces, though, are a type of
+            <b>pure specification</b>. Abstract classes can <b>also</b>
+            contain fields and regular methods, though, so unlike an interface
+            they can provide a default implementation of a capability that
+            their subclasses are intended to perform.
+        </p>
+    <h3>Creating Abstract Classes</h3>
+        <p> Creating an abstract class is as simple as including
+            the keyword <code>abstract</code> in the header of an otherwise ordinary
+            class. Here's a simple abstract class that represents shapes
+            that can be drawn on a display:
+        </p>
+        <p class="code">
+            abstract public class Shape<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x, y;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// class body goes here</span><br>
+            }
+        </p>
+        <p> The <code>Shape</code> class contains fields that can be used to
+            store its location on the display (x,y).
+        </p>
+    <h4>Abstract Methods</h4>
+        <p> In addition to regular fields and methods, an abstract class
+            may also contains one or more <b>abstract methods</b>.
+            An abstract method includes the keyword <code>abstract</code>
+            in the method header, and <b>doesn't include a method body</b>.
+            In place of the body, you simply put a semicolon (;).
+        </p>
+        <p> Here's the <code>Shape</code> class
+            along with its abstract method:
+        </p>
+        <p class="code">
+            abstract public class Shape<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x, y;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// class body goes here</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;abstract public void draw(Graphics g);<br>
+            }
+        </p>
+        <img src="images/shape08.gif" class="right" alt="The Shape class UML diagram.">
+    <h4>Adding More Methods</h4>
+        <p>
+            Abstract classes are <b>not restricted</b> to abstract
+            methods like the <code>draw()</code> method in the
+            <code>Shape</code> class; you can have as many regular methods as you'd
+            like, freely mixed in with your abstract methods.
+        </p>
+        <p> The <code>Shape</code> class, for instance, could easily have
+            a <code>setLocation()</code> method, like that shown in
+            this UML diagram.
+        </p>
+    <h3>Extending Abstract Classes</h3>
+        <p> When you extend an abstract class, your new subclass should override
+            <b>every</b> abstract method in its superclass, giving each a
+            concrete implementation. The resulting subclass is a
+            <b>concrete class</b>, and it can be used to create new objects.
+        </p>
+        <p> <img src="images/e18.gif" class="right" alt="Extending an abstract class in Eclipse.">
+            Let's look at an example. To create the <code>Circle</code> or
+            <code>Square</code> classes in Eclipse, all you need to do is
+            to:
+        </p>
+        <ol>
+            <li>specify the <code>Shape</code> class as the superclass.</li>
+            <li>make sure that the "Inherited abstract methods"
+            checkbox is selected.</li>
+        </ol>
+        <p> When you do that, Eclipse will generate the "boilerplate" code
+            that you'll need to make <code>Circle</code> into a concrete class.
+            This consists of a <i>method stub</i> for each of the abstract
+            methods defined in the superclass; in our case, that's only
+            the <code>draw()</code> method.
+        </p>
+        <br clear="all">
+        <p> Here's what the auto-generated code looks like in Eclipse for a
+            <code>Triangle</code> class:
+            <img src="images/e20.gif" class="inline" alt="The Triangle generated code.">
+            All you need to do is to do is add the code where
+            indicated by the comments.
+            Of course, in reality, you'll probably want to do a lot more.
+            The <code>Circle</code> class, for instance, might have a
+            <code>radius</code> field, the <code>Square</code> class
+            could have fields for <code>width</code> and <code>height</code>,
+            and the <code>Triangle</code> class could have fields and methods
+            for <code>base</code> and <code>height</code>.
+        </p>
+        <p>
+        </p><p> <a href="http://www.ecst.csuchico.edu/%7Emayur/Test1.html" target="_blank">
+            <b>Here's an applet</b></a> created by a student at Chico State, that puts
+            these ideas together into a simple drawing program.
+        </p>
+    <h3>Interfaces?</h3>
+        <p> An interface is like an <b>extremely</b> abstract class&#8212;one that
+            contains <b>only</b> abstract methods. Because all of its methods
+            are abstract, you can never create an object directly from an
+            interface, just as you can't directly create an instance of an
+            abstract class.
+        </p>
+        <p> An abstract class allows a designer to provide
+            general behavior in the abstract class, while forcing those
+            who extend the class to define particular methods (such as
+            the <code>draw()</code> method in the last section) before
+            they can create objects. An interface works the same way,
+            except it doesn't provide any behavior; it only specifies
+            what methods <b>must</b> be implemented.
+        </p>
+    <h4>Pure Specification</h4>
+        <p> If we think of regular inheritance as <b>specialization</b> and
+            abstract classes as <b>specification</b>, you may find remaining places
+            where you want to factor out common behavior. The problem is that the objects
+            sharing that common behavior <b>are otherwise unrelated</b>. When
+            this happens, that's where Java's facility for writing
+            <b>pure specification</b>, the Java interface, comes into play.
+        </p>
+        <p> The interface mechanism differs from the forms of inheritance
+            we have discussed so far in three important ways:
+        </p>
+        <ul>
+            <li>When a class <code>implements</code> an <code>interface</code>,
+                it <b>doesn’t receive any method implementations or nonfinal
+                fields</b> from the interface. Interfaces <b>can</b> be used to
+                define inherited <b>constants</b>, but they can’t be used to define
+                nonconstant data. Any fields defined within an interface are
+                implicitly <code>final</code>.
+            </li>
+            <li>Unlike inheritance, a class may <code>implement</code> <b>several</b> interfaces.
+                This facility can be used to simulate multiple inheritance,
+                where a subclass inherits behavior from each of several
+                superclasses. This is the only way to model this kind of
+                relationship in Java, which supports only single inheritance
+                (every class other than <code>Object</code> has exactly one direct ancestor).
+            </li>
+
+            <li>Classes that <code>implement</code> the same interface don’t need to be
+                substitutable in the Liskov sense, <b>except</b> with respect to
+                the interface they implement. Thus, if a class <code>implements</code> the
+                <code>Runnable</code> interface, it <b>isA</b> <code>Runnable</code> object,
+                and it can be used anywhere a <code>Runnable</code> object is expected.
+                <code>Runnable</code> objects <b>don’t
+                have to be otherwise related</b>, however. Because they <code>implement
+                Runnable</code>, they must have a <code>run()</code> method; otherwise the class
+                won’t compile. There’s no guarantee they’ll have any
+                other methods or fields in common.
+            </li>
+        </ul>
+    <h4>Why Interfaces Are Useful</h4>
+        <p> An interface doesn't specify anything about <b>how</b> a
+            class must implement a particular method&#8212;only that it must
+            contain a particular set of methods having a particular
+            signature.
+        </p>
+        <p> <img src='images/obey02.png' class='right' alt='An obey image.'>
+            When a class declares that it <b>implements</b> an
+            interface, it makes a binding promise to provide a concrete
+            implementation of <b>every method of the interface</b>. You can
+            think of this promise as a contract. If you use an object
+            that implements a particular interface, you know that it
+            can respond to any method that the interface requires.
+        </p>
+        <p> If a class fails to make good on its promise, the
+            Java compiler will reject it. Thus, like abstract classes,
+            interfaces make it possible to pre-determine that a given
+            class will understand a particular set of methods. But,
+            because <b>a class can implement several interfaces</b>,
+            interfaces allow you to pre-determine that a given class
+            will understand several entire sets of methods. The trade-
+            off is that an interface cannot include even one concrete
+            method.
+        </p>
+    <h4>Mix-ins and Multiple Inheritance</h4>
+        <p> C++ is a popular object-oriented language that is similar to
+            Java in many ways. In fact, C++ is Java's "father": Most of the
+            syntax of Java is taken from C++ and its "father," C.
+        </p>
+        <p> Unlike Java, C++ includes an object-oriented capability known as
+            <b>multiple inheritance</b>, which allows a subclass to be
+            derived from two (or more) superclasses. Multiple inheritance
+            can be a very handy thing. For example, it lets you create a
+            class <code>AmphibiousVehicle</code> from the parent classes
+            <code>LandVehicle</code> and <code>WaterVehicle</code>.<br>
+            <img src='images/amphibious.png' class='inlineCenter' alt='An amphibious vehicle.'>
+            An <code>AmphibiousVehicle</code> can travel on land or water, and so
+            inherits wheels or treads from its <code>LandVehicle</code> parent, and
+            a prop or screw and rudder from its <code>WaterVehicle</code>
+            parent. You can't do this in Java, because Java classes can have
+            only one parent class.
+        </p>
+    <h5>Problems of Multiple Inheritance</h5>
+        <p>Multiple inheritance is not all roses, however; that's why the
+            designers of Java decided to omit this capability. One problem
+            occurs when each of the parent classes has a method of the same
+            name. For example, what happens when you send a <code>go()</code>
+            message to an <code>AmphibiousVehicle</code>? Does it turn its
+            treads or its prop?
+        </p>
+        <p>
+            Certainly, you could implement a
+            <code>go()</code> method within <code>AmphibiousVehicle</code> that
+            eliminates the ambiguity, spinning the treads if the
+            vehicle is on land and the prop if the vehicle is on water.
+            Languages like C++ that support multiple inheritance
+            usually provide some mechanism for automatically resolving
+            such ambiguities.<br>
+             <img src='images/doublediamond.png' class='inlineCenter' alt='Problems of multiple inheritance.'>
+            But when classes have parents,
+            grandparents, and great-grandparents, and when each
+            generation has two, three, or four of each, things get
+            frightfully complicated. Given the limited memory and
+            mental facilities of humans, a programmer may not be quite
+            sure exactly what method will be executed in response to a
+            given message.
+        </p>
+
+        <p> "This," as the saying goes, "is not a good thing."</p>
+    <h5>Java's Solution</h5>
+        <p> Java cuts through this complexity by requiring that a class
+            have only a single parent: this is called <b>single
+            inheritance</b>. (C# and all of the languages in Microsoft's
+            new .NET Framework also do this.) Thus, you always know exactly
+            what method will be executed.
+        </p>
+        <p> But multiple inheritance serves an important
+            function. It is important to be able to create classes that
+            understand several types of messages. Interfaces provide
+            that capability.<br>
+            <img src='images/interfaces.png' class='inlineCenter' alt='Interfaces and multiple inheritance.'>
+        </p>
+
+        <p> Because of this, we can say that Java allows <b>multiple specification inheritance</b>,
+            but only <b>single implemenation inheritance</b>.
+        </p>
+
+    <h3>Defining Interfaces</h3>
+        <p> Like a <code>public</code> class, an interface must be
+            placed in a file that has the same name as the interface, and that
+            has the extension .java. Inside the file, you define an interface
+            just as you would a class, substituting the keyword <code>interface</code>
+            for the keyword <code>class</code> in the header, like this:
+        </p>
+<pre class='code'>public interface Paintable
+{
+    public void paint(Graphics g);
+}
+</pre>
+        <p> Because all methods in an interface <b>must</b> be
+            abstract, you <b>don't</b> have to use the <code>abstract</code>
+            keyword in front of each one. You cannot supply a body for any
+            of the methods, of course; if you do so, Java will not compile
+            your code.
+        </p>
+    <h4>Using Interfaces</h4>
+        <p> Instead of <b>extending</b> the interface, you use the
+            <code><b>implements</b></code> keyword to specify the
+            interface&#8212;or interfaces&#8212;that relate to a given class:
+        </p>
+<pre class='code'>public class WhatsIt extends Widget
+                    implements Paintable
+{
+   <span class='cmt'>// implement the interface methods here</span>
+}
+</pre>
+        <p> Here, <code>WhatsIt</code> is a subclass of <code>Widget</code>,
+            and, since <code>WhatsIt</code> implements the
+            <code>Paintable</code> interface, it <b>must</b> contain
+            a method with the signature: <code>public void paint(Graphics g);</code>.
+        </p>
+        <p> Note that both the <code>extends</code> and <code>implements</code>
+            keywords are used together. Because every class in Java is a
+            subclass of another class, (except for <code>Object</code>, of
+            course), this will usually be the case, unless your new class
+            is a direct subclass of the <code>Object</code> class.
+        </p>
+        <p> Note also that <code>implements</code> allows you to specify
+            more than one interface, unlike extends, and that you separate
+            the different interfaces with a comma (,).
+        </p>
+    <h5>Fields in Interfaces</h5>
+        <p> In addition to abstract methods, an interface can include
+            fields; but the fields must be <code>static final</code>
+            and, therefore, must also be initialized:
+        </p>
+        <p class="code">
+            public interface AnInterface<br>
+
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public int aMethod(int arg);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public int anotherMethod(int arg1, int arg2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public static final int A_CONSTANT = 100;<br>
+            }<br>
+        </p>
+
+        <p> Such fields are useful for defining constants used as arguments
+            to methods defined by the interface. Constants defined in an
+            interface are also quite useful when several classes in a package
+            share the same common constant definitions. Because you can
+            implement more than one interface, you can put all the common
+            constants into a single interface and just have each class
+            implement that interface in addition to any others it implements.
+        </p>
+        <p> Constants defined in interfaces have one last
+            benefit. If you write a class that implements an interface
+            that contains constant fields, you can refer to those
+            fields without the class or interface qualifier that would
+            otherwise be required.
+        </p>
+    <h3>Interfaces and Event Handling</h3>
+        <p><b>Back in an earlier lesson</b>,
+            you learned to write code to perform an action when a user clicked
+            a button on your applet. You put your code into an
+            inner class with the magic incantation
+            <code>implements ActionListener</code>, in its header.
+            Inside that class, you wrote an <code>actionPerformed()</code>
+            method, and then sent the <code>addActionListener()</code> message
+            to your <code>Button</code> object.
+        </p>
+        <p> Now that you've been formally introduced to interfaces, let's take
+            a closer look at what all that "mumbo jumbo" means.
+            We'll start by a little about Java's AWT event hierarchy.
+            I won't cover each of the classes in detail here; instead I'll try
+            to give you a high-level, practical overview.
+        </p>
+    <h4>Events</h4>
+        <p> While messages allow you to communicate with
+            your objects, they don't allow your objects to "talk back."
+            Events change that.
+        </p>
+        <p> Events are external occurances that let you know something has
+            happened in your program. Ususally an event is triggered by a
+            user interacting with your progam. When the user clicks on a
+            button, for instance, events allow the <code>Button</code> object
+            to notify you that this has occurred.
+        </p>
+        <p> In the Java's event model, objects have to <i>subscribe</i> to a
+            component's events. For instance, if I want my applet to do
+            something when a particular button is pressed, I have to <b>explicitly</b>
+            tell that button to "Notify me when something happens."
+        </p>
+        <p> If I don't ask the
+            button to notify me, it will keep the information to itself. Here
+            are the basic features of this scheme:
+        </p><ol>
+            <li class="d">Any component can generate events.</li>
+            <li class="d">Different components generate different kinds of events.</li>
+            <li class="d">Any class (not just components) can receive, or respond to, an event</li>
+            <li class="d">Responding classes must:</li>
+            <ul>
+                <li><b>implement</b> the correct <b>interface</b></li>
+                <li><b>register</b> or <b>subscribe</b> to a components events</li>
+            </ul>
+        </ol>
+        <p> Let's see how this works by having our <code>Dot</code> objects
+            "move themselves" when the user drags them with the mouse.
+        </p>
+    <h4>Step 1: Preparation</h4>
+        <p>
+            There are two things we have to change to <b>Dot.java</b> before
+            we can use Java's events.
+        </p>
+        <p><img src="images/e07.gif" class="right" alt="Adding the implements phrase.">
+            First, we have to begin by <b>importing</b>
+            the package that contains the event code: <code>java.awt.event</code>.
+            Once we've done that, we can use any of the classes and interfaces
+            in the <code>awt.event</code> package.
+        </p>
+        <p> Second, we have to add a new phrase, <code>implements MouseMotionListener</code>,
+            to the class header.
+            When we're done, the top of <b>Dot.java</b> should look like
+            the screenshot shown here.
+        </p><p>
+        </p><p> Notice that as soon as you add these statements, Eclipse "sends up
+            a red flag", as shown in the picture to the right.
+            We'll fix that error in a minute.
+        </p>
+    <h4>Step 2: Subscribing</h4>
+        <p> You subscribe to a particular event by telling the object that
+            generates events (in this case, our <code>Dot</code> objects),
+            that you want it to add you to its "list of subscribers." This
+            list of subscribers is called a <b>"listener list"</b>, and
+            there's a special method  to sign up for each of the events
+            that a component can generate.
+        </p>
+        <p> The method to sign up for events that occur when the mouse
+            is moved or dragged over a component is called
+            <code>addMouseMotionListener()</code>. Since we're going to have our
+            <code>Dot</code> objects "move themselves", we'll place this code
+            in the constructor:
+            <img src="images/e11.gif" alt="Subscribing to events RedDot01" class="inline">
+            When you subscribe to an event, you also have to pass along an
+            argument telling the component <b>who to notify</b> when the
+            event occurs. Again, this is like subscribing to a magazine;
+            you can have the magazines sent to yourself, or you can have
+            them sent to your inlaws as a gift.
+        </p>
+        <p> In our case, instead of a magazine subscription, our <code>Dot</code>
+            object will deliver a <code>MouseEvent</code> object whenever it notifies
+            its listener. We want our <code>Dot</code> object to send its notification
+            <b>back to itself</b>, and so we'll pass <code><b>this</b></code> as the
+            argument to <code>addMouseMotionListener()</code>. Passing
+            <code>this</code> as an argument tells the class to
+        </p>
+        <p class="pullquote">
+            Deliver the MouseEvent object to <b><i><u>me.</u></i></b>
+        </p>
+    <h4>Step 3: Responding to Events</h4>
+        <p> Now that our <code>Dot</code> is prepared to notify you, (or <b>itself</b>,
+            actually), whenever a <code>MouseEvent</code> occurs in its
+            neighborhood, you need to be prepared to respond. You respond
+            to events by writing methods.
+        </p>
+        <p> What methods should you write? Different "event packages" require
+            you to write different methods. Look at the <b>source code</b>
+            for the <code>MouseMotionListener</code> class itself:
+            <img src="images/e08.gif" class="inline" alt="The MouseMotionListener class.">
+            Notice that the definition of the interface includes two <i>abstract</i>
+            methods: <code>mouseMoved()</code> and <code>mouseDragged()</code>. By
+            adding the line <code>implements MouseMotionListener</code> to our
+            class header, we <b>promised</b> to define these two methods in our
+            class. Since we haven't yet done so, Eclipse displays an error.
+        </p>
+        <p> The easiest way to implement these methods in Eclipse, is to
+            right-click the error symbol, and choose <b>Quick Fix</b>. When the
+            Quick Fix window pops up, choose <i>Add unimplemented methods</i>,
+            as shown here:
+            <img src="images/e10.gif" class="inline" alt="Adding the unimplemented MouseMotion methods.">
+            Once Eclipse has added the methods, you'll be able to successfully
+            save (compile) <b>Dot.java</b> and run the <b>TestDots</b>
+            applet.
+        </p>
+    <h5>But, Nothing Happens!!!</h5>
+        <p> That's right! We haven't actually put any code into
+            the <code>mouseMoved()</code> or <code>mouseDragged()</code>
+            methods, but, when the user moves the mouse over <code>Dots</code>
+            on the applet, the <code>mouseMoved()</code> method <b>is</b> called.
+            Similarly, if the user drags the mouse (moving and holding
+            down the primary mouse button) over the applet, it
+            calls the <code>mouseDragged()</code> method.
+        </p>
+        <p> What happens if the user <b>clicks</b> the mouse while
+            over your applet? Nothing. The applet is "aware" that the
+            event has occurred, but because no one has subscribed to the
+            <code>MouseListener</code> (different than
+            <code>MouseMotionListener</code>), it keeps the information to
+            itself.
+        </p>
+    <h5>Using the MouseEvent</h5>
+        <p> When a <code>Dot</code> object calls the <code>mouseMoved()</code> or
+            <code>MouseDragged()</code> method, it passes along a reference
+            to the <code>MouseEvent</code> object that triggered all the
+            fuss. You can send messages to the <code>MouseEvent</code> object,
+            (here I've named it <code>e</code>, for event), to find
+            out what it's up to.
+        </p>
+        <p> Three of the <code>MouseEvent</code> messages you might find most
+            useful are <code>getX()</code>, <code>getY()</code>, and
+            <code>getPoint()</code>, which return the horizontal and
+            vertical mouse coordinates (starting at 0,0 in the upper-left corner
+            of the component generating the event, and increasing right and down)
+            when the <code>MouseEvent</code> occurred.
+        </p>
+        <p> We can use this information to reposition the <code>Dot</code> object
+            so that its center is positioned at the location of the mouse
+            drag event, like this:
+            <img src="images/e12.gif" class="inline" alt="Overriding the mouseDragged() method.">
+            Here's how the code works:
+        </p>
+        <ol>
+            <li class="d">On line 56 we retrieve the location of the mouse using
+                the <code>getPoint()</code> method, and store it in a local
+                <code>Point</code> variable named <code>mouseLoc</code>.
+            </li>
+            <li class="d">The location of the mouse returned by <code>getPoint()</code>
+                is relative to the <code>Dot</code> object itself, not to the
+                applet. To compare the coordinates to the actual center of the
+                object, we need to "add in" the current location of the <code>Dot</code>
+                object itself. We do this on lines 57 and 58 by using the
+                <code>translate()</code> method, (from the <code>Point</code> class),
+                and the <code>getX()</code> and <code>getY()</code> methods from
+                the <code>Dot</code> class itself. As part of our calculation,
+                we subtract the <code>radius</code> values, to get the
+                <i>center</i> of the <code>Dot</code>.
+            </li>
+            <li class="d">Finally, once the new point has been calculated, we
+                use the inherited <code>setLocation()</code> method to move the
+                center of the dot to the location of the mouse pointer.
+            </li>
+        </ol>
+        <p> You can
+        <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/TestDots.html',0,0,575,425);">
+            <b>run the applet</b></a> by clicking the hyperlink
+            in this sentence. Click the link in this sentence to examine the
+            finished source code for
+            <a href='javascript:var%20w=window.open("Dot03.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>Dot.java</b></a> and
+            <a href='javascript:var%20w=window.open("TestDots01.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>TestDots.java</b></a>.
+            Here's the applet after I've used the mouse to
+            rearrange some of the dots:
+            </p><center>
+            <img src="images/e13.gif" class="inline" alt="Running the TestDots applet.">
+            </center>
+        <p></p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned how to define <b>abstract classes</b> and
+            <b>abstract methods</b>. You also learned how to create a <b>concrete</b>
+            class from an abstract class. You learned how to define an <b>interface</b>,
+            and how to create a class that <b>implements an interface</b>. You also
+            learned how to implement interfaces to handle mouse motion events.
+        </p>
+        <p> In the next lesson, you'll continue working with events by creating
+            <b>inner classes</b> and using <b>event adapter</b> classes.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

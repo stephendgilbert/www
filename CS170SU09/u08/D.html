@@ -1,0 +1,626 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+        <style type='text/css'>
+            li.a {
+                list-style-type:lower-alpha;
+            }
+        </style>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/e.jpg" alt="CS 170 Lesson E logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p>
+        <img src='images/listening.gif' class='right' alt='A dog with big ears.'>
+        <b><span class="cap">N</span>ot only can you send messages
+            to an object</b>, as you've done when you told your <code>Graphics</code>
+            object to use a different font, or asked your <code>GImage</code>
+            object to change its location, but things <b>in the outside world</b>
+            can send messages to your graphical Java programs, provided that
+            your programs are <b>prepared to listen</b>.
+        </p>
+        <p> You can tell your graphical programs "listen" for all sorts
+            of outside events. Every time you move your mouse over your
+            applet or ACM <code>GraphicsProgram</code>, your computer
+            sends a message to your program saying,
+        </p>
+        <p class='pullquote'>"Somebody moved a mouse over you."</p>
+        <p>The name of this message is <b>mouseMoved</b>, and you can
+            <b>respond</b> when that happens by adding your own
+            <code>mouseMoved()</code> method to your program, containing
+            the actions that you'd like to occur.
+        </p>
+        <p> This type of <b>message</b> is called an <b>event</b>, and,
+            by writing a method in response (called an <b>event handler</b>),
+            you can arrange to do something when the event occurs.
+        </p>
+        <p> In this lesson, we'll look at the <b>practical</b> steps you need to
+            do to handle both mouse events like this, (as well as button
+            clicks). If some of this seems strange, don’t worry. We'll be
+            coming back to event-handling in depth a little later, when
+            you learn about interfaces. For right now, you’ll just get
+            an overview of only a few events, so that you'll
+            be able to write some interesting programs.
+        </p>
+    <h3>Event-Driven vs. Sequential Computing</h3>
+        <p> <img src='images/assembly.gif' class='right' alt='The Ford Model T assembly line.'>
+            <b>Sequence, selection, and iteration</b> are the basic building
+            blocks of structured programming. In fact, from day one of this
+            course, you've learned to write programs where you get some
+            input, process it and then display the results in a strictly
+            linear fashion.
+        </p>
+        <p><b>Input-processing-output</b> has been at the
+            center of the computing we've done during the first half
+            of the course, and structured programming like this is
+            <b>very successful</b> when applied to <b>linear</b> problems
+            like processing the monthly payroll or sending out a set of
+            utility bills. It's easy to see how you can feed a list of
+            employees and their hours into one end of a program and get a
+            pile of paychecks out the other.
+        </p>
+        <p> Organizing <b>this type of program like an assembly line</b> works
+            very well.
+        </p>
+        <p> But how do you apply the linear model of an assembly line to your
+            Web browser? Where is the beginning? Where's the end?
+            When it comes to <b>interactive</b> software, using a linear
+            organization, where programs are simply a collection
+            of procedures that operate on data in a sequential manner,
+            just doesn't work as well. As we saw back in Unit 6, a
+            better method of organization is needed, and that's where
+            <b>OOP</b> (<b>O</b>bject-<b>O</b>riented <b>P</b>rogramming)
+            comes in.
+            <center>
+            <img src='images/browser2.gif'
+                vspace='15'
+                alt='A Web browser is composed of objects.'>
+            </center>
+            However, even if you use objects to construct your Web browser
+            or your word processor you still won't find any well defined sequence
+            of actions: <b>there is no clearly defined order of execution</b>.
+        </p>
+        <p> Does this mean that such programs simply execute all of the
+            statements in their code and then stop. No, not at all.
+            Most of the programs you work with on your computer are
+            not <b>linear</b>, but are examples of <b>reactive</b> or
+            <b>event-driven</b> systems.
+        </p>
+<!--
+    <h4>History of Event-Driven Systems</h4>
+        <p> Most computer systems involve some sort of interaction with
+            the user of the program. In bygone years, (that is, in the
+            1970s and 1980s), if you wanted to write an interactive or
+            event-driven program, you were responsible for reading the
+            keyboard and the mouse yourself.
+        </p>
+        <p> Normally the code that
+            did this would be placed in a large, "endless" loop that
+            continuously monitored or "polled" those devices. The problem
+            with this scheme is that each program took exclusive control
+            of the mouse and keyboard so that other programs couldn't use
+            them.
+        </p>
+        <p> When computers first started to use hard disks, a similar
+            problem arose. If my program took control of the hardware
+            and wrote data to track 50, sector 27, how was your program
+            supposed to know that, and avoid overwriting my files?
+        </p>
+        <p> In response to this software developers invented the operating
+            system that allows us all to work with a "virtual" file system,
+            rather than working with the actual disk-drive and controller
+            hardware.
+        </p>
+-->
+    <h4>Event-Driven Java</h4>
+        <p> <b>In an event-driven, graphical operating system</b>, like the
+            Mac OSX, Windows, or X Windows in the Unix world,
+            the mouse, keyboard, and display all belong to the
+            operating system, rather than to your program. If the user moves
+            her mouse over one of the windows you've created, or if the user
+            clicks on a button on your form, or types a character into a text
+            field, then <b>the operating system notifies you</b> telling you
+            that such an event has occurred.
+        </p>
+        <p> For Java, this creates a little bit of a problem. Java programs
+            should run, unchanged, on the Mac and on your Linux or Windows
+            machine, yet each of these operating systems has <b>different and
+            incompatible</b> event notification systems. The solution the
+            designers of Java arrived at was to <b>create their own event
+            handling system</b> that sits on top of the native system provided
+            by your operating system. This Java event system is integrated
+            with the Abstract Windowing Toolkit or AWT.
+        </p>
+    <img src='images/f06.gif' class='right' alt='Two AWT buttons on a Mac applet.'>
+        <p> The earliest Java event model, introduced in Java 1.0, was a
+            "hierarchical broadcast" model, which didn't really work
+            well for larger programs. In Java 1.1, the early model was
+            replaced by a new "publish-subscribe" model, usually called
+            the <b>Java 1.1 event model</b>, even though it's still used
+            in Java 2.
+        </p>
+        <p> The Java 1.1 event model, (also known as <b>the delegation
+            model</b>), works like subscribing to a newsletter or magazine.
+            You tell a component to notify you when a certain event
+            occurs&#151;you can "subscribe" so to speak. You then create
+            a class that you entrust to carry out an action when the
+            notification arrives.
+        </p>
+        <p> When the event occurs&#151;a button is clicked, or a selection
+            is made from a menu, for example&#151;the <b>component notifies</b> only those objects
+            which have <b>subscribed</b> to the particular event. If no one
+            subscribes, then the component keeps the event information to
+            itself, and doesn't "clutter up" the airways.
+        </p>
+    <h3>Making Hay While Your Mouse Moves</h3>
+        <p> <img src='images/checklist02.gif' class='right' alt='A checklist.'>
+            Let's begin by making our <b>applets</b> respond to
+            <b>mouse movement</b> events. To make your your graphical program to take some action
+            when an event occurs there are three steps you have to go through:
+        </p>
+        <ol>
+            <li class='d'>Prepare to accept event messages.</li>
+            <li class='d'>Start listening for events.</li>
+            <li class='d'>Respond to the event messages.</li>
+        </ol>
+        <p> Let's start by looking at the "preparation" step.</p>
+    <h4>Step 1: Preparation</h4>
+        <p> The first step in listening for events is to <b>import</b>
+            the package, <code>java.awt.event</code>. The classes in
+            <code>java.awt.event</code> give your applet the power to
+            receive and respond to event messages, such as those sent by
+            the mouse when it moves.<br>
+            <img src='images/event01.gif' class='inline' alt='Importing the classes.'>
+        </p>
+        <p class='note'>Note that importing the <code>java.awt</code> package is <b>not</b>
+            the same as importing the <code>java.awt.event</code> pagckage.
+            The <code>java.awt</code> package contains classes like <code>Graphics</code>
+            and <code>Color</code> which you'll still need in your programs.
+            The <b>*</b> at the end of the <code>import java.awt.*;</code>
+            line, imports all <b>classes</b> inside the <code>java.awt</code>
+            package, but <b>does not</b> import the classes in embedded
+            packages, like <code>java.awt.event</code>
+        </p>
+        <p> To prepare to receive the messages from the mouse, the program
+            must also declare its <b>willingness to receive</b> those messages.
+            It does this by including a new phrase in its class header:
+            <code>implements MouseMotionListener</code>.<br>
+            <img src='images/event02.gif' class='inline' alt='Implementing the interface.'>
+            We'll talk more about <b>what this means</b> later, when we cover
+            <b>interfaces</b>. For right now, it's fine to just think of it
+            as a "magic incantation".
+        </p>
+        <p class='note'>In the code shown here, I've placed the
+            <code>implements</code> phrase on a separate line. That's not
+            really necessary; I've only done it for formatting reasons. It
+            is important that the phrase appears <b>before</b> the opening
+            brace of the class body, though.
+        </p>
+    <h4>Step 2: Subscribing</h4>
+        <p> Once that’s accomplished, all that’s left is to throw the
+            switch saying <i>"Give me the messages"</i>. This is done inside
+            <code>init()</code> method (or the constructor), by invoking the method
+            <code>addMouseMotionListener()</code> like this:<br>
+            <img src='images/event03.gif' class='inline' alt='Subscribing to MouseMotion events.'>
+            When you call this method, you pass a parameter, the keyword
+            <code>this</code>, which works like the word "me" in English;
+            it refers to the program itself. The message says, in effect,
+        </p>
+        <p class='pullquote'>
+            "Send me a message whenever the mouse moves: I’m listening!"
+        </p>
+        <p> How, exactly, does your program listen? Since listening is a behavior,
+            you might guess that listening involves a method and you're
+            right. In fact, in this case, it involves <b>two new methods</b>,
+            each one listening for a different sort of message from the
+            mouse.
+        </p>
+        <p> You determine what happens when the mouse is moved
+            or dragged by writing statements that go inside each of these
+            methods. Let’s look at those methods, <code>mouseMoved()</code>
+            and <code>mouseDragged()</code>.
+        </p>
+    <h4>Step 3: Responding</h4>
+        <p> The <code>mouseMoved()</code> method is called whenever the
+            user moves the mouse across the surface of the program.
+            Here's an applet with the basic definition for this method
+            already defined:<br>
+            <img src='images/event04.gif' class='inline' alt='The mouse motion event-handler methods.'>
+            Each time the method is called, Java sends along a <b>event
+            parameter</b> containing useful information about the event,
+            such as the position of the mouse.
+        </p>
+    <h5>The MouseEvent Parameter Variable</h5>
+        <p> To handle this parameter,
+            the method header of <code>mouseMoved()</code> must define a
+            formal <code>MouseEvent</code> parameter variable, which
+            seems appropriate enough. You’ll learn more about such
+            event objects later in the course, so for the moment let’s
+            simply say that the <code>MouseEvent</code> parameter
+            is used to describe something that’s happened involving the mouse.
+        </p>
+            You can give the parameter a name of your choice: commonly
+            used choices are <code>e</code>, <code>evt</code> or
+            <code>event</code>. This is the name by which the parameter
+            is known inside the <code>mouseMoved()</code> method. You should
+            chose a name so that its association with the <code>MouseEvent</code>
+            object can be easily remembered.
+        </p>
+    <h5>Event-handling Statements</h5>
+        <p> Just what your program <b>does</b> in response to the movement
+            of the mouse is determined <b>by the statements that you write</b>
+            within the body of the <code>mouseMoved()</code> method.<br>
+            <img src='images/event05.gif' class='inline' alt='The mouseMoved() event handler.'>        </p>
+            If your actions depend on the location of the mouse pointer when
+            the mouse was moved, that can be determined by asking the
+            <code>MouseEvent</code> parameter for the location of the
+            mouse, via its <code>getX()</code> and <code>getY()</code>
+            methods.
+            <img src='images/event06.gif' class='right' alt='Running the applet.'>
+        </p>
+        <p> In the example here, I've added code to set the background
+            of the applet to a random color. I've also used the applet's
+            <code>showStatus()</code> method to display the location of
+            the mouse pointer each time the mouse is moved.
+        </p>
+    <h5>MouseDragged</h5>
+        <p> What about the second new method, <code>mouseDragged()</code>?
+            This method is called whenever the mouse is moved
+            while the mouse button is held down. You’ll notice that there
+            are no statements in the body of this method, which consists
+            only of the curly braces (<code>{}</code>).
+        </p>
+        <p> What does the applet do when
+            it receives a <code>mouseDragged()</code> message?
+            The right answer is: nothing. So, why bother to define the
+            <code>mouseDragged()</code> method at all? It’s required!
+        </p>
+        <p> When your program declares it <i>knows</i> how to handle mouse
+            movement messages (by including <code>implements
+            MouseMotionListener</code> in its class header), it is
+            <b>promising</b> that it <b><u>will define a method</u></b>
+            to handle each type of message relating to mouse movement.
+            There are exactly two of these (<code>mouseMoved()</code> and
+            <code>mouseDragged( )</code>); if you omit either, the
+            program will not compile.
+        </p>
+        <p> If you want to run <a href='FirstEventApplet.java' target='_blank'>
+            <b>FirstEventApplet.java</b></a> on your own machine, you can
+            download it by clicking the link in this sentence.
+        </p>
+    <h3>ACM Mouse Event Handling</h3>
+        <p> You can use the same techniques for handling mouse events inside
+            your ACM graphical programs, but, as usual, the ACM libraries
+            <b>make things a little easier</b>; You don't have to go to all
+            of that work.
+        </p>
+        <p> Here are the steps you need to follow.</p>
+        <ol>
+            <li class='d'><b>Preparation</b>: You <b>do</b> need to <code>import</code> the <code>java.awt.event</code>
+                package to make the event-handling classes available to your program.
+                However, you <b>do not</b> need to add anything extra to the class
+                header. The <code>GraphicsProgram</code> class has already done this
+                for you.<br>
+                <img src='images/acmevent01.gif' class='inline' alt='Preparing to use events in an ACM graphics program.'>
+            </p>
+            <li class='d'><b>Subscribing</b>: Instead of writing
+                <code>addMouseMotionListener(this);</code>, <b>just add the
+                line</b>:<br>
+                <img src='images/acmevent02.gif' class='inline' alt='Subscribing to use events in an ACM graphics program.'>
+                to the end of your <code>init()</code> method. This adds <b>both</b>
+                mouse motion listeners as well as the other mouse event listeners
+                such as mouse clicks and mouse over. Doing this would require
+                <b>extra steps</b> in an applet.
+            </li>
+            <li class='d'><b>Responding</b>: In your ACM programs, you <b>only</b>
+                need to write the methods that you intend to actually supply
+                actions for. Again, the ACM <code>GraphicsProgram</code> class
+                comes to your rescue, writing the "empty" methods that you
+                needed to write yourself using the bare Java event-handling
+                techniques.
+            </li>
+        </ol>
+    <h4>Other Mouse Events</h4>
+        <p> In addition to the <code>mouseDragged()</code> and
+            <code>mouseMoved()</code> events, the ACM <code>GraphicsProgram</code>
+            class also implements the <code>MouseListener</code> interface,
+            which specifies these additional five methods that you can use
+            in your programs:
+        </p>
+        <ul>
+            <li><b>mousePressed()</b>: called whenever the mouse button is pressed
+                down.
+            </li>
+            <li><b>mouseReleased()</b>: called whenever the mouse button is
+                released after being pressed down.
+            </li>
+            <li><b>mouseClicked()</b>: called whenever the mouse button is pressed
+                down and then released within a short period of time. (Each
+                <code>mouseClicked()</code> event is always accompanied by a
+                <code>mousePressed()</code> followed by a <code>mouseReleased()</code>.
+            </li>
+            <li><b>mouseEntered()</b>: called whenever the mouse pointer enters
+                the canvas area of your program.
+            </li>
+            <li><b>mouseExited()</b>: called whenever the mouse leaves the
+                canvas area of your program.
+            </li>
+        </ul>
+    <h4>An Example</h4>
+        <p> <a href='DrawLine.java' target='_blank'><b>DrawLine.java</b></a> is
+            an example program that responds to both the <code>mousePressed</code>
+            event and the <code>mouseDragged</code> event, to create an
+            interactive line-drawing program. (You can click the link in the
+            previous sentence if you want to compile and run the program on
+            your own computer.)
+        </p>
+    <h5>The mousePressed Event</h5>
+        <p> When the user clicks the mouse anywhere on the program's canvas,
+            a <code>mousePressed</code> event is triggered. The program
+            responds to that event by executing the code inside the
+            <code>mousePressed()</code> event handler method, shown here:<br>
+            <img src='images/acmevent03.gif' class='inline' alt='The DrawLine mousePressed event handler.'>
+            Inside the method, the program creates a new <code>GLine</code>
+            object, located at the position of the mouse. Since the end-point
+            of the line is set to the same position, the line has zero length.
+        </p>
+        <p> When the line is created, it is assigned to the <b>instance
+            variable</b> named <code>line</code>. By using an instance
+            variable, the same object can be manipulated in different
+            methods, specifically the <code>mouseDragged()</code> method.
+        </p>
+    <h5>The mouseDragged Event</h5>
+        <p> The <code>line</code> object is created and added to the
+            canvas in the <code>mousePressed()</code> method. If the
+            user keeps the mouse button down and then moves the
+            mouse, the <code>mouseDragged()</code> method will be
+            called.<br>
+            <img src='images/acmevent04.gif' class='inline' alt='The DrawLine mouseDragged event handler.'>
+        </p>
+        <p class='note'>When the mouse button is released, the mouse
+            dragging event ends. Then, if the user presses the mouse
+            down again, a new <code>GLine</code> object will be created.
+        </p>
+        <p> Inside the <code>mouseDragged()</code> method, the end-point
+            of the line is reset. This creates a "rubber-band" drawing
+            effect, where the end-point of the line follows the mouse
+            until the mouse button is released, at which point, the
+            line is "fixed".
+        </p>
+    <h5>Try it Yourself</h5>
+        <p> If you don't want to download and run the program on your
+            own computer, you can try it out yourself right here:
+        </p>
+        <center>
+        <div style='width:500px;padding:10px;border:1px solid blue;'>
+        <applet code='DrawLine'
+                archive='acm.jar'
+                codebase='http://faculty.orangecoastcollege.edu/sgilbert/applets/'
+                width='480'
+                height='350'
+                alt='The ACM DrawLine Applet'>
+        </applet>
+        </div>
+        </center>
+    <h3>JButtons and Events</h3>
+        <p> When a <code>JButton</code> object is clicked, instead of
+            generating mouse events, it generates
+            a specific kind of event object called an
+            <code>ActionEvent</code>.
+        </p>
+        <p class="note">
+            <b>ActionEvent</b> objects are not specific to buttons;
+            if you press the <b>ENTER</b> key inside a <b>TextField</b>
+            object, or, if you double-click an entry in a <b>List</b>
+            object, the component will generate an <b>ActionEvent</b>
+            object as well.
+        </p>
+        <p>To perform an action when a <code>JButton</code> object is
+            clicked (inside your ACM graphical programs), you only have to
+            do these three things:
+            <img src='images/checklist02.gif' class='right' alt='The checklist image.'>
+        </p>
+        <ol>
+            <li class='d'> Make sure that the <code>java.awt.event</code>
+                package is available, just like you did when working with
+                the different mouse events.
+            </li>
+            <li class='d'> Tell your program to <b>subscribe</b> to
+                any <code>ActionEvent</code>s generated by the
+                <code>JButton</code> objects you've added to your
+                program. In your ACM programs, you'll do this by
+                calling <code>addActionListeners()</code> from inside
+                your <code>init()</code> method.
+            </li>
+            <li class='d'>Add an <code>actionPerformed()</code> method to
+                your program where you'll respond whenever any of the
+                buttons in your program are selected.
+            </li>
+        </ol>
+        <p> Here's an example program
+            <a href='ButtonActions.java' target='_blank'>
+            <b>ButtonActions.java</b></a> that is very similar to
+            the <b>ButtonWorld</b> program you saw in the last lesson.<br>
+            <img src='images/action09.gif' class='inline' alt='Running ButtonAction.'>
+            Instead of three buttons, though, I've added a <code>JLabel</code>
+            and one of the <b>ACM GUI components</b>, the
+            <code>DoubleField</code>, so that you can interactively change
+            the radius of the circle displayed on the screen.<br>
+        </p>
+    <h4>Step 1: Import the Packages</h4>
+        <p> As always, you'll also need to <b><code>import</code></b> the
+            package containing the <code>ActionEvent</code> and <code>ActionListener</code>
+            classes. These listeners are in the <b>same</b> package as the
+            mouse events: <code>java.awt.event</code>. It's easy to
+            forget to add this line to the top of your program:
+            <img src='images/action01.gif' class='inline' alt='The ButtonActions import statements.'>
+            Notice that in addition to the Java event packages, I <b>also</b>
+            need to remember to import:
+       </p>
+        <ul>
+            <li>The <code>acm.gui</code> package which contains the code for
+                the "enhanced" numeric version of the <code>JTextField</code>
+                class, called <code>DoubleField</code>. We could use
+                <code>JTextField</code>, of course, but then we'd have to
+                handle converting the radius from <code>String</code> to
+                <code>double</code> ourselves.
+            </li>
+            <li>The <code>javax.swing</code> package that contains the
+                Swing GUI components, such as <code>JLabel</code> and
+                <code>JButton</code>.
+            </li>
+        </ul>
+    <h4>Step 2: Initialize the Application</h4>
+        <p> Reactive or event-driven programs often do not have a
+            <code>run()</code> method. Instead, we'll put all of our
+            code inside the <code>init()</code> method as well as the
+            event-handlers that will be called as the users interact
+            with our app. Instead of just looking at the code that
+            sets up the event-handling, let's look at each of the
+            main points inside the <code>init()</code> method.
+        </p>
+    <h5>Instance Variables</h5>
+        <p> Our program starts by defining several instance variables
+            that will be used inside both the <code>init()</code> method as
+            well as from inside the event-handlers:<br>
+            <img src='images/action02.gif' class='inline' alt='The ButtonActions instance variables.'>
+            There are fields for each of the GUI components, as well as a
+            <code>GPoint</code> to store the center of the screen (so we don't
+            need to calculate it again and again.)
+        </p>
+    <h5>Creating the Objects</h5>
+        <p>The first section inside <code>init()</code> simply calls the
+            various constructors to create each of the objects associated
+            with our program's fields:<br>
+          <img src='images/action03.gif' class='inline' alt='Initializing the fields.'>
+          The <code>GPoint</code> used to keep track of the center of the application
+          is offset by 20 pixels up from the bottom, to allow for the toolbar at
+          the bottom of the screen.
+        </p>
+    <h5>Additional Initialization</h5>
+        <p>While each object's constructor is responsible for initializing
+            the objects you create, often, especially with GUI apps, you'll
+            find that many components need additional intialization,
+            such as that shown here:<br>
+          <img src='images/action04.gif' class='inline' alt='Additional initialization.'>
+          In addition to adding a hot-key and tool-tip for the button,
+          the program sets the fill color for the dot on the screen
+          as well.
+        </p>
+    <h5>Adding and Actions</h5>
+        <p>After the objects are created and any initialization is
+            preformed, each of the components is added to the toolbar at the
+            bottom of the screen. The <code>GPoint</code> is used to calculate
+            the location of the <code>GOval</code> object:<br>
+          <img src='images/action05.gif' class='inline' alt='Hooking up action events.'>
+          The last line in the <code>init()</code> method is the line
+          the <b>activates</b> the event handling for your buttons. (If you
+          want to respond to mouse events also, you can add an
+          <code>addMouseListeners()</code> line as well.)
+        </p>
+    <h4>Step 3: Responding</h4>
+        <p> How will the <code>JButton</code> object, <b>goBtn</b>, notify
+            you when an <code>ActionEvent</code> occurs? It will send <b><u>a
+            particular message</u></b>, passing along the <code>ActionEvent</code>
+            object as an argument. The name of the message&#151;and the method
+            you must write&#151;is <code>actionPerformed()</code>, and you'll
+            place it <b>inside</b> your class:<br>
+          <img src='images/action06.gif' class='inline' alt='The actionPerformed method.'>
+            In the body of the <code>actionPerformed()</code>
+            method, you can carry out the actions you want to occur when
+            <b>goBtn</b> is clicked.
+        </p>
+        <p> In this case, I:</p>
+        <ul>
+            <li>Extract the new radius from the <code>DoubleField</code>
+                named <code>radiusTf</code>. Note that the ACM GUI
+                component doesn't require me to convert the value,
+                but allows me to read it directly, using its
+                <code>getValue()</code> method.
+            </li>
+            <li>Use the new radius value to first position and then
+                resize the <code>GOval</code> object on the screen.
+            </li>
+        </ul>
+    <h5>Handling the Focus</h5>
+        <p> When the user enters a new radius into the text field, and
+            then clicks the button, the GUI <b>focus</b> remains on the
+            <code>JButton</code> object. To go back and enter another
+            value, the user has to either use the tab key, or click with
+            the mouse and erase the old value in the text field.
+        </p>
+        <p> To make your code more user-friendly, you can perform those
+            two steps using code, each time the <code>actionPerformed()</code>
+            method is called, like this:<br>
+          <img src='images/action07.gif' class='inline' alt='Changing the focus.'>
+          The first line selects all of the text inside the text field,
+          while the second line sends the keyboard focus back to that
+          field. All the user has to do is type a new value.
+        </p>
+    <h4>Multiple Buttons</h4>
+        <p> If you have multiple buttons inside your application, all of
+            them will call the <b>same</b> <code>actionPerformed()</code>
+            method. Inside your method, you'll need to determine which
+            button actually triggered the event.
+        </p>
+        <p> You can do that in two ways:</p>
+        <ol>
+            <li class='d'>You can call the <code>ActionEvent</code> parameter's
+                <code>getSource()</code> method, and compare the
+                <code>Object</code> reference that you get back to the
+                button you want to respond to. Here's what that would
+                look like, if you had a second button named colorBtn
+                that changed the oval's color:<br>
+                <img src='images/action10.gif' class='inline' alt='Using getSource().'>
+
+            </li>
+            <li class='d'>You can call the <code>ActionEvent</code> parameter's
+                <code>getActionCommand()</code> method to "read" the text appearing
+                on the button, and differentiate between the buttons that way.
+                This works even if the button was not defined as an instance
+                variable. Here's what that looks like:<br>
+                <img src='images/action11.gif' class='inline' alt='Using getActionCommand().'>
+            </li>
+        </ol>
+    <h3>Coming Up Next ...</h3>
+    <p> In this lesson, you learned how to respond to <b>mouse events</b>,
+        that occur when the user moves or clicks the mouse, and
+        how to respond to <b>action</b> events, those that occur when the
+        button is clicked.
+    </p>
+    <p> In the next lesson, we'll make your programs even more
+        interesting and interactive by learning how to perform
+        <b>animation</b>.
+    </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

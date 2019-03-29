@@ -1,0 +1,41 @@
+    // Copy and paste this code into your BlueJ class
+    private int appWidth, appHeight;
+
+    public void init()
+    {
+        setBackground(Color.black);
+        appWidth = getSize().width;
+        appHeight = getSize().height;
+    }
+
+
+    public void paint(Graphics g)
+    {
+        // Put your painting code here
+        // 1. Create a Color object using random numbers
+        // 2. Calculate 4 random coordinates (x1, y1, x2, y2)
+        // 3. Use the smallest of each for x,y
+        // 4. Subtract x,y from the larger for width & height
+        // 5. Set the drawing color using your Color object from 1
+        // 6. Draw your oval using the position and coordinates
+        //    you generated in steps 2-4
+
+        wait(1); // wait one second before repainting
+        repaint();
+    }
+
+    // This eliminates erasing of the previous image
+    public void update(Graphics g)
+    {
+        paint(g);
+    }
+
+    // This delays for x seconds
+    public void wait(int seconds)
+    {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) { }
+    }
+
+    // End of code to be inserted

@@ -1,0 +1,698 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + ": " + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <img src='images/popeye.gif' class='right' alt='A hamburger today.'>
+            <b><span class="cap">
+            L</span>et me ask you a question</b>. Is this a good deal, or
+            what? I don't mean the wager on Popeye versus Kid Panther; I mean this:
+            Wimpy's offer of payment on Tuesday, for a hamburger today.
+        </p>
+
+        <p> The answer is, you can't tell; at least not without knowing
+            <b>exactly how much</b> Wimpy is willing to pay next Tuesday
+            for that "six-dollar burger" today, and, of course, how likely
+            you are to collect.
+        </p>
+        <p> Although we laugh at the Wimpy character, his offer is really
+            the basis for most commerce in the world today, and many
+            computer programs are devoted to figuring out exactly how
+            much that burger is worth. We call this concept "the time
+            value of money".
+        </p>
+        <p> Although Java has a host of different mathematical and
+            <code>String</code> functions, it's doesn't have any
+            functions dedicated to providing answers to questions like
+            this (like Excel does). If you want those answers, you'll
+            need to build those functions yourself.
+        </p>
+        <p> That's what you'll learn how to do in this lesson.
+        </p>
+        <ul>
+            <li> We'll start by building a simple loan calculator, where
+                you can enter the principle, (the hamburger's "list price"),
+                the term, (exactly <u>which</u> Tuesday are we talking about),
+                and the interest rate, (the <b>rent</b>, given the variables
+                of risk and return).
+            </li>
+            <li>Then, we'll turn that calculation into a procedure and
+                pass each of these values as <b>parameters</b>.
+            </li>
+            <li> Then, you'll learn how to turn that procedure into a <b>
+                reusable function</b>, just like the functions in the
+                <code>Math</code> class.
+            </li>
+        </ul>
+
+        <p> That's the plan; let's get started with our calculator.
+        </p>
+    <h3>Introduction to Finance</h3>
+        <p> <b>Suppose I lend you a thousand dollars
+            today</b>, on your promise to pay me back in a year. I
+            first consider my options. With my thousand I could:
+        </p>
+        <ul>
+            <li>put it in the bank and get back thirty-five extra dollars
+                at the end of the year.
+            </li>
+            <li>buy some shares of Google stock and hope that
+                I can sell it for more than I paid for it at the
+                end of the year.
+            </li>
+
+            <li>lend it to my brother-in-law who has a great invention,
+                which he's sure will pay me back two thousand dollars
+                after the year.
+            </li>
+            <li>lend it to you.</li>
+        </ul>
+        <p> If I put it in the bank, baring revolution, I'm sure to
+            get my interest back. If I lend it to my brother-in-law,
+            I <b>may</b> get my two thousand back, but it would be a miracle.
+        </p>
+        <p> Investing in Google and lending the money to you both
+            probably fall somewhere in between those two extremes.
+            Because there's a little more risk, I'd <b>expect</b>
+            to make a little more money if things to well, so
+            I'd lend you the money for, say 20%, or $200 for the
+            year.
+        </p>
+    <h4>Simple Interest</h4>
+        <p> This is called <b>simple interest</b> because it is,
+            well, <b>simple</b>. Here's a program that calculates
+            the amount you'll need to repay:<br>
+            <img src='images/interest01.gif' class='inline' alt='SimpleInterest01.java'>
+            With simple interest, when the year's
+            up, you write  me a check for $1,200, and everybody's happy.
+        </p>
+        <p> My wife, though, doesn't like the deal. "Make him
+            pay you back a little bit each month", she says.
+            "That way, if he loses his job, we won't lose the
+            entire thousand as well as the interest."
+        </p>
+        <p> Now, the question is, how <b>much</b> should you
+            pay me back each month? When you first look at the
+            problem, it looks simple. 20% interest on a thousand
+            dollars is $200, for a total of $1,200, so the
+            monthly payments should be $100, right?
+        </p>
+        <p> Well, I'm <b>perfectly</b> willing to <b>lend</b> money
+            on those terms, but I certainly wouldn't be the
+            borrower. That's because in the simple interest example,
+            you got to keep my thousand for the entire year. In
+            the revised example, you only get to keep <b>part</b>
+            of the my money for the entire year.
+        </p>
+    <h4>Monthly Payments</h4>
+        <p> So, how do you calculate the payments? Like this:</p>
+        <ul>
+            <li>For the first month, you kept my entire thousand,
+                so you should pay me one month's interest on
+                the whole thing. Now one month's interest is
+                20% / 12 * $1,000 or $16.67. The remaining
+                $83.33 is just returning me part of the money
+                that I lent you.
+            </li>
+            <li>In the second month, you only have $916.67 of my
+                money, so you shouldn't have to pay as much
+                interest. Instead of $16.67 you only have to pay
+                $15.28, and the rest goes to pay me back a
+                little more on my original thousand.
+            </li>
+        </ul>
+
+        <p> If you keep this up, you'll see that you end up paying
+            me back all of my money way before the entire year is
+            up. Of course, you don't want to do that! You'd rather
+            pay me back less money each month, so the payments
+            come out even. How do we calculate what those payments
+            should be?
+        </p>
+        <p> Rather than going back and forth, lowering the payments,
+            and then increasing them, until you come out with the
+            right amount at the end, you can use a calculation,
+            like the one shown here, from a finance textbook:
+            <img src='images/interest02.gif' class='inline' alt='A version of the payment function.'>
+            In this case:
+        <p>
+        <ul>
+            <li><b>c</b> stands for the <b>monthly</b> (or <i>period</i>) interest rate.</li>
+            <li><b>n</b> stands for the number of months or payments.</li>
+        </ul>
+        <p class='note'>I don't really recommend the names <code>n</code> and <code>c</code>
+            for your programs. I've used them here only because those were the names
+            used in the financial function that I copied from the textbook.
+        </p>
+
+        <p> We can put this into a program, along with some variables to make the
+            program interactive, and end up with a useful loan calculator:<br
+            <img src='images/interest03.gif' class='inline' alt='A version of the payment function.'>
+            Here's what the program looks like when run against the
+            $1,000 I lent you at the beginning of this lesson:
+            <img src='images/interest04.gif' class='right' alt='Running the payment calculator.'>
+        </p>
+        <p> Notice that instead of paying me back $100 a month, your actual payments
+            are only $92.63.
+        </p>
+        <p> Here are some program notes:
+        </p>
+        <ol>
+            <li class='d'>The program asks the user for the loan amount, annual interest rate,
+                and term of the loan in years. These are stored in <code>double</code> variables.
+            </li>
+            <li class='d'>For the interest rate, the user's input is divided by 1200
+                because we need the <i>monthly</i> interest rate in the formula. If
+                you wanted to print the annual rate as part of the message to the user,
+                you might want to do this calculation separately and store that in another
+                variable.
+            </li>
+            <li class='d'>Similarly, the term in years input by the user is multiplied
+                by 12 to store the number of monthly periods in the variable <code>n</code>,
+                which is what the formula requires.
+            </li>
+            <li class='d'>The <code>Math.pow</code> function is used to calculate
+                the payment, using the formula from the textbook. (There are other
+                formulas you can use as well.) Because I added the line
+                <code>import static java.lang.Math.*;</code> to the top of my
+                program, I don't have to prefix each use of the <code>pow()</code>
+                function with the name of the <code>Math</code> class.
+            </li>
+            <li class='d'>Finally, the program prints out the value for the
+                monthly payment as well as the total future (total) value of
+                all the the payments.
+            </li>
+        </ol>
+
+    <h3>Procedures and Parameters</h3>
+        <p> Instead of writing a <i>stand-alone</i> program that gets
+            the user's input, calculates the payment, and then prints
+            the results, it would be more useful to put your code into
+            procedures that could be reused whenever you wanted.
+        </p>
+        <p> Here's a first attempt, that simply moves the calculation
+            and the printing into a procedure named <code>printLoanData()</code>,
+            just like you did in the last unit, when you studied procedural
+            decomposition:
+            <img src='images/parameters01.gif' class='inline' alt='A procedure and local variables.'>
+            As you can see, the variables <code>loan</code>, <code>c</code> and
+            <code>n</code> are <b>local</b> to the <code>run()</code> method. When
+            you define a variable inside a procedure, you can <b>only</b> use that
+            variable inside the same procedure, <b>not</b> inside another
+            procedure like <code>printLoanData()</code>.
+        </p>
+    <h4>Parameters and Arguments</h4>
+        <p>Most procedures and functions require additional <b>input information</b>
+            to carry out their work. A method that computes square roots, for instance,
+            requires the number to operate on. The  <code>printLoanData()</code>
+            procedure shown here, requires the loan amount, the monthly rate and
+            the term of the loan before it can calculate the payments.
+        </p>
+        <p> Fortunately, it is very easy to do this by writing your
+            procedures and functions so that they accept <b>parameters</b>,
+            and then passing different values when you actually call the procedure.
+        </p>
+    <h5>Actual Parameters</h5>
+        <p>There are actually <b>two</b> kinds of parameters used when you
+            write computer programs: <b>formal</b> parameters, and
+            <b>actual</b> parameters.
+        </p>
+        <p>A <b>formal parameter</b> is simply a local variable, specifically
+            designed to transfer information from one method to another.
+            Actual parameters are <b>values</b> you supply when you <b>call</b>
+            the method. When you call the method, the actual parameters are used to
+            initialize the formal parameters.
+        </p>
+        <p> Let's see how that works in our case by passing the loan amount,
+            annual rate and term in years as actual parameters when we
+            <b>call</b> the <code>printLoanData()</code> procedure:
+            <img src='images/parameters02.gif' class='inline' alt='Passing actual parameters to printLoanData'>
+            Notice that I have:
+        </p>
+        <ul>
+            <li>Changed the names of each of the variables to make the program
+                clearer.
+            </li>
+            <li>Called the <code>readDouble()</code> input function to accept the
+                user's input and store it in my three variables.
+            </li>
+            <li>Skipped the calculations previously used to turn rate into a
+                monthly rate and years into months. I'll make those adjustments
+                when I calculate the payment inside the procedure.
+            </li>
+            <li><b>Passed</b> each of the three variables to <code>printLoanData()</code>
+                by placing them in the <b>parameter list</b> which, up until now,
+                we've left empty.
+            </li>
+        </ul>
+        <p> Note also that Eclipse still underlines the word <code>printLoanData()</code>,
+            because when I <b>defined</b> the procedure, I <b>didn't</b> define any
+            <b>formal parameters</b> to match the actual parameters that I've passed
+            when calling the procedure.
+        </p>
+    <h5>Formal Parameters</h5>
+        <p> As I mentioned in the previous section,
+            A <b>formal parameter</b> is simply a local variable, specifically
+            designed to transfer information from one method to another.
+            A <b>regular local variable</b>, for instance, is declared like this:
+        </p>
+        <p class="code">
+            public void someMethod()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; int myLocalVar = 32;<br>
+            }
+        </p>
+        <p> As you remember, a variable declaration creates
+            a "bucket" where you can store a value&#8212;in this case,
+            <code>myLocalVar</code> is an <code>int</code>-sized
+            bucket that can hold an <code>int</code> value. The
+            actual value, <b>32</b> is stored in the "bucket" when
+            it is initialized; however, the initialization must happen
+            inside the method&#8212;there is no way to initialize the
+            local variable from outside.
+        </p>
+        <p><b> A formal parameter</b> works exactly like this local
+            variable <b>except</b>:
+            </p><ol>
+                <li>A formal parameter is declared <b>inside the parameter
+                    list</b>&#8212;that is,
+                    inside the parentheses following the method name&#8212;and
+                    <b>not</b> inside the method body.
+                </li>
+                <li>Each formal parameter declaration must include <b>both</b> the
+                    type of the variable <b>and</b> a name. Remember that you can
+                    use a single type along with several names when
+                    declaring regular local variables, like this:
+                    <p class="code">
+                    int a, b, c;
+                    </p>
+                    This kind of syntax is <b>not</b> legal when declaring
+                    paramters; <b>each</b> formal parameter must have both a name
+                    and a type.
+                </li>
+                <li>A formal parameter is initialized by <b>calling</b> the
+                    method, <b>not</b> by using the assignment operator.
+                </li>
+            </ol>
+        <p> To change the definition of <code>printLoanData()</code>
+            to add the three formal parameters that are needed, you would
+            write something like this:
+            <img src='images/parameters05.gif' class='inline' alt='Defining formal parameters.'>
+            Notice that each formal parameter is a complete variable
+            declaration with its own type and name. Note also that the
+            names I've used for the formal parameters here, <b>are not the
+            same</b> as the names of the actual parameters I've used when
+            calling the procedure. (They <b>could</b> be the same name, but
+            I've used different names to highlight the fact that these are
+            <b>different</b> variables.
+        </p>
+        <p> To initialize the formal parameters <code>principle</code>,
+            <code>interest</code> and <code>term</code>, you <b>pass</b> different
+            values as <b>actual parameters</b>. Actual parameters, you remember,
+            are <b>values</b> you supply when you <b>call</b> the procedure. When
+            you call <code>printLoanData()</code>, the values stored in the
+            variables <code>loanAmount</code>, <code>apr</code> and <code>years</code>
+            in the <code>run()</code> method are used to <b>initialize</b> the
+            formal parameters in <code>printLoanData()</code>, <b>exactly as if
+            the procedure started with this line</b>:
+        </p>
+        <p class='code'>
+            public void printLoanData()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double principle = loanAmount;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double interest = apr;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double term = years;
+        </p>
+        <p> When you create a <b>local variable</b> and initialize it inside
+            a procedure, the local variable (like the example <code>myLocalVar</code>
+            shown earlier) has the same value (32) <b>every time</b> that
+            the procedure is called. In contrast, the formal parameters
+            <code>principle</code>, <code>interest</code> and <code>term</code>
+            may have <b>different</b> values each time <code>printLoanData()</code>
+            is called. This means that by calling a procedure using different
+            <b>actual</b> parameters, you can <b>customize</b> the
+            way that the method behaves.
+        </p>
+    <h4>Finishing printLoanData()</h4>
+        <p> Of course, as you can see from the picture, Eclipse reports that
+            <code>printLoanData()</code> <b>still</b> has errors! That's because
+            the names of the formal parameters, and the names of the variables
+            used in the actual calculations are different.
+        </p>
+        <p> To fix this, just create local variables for <code>c</code> and <code>n</code>,
+            using the formal parameters. Then, change the formula to use <code>principle</code>
+            instead of <code>loan</code> like this:<br>
+            <img src='images/parameters04.gif' class='inline' alt='Finishing printLoanData().'>
+        </p>
+
+    <h4>Pass By Value</h4>
+        <p>When you call a method, the formal parameter receives a
+            <b>copy</b> of the actual parameter. This is called
+            <b>pass by value</b>. The actual parameters you use may be
+            either literals or variables; in both cases a copy is made.
+        </p><p>Suppose, for instance, inside your <code>run()</code> method
+            that you have two local variables, named
+            <code>a</code> and <code>b</code>, containing the values
+            <b>52</b> and <b>17</b>. Now, suppose that you
+            called <code>myMethod()</code> and passed as actual parameters,
+            the variables <code>a</code>, and <code>b</code>.
+        </p>
+        <p> When you pass the variables <code>a</code> and <code>b</code> to
+            the method <code>myMethod()</code>, the values <b>52</b> and
+            <b>17</b> are copied into the formal parameters <code>j</code>
+            and <code>k</code>, as shown here:<br>
+            <img src="images/e08.gif" alt="Passing parameters by value" vspace="15" hspace="5"><br>
+            In the example shown here, the formal parameters <code>j</code>
+            and <code>k</code> are changed inside the method to <b>13</b>
+            and <b>52</b>. This has no effect at all on the variables
+            <code>a</code> and <code>b</code>.
+        </p>
+    <h4>Type Checking</h4>
+        <p> When you call a method, the actual parameters you
+            pass must be <b>compatible</b> with the types of the formal parameters.
+            Java will attempt to ensure this using a process called
+            <b>type-checking</b>.
+        </p>
+        <p> Generally, what this means is that when a method is expecting a
+            <code>String</code> parameter, you can't pass an <code>int</code>,
+            and vice-versa. As you saw when we looked at Java's
+            primitive types, there are some numeric types that are compatible
+            with each other, and some that are not. For instance, if a method
+            is expecting a <b>floating-point</b> number, you can usually pass it an
+            <b>int</b>, but the reverse isn't true.
+        </p>
+        <div class="note">
+        <p>Type checking doesn't catch <b>every</b> error when
+            you pass parameters to methods. If you write:
+        </p>
+        <p class="code">
+            printLoanData(loanAmount, years, rate); <span class="cmt">// from line 26</span>
+        </p>
+        <p> the compiler <b>will not </b> catch your error. Because both
+            <code>rate</code> and <code>years</code> have the same type
+            (<code>double</code>), the compiler doesn't distinguish between them.
+            All it's doing is checking to see that you are passing the
+            right <b>kind</b> of value, not the <b>right</b> value.
+        </p>
+        </div>
+    <h3>Writing Functions</h3>
+        <p> As you probably remember from Unit 2, many methods produce,
+            or <b>return</b>, a value instead of, or in addition to,
+            performing an action. For instance, the all of the
+            <code>Math</code> methods <b>return</b> information to
+            your program, rather than doing something <b>to</b> your
+            program, like the <code>println()</code> method does.
+        </p>
+        <p> We call these kind of "value-producing" methods <b>functions</b>,
+            and we call the "perform an action" methods <b>procedures</b>.
+            The most important difference between these two kinds of
+            methods is:
+        </p>
+        <p class='pullquote'>
+            A procedure represents a series of statements<br>
+            A function represents a value
+        <p>
+    <h4>Function Definitions</h4>
+        <p> You've already learned how to <b>use</b> or <b>call</b> such
+            value-producing methods, but how do you define them? Fortunately,
+            it's not difficult. Functions vary in only two
+            particulars from their action-oriented procedural cousins:
+        </p>
+        <ul>
+            <li>functions have a <b>return type</b> other than
+                <code>void</code>.</li>
+            <li>functions must terminate by using a <b>return
+                expression</b></li>
+        </ul>
+        <p>Here's the basic structure for defining a function looks like this:</p>
+        <p class="code">
+            public <span class="red">returnType</span> methodName( parameters )<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// statements</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">return typeExpr;</span><br>
+            }
+        </p>
+    <h4>The monthlyPayment() Function</h4>
+        <p> To help you understand how the <code>return</code> statement works,
+            let's rewrite our
+            example from earlier in this lesson as a <b>function</b> named
+            <code>monthlyPayment()</code>.
+        </p>
+        <p> To create the function, just follow these two steps:</p>
+        <ol>
+            <li class="d">
+                <b>Write the Heading:</b>
+                You first have to decide what <b>kind</b> of
+                value the method will return, and what kind of parameters
+                it will need. Like the <code>printLoanData()</code> procedure,
+                the <code>monthlyPayment()</code> function will need three
+                formal parameters. Unlike the procedure, though, the
+                function will return a <code>double</code>, instead of
+                using the word <code>void</code>. Here's the difference
+                in the two headers:<br>
+                <img src="images/functions01.gif" class='inline' alt="Writing the function header.">
+            </li>
+            <li class="d">
+                <b>Return the Value: </b>
+                Inside the method, perform any calculations that are needed to
+                determine "the answer", and then use a <code>return</code>
+                expression to end the method. For <code>monthlyPayment()</code>, the code
+                is <b>exactly</b> like <code>printLoanData()</code>, <b>except</b>
+                that instead of <i>printing</i> the value, it is <b>returned</b>
+                instead:<br>
+                <img src="images/functions02.gif" class='inline' alt="The function body.">
+            </li>
+        </ol>
+    <h5>Alternative Return Syntax</h5>
+        <p> Since we make no further use of the variable <code>payment</code> returned
+            from the <code>monthlyPayment()</code> function, it's common to
+            simply make the calculation part of the <b>return expression</b> and
+            shorted the method like this:<br>
+            <img src="images/functions03.gif" class='inline' alt="Returning an expression.">
+        </p>
+    <h5>Return Caveats</h5>
+        <p> There are two things you have to watch out for when using the
+            <code>return</code> statement.
+        </p>
+        <ul>
+            <li> First, the expression that you return, <b>must</b> be the same type
+                (or convertible to that type) as the return type listed in the function
+                header. This, for instance, would be an error:<br>
+                <img src="images/functions04.gif" class='inline' alt="Returning the wrong type.">
+                because the method header <b>says</b> that it returns a <code>double</code>,
+                but the <b>actual</b> value returned is a <code>String</code>.
+            </li>
+            <li> Second, a <code>return</code> statement is a special <b>flow of control</b>
+                that immediately <b>ends</b> the function. That means you <b>can't</b>
+                have any other statements <b>after</b> a <code>return</code> statement.
+                This, for instance produces an error:<br>
+                <img src="images/functions05.gif" class='inline' alt="Unreachable code.">
+                because the <code>println()</code> statement can never be reached;
+                the function has already returned.
+            </li>
+        </ul>
+        <p class='note'>Actually, when we learn about the <code>if</code> statement
+            later this week, you'll see that a function <b>can</b> have several
+            <code>return</code> statements, as long as each and every path through
+            the code leads to exactly one <code>return</code>.
+        </p>
+    <h4>Calling the Function</h4>
+        <p>To <b>call</b> the <code>monthlyPayment()</code> function, we have
+            four options:<br>
+            <img src="images/functions07.gif" class='inline' alt="Calling a function.">
+        </p>
+        <ol>
+            <li class='d'>You can pass <b>variables</b> to the function and then pass the
+                returned value to another procedure or function. In the example
+                shown here, I'm passing the returned value to the <code>String.format()</code>
+                function, and passing the value that <code>format()</code> returns to
+                the <code>println()</code> procedure.
+            </li>
+            <li class='d'>You can pass <b>literals</b> as the actual parameters when you call
+                the function. The second example is almost identical to the first,
+                except that literals are passed instead of variables.
+            </li>
+            <li class='d'>You can call the function and <b>save the value</b> you get back in a
+                variable for later use.
+            </li>
+            <li class='d'>Finally, you can call the function just like you would call a
+                procedure, that is, as a <b>statement</b>. While this is <b>not</b>
+                a syntax error, it is <b>always a logic error</b>, since the code
+                has <b>no effect</b> in your program.
+            </li>
+        </ol>
+    <h4>Documenting Procedures and Functions</h4>
+        <p> Whenever you write a procedure or function, you should provide
+            documentation, so that those who <i>call</i> your method know what
+            each formal parameter stands for, and what the returned value of
+            any function represents.
+        </p>
+        <p> To do this, you'll use Java <b>documentation comments</b> that begin
+            with the sequence <code>/**</code> (slash-star-star) and end with a
+            <code>*/</code> (star-slash) just like a plain multi-line comment.
+            In between, you'll use special <b>documentation</b> tags that can
+            be interpreted by the Javadoc utility.
+        </p>
+        <p> You can look up the syntax for these
+            <a href='http://java.sun.com/javase/6/docs/technotes/tools/windows/javadoc.html#javadoctags'
+            target='_blank'><b>special JavaDoc tags</b></a> online.
+            Fortunately, you don't need to look them up, because Eclipse will
+            provide most of the structure for you. After you've written your
+            function (or procedure), just type a slash-star-star (<code>/**</code>)
+            immediately before the header, and Eclipse will fill in a skeleton
+            like this for you to modify:<br>
+            <img src='images/javadoc01.gif' class='inline' alt='The Eclipse-generated function documentation.'>
+            To finish the documentation just:
+        </p>
+        <ul>
+            <li>Provide a single sentence that describes what the function does. After this
+                sentence (which must end in a period) you have supply more information
+                on how the function or procedure would be used if you like.
+            </li>
+            <li>For every formal parameter, complete the <code>@param</code> tag which
+                describes what the parameter represents.
+            </li>
+            <li>Finally, after the <b>@return</b> tag (for a function), describe what
+                the value returned by the function represents.
+            </li>
+        </ul>
+        <img src='images/javadoc02.gif' class='inline' alt='The completed documentation.'>
+    <h3>How Method Calls Work</h3>
+        <p> <img src="images/method_call2.gif" alt="Image shows three methods. The init() method calls method1(), and method1() calls method2()." class="right">
+            <b>How do method calls work?</b> When you call one method
+            from another method, whether the method is a
+            procedure or a function,
+            the caller (the method making the call)
+            <b>saves</b> the location of the line of code <b>following</b> the
+            method call before tranferring control to the new method.
+        </p>
+        <p> In the new method, each statement is executed
+            in order until the method is finished (either by running out of
+            statements to execute, or by encountering the <code>return</code>
+            keyword). When the new method is finished, it returns control to the
+            statement following the original method call&#8212;the location
+            originally saved by the caller.
+        </p>
+        <p> This is slightly complicated by the fact that
+            the method you're calling may, itself, call other methods, which
+            may also call other methods in turn. This chain of method calls
+            is known as the "call stack", and is illustrated here.
+        </p>
+        <p> In this example, when the <code>init()</code> method is called,
+            it first executes the line reading "statement 1" (06). Then, before
+            calling <code>method1()</code> on the next line, the program
+            <b>saves</b> the address of the following line&#8212;the line that
+            reads "statement 3" (08). This is called the <b>return address</b>.
+        </p>
+        <p> After the return address is saved, the program <b>jumps</b> to
+            the first statement inside <code>method1()</code> and executes
+            it. Since the second statement inside <code>method1()</code> is
+            another method call, the program saves the address of the
+            following line (15) before calling it, just as it did inside the
+            <code>init()</code> method. This new return address is "stacked
+            on top of" the previously saved return address.
+        </p>
+        <p> This continues on until <code>method2()</code> ends, and then
+            the address on the "top" of the stack is retrieved, and the
+            method "returns" to the statement it left.
+        </p>
+    <h4>Examining the Call Stack</h4>
+        <p> Let's take a look at the call stack in real life
+            by creating an error inside one of the "bottom-level"
+            procedures in the <b>Abacus</b> program from last week.
+            In that program, recall, we had a <code>printBeads()</code>
+            procedure which was called by another procedure,
+            <code>printTwoBeads()</code>.
+        </p>
+        <p> To create an intentional <b>runtime</b> error, I've simply
+            defined a local <code>int</code> variable and initialized it with
+            the expression <code> 1 / 0</code>:<br>
+            <img src="images/functions08.gif" class='inline' alt="Adding a runtime error.">
+            This is not <b>illegal</b>; that is, your code <b>compiles</b> without
+            any problems at all. But, when you <br>run</b> the program after
+            adding this line, you'll see something that looks like this:<br>
+            <img src="images/functions09.gif" class='inline' alt="A stack trace.">
+        </p>
+    <h5>What Happened?</h5>
+        <p> When you run the program it continues until the <code>printBeads()</code>
+            procedure is encountered. As you can see, the abacus heading is
+            printed in the ACM console program window at #1.
+        </p>
+        <p> When <code>printBeads()</code> is executed, and it creates a
+            <b>runtime error</b> and the output in the ACM console program
+            window just stops. However, if you look in the Eclipse console window,
+            you'll see a <b>stack trace</b> as shown at #2. A stack trace is like
+            a <i>snapshot</i> of the <b>call stack</b>.
+        </p>
+        <p> The top, or first line, of the stack trace shows you what error occured.
+            In this case, the error was a <code>java.lang.ArithmeticException</code>.
+            This occurs when you attempt an <b>integer divide by zero</b>. (As you gain
+            some experience with Java, you'll learn to interpret other, similar
+            runtime exception messages.)
+        </p>
+        <p> Immediately below the error description is the
+            actual call-stack: the return addresses that were in memory at
+            the time the error occurred. As you can see, the error occurred
+            in a the <code>printBeads()</code> method on line 39. That method
+            was, in turn, called from the <code>printTwoBeads()</code> procedure
+            on line 48. That method was called from your <code>run()</code> method
+            on line 21.
+        </p>
+        <p> Following that, you'll see several other entries, but notice that
+            these entries are <b>not</b> in code that you've written, but are
+            part of the ACM Class Libraries. Finally, at the very bottom, you'll
+            find a portion of your code again, the <code>main()</code> method in
+            your <b>Abacus</b> program.
+        </p>
+        <p> Using the stack trace allows you to pinpoint the runtime
+            errors that occur in your code. You can't, generally, locate
+            code referred to in the ACM or Java class libraries, though,
+            even though you have line numbers in the stack trace. This library
+            code is supplied in object-code (binary) format, so you normally
+            won't be able to read it. Most of the time, though, you'll just ignore
+            these lines in the stack trace.
+        </p>
+    <h3>Coming Up Next ...</h3>
+    <p> In this lesson you learned how to write user-defined methods
+        that <b>take parameters</b>, and how to write methods that
+        <b>return values</b>.
+    </p>
+    <p> In the next lesson, you'll learn about Java's final primitive type,
+        <code>boolean</code> which represents the values <b>true</b> and
+        <b>false</b>, and which makes computer logic possible.
+    </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

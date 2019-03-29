@@ -1,0 +1,439 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+    <p><strong><span class="cap">W</span>hat's the <u>purpose</u> of
+        a computer?</strong> That's pretty simple: computers are designed to
+        <b>run programs</b>, just like your Walkman is designed to play music,
+        and your DVD player is designed to show movies.
+    </p>
+     <div style='border:1px solid navy; padding:0; margin:1em; float:right;background:black;'>
+        <APPLET CODE='c' archive='obf_goldfish.jar'
+            codebase='http://csjava.occ.cccd.edu/~gilberts/applets/fish'
+            width='320' height='240'>
+
+            <param name="bowlcentre_x" value="160.0">
+            <param name="bowlcentre_y" value="145.0">
+            <param name="bowlradius" value="124.0">
+            <param name="watertop" value="60.0">
+            <param name="waterbottom" value="205.0">
+            <param name="leftlip" value="65.0">
+            <param name="rightlip" value="255.0">
+            <param name="round" value="true">
+        </applet>
+    </div>
+    <p> To run a particular program on your computer, a
+        spreadsheet, say, or a computer game, you can
+        install the program on your local hard disk and start it running from
+        your computer's "desktop", by clicking on its icon. Java, though, gives
+        you another option.
+    </p>
+    <p> Using Java you can write computer
+        programs that run <b>inside</b> your Web browser, like
+        Mark Wesley's "Fish Bowl" program on the right; with these
+        kinds of programs, called <b>Java applets</b>, there's no
+        separate download step and no explicit run step: you just visit
+        a Web site containing the Java program, and it
+        automatically starts working inside your browser.
+    </p>
+    <p> Up to now, all of your programs have been text-based (console mode)
+        Java <u>applications</u>. This week you'll write your
+        first <b>graphical Java applet</b>. Before we do that, though, let's
+        spend a little time looking at
+        the <b>environment</b> that Java applets "swim around in"&#8212;the
+        Internet, the World Wide Web&#8212;and the HTML language used to
+        create the pages that will contain your Java programs.
+    </p>
+    <h3>Computer Networks</h3>
+    <p> So far, we've talked about hardware,
+        the physical components that make up your computer, ans <b>software</b>,
+        the "digital-content" that your computer "plays". Where do computer
+        networks come into this? Are they hardware or software, and what do
+        they do?
+    </p>
+    <p> A network is a little bit of both hardware and software, and the purpose
+        of a network is to facilitate the last step of the information
+        processing cycle, <b>communications</b>.
+    </p>
+    <p> Let's start with the definition of a network. A network is a:</p>
+    <p class="pullquote">
+        collection of computers and devices connected together for
+        purposes of communication
+    </p>
+    <p> A network consists of three parts:</p>
+    <ul>
+        <li>network devices</li>
+        <li>network media</li>
+        <li>network software</li>
+    </ul>
+    <p> <img src="images/wireless-router.jpg" style="float: right; margin-left: 1em; margin-top: -3em;" alt="A wireless router">
+        A network device is a piece of hardware that can transmit and
+        receive signals from other computers. One type of a network
+        device is a modem; others are network interface cards (or NICs),
+        or a Wireless Access Point (WAP).
+    </p>
+    <p>
+        When your networking device transmits a message to another computer,
+        how does it get from your computer to its destination? That's the
+        job of the second networking component: the networking media. When
+        signals are sent from one computer to another, they can travel over
+        computer cables, such as those used to wire-together a local area
+        network. They can travel over telephone lines, as they do when you
+        dial into your Internet Service Provider.
+    </p>
+    <p> If you have a smart-phone, a PDA, or a wireless card in your notebook
+        computer, the signals might travel via radio frequency or over a
+        cell-pone network. And, when visit the Louvre as you're surfing the
+        Web, the signals may be traveling through outer space, via satellite.
+    </p><p>
+    </p><h4>Why Bother?</h4>
+    <p> Just because you <b>can</b> do something, doesn't mean you <b>should</b>.
+        Your computer is just a machine; it never gets lonely, so why should
+        you <b>want</b> it to communicate with other computers? We can answer
+        that in one word: <b>sharing</b>.
+    </p>
+    <p> Having a network allows you to share resources between many
+        different computers. For instance, with a network you can share:
+    </p>
+    <ul>
+        <li><b><u>Hardware Devices</u></b> : in our Computing Center, for
+            instance, all of the students share a handful of expensive
+            laser printers. We do the same thing with large disk storage.
+        </li>
+        <li><b><u>Software Programs</u></b> : at OCC, our thousands of computers
+            all use a central copy of Microsoft Office for installation. Of
+            course we still have to pay for every individual instance of
+            Office in use, but we save a lot of money on the cost of
+            installing and maintaining the software.
+        </li>
+        <li><b><u>Data</u></b> : OCC's network allows us to keep all of
+            your student records in one place, and access that data from
+            anywhere  on campus.
+        </li>
+        <li><b><u>Information</u></b> : our network enables us to deliver
+            this online class itself.
+        </li>
+    </ul>
+    <p> The bottom line is that networking just makes computing
+        more productive. Sun Microsystems trademarked this
+        slogan several years ago, and it really strikes me as true<br>
+        <img src="images/network.gif" alt="The Sun slogan: the Network is the computer" vspace="10" border="1" hspace="0"><br>
+        To see exactly what that means, you might want to read
+        <a href="http://www.oreillynet.com/pub/a/251" target="_blank">
+        <b>this article</b></a>
+        from a speech given by Tim O'Reilly.
+    </p>
+    <h4>Clients and Servers</h4>
+    <p> For all of this sharing to take place, somebody has to be
+        in control; otherwise Computer A and Computer B will end up
+        in a big fight over who gets to print first if they both
+        share a printer.
+    </p>
+    <p> <img src="images/client-server.gif" style="border: 1px solid black; float: right; margin-left: 2em; margin-bottom: 1em;" alt="Clients and servers on a network">
+        In a network, we call the computer that controls access to
+        a particular device, such as a printer or collection of
+        documents, a <b>server</b>. A server in this sense is not,
+        necessarily, a specific <b>kind</b> of computer, but a
+        particular <b>role</b> that a computer takes on.
+    </p>
+    <p> There are many different kinds of servers. For instance, the
+        computer that controls access to a printer is called a
+        <b>print server</b>. A computer that allows many computers to
+        share access to its hard disks, such as the one used in
+        the OCC Computing Center, is called a <b>file server</b>.
+        The computer that manages a collection of Web documents,
+        (coming up shortly), is called a <b>Web server</b>.
+    </p>
+    <p> The computers that use the services of a server are called
+        <b>clients</b>. So, for instance, as you view this Web page,
+        your computer is a client, while the computer that stores the
+        Web pages at OCC is the server.
+    </p>
+    <p class="note">The terms client and server are also used to refer
+        to the <b>software</b> that manages or requests a resource,
+        instead of the computer itself. For instance, the pages you
+        are viewing are stored on a computer at OCC which the computing
+        staff has named Athena. However, that single computer is running
+        two separate Web server programs: one Web server that serves
+        up the faculty Web pages pages, and a different Web server
+        program that serves up the regular campus Web site.<br><br>
+        The same thing applies to the term <i>client</i>. In once sense
+        the computer you are sitting at is a client, but in another
+        sense, the <b>program you are using</b>, Internet Explorer,
+        Firefox, or Safari, is the real client, since it is making and
+        receiving the requests.
+    </p>
+    <h3>The Internet</h3>
+    <p> If networking is so wonderful, you might wonder why we don't just
+        network all of the world's computer's together. Unfortunately, that's
+        more difficult than it might seem at first glance.
+    </p>
+    <p> <img src="images/globe.gif" style="float: right; margin-left: 2em; margin-bottom: 1em;" alt="The Internet">
+        When networks were first invented, each different hardware and software
+        vendor used a different networking standard. If you purchased a
+        network interface card that used Arc-Net or Token-Ring, you couldn't
+        communicate with computers that used Ethernet, for instance. The
+        same thing was true with software; if your network was mostly Mac's
+        running Appletalk, you couldn't just plug in a PC running Lan-Manager.
+        Even in the PC world, there were several incompatible software
+        standards when it came to network operating systems.
+    </p>
+    <p> So, the first order of business was to get everyone to use the
+        <b>same</b> networking hardware and software. Obviously, that was a complete
+        non-starter; Apple users or Unix shops are not going to roll over and
+        start using Microsoft networking software, and vice versa.
+    </p>
+    <p> Instead of throwing out all of the incompatible networking software
+        in the world, and making everyone start over, the architects of the
+        Internet came up with the idea of <b>inter-networking</b>; don't
+        connect all of the computers together, just connect the networks.
+    </p>
+    <p> And, that's what the Internet is: it's a global collection of
+        networks. Internally each network can manage its communication
+        using any hardware and software it likes; externally, though,
+        all of the networks on the Internet have agreed on a common
+        method of communication, called TCP/IP, or <b>Transmission
+        Control Protocol/Internet Protocol</b>.
+    </p>
+    <p> This agreed upon internetworking standardization means that
+        I can sit on my Unix network, and retrieve a file from a Web
+        server sitting on an Apple network or one sitting on a Windows
+        network, and never know the difference.
+    </p>
+<h4>Open Protocols</h4>
+    <p> The Internet works because all of the different companies that
+        use it agreed to use the same <b>open protocol</b>. This is kind
+        of like how all of your appliances agree to use the same kind of
+        electricity. You can plug in your toaster or your TV to the same
+        plug, and both of them work.
+    </p>
+    <p> TCP/IP, though, is a <b>low-level</b> protocol. The Internet
+        pioneers soon developed <b>higher-level</b> protocols, like the
+        standards that are used for TV or radio transmission, for instance.
+        These standards mean that you can plug in a TV or radio from any
+        manufacturer, and receive TV or radio broadcasts. You can't do
+        that with your toaster, though, because it doesn't respond to
+        the same kind of high-level protocols, even though it uses the
+        same kind of electricity as your TV.
+    </p>
+    <p> So, what kind of higher-level protocols were developed for
+        the Internet? Here are the most common ones:</p>
+
+      <h5>Telnet</h5>
+      <p>A <strong>Telnet</strong> server allows you to connect to the
+      machine running the service and to use the machine exactly as if
+      you were sitting at the console. Telnet is common in the UNIX
+      world, where each computer is expected to have many users. It's
+      less common in the Mac and PC worlds, where most machines are
+      single user.
+      </p>
+      <p class="note">Today, a <i>safer</i> version of "telnet" is pretty
+      common, known as <b>SSH</b> or Secure Shell protocol. Using SSH
+      is pretty much like using Telnet, except that the communication
+      between the client and server is encrypted, rather than taking
+      place in "plain text".
+      </p>
+
+      <h5>FTP</h5>
+      <p>A <strong>File-Transfer-Protocol</strong> server allows you to
+      move files between different machines, even if both machines are
+      using different operating systems. Using FTP, it's easy to
+      transfer files between UNIX, Mac, and PC machines over the
+      Internet, when it would be difficult&#8212;if not impossible&#8212;to
+      directly transfer the files.</p>
+
+      <h5>SMTP</h5>
+      <p>Most of us take global email for granted, but just a few short
+      years ago there were several incompatible email systems,
+      restricted to exchanging mail between local clients on the same
+      local area network. Those proprietary email systems haven't
+      entirely disappeared, but all of them have had to make
+      arrangements to deal with <strong>SMTP: the Simple Mail Transport
+      Protocol</strong>.</p>
+
+      <h5>POP</h5>
+      <p>SMTP is the protocol used to send mail around the Internet,
+        but most of us don't have SMTP servers on our local machines;
+        instead, we use our Internet Service Provider's (ISP) SMTP
+        servers to send and receive our email. Once the mail arrives
+        at your service provider, however, you may want to copy it
+        from your ISP's servers to your local machine for reading.
+        The <b>Post Office Protocol</b>, or <b>POP</b> allows
+        you to do that.
+        </p>
+
+    <h5>HTTP</h5>
+      <p>Perhaps the most important, and most widely used of these
+        high-level protocols is the <strong>HyperText Transfer Protocol</strong>,
+        which is the basis for the World-Wide-Web. HTTP is a "language" used to
+        communicate between Web servers and Web clients. (Today, a Web
+        client is commonly called a "Web Browser".)</p>
+
+    <h3>The World-Wide-Web</h3>
+      <p> <img src="images/opal_4.jpg" class="right" alt="The Particle Accelerator at CERN.">
+        Tim Berners-Lee , the Father of the Web, (and first <i>Duke of
+      URL</i>, as the old nerd-joke went, but now <i>Sir Tim</i> for real),
+      invented <b>HTTP</b>, the <b>HyperText Transfer Protocol</b>,
+      while working as a researcher at the
+      European Center for Partical Physics (CERN). Like many who have
+      had a great impact on the world, Berners-Lee simply wanted to
+      find an easier way to get his work done. In this case, he wanted
+      an easier way to exchange documents with other researchers and
+      academics.</p>
+
+      <p>If you've ever read an academic paper, you know that
+      they are literally peppered with references and citations: it's
+      how you get "graded" in that profession. Unfortunately, it makes
+      for somewhat difficult reading because just when you've gotten to
+      the interesting part, there's one of those darn footnotes, and
+      you, being the conscientious type, have to plod down to the
+      library, look up the reference, and then plod back to where you
+      left off, by which time you've forgotten all about what the
+      author was originally trying to say, if you ever cared, in the
+      first place.</p>
+
+      <p>Whew!</p>
+
+      <p>Berners-Lee's idea was to store the documents on computers
+      connected via the Internet. When you retrieved the document, all of those
+      pesky references would be translated into <b>hyperlinks</b>. As
+      you read through the document and encountered a reference, rather
+      than breaking your train of thought, you could just select the
+      link and instantly view the reference.</p>
+
+      <h3>HTTB: Hypertext TidBits</h3>
+      <p>For Berners-Lee's vision to come to pass, there were
+      several different problems that needed to be solved:</p>
+
+      <ul>
+        <li>Finding a particular document</li>
+
+        <li>Encoding the document to add the links</li>
+
+        <li>Retrieving and transporting the document</li>
+      </ul>
+      <p>Here are the pieces Berners-Lee designed to solve these
+      problems.</p>
+
+      <h4>Location, Location, Location</h4>
+      <p>Since the actual documents Berners-Lee wanted to read
+      could be located anywhere in the world, every document had to be
+      given a unique identifier. At first a scheme was proposed where
+      every document would be branded with an incomprehensible very
+      large number called a GUID. All reasonable people thought that
+      this idea was a severe afront to our Civil Liberties, however,
+      and it was abandoned except in some of the remote provinces of
+      Redmond :).</p>
+
+      <p>The idea Berners-Lee actually came up with, and that
+      was adopted, was the <b>URL</b> or <b>Uniform Resource Locator</b>. You'll
+      learn more about these in a later lesson. A URL provides a
+      unique identifier for any document on the Internet, located
+      anywhere in the world. (For those of you who are sticklers for
+      detail, a URL is actually a type of <b>Universal Resource Identifier</b>
+      or <b>URI</b>. The difference between a URI and a URL, is that
+      the URL contains information about which type of protocol to use
+      to serve the unique document.)</p>
+
+      <h4>Linking Up</h4>
+      <p>Knowing where a document lives is a good start, but to actually
+      create the hyperlinks inside the document, each document
+      needs to be <b>encoded</b> in some manner. For instance, some
+      of the references in a footnote might not be available online, so
+      having a link for that reference would be impossible.</p>
+
+      <p>The scheme that Berners-Lee came up with to encode these
+      hypertext documents is called <strong>HTML</strong> or the
+      <strong>HyperText Markup Language</strong>.</p>
+
+      <h4>Sending Documents</h4>
+      <p>When a link is encountered in a document, some way is needed
+      for the clients and servers, (located on different machines), to
+      request and transfer those documents. For this part Berners-Lee
+      invented <strong>HTTP</strong> or the <strong>HyperText Transfer
+      Protocol</strong>. HTTP is the <i>language</i> that Web Servers
+      and Web Clients (browsers) use to talk to each other.</p>
+
+      <h3>More Clients and Servers</h3>
+      <p>Going back to the beginning of this discussion: do you remember
+      clients and servers? Well HTTP also has clients and servers. The
+      HTTP server is called a Web server, but in the UNIX tradition
+      [where all this started] it is often named
+      <strong>httpd</strong>, which stands for the
+      hyper-text-transfer-protocol-daemon.</p>
+
+      <div class="pullquote">
+        In UNIX, daemons are resident programs that sit and wait
+        to be of service. As Stan Kelly-Bootle has pointed out, "the
+        spelling indicates such processes are amiable spirits rather
+        than evil demons." Of course, if your httpd program goes bad,
+        it can be hard to tell the difference.
+      </div>
+      <p>The HTTP client program is called a <b>browser</b> . Tim
+      Berners-Lee built the first Web browser, named, appropriately,
+      <strong>WorldWideWeb</strong> , in 1990 shown here:<br>
+       <img src="images/c05.gif" alt="Tim-Berners Lee&amp;apos;s WorldWideWeb program." vspace="15" border="1" hspace="15"><br>
+      You can read Tim's account and see a larger screenshot of the
+      browser, which predates Mosaic, (not to mention Netscape
+      Navigator and Internet Explorer), by several years at:</p>
+
+      <div class="screen">
+        <strong><a href="http://www.w3.org/People/Berners-Lee/WorldWideWeb.html" target="_blank">
+        http://www.w3.org/People/Berners-Lee/WorldWideWeb.html</a></strong>
+      </div>
+      <p>The only problem with Tim's browser was that it only ran on
+      relatively rare and expensive <b>NeXT</b> machines; all of the other Web
+      browsers were text based, academic papers not being known as
+      hotbeds of creative graphics. It wasn't until an undergraduate
+      student making $9.00 an hour&#8212;<b>Mark Andressen</b>&#8212;created the first
+      Windows/Mac graphical Web browser, <b>Mosaic</b>, that things really
+      took off.</p>
+
+      <p>And that, as they say, is history.</p>
+
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, you learned a little bit about the Internet
+            and the World Wide Web. You learned about the differences
+            between <b>clients and servers</b>, about different kinds of
+            <b>networking protocols</b>, and how to specify a <b>URL</b>
+            or Uniform Resource Locator.
+        </p>
+        <p> In the next lesson, you'll learn how to write Java programs,
+            called <b>applets</b>, that work inside a Web page.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

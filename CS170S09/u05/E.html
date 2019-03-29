@@ -1,0 +1,708 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + " " + lessn;
+        </script></head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">J</span>ava's selection and iteration
+            statements</b> are called <b>flow-of-control</b> statements
+            because they provide a highly <b>structured</b> method of conditionally
+            and repeatedly executing a particular section of code.
+        </p>
+        <p>
+            In years past, however, before the control structures we use
+            today, programmers still needed the equivalent of <code>if</code>
+            statements and loops.
+            <img src="images/e01.jpg" class="right" alt="Esdgar Dijkstra.">
+            Rather than relying on built-in language
+            features, though, those iron-age programmers constructed their
+            own flow of control statements, using the <b>jump</b>.
+        </p>
+
+        <p>
+            The jump statement often uses another name; even programmers who
+            have never heard of the jump have heard of its nom de plum,
+            the <b><code>goto</code></b> statement. The computer scientist
+            Esdgar Dijkstra, (shown here), is best known for his landmark
+            paper published in the journal, <i><u>Communications of the ACM</u></i>,
+            titled <b>GOTO Considered Harmful</b>. The paper, which pointed
+            out the dangers of using the <code>goto</code> statement, and
+            urged its retirement, ignited a storm of controversy and
+            is often credited with starting the <b>structured programming
+            revolution</b>.
+        </p>
+        <p> The <code>goto</code> is
+            one of Java's fifty reserved words, but it isn't actually
+            implemented as part of the language, (like it is in C++ and C#).
+            If your dream is to arbitrarily jump willy-nilly hither-and-yon
+            through your code, you'll have to find another programming
+            language to accomodate you. When it comes to loop control,
+            however, Java hasn't abandoned the jump altogether. Java has two
+            statements&#8212;<code>break</code> and <code>continue</code>&#8212;that
+            let you do your jumping in a controlled fashion.
+        </p>
+    <h3>The break Statement</h3>
+        <p>The <code>break</code> statement is used in two different
+            circumstances, but both circumstances are quite similar.
+            The break statement allows you to jump <b>out</b> of:
+        </p>
+        <ul>
+            <li>a <code>switch</code> statement</li>
+            <li>a loop</li>
+        </ul>
+        <p> <img src="images/x06.gif" alt="The break statement" align="right" border="0" hspace="15">
+            When a <code>break</code> statement is encountered in the
+            body of a loop, your program jumps to the statement immediatly
+            <b>following</b> the loop body, as you can see in the illustration
+            shown here.
+        </p>
+        <p> Any remaining statements within the loop body are skipped. The
+            test expression is not re-evaluated; the termination occurs
+            regardless of the value of the test expression.
+        </p>
+        <p> Although it can be missused, allowing you to write
+            code that is as convoluted as any produced by the
+            <code>goto</code> statement, the <code>break</code> can
+            sometimes be used to make your loops simpler and clearer,
+            especially when used to create a <b>loop-and-a-half</b>.
+        </p>
+        <p class="note">Many textbooks discourage the use of the break
+            statement as part of a loop, but I disagree. Research has shown
+            that students who use the <code>break</code> statement following
+            the loop-and-a-half pattern shown below, understand the termination
+            condition better and consistently write correct loops more often.
+        </p>
+    <h4>Loop-and-a-half</h4>
+        <p> As you know, the built-in loops test either <b>before</b> the
+            loop body, or <b>after</b> the loop body. Sometimes, however,
+            its much more convenient to test <b>inside</b> the loop body.
+            This is especially true when a <b>primed</b> loop requires
+            many lines of code just to set up the loop condition.
+        </p>
+        <p> This can be done by using a Boolean <b>flag</b>, like we did
+            in the last lesson. There are pros and cons to this approach.
+        </p>
+        <ul>
+            <li><b>Con</b>: using a flag introduces another variable,
+                which adds to the "mental overhead" of understanding
+                the function.
+            </li>
+            <li><b>Pro</b>: the flag <i>can</i> be used to consolidate
+                several different, otherwise unrelated, bounds
+                conditions, making the overal loop structure clearer.
+            </li>
+        </ul>
+        <p> I, personally, feel that <b>flag-controlled</b> loops only
+            make sense in this second situation: where you have several
+            different bound conditions and you can use nested or
+            sequential <code>if</code> statements to intialize a
+            single Boolean flag.
+        </p>
+    <h5>The PositiveMean2 Example</h5>
+        <p> Let's look at an example of a loop that uses the
+            <code>break</code> statement to implement a loop-and-a-half.
+            <a href="PositiveMean2.java",target="_blank">
+            <b>PositiveMean2.java</b></a> is a rewrite of the
+            <b>PositiveMean</b> example from the lesson on <code>while</code>
+            loops.
+        </p>
+        <p> Instead of using a <b>primed loop</b> that reads
+            a number before the loop, and then reads the next number
+            at the bottom of the loop, this version of the application
+            uses a <b>single read statatement</b>, along with a
+            <code>break</code> statement to exit the loop:<br>
+            <img src="images/pm2.gif" class="inline" alt="A fragment of PositiveMean2.java.">
+            Note that the <code>while</code> loop uses a bounds condition
+            of <code>true</code>; that means that this is an
+            <b>infinite</b> loop that can only exit using the
+            <code>if</code> statement in it's center.
+        </p>
+        <p> Often, in a loop-and-a-half, you'll put the <b>necessary</b>
+            bound here, to make sure a loop doesn't run past the end of
+            an input <code>String</code>, for instance.
+        </p>
+        <p> Inside the loop you'll find:</p>
+        <ol>
+            <li class="d"> An "input" section in the top half of the
+                loop. Of course, you'll recall that this is exactly the
+                same structure that was used for the <b>flag-controlled</b>
+                sentinel loop in the last lesson.
+            <li class="d">  The loop condition
+                doesn't need to test for the sentinel value, because it's
+                tested in the middle of the loop body, using
+                and <code>if</code> statement. When the sentinel is
+                encountered, the loop is exited using the <code>break</code>
+                statement. This is the loop's <b>intentional</b> bounds.
+            </li>
+            <li class='d'> After the "test in the middle", the actual
+                processing takes place. Unlike a flag-controlled loop,
+                this code does <b>not</b> need to be placed inside an
+                <code>else</b> block, since the <code>break</code> statement
+                causes a <b>jump</b> past this code when it it is encountered.
+            </li>
+        </ol>
+        <p> You can
+            <a href="javascript:popUpWindow('http://faculty.orangecoastcollege.edu/sgilbert/applets/PositiveMean2.html',0,0,525,400);">
+            <b>run the program</b></a>, by clicking the hyperlink
+            in this sentence. To download the source code and run it on
+            your own computer, click the link at the beginning of this
+            section. Here's what the program looks like when it runs on
+            my machine:<br>
+            <img src="images/pm2a.gif" alt="Running the PositiveMean2 app." class="inline">
+        </p>
+    <h3>The continue Statement</h3>
+        <p> <img src="images/x09.gif" alt="The operation of the continue statement" class="right">
+            The <code>continue</code> statement is a jump statement like
+            <code>break</code>, but unlike <code>break</code>,
+            the <code>continue</code> jumps <b>back</b> to the loop
+            condition, rather than jumping <b>out</b> of the loop.
+        </p>
+        <p>Exactly what that means depends upon which loop you're using:</p>
+        <ul>
+            <li>For the <code>while</code> loop and the
+                <code>do</code>-<code>while</code> loop, the <code>continue</code>
+                statement jumps to the <code>boolean</code> test, skipping
+                backward (<code>while</code>) or forward
+                (<code>do</code>-<code>while</code>) as necessary.
+            </li>
+            <li> With the <code>for</code> loop, control jumps to the update
+                expression.
+            </li>
+        </ul>
+        <br clear="all">
+    <h4>An Example : Summing Digits Yet Again</h4>
+        <p> Let's look at an example from JavaBat where you might want to
+            use the <code>continue</code> statement with a <code>for</code>
+            loop. We've already seen two programs that sum the digits in
+            an integer. How about summing the digits in a <code>String</code>?
+        </p>
+        <p> Well, that's easy. To turn a <code>String</code> containing digits
+            into an integer, you can use the <code>Integer.parseInt()</code>
+            method. You can walk through the <code>String</code> with a
+            <code>for</code> loop, extracting each single-character
+            digit substring. Use <code>Integer.parseInt() on the substring,
+            and add that to the running total.
+        </p> There are two complications, though:</p>
+        <ul>
+            <li>all of the characters inside the <code>String</code>
+                <b>may not be digits</b>. If a character isn't a digit,
+                then you'll want to skip it.
+            </li>
+            <li>our plan depends on extracting single-character substrings,
+                but the <code>Character.isDigit()</code> method, which we
+                need to use to determine if an individual character is a
+                digit, takes a <code>char</code> parameter, not a
+                <code>String</code>.
+            </p>
+        </ul>
+        <p> Neither of these are huge problems, but they mean that the
+            code is a little bit more complex than the original plan
+            would suggest. The <code>continue</code> statement can make
+            the solution a little simpler. The
+            <a href='http://www.javabat.com/prob?id=1978901'
+            target='_blank'><b>sumDigits</b></a> problem is from the <b>String-3</b>
+            section. Here's the summary:
+        </p>
+        <div class='note'>
+        <img src='images/sumdigits3.gif'>
+        <p> Given a String, return the <i>sum</i> of the digits 0-9
+            that appear in the String, ignoring all other characters.
+            Return 0 if there are no digits in the string. (Note:
+            <i>Character.isDigit(char)</i> tests if a <i>char</i> is
+            one of the chars '0', '1', .. '9'. You can convert a digit
+            to an integer by subtracting '0' or by converting to a
+            String and using the Integer.parseInt() function.)
+        </p>
+        <p> Here are some examples:</p>
+        <ul>
+            <li>sumDigits("aa1bc2d3") returns 6</li>
+            <li>sumDigits("aa11b33") returns 8</li>
+            <li>sumDigits("Chocolate") returns 0</li>
+        </ul>
+        </div>
+    <h4>The Solution</h4>
+        <p> The first step in solving this problem is to put in the
+            "boiler-plate" code; that is, the code you really don't
+            need to think about. Here's what that looks like:<br>
+            <img src='images/sumdigits04.gif' class='inline'
+                alt='The sumDigits function with boilerplate code.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>As with any function, our first step is to
+                create and initialize a variable to hold the returned
+                value (<code>sum</code> in this case), and then add a
+                <code>return</code> statement at the end of the function.
+            </li>
+            <li class='d'>Since we need a loop, the next step is to determine
+                the loop bounds. As with most <code>String</code> functions,
+                you'll use the length as a count bounds. Since we are
+                going to visit every character, we don't need to subtract
+                anything from the length, like we would if we were comparing
+                substrings of different lengths.
+            </li>
+            <li class='d'>Finally, we need to add the "reading" or data input
+                part. We know that we'll need to process each character,
+                so we can use the <code>charAt()</code> function like this.
+            </li>
+        </ol>
+    <h5>Using continue</h5>
+        <p> Now that we have a character, we have two choices. If it is
+            a digit, we want to convert it to an integer and add it to
+            a sum. If it is anything else, we want to just ignore it and
+            go get the next character.
+        </p>
+        <p> This is where the <code>continue</code> statement comes into
+            play. Use the <code>Character.isDigit()</code> method to check
+            if the character is a digit. If it is <b>not</b>, the
+            <code>continue</code> statement sends you right back up
+            to the loop update expression, like this:<br>
+            <img src='images/sumdigits05.gif' class='inline'
+                alt='The sumDigits function with the continue.'>
+        </p>
+    <h5>Converting the Digit with parseInt()</h5>
+        <p> At this point, we know that the character is a digit,
+            and so we want to convert it to an integer, and add
+            that integer to the sum. (Don't just add the character
+            to the sum. The numeric Unicode value of the digit '1'
+            is 49, and that is what would be added. You won't get
+            the answer that you expect.)
+        </p> To convert your digit to an integer, you can use
+            <code>Integer.parseInt()</code> like this:
+        </p>
+        <p class='code'>
+            sum += Integer.parseInt("" + ch);
+        </p>
+        <p> Note you have to use <code>String</code> concatenation
+            because <code>Integer.parseInt()</code> only accepts
+            <code>String</code> parameters.
+        </p>
+    <h5>Using Character Arithmetic</h5>
+        <p> Another alternative is to take advantage of the fact that
+            all of the digit characters are <b>contiguous</b>, located
+            right next to each other in the Unicode (or any other
+            character set.) Since <code>char</code> varaibles are actually
+            16-bit numbers, you can use them in arithmetic expressions,
+            including subtraction.
+        </p>
+        <p> Now, suppose <code>ch</code> contains the digit character
+            zero. If you subtract the <code>char</code> literal
+            <code>'0'</code> from <code>ch</code> you'll get the
+            <b>integer</b> value 0. The same thing works for the
+            other digit characters, since they are right next to
+            each other in the character set.
+        </p>
+        <p> Thus, instead of using concatenation and
+            <code>Integer.parseInt()</code>, you can just do the
+            conversion and the addition like this:<br>
+            <img src='images/sumdigits06.gif' class='inline'
+                alt='The sumDigits function with the conversion.'>
+        </p>
+    <h3>Labeled break and continue</h3>
+        <p> One of the problems with nested loops, is that the
+            <code>break</code> and <code>continue</code> statements stop
+            "working." Actually, they don't stop working, exactly; they just
+            don't work quite the way you'd like. Here's the problem.
+        </p>
+        <p> Both <code>break</code> and <code>continue</code> work on
+            the <b>current</b> loop. That means, when you are in an inner
+            loop, a <code>break</code> statement only exits the inner loop,
+            it doesn't get you out of the outer loop. Java has a facility
+            to address this deficiency, called the <b>labeled break</b> and
+            the <b>labeled continue</b>. Here's how they work:
+        </p>
+        <ol>
+            <li class="d"><b>Before</b> each loop, add a <b>label</b>. A label is
+                simply an identifier that ends in a <b>colon</b>.
+            </li>
+            <li class="d">Inside the loop, use the name of the label, along
+                with the keyword <code>break</code> or <code>continue</code>,
+                to jump to the loop following the label.
+            </li>
+        </ol>
+        <p> Here's an example:</p>
+        <p class="code">
+            <span class="cmt"><b>// Labeled break and continue</b></span><br>
+            <br>
+            int count = 0;<br>
+            <br>
+            Outer: <span class="cmt">// label ends with a colon</span><br>
+            for (int outer = 1; outer &lt; 1000; outer++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(int inner = 1; inner &lt; 1000; inner++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( inner % 2 == 0)&nbsp;&nbsp; continue;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( inner % 201 == 0 ) break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( outer % 25 == 0 )&nbsp; continue Outer;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( outer % 51 == 0 )&nbsp; break Outer;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Can you follow the flow of control in this nested loop?
+            Let's analyze it:
+        </p>
+        <ol>
+            <li class="d">The outer loop goes from 1 to 999, and for every revolution
+                of the outer loop, the inner loop should also go around 999
+                times. If there were no <code>breaks</code> or
+                <code>continues</code>, then the loop would repeat
+                998,001 times.
+            </li>
+            <li class="d">In the inner loop, every even value where (<code>inner % 2 == 0</code>)
+                uses <code>continue</code> to skip back to the update
+                expression of the inner loop. However, when <code>inner</code>
+                reaches 201 (an odd number) <code>break</code> ends the
+                inner loop. The inner loop, then, never executes more than
+                201 times per revolution of the outer loop.
+            </li>
+            <li class="d">On the 25th repetition of the outer loop, there is a
+                labeled <code>continue</code>. The target of this
+                <code>continue</code> is the label <code>Outer</code>. This causes
+                a jump to the expression <code>outer++</code>, (after
+                updating count) and the 25th and 50th iterations of the
+                inner loop are skipped.
+            </li>
+            <li>Finally, on the 51st repetition of the outer loop, the
+                labeled <code>break</code> is encountered. This jumps to
+                the statement following the closing brace of the loop labeled
+                by <code>Outer</code>.
+            </li>
+        </ol>
+        <p> The result? The variable <code>count</code> records 201
+            iterations of the inner loop times 48 iterations of the outer
+            loop, plus 3 entries to the inner loop with early exit (two
+            <code>continue</code> <code>Outer</code> and one
+            <code>break</code> <code>Outer</code>). The final total for
+            <code>count</code> is 9,648 instead of 998,001.
+        </p>
+    <h2>Data-Bound Loops</h2>
+        <p><b><span class='cap'>U</span>p to now we've written
+            counter-controlled</b>, sentinel-controlled and
+            limit-controlled loops. There is one last category of
+            loop you'll need to know how to implement: the <b>data-bound</b>
+            loop.
+        </p>
+        <p> With a data-bound loop, instead of looking for a specific
+            value, like we do with a sentinel, or a computed value,
+            like we do with limit loops, we just keep going until
+            there is no more data left.
+        </p>
+        <p> Well, how do we tell if there is any more data left? For
+            that, we rely on the operating system to send us a specific
+            signal, traditionally called <b>EOF</b>. EOF stands for
+            "end of file"; an <b>EOF-controlled</b> loop is just another
+            name for a <b>data-bound</b> loop.
+        </p>
+    <h3>Introducing Iterators</h3>
+        <p> <img src='images/iterator2.gif' class='right' alt='Different iterators.'>
+            To implement a data-bound loop, you'll usually use an
+            <b>iterator</b> of some sort. An <b>iterator</b> is an object
+            that allows you to apply some operation to all of the members
+            of a group of related variables or objects, using a loop.
+        </p>
+        <p> Iterators can be used to skip from cell to cell in a biological
+            simulation, or to display an "overhead radar" of all of the
+            objects in a game of Doom (as the illustration on the right
+            shows.) As one textbook put it: "iterators provide a consistent
+            and simple mechanism for systematically processing a group of
+            items", no matter what kind of things those items might be.
+        </p>
+        <p> Such groups of related items or variables are known as
+            <b><i>collections</i></b>, and Java has several different
+            types. The <code>String</code> class is a a collection of
+            characters, and, in another sense, it is a collection of
+            <b>tokens</b>. Tokens are just meaningful sequences of
+            characters.
+        </p>
+        <p> In the next unit we'll take a look at Java's <b>array</b>
+            collection types, and later in the semester we'll look at
+            the <b>ArrayList</b> class. If you go on in Computer Science
+            and take CS 272 or CS 200 (Data Structures), you'll learn
+            about dozens if different kinds of collections and
+            their associated iterators.
+        </p>
+        <p> In this lesson, though, let's take another look
+            at an iterator object you've already met: the
+            <code>java.util.Scanner</code> class.
+        </p>
+    <h4>The Scanner Class</h4>
+        <p> You first met the <code>Scanner</code> class back in Unit 2,
+            where you saw how it could be used to read input in
+            a "traditional" Java console program. Most of the programs
+            we've written since then, though, have used the ACM
+            <code>ConsoleProgram</code> class, which has its own
+            method of reading input.
+        </p>
+        <p> The <code>Scanner</code> class is actually much more versatile
+            than I've let on. Using a <code>Scanner</code> as an
+            iterator allows us to:
+        </p>
+        <ul>
+            <li>process each individual word in a line of text</li>
+            <li>read and process each line of text in a file</li>
+            <li>read and process tokens from a network stream</li>
+        </ul>
+        <p> In the first lesson of this unit (Logical Operators) you
+            saw how you could use the logical <b>AND</b> and <b>NOT</b>
+            operators to count the number of words in a <code>String</code>.
+            In that lesson, you had to carefully monitor each character
+            to see if you were entering or leaving a word, and then act
+            accordingly.
+        </p>
+        <p> The iterators provided by the <code>Scanner</code> class
+            will do all of that for you automatically.
+        </p>
+    <h4>Reading Tokens</h4>
+        <p> To read a <b>token</b> using the <code>Scanner</code> class,
+            you have to do three things:
+        </p>
+        <ol>
+            <li class='d'>Construct a <code>Scanner</code> object and
+                "hook it up" with the <b>source</b> of the data.
+            </li>
+            <li class='d'>Write a <code>while</code> loop that continues
+                until you are out of data. You do that by calling the
+                <code>Scanner hasNext()</code> method. If you are at
+                end-of-input (or EOF), then the method will return
+                <code>false</code>; otherwise it returns <code>true</code>.
+            </li>
+            <li class='d'>Read the next word or <i>token</i> from the
+                input. You do that by calling the method <code>next()</code>
+                which <b>returns a token, not a line of text</b>.
+            </li>
+        </ol>
+        <p> The <code>next()</code> method returns its token as a
+            <code>String</code> with all of the <i>delimiters</i>
+            (or <i>token-separators</i>) removed. The "stock" version
+            of the <code>Scanner</code> uses whitespace as the delimiter,
+            so the token you get back will have both leading and
+            trailing whitespace removed.
+        </p>
+    <h4>Creating Scanner Objects</h4>
+        <p> Here are a few snippets that show you how to connect a
+            <code>Scanner</code> object with diffferent kinds of
+            data sources. You already saw how to connect to the
+            standard Java system console (<code>System.in</code>) like this:
+        </p>
+        <p class='code'>
+            Scanner cin = new Scanner(System.in);
+        </p>
+        <p> To read from an ACM <code>ConsoleProgram</code> using a
+            <code>Scanner</code>, you first need to "grab" the underlying
+            "reader" object like this:
+        </p>
+        <p class='code'>
+            Scanner cin = new Scanner(getReader());
+        </p>
+        <p> To "read" from a <code>String</code> token-by-token,
+            either of these will work:
+        </p>
+        <p class='code'>
+            Scanner sin1 = new Scanner("A string literal.");<br>
+            Scanner sin2 = new Scanner(str); <span class='cmt'>// a String variable</span>
+        </p>
+        <p> To read from a file on disk, you first need to open the file.
+            Java has a wealth of classes that allow you to do this, but,
+            unfortunately, all of them require you to explicitly handle
+            various error conditions, such a missing file.
+        </p>
+        <p> You'll learn how to use Java's standard file-processing classes
+            in the second half of the course. For right now, though, we
+            can fall back on the ACM <code>MediaTools</code> class, which
+            has an <code>OpenDataFile()</code> function that performs the
+            error-handling for you.
+        </p>
+        <p> Here's how you'd use the class to open the text file "moby.txt"
+            containing the text of Moby Dick:
+        </p>
+        <p class='code'>
+            Scanner fin = new Scanner(MediaTools.openDataFile("moby.txt"));
+        </p>
+    <h4>The FileStats Example</h4>
+        <p> To see how an iterator works, let's build a
+            program that asks the user for the name of the file to open,
+            and then uses the <code>Scanner</code> class to loop through
+            the file and count them the words, lines and characters.
+        </p>
+        <p> We'll call the program
+            <a href='FileStats.java' target='_blank'><b>FileStats</b></a>.
+            Click the link in the previous sentence to download and
+            run the program on your own machine. You'll also need to
+            get one or more text files (or download
+            <a href='moby.txt' target='_blank'><b>moby.txt</b></a>) and
+            place them in the same folder as FileStats.java.
+        </p>
+        <p> Here's what the program looks like as it runs:<br>
+            <img src='images/fs01.gif' class='inline' alt='Running FileStats.java.'>
+            Here's how it works
+        </p>
+    <h5>Getting Started</h5>
+        <p> Our program needs to use the <code>Scanner</code> class, which is
+            located in the <code>java.util</code> package and the
+            <code>MediaTools</code> class which is part of the
+            <code>acm.util</code> package, which we'll need to open
+            the file.
+        </p>
+        <p> Step 1 is to <code>import</code> those two packages,
+            like this:<br>
+            <img src='images/fs02.gif' class='inline' alt='FileStats imports.'>
+        </p>
+    <h5>Opening the File</h5>
+        <p> Here's the code from the program that opens the file:<br>
+            <img src='images/fs03.gif' class='inline' alt='FileStats open the file.'>
+            The program:
+        </p>
+        <ol>
+            <li class='d'>Asks the user for the name of the file to open
+                and stores it in the <code>String</code> variable named
+                <code>filename</code>
+            </li>
+            <li class='d'>It then creates a <code>Scanner</code> to iterate
+                over the file. To construct the <code>Scanner</code> object,
+                it first calls the <code>MediaTools.openDataFile()</code>
+                method.
+            </li>
+        </ol>
+    <h5>Reading the File</h5>
+        <p> We'll use <b>this</b> iterator (<code>fileItr</code>) to
+            process the data file <b>a line at a time</b>. Here's the code that
+            does that<br>
+            <img src='images/fs04.gif' class='inline' alt='FileStats read the file.'>
+            Here's how it works:
+        </p>
+        <ol>
+            <li class='d'>Before we start reading the file, we need to
+            create and initialize <b>counter variables</b> to hold the
+            words, characters and sentences that we encounter.
+            </li>
+            <li class='d'>Because this is a <b>data-bound</b> loop, we'll
+                keep going as long as there are more lines in the file.
+                Do that by using the iterator's <code>hasMoreLines()</code>
+                method.
+            </li>
+            <li class='d'>Inside the loop, we actually <b>read</b> the
+                line by using the iterator's <code>nextLine()</code>
+                method and storing the result in a <code>String</code>
+                variable.
+            </li>
+            <li class='d'>Once we've read a line of text we can update
+                our word and character counters.
+            </li>
+        </ol>
+        <p class='note'> One thing you should note
+            is that <code>nextLine()</code> does <b>not</b> save the
+            newline characters at the end of each line of text, so
+            the number of characters we'll report will not include those.
+        </p>
+    <h5>Counting Words</h5>
+        <p> To count the words in the file, we'll create a <b>second</b>
+            <code>Scanner</code> object, and use it to iterate over the
+            line of text that we retrieved from the file. Here's what
+            that code looks like:<br>
+            <img src='images/fs05.gif' class='inline' alt='FileStats read the words.'>
+            Here's how it works:
+        </p>
+        <ol>
+            <li class='d'>The new <code>Scanner</code> object, <code>wordItr</code>,
+                is constructed by passing the line of text read from the
+                file. Notice that this iterator will be iterating over a
+                <code>String</code>. That's the beauty of iterators: it doesn't
+                matter what you're looping over, the methods are the same.
+            </li>
+            <li class='d'>Because we want to read token-by-token, we use
+                another data-bound <code>while</code> loop, using the
+                <code>has.next()</code> (instead of <code>hasNextLine()</code>)
+                iterator method.
+            </li>
+            <li class='d'>Inside the loop, we read the next token (using
+                the <code>next()</code> method. We aren't going to further
+                examine it, so we don't bother saving it in a variable;
+                instead, we just count the word.
+            </li>
+            <li class='d'>Finally, after the loop, we have a regular
+                formatted print statement displaying the statistics
+                on our file.
+            </li>
+        </ol>
+    <h4>When Things Go Wrong</h4>
+        <p> What happens if you type in a name for a file and your
+            program can't find the file you've requested. At first,
+            it may look like your program just hangs up, but that's
+            not the case. The error message is printed on the regular
+            Java console window, not on your ACM application's console.<br>
+            <img src='images/fs06.gif' class='inline' alt='Bad file name.'>
+        </p>
+        <p> You can anticipate this problem by first checking to see
+            if the file you want to open actually exists. You can do
+            that by using the <code>File</code> class and it's
+            <code>exists()</code> function, along with a <code>return</code>
+            statement like this:<br>
+            <img src='images/fs07.gif' class='inline' alt='Checking for a file.'>
+            To use the <code>File</code> class, you have to import the
+            <code>java.util</code> package.
+        </p>
+        <p class='note'>If the file isn't found, I simply exit the program
+            by using a plain <code>return</code> statment. Since the
+            <code>run()</code> procedure is <b>not a function</b> it
+            doesn't <b>need</b> a <code>return</code> statement. If
+            you want to leave a procedure early, though, you can always
+            use a plain <code>return</code> with no expression following it.
+        </p>
+    <h4>More on Tokens</h5>
+        <p> Once each line has been extracted, the <b>FileStats</b> program uses a
+            <b>second</b> <code>Scanner</code> designed to break each line into its
+            individual parts, (called <i>tokens</i>). A token is just a "meaningful
+            chunk of text". Words are tokens, as are the operators, operands, and keywords
+            in a programming language like Java.
+        </p>
+        <p> To define a token, you specify the characters that separate one token from
+            another. These are called <b>delimiters</b>. As I mentioned, the
+            default delimiters are the whitespace characters. If you want to
+            read your text based on a different set of tokens, though, you
+            can use the <code>Scanner useDelimiter()</code> method to change
+            the separator to something else.
+        </p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson, you learned how to use Java's <b>jump</b> statements,
+            the <code>break</code> and <code>continue</code>. You also learned how
+            to use the <b>labeled</b> versions of these two jumps to exit an outer
+            loop from inside an inner loop. Finally, you learned how to use the
+            <code>Scanner</code> class to process the items in a <code>String</code>
+            and to read the lines from a file.
+        </p>
+        <p> That's it for this unit. Make sure you finish taking the Unit 5 quiz
+            and head on over to the Exercises page for the assignments this week.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

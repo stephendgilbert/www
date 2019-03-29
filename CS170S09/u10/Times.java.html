@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> *  Illustrates nested loops</span>
+<span class="linenum">03: </span><span class="comment"> *  Example for CS 170</span>
+<span class="linenum">04: </span><span class="comment"> *</span>
+<span class="linenum">05: </span><span class="comment"> *  @author Stephen Gilbert</span>
+<span class="linenum">06: </span><span class="comment"> *  @version 2.0, Fall 2005</span>
+<span class="linenum">07: </span><span class="comment"> */</span>
+<span class="linenum">08: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">09: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">10: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">11: </span>
+<span class="linenum">12: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">Times</span> <span class="keyword">extends</span> <span class="normal">Applet</span>
+<span class="linenum">13: </span><span class="cbracket">{</span>
+<span class="linenum">14: </span>    <span class="keyword">private</span> <span class="normal">TextArea</span> <span class="normal">output</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">TextArea</span><span class="symbol">(</span><span class="number">10</span><span class="symbol">,</span> <span class="number">40</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">15: </span>    <span class="keyword">private</span> <span class="normal">Button</span>   <span class="normal">go</span>     <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Button</span><span class="symbol">(</span><span class="string">"Go"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">16: </span>
+<span class="linenum">17: </span>    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">18: </span>    <span class="cbracket">{</span>
+<span class="linenum">19: </span>        <span class="function">setLayout</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">BorderLayout</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">20: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">go</span><span class="symbol">,</span>     <span class="normal">BorderLayout</span><span class="symbol">.</span><span class="normal">NORTH</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">21: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">output</span><span class="symbol">,</span> <span class="normal">BorderLayout</span><span class="symbol">.</span><span class="normal">CENTER</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">22: </span>        <span class="normal">output</span><span class="symbol">.</span><span class="function">setFont</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">Font</span><span class="symbol">(</span><span class="string">"Monospaced"</span><span class="symbol">,</span> <span class="normal">Font</span><span class="symbol">.</span><span class="normal">PLAIN</span><span class="symbol">,</span> <span class="number">10</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">23: </span>        <span class="normal">go</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">TablePrinter</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">24: </span>    <span class="cbracket">}</span>
+<span class="linenum">25: </span>
+<span class="linenum">26: </span>    <span class="comment">/**</span>
+<span class="linenum">27: </span><span class="comment">     *  Prints a times table when pressed</span>
+<span class="linenum">28: </span><span class="comment">     */</span>
+<span class="linenum">29: </span>    <span class="keyword">private</span> <span class="keyword">class</span> <span class="normal">TablePrinter</span> <span class="keyword">implements</span> <span class="normal">ActionListener</span>
+<span class="linenum">30: </span>    <span class="cbracket">{</span>
+<span class="linenum">31: </span>        <span class="keyword">public</span> <span class="type">void</span> <span class="function">actionPerformed</span><span class="symbol">(</span><span class="normal">ActionEvent</span> <span class="normal">ae</span><span class="symbol">)</span>
+<span class="linenum">32: </span>        <span class="cbracket">{</span>
+<span class="linenum">33: </span>            <span class="keyword">for</span> <span class="symbol">(</span><span class="type">int</span> <span class="normal">outer</span> <span class="symbol">=</span> <span class="number">1</span><span class="symbol">;</span> <span class="normal">outer</span> <span class="symbol">&lt;</span><span class="symbol">=</span> <span class="number">10</span><span class="symbol">;</span> <span class="normal">outer</span><span class="symbol">+</span><span class="symbol">+</span><span class="symbol">)</span>
+<span class="linenum">34: </span>            <span class="cbracket">{</span>
+<span class="linenum">35: </span>                <span class="keyword">for</span> <span class="symbol">(</span><span class="type">int</span> <span class="normal">inner</span> <span class="symbol">=</span> <span class="number">1</span><span class="symbol">;</span> <span class="normal">inner</span> <span class="symbol">&lt;</span><span class="symbol">=</span> <span class="number">10</span><span class="symbol">;</span> <span class="normal">inner</span><span class="symbol">+</span><span class="symbol">+</span><span class="symbol">)</span>
+<span class="linenum">36: </span>                <span class="cbracket">{</span>
+<span class="linenum">37: </span>                    <span class="type">int</span> <span class="normal">product</span> <span class="symbol">=</span> <span class="normal">inner</span> <span class="symbol">*</span> <span class="normal">outer</span><span class="symbol">;</span>
+<span class="linenum">38: </span>
+<span class="linenum">39: </span>                    <span class="keyword">if</span> <span class="symbol">(</span><span class="normal">product</span> <span class="symbol">&lt;</span> <span class="number">10</span><span class="symbol">)</span>
+<span class="linenum">40: </span>                      <span class="normal">output</span><span class="symbol">.</span><span class="function">append</span><span class="symbol">(</span><span class="string">"   "</span> <span class="symbol">+</span> <span class="normal">product</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">41: </span>                    <span class="keyword">else</span> <span class="keyword">if</span> <span class="symbol">(</span><span class="normal">product</span> <span class="symbol">&lt;</span> <span class="number">100</span><span class="symbol">)</span>
+<span class="linenum">42: </span>                      <span class="normal">output</span><span class="symbol">.</span><span class="function">append</span><span class="symbol">(</span><span class="string">"  "</span> <span class="symbol">+</span> <span class="normal">product</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">43: </span>                    <span class="keyword">else</span>
+<span class="linenum">44: </span>                      <span class="normal">output</span><span class="symbol">.</span><span class="function">append</span><span class="symbol">(</span><span class="string">" "</span> <span class="symbol">+</span> <span class="normal">product</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">45: </span>                <span class="cbracket">}</span>
+<span class="linenum">46: </span>                <span class="normal">output</span><span class="symbol">.</span><span class="function">append</span><span class="symbol">(</span><span class="string">"\n"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">47: </span>            <span class="cbracket">}</span>
+<span class="linenum">48: </span>        <span class="cbracket">}</span>
+<span class="linenum">49: </span>    <span class="cbracket">}</span>
+<span class="linenum">50: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

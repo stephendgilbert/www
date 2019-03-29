@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="comment">// CS 170 - Homework Exercise</span>
+<span class="comment">// Simple TicTacToe</span>
+<span class="comment">// This is the starter file</span>
+<span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">TicTacToe</span> <span class="keyword">extends</span> <span class="normal">Applet</span> <span class="keyword">implements</span> <span class="normal">ActionListener</span><span class="symbol">,</span> <span class="normal">MouseListener</span>
+<span class="cbracket">{</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// 1. Create your fields</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// a. Arrays</span>
+    <span class="comment">// -- A 3 x 3 array of Label objects. Call it grid</span>
+    <span class="comment">// -- A 3 x 3 array of chars. Call it game</span>
+
+    <span class="comment">// b. Other graphical fields</span>
+    <span class="comment">// -- A Button named restart</span>
+    <span class="comment">// -- A Panel named p</span>
+    <span class="comment">// -- A Label named status</span>
+
+    <span class="comment">// c. Primitive variables</span>
+    <span class="comment">// -- an int named numClicks (number of clicks in game)</span>
+    <span class="comment">// -- a boolean named isDone (set to false)</span>
+    <span class="comment">// -- a boolean named isXTurn (set to true)</span>
+
+    <span class="comment">// COMPILER CHECK # 1</span>
+
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// 2. The init() method</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="comment">// a. Set the layout for the applet (BorderLayout())</span>
+
+        <span class="comment">// b. Add and hook up the restart button</span>
+
+        <span class="comment">// c. Add your status label to the top of the applet</span>
+        <span class="comment">// -- Set background to yellow, foreground to blue</span>
+        <span class="comment">// -- Set font to 12 point bold Helvetica</span>
+
+        <span class="comment">// d. Initialize your main Panel</span>
+        <span class="comment">// -- set the layout (GridLayout(3, 3, 3, 3));</span>
+        <span class="comment">// -- set a nice font</span>
+        <span class="comment">// -- initialize the background to black</span>
+        <span class="comment">// -- add the Panel to the center of your applet</span>
+
+        <span class="comment">// e. Create and initialize your Label objects</span>
+        <span class="comment">// -- Start with a nested loop (row, col)</span>
+        <span class="comment">// -- Inside the inner loop</span>
+        <span class="comment">// &gt; Create a new Label object.</span>
+        <span class="comment">//  -- Use a blank " " as the text, center align it</span>
+        <span class="comment">//  -- Place it in the array</span>
+        <span class="comment">// &gt; Attach a MouseListener to it</span>
+        <span class="comment">// &gt; Set the background color (white)</span>
+        <span class="comment">// &gt; Add it to your panel</span>
+        <span class="comment">// &gt; Put a blank in each element of your game array</span>
+
+    <span class="cbracket">}</span>
+
+    <span class="comment">// COMPILER CHECK # 2</span>
+
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// 3. Handle the Mouse Clicked Event</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mouseClicked</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="comment">// a. If the game is done, then call the reset game method</span>
+
+        <span class="comment">// b. Retrieve a reference to the object that was clicked</span>
+
+        <span class="comment">// c. Loop through the array finding the correct label</span>
+        <span class="comment">//    Once you've found the label then -&gt;&gt;&gt;</span>
+        
+            <span class="comment">// d. if text in the clicked label is not " "</span>
+            <span class="comment">//    then print "Invalid Move" using status()</span>
+            <span class="comment">//    and break all the way out. (You might want to</span>
+            <span class="comment">//    use a labelled break for this]</span>
+
+            <span class="comment">// e. if text in the clicked label  is " " and isXTurn is true</span>
+            <span class="comment">// -- set the text in clicked to "X"</span>
+            <span class="comment">// -- set the foreground in clicked to red</span>
+            <span class="comment">// -- set the game[row][col] to 'X'</span>
+
+            <span class="comment">// f. Otherwise (previous two false)</span>
+            <span class="comment">// -- set the text in clicked to "O"</span>
+            <span class="comment">// -- set the foreground to blue</span>
+            <span class="comment">// -- set the game[row][col] to 'O'</span>
+
+            <span class="comment">// g. Toggle isXTurn, incrment numClicks</span>
+
+        <span class="comment">// h. Check to see if game is over after each click</span>
+    <span class="cbracket">}</span>
+
+    <span class="comment">// COMPILER CHECK # 3</span>
+
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// 4. The resetGame() method</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="type">void</span> <span class="function">resetGame</span><span class="symbol">(</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="comment">// a. Write a nested for loop (row, col)</span>
+        <span class="comment">// b. For each element in grid, set text to " "</span>
+        <span class="comment">// c. For each element in game, set value to ' '</span>
+
+        <span class="comment">// d. Set numClicks to zero</span>
+        <span class="comment">// e. Set isXTurn to true</span>
+    <span class="cbracket">}</span>
+
+    <span class="comment">// COMPILER CHECK # 4</span>
+
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// The actionPerformed() method (resets the game)</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">actionPerformed</span><span class="symbol">(</span><span class="normal">ActionEvent</span> <span class="normal">ae</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="function">resetGame</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+    <span class="cbracket">}</span>
+
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="comment">// The gameOver() method [see if there is a winner]</span>
+    <span class="comment">// ------------------------------------------------------------</span>
+    <span class="type">void</span> <span class="function">gameOver</span><span class="symbol">(</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="type">char</span> <span class="normal">winner</span> <span class="symbol">=</span> <span class="string">' '</span><span class="symbol">;</span>
+
+        <span class="comment">// Check values in array named game</span>
+        <span class="comment">// a. Check the first diagonal (upper-left to lower right)</span>
+        <span class="comment">//    Set winner to upper-left if all are equal.</span>
+
+        <span class="comment">// b. if no winner, then check second diagonal</span>
+        <span class="comment">//    (lower-left to upper-right). If all three are the</span>
+        <span class="comment">//    same then winner is lower-right corner</span>
+
+        <span class="comment">// c. if no winner on diagonals, then check rows</span>
+        <span class="comment">// -- start by creating a loop for rows</span>
+        <span class="comment">// -- on each row check if all three columns are same</span>
+        <span class="comment">// -- if they are, then winner is game[i][0]</span>
+        <span class="comment">// -- if not, use rows to represent the columns</span>
+        <span class="comment">// and check if each row is the same</span>
+
+        <span class="comment">// d. Check for tie</span>
+
+        <span class="comment">// e. Check for game done</span>
+
+        <span class="comment">// f. Otherwise a continuing game</span>
+    <span class="cbracket">}</span>
+
+    <span class="comment">// -------------------------------------------------------</span>
+    <span class="comment">// Dummy methods for MouseListener interface</span>
+    <span class="comment">// -------------------------------------------------------</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mouseEntered</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span> <span class="cbracket">{</span><span class="cbracket">}</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mouseExited</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span>  <span class="cbracket">{</span><span class="cbracket">}</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mousePressed</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span> <span class="cbracket">{</span><span class="cbracket">}</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mouseReleased</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span><span class="cbracket">{</span><span class="cbracket">}</span>
+<span class="cbracket">}</span></tt></pre>
+</body>
+</html>

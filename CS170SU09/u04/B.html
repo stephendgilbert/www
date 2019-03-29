@@ -1,0 +1,676 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][2].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + ": " + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+
+        <p><img src="images/boole.gif" class="right" alt="George Boole.">
+            <b><span class="cap">G</span>eorge Boole was one of the most
+            famous mathematicians</b> of the 19th century. Born in 1815 to a
+            working-class family, he was a self-taught child prodigy in
+            both science and Latin. Even though he couldn’t afford to attend
+            college, he became a professor of Mathematics (and later
+            the Dean of Science) at Queens College in Cork Ireland.
+        </p>
+        <p> Boole’s 1854 paper, <i>"An Investigation Into the Laws of
+            Thought, on Which are Founded the Mathematical Theories
+            of Logic and Probablility"</i> detailed the relationship
+            between algebra and logic. This paper was the foundation
+            of the discipline now known as <b>Boolean logic</b> or
+            <b>Boolean algebra</b>, and these are the ideads that
+            underly much of today's computer technology.
+        </p>
+        <p> George Boole died on 8th December, 1864 after walking to school
+            in the pouring rain at the end of November. He proceeded
+            to teach in wet clothes, and, as a result he contracted
+            a chest infection which ultimately turned into pneumonia.
+        </p>
+        <p> His condition was made worse by his wife's attempts to help
+            him.
+            <img src="images/yoda.gif" class="right" alt="George Boole.">
+            She subscribed to the widely held view that the cure
+            should match the cause and so while George took to his bed,
+            she threw buckets of cold water over him.
+
+        </p>
+        <p>
+            Boole is still honored in his native Ireland. Here's a rare
+            picture of one his most famous later disciples, in front of
+            the Boole library in Cork Ireland.
+        </p>
+        <p> In this lesson we'll take a closer look at the
+            <code>boolean</code> primitive type, which contains the
+            two values <b>true</b> and <b>false</b>, and which was
+            named after George Boole. Then, we'll put the
+            the <code>boolean</code> type to work <b>making decisions</b>.
+        </p>
+        <p class='note'>Note that the <code>boolean</code> primitive type
+            is all lowercase (just like all of Java's keywords). There is
+            also a <code>Boolean</code> <b>class</b>, which is a <i>wrapper</i>
+            class, like the <code>Integer</code> and <code>Double</code>
+            classes. Finally, when we talk about a true/false value
+            in the abstract, it is customary to capitalize it, since it
+            is named after old George. Thus in the text and in these lessons,
+            you'll see the sentences like this:<i>"The logical operators create
+            Boolean values which you can use as part of a Boolean expression
+            or store in a <code>boolean</code> variable."</i>
+        </p>
+   <h3>The boolean Type</h3>
+        <p> In earlier lessons, you learned that Java has four
+            primitive type families: integers, floating-point numbers,
+            characters and Booleans. Up to now, you've learned quite
+            a bit about each of these families except for the
+            <code>boolean</code> type.
+        </p>
+        <p> The <code>char</code> type consists of all of the Unicode
+            values, while the <code>byte</code> type consists of all of
+            the whole numbers between -128 and 127. The <code>boolean</code>
+            primitive type is simpler: it consists <i>only</i> of the two literal
+            values <b>true</b> and <b>false</b>.
+        </p>
+        <p> As with the other primitive types, you can have <code>boolean</code>
+            variables and <code>boolean</code> literals. To write the
+            <code>boolean</code> literal values you simply write <b>true</b>
+            or <b>false</b>. Make sure you don't accidentally write
+            <b>True</b> or <b>TRUE</b>; that's not the same thing.
+        </p>
+        <p class='note'>C and C++ programmers are often lulled into a sense of
+            security by Java's familiar syntax. Boolean types are one of the
+            areas where C and Java differ. In C and C++ Boolean values are
+            convertable to numeric values (0 being false and everything else
+            being true). This is not the case in Java. There is no conversion
+            between numeric types and Boolean types; they are completely
+            separate concepts.
+        </p>
+    <h4>Boolean Variables</h4>
+        <p> You create a <code>boolean</code> variable the same way
+            you create an <code>int</code>, <code>long</code>, or
+            <code>double</code> variable: you start with the type,
+            select a name, and then (optionally) initialize your variable.
+        </p>
+        <p>Here are two <code>boolean</code> variables definitions:</p>
+        <p class='code'>
+            boolean isEmpty = true;<br>
+            boolean isDone;
+        </p>
+        <p> The same rules apply to <code>boolean</code> variables as
+            apply to integer or floating point variables. If you fail
+            to initialize a <code>boolean</code> <b>local variable</b>,
+            then you must assign a value before using the variable
+            or Java will refuse to compile your code.
+        </p>
+        <table width='90%' align='center'>
+        <thead style='background:navy;color:white;text-align:center;font-weight:bold;'>
+        <tr><td style='padding:.5em;'>Naming boolean Variables</td></tr>
+        <thead>
+        <tbody>
+        <tr><td style='font-size:10pt; background:honeydew;padding:.5em;border:1px solid gray;'>
+            <i>When you choose a name for a <code>boolean</code> variable,
+            try to think about how the variable will be used. Try to
+            name your variables so that when the value is <b>true</b>,
+            your conditional expressions can be phrased "naturally"
+            like this</i>:<br><br>
+            &nbsp;&nbsp;&nbsp;<tt>if (isVisible) ...</tt><br>
+            &nbsp;&nbsp;&nbsp;<tt>if (isFinished) ...</tt><br>
+        </td></tr>
+        </tbody>
+        </table>
+   <h4>Boolean Methods</h4>
+        <p> Most students easily understand methods like <code>Math.Random()</code>,
+            or <code>Math.pow()</code> which return the results of a numeric calculation.
+            We can also have methods that return <i>Boolean</i>, that is, <b>true</b> or
+            <b>false</b>, values. These <i>Boolean</i> methods are often
+            also known as <b>predicate</b> methods.<br>
+            <img src='images/boolean01.gif' class='inline' alt='Some boolean String methods.'>
+        </p>
+        <p> When you call a <i>Boolean</i> method you'll often use a
+            <code>boolean</code> variable to store the result that the method
+            returns. Here are some examples using a few Boolean
+            methods in the <code>String</code> class:<br>
+            <img src='images/boolean02.gif' class='inline' alt='Using boolean methods.'>
+<!--
+        </p>
+        <p class="code">
+            String fileName = readLine("Enter a file name:");<br>
+            boolean isSourceCode = fileName.endsWith(".java");<br>
+            String answer = readLine("Continue (Yes or No)? ");<br>
+            boolean isDone = answer.equalsIgnoreCase("No");
+        </p>
+        <p>
+-->     Here's what this code does:</p>
+        <ol>
+            <li class='d'>The <code>readLine()</code> method asks the
+                user to enter a file name, and the answer is stored in
+                the <code>String</code> variable <code>fileName</code>.
+            </li>
+            <li class='d'>The <code>String</code> predicate
+                <code>endsWith()</code> method is used to see if the
+                variable <code>fileName</code> ends with ".java". If
+                it does, the method returns <code>true</code>; if not,
+                the method returns <code>false</code>. The returned
+                value is stored in the <code>boolean</code> variable
+                <code>isSourceCode</code>.
+            </li>
+            <li class='d'>The user is again asked to respond if
+                they wish to continue by typing "Yes" or "No" and
+                their answer is stored in the <code>String</code>
+                variable named <code>answer</code>.
+            </li>
+            <li class='d'>The <code>boolean</code> variable
+                <code>isDone</code> is initialized by calling the
+                <code>String equalsIgnoreCase()</code> method,
+                checking against the value "No". If the user types
+                "no", "NO", or "No", then <code>isDone</code> will
+                be set to <code>true</code> while anything else
+                will set it to <code>false</code>.
+            </li>
+        </ol>
+        <p class='note'>Even though this last example allows for
+            the user to type their response in any case, it's not
+            really an example of good programming. For instance, if
+            the user types "nope" or "N", <code>isDone</code> will
+            be set to <code>false</code> and the user will continue.
+            A better design would be to check against the <code>String</code>
+            "Yes", and then use the <b>logical NOT operator</b> to
+            reverse the sense of the condition. You'll learn how
+            to do that next week.
+        </p>
+        <p> We'll look at some more predicate functions in the
+            <code>Character</code> wrapper class shortly. Let's move on
+            now and see some other ways to generate <i>Boolean</i>
+            values.
+        </p>
+    <h3>The Relational and Equality Operators</h3>
+        <p> Although <code>boolean</code> literals and <code>boolean</code> variables
+            <b><u>can</u></b> be useful, <b>most</b> of the time, you'll create the
+            Boolean values used by your program by making use of Java's
+            <b>relational</b> or <b>equality</b> operators, often in the context of
+            a <b>selection</b> or <b>iterative</b> conditional statement.
+        </p>
+
+        <p> A relational operator <b>compares</b> two values and returns a
+            Boolean value based on a question about the relationship
+            of one value to the other. (That's why they're called the <i>relational</i>
+            operators.)
+            Using a relational operator is a little like the parlor game,
+            "Twenty questions." You use the operator to "ask" if one number
+            is larger than, smaller than, or equal to, another. The
+            operator "responds" with <b>true</b> or <b>false</b>.
+        </p>
+        <p> Java has six operators which are used to compare
+            numerical values. Here's an illustration of the use of each:
+        </p>
+        <center>
+        <table width="85%" border="1" cellpadding="5">
+        <tbody>
+            <tr>
+                <th class="thead" style="background: navy none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">Example</th>
+                <th class="thead" style="background: navy none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">Result</th>
+            </tr>
+            <tr>
+                <th class="tcode">a &lt; b</th>
+                <td class="tdata">true if a is less than b; otherwise false</td>
+            </tr>
+            <tr>
+                <th class="tcode">a &lt;= b</th>
+                <td class="tdata">true if a is less than or equal to b; otherwise false</td>
+            </tr>
+            <tr>
+                <th class="tcode">a &gt; b</th>
+                <td class="tdata">true if a is greater than b; otherwise false</td>
+            </tr>
+            <tr>
+                <th class="tcode">a &gt;= b</th>
+                <td class="tdata">true if a is greater than or equal to b; otherwise false</td>
+            </tr>
+            <tr>
+                <th class="tcode">a == b</th>
+                <td class="tdata">true if a is equal to b, otherwise false</td>
+            </tr>
+            <tr>
+                <th class="tcode">a != b</th>
+                <td class="tdata">true if a is not equal to b, otherwise false</td>
+            </tr>
+        </tbody>
+        </table>
+        </center>
+        <p> Those operators that
+            require two symbols (<b>&lt;=</b>, <b> &gt;=</b>, <b>==</b>,
+            and <b>!=</b>) must be typed with no space between the two
+            symbols.
+        </p>
+        <p class="note">Some textbooks reserve the term <i>relational operator</i>
+            for the first four of these,&#8212;and call the last two the <i>equality</i>
+            operators. Often you'll see <b>all six operators</b> called the relational
+            operators, with the first four "non-equality" operators called the
+            <i>inequality</i> operators, instead of the relational operators.
+            I'll use <i>relational</i> to refer to the whole group,
+            but will still use <i>equality operators</i> to refer to
+            <code>==</code> and <code>!=</code>.
+        </p>
+     <h4>Relationship Pitfalls</h4>
+        <p> If you come from another programming language,
+            here are some potential pitfalls you should look for:
+        </p>
+        <ul>
+            <li>The "is equal to" operator is <b><code>==</code></b>, not
+                <b><code>=</code></b>, which is the <b>assignment</b> operator.
+                The error message you'll encounter when you confuse these
+                two is not very informative. Nevertheless, it's better than
+                C++, where you may not even get an error message.
+            </li>
+            <li>The "not-equals" operator is <b><code>!=</code></b>, not
+                <b>&lt;&gt;</b>. Again, the error message you'll get if
+                you accidently type this is not very helpful.
+            </li>
+            <li>Make sure you use <b>&gt;=</b> for greater-than
+                or equal, and not <b>=&gt;</b>, which is not a valid
+                symbol. (Of course, the compiler easily catches this one.)
+            </li>
+        </ul>
+        <p> The relational operators act a little differently when applied
+            to primitive numeric types than when applied to objects
+            like <code>Strings</code>. Let's look
+            at the numeric types first.
+        </p>
+    <h3>Numeric Relations</h3>
+        <p> Each of the relational operators requires two primitive
+            numeric operands, and the expression produces a
+            <code>boolean</code> (<b>true</b>/<b>false</b>) result.
+            You can usually mix <i>any</i> of the primitive numeric
+            types, <b>including the <code>char</code> type</b> in
+            relational expressions. When you compare <code>char</code>
+            values, the underlying Unicode value is used as if it were
+            a <code>short</code>. You normally don't have to worry about
+            mixed-type comparisons, like you do with mixed-type expressions;
+            for the most part, they will work just like you'd expect.<br>
+            <img src="images/a07.gif" alt="Comparing primitive values." vspace="15" hspace="15">
+            <br>Here are some examples:
+        </p>
+        <p class="code" style="margin-bottom: 1em;">
+            <span class="cmt">// Variables</span><br>
+            byte b = 2;<br>
+            short sh = 65;<br>
+            double a = 2.34;<br>
+            float f = 2.34F;<br>
+            char c = 'A';<br>
+            boolean result;<br>
+            <br>
+            <span class="cmt">// Some relational expressions and their results</span><br>
+            result = b &gt; sh; <span class="cmt">// false</span><br>
+            result = c &lt; a; <span class="cmt">&nbsp;// false</span><br>
+            result = f == a; <span class="cmt">// false</span><br>
+            result = f &lt; a; <span class="cmt">&nbsp;// true</span><br>
+            result = c &gt;= a; <span class="cmt">// true</span><br>
+            result = c = sh; <span class="cmt">// true</span><br>
+        </p>
+        <p> As you can see, you can compare characters, integers (both
+            large and small) and floating-point numbers, with wild disregard
+            for the type of each operand. There is, however, one place where
+            you must be especially wary: when you compare two
+            floating-point numbers.
+        </p>
+    <h4>Floating-point Relations</h4>
+        <p> Even though you <b>can</b> compare numbers without regard for
+            their types, that doesn't mean that the results will always
+            be meaningful. As a general rule, you should <b>never</b>
+            directly compare two floating point numbers using the equality
+            operators (<b><code>!=</code></b>, <b><code>==</code></b>)
+            because of the "round-off" errors that can occur.
+        </p>
+        <p> Here's a short console-mode program,
+            <a href='javascript:var%20w=window.open("BooleanExamples.java.html","","width=725,height=725,scrollbars=yes");'>
+            <b>BooleanExamples.java</b></a>, that illustrates many of the
+            pitfalls that can arise when comparing floating-point numbers.
+            Let's look at a couple of instances:
+        </p>
+    <h5>Different Types</h5>
+        <p>
+            In the first section, two floating-point variables (<b>a</b> and <b>b</b>)
+            are created and initialized using the values <b>2.34</b> and
+            <b>2.34F</b> which are <b>logically</b> identical.
+            Then, these values are compared using the relational operators
+            and the result of that comparison is printed:<br>
+            <img src='images/boolean03.gif' class='inline' alt='Comparing different types.'>
+            If you run the code, you'll see that the two values are never equal,
+            because they have different bit patterns that can't be accurately
+            compared. Many times the comparison <b>will</b> be correct, but
+            often it won't, so you can rely on it.
+        </p>
+    <h5>Comparing Calculated Values</h5>
+        <p> Calculations involving floating-point numbers are done in binary,
+            so even if all operands have the same type, you cannot be sure that
+            the bit-patterns will match exactly.
+        </p>
+        <p> Here are two examples. Look at the variable
+            definition for <b>c</b> on line 38,
+            which multiplies .1 times 10, yielding (theoretically) 1.0.
+            Note then the comparison of <b>c</b> with <b>1.0</b> on
+            line 41. Is it <b>true</b> or <b>false</b>?<br>
+            <img src='images/boolean04.gif' class='inline' alt='Literals or calculations.'>
+            I'm sure you realize that this <i>should</i> be <b>true</b>, and that's
+            what Java reports. Well, if that's so, what about the variable
+            <b>d</b> defined on line 39? Obviously, adding .1 ten times is
+            <i>mathematically</i> the same expression as multiplying .1 times 10,
+            yet Java considers this one to be <b>false</b>.
+        </p>
+        <p> Here's a second example from Cay Horstmann's Big Java textbook.<br>
+            <img src='images/boolean05.gif' class='inline' alt='Floating-point roundoff.'>
+            Here he uses the <code>Math.sqrt()</code> function
+            to get the square root of 2, multiplies the result by itself,
+            (yielding, theoretically, 2), and then subtracts 2.
+            This result should be, mathematically, 0. Instead, Java reports on
+            line 48 that the answer is 4.440892098500626E-16.
+        </p>
+        <p> Programmers encountering this behavior for the first time,
+            often think that this is a bug, but it is not. This
+            is <b>not</b> a bug in Java, or its ability to add. This is
+            just the way that binary floating-point numbers work. It's in
+            the nature of the numbers themselves.
+        </p>
+        <p class="pullquote">
+            Don't compare floating point numbers using the equality operators.
+        </p>
+        <img src='images/gas.gif' class='right' alt='Gas prices'>
+    <h4>A Solution To the Problem</h4>
+        <p>
+            To <i>accurately</i> compare floating point numbers after a
+            calculation, you'll have to first decide what is "close enough".
+            If you buy gasoline, for instance, you might notice the price often priced to include
+            9/10 of a cent, but no one ever pays 9/10 of a cent&#8212;because
+            our currency doesn't have amounts less than a penny. So,
+            if you were comparing two floating-point numbers where
+            it was important to be accurate only to a penny, you'd want the
+            number 1.256 and 1.257 to be "equal".
+        </p>
+        <p> Since type <code>double</code> is accurate to about 16 digits of
+            precision, we can generalize by using a fudge factor (often
+            called EPSILON) of 10E-14. Using this scheme, two <code>double</code>
+            values are equal if the absolute value of their difference is
+            less than or equal to EPSILON). Here's some Java code that
+            does that for the examples we've seen so far:<br>
+            <img src='images/boolean06.gif' class='inline' alt='Effective floating-point comparisons.'>
+            When you run this, you'll see that the variables <b>c</b> and <b>d</b>
+            are <i>effectively</i> equal, and that the variable <b>result</b> is
+            <i>effectively</i> 0.
+        </p>
+    <h5>Caveats</h5>
+        <p>This doesn't work perfectly if the numbers are very large&#8212;in
+            the millions&#8212;in which case you may need to make your EPSILON
+            factor larger. If the numbers are large enough, your problem
+            will be the opposite: numbers that are logically different will
+            be identical when it comes time to compare them.<br>
+            <img src='images/boolean07.gif' class='inline' alt='Large numbers.'>
+            For instance, if you have a <code>double</code>
+            variable containing 3.25E50 and you add a million, (or
+            subtract a million), you'll still end up with
+            <b>exactly the same number</b>. A <code>double</code> can
+            store very, very large and very, very small numbers, but it
+            both cases, only fifteen or sixteen digits are significant.
+        </p>
+    <h3>Object Relations</h3>
+        <p> In addition to comparing primitives, you can
+            also use the equality operators to compare objects and
+            <code>Strings</code>. We're not really concerned with
+            comparing objects at this point, but learning how to
+            correctly compare <code>Strings</code> is <b>really</b>
+            important:
+            <br>
+            <img src="images/zz03a.gif" alt="Using the relational operators with objects and strings" vspace="15" hspace="15">
+            <br>Unlike numeric comparisons, where you can mix your types with
+            abandon, you can only compare a <code>String</code> with another
+            <code>String</code>, a <code>Rectangle</code> with another
+            <code>Rectangle</code>, and so forth. (You may, however, compare
+            a variable of type <code>Object</code> with <b>any</b>
+            object type. You'll see how that works later in the course,
+            when we look at object-oriented graphics and attempt to
+            determine which item on the screen was clicked with the
+            mouse.)
+        </p>
+        <p> You cannot compare <code>String</code> variables using the
+            inequality operators. These are legal expressions:
+        </p>
+        <p class="code">
+            "Hi" != "Mom"; <span class="cmt">// result is true</span><br>
+            "dad" == "Dad"; <span class="cmt">// result is false</span>
+        </p>
+        <p>These are <b><i>illegal</i></b> expressions:</p>
+        <p class="code">
+            "Mom" &lt; "Dad"; <span class="cmt">// no inequality operator</span><br>
+            JLabel b = new JLabel("Mom");<br>
+            b == "Mom";&nbsp;&nbsp;&nbsp; <span class="cmt">// can't compare String &amp; JLabel</span>
+        </p>
+    <h4>The instanceof Operator</h4>
+        <p> In addition to the six relational operators that work on
+            numeric values, there is one relational operator that works
+            <b>only</b> on object types: the <code>instanceof</code> operator.
+        </p>
+        <p> The <code>instanceof</code> operator is a binary operator
+            that returns <b>true</b> if the object on the left is
+            an "instance of" the class on its right, <b>or</b> if the
+            object belongs to a subclass of the class on the right.
+        </p>
+        <p> Here are some examples:</p>
+        <p class="code">
+            Button b = new Button("Hi");<br>
+            Menu m = new Menu("File");<br>
+            boolean ans;<br>
+            <br>
+            ans = b instanceof Button; <span class="cmt">// true</span><br>
+            ans = b instanceof Component; <span class="cmt">//true</span><br>
+            ans = m instanceof Menu;  <span class="cmt">// true</span><br>
+            ans = m instanceof Component;  <span class="cmt">// false</span><br>
+        </p>
+        <p> Notice that the object <b>b</b> is both a <code>Button</code>
+            and a <code>Component</code>, but that the object <b>m</b> is
+            not a <code>Component</code>. (You don't really need to pay
+            much attention to this operator at this point. We'll look at
+            this in greater depth when we study objects and inheritance.)
+        </p>
+    <h4>Equality vs Identity</h4>
+        <p> When you use the equality operators
+            with <code>Strings</code> or objects, you are comparing the
+            <b>identity</b> of the two objects, <b>not their contents</b>.
+            Specificially, you are asking, "do both object references refer
+            to the same object?"
+        </p>
+        <p> Here's an example using <code>Fraction</code> objects.
+            (<code>Fraction</code> is a user-defined class that contains
+            a numerator and denominator. This is the same example that
+            I showed you back in Unit 2.):</p>
+        <p class="code">
+            Fraction a = new Fraction(1, 2);<br>
+            Fraction b = new Fraction(1, 2);<br>
+            Fraction c = b;
+        </p>
+        <p> <img src="images/a04.gif" class="right" alt="Creating three Fractions.">
+            Remember that <b>object</b> variables contain the <b>address</b>,
+            (a <i>reference</i>), of the object they refer to. In this
+            example, two <code>Fraction</code> objects are created, (using
+            <code>new</code>), and the reference stored in the variables
+            <b>a</b> and <b>b</b>. A third object variable, <b>c</b>,
+            is the created, and the value stored in <b>b</b> is copied
+            to <b>c</b>, using the assignment operator.
+        </p>
+        <p>
+            All three variables refer to <code>Fraction</code> objects that
+            contain the <b>same value</b>, ½.
+            Here's what memory looks like after the variables are created.
+        </p>
+        <p> Now, let's use these <code>Fraction</code> variables in
+            some relational expressions, and look at the results:
+        </p>
+        <p class="code">
+            a == b; <span class="cmt">// false - different Fraction objects</span><br>
+            b == c; <span class="cmt">// true - same Fraction object</span><br>
+            a == c; <span class="cmt">// false - different Fraction objects</span>
+        </p>
+        <p> Obviously, when it comes to objects, the <b><code>==</code></b> operator
+            tests the <b>identity</b> of the object referred to by the two variables,
+            <b>not the value</b> contained in the objects themselves.
+        </p>
+    <h4>String Relations</h4>
+        <p><code>String</code> objects, <b>work just like Fraction</b>:
+            if you use the equality operator, you are asking whether these
+            two <code>String</code> variables <b>refer to the same
+            <code>String</code> object</b>.
+        </p>
+        <p> <img src="images/a05.gif" alt="String objects and assignment." class="right">
+            Let's take this to heart and perform the same test we did for
+            <code>Fraction</code> objects. We'll create three <code>String</code>
+            variables, <b>a</b>, <b>b</b>, and <b>c</b>, and we'll assign
+            the same <code>String</code> value to the first two. Then,
+            we'll draw a picture like we did for <code>Fraction</code>
+            objects. We should end up with something like this:<br>
+        </p>
+        <p class="code">
+            String a = "Hi Mom";<br>
+            String b = "Hi Mom";<br>
+            String c = b;
+        </p>
+        <p> Unfortunately, when we write and run <b>exactly the same relational
+            tests</b> we used with our <code>Fraction</code> variables,
+            we find that <b><span class="red">all three
+            expressions come back true!</span></b> What's going on here?
+        </p>
+    <h5>Under the Hood</h5>
+        <p> Well, it may <b>look</b> like Java is treating <code>String</code>
+            objects specially, <b>comparing the contents</b> of each <code>String</code>,
+            like Pascal, Visual Basic, and C# do. <b><span style="background: transparent none repeat scroll 0% 0%; color: red; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+            Don't be deceived, however;
+            that's not what's happening at all!</span></b>
+        </p>
+        <p>
+            Our test program reports such unexpected results because
+            our <i>mental picture</i> of what
+            happened in memory is faulty. Since <code>String</code>
+            objects are <b>immutable</b>, Java automatically shares the
+            same actual <code>String</code> between several references.
+        </p>
+        <p class='pullquote'> This <b>only</b> occurs with <b>literal</b>
+            <code>String</code> objects, not with any other object types
+            and not with <code>string</code> variables.
+        </p>
+        <p> <img src="images/a06.gif" class="right" alt="The actual representation of String objects in memory.">
+            In our example, Java actually stores the characters "Hi Mom"
+            only once. The line where the <code>String</code> variable
+            <b>b</b> is created <b>does not</b> create a second copy of
+            the words "Hi Mom". Thus, all three <code>String</code> variables,
+            <b>a</b>, <b>b</b>, and <b>c</b>, refer to exactly the same
+            characters in memory as shown in the picture here.
+        </p>
+    <h4>Comparing Strings</h4>
+        <p> The bottom line is that you <b>should not</b> use the
+            relational operators to compare <code>Strings</code>.
+            The answer you get back is <b>almost always wrong!</b> Instead,
+            you should <b>always</b> compare <code>String</code> objects
+            using the methods in the <code>String</code> class. Let's
+            look at three of them.
+        </p>
+    <h5>equals()</h5>
+        <p> The <code>equals()</code> method returns <b>true</b>
+            if the contents of two <code>Strings</code> <b>exactly match</b>,
+            and <code>false</code> otherwise. Here are some examples:
+        </p>
+        <p class='code'>
+            "cat".equals("cat"); <span class='cmt'>// true</span><br>
+            "cat".equals("Cat");  <span class='cmt'>// false</span>
+        </p>
+        <p class='note'>Notice that you can call <code>String</code> methods
+            using <i>literals</i> like "cat" as well as variables, because
+            <code>String</code> literals are actually objects.
+        </p>
+    <h5>equalsIgnoreCase()</h5>
+        <p> Often, you want to make a comparison without taking case
+            into account. The <code>equals()</code> method uses the
+            underlying Unicode value to make its comparisons, so that
+            "Bob" is not equal to "bob".
+        </p>
+        <p> This method returns <code>true</code> if the contents of
+            two <code>Strings</code> match when case <b>is not considered</b>,
+            and <code>false</code> otherwise. Here's an example:
+        </p>
+        <p class='code'>
+            "cat".equalsIgnoreCase("cat"); <span class='cmt'>// true</span><br>
+            "cat".equalsIgnoreCase("Cat"); <span class='cmt'>// true</span><br>
+            "cat".equalsIgnoreCase("dog"); <span class='cmt'>// false</span><br>
+        </p>
+    <h5>compareTo() or compareToIgnoreCase()</h5>
+        <p> The two <code>equals()</code> methods only allow you to
+            see if two <code>Strings</code> contain the same words. They
+            don't allow you to check if one is <i>lexigraphically</i>
+            larger or greater. (In other words, you can't tell if it
+            appears before or after in the phone book or dictionary.)
+        </p>
+        <p> To do this, you need to use one of the <code>compare()</code>
+            methods. Instead of returning a <code>boolean</code> value,
+            these methods return three different possiblities:
+        </p>
+        <ul>
+            <li>If both strings are <b>equal</b> then the methods
+                return <b>0</b>.
+            </li>
+            <li> If the <code>String</code> on the <b>left</b> appears
+                <b>before</b> the one on the right, then the methods
+                return a negative number.
+            </li>
+            <li> If the <code>String</code> on the <b>left</b> appears
+                <b>after</b> the one on the right (that is, the method
+                parameter), then the methods both return a positive number.
+            </li>
+        </ul>
+        <p> Here are a couple of examples:</p>
+        <p class='code'>
+            "cat".compareTo("cat"); <span class='cmt'>// 0 - equal</span><br>
+            <br>
+             <span class='cmt'>// "cat" &gt; "Cat" (Unicode case-sensitive ordering)</span><br>
+            "cat".compareTo("Cat");  <span class='cmt'>// Positive</span><br>
+            "cat".compareToIgnoreCase("Cat");  <span class='cmt'>// 0</span><br>
+            <br>
+            <span class='cmt'>// "cat" &lt; "dog"</span><br>
+            "cat".compareTo("dog"); <span class='cmt'>// Negative</span><br>
+        </p>
+        <p class='pullquote'>
+            Always compare Strings using String methods!
+        </p>
+
+     <h3>Coming Up . . .</h3>
+        <p> In the next lesson, we'll put all of these Boolean expressions
+            to work as we tackle to topic of <b>selection</b>.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

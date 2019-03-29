@@ -1,0 +1,517 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + ": " + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p> <img src="images/c01.gif" class="right" alt="The for loop syntax.">
+            <span class="cap"><b>T</b></span><b>he first Java loop we're
+            going to look at is the <code>for</code> loop</b>. (Your textbook
+            starts with the <code>while</code> loop, but I think that counted
+            <code>for</code> loops are a little easier to understand.) Both Pascal
+            and Basic have <code>for</code> loops, as do C and C++. Like
+            those languages, the <code>for</code> loop in Java is designed
+            for writing counted loops&#8212;loops that repeat a specified number
+            of times.
+        </p>
+        <p> Unlike the Pascal or Basic <code>for</code> loop, however,
+            the <code>for</code> loop in Java can do much more than simple
+            counted loops. The <code>for</code> loop in Java works almost
+            exactly like the <code>for</code> loop in C++; it is a general
+            purpose, "test at the top" loop, that makes writing counted loops
+            very straightforward, but <b>can</b> be used for other purposes.
+        </p>
+    <h3>The for Loop Syntax</h3>
+        <p> As mentioned previously, the body of the <code>for</code> loop
+            follows the loop's test condition; you test first, then, if the
+            test evaluates to true, you enter the loop body, as you can see
+            in the illustration.<br>
+            <img src="images/z07b.gif" alt="For loop syntax" vspace="15" border="0"><br>
+            The <code>for</code> loop's condition involves more
+            than a simple <code>boolean</code> test, however. In fact, it
+            involves three different expressions:
+        </p>
+        <ul>
+            <li>The <span class="red"><b>initialization</b></span> expression</li>
+            <li>The <span class="red"><b>test</b></span> expression</li>
+            <li>The <span class="red"><b>update</b></span> expression</li>
+        </ul>
+        <p> Each of these three expressions is separated from
+            the others by a <b>semicolon</b>. You can omit any&#8212;or all&#8212;of
+            the expressions, but the semicolons are required. (Make sure you
+            don't accidentally use commas instead of semicolons. When you do
+            so, the Java compiler is not particularly helpful with its error
+            messages.)
+        </p>
+        <p> The loop body following the loop condition is
+            usually enclosed in braces,
+            although, technically, braces are not required
+            if the loop body consists of a single statement. As a practical
+            matter, though, you'll almost always use braces, and, since they
+            don't hurt&#8212;even when not strictly required&#8212;you should always
+            put them in as a matter of course.
+        </p>
+        <p> Let's return to the <code>for</code> loop condition,
+            and take a closer look at each of its three expressions.
+        </p>
+    <h4>The Initialization Expression</h4>
+        <p> When a <code>for</code> loop is encountered, the first
+            part of the loop condition, the initialization expression, is
+            executed. It is <b>always</b> executed, regardless of the other
+            parts of the <code>for</code> statement, almost, (but not
+            quite), as if it occurred on the previous line.
+        </p>
+        <p> The initialization expression is evaluated only once, and is
+            usually used to define the counter variable that will control
+            your loop, like this:
+        </p>
+        <p class="code">
+            for (<span class="red">int counter = 0;</span> ... ; ... )<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Can use counter here</span><br>
+            }<br>
+            <span class="cmt">// Cannot use counter here</span>
+        </p>
+
+        <p> Variables declared <b>inside</b> the <code>for</code>
+            loop initialization section, like <b>counter</b>, shown here,
+            are <b>local</b> to the body of the <code>for</code> loop. Once
+            the loop is finished, the variable goes out of scope and can no
+            longer be used.
+        </p>
+    <h4>The boolean Test</h4>
+        <p> The second section of the <code>for</code> loop is called
+            the <b>test condition</b>. The test condition is a
+            <code>boolean</code> expression which is evaluated immediately
+            after the intitialization expression.
+        </p>
+        <p> If the test condition is <b>true</b>, (when it is evaluated),
+            then execution begins with the first statement in the loop body.
+            If it is <b>false</b>, then the entire loop body is skipped,
+            and execution continues at the first statement <b>following</b>
+            the loop body.
+        </p>
+        <p> To continue our example, we can test the value
+            of <b>counter</b>, checking to make sure it is less than ten,
+            like this:
+        </p>
+        <p class="code">
+            for (int counter = 0; <span class="red">counter &lt; 10; </span> ... )<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Can use counter here</span><br>
+            }<br>
+            <span class="cmt">// Cannot use counter here</span>
+        </p>
+        <p> Using <b>counter</b> like this insures that the loop will
+            execute ten times. This is a common <b>idiom</b> in Java
+            programming, called <b>zero-based counting</b> :
+        </p>
+        <ul>
+            <li>start <b>counter</b> at 0</li>
+            <li>test that <b>counter</b> is <b>less than</b> the upper bounds</li>
+        </ul>
+        <p class="note"> An idiom is just a common and widely accepted way
+            of "phrasing" a particular operation. This particular idiom works
+            well, because you can immediately tell how many times the loop
+            will execute just by glancing at the test condition.
+        </p>
+    <h4>The Update Expression</h4>
+        <p> At the beginning of this lesson, you learned to make sure that
+            every repetition of a loop moves closer to the loop bounds.
+            But, in the <code>for</code> loop shown here, there are
+            <b>no</b> statements that move toward the bounds; in fact, as
+            written, this example is an <b>endless loop</b>! Since
+            <b>counter</b> is <b>never</b> updated, it <b>always</b> remains
+            at zero.
+        </p>
+        <p> Updating the counter is the responsibilitity of the third part
+            of the <code>for</code> loop condition&#8212;the <b>update
+            expression</b>. The update expression is evaluated <b>after</b>
+            the body of the loop is finished, but <b>before</b> the test
+            expression is evaluated for the next repetition.
+        </p>
+        <p> For a counted loop, you'll use the update expression
+            to increment your counter like this:
+        </p>
+        <p class="code">
+            for (int counter = 0; counter &lt; 10; <span class="red">++counter</span>)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Can use counter here</span><br>
+            }<br>
+            <span class="cmt">// Cannot use counter here</span>
+        </p>
+    <h3>Counting Variations</h3>
+        <p> You've probably noticed that this loop doesn't really <b>do</b>
+            anything; the portion that we've written simply repeats ten
+            times. However, you can use this basic skeleton for any loop
+            that needs to repeat a fixed number of times. Simply replace
+            10 with the number of times you want to repeat, and you're all
+            set.
+        </p>
+        <p> In addition to acting as a loop control, you can also use your
+            counter variable to process different pieces of information
+            during each repetition of the loop. Here, for instance, is a
+            loop that sums the Unicode values for all the characters in a
+            <code>String</code>:
+            <img src="images/c02b.gif" class="inline" alt="Main loop of CodeSumer.java.">
+            The loop shown here is from <b>CodeSumer.java</b>, an
+            ACM console program that sums up the value of
+            each Unicode character in a <code>String</code> entered
+            by the user, and tells you how much your <code>String</code>
+            "weighs".
+        </p>
+        <p> Notice how the structure of the <code>for</code> loop <b>follows the
+            six steps</b> you met in the loop-building lesson:
+        </p>
+            <ol>
+                <li class="d">The bounds is when our counter reaches the number
+                    of characters in the string.
+                </li>
+                <li class="d">To test the counter and number of characters, we first
+                    have to create the variables <code>counter</code>, <code>nChars</code>,
+                    and <code>s</code>, so that they can be tested when we get to the
+                    bounds. We also have to initialize them, by first reading the text
+                    the user entered, using <code>readLine()</code>, finding the length
+                    of the string, using the <code>length()</code> method, and initializing
+                    the counter in the <code>for</code> loop's initializer section. All
+                    of these are part of "Step 2", writing the bounds preconditions.
+                </li>
+                <li class="d"><b>Step 3 is to advance the loop</b>. In a counted <code>for</code>
+                    loop, you do that in the update expression.
+                </li>
+                <li class="d">This loop's <b>output</b> is the sum of all the individual
+                    code values, so Step 4, the goal precondition, involves creating
+                    and initializing the accumulator variable <code>sumOfCodes</code>.
+                </li>
+                <li class="d">Since we're adding up all of the Unicode values in the
+                    string, Step 5, the loop operation, is accomplished by extracting
+                    each individual character, using the <code>charAt()</code> method,
+                    and then adding that value to the accumulator.
+                </li>
+                <li class="d">For the last step, the goal postcondition, we simply
+                    print out the loop's results. There's nothing extra we have to
+                    test in this case.
+                </li>
+            </ol>
+        <p> Here's what the output of the program looks like
+            with my name entered as input:
+            <img src="images/z08b.gif" alt="Running the CodeSumer app." class="inline">
+        </p>
+    <h4>Counting Down</h4>
+        <p> When you create a counted loop using <code>for</code>, <b>you</b>
+            are responsible for initializing the counter in the
+            intitialization expression, and for updating it in the update
+            expression; it doesn't happen "automatically" like it does
+            in BASIC or Pascal.
+        </p>
+        <p> However, there's no law that says you <b>have</b> to start at
+            zero, and there's nothing to stop you from counting down rather
+            than up.
+        </p>
+        <p> Here's a code fragment from a Java Applet named
+            <b>ReverseString</b> that displays the characters in a
+            <code>String</code> in reverse order. It works by walking
+            through the characters of the <code>String</code> from the end
+            to the beginning, using a <code>for</code> loop that:
+            </p><ol>
+                <li class="d">initializes <code>counter</code> to point to
+                    the <i>last</i> character, rather than the <i>first</i>
+                </li><li class="d">continues until <code>counter</code> reaches zero</li>
+                <li class="d">decrements the <code>counter</code>, so that the loop
+                    counts <b>down</b>, instead of counting <b>up</b>
+                <p></p>
+            </li></ol>
+            <img src="images/c03.gif" class="inline" alt="Counting down with a for loop.">
+            You can
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/%7Egilberts/applets/ReverseString.html',0,0,500,325);">
+            <b>run the applet</b></a> by clicking the link in this
+            sentence. If you don't want to run it, here's what it looks like
+            with my name entered into the input field:
+            <center>
+            <img src="images/z09a.gif" alt="Running the ReverseString applet" class="inline">
+            </center>
+        <p></p>
+        <p class="note"><b>What's with the -1?</b><br>
+            You might wonder why the code shown here subtracts one from
+            the length of the <b>String</b> in the initialization expression.
+            In a <b>String</b>, the characters are numbered starting with
+            zero. Thus, if there are 10 characters in a particular
+            <b>String</b>, then the last character is in position 9.
+        </p>
+    <h4>Counting by Steps</h4>
+        <p> Not only can you count up and count down, you can
+            also count by values other than 1, simply by changing the value
+            in the update expression. The BASIC language allows you do do
+            this via its STEP clause, but the Java <code>for</code> loop
+            allows you to use any expression you like, not just different
+            constant values.
+        </p>
+        <p> Here, for instance, is how you could calculate
+            the sum of all the even numbers less than 100:
+        </p>
+        <p class="code">
+            int sum = 0;<br>
+            for (int i = 2; i &lt; 100; i += 2)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; sum += i;<br>
+            }
+        </p>
+        <p> And, here's a loop that displays exponential growth. How many
+            numbers do you think that this will print?
+        </p>
+        <p class="code">
+            for (int i = 2; i &lt; 10000; i *= i)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; println(i);<br>
+            }
+        </p>
+        <p> Try it out and see if you're right.</p>
+    <h3>Nested Loops</h3>
+        <p>When you put one <code>if</code> statement inside the body of
+            another <code>if</code> statement, you have a <b>nested</b>
+            <code>if</code> statement. You can do the same thing with loops.
+            As you'd expect, these are called <code>nested loops</code>.
+            When you stick one loop inside another loop, the first loop
+            encountered is called the <code>outer</code> loop, and the
+            next is called the <code>inner</code> loop.
+        </p>
+        <p> Here's an example of a pair of nested <code>for</code>
+            loops that print a multiplication table. This is taken from
+            the ACM console application, <b>TimesTable.java</b>:<br>
+            <img src='images/nested01.gif' class='inline' alt='The Times nested loop.'>
+            With a the nested loops shown here, every repetition
+            of the outer loop (1) contains ten repetitions of the inner loop (2). Every time
+            the outer loop goes round once, the inner loop goes through it's entire
+            set of repetitions.
+        </p>
+        <p> Notice that inside the inner loop, each value of <code>product</code>
+            is printed to the console window using the <code>print()</code>
+            statement (so each value appears on the same line), and formatted
+            using <code>String format()</code>, using a field width specifier,
+            so that both the small numbers and the large numbers take the same
+            amount of space on the line, and so that the columns line up.
+        </p>
+        <p> After the inner loop finishes, the outer loop contains one more
+            statement, a plain <code>println()</code> that advances the
+            cursor to the next line.
+        </p>
+        <p class='note'>Often, you'll find it easier to understand a
+            nested loop, by reading it "from the inside out". Figure out
+            what the inner loop does first. Then, for every repetition
+            of the outer loop, perform the inner loop actions.
+        </p>
+
+        <p> Here's what the program looks like when you run it:
+            <center>
+            <img src="images/nested02.gif"
+                alt="Running the TimesTable app"
+                class='inline'>
+            </center>
+        </p>
+    <h4>Improvements</h4>
+        <p> A first improvement would be to label both the rows and
+            columns in our table. Fortunately, that's pretty easy
+            because we can use the counter variables and some constants
+            like this:<br>
+            <img src="images/nested03.gif" alt="TimesTable app with headings" class='inline'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>I've replaced the literal <b>magic number</b> with
+                a constant and then used that constant over and over.
+            </li>
+            <li class='d'>I've addded a set of <b>sequential</b> <code>for</code>
+                loops to print the column labels and the separator that
+                appears below it.
+            </li>
+            <li class='d'>I've added a single <code>print()</code> statement,
+                <b>inside the outer loop</b> and <b>before the inner loop</b>
+                that is used to print the <b>row labels</b>.
+            </li>
+        </ol>
+        <p> Here's what the program looks like after this improvement:<br>
+            <img src="images/nested04.gif" alt="RunningTimesTable app with headings" class='inline'>
+        </p>
+    <h5>Interactive Times Table</h5>
+        <p> We can make the program <b>interactive</b> by just replacing
+            the constant <code>LIMIT</code> with a variable, and then asking
+            the user for the upper limit, like this:<br>
+            <img src="images/nested05.gif" alt="TimesTable app with user input." class='inline'>
+        </p>
+        <p> Here's what that looks like when it runs:<br>
+            <img src="images/nested06.gif" alt="Running TimesTable app with user input." class='inline'>
+        </p>
+    <h5>Eliminate Redundancy</h5>
+        <p> Finally, notice that each product in the table <b>appears
+            twice</b>: once when we multiply the row by the column and
+            again when we multiply the column by the row. We can
+            eliminate this redundancy by <b>using the outer loop counter
+            as the inner loop limit</b>.
+        </p>
+        <p> In other words, the inner loop will no longer go from
+            1 to <code>limit</code> each time, but will go from
+            1 to <code>outer</code>; the number of inner loop repetitions
+            will vary in response to the outer loop counter variable,
+            like this:<br>
+            <img src="images/nested07.gif" alt="TimesTable app with single product." class='inline'>
+        </p>
+        <p> Here's what that looks like when it runs:<br>
+            <img src="images/nested08.gif" alt="Running TimesTable app with single product." class='inline'>
+        </p>
+    <h3>Loops and Functions</h3>
+        <p> Let's finish up this lesson by learning how to use the
+            <code>for</code> loop to solve <code>String</code> problems.
+            To do that, let's return to <b>JavaBat</b> and look at
+            the <b>doubleChar</b> problem in the <b>String2</b> section:<br>
+            <img src="images/stringfunc01.gif" class='inline' alt='The JavaBat doubleChar problem.'>
+        </p>
+    <h4>Solving String Problems</h4>
+        <p> You'll normally want to attack these kinds of problems using
+            the same basic strategy. Here's how to do that:
+        </p>
+    <h5>Step 1: Return Type</h5>
+        <p> Even though all of the problems in this section <b>process</b>
+            <code>Strings</code>, they don't necessarily <b>return</b>
+            <code>String</code> values. Some will, but others will return
+            <code>int</code> or <code>boolean</code> values.
+        </p>
+        <p> My first step is always to create an "empty" variable of the
+            correct type and then add a return statement, so that I can
+            run the program and see what the tests do. Here's what you'd
+            do for <code>doubleChar()</code>:<br>
+            <img src="images/stringfunc02.gif" class='inline' alt='Step 1: the returned value.'>
+        </p>
+    <h5>Step 2: Loop through the String</h5>
+        <p> This group of problems all requires the use of loops.
+            Because you can easily find the length of the <code>String</code>,
+            you'll almost always use the <code>for</code> loop. Here's the
+            general pattern that I follow, even before I give any thought
+            to what my code is actually going to do:<br>
+            <img src="images/stringfunc03.gif" class='inline' alt='Step 2: string length and loop.'>
+        </p>
+    <h5>Step 3: What's the Goal?</h5>
+        <p> Now we're ready to look at what the output should be. In this
+            case, we want our output to contain two characters for each
+            character in input.
+        </p>
+        <p> In general, if you want to examine every character, you can do
+            it like this:
+        </p>
+        <p class='code'>
+            char ch = str.charAt(i);
+        </p>
+        <p> or, you can do it like this:</p>
+        <p class='code'>
+            String chStr = str.subString(i, i + 1);
+        </p>
+        <p> The first technique gives you back a <code>char</code>
+            variable which is easy to compare using the various
+            relational operators. You'll have to use the second
+            technique if you need to process more than one character
+            on each repetition.
+        </p>
+        <p> In this case, we can go either way. We need to grab each
+            character and then "paste" that character onto the output
+            <code>String</code> two times to double it. Here's a version
+            using <code>charAt()</code>:<br>
+            <img src="images/stringfunc04.gif" class='inline' alt='Step 3: processing characters.'>
+            Notice that you need to concatenate the characters with the
+            <code>String</code> output, not <b>add</b> the two characters
+            together and concatenate that. Concatenation works with
+            <code>Strings</code>, <b>not</b> characters. If you were to
+            write this:
+        </p>
+        <p class='code'>
+            result += ch + ch;
+        </p>
+        <p> the two characters would be <b>added</b> as Unicode characters and
+            the resulting <b>numeric</b> value would be pasted onto the
+            end of your <code>String</code>.
+        </p>
+        <p> Here's a version of the same loop, using the <code>substring()</code>
+            method instead of <code>charAt()</code>:<br>
+            <img src="images/stringfunc05.gif" class='inline' alt='Step 3: processing strings.'>
+        </p>
+    <h4>A Second Example</h4>
+        <p> Let me show you a second example, just to make sure you have the
+            idea. This is also from JavaBat, and is the String2 problem named
+            <b>countHi</b>. All you need to do is count the number of times
+            that the word "hi" appears in the given <code>String</code>.
+            <img src="images/stringfunc06.gif" class='inline' alt='The countHi Problem.'>
+        </p>
+        <p> The first step is exactly like the previous problem. Because the
+            return type of this function is <code>int</code>, I create a
+            numeric variable (instead of a <code>String</code>), and return that:<br>
+            <img src="images/stringfunc07.gif" class='inline' alt='Step 1: return type.'>
+        </p>
+        <p> The second step is very similar to last problem, but has a
+            <i>little twist</i> that you need to pay attention to. In the
+            first problem, our loop when through each character
+            in the <code>String</code>.
+        </p>
+        <p> In this problem, we are looking for
+            a <b>two-character</b> wide <code>String</code>, so we <b>can't</b>
+            loop through the <b>entire</b> <code>String</code>, because we
+            will be extracting two characters at a time, instead of only
+            one. If we looped through the entire <code>String</code>, then
+            when we got to the last character, and then tried to get a
+            substring consisting of the <b>next two characters</b>, the
+            program would generate an "out of bounds" <b>runtime error</b>.
+        </p>
+        <p> In general, if was intend to extract or examine <b>n</b>
+            characters, then our loop should go <b>from 0 to len - (n - 1)</b>
+            like I've done here:<br>
+            <img src="images/stringfunc08.gif" class='inline' alt='Step 2: extract substring.'>
+            Note also, that the <code>substring</code> extraction code
+            <b>always</b> looks like <code>str.substring(i, i + n)</code>
+            where <b>n</b> is the number of characters for the resulting
+            substring.
+        </p>
+        <p> Finally, to compare the extracted substring with the literal
+            value "hi", you need to use the <code>equals()</code> method.
+            If <code>equals()</code> returns <code>true</code>, then you'll
+            <b>increment</b> your counter. Here's what the final loop
+            looks like:<br>
+            <img src="images/stringfunc09.gif" class='inline' alt='Step 3: counting matches.'>
+        </p>
+    <h3>Coming Up ...</h3>
+        <p> That's it for this week. Check the Exercises page for the
+            assignments this week and make sure you complete the
+            Unit 4 Quiz.
+        </p>
+        <p> See you in class!</p>
+    </p></div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

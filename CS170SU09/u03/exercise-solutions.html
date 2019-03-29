@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][6].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Unit " + unit + "Exercises";
+        </script>
+        <style type='text/css'>
+            li {
+                margin-bottom:.5em;
+            }
+        </style>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/hw.jpg" alt="CS 170 Exercise logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            <script>document.write("Unit " + unit);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            Exercises and Assignments
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+
+    <p><b><span class='cap'>T</span>his week you'll do some exercises</b>
+        using the functions in the <code>Math</code> and <code>String</code>
+        classes as well as some programs that use procedures.
+    </p>
+    <ol>
+        <li class='d'>
+            <b>Homework 08 (String Functions)</b>:
+            Write an ACM console program, <b>ProcessName</b> that asks the
+            user to enter their name in the form (First MI. Last) and then
+            prints the resulting name rearranged and labeled in the form
+            "Last, First MI." (including  the quotes as shown below).
+        </p><p>Use the <code>String</code> functions <code>substring()</code>,
+            <code>indexOf()</code>, <code>lastIndexOf()</code>, <code>charAt()</code>
+            and <code>trim()</code> to solve this problem.
+            You may assume:
+            <ul>
+                <li>that every name will have exactly one word
+                    for the first and last names and a single character, followed
+                    by a period for the middle initial.
+                </li>
+                <li> There will be <b>at least</b>
+                     one space separating each of the portions of the input name,
+                    but there may be more spaces.
+                </li>
+            </ul>
+            Your program should handle
+            spaces before the first name and after the last name as well.</p>
+            <p>The program should look like this when it runs.
+            <img src='images/processname.gif' class='inline' alt='The ProcessName program running.'>
+            </p>
+            <p>Format your code using the rules covered in lecture, as
+            well as those found in the CS 170 style guide. Your program
+            will be graded 10% on style. Submit only
+            <b>ProcessName.java</b> to Web-Cat before the deadline.
+            (5 points)<br>
+            <b><a href="../../movies/hw08-ProcessName/hw08-ProcessName.html" target="_blank">Solution</a></b>
+        </li>
+        <li class='d'>
+            <b>Homework 09 (Math Functions) </b>:
+            Write a complete Java <b>ConsoleProgram</b> in a
+            class named <b>FutureValue</b> that asks the user for an initial
+            investment, an annual interest rate and the number of years to
+            keep the money invested. Print the future value, assuming that the
+            interest is calculated monthly, as shown below.<br>
+            <img src='images/fv.png' class='inline' alt='The FutureValue program running.'>
+            </p>
+            <p> Read the input as <code>String</code> variables and convert to
+                the correct type before doing a calculation. For the investment
+                amount, you should remove any "$", space or "," characters from
+                the input string, using the <code>String replace()</code> function
+                before converting to a <code>double</code> value. For the annual
+                percentage rate, you should remove any spaces and any percent signs.
+                When I test your code, I'll test it using plain values (as on the
+                left) as well as values containing these special characters (as on
+                the right). That way, if you have difficulty with that portion,
+                you'll still get partial credit.
+            </p>
+            <p> The formula to calculate the future value of the investment is:
+                <div style='font-style:italic; font-family:times,times new roman,serif;font-size:larger;padding:1em;border:1px solid navy;'>
+                    Future Value = Investment x (1 + Monthly Rate)<sup>Number of Years x 12</sup>
+                </div>
+            </p>
+            <p> For your output, use the <code>String format()</code> method and
+                display three decimals for the rate, and a dollar sign and thousand
+                separators (commas) for both the amount invested and the future value.
+                Display only two decimal places for these amounts as shown in
+                the picture.
+            </p>
+            <p>Format your code using the rules covered in lecture, as
+            well as those found in the CS 170 style guide. Your program
+            will be graded 10% on style. Submit only
+            <b>FutureValue.java</b> to Web-Cat before the deadline.
+            (5 points)<br>
+            <b><a href="../../movies/hw09-FutureValue/hw09-FutureValue.html" target="_blank">Solution</a></b>
+        </li>
+        <a href='images/draweggs.gif' target='_blank'>
+            <img src='images/draweggs.gif' height='75%'
+                 style='border:none;' class='right' alt='The output of DrawEggs. Click to see it full size.'></a>
+        <li class='d'>
+           <b>Homework 10 (Procedural Decomposition) </b>:
+            Write a complete Java <b>ConsoleProgram</b> in a
+            class named <b>DrawEggs</b> that prints the pattern shown
+            on the right. (Click the image to see it full size.)
+            <p>Here are the requirements:
+            <ul>
+                <li>You must use at least <b>at least three procedures</b>,
+                    (not counting <code>run()</code> and <code>main()</code>).
+                </li>
+                <li>Do <b>not</b> do any printing inside your <code>run()</code>
+                    method. The <b>only</b> thing that <code>run()</code> should
+                    contain is <b>procedure calls</b>.
+                </li>
+            </ul>
+            <p> Make sure that you make each of the procedures that you
+                write <code>public</code>. If you use Eclipse to generate the
+                procedure skeletons, it will initially make each one
+                <code>private</code>, and I will <b>not</b> be able to
+                test it. This is a common mistake, so make sure that you
+                check for it.
+            </p>
+            <p>Format your code using the rules covered in lecture, as
+            well as those found in the CS 170 style guide. Your program
+            will be graded 10% on style. Submit only
+            <b>DrawEggs.java</b> to Web-Cat before the deadline.
+            (5 points)<br>
+            <b><a href="../../movies/hw10-DrawEggs/hw10-DrawEggs.html" target="_blank">Solution</a></b>
+        </li>
+        <li class='d'>
+            <b>Extra Credit (Advanced and Challenging)</b>:
+            Write a complete Java <b>ConsoleProgram</b> in a
+            class named <b>AirDistance</b> that calculates the
+            number of air miles between two airports. Here's what
+            the program looks like when it runs (Click to see full size) :<br>
+            <a href='images/airdistance.gif' target='_blank'>
+            <img src='images/airdistance.gif' width='90%' style='border: none;'
+                class='inline' alt='The AirDistance application. Click to see full size.'>
+            </a>
+            <p>The input for each line of input is formatted as shown in
+                the picture. I've provided a <a href='AirportLocations.txt' target='_blank'>
+                <b>text file</b></a> of different airport locations,
+                formatted in this manner, that you can use to test your program.
+                After the location, the latitude and logitude are supplied in
+                <b>degrees</b>. Southern latitudes and western longitudes are supplied
+                as negative numbers as is required for the calculations.
+            </p>
+            <p> You can solve this problem using only the math and string functions
+                that we covered in lecture this week, but doing so will require
+                extensive research on your own. You can find the formulas you'll
+                need at <a href='http://en.wikipedia.org/wiki/Great-circle_distance' target='_blank'>
+                <b>http://en.wikipedia.org/wiki/Great-circle_distance</b></a>.
+            </p>
+            <p> Here are the basic pieces of information you'll need:</p>
+            <ol>
+                <li>Read the information for two airports into strings</li>
+                <li>Extract the description, latitude and logitude for each</li>
+                <li>Convert the latitudes and logitudes into <code>double</code>
+                    variables named something like <code>lat1</code>,
+                    <code>lng1</code>, <code>lat2</code>, and
+                    <code>lng2</code>.
+                </li>
+                <li>Latitude and longitude are in <i>degrees</i> but you
+                    need them in <i>radians</i>. You can use one of the
+                    <code>GMath</code> functions or just multiply each
+                    value by the value <code>PI / 180</code>.
+                </li>
+                <li>The formula for the <i>spherical distance</i> is
+                    the radius of the earth (make a constant using
+                    6371.01 km which is the average radius), multiplied
+                    by the arc cosine of the sum of the product of the
+                    sine of each latitude and the product of the cosine
+                    of each latitude and the cosine of the difference
+                    of the latitudes, like this:<br>
+                    <img src='images/formula02.png' class='inline' alt='Angular distance'>
+                    Using variables instead of the funny math symbols shown
+                    here, the angular distance (which you multiply by the radius
+                    of the earth to get the actual distance) is:
+                    <p class='code'>
+                    diffLng is the difference beteen the longitiudes<br>
+                    Angular Distance = arc cosine of ( <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sine lat1 x sine lat2 +<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cosine lat 1 x cosine lat2 x cosine diffLng)
+                    </p>
+                    <p> There are other formulas you can use, referenced
+                    above. This is the simplest, but not most accurate.)
+                </li>
+            </ol>
+            <p> Format your code using the rules covered in lecture, as
+            well as those found in the CS 170 style guide. Your program
+            will be graded 10% on style. Submit only
+            <b>AirDistance.java</b> to Web-Cat before the deadline.
+            (5 points)
+        </li>
+        <li class='d'>Finish reading Chapter 4 and complete the
+            Unit 3 Quiz online before the deadline.
+        </li>
+    </ol>
+    <p> Remember that all of these assignments are due
+        <span style='color:red'><b>before the deadline</b></span>,
+        so make sure you don't get "caught short".
+    </p>
+</div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

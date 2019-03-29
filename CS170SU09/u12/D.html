@@ -1,0 +1,720 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/d.jpg" alt="CS 170 Lesson D logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src='images/unexpected3.png' class='right' alt='An unexpected event.'>
+            <b><span class="cap">I</span>n earlier lessons</b>, you
+            worked with runtime errors, which
+            are often caused by meaning one thing, but saying quite another.
+            Such <b>logical</b> or <b>semantic</b> errors must be carefully
+            and systematically expunged from your code.
+        </p>
+        <p>
+            However, runtime "errors" are not always the result of logical
+            mistakes. Sometimes, runtime errors are caused by unusual&#8212;you
+            could almost say <b>exceptional</b>&#8212;situations.
+        </p>
+        <p> For instance, most of the time, when you read and write to a
+            file, everything goes along normally. Sometimes, however,
+            "bad things" happen; the disk may be full, for instance, or the
+            file you want to write to may be a read-only file.
+        </p>
+        <p> These kinds of situations are not mistakes that you've made in
+            your code; instead they are unusual occurances that you must
+            allow for. If you just <b>assume</b> that everything will always
+            go normally, your program is not very robust.<br>
+            <img src='images/unexpected2.png' class='inlineCenter' alt='An unexpected event.'>
+            Exceptional
+            situations are often confused with error conditions, or
+            bugs, but they really are different things.
+            In earlier lessons, you learned how to <b>throw</b> an exception
+            when you encountered unexpected parameter values. In this lesson,
+            you'll learn how to <b>handle</b> such exceptions.
+        </p>
+    <h3>Exception-Handling Methods</h3>
+        <p> The traditional way of dealing with this kind of situation is
+            through the use of <b>completion codes</b> (also known as
+            <i>exit</i> or <i>return</i> codes).<br>
+            <img src='images/return-code.png' class='inlineCenter' alt='Completion codes.'>
+            With completion codes, every time
+            you perform an operation that <b>may</b> fail you must first
+            check to be sure that the operation succeeded before you continue.
+            If the operation fails, you have to decide whether to handle
+            the failure at that point or to pass it back to the method that
+            invoked the operation.
+        </p>
+    <h4>A Traditional Example</h4>
+        <p> Here's some psuedocode that shows the traditional method of
+            dealing with exceptional situations. Consider the steps you need
+            to follow to open a file, read some data, process the data,
+            write the changed data back to the file, and finally, close the
+            file:
+        </p>
+        <p class="screen" style='border:3px solid green;background:black;margin-right:3em;color:green;'>
+            <code style='color:#66FF66;'><b>
+            <h5 style='margin-top:0;color:yellow;background:black;border-bottom:1px solid white;'>Open, Read, Write, Close</h5>
+            <br>GET A FILENAME&nbsp;
+            <br>OPEN THE FILE&nbsp;
+            <br>IF NO ERROR OPENING THE FILE&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;READ SOME DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;IF NO ERROR READING THE DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROCESS THE DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE THE DATA
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF NO ERROR WRITING THE DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLOSE THE FILE&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF NO ERROR CLOSING FILE&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN OK
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN CLOSE_ERROR
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN WRITE_ERROR
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;ELSE
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN READ_ERROR
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;ENDIF
+            <br>ELSE
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;RETURN FILE_OPEN_ERROR
+            <br>ENDIF
+            </b></code>
+        </p>
+    <h4>Observations</h4>
+        <p>There are three things to notice about this code:</p>
+        <ul>
+            <li><b>Most</b> of these operations, except for "PROCESS THE DATA" <b>can
+                fail</b>, and so the program has to be prepared.
+            </li>
+            <li>It is very difficult to determine the normal course of action
+                when first reading the code. The program is so taken up with
+                what can go <b>wrong</b>, that it's hard to be certain
+                you are doing the right things in the right order.
+            </li>
+            <li>It is very difficult to write a library that depends upon
+                code like this, because every function in the library has
+                to return several different error codes.</li>
+        </ul>
+        <p>Now, let's look at an alternative, using exceptions.</p>
+    <h4>The Exceptional Method</h4>
+        <p> Using an exception mechanism, the same psedocode looks like this:</p>
+        <p class="screen" style='border:3px solid green;background:black;margin-right:3em;color:green;'>
+            <code style='color:#66FF66;'><b>
+            <h5 style='margin-top:0;color:yellow;background:black;border-bottom:1px solid white;'>Open, Read, Write, Close</h5>
+            <br>TRY TO DO THESE THINGS:
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;GET A FILENAME&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;OPEN THE FILE&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;READ SOME DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;PROCESS THE DATA&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;WRITE THE DATA
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;CLOSE THE FILE
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;RETURN
+            <br>IF ERROR OPENING FILE THEN ...
+            <br>IF ERROR READING FILE THEN ...
+            <br>IF ERROR WRITING FILE THEN ...
+            <br>IF ERROR CLOSING FILE THEN ...
+            </b></code>
+        </p>
+        <p> Compare this code to the previous code, and you'll immediately see that
+            the code that uses an exception strategy:
+        </p>
+        <ul>
+            <li>Is shorter and easier to read.</li>
+            <li>Makes the normal logic&#8212;what you are actually trying to do with the
+                method&#8212;its
+                focus. In the traditional method, the error-handling often <b>obscures</b> the
+                normal logic.
+            </li>
+            <li>Allows you to handle an error or pass it back to the caller. Using exceptions,
+                the caller is not forced to manually pass errors back up the "chain" of
+                command. This is done automatically making it very easy to implement a
+                centralized error-handling strategy.
+            </li>
+        </ul>
+        <p> In Java, when an exceptional situation occurs, an <b>object</b>
+            is created and passed to your error-handling code. In this
+            next section, you'll look at the most common of the Java
+            exception-handling classes.
+        </p>
+    <h3>Exception and Error Objects</h3>
+        <p> In Java, when an exceptional situation occurs&#8212;if you try to write to a
+            file that cannot be written to, if you try to write past the end of an
+            array, or if you try to divide by zero, even though your mother warned
+            you not to&#8212;Java will create one of two types of
+            <code>Throwable</code> objects: an <code>Error</code> object or
+            an <code>Exception</code> object.
+        </p>
+        <p> Java then takes that <code>Throwable</code> object and
+            <b>throw</b> it right back up the call stack where the method
+            was called from.
+            </p><center>
+            <img src="images/x09.gif" alt="How exceptions are thrown" class="inline">
+            </center>
+            Any method, anywhere along the way, can decide
+            to deal with that <code>Throwable</code> object, by
+            <b>catching</b> it.
+        <p></p>
+    <h4>Types of Exceptions</h4>
+        <p> This illustration shows a small portion of Java's exception
+            hierarchy:
+            </p><center>
+            <img src="images/w01.gif" alt="Some of Java's exception hierarchy" class="inline">
+            </center>
+            As you can see, and was previous mentioned,
+            <code>Throwable</code> has two subclasses, <code>Exception</code>
+            and <code>Error</code>.
+        <p></p>
+        <p> The <code>Exception</code> side of the familiy is further divided
+            into those exceptions that are <b>checked</b>, (represented by
+            the green-shaded classes in the illustration), and those that
+            are <b>unchecked</b>, (represented by the pink-shaded classes).
+            We'll talk more about the distinction between checked and
+            unchecked exceptions shortly.
+        </p>
+    <h4>Error Objects</h4>
+        <p><img src="images/g06.gif" class="right" alt="The Error classes.">
+            An <code>Error</code> is an unusual situation, like the other
+            exceptions, but it is the kind of situation that has no easy
+            solution. If, for instance, the JVM throws an
+            <code>InternalError</code>, there is nothing you can put in
+            your code that will cure it.
+        </p>
+        <p> Because of Java's reliance on automatic memory management and
+            garbage collection, an <code>OutOfMemoryError</code> is likewise
+            fatal. And, even if you <b>could</b> catch the wiley
+            <code>UnknownError</code>, what would you do
+            with it after you'd caught it?
+        </p>
+        <p> When your program throws an <code>Error</code> object, it's about
+            to give up the ghost, and there's nothing you can do about it.
+        </p>
+    <h4>Checked and Unchecked Exceptions</h4>
+        <p> If you can't do anything about the <code>Error</code> side of the
+            <code>Throwable</code> family, how about the
+            <code>Exception</code> side? The <code>Exception</code> class
+            represents unusual situations that you <b>may</b> want to handle
+            in your own code. Like <code>Throwable</code>, the
+            <code>Exception</code> class is also subdivided into two
+            branches&#8212;commonly called the checked and the unchecked
+            exceptions, as was previously mentioned.
+        </p>
+    <h5>The RuntimeException Class</h5>
+        <p> <img src="images/g07.gif" class="right" alt="The unchecked exceptions.">
+            Unchecked exceptions are those thrown by the Java runtime system,
+            and are all descended from the <code>RuntimeException</code>
+            class. These kinds of exceptional situations&#8212;accessing an
+            element past the end of an array, for instance, or dividing by
+            zero&#8212;represent unusual situations that you would normally
+            prevent by careful programming.
+        </p>
+        <p> These are called unchecked exceptions because you are not
+            <b>required</b> to specifically handle these exceptions in your
+            code if they occur. Most of the time, in fact, you will
+            <b>not</b> handle them at all. Some times, however, handling one
+            of these unchecked exceptions provides an easy way to accomplish
+            a dificult task.
+        </p>
+        <p> Here's an example. Type a number in the
+            <code>TextField</code> shown here, and press ENTER. Now try
+            typing a word, like "one." What happens now?
+        </p>
+        <div class="redbox" style="background: yellow;">
+            <applet code="NFE.class" alt="The NFE [Number Format Exception] applet."
+                codebase="http://csjava.occ.cccd.edu/~gilberts/applets"
+                width="400" height="50">
+            </applet>
+        </div>
+        <p> The <code>NumberFormatException</code> class provides an easy way
+            to recover when converting between <code>Strings</code> and
+            <code>ints</code> using <code>Integer.parseInt()</code>.
+            Writing the logic necessary to determine if a <code>String</code>
+            contains a "well-formed" number is more work than manually
+            converting the <code>String</code> to an <code>int</code>.
+        </p>
+        <p> Instead of going to all that work, you can simply create a
+            <code>try</code> block, (which you'll learn to do in the next
+            section), and <code>catch</code> the
+            <code>NumberFormatException</code> that is thrown when
+            someone types in "one hundred" instead of "100".
+        </p>
+    <h4>Handling Checked Exceptions</h4>
+        <p> <img src="images/g05.gif" class="right" alt="The checked exceptions.">
+            To use checked exceptions  you have to do two things. First, you
+            have to put the code that may cause an exceptional situation
+            into a <code>try</code> block. Then, you provide one or more
+            <code>catch</code> blocks immediately following the
+            <code>try</code> block.
+        </p>
+        <p> If a method throws one of these checked exceptions&#8212;an exception
+            <b>not</b> descended from the <code>RuntimeException</code>
+            class&#8212;you <b>must</b> handle the exception, you can't simply
+            ignore it like you can with the unchecked exceptions.
+        </p>
+        <p> This next section will show you how to handle these types
+            of exceptions.
+        </p>
+    <h3>Using try-catch-finally</h3>
+        <p>In the last section,
+            you learned about the different kinds of <code>Throwable</code>
+            objects that are generated when an exception occurs. In this
+            part, you'll learn to trap those <code>Throwable</code> objects
+            and put them to work.
+        </p>
+        <p>You'll learn:</p>
+        <ul>
+            <li>How to use <code>try-catch</code> to respond to
+                specific errors</li>
+            <li>How to use the <code>throws</code> clause when you want to
+                allow the Java runtime system to handle an exception for
+                you</li>
+            <li>How to use <code>try-catch-finally</code> to make sure that
+                necessary portions of your program are executed whether or
+                not an exception occurs.</li>
+        </ul>
+        <p>Let's get started by looking at the syntax of the
+            <code>try-catch</code> statement.
+            If you are a long-time programmer, Java's <code>try-catch</code>
+            mechanism, shown here, looks kind of strange the first time you
+            see it:<br>
+            <img src="images/w02.gif" alt="The try-catch syntax" class="inlineCenter">
+            Most programming structures&#8212;loops, selection statements, method
+            definitions&#8212;have the same basic "shape" in every programming
+            language, even though the details might differ.
+        <p></p>
+        <p> That's not true with <code>try-catch</code>, which seems to
+            combine elements of loops and methods together in a package that
+            just doesn't "look quite right" when you first encounter it.
+            Once you understand how
+            <code>try-catch</code> works, though, the strangeness
+            goes away, and it starts to look a little bit more natural.
+        </p>
+    <h4>The try Block</h4>
+        <p> The first portion of a <code>try-catch</code> statement is the
+            <code>try</code> block. This is the easiest part to understand.
+            A <code>try</code> block consists of the keyword <code>try</code>
+            followed by a brace-delimited block.
+        </p>
+        <p class="note">The braces are part of the
+            <code>try-catch</code> syntax, and are required. This is
+            different than a loop body or the body of an <code>if</code>
+            statement, where the braces are optional.
+        </p>
+        <p> Inside the braces you can put any number of statements that
+            may throw an exception:
+        </p>
+        <p class="code">
+            <span class="red"><b>// A try Block</b></span><br>
+            <br>int a = 3, b = 0;
+            <br>int n = 0, x = 0;
+            <br>try
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; n = System.in.read();
+            <br>&nbsp;&nbsp;&nbsp; Thread.sleep(100);
+            <br>&nbsp;&nbsp;&nbsp; x = a / b;
+            <br>}
+        </p>
+    <h5>Trying Exceptions</h5>
+        <p>If you use a method that throws a <b>checked</b> exception&#8212;that
+            is, an exception that is not a subclass of the
+            <code>RuntimeException</code> class&#8212;then you <b>must</b> put
+            the statement inside a <code>try</code> block. Common
+            methods that throw checked exceptions include the
+            <code>System.in.read()</code> method, (which throws
+            <code>IOException</code>), the <code>Thread.sleep()</code>
+            method, and the <code>File</code> constructor which you used
+            when you first looked at iterators.
+        </p>
+        <p> The statements inside the <code>try</code> block are not
+            restricted to those that may throw checked exceptions; you can
+            place <b>any</b> statements you like inside the <code>try</code>
+            block. If you call a method or perform an operation that
+            generates an unchecked exception&#8212;say a
+            <code>NullPointerException</code> or a
+            <code>NumberFormatException</code>&#8212;then you can handle the
+            exception by adding an appropriate <code>catch</code> block,
+            which you'll meet shortly.
+        </p>
+        <p> You are not <b>required</b> to provide a <code>catch</code> block
+            for the unchecked exceptions which may be generated inside your
+            <code>try</code> block, but you <b>are</b> required to provide a
+            <code>catch</code> block for each <b>checked</b> exception
+            that might be thrown.
+        </p>
+    <h4>The catch Blocks</h4>
+        <p> Immediately following your <code>try</code> block you must supply
+            one or more <code>catch</code> blocks. The syntax for the
+            <code>catch</code> blocks looks like this:
+        </p>
+        <p class="code">
+            catch (&lt;Exception1-Class&gt; &lt;var1&gt;)
+            <br>{
+            <br>&nbsp; <span class='cmt'>// Handle exception1 here</span>
+            <br>}
+            <br>catch (&lt;Exception2-Class&gt; &lt;var2&gt;)
+            <br>{
+            <br>&nbsp; <span class='cmt'>// Handle exception 2 here</span>
+            <br>}
+        </p>
+        <p> This is the part that gets a little tricky. Each
+            <code>catch</code> block starts with the keyword
+            <code>catch</code>, which is followed by parentheses.
+            Inside the parentheses you declare an <b>exception variable</b>
+            which is used to hold the exception object if that particular
+            exception is thrown inside the <code>try</code> block.
+        </p>
+        <p> You must provide a name for each exception object, and, although
+            this looks like a method header, the scoping rules are somewhat
+            different. Each exception variable used in one
+            <code>try-catch</code> situation must have a unique name.
+        </p>
+        <p> Following the exception variable declaration is a brace-delimited
+            block where you add the actions you want to take when that
+            particular exception is thrown. As with the <code>try</code>
+            block, the braces around the <code>catch</code> block
+            body are required. (Early versions of javac did not enforce this
+            restriction, so you may still see some code that has no braces
+            surrounding the body of the <code>catch</code> block).
+        </p>
+    <h4>Catching A Checked Exception</h4>
+        <p> You must provide a <code>catch</code> block for <b>every</b>
+            checked exception that may be thrown inside your
+            <code>try</code> block. Let's continue the example we started
+            earlier. Because you know that <code>System.in.read()</code>
+            throws an <code>IOException</code>, and that
+            <code>IOException</code> is a checked exception,
+            you can add a <code>catch</code> block like this:
+        </p>
+        <p class="code">
+            <span class="red"><b>// A catch Block</b></span><br>
+            <br>int a = 3, b = 0;
+            <br>int n = 0, x = 0;
+            <br>try
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; n = System.in.read();
+            <br>&nbsp;&nbsp;&nbsp; Thread.sleep(100);
+            <br>&nbsp;&nbsp;&nbsp; x = a / b;
+            <br>}<span class="red">
+            <br>catch (IOException ioe)
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; System.out.println("No read()");
+            <br>}</span>
+        </p>
+        <p> To compile this code, you must import the <code>java.io</code>
+            package, where <code>IOException</code> is defined. Once you do
+            that, you can recompile. When you do, here's what you'll see:
+        </p>
+        <p class="screen" style='border:3px solid green;background:black;margin-right:3em;color:#66FF66;font-weight:bold;'>
+            C:\MyFiles\Unit12&gt; javac TryCatch.java<br>
+                TryCatch.java:15: Exception java.lang.InterruptedException<br>
+                 must be caught, or it must be declared in the throws clause<br>
+                 of this method.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.sleep(100);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^<br>
+                1 error
+        </p>
+        <p> As you can see, the <code>Thread.sleep()</code> method throws an
+            <code>InterruptedException</code>. This is a checked exception,
+            so you must catch it as well.
+        </p>
+    <h4>A Second Checked Exception</h4>
+        <p> Let's add a <code>catch</code>
+            block for <code>InterruptedException</code> and see what happens.
+        </p>
+        <p class="code">
+            <span class="red"><b>// A Second catch Block</b></span><br>
+            <br>int a = 3, b = 0;
+            <br>int n = 0, x = 0;
+            <br>try
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; n = System.in.read();
+            <br>&nbsp;&nbsp;&nbsp; Thread.sleep(100);
+            <br>&nbsp;&nbsp;&nbsp; x = a / b;
+            <br>}
+            <br>catch (IOException ioe)
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; System.out.println("No read()");
+            <br>}<span class="red">
+            <br>catch (InterruptedException ie)
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp; System.out.println("No sleep()");
+            <br>}</span>
+        </p>
+        <p> Because <code>InterruptedException</code> is part of the
+            automatically-included <code>java.lang</code> package, you don't
+            have to add any new <code>import</code> statements. You must
+            make sure that your new exception variable has a different name
+            than the first, however, or Java will complain that a variable
+            with that name already exists. In the example, the new variable
+            is named <code>ie</code> instead of <code>ioe</code> like
+            the first.
+        </p>
+    <h4>Catching an Unchecked Exception</h4>
+        <p> Once you do that, the program compiles without error. If you put
+            this code into a console-mode application and run it, however,
+            this is what you'll see:<br>
+            <img src="images/w03.gif" alt="Running TryCatch.java" vspace="15" border="1" hspace="15"><br>
+            As you can see, an <code>ArtithmeticException</code> is being
+            thrown because we are dividing by zero. Since
+            <code>ArithmeticException</code> is a sublcass of
+            <code>RuntimeException</code>, it is <b>unchecked</b>. The Java
+            compiler does not require you to <code>catch</code>
+            it, nor do you have to place the code that causes the exception
+            inside a <code>try</code> block. If you move the line
+        </p>
+        <p class="code">x = a / b;</p>
+        <p>outside of the <code>try-catch</code>, the program runs just the same.</p>
+        <p> Although you don't <b>have</b> to use <code>try-catch</code> with
+            unchecked exceptions, you certainly <b>can</b>. If you add a
+            <code>catch</code> block for <code>ArithmeticException</code>
+            to your program, you can catch and handle the divide-by-zero
+            exception in your own code.
+        </p>
+        <p> Generally, you don't want to do this,
+            because runtime exceptions usually indicate a programming error
+            that should be fixed. For certain tasks, however, such as
+            checking to see if a <code>String</code> is properly
+            formatted as a number by using <code>NumberFormatException</code>,
+            catching an unchecked exception is the smart way to go.
+        </p>
+    <h3>Exception Matching</h3>
+        <p> Because the various exception classes are arranged in a
+            hierarchy, it is possible to catch <b>several</b> exceptions
+            using a <b>single</b> <code>catch</code> block. If, for instance,
+            you add a <code>catch</code> block for <code>Exception</code>, the
+            superclass for all exceptions, then your <code>catch</code> block
+            will intercept every exception that can be generated.
+            (This is not a good idea, by the way.)
+        </p>
+        <p>You can use this hierarchy of exceptions to handle certain
+            exceptions and to defer handling others, like this:<br>
+            <img src="images/w04.gif" alt="Using multiple exception catch blocks" class="inlineCenter">
+            When an exception occurs, the <code>catch</code> blocks are
+            searched in order, looking for a match. That means, you
+            should place your most specific <code>catch</code>
+            blocks first, and the more general ones later.
+        <p></p>
+        <p> If you place your general (superclass) <code>catch</code> blocks
+            first, then the more specific (subclass) <code>catch</code>
+            blocks will never be searched.
+        </p>
+    <h3>Throwing Exceptions</h3>
+        <p> So far, we've talked about <b>catching</b> exceptions. Let's look at
+            this from another angle, though. How can you <b>generate an exception</b>
+            in your own code?
+        </p>
+        <p> Actually, you've already done this in an earlier lesson, and,
+            as you saw there, it's pretty easy. Suppose you had a factory method that
+            produced <b>Widgets</b>. To create a Widget, you pass a single int
+            argument telling the factory what kind of Widget you want. The
+            only valid arguments are 1 through 4. Anything else should produce
+            an exception.
+        </p>
+        <p> To do this, you use Java's <code>throw</code> statement, along
+            with the <b>IllegalArgumentException</b> class like this:
+        </p>
+<pre style='font-size:10pt;'>public Widget makeWidget(int widgetType)
+{
+    <span class="cmt">// only valid types are 1&#8230;4</span>
+    if (widgetType &lt; 1 || widgetType &gt; 4)
+        <span style="color: red;">throw new IllegalArgumentException(&#8220;Invalid type&#8221;);</span>
+
+    <span class="cmt">// Remaining code is skipped when exception thrown</span>
+}
+</pre>
+        <p> When you call this method with an illegal argument, the <code>if</code>
+            statement creates an <code>IllegalArgumentException</code> object, with the
+            error message "Invalid type", and <b>throws it</b> up the call stack.
+        </p>
+        <p> Although we used <code>IllegalArgumentException</code> in this example,
+            we could have used <code>RuntimeException</code> or any
+             <code>RuntimeException</code> subclass. These classes are <b>not
+             checked exceptions</b>, which means that users can call the
+             <code>makeWidget</code> method without putting it in a
+             <code>try-catch</code> block.
+        </p>
+    <h4>The throws Clause</h4>
+        <p> Although you've already learned how to throw an exception,
+            One of the beauties of Java's exception mechanism
+            is its flexibility. If you decide that you don't want to handle
+            a particular exception, then you don't have to: you can pass it,
+            like a "hot-potato", back to the Java runtime system, and let
+            Java handle it.
+        </p>
+        <p> Here's how that works. Suppose you want to write a method for a
+            console-mode application that reads integers from the keyboard.
+            You want the method to return an <code>int</code> if it succeeds,
+            but, if the user types in "cat" or "100", you don't want to be
+            bothered correcting them. You're happy to let Java do that:<br>
+            <img src="images/w05.gif" alt="Throwing exceptions" class="inlineCenter">
+            As you can see from the illustration, there are two
+            possible things that can go wrong inside your method. The
+            <code>System.in.read()</code> method, used to read from the
+            keyboard, can throw an <code>IOException</code>. Also, the
+            <code>Integer.parseInt()</code> method can throw a
+            <code>NumberFormatException</code>.
+        </p>
+        <p> Because <code>NumberFormatException</code> is an unchecked
+            exception, you don't have to do anything to pass it on to the
+            Java runtime. <code>IOException</code> is a different matter.
+            If you try to use <code>System.in.read()</code> in your code
+            <b>without</b> placing the statement inside a
+            <code>try</code>-<code>catch</code> block, then Java will not
+            compile your code.
+        </p>
+        <p> You don;t have to use <code>try</code>-<code>catch</code> for
+            <code>IOException</code>, however. Instead, you can defer to the
+            caller of your method by adding <code>throws IOException</code>
+            to the method definition. This means that any method which calls
+            <code>readInt()</code> must place the call in a
+            <code>try</code>-<code>catch</code> block, or throw the
+            exception as well.
+        </p>
+        <p class="redbox">Note that the <b>throws clause</b>, which is added
+            to a method header, is different than the <b>throw statement</b>,
+            which causes an exception to be generated. We used the <b>throws
+            statement</b> in Unit 10 when checking parameters in constructors.
+        </p>
+    <h4>Throwing Multiple Exceptions</h4>
+        <p> If you wanted to call the <code>Thread.sleep()</code> method inside
+            the <code>readInt()</code> method, you would have to add the
+            <code>InterruptedException</code> to your <code>thows</code>
+            clause as well, like this:
+        </p>
+        <p class="code">
+            public int readInt() <span class="red">throws IOException, InterruptedException</span><br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Code here<br>
+            }
+        </p>
+        <p> If you don't want to be bothered with handling
+            any exceptions at all, however, you can simply use
+            <code>throws Exception</code> to your <code>main()</code>
+            method, and be done with it.
+        </p>
+    <h4>Exception Strategies</h4>
+        <p>When should you use <code>try</code>-<code>catch</code> and
+            when should you rely on the <code>throws</code> clause? Here
+            are some simple guidelines that might help you:
+        </p>
+        <ul>
+            <li>If you <b>know</b> how to handle a situation, use
+                <code>try</code>-<b>catch.</b>
+            </li>
+            <li>If you <b>don;t know</b> how to handle an error, or, if you
+                think there may be situations where users of your code will
+                want to handle an error differently, then use
+                <code>throws</code>.
+            </li>
+        </ul>
+        <p> In any event, you should make sure you use exceptions for
+            exceptional situations only. Don't let exception handling make
+            up for sloppy programming. You should never, for instance, rely
+            on exception handling to tell you when you have exceeded the
+            bounds of an array.
+        </p>
+    <h3>The finally Clause</h3>
+        <p>As you've just seen, when an exception is thrown
+            in a <code>try</code> block, program control jumps to the
+            <code>catch</code> block that handles that particular exception.
+        </p>
+        <p> Sometimes, however, this can lead to problems because code
+            necessary for managing resources may be skipped. For instance,
+            every time you open a file, you should close the file. Files are
+            an operating system resource that must be manually returned
+            to the O/S by closing the file. But, <b>where</b> should you
+            put the code to close the file?
+        </p>
+    <h4>Where to Close the File?</h4>
+        <p> Here's an example:</p>
+        <p class="code">
+            <span class="red"><b>A Problem with try-catch</b></span><br>
+            <br>try
+            <br>{
+            <br>&nbsp; openFile();
+            <br>&nbsp; readData();&nbsp; <span class="cmt">// What if exception thrown here</span>
+            <br>&nbsp; closeFile(); <span class="cmt">// This is skipped</span>
+            <br>}
+            <br>catch (IOException ioe)
+            <br>{
+            <br>&nbsp; <span class="cmt">// closeFile() not executed if no exception</span>
+            <br>}
+            <br><span class="cmt">// closeFile() <b>possibly</b> executed</span>
+        </p>
+        <p> As you can see, there are three possible places where the call
+            to <code>closeFile()</code> can go:
+        </p>
+        <ol>
+            <li>In the <code>try</code> block, following <code>readData()</code></li>
+            <li>In the <code>catch</code> block</li>
+            <li>After the <code>try-catch</code> block</li>
+        </ol>
+        <p>Each of these locations has a potential problem:</p>
+        <ul>
+            <li>If you put the code in the <code>try</code> block, then it
+                will not be executed if an exception is thrown in the
+                <code>readData()</code> method.
+            </li>
+            <li>If you put the code <b>only</b> in the <code>catch</code>
+                block, it won't be called <b>unless</b> an error occurs.
+            </li>
+            <li>If you put the code <b>after</b> the <code>try-catch</code>
+                block, and the <code>catch</code> block terminates the
+                program, you'll have failed to close the file as well.
+            </li>
+        </ul>
+        <p> To fix this, your first inclination is probably to put the code
+            in <b>both</b> the <code>try</code> and <code>catch</code> blocks,
+            even though this results in duplicated code. A better
+            solution, however, is to place the code, <b>once</b>, in a
+            <code>finally</code> block as shown here:<br>
+            <img src="images/w06.gif" alt="The finally block" class="inlineCenter">
+            The optional <code>finally</code> clause, will always
+            be called, both when an exception is thrown and when
+            the code executes normally.
+            Use the <code>finally</code> clause to guard against resource
+            depletion of items like file handles and graphic context handles.
+        </p>
+
+    <h3>Coming Up ...</h3>
+        <p> </p><center>
+            Thaaaaaat's All Folks! Make sure you take the Practice Final Exams.
+            Then, I'll see you at the Final Exam!
+            <img src="images/g10.gif" class="inline" alt="Looney Tunes logo.">
+            </center>
+        <p></p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][2].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p><b><span class="cap">T</span>he examples you've seen so far</b>
+            all require your applet to implement an interface to handle the
+            events you're interested in. In this section, you'll look at a
+            different way of handling events: through the use of
+            <b>inner classes</b> and <b>event adapters</b>.
+        </p>
+        <p> Inner classes are <b>nested</b> classes that you define "inside"
+            other classes. When you compile your program, Java combines the
+            name of your outer (containing) class with the name of your
+            inner class to create the actual "real" name of the class.
+        </p>
+        <p> Here's an example:</p>
+        <p class="code">
+            public class Outer<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; private int a = 10;<br>
+            &nbsp;&nbsp;&nbsp; class Inner<br>
+            &nbsp;&nbsp;&nbsp; {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void changeIt()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a = 5;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+            &nbsp;&nbsp;&nbsp; }<br>
+            }
+        </p>
+        <p> The outer class, here imaginatively named <code>Outer</code>
+            contains only a single <code>private int</code> field named
+            <code>a</code>, as well as the definition for an inner class
+            named <code>Inner</code>. There are two important things to
+            note about this example:
+        </p>
+        <ol>
+            <li class='d'>The method <code>changeIt()</code>, defined in the class
+                <code>Inner</code>, has access to the <code>private</code>
+                data field <code>a</code>, while a subclass of the
+                <code>Outer</code> class would not. In this sense, inner
+                classes act more like body parts than like relatives.
+            </li>
+            <li class='d'>The example program creates no <code>Inner</code> object,
+                it only contains a definition. To actually use the inner
+                class you must also create an <code>Inner</code> object.
+            </li>
+        </ol>
+        <p> When you compile this, as you can see here, you don't end up
+            with files named <b>Outer.class</b> and <b>Inner.class</b>.
+            Instead you have <b>Outer.class</b> and <b>Outer$Inner.class</b>:<br>
+            <img src="images/inner_class_1.gif" class='inlineCenter' alt="Files created when compiling a program containing inner classes.">
+            The <b>main</b> reason for using inner classes is to <b>respond to
+            events</b>. By creating a separate inner class for each event you
+            want to handle, your code is more modular.
+        </p>
+        <p>Let's look at an example.</p>
+    <h3>An Inner-class ActionListener</h3>
+        <p> Let's create an applet that has two <code>Button</code>s, and use
+            inner classes to hook up their events. This is an intentionally
+            simplified example. It also shows how to use AWT <code>Button</code>
+            and <code>Label</code> objects
+            in Java applets. Mostly the <code>Button</code> class works just
+            like the <code>JButton</code> class, but with fewer features.
+        </p>
+    <h4>Step 1: The Framework</h4>
+        <p> The first step is to create the overall framework:</p>
+        <ol>
+            <li class='d'>Create an applet with a <code>Label</code> (instance
+                variable) and two local <code>Button</code> objects.
+            </li>
+            <li class='d'>Put "A Simple Action Applet" in the <code>Label</code></li>
+            <li class='d'>Name your <code>Buttons</code> <code>show</code> and
+                <code>hide</code>.
+            </li>
+            <li class='d'>Add all three items to the surface of your applet.</li>
+        </ol>
+        <p>Your code should look like this:
+            <img src='images/sa01.png' class='inlineCenter' alt='The SimpleAction skeleton.'>
+        </p>
+    <h4>Step 2: Inner Classes</h4>
+        <p> Now, create the <b>inner class definitions</b>. Make sure that these go
+            <b>inside</b> the <code>SimpleAction</code> class definition,
+            but not inside one of the methods, such as <code>init()</code>.
+            Here are the steps:
+        </p>
+        <ol>
+            <li class='d'>Name your classes <code>ShowMe</code> and <code>HideMe.</code></li>
+            <li class='d'>Have each one <code>implement ActionListener</code></li>
+            <li class='d'>Each one should contain an <code>actionPerformed()</code> method.</li>
+            <li class='d'>Make the <code>Label</code> visible in one and invisible in the other.</li>
+        </ol>
+        <p>Here's what your code should look like now:<br>
+            <img src='images/sa02.png' class='inlineCenter' alt='Adding the inner classes.'>
+            Notice that the inner classes are marked as <code>private</code> (since they
+            have no meaning outside of their enclosing class) and that they are defined
+            <b>entirely inside</b> the <code>SimpleAction</code> class.
+        </p>
+    <h4>Step 3: Objects &amp; Connections</h4>
+        <p> At this point, you have two <b>inner classes</b> but you
+            don't have any <code>ShowMe</code> or <code>HideMe</code>
+            <b>objects</b>. Furthermore, since you don't have any handler
+            objects, your <code>Button</code>s have nowhere to send their
+            event notifications.
+        </p>
+        <p>Let's fix that like this:<br>
+          <img src='images/sa03.png' class='inlineCenter' alt='Hooking up the handlers.'>
+        <ol>
+            <li class='d'>Add two fields, <code>hideMe</code> and <code>showMe</code>, using the
+                appropriate constructor to initialize them. (Notice that these are
+                the same names as the classes, except that they start with lowercase.)
+            </li>
+            <li class='d'>Connect each <code>Button</code> to the appropriate handler
+                object, by sending it the <code>addActionListener()</code>
+                message.
+            </li>
+        </ol>
+        <p> When you run the program, clicking the <code>hide</code> button
+            forwards the event notification to the <code>HideMe</code> object,
+            calling it's <code>actionPerformed()</code> method. The second
+            button, <code>show</code>, forwards its notifications to the
+            <code>ShowMe</code> event-handler object.
+        </p>
+    <h3>Variations on a Class</h3>
+        <p> There are two different variations on this basic inner-class
+            arrangement that are commonly used. It's important that you
+            recognize them, but remember that each of them does exactly the
+            same thing as the <code>SimpleAction</code> class you've just
+            seen; the inner classes are just arranged a little differently.
+        </p>
+    <h4>Variation 1: Anonymous Variables</h4>
+        <p> This one is easy to understand. In <code>SimpleAction</code>,
+            the two variables <code>showMe</code> and <code>hideMe</code>
+            have only a single purpose: to create a <code>ShowMe</code>
+            object and a <code>HideMe</code> object to be passed to the
+            appropriate <code>Button</code> in <code>addActionListener()</code>.
+        </p>
+        <p> Since you really don't need these two fields for any other
+            purpose, you can eliminate the variables entirely, replacing
+            them with <b>anonymous variables</b> in the <code>init()</code>
+            method, like this:
+        </p>
+        <p class="code">
+            hide.addActionListener(new HideMe());<br>
+            show.addActionListener(new ShowMe());
+        </p>
+        <p> Once you've done this, you can delete the two event-handler
+            instance variables.
+        </p>
+    <h4>Variation 2: Anonymous Classes</h4>
+        <p> This one is a little harder to grasp, because it's easy to get
+            the syntax confused.
+        </p>
+        <p> In the <code>SimpleAction</code> applet, the classes
+            <code>ShowMe</code> and <code>HideMe</code> are only used to
+            each create <b>a single object</b>&#8212;the object passed to
+            <code>addActionListener()</code>. Since you really don't <b>need</b>
+            the class definition in any other context, Java allows you to
+            create an <b>anonymous class</b> at the same place you
+            created the <b>anonymous object</b> in the last example:
+            when you call <code>addActionListener()</code>.
+        </p>
+        <p> To understand this syntax, think of the original class definition
+            for the <code>HideMe</code> class shown here, with the
+            <b>identifying information</b> stripped out:
+        </p>
+        <p class="code">
+            <strike>class HideMe implements</strike> ActionListener<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent ae)<br>
+            &nbsp;&nbsp;&nbsp; {<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; message.setVisible(false);<br>
+            &nbsp;&nbsp;&nbsp; }<br>
+            }
+        </p>
+        <p> Now, imagine that this definition is used to replace the
+            <code>Hideme()</code> constructor in the anonymous variables
+            variation like this:
+        </p>
+        <p class="code">
+            hide.addActionListener(new <strike>HideMe</strike>/* insert here */());
+        </p>
+        <p>The result is an anonymous class object that looks like this:
+            <img src='images/sa04.png' class='inlineCenter' alt='Anonymous inner class.'>
+            <b>Note :</b> Pay special attention to the last line.
+            Note that it ends in a closing brace, followed by a closing
+            parenthesis and a semicolon.
+        </p>
+    <h4>Should You?</h4>
+        <p> Should you use anonymous classes? Many programmers like them
+            because using anonymous classes makes their code slightly
+            shorter, plus they don't have to think up "dummy" class names.
+            Others feel that it makes it harder to follow the outline of
+            the original program.
+        </p>
+        <p> You'll have to decide for yourself. There's no doubt, however,
+            that anonymous classes, unless used in moderation, make a
+            program harder to read and understand.
+        </p>
+    <h3>Event Adapters</h3>
+        <p><b>In the last lesson</b>, you saw how to implement the
+            <code>MouseMotionListener</code> interface, which you used to
+            respond to the <code>mouseDragged()</code> message in the
+            <b>Dot</b> applet.
+        </p>
+        <p> Implementing the <code>MouseMotionListener
+            </code> interface required you to write <b>two</b> methods, but one
+            of those methods, (<code>mouseMoved()</code>), didn't do anything;
+            nevertheless, you still had to write the empty method; otherwise
+            your code would not compile.
+        </p>
+        <p> For many of the other event-listener classes, the situation is
+            even worse.
+        </p>
+        <ul>
+            <li>For <code>KeyListener</code> you have to write three methods</li>
+            <li>For <code>MouseListener</code> you have to write five</li>
+            <li>For <code>WindowListener</code> you have to write seven</li>
+        </ul>
+        <p> And, in many cases, such as <code>WindowListener</code>, <b>all</b> of
+            those methods will be empty, "dummy" methods, which seems kind
+            of a waste.
+        </p>
+        <p>
+            Instead of writing all seven methods, why not simply create a
+            superclass, <b>that has dummy methods for all seven</b>? Then, instead
+            of writing out the same dummy methods over and over, you can
+            just create a subclass, and override only the methods you want.
+        </p>
+        <p> That's a really good idea. So good, in fact, that the designers
+            of Java have already done this with the <b>event adapter
+            classes</b>. An adapter class is simply a class which implements
+            a specific event interface and then provides dummy methods for
+            each of the required methods.
+        </p>
+    <h4>Exploring Adapters</h4>
+        <p> Java provides seven different adapter classes&#8212;one for each of
+            the event interfaces that contain multiple methods.
+        </p>
+        <p class="note">No adapter classes are provided for interfaces such
+            as <code>ItemListener</code> or <code>ActionListener</code>,
+            which contain only a single method, because there would be no
+            advantage to using the adapter class over the interface.
+             <img src='images/adapter03.png' class='right' alt='An ethernet adapter.'>
+        </p>
+        <p>The seven adapter classes provided by Java include:</p>
+        <ul>
+            <li><code>ComponentAdapter</code></li>
+            <li><code>ContainerAdapter</code></li>
+            <li><code>FocusAdapter</code></li>
+            <li><code>KeyAdapter</code></li>
+            <li><code>MouseAdapter</code></li>
+            <li><code>MouseMotionAdapter</code></li>
+            <li><code>WindowAdapter</code></li>
+        </ul>
+    <h4>Using Adapters</h4>
+        <p> To use an adapter class you follow these steps:</p>
+        <ol>
+            <li class='d'>Create an inner class that extends one of the existing
+                adapter classes.
+            </li>
+            <li class='d'>Override the methods of interest in your inner class.</li>
+            <li class='d'>Create an object of your inner class and send event
+                notifications to the new object.
+            </li>
+        </ol>
+        <p> Here's what that looks like for the <code>MouseAdapter</code>
+            class:<br>
+            <img src="images/adapter_lg.gif" alt="Using the MouseAdapter class" vspace="15" border="0" hspace="15">
+        </p>
+    <h3>A MouseAdapter Example</h3>
+        <p> Let's look at a simple applet that uses <code>MouseAdapter</code>
+            to change the background of the applet. The program,
+            <a href='javascript:var w=window.open("LabelClick.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>LabelClick.java</b></a>, contains four <code>Label</code> objects,
+            captioned "Red", "Green", "Blue", and "Yellow", as shown here<br>
+            <img src="images/c04.png" class='inlineCenter' alt="Running the LabelClick applet">
+        </p>
+    <h4>The init() Method</h4>
+        <p> The applet itself doesn't implement any interface. Instead, it
+            simply creates several <code>Label</code> objects inside the
+            <code>init()</code> method, and then registers each one by
+            calling <code>addMouseListener()</code>, passing an annonymous
+            <code>BGChanger</code> object as the argument:<br>
+            <img src="images/c05.png" class='inlineCenter' alt="Adding labels to the LabelClick applet">
+        </p>
+    <h4>The Inner Class</h4>
+        <p> The <code>BGChanger</code> class is defined as an inner class
+            that <code>extends MouseAdapter</code>. Inside the class, only
+            the <code>mouseClicked()</code> method is overridden:<br>
+            <img src="images/c06.png" class='inlineCenter' alt="The LabelClick applet's BGChanger class">
+            The method retrieves the foreground color from the <code>Label</code>
+            that was clicked, and uses that to set the applet's background
+            color.
+        </p>
+        <p>You can
+            <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/%7Egilberts/applets/LabelClick.html',0,0,575,325);">
+            <b>run the applet</b></a> by clicking the link in
+            this sentence.
+        </p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned how to create <b>inner classes</b> and
+            how to use Java's <b>event adapter</b> classes to respond to events.
+        </p>
+        <p> In the next lesson, we'll return to the topic of <b>exceptions</b>,
+            learning how to <b>handle them</b> with <code>try-catch-finally</code>.
+        </p>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

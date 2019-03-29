@@ -1,0 +1,633 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + " " + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/d.jpg" alt="CS 170 Lesson D logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p>
+            <b><span class="cap">S</span>o far, all of the
+            indefinite sentinel loops we've looked at</b>
+            have been what are known as <i>primed</i> loops.
+            In each case we've:
+        </p>
+        <img src="images/pump.jpg" class="right" alt="Pumping water during the depression.">
+        <ol>
+            <li>set up the value of the variable</li>
+            <li>tested the value against the sentinel in the loop condition</li>
+            <li>processed the variable as needed in the loop body</li>
+            <li>updated the variable's value at the end of the loop body</li>
+        </ol>
+        <p> This works just fine, but it means that we have the exact same
+            code, that used to initialize our variable, in <u><b>two</b></u>
+            <u><b>places</b></u>:
+            <i>before</i> the loop and <i>at the end</i> of the loop.
+        </p>
+        <p class="d">The process of "reading a value" <i>before</i> the loop
+            starts is known as "priming" the loop, similar to the way that
+            a bucket of water is used to prime a hand-operated water pump,
+            similar to the one in this photo by Russell Lee, from the
+            Library of Congress' <i>American Memory</i> collection.
+        </p>
+    <h4>An inline Test</h4>
+        <p> Because assignment is an operator in Java, and not a statement,
+            there is a much shorter and more concise way to write the same
+            kind of sentinel loop. A loop employing an <b>inline test</b>
+            is an extremely common Java idiom, and you should become familiar
+            with it, even if you prefer the longer, more traditional primed
+            loop.
+        </p>
+        <p> Using an inline test, the loop in the <b>PositiveMean</b> program in
+            the last lesson, can be rewritten like this:
+        </p>
+        <p class="code">
+            <span class="cmt"><b>// An Inline-test Sentinel Loop</b></span><br>
+            <br>
+            while ((num = readInt()) &gt;= 0)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp; <span class="cmt">// Loop actions</span><br>
+            &nbsp;&nbsp;&nbsp; count++;<br>
+            &nbsp;&nbsp;&nbsp; sum += num;<br>
+            }
+        </p>
+        <p> Now, you only have to initialize <code>num</code> once&#8212;during
+            the loop test&#8212;and not twice&#8212;before and at the end of the loop.
+        </p>
+        <p class="note">Note the additional set of parentheses surrounding
+            the assignment operation:<br>
+            <br>
+            <code>&nbsp;&nbsp;&nbsp;(num = readInt())</code><br>
+            <br>
+            The parentheses are <b>required</b> because the precedence of the
+            relational operator (<code>&gt;=</code>) is higher than the
+            precedence of the assignment operator. If you omit the
+            parentheses, Java will call the <code>readInt()</code>
+            method and compare the number it returns with zero, generating a
+            <code>boolean</code> value. When it comes time to assign the
+            <code>boolean</code> value to the variable <code>num</code>,
+            however, Java will choke because <code>num</code> is an
+            <code>int</code> variable, and you cannot assign a
+            <code>boolean</code> value to an
+            <code>int</code> variable.
+        </p>
+    <h3>Intentional &amp; Necessary Bounds</h3>
+        <p> Sentinel bounds are often used to search for a particular
+            value in a set of data, such as looking for a particular word
+            or character in a document. When used like this, however,
+            sentinel-controlled loops have one great failing: they can't
+            ensure that the value will actually be found.
+        </p>
+        <p> To handle this problem, you need to add an additional
+            item to your loop-building toolkit&#8212;you must learn to
+            differentitate between <b>intentional</b> and <b>necessary</b>
+            bounds. Here's the difference.
+        </p>
+    <h4>Intentional Bounds</h4>
+        <p> Suppose you want to search the <code>String s</code>
+            for the character stored in <code>c</code>, and return the position where
+            the value is found. Using a simple sentinel loop you could write:
+        </p>
+        <p class="code">
+            while (s.charAt(i) != c) ...
+        </p>
+        <p> This bounds, <code>s.charAt(i) != c</code>, is your <b>intentional
+            bounds</b>, it is the sentinel value that will end your loop if
+            all goes well.
+        </p>
+    <h4>Necessary Bounds</h4>
+        <p> You can't just assume that all will go well,
+            however. It is possible that:
+        </p>
+        <ol>
+            <li> The character stored in <code>c</code> might not occur in
+            the <code>String s</code></li>
+            <li>The <code>String s</code> may have no characters</li>
+        </ol>
+        <p> The bounds used to handle these kinds of conditions
+            are called the <b>necessary bounds</b>. Writing the necessary
+            bounds for a loop almost always involves writing a compound
+            <code>boolean</code> condition using the logical operators.
+        </p>
+        <p> In this example, we can handle the first necessary
+            bounds by changing the loop condition like this:
+        </p>
+        <p class="code">
+            int i = 0;<br>
+            int len = s.length();<br>
+            while (i &lt; len &amp;&amp; s.charAt(i) != c)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+            }
+        </p>
+        <p> Adding necessary bounds to a loop condition means
+            that the loop can end for two (or more) reasons, not just one.
+            When you write the loop postcondition statements, you have to
+            take this into account.
+        </p>
+        <p> For instance, after this loop terminates, you can determine
+            whether the character stored in <code>c</code> was found by
+            checking the value of <code>i</code> and <code>len</code>.
+            If <code>i == len</code>, then the character stored in <code>c</code>
+            was <b>not</b> found in the <code>String s</code>, because the
+            loop <b>must</b> have exited when it encountered the first
+            condition.
+        </p>
+    <h4>Other Necessary Bounds</h4>
+        <p> Whenever you set up the initial bounds for a loop, you
+            always need to ask yourself another question: "Have I
+            considered every possibility? Will this loop always
+            end, no matter what?"
+        </p>
+        <p> If you can think of an input value or situation where the
+            loop may not end, then you <b>must</b> add an additional,
+            necessary bounds, for that situation.
+        </p>
+        <p> Here are some of the situations that may require
+            necessary bounds:
+        </p>
+        <ul>
+            <li> As you just saw, if you are using a sentinel as the
+                loop bounds, there are situations where the sentinel
+                may not appear.
+            </li>
+            <li> When you are repeating a calcuation that gets closer
+                and closer to an approximate limit, you may want to
+                limit the number of repetitions.
+            </li>
+            <li> If you don't know that an answer actually exists,
+                you might want to limit the amount of time spent
+                trying to find it.
+            </li>
+            <li> You might not be sure of the reliability of your
+                data and might want to provide a fail-safe exit if
+                the data doesn't live up to your expectations.
+            </li>
+        </ul>
+    <h4> A Termination Checklist</h4>
+        <p> Remember, the most important part of writing a loop is
+            making sure that it terminates correctly. To do that, you should
+            have a mental checklist to make sure that it always ends,
+            and, that it ends correctly.
+        </p>
+        <p> There are different things you have to look for, depending
+            on how your loop is controlled. So for, we've looked at
+            <b>counter-controlled</b> loops (using both <code>for</code> and
+            <code>while</code>) and <b>sentinel</b> loops. Here are
+            the things you need to check for, (from Doug Cooper's
+            <i>Treatise On Loops</i>).
+        </p>
+    <h5>Counter-Controlled Loops</h5>
+        <ul>
+            <li>Is there an upper limit on the number of iterations? Should
+                there be?
+            </li>
+            <li>Are you counting the right thing?</li>
+            <li>Can a partial result "blow up" as you approach the limit?
+                (Consider a counted loop that goes from 1 to MAX_INTEGER / 2
+                that stores the sum of the numbers in an <code>int</code>
+                variable).
+        </ul>
+    <h5>Sentinel-Controlled Loops</h5>
+        <ul>
+            <li>Is there a sentinel?</li>
+            <li>Is there more than one sentinel?</li>
+            <li>What will you do if the sentinel doesn't show up?</li>
+            <li>Should you be watching for a "just-in-case" sentinel?
+                For instance, if you are summing numbers and you discover
+                characters in input, what do you do?
+            </li>
+        </ul>
+    <h3>Flag Controlled Loops</h3>
+        <p> <img src='images/flag-controlled-sm.gif' class='right' alt='General form of a flag-controlled loop.'>
+            A <b>flag-controlled</b> loop uses a <code>boolean</code>
+            variable to control the loop. Inside the loop body, you'll
+            use and <code>if-else</code> to <b>set</b> the flag or
+            to process the data, depending on the results of
+            your calculation.
+        </p>
+        <p>
+            As with the <code>inline test</code> that began this lesson,
+            the flag-controlled loop allows you to avoid having multiple
+            input statements: one <i>before</i> the loop condition, and
+            another at the <i>end</i> of the loop body to set things up
+            for the next iteration.
+        </p>
+        <p> Using a flag allows you to reorder
+            the test condition for a sentinel loop into a form that
+            is sometimes known as a <b>loop-and-a-half</b>. The illustration
+            shows the general form for a flag-controlled loop.
+        </p>
+    <h4>The GuessOMatic</h4>
+        <p> Let's look at a simple illustration program that uses a
+            <b>flag-controlled</b> sentinel loop. Our program will guess
+            a number between 1 and 100 and you'll try to guess it. <br>
+            <center>
+            <img src='images/guessomatic.gif' class='inline' alt='The GuessOMatic verbiage.'>
+            </center>
+            If you don't guess the number, then the GuessOMatic will tell
+            you whether you were high or low, and give you another chance
+            to make a killing. Of course, since you missed the first time,
+            you won't get the full $2*, but "only" $1.75*. But hey, since
+            you only put in a buck, that means you've almost doubled your
+            investment!
+        </p>
+        <p> If you miss your second chance the GuessOMatic points you
+            toward the correct answer, extracting a mere  $.25* for the
+            hint and for the wear and tear on this old program. Don't
+            be discouraged; that means you still made $ .50* more than
+            you paid. At this rate you'll be a millionaire in no time
+            at all, can forget about CS 170, and retire to Hawaii!
+        </p>
+        <p style='font-size:xx-small;color:gray;'>
+            * All amounts are virtual amounts, paid in the
+            <i>Zipoid</i> currency. U.S. cash value is 0.
+        </p>
+    <h5>A Sample Run</h5>
+        <p> Here's what the program looks like when it runs. Notice that
+            even though I only paid a dollar to play, the running prompt
+            let's me know what the payout will be if I guess the number
+            on that try. I'm not very lucky, so I only broke even:<br>
+            <img src='images/guessomatic02.gif' class='inline' alt='Playing the GuessOMatic.'>
+        </p>
+    <h4>The Code</h4>
+        <p> Here's how the GuessOMatic works. I'm only going to show
+            you the code for the <code>run()</code> method. You should
+            be able to figure out the <code>printWelcome()</code>
+            procedure on your own. (If you want to run this on your
+            own machine, though, you can download it by clicking
+            <a href='GuessOMatic.java' target='_blank'><b>this link</b>
+            </a> and then importing it into an Eclipse project.)
+        </p>
+    <h5>Before the Loop</h5>
+        <p> Before the loop starts, we need to print the welcome message
+            and then create some variables:<br>
+            <img src='images/guessomatic03.gif' class='inline' alt='GuessOMatic setup.'>
+            The variables we need are:
+        </p>
+        <ul>
+            <li><b>payout</b>, hard-coded to $2.00. Assumes you've already
+                given me the $1.00 to play the game.
+            </li>
+            <li><b>tries</b> will be used to <b>count</b> the number of
+                guesses that you needed.
+            </li>
+            <li><b>done</b> is the <code>boolean</b> <b>flag</b> variable
+                that we'll use to control the loop.
+            </li>
+            <li><b>theNumber</b> is a random number (selected using
+                <code>Math.random()</code> and the algorithm you met back
+                in Lesson 3B) between 1 and 100.
+            </li>
+        </ul>
+        <p> I've added <code>static import</code> for the functions in
+            the <code>Math</code> and <code>String</code> classes, so I
+            can use the <code>random()</code> and <code>format()</code>
+            functions without any extra prefix.
+        </p>
+    <h5>Inside the Loop</h5>
+        <p> The loop starts with the <b>flag-controlled bounds</b> on
+            line 27. Since we set the <code>done</code> flag to
+            <code>false</code> when it was intialized, we'll always
+            enter the loop the first time.<br>
+            <img src='images/guessomatic04.gif' class='inline' alt='GuessOMatic setup.'>
+            After the loop bounds, the program:
+        </p>
+        <ul>
+            <li>prints the current payout amount and asks the user for
+                their current guess.
+            </li>reads the guess using the "bounded" form of the
+                ACM console program's <code>readInt()</code> function.
+                With the bounded version, you supply a lower and
+                upper bounds, so that your code doesn't have to check.
+            </li>
+            <li> increments the number of attempts that the user has
+                made.
+            </li>
+        </ul>
+        <p> Below this, is the <code>if</code> statement, used to
+            control the flag. If the user's guess is equal to the
+            number, then the flag <code>done</code> is set to true:<br>
+            <img src='images/guessomatic05.gif' class='inline' alt='GuessOMatic if statement processing.'>
+        </p>
+        <p> If the guess is incorrect, then we drop into the <code>else</code>
+            portion of the loop, shown here:<br>
+            <img src='images/guessomatic06.gif' class='inline' alt='GuessOMatic else-clause loop processing.'>
+            Inside the "working" portion of the loop we:
+        </p>
+        <ul>
+            <li>subtract the "vig" for the missed guess.</li>
+            <li>use a <i>nested</i> <code>if-else</code> statement to
+                print a "too-high: or "too-low" message.
+            </li>
+        </ul>
+        <p> The <code>else</code> portion ends the loop, and it returns
+            up to the <code>while</code> statement on line 27, where, if
+            <code>done</code> was set to <code>true</code> on this
+            iteration, the loop ends. If the <code>else</code> portion
+            was executed instead, then the user is asked for another
+            number.
+        </p>
+    <h5>After the Loop</h5>
+        <p> Eventually, the user will guess the correct number and exit
+            the loop. When that happens, the program prints a pair of
+            error messages:<br>
+            <img src='images/guessomatic07.gif' class='inline' alt='GuessOMatic post-loop messages.'>
+            The messages display both the number guessed by the computer,
+            (which is, of course, the same as the last number guessed by
+            the user), the number of tries, and the total payout.
+        </p>
+    <h4>Improvements</h4>
+        <p> There are several things that can be done to improve the
+            GuessOMatic. Probably the biggest one is that, unlike the
+            advertising, the actual program <b>does</b> let the user
+            "go in the hole", since the loop only exits when the
+            correct number is guessed.
+        </p>
+        <p> Of course, you've already learned how to fix that:</p>
+        <p class='pullquote'>
+            Add a Necessary Bounds Condition!
+        </p>
+        <p> We can do that by checking <b>both</b> the flag and the payout
+            amount. When <code>payout</code> reaches zero, then we stop.
+            Here's what the improved loop looks like with this
+            necessary bounds added:<br>
+            <img src='images/guessomatic08.gif' class='inline' alt='GuessOMatic necessary bounds.'>
+        </p>
+        <p> Of course, that creates a little problem with the messages
+            after the loop, doesn't it?<br>
+            <img src='images/guessomatic09.gif' class='inline' alt='GuessOMatic post-loop messages.'>
+            Remember that <b>after</b> a loop, we need to check the
+            <b>post-condition</b> to see if the loop ended because we
+            met the goal (that is, the user guessed the correct number),
+            or, because we ran up against a limiting bounds condition,
+            like running out of money.
+        </p>
+        <p> To fix the post-condition problem, we need to check the
+            value of <code>payout</code> and print a different message,
+            like this:
+            <img src='images/guessomatic10.gif' class='inline' alt='GuessOMatic post-loop messages fixed.'>
+            Of course if the user can't guess after eight tries (when all
+            of the payout money is exhausted), they may not be able to
+            figure out that they are out of money either, so you might need
+            a more explicit message.
+        </p>
+    <h3>Bottom-Testing</h3>
+        <p> In addition to the <code>for</code> and <code>while</code> loops,
+            Java also has a loop that performs it's <code>boolean</code> test
+            <b>after</b> the loop body, instead of before. This loop, the
+            <code>do</code>-<code>while</code> loop, illustrated here,
+            will always execute the statements inside its body at least once.
+            <img src="images/x04.gif" alt="The syntax of the do-while loop" class="inline">
+            The body of the <code>do</code>-<code>while</code> loop appears
+            between the keywords <code>do</code> (which <b>preceeds</b> the
+            loop body) and <code>while</code>. Like all loops, the body of
+            the <code>do</code>-<code>while</code> loop can be a single
+            statement, ending with a semicolon, or it can be a compound
+            statement enclosed in braces. As with the other loops, you'll
+            have a more fullfilling life if you train yourself to always use
+            a compound (brace-delimited) loop body.
+        </p>
+        <p> The <code>do</code>-<code>while</code> loop's <code>boolean</code>
+            condition follows the <code>while</code> keyword. As with
+            all selection and iteration statements in Java, the
+            <code>boolean</code> condition must be enclosed in parentheses,
+            which are part of the statement syntax. In the
+            <code>do</code>-<code>while</code> loop, the <code>boolean</code>
+            condition is followed by a semicolon, unlike the <code>while</code>
+            loop, where following the condition with a semicolon can
+            lead to subtle, hard to find bugs.
+        </p>
+        <p> The <code>do</code>-<code>while</code> loop is often employed
+            by beginning programmers, because, for some reason, it seems
+            more natural. If you find yourself in this situation, however,
+            you should think twice. 99% of the time, a <code>while</code>
+            loop or a <code>for</code> loop can be employed to better effect
+            than using a <code>do</code>-<code>while</code>. In fact, except
+            for salting your food...
+            </p><center>
+            <img src="images/x12a.gif" class="inline" alt="Salting your food.">
+            </center>
+            which should <b>always</b> be done before
+            tasting, there are relatively few other situations where a
+            test-at-the-bottom strategy is superior to
+            "looking before you leap."
+        </p>
+    <h4>GuessOMatic II</h4>
+        <p> One application of a <code>do-while</code> loop is in an
+            ATM-type situation. You've got your money or made your
+            deposit, and, instead of giving you your card back, the
+            machine asks you "Do you want another transaction?".
+        </p>
+        <p> This is easily handled with a <code>do-while</code> loop.
+            Let's employ this technique to make the GuessOMatic more
+            like its Vegas cousins. When we start the game, we'll ask
+            the user for a deposit. Then, at the end of each game,
+            we'll let them cash out, deposit more money or play again.
+        </p>
+    <h5>The do-while Loop</h5>
+        <p> To do this, "wrap" all of the existing code in GuessOMatic
+            in a <code>do-while</code> loop, as shown at (2) in this
+            picture:<br>
+            <img src='images/gom2a.gif' class='inline' alt='The GOM2 do loop.'>
+            Before the loop:
+        </p>
+        <ul>
+            <li>Create a <code>double</code> variable, <code>bankRoll</code>
+                and initialize it by asking for an inital deposit. (I'll
+                leave writing the code to put the charge on the player's
+                MasterCard as an "exercise for the reader".)
+            </li>
+            <li>Create a <code>boolean</code> variable named
+                <code>playAgain</code> and initialize it to <code>false</code>.
+            </li>
+        </ul>
+        <p> At the very top of the loop, right before the existing
+            initialization statements, subtract the dollar from the
+            bankroll for playing the game.
+        </p>
+        <p> At the <b>end</b> of the loop, use the <code>playAgain</code>
+            variable as the <b>flag bounds</b>
+            in the <code>while</code> portion of your <code>do-while</code>
+            loop, like this:<br>
+            <img src='images/gom2b.gif' class='inline' alt='The GOM2 do-while loop.'>
+            Then, after the loop, print a "Thank You" message along with the
+            value of the player's bankroll.
+        </p>
+    <h5>Controlling the do-while Loop</h5>
+        <p> Inside the <code>do-while</code> loop, you'll place the
+            code that controls the next repetion of the game, <b>after</b>
+            the existing code and <b>before</b> the <code>while</code>
+            condition that ends the loop:<br>
+            <img src='images/gom2c.gif' class='inline' alt='The GOM2 do-while loop.'>
+            Here's what our code needs to do:
+        </p>
+        <ol>
+            <li class='d'> First, we need to add the winnings (if any)
+                back to the user's bankroll.
+            </li>
+            <li class='d'> Next, we have two possibilies. If they still
+                have enough money left to play another game, ask them if
+                they want to continue. Store the result in a
+                <code>String</code> variable. Then, use that variable to
+                initialize the <code>playAgain</code> flag variable. I'm
+                assuming they'll enter something that starts with a "Y"
+                to continue.
+            </li>
+            <li class='d'> If they don't have enough money to play again,
+                we don't want to just drop them out. Instead, ask them
+                to deposit some more money. Then, set the <code>playAgain</code>
+                flag using the Boolean expression
+                <code>bankRoll > 1.0</code>.
+            </li>
+        </ol>
+    <h3>Limit Bounds</h3>
+        <p> Now that you know the syntax of the <code>while</code> and
+            <code>do-while</code>, let's look at another kind of bounds:
+            the <b>limit</b> bounds. A limit bounds is a natural bounds
+            in many mathematical, graphical and financial applications.
+        </p>
+        <p> So, what, exactly <b>is</b> a limit bounds? A limit bounds
+            is a condition that occurs when one more repetition of the
+            loop would either get you no closer to the goal or would
+            actually lead you astray. Limits can be exact values (reducing
+            a number to zero, for instance), boundaries (exceeding an
+            upper size limit), or relative values (the difference between
+            two successive calculations is less than .00000001 percent).
+            <br><img src='images/limit01.gif' class='inline' alt='A bifurcation loop plotting.'>
+        </p>
+        <p> Here are some common limit loop bounds:</p>
+        <ul>
+            <li><b>Reduction loops</b>. Methodicaly reduce a number to zero, or less
+                than some known value. The algorithm for integer division
+                by subtraction is an example of this.
+            </li>
+            <li><b>Successive approximation methods</b>. Each time a calculation
+                is performed, the result is compared to a previous calculation.
+                The bound is reached when two successive calculations
+                yield approximately the same results.
+            </li>
+            <li><b>Bisection methods</b>. These calcualte mathematical
+                approximations. The limit is set by approaching to within
+                some tiny amount of an answer that is known to be correct.
+            </li>
+            <li><b>Non-convergence tests</b>. These are often the necessary
+                bounds applied to the other techniques, to make sure they
+                haven't gone astray.
+            </li>
+        </ul>
+    <h4>An Example</h4>
+        <p> Loops that involve limit bounds are mostly mathematical. These
+            include things like finding the greatest common denominator (gcd)
+            using Euclid's algorithm, calculating square roots using
+            Newton's method, or approximating pi, using the Buffon's Needle
+            experiment, presented in Chapter 6 of your text.
+        </p>
+        <p> All of these are fairly difficult if you're uncomfortable with
+            math. My goal is for you only to recognize and apply a limit
+            loop, so I'll show you a simpler example.
+        </p>
+        <p> The <b>SumDigits</b> program you wrote for Homework 7, asked
+            you to add up the digits in an integer between 1 and 1000. Let's
+            use a limit loop that allows you to add up the digits in an
+            integer of any size. We'll call it <b>SumDigits2</b>.
+        </p>
+    <h5>The Concept</h5>
+        <p> <img src='images/sumdigits2.gif' class='right' alt='Dividing integers by 10'>
+            The concept behind the program is simple. When you use integer
+            division to divide the number <code>n</code> by ten, the
+            <b>remainder</b> is the single right-most digit, while the
+            <b>quotient</b> consist of the remaining digits on the left.
+        </p>
+        <p> If we repeatedly perform this operation, eventually, n will
+            reach 0. This is our <b>limit</b>.
+        </p>
+    <h5>The Code</h5>
+        <p> The program begins, like the original <b>SumDigit</b> with
+            some input. Here I've told the user to enter an integer
+            between 1 and the largest possible integer. I used the
+            <code>Integer</code> class constant, rather than hard-coding
+            the number in the prompt:<br>
+            <img src='images/sd2b.gif' class='inline' alt='Integer input'>
+            I used the "bounded" version of <code>readInt()</code> and
+            stored the result in the <code>int</code> variable <code>n</code>.
+        </p>
+        <p> The loop itself consists of three sections<br>
+            <img src='images/sd2c.gif' class='inline' alt='Integer input'>
+        </p>
+        <ol>
+            <li class='d'>Before the loop, I declare and initialize the
+                precondition variable <code>sum</code> to 0. I also save
+                the value of <code>n</code> in a new variable,
+                <code>original</code>, since the "reduction" algorithm
+                will destroy <code>n</code> when it is finished.
+            </li>
+            <li class='d'>I used a <code>do-while</code> loop for this
+                problem (although I could have used a <code>while</code>
+                loop instead). The bounds of the loop is the <b>limit</b>,
+                <code>n > 0</code>. Inside the loop I first add the
+                right-most digit to the sum, and then remove the digit,
+                moving closer to the limit bounds, by dividing <code>n</code>
+                by 10.
+            </li>
+            <li class='d'>Finally, after the loop is finished, I print
+                both the number and its sum. Since we reduced <code>n</code>
+                to 0, I must use the variable <code>original</code> to
+                report the original number entered.
+            </li>
+        </ol>
+        <p> Here's what the program looks like when it runs:<br>
+            <img src='images/sd2a.gif' class='inline' alt='Running SumDigits2.'>
+        </p>
+
+
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson, you learned how to write <b>indefinite</b> loops,
+            those that test a condition, rather than testing the value of a
+            counter. You also learned how to write loops that have
+            both an <b>intentional</b> and <b>necessary</b> bounds,
+            how to write a <b>flag-controlled</b> loop, and
+            how to use the <b>do-while</b> loop, a loop that performs its test
+            <i>after</i>, rather than <i>before</i>, executing the loop body.
+            You ended the lesson by looking at some indefinite loop
+            applications, using <b>limit bounds</b>.
+        </p>
+        <p> In the next lesson, we'll look at two loop-related topics:
+            how to use Java's <b>jump</b> statements, and how to use the Java's
+            <b>iterator</b> statements.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

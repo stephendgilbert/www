@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> *  TestColor.java</span>
+<span class="linenum">03: </span><span class="comment"> *</span>
+<span class="linenum">04: </span><span class="comment"> *  An applet to test the use of setForeground()</span>
+<span class="linenum">05: </span><span class="comment"> *  and setBackground() on several AWT components.</span>
+<span class="linenum">06: </span><span class="comment"> *</span>
+<span class="linenum">07: </span><span class="comment"> *  @author Stephen Gilbert</span>
+<span class="linenum">08: </span><span class="comment"> *  @version 2.0, September 2005</span>
+<span class="linenum">09: </span><span class="comment"> */</span>
+<span class="linenum">10: </span>
+<span class="linenum">11: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">12: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">13: </span>
+<span class="linenum">14: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">TestColor</span> <span class="keyword">extends</span> <span class="normal">Applet</span>
+<span class="linenum">15: </span><span class="cbracket">{</span>
+<span class="linenum">16: </span>    <span class="keyword">private</span> <span class="normal">Label</span>     <span class="normal">lbl1</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Label</span><span class="symbol">(</span><span class="string">"Red FG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">17: </span>    <span class="keyword">private</span> <span class="normal">Label</span>     <span class="normal">lbl2</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Label</span><span class="symbol">(</span><span class="string">"Red BG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">18: </span>    <span class="keyword">private</span> <span class="normal">Button</span>    <span class="normal">btn1</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Button</span><span class="symbol">(</span><span class="string">"Green FG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">19: </span>    <span class="keyword">private</span> <span class="normal">Button</span>    <span class="normal">btn2</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Button</span><span class="symbol">(</span><span class="string">"Green BG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">20: </span>    <span class="keyword">private</span> <span class="normal">List</span>      <span class="normal">lst1</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">List</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">21: </span>    <span class="keyword">private</span> <span class="normal">List</span>      <span class="normal">lst2</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">List</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">22: </span>    <span class="keyword">private</span> <span class="normal">Scrollbar</span> <span class="normal">sb1</span>  <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Scrollbar</span><span class="symbol">(</span><span class="normal">Scrollbar</span><span class="symbol">.</span><span class="normal">HORIZONTAL</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">23: </span>    <span class="keyword">private</span> <span class="normal">Scrollbar</span> <span class="normal">sb2</span>  <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Scrollbar</span><span class="symbol">(</span><span class="normal">Scrollbar</span><span class="symbol">.</span><span class="normal">HORIZONTAL</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">24: </span>
+<span class="linenum">25: </span>    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">26: </span>    <span class="cbracket">{</span>
+<span class="linenum">27: </span>        <span class="normal">lst1</span><span class="symbol">.</span><span class="function">add</span><span class="symbol">(</span><span class="string">"Yellow FG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">28: </span>        <span class="normal">lst2</span><span class="symbol">.</span><span class="function">add</span><span class="symbol">(</span><span class="string">"Yellow BG"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">29: </span>
+<span class="linenum">30: </span>        <span class="normal">lbl1</span><span class="symbol">.</span><span class="function">setForeground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">red</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">31: </span>        <span class="normal">lbl2</span><span class="symbol">.</span><span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">red</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">32: </span>        <span class="normal">btn1</span><span class="symbol">.</span><span class="function">setForeground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">green</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">33: </span>        <span class="normal">btn2</span><span class="symbol">.</span><span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">green</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">34: </span>        <span class="normal">lst1</span><span class="symbol">.</span><span class="function">setForeground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">yellow</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">35: </span>        <span class="normal">lst2</span><span class="symbol">.</span><span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">yellow</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">36: </span>        <span class="normal">sb1</span><span class="symbol">.</span><span class="function">setForeground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">pink</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">37: </span>        <span class="normal">sb2</span><span class="symbol">.</span><span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">pink</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">38: </span>
+<span class="linenum">39: </span>        <span class="function">setLayout</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">GridLayout</span><span class="symbol">(</span><span class="number">5</span><span class="symbol">,</span><span class="number">2</span><span class="symbol">,</span><span class="number">5</span><span class="symbol">,</span><span class="number">5</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">40: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">lbl1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">41: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">lbl2</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">42: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">btn1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">43: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">btn2</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">44: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">lst1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">45: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">lst2</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">46: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">sb1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">47: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">sb2</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">48: </span>    <span class="cbracket">}</span>
+<span class="linenum">49: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

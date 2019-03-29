@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="preproc">import</span> <span class="normal">acm</span><span class="symbol">.</span><span class="normal">program</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="preproc">import</span> <span class="normal">acm</span><span class="symbol">.</span><span class="normal">graphics</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="comment">/**</span>
+<span class="comment"> * The TwoCards program uses the GOval, GImage,</span>
+<span class="comment"> * and GLabel classes to display two cards on</span>
+<span class="comment"> * the screen. Uses the GPL card images available</span>
+<span class="comment"> * from &lt;a href='http://www.waste.org/%7Eoxymoron/cards/'&gt;</span>
+<span class="comment"> * http://www.waste.org/~oxymoron/cards/&lt;/a&gt;</span>
+<span class="comment"> * </span>
+<span class="comment"> * @author Stephen Gilbert</span>
+<span class="comment"> * @version 1.0, September 2005</span>
+<span class="comment"> */</span>
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">TwoCards</span> <span class="keyword">extends</span> <span class="normal">GraphicsProgram</span>
+<span class="cbracket">{</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">run</span><span class="symbol">(</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="comment">// 1. Create a green "table" for our cards</span>
+        <span class="keyword">final</span> <span class="type">int</span> <span class="normal">T_WIDTH</span> <span class="symbol">=</span> <span class="number">200</span><span class="symbol">;</span>
+        <span class="keyword">final</span> <span class="type">int</span> <span class="normal">T_HEIGHT</span> <span class="symbol">=</span> <span class="number">150</span><span class="symbol">;</span>
+        <span class="normal">GRect</span> <span class="normal">table</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">GRect</span><span class="symbol">(</span><span class="number">0</span><span class="symbol">,</span> <span class="number">0</span><span class="symbol">,</span> <span class="normal">T_WIDTH</span><span class="symbol">,</span> <span class="normal">T_HEIGHT</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="comment">// 1a. Center the table</span>
+        <span class="type">int</span> <span class="normal">appWidth</span> <span class="symbol">=</span> <span class="function">getWidth</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="type">int</span> <span class="normal">appHeight</span> <span class="symbol">=</span> <span class="function">getHeight</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">table</span><span class="symbol">.</span><span class="function">setLocation</span><span class="symbol">(</span><span class="normal">appWidth</span><span class="symbol">/</span><span class="number">2</span> <span class="symbol">-</span> <span class="normal">T_WIDTH</span><span class="symbol">/</span><span class="number">2</span><span class="symbol">,</span>
+                          <span class="normal">appHeight</span><span class="symbol">/</span><span class="number">2</span> <span class="symbol">-</span> <span class="normal">T_HEIGHT</span><span class="symbol">/</span><span class="number">2</span><span class="symbol">)</span><span class="symbol">;</span>
+
+        <span class="comment">// 1b. Fill it with a dark green color</span>
+        <span class="normal">table</span><span class="symbol">.</span><span class="function">setFillColor</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">Color</span><span class="symbol">(</span><span class="number">0</span><span class="symbol">,</span> <span class="number">128</span><span class="symbol">,</span> <span class="number">0</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span> <span class="comment">// dark green</span>
+        <span class="normal">table</span><span class="symbol">.</span><span class="function">setFilled</span><span class="symbol">(</span><span class="keyword">true</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="function">add</span><span class="symbol">(</span><span class="normal">table</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="comment">// 1c. Let's label it as well</span>
+        <span class="normal">GLabel</span> <span class="normal">caption</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">GLabel</span><span class="symbol">(</span><span class="string">"Place your bet!"</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="type">double</span> <span class="normal">capWidth</span> <span class="symbol">=</span> <span class="normal">caption</span><span class="symbol">.</span><span class="function">getWidth</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="type">double</span> <span class="normal">capHeight</span> <span class="symbol">=</span> <span class="normal">caption</span><span class="symbol">.</span><span class="function">getHeight</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">caption</span><span class="symbol">.</span><span class="function">setLocation</span><span class="symbol">(</span><span class="normal">appWidth</span><span class="symbol">/</span><span class="number">2</span> <span class="symbol">-</span> <span class="normal">capWidth</span><span class="symbol">/</span><span class="number">2</span><span class="symbol">,</span>
+               <span class="normal">appHeight</span><span class="symbol">/</span><span class="number">2</span> <span class="symbol">+</span> <span class="normal">T_HEIGHT</span><span class="symbol">/</span><span class="number">2</span> <span class="symbol">+</span> <span class="normal">capHeight</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="function">add</span><span class="symbol">(</span><span class="normal">caption</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="comment">// 2. Let's create a card using the GImage class</span>
+        <span class="normal">GImage</span> <span class="normal">card1</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">GImage</span><span class="symbol">(</span><span class="string">"cards/as.gif"</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card1</span><span class="symbol">.</span><span class="function">setLocation</span><span class="symbol">(</span><span class="normal">table</span><span class="symbol">.</span><span class="function">getLocation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card1</span><span class="symbol">.</span><span class="function">move</span><span class="symbol">(</span><span class="number">15</span><span class="symbol">,</span> <span class="number">15</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="function">add</span><span class="symbol">(</span><span class="normal">card1</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="comment">// 2b. We'll deal the second card with the back showing</span>
+        <span class="normal">GImage</span> <span class="normal">card2</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">GImage</span><span class="symbol">(</span><span class="string">"cards/b.gif"</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card2</span><span class="symbol">.</span><span class="function">setLocation</span><span class="symbol">(</span><span class="normal">card1</span><span class="symbol">.</span><span class="function">getLocation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card2</span><span class="symbol">.</span><span class="function">move</span><span class="symbol">(</span><span class="number">25</span><span class="symbol">,</span> <span class="number">10</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="function">add</span><span class="symbol">(</span><span class="normal">card2</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="comment">// 3. Hook up mouse listeners</span>
+        <span class="function">addMouseListeners</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+    <span class="cbracket">}</span>
+    
+    <span class="comment">// Turn over the card when clicked</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="function">mouseClicked</span><span class="symbol">(</span><span class="normal">MouseEvent</span> <span class="normal">e</span><span class="symbol">)</span>
+    <span class="cbracket">{</span>
+        <span class="type">int</span> <span class="normal">x</span> <span class="symbol">=</span> <span class="normal">e</span><span class="symbol">.</span><span class="function">getX</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="type">int</span> <span class="normal">y</span> <span class="symbol">=</span> <span class="normal">e</span><span class="symbol">.</span><span class="function">getY</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+        
+        <span class="normal">GImage</span> <span class="normal">card</span> <span class="symbol">=</span> <span class="symbol">(</span><span class="normal">GImage</span><span class="symbol">)</span> <span class="function">getElementAt</span><span class="symbol">(</span><span class="normal">x</span><span class="symbol">,</span> <span class="normal">y</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card</span><span class="symbol">.</span><span class="function">setImage</span><span class="symbol">(</span><span class="string">"cards/7c.gif"</span><span class="symbol">)</span><span class="symbol">;</span>
+        <span class="normal">card</span><span class="symbol">.</span><span class="function">move</span><span class="symbol">(</span><span class="normal">card</span><span class="symbol">.</span><span class="function">getWidth</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">,</span> <span class="symbol">-</span><span class="number">10</span><span class="symbol">)</span><span class="symbol">;</span>
+    <span class="cbracket">}</span>
+<span class="cbracket">}</span>
+
+</tt></pre>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">A</span>lthough you've had <i>some</i> exposure to
+            objects in this course</b>, with the <code>Scanner</code> and
+            <code>String</code> classes, for the most part you've been working
+            with <b>structured programming</b> up to now.<br>
+            <img src='images/assembly-line.gif' class='inline' alt='The Ford Model T assembly line.'>
+        </p>
+            Structured programming is very successful when
+            applied to <b>linear</b> problems like processing the monthly
+            payroll or sending out a set of utility bills. It's easy to see
+            how you can feed a list of employees and their hours into one
+            end of a program and get a pile of paychecks out the other.
+            Organizing this type of program like the Ford Model-T assembly line,
+            shown in the picture above, works <i>very</i> well.
+        </p>
+        <p> But how do you apply the linear model of an assembly line to your
+            Web browser? Where is the beginning? Where's the end?
+            </p><center>
+            <img src="images/browser2.gif" alt="A Web browser is composed of objects." vspace="15">
+            </center>
+            When it comes to <b>interactive</b> software, using a linear
+            organization, where programs are simply a collection
+            of procedures that operate on data in a sequential manner,
+            just doesn't work as well. A better method of organization
+            is needed, and that's where <b>OOP</b> (<b>O</b>bject-<b>O</b>riented
+            <b>P</b>rogramming) comes in.
+        <p></p>
+        <p> In an object-oriented program, the basic "building-block" is not
+            the procedure, but the <b>object.</b> Instead of assembly lines,
+            OOP programs look more like communities. Each object has its own
+            attributes and behavior, and your program "runs" as the objects
+            interact with one another.
+        </p>
+        <p> Take another look at your Web browser. Do you see the navigation
+            buttons? Those are objects. The scrollbars? Those are objects as
+            well; the main display window is an object, the text area where
+            you type in a URL is an object, the menu at the top of the screen
+            and the resizable frame that encloses the whole thing are objects.
+            In fact, looking at your Web browser, it's hard to find a part
+            of it that <b>isn't</b> an object.
+        </p>
+        <p> In the rest of this lesson you'll learn a bit more about the basic
+            ideas of object-oriented programming, and you'll be introduced to
+            some important terminology you must master before you begin
+            programming in Java.
+        </p>
+    <h2>What are Objects?</h2>
+        <p><b><span class="cap2">O</span>bjects are the components</b> used to build OOP
+            computer programs; each object represents a part of the system.
+            Looking at your Web browser, you saw that objects can represent
+            visible things such as buttons and scrollbars. But OOP is useful
+            for more than merely creating user interfaces.
+        </p>
+        <p> In an OOP program, <b>everything</b> of importance to the program
+            is represented by an object. Objects can represent <b>real things</b>,
+            like employees or automobile parts or apartment buildings; but
+            objects can also represent more abstract concepts, such as
+            relationships, times, numbers, or even black holes and
+            transfinite dimensions.
+        </p>
+        <p> Regardless of what kind of objects you use, you'll want to be able
+            to recognize an object when you meet one. That's easy to do,
+            because all objects have three properties:
+        </p>
+        <ul>
+            <li> <b><u>Identity</u></b>: who the object is</li>
+            <li> <b><u>State</u></b>: the characteristics of the object</li>
+            <li> <b><u>Behavior</u></b>: what the object can do</li>
+        </ul>
+        <p>Let's take some time to explore each of these concepts.</p>
+    <h3>Object Identity</h3>
+        <p>Inside your computer program, every object has its own
+            <b>identity</b>. Probably the easiest way to think about
+            identity is to think of it as the object's <b>name</b>.
+            In this respect, objects act a little bit like <b>variables</b>
+            which are available in Java and most other computer languages.
+        </p>
+        <p> Variables are names we give to <b>data elements</b> that can vary (hence
+            the name), or change as a program runs. You can create a pair of
+            simple numeric variables in Java like this:
+        </p>
+        <p class="code">
+            int littleInt, bigInt;
+        </p>
+        <p> The names <code>littleInt</code> and <code>bigInt</code> now represent
+            different areas of memory where you can store simple integer
+            values. If you put a value into the integer named <code>littleInt</code>,
+            it won't affect the variable <code>bigInt</code> at all. The two
+            variables have different identities.
+        </p>
+        <p> Objects are a little more complex than simple numeric variables,
+            however. The name of an object does not represent a particular
+            area of memory, as the name of a simple (or primitive) variable
+            does. Instead, the name of an object <b>refers to</b>, or
+            <b>points to</b>, a particular area of memory. Thus, the same
+            object can have several different names.
+        </p>
+        <p> Of course, in real life, you cope with this all the time; your
+            children call you "Dad" or "Mom", your spouse calls you "Honey",
+            and your boss calls you by your given name, all without any
+            confusion as to your real identity. In a similar manner, a
+            single object can have many different names, by creating
+            several <b>object variables</b> that refer to the same
+            object.
+        </p>
+    <h3>Object State</h3>
+        <p> The second property shared by every object is <b>state</b>. The
+            state of an object includes all the information about the object;
+            that is, its attributes or characteristics. In an object-oriented
+            program, each object stores its state in <b>fields</b> or
+            <b>instance variables</b>.
+        </p>
+        <p><img src="images/back_btn.gif" alt="The back button on a Web browser" vspace="10" align="right" border="1" hspace="15">
+            The easiest way to understand state is to look at an example.
+            Take a look at the "Back" button on your Web browser&#8212;the
+            button used to return to the last Web page that you've visited.
+        </p>
+        <p> You've already seen that a button is an object; let's see if you
+            can identify some of the fields that a <b>backButton</b> object
+            (just to give it a name), needs in order to do its job.
+        </p>
+        <p> If you take a piece of paper and start describing the button,
+            you'll find you need attributes such as the following:
+        </p>
+        <ul>
+            <li><b><u>Position</u></b>: where the button is located on the screen</li>
+            <li><b><u>Size</u></b>: the button's width and height</li>
+            <li><b><u>Caption</u></b>: any text, such as the word "Back,"
+                that the button displays</li>
+            <li><b><u>Image</u></b>: any icon or image that is displayed on
+                the button's surface</li>
+            <li><b><u>Clicked</u></b>: whether or not the button is currently
+                selected (pressed)</li>
+         </ul>
+        <p> <img src="images/back_btn01.gif" alt="UML diagram of a backButton object" align="right">
+            Each of these attributes can be represented as a a <b>field</b>
+            or data item, in the <code>backButton</code> object, as shown in
+            the <b>UML</b> (Unified Modeling Language) diagram to the right.
+            The state of the object is represented by the <b>values</b>
+            stored in those fields.
+        </p>
+        <p> For instance, the <b>backButton</b>
+            object may display an arrow image but no text, and, if you
+            click on the button with your mouse, it's <b>Clicked</b> state
+            may change from <code>false</code> to <code>true</code>. When you release
+            the mouse button, the state of the object may change again,
+            because the value stored in the <code>Clicked</code> field may
+            change back from <code>true</code> to <code>false</code>.
+        </p>
+        <br clear="all">
+        <p class="note"><b>Note :</b> The UML diagram shown here represents
+            an <b>object instance</b>. The top part of the diagram contains
+            the name of the object (backButton), and the class it belongs to,
+            (Button). These are underlined to indicate that this is an
+            object, not a class.<br><br>The next section shows the object's
+            fields. Each field starts with a - to indicate that it is
+            <b>private</b>. The name of the field is followed by it's
+            <b>type</b>. The last part of each field lists its current
+            value or <b>state</b>. UML diagrams are the common
+            "schematic" used in object-oriented design, much like
+            blueprints are used in building.
+        </p>
+        <p> The attributes (or fields) that an object contains remain unchanged,
+            but the state of your object changes as the values stored in its
+            attributes change. Your <code>backButton</code> will always have a
+            <code>Clicked</code> attribute, but the value stored in the
+            <code>Clicked</code> field&#8212;and your object's state&#8212;can vary as your
+            program runs.
+        </p>
+    <h3>Object Behavior</h3>
+        <p> The third property shared by all objects is <b>behavior</b>. In
+            Java, the behavior of an object is represented by a set of procedures,
+            called <b>methods</b>. Methods contain the instructions that tell
+            a particular object how to perform a task.
+        </p>
+        <p> If you want a particular object to perform some action, you
+            <b>invoke</b> or <b>call</b> one of its <b><i>methods</i></b>. To accent the
+            fact that objects represent fairly self-contained, autonomous
+            units, the process of invoking a method is often called
+            <b>sending a message</b> to the object. If you were writing a
+            Web browser program and you wanted to interact with the
+            <code>backButton</code> object that you previously met, you could ask
+            it to change its size, for instance, by sending it a message
+            with the desired size like this:
+        </p>
+        <p class="code">
+            backButton.setSize(300, 100);
+        </p>
+        <p> <img src="images/back_btn02.gif" alt="UML diagram of a backButton object with methods" align="right">
+            If the <b>backButton</b> object had a method called
+            <code>setSize()</code>, as shown in the accompanying UML diagram,
+            it would obediently carry out the instructions
+            contained in the method at that point.
+        </p>
+        <p>Unlike an object's fields, which are generally hidden from
+            outside view by making them <b>private</b>, most methods are
+            <b>public</b>, readily accessible to other objects. In the
+            UML diagram, this is illustrated by putting a + in front of
+            the name. Note also, that the two methods shown here,
+            <code>setSize()</code> and <code>setPostion()</code> both require
+            <b>arguments</b> to carry out their actions. As the
+            diagram shows, <code>setSize()</code> requires two arguments of
+            type <code>int</code>, while <code>setPosition()</code> requires a
+            single argument of type <code>Point</code>.
+        </p>
+        <br clear="all">
+    <h2>What are Classes?</h2>
+        <p><b><span class="cap2">I</span>f object-oriented programs are collections
+            of cooperating objects</b>, then just what are <b>classes</b>?
+            Although often confused, the difference between classes and
+            objects is simple:
+        </p>
+        <p class="pullquote"><b>A class represents
+            the definition&#8212;the blueprint if you like&#8212;that is used to
+            construct an object.</b>
+        </p>
+        <p> Objects are created (or <b>instantiated</b>) when your program
+            runs, by following the definition specified in a particular class.
+            A class defines the characteristics of each individual object,
+            and each class can be used to produce many objects.
+        </p>
+        <p> The blueprint
+            shown here, for instance is used to define the characteristics
+            of a particular automobile. The same blueprint can be used
+            to produce any number of individual cars:<br>
+            <img src="images/classes-n-objects.gif" class='inline' alt="Classes are used to produce objects.">
+            In object-oriented programs, classes represent a concept that is
+            similar to the concept of a <b>user-defined data type</b> in other languages.
+            In languages like BASIC, Pascal, and C, you can combine individual
+            related variables into a package, (called a <b>record</b> or a <b>struct</b>),
+            and then treat that package as in individual unit. A record
+            might store the information for a customer in a hospital application,
+            or for a student in a program used to run a school.
+        </p>
+        <p> <img src="images/fwd_btn01.gif" alt="A forwardButton UML diagram" align="right">
+            Like structures, a class describes the attributes of an object: the kinds
+            of states it can assume. <b>Unlike</b> a structure, though, a class
+            <b>also</b> describes the behaviors of its objects: the kinds of
+            operations that they can perform. If you return to your Web browser
+            again, and this time turn your attention to the "Forward" button, (let's call it <b>forwardButton</b>),
+            you'll immediately notice that is the same "kind" of object as
+            the <code>backButton</code> object you looked at previously, even
+            though it contains a different image, and it is disabled. The
+            two buttons share a common class, even though the <code>enabled</code>
+            field of <code>forwardButton</code> is <code>false</code>.
+        </p>
+        <p> As you begin writing Java programs, you'll find that classes
+            are very important. In fact, <b>every Java program you write is
+            a class definition</b>. In your class definitions you describe
+            the attributes that each of your objects possesses, and define
+            the methods that each uses to carry out its actions.
+        </p>
+        <p> As you write your class definitions, you'll rely on three
+            very important OOP principles: <b>encapsulation</b>,
+            <b>inheritance</b>, and <b>polymorphism</b>.
+        </p>
+    <h3>Encapsulation and Data Hiding</h3>
+        <p>As you've seen, in addition to having its own identity, every
+            object is divided into two parts&#8212;the things that it knows how
+            to do, and the data the object contains.
+        </p>
+        <p> In a procedural program,
+            the procedures that make up the program, and the data that those
+            procedures operate on, are separate. In an object-oriented program,
+            they are combined. This process of wrapping up procedures and data
+            together is called <b>encapsulation</b>.
+        </p>
+        <p>
+        <img src="images/encapsulation.gif" alt="With encapsulation, data is hidden from direct access" align="right">
+            Encapsulation is used to enforce the principle of <b>data
+            hiding</b>. With encapsulation, the fields defined inside a
+            class are accessible to all the methods defined inside the
+            same class, but cannot be accessed by methods outside that
+            class.
+        </p>
+        <p> Before OOP, if you had two procedures that needed to operate
+            on the same piece of information, you had to either make the
+            data publicly accessible&#8212;and risk accidental data corruption
+            as a result of a bug in someone else's code&#8212;or you had to pass
+            the data as an argument to each of the functions that operated
+            on it, a tedious and error-prone practice.
+        </p>
+        <p> With encapsulation, all of the methods in your object can
+            get to the data, but it is still protected from outside access.
+        </p>
+    <h4>Encapsulation in the Real World</h4>
+        <p> When you first start programming, or, if you come from a language
+            that has more liberal rules on data access, like C, you might find
+            encapsulation a fairly strange idea. After all, why make it
+            <b>harder</b> for your programs to access their data?
+        </p>
+        <p> In fact, out in the real world, all of us are familiar with the
+            ideas of encapsulation. Let me give you a few examples.<br>
+            <center>
+            <img src='images/encapsulate.gif' class='inline' alt='Real-world examples of encapsulation'>
+            </center>
+        </p>
+        <ul>
+            <li><b>Today's automobiles</b> are very complex engineering accomplishments;
+                much more complicated than Henry Ford's original Model-T. Despite
+                this added complexity, though, <b>driving</b> today's car is similar to,
+                if not simpler than, driving a Model-T.
+                <p>That's because, as the
+                cars got more complex, that complexity was <b>hidden</b> behind
+                a <b>simpler</b> interface: the ignition (key), steering wheel,
+                accelerator and brakes. Internal changes, such as the change from
+                carburetors to fuel injections and from gasoline to hybrid don't
+                require drivers to take a new class. That's because those details
+                are <b>encapsulated</b>.
+            </li>
+            <li><b>Your computer</b> is another modern, complex marvel that all of you use
+                every day. Unless you are a hardware tech, though, you never open up
+                the system unit and try to operate it by shorting the pins with a
+                paper-clip. Instead, you use the computer's <b>interface</b>&#8212;the mouse,
+                and keyboard&#8212; to control the thousands of complex working parts that it
+                contains.
+            </li>
+            <li> Finally, think about <b>your TV</b>. Technologically, it's probably at least
+                as complex as your car or your computer, but you don't need a license
+                or a degree to operate one. Thanks to the magic of encapsulation,
+                exemplified by the <b>remote control</b>, every child in the country
+                can harness that power.<br clear='all'>
+            </li>
+        </ul>
+        <p> Just as with automobiles, computers and TVs, when it comes to
+                programming, instead of making things more difficult encapsulation
+                will actually make your objects both safer <b>and</b> easier to use.
+        </p>
+    <h3>Inheritance and Code Reuse</h3>
+        <p>Inheritance is another important OOP concept. With inheritance,
+            once you've done all the work of writing and debugging a class
+            definition, you can use that class as the starting point for a
+            new class. Rather than starting over from scratch, your new class
+            can simply add new methods or fields when it needs some new
+            behavior or attribute.
+        </p>
+        <p>Suppose, for instance, you've just finished writing the first
+            version of your new super Web browser. It's functional, but
+            not very exciting. The navigation buttons, for instance, are
+            just plain <code>Buttons</code>&#8212;no images at all. When your boss
+            sends you a memo asking you to jazz things up with some neat
+            icons, there's no need for you to start over and write a new
+            <code>ImageButton</code> class. Instead, you can use the <b>Button</b>
+            class you've already written, and <b>extend</b> it by using
+            inheritance.
+        </p>
+        <p>When you use inheritance to create your <code>ImageButton</code>
+            class, you don't have to write any methods to change the size
+            or handle mouse clicks&#8212;the <code>Button</code> class you used as a
+            starting point already knows how to do those things, and your
+            new <code>ImageButton</code> class simply <b><u>inherits</u></b> them. All you have
+            to do is write the code that adds and displays the image, and
+            you're done.
+            </p><center>
+            <img src="images/inherit_btn.gif" alt="Creating an ImageButton from a Button" vspace="15">
+            </center>
+            When you extend another class, the class you use as a starting
+            point is called the <b>superclass</b> and the new, extended
+            class you create is called the <b>subclass</b>. Although you
+            should endeavor to keep these terms straight, you might prefer
+            to use the terms <b>parent class</b> and <b>child class</b>,
+            which are less apt to lead to confusion.
+        <p></p>
+        <p> It's obvious that inheritance is useful, because it allows
+            you to reuse code you've already written. What might not be so
+            obvious, however, is that inheritance allows you to organize
+            your programs so that they are more understandable and
+            efficient. You do this by arranging the objects in your programs
+            into <b>inheritance hierarchies</b>.
+        </p>
+        <p> Take a look at the <code>Button</code> and <code>ImageButton</code> classes
+            again. These two classes form a simple inheritance hierarchy.
+            Every <code>ImageButton</code> object is also, by virtue of inheritance,
+            "a kind of" <code>Button</code> object as well. The <code>ImageButton</code>
+            class is thus a <b>specialization</b> of the <code>Button</code> class.
+            Just as a motorcycle or dump truck is a special type of vehicle
+            with distinctive attributes and behaviors, an <code>ImageButton</code>
+            is a special type of <code>Button</code>.
+        </p>
+        <p> You'll learn a lot more about this when we cover inheritance and GUI
+            programming, later in the semester.
+        </p>
+    <h3>Polymorphism</h3>
+        <p>The last of the OOP foundation terms, <b>polymorphism</b>, is a
+            big word that describes a simple idea: two objects can respond
+            to the <b>same message</b> in different ways&#8212;according to their
+            nature, so to speak. Thus your <code>ListBox</code> class may have
+            an <code>add()</code> method that it uses to construct the list that
+            it displays, while your <code>ComplexNumber</code> class may have
+            an <code>add()</code> method that it uses to perform arithmetic.
+            Objects of each sort behave appropriately when sent the
+            <code>add()</code> message; they never get confused.
+        </p>
+        <p> This simple idea only hints at the <b><u>real</u></b> power of polymorphism,
+            however. Just as inheritance lets you write simpler class
+            definitions by reusing existing classes, polymorphism allows
+            you to use the inheritance relationship to write simpler code.
+            Let's look at an example.
+        </p>
+        <p> Suppose you are writing a "Space Wars" type arcade game, with
+            several different kinds of players&#8212;<code>FighterShip</code>,
+            <code>BattleCruiser</code>, <code>SupplyShip</code>, and so on. By
+            creating a common superclass&#8212;<b> SpaceVehicle</b>&#8212;and
+            then using inheritance to create all of the other classes, you
+            can write one simple method to display all of the players in
+            all of their glory, instead of writing a bunch of complex
+            code to display every player. Polymorphism allows you to
+            simply send the same <code>draw()</code> message to every
+            <code>SpaceVehicle</code> on the screen, and each actual object
+            will render itself appropriately.
+        </p>
+        <p> This is the same idea that is used to make a general-purpose
+            drawing program, like Visio work. The program is written in terms
+            of a generic <code>Shape</code> class like this:
+            </p><center>
+            <img src="images/e15.gif" alt="Shapes and polymorphism." vspace="15">
+            </center>
+            The generic <code>Shape</code> class doesn't know <b>how</b> to
+            correctly render itself on the screen. Instead, each of the
+            specialized shape classes, <code>Star</code>, <code>Square</code>,
+            and <code>Circle</code> contain their own version of the
+            <code>draw()</code> method that displays the <b>correct</b>
+            shape object.
+        <p></p>
+
+      <h3>Coming Up...</h3>
+         <p> In this lesson you learned about the concepts behind <b>Object-Oriented
+            Programming</b> or <b>OOP</b>. You learned the difference between <b>classes</b> and
+            <b>objects</b>, and the three guiding principles of OOP design: <b>encapsulation</b>,
+            <b>inheritance</b> and <b>polymorphism</b>.
+        </p>
+        <p> In the second half of this course, we'll concentrate on Object
+            Oriented Programming. In the meantime, though, you have a <b>midterm
+            exam</b> to prepare for.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

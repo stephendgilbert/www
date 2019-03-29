@@ -1,0 +1,531 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src="images/a03.jpg" class="right" alt="The ALMA radio telescope.">
+            <b><span class="cap">T</span>he Atacama Large Millimetre <u>Array</u>,
+            (ALMA) is a <i>collection of 64 radio antennas
+            that work together as one telescope</i></b>, to study
+            millimetre-and submillimetre-wavelength light from space.
+            ALMA is being built in Chile by an international
+            partnership which includes the National Research Council of
+            Canada and the U.S. National Radio Astronomy Observatory. It
+            is the largest ground-based astronomy endeavor ever undertaken.
+            You can find out more about ALMA at
+            <a href="http://hia-iha.nrc-cnrc.gc.ca/projects/alma_e.html" target="_blank">
+            <b>this site</b></a>, sponsored by the Canadian National
+            Research Council.
+        </p>
+        <p> In Java, an <b>array</b> is similar. Arrays are the built-in Java type
+            for holding <b><i>collections</i></b> of variables. Arrays
+            are useful whenever you need to apply identical processing
+            to all of the members of a group of related variables. You
+            could use an array, for instance, to calculate the grades
+            for an entire class of students, rather than performing
+            the operation one-by-one.
+        </p>
+        <p>In this lesson you'll learn:</p>
+        <ul>
+            <li>what array variables are, and why they're useful</li>
+            <li>how to define and initialize array variables</li>
+        </ul>
+        <p> In this lesson we'll focus on creating and using arrays of
+            primitive types. Later in the semester, once we've you've learned
+            to create your own object types, we'll cover object collections,
+            more complex array algorithms, and some of the Java collection
+            classes, like <code>ArrayList</code>.
+        </p>
+        <p class="note">The
+            Java library actually contains many different kinds <i>collection
+            classes</i>, which are commonly known as <i>data structures</i>
+            or <i>abstract data types</i>. Chapters 15 and 16 in your textbook,
+            (which we <i>won't</i> cover in this class), has an introduction
+            to the most commonly used classes. If you're a Computer Science
+            major, you'll take CS 200, Data Structures, which
+            uses similar classes from the C++ Standard Template Library (STL).
+        </p>
+    <h3>What are Arrays?</h3>
+        <p><b>Variables</b>, you'll recall, are 'buckets' that hold a value. When
+            you create the bucket, you have to say what <b>kind</b> of
+            thing you're going to store in it; there are no "one size fits
+            all" buckets, like there are in some languages.
+        </p>
+        <p> Now, the only problem with variables comes whne you want to
+            store <b>a lot of values</b>;
+            creating individual variables for each value can quickly become
+            very tedious&#8212;especially if the values are similar and somehow
+            related. A program that keeps the records for a class of Java
+            students, for instance, would need to declare variables for
+            each each grade for each assignment for each student.
+        </p>
+        <p> Even if we <b>encapsulated</b> all of the related data for each
+            student into a <code>Student</code> class, (something you'll start
+            learning about at the end of this unit), you'd still be left with
+            something like this:
+            <img src="images/a02.gif" class="inline" alt="Individual variables.">
+            While you certainly could write code like this, imagine how
+            long and unwieldy your program would become when it came
+            time to add the scores for a quiz, for instance. You'd need to
+            have a separate statement for each student variable.
+        </p>
+        <p> You probably think "There has to be a better way!", and you're right,
+            there is.
+        </p>
+    <h4>Meet the Array</h4>
+        <p> The solution that's built into the Java language is called
+            the <b>array</b>. An array is a <b>collection variable</b>:
+        </p>
+        <ul>
+            <li>an array can hold multiple values rather than just
+                a single value.
+            </li>
+            <li> An array can store values of any type&#8212;either primitive
+                values or object references (such as <code>Strings</code>)&#8212;but
+                each of the values in a single array must <b>all be of the
+                same type</b>. You can't put eggs in a muffin-tin or bake
+                muffins in an egg crate (so to speak).<br>
+                <img src='images/muffin.gif' class='inline' alt='Muffin-tins and egg-crates.'>
+            </li>
+        </ul>
+        </p>
+    <h4>Array Elements</h4>
+        <p>When you create an array, you give the <b>entire collection</b> a
+            <b>name</b>, just like you would any other <i>simple</i> variable.
+            I think of it like the name of a neighborhood like Newport Heights
+            or Turtle Ridge.<br>
+            <img src='images/neighborhood.gif' class='inline' alt='A neighborhood.'>
+            Just like you would indicate the houses in a neighborhood by their
+            street number, you access the individual data values stored in the
+            array&#8212;these are called the <b>array elements</b>&#8212;by
+            specifying an <b>index</b> or <b>subscript</b> representing its
+            <b>position</b> in the collection.
+        </p>
+        <p> The only tricky thing about this is that you have to remember
+            that in Java, <b>the first element of the array has the subscript 0,
+            the next 1, and so on</b>. Of course, you're already somewhat
+            familiar with this concept, since it's the same numbering scheme
+            that's used for locating the individual characters inside of
+            a <code>String</code>.
+        </p>
+        <div class="redbox">
+            <h5 style='margin-top:0;'>Why Start At 0?</h5>
+            <p>One of the perennial debates in programming language circles has
+            to do with whether array elements should be numbered starting
+            with zero or one. Java, like C and C++, uses zero-based arrays.
+            While you might not like this, it may help a little if you
+            understand why zero-based arrays are used.
+            </p><p>
+            If you think of the array subscript as the number of the
+            element&#8212;#1, # 2, etc...&#8212;then zero based arrays make no sense
+            at all. After all, what does it mean to be the "zeroth" element?
+            </p><p>
+            But, array subscripts are not the number of the element; instead,
+            the subscript is an <b>offset</b> from the beginning of the array.
+            When you tell the compiler to retrieve <b>myArray[5]</b>, you are
+            telling it to go to the array named <b>myArray</b>, then
+            "walk past" five elements and bring you the element it finds
+            there. If you tell it to access myArray[0], the compiler
+            knows it doesn't have to skip any elements at all, and it brings
+            you the first element.
+            </p>
+        </div>
+        <p class="note">When you create an array, all of the elements
+            are stored right next to each other in memory; we say that
+            the elements are <i>contiguous</i>. Since each value must be
+            the same type, each value uses exactly the same amount of memory,
+            which allows Java to locate an individual value very quickly using
+            simple arithmetic. If the first element is at address 100 in memory,
+            and each element is 4 bytes long, the 1000<sup>th</sup>
+            element must be at 100 + 4 * 1000.
+        </p>
+
+    <h4>Array Variables</h4>
+        <p> In Java, arrays variables are references, just like object
+            variables. (Java is different in this regard than some other
+            languages, like Pascal and C. Other language, though, like C#
+            use the same general method as Java.)
+        </p>
+        <p> An array variable does not actually <b>contain</b>
+            the individual values in the array, it <b>refers to them</b>.
+            Thus, two array <b>variables</b> can "point to" the same <b>actual
+            array</b> containing the values.
+        </p>
+        <p> Here's an example. The array variable named <code>gradeAR</code>
+            pictured here is a <code>char</code> array variable. The variable
+            <code>gradeAR</code> <b>refers to</b> a five-element array of
+            <code>char</code> values.<br>
+            <img src="images/z01.gif" alt="Illustration of a 5-element array and its array variable" vspace="15" hspace="15">
+        </p>
+        <p> The individual elements in <code>gradeAR</code> are each
+            <b>indexed</b> or <b>subscripted</b>, starting at 0 and going
+            to 4. (For another illustration that shows the same thing, look at
+            the diagram showing the array named <code>data</code> in the
+            Section 7.1 of your textbook.)
+        </p>
+        <p> Now that you have a conceptual picture of what an array looks like,
+            let's turn to the Java instructions you use to create and
+            initialize array variables.
+        </p>
+    <h3>Creating Arrays</h3>
+        <p><b>Creating an array
+            is a two step process</b>, just like creating an object. You
+            learned how to do this (conceptually) in Unit 2 and have put it
+            to work in the last unit when working with the <code>Scanner</code>
+            class as an iterator.
+        </p>
+        <p> When you create an object, you first declare an <b>object variable</b>,
+            like this:
+        </p>
+        <p class="code">Scanner cin;</p>
+        <p>and then create and "attach" (using assignment) an <b>actual object</b>
+            to the object variable, like this:</p>
+        <p class="code">
+            cin = new Scanner(System.in);
+        </p>
+        <p class='note'>Even though we've normally done the previous two steps in
+            one statement, <b>logically</b> they are two separate steps. The first
+            step creates a <b>variable</b> which can <i>refer</i> to an object,
+            while the second step creates an <b>object</b> and attaches it to
+            a variable.
+        </p>
+        <p>Arrays work in an <b>almost</b> identical manner: the two steps
+            are to <b>declare the variable</b> and then <b>create the array</b>.
+            The syntax is <i>slightly</i> different than that used to create
+            objects and object variables, though.
+        </p>
+    <h4>Step 1: Declare the Variable</h4>
+        <p>To declare an <b>array variable</b> you specify:
+        </p><ol>
+            <li>The <b>type of elements you'll store</b> in the array. This can be
+                any type, object or primitive. We're going to concetrate on
+                primitive types in this unit.
+            </li>
+            <li>A <b>name for the entire collection</b>. Here you must follow the
+                standard naming rules. There are no special names for arrays.
+            </li>
+            <li>A set of <b>empty square brackets</b> (<b><code>[]</code></b>)
+                following <b>either</b> the variable name or the type name.
+                This is how you signify that this is an <b>array</b> variable
+                instead of a <b>simple</b> variable.
+            </li>
+        </ol>
+        <p class='note'>Even though the brackets can go after either the
+            variable name or the type name, you <i>should</i> place them
+            immediately after the type name. The post-variable-name syntax
+            was allowed because that's the syntax in C and C++. Placing the
+            brackets after the type name associates the brackets with the
+            type rather than with the variable, and is the almost universal
+            convention among Java programmers.
+        </p>
+    <h5>Declaration Examples</h5>
+        <p> Here are a few examples to give you the idea.</p>
+        <ul>
+            <li>This example creates an array variable that holds
+                <b>chars</b>. We've put the brackets after the type name.
+                You should read this as "<i><code>grades</code> is an array
+                of <code>char</code>"</i>
+                <p class="code">char[] grades;</p>
+            </li>
+            <li>This example creates an array variable that holds <b>ints</b>.
+                Here we've put the brackets after the variable name, but you
+                really <i>shouldn't</i> use this syntax.
+                Read this as "<i><code>pieces</code> is an array of
+                <code>int</code></i>".</li>
+                <p class="code">int pieces[];</p>
+
+            <li>This example creates an array variable that holds
+                <b>Card</b>s. The <code>Card</code> class is a user-defined
+                class that you'll create later in the semester. As you can see,
+                the <b>syntax</b> is just the same whether you're creating an
+                array of primitive types or of object references.
+                <p class="code">Card[] deck;</p>
+            </li>
+        </ul>
+        <p>To actually <b>store values</b> in the collection, though, you'll have
+            to <b>create the actual elements</b> that make up the array. Here's how.
+        </p>
+    <h4>Step 2: Create the Array Elements</h4>
+        <p> Just as with objects, the actual array is created by using
+            the <code>new</code> operator. When used to create an array,
+            the syntax used with <code>new</code> is a little different
+            than the syntax used to create an object.
+        </p>
+        <p> When creating an object, you use an <b>object constructor</b>
+            which appears on the right side of the assignment operator. When
+            creating an array, you use an <b>array constructor</b>. Here's
+            the difference
+        </p>
+        <h5>Object Constructors</h5>
+        <p> An object constructor uses the name of the class, followed by
+            parentheses and any parameters that are required by the
+            constructor, like this:
+        </p>
+        <p class="code">
+            <span class="red"><b>// Object Constructors</b></span><br>
+            <br>
+            public void run()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Scanner cin;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;cin = new Scanner(System.in);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Scanner fileItr;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;fileItr = new Scanner(MediaTools.openDataFile("moby.txt")));<br>
+            }
+        </p>
+        <p> Object constructors are <b>actually methods</b>, defined inside
+            the class of the object you are creating.
+        </p>
+        <ul>
+            <li>A class may have <b>several</b> overloaded constructors,
+                like the <code>Scanner</code> class  does, here for instance. You can
+                construct a <code>Scanner</code> that reads from the keyboard,
+                and another that reads from a file, by changing the type of
+                parameters.
+            </li>
+            <li>You do not use a constructor to create primitive variables.</li>
+        </ul>
+        <p> Array constructors are different.</p>
+    <h5>Array Constructors</h5>
+        <p> An array constructor uses the name of the class <b>or</b> the name of
+            a primitive type, <b>followed by a set of brackets</b>,
+            <i>instead</i> of parentheses.
+            <img src="images/a04b.gif" class="inline" alt="Some array constructors.">
+        </p><p> Inside the brackets, instead of different parameters like you would
+            use with an overloaded object constructor, you put the <b>number of
+            elements</b> you want your array to have. The number:
+        </p>
+        <ol>
+            <li class="d">Can be a <b>constant</b>, like the 5 used for
+                <code>grades</code> in the example you just saw. The
+                <code>grades</code> array has five elements, and the
+                subscripts go from zero to four.
+            </li>
+            <li class="d">Can be an <b>expression</b> or <b>variable</b>, like the
+                expression <code>nTiles * nTiles</code>, used for the
+                <code>pieces</code> array. The <code>pieces</code> array
+                has nine elements, and the subscripts go from zero to eight.
+            </li>
+        </ol>
+        <p class="note"><b>Note</b>: When you create an array that holds
+            objects or <code>Strings</code>, such as <code>lines</code> (3),
+            the array actually holds <b>references</b> to those objects.
+            You still have to create the object variables in a separate step.
+            You'll learn how to do that when we cover objects in a later
+            section.
+        </p>
+    <h3>Array Initialization</h3>
+        <p> If you like, you can declare an array variable and create the
+            array at the same time. This is actually quite common. Here's
+            what it looks like:
+        </p>
+        <p class="code">double[] scores = new double[5];</p>
+        <p> When you first create an array using <code>new</code>, the values
+            stored in each of the elements are set to:
+        </p><ul>
+            <li> <b>0</b> if the array holds integer or character values.</li>
+            <li><b>false</b> if the array holds <code>boolean</code> values.</li>
+            <li>The value <b>null</b> if the array holds object (or <code>String</code>)
+                references. Thus each element of the <code>String</code> array
+                <code>lines</code>, defined earlier in this lesson, is the
+                <code>null String</code>, <b>not</b> the <i>empty</i>
+                <code>String</code>.</li>
+        </ul>
+        <p> Please note that <b>this is different than simple variables</b>.
+            With a simple variable, default (automatic) initialization is
+            only provided if the variable is a field, (declared outside of
+            all methods). <b>All array variables</b>, both fields
+            and locals, are automatically initialized when you create them.
+        </p>
+    <h4>Explicit Initialization</h4>
+        <p> Often, however, this default initialization is not what you want.
+            If this is the case, then you'll have to <b>explicitly</b>
+            initialize your variables. You can initialize the elements in
+            an array in two ways:
+        </p>
+        <ol>
+            <li>You can explicitly set each element by using the subscripted
+                name of each element and storing a value in that element.
+                This is most often done in a loop.
+            </li>
+            <li>You can provide a set of initial values in an
+                <b>initializer list</b>.
+            </li>
+        </ol>
+    <h4>Initializer Lists</h4>
+        <p> To explicitly provide a set of initial values, you write each
+            value, separated by commas, inside a set of braces. When you do
+            this, you <b>cannot</b> supply a size for the array and you
+            usually <b>do not</b> use the <code>new</code> operator.
+        </p>
+        <p> Here's an example declaration that shows you how to do this:</p>
+        <p class="code">
+            char[] allGrades = {'A', 'B', 'C', 'D', 'F', 'W', 'I'};
+        </p>
+        <p> When you write this, the Java compiler <b>counts</b> the number of
+            elements in your initializer and automatically creates a
+            seven-element array. (Make sure you don't forget the semicolon
+            at the end of the list.)
+        </p>
+        <p class="note"><b>Java vs C/C++ Initialization</b><br>
+            If you know a litte C or C++, don't confuse the way that
+            Java does things and the way that C does it. Java does not
+            have partial array initialization, like C, where you can
+            combine an explicit array size with a partial
+            initialization list.
+        </p>
+        <p> You can also use a similar (although infrequently used) syntax,
+            which employs both the intitializer list, <b>and</b> the
+            <code>new</code> operator, to create something like an
+            <b>array literal</b>, which
+            can be assigned to an array variable, like this:
+        </p>
+        <p class="code">
+            int[] ar;<br>
+            ar = new int[] { 1, 2, 3 };
+        </p>
+        <p> This creates an <b>anonymous array</b> holding the values 1, 2,
+            and 3, and assigns a reference to the variable <code>ar</code>.
+            If you wanted to pass an <i>array literal</i> to a procedure
+            that expected to receive an array, you could use an
+            annonymous array like this:
+        </p>
+        <p class='code'>
+            doSomeProcedure(new int[]{1, 2, 3}); <span class='cmt'>// actual parameter is a literal array</span>
+        </p>
+    <h3>Accessing Array Elements</h3>
+        <p><b>Now that you know how to create arrays</b>,
+            it's time to put them to work; you don't want all of those elements
+            sitting around collecting dust, do you?
+        </p>
+        <p> You'll first learn about <b>storing
+            and retrieving values</b> in individual elements.
+            Then, in the next two lessons you'll learn how to
+            processes arrays using loops,
+            write methods that <b>take arrays as parameters</b> and how to write methods
+            that <b>return array values</b>.
+            <img src="images/bottles.gif" class="inline" alt="Bottles in a factory.">
+        </p>
+    <h3>Storing and Retrieving Values</h3>
+        <p> To access an individual array element, you use the name of the
+            array and add the subscript of the element you want to access in
+            brackets following the name. This is known as the <b>subscripted
+            name</b> or an array variable.
+        </p>
+        <p> Using this "compound" name, you can
+            store new values in individual elements, or retrieve values
+            from individual elements in the array.
+            For example, to store a new grade into the first element of
+            <code>grades</code>, you just do this:
+        </p>
+        <p class="code">grades[0] = 'C';</p>
+        <p> In the same way, you can retrieve a value simply by using the
+            <b>subscripted variable name</b> in an expression, like this:
+        </p>
+        <p class="code">
+            int i = 0;<br>
+            char current = grades[i];
+        </p>
+        <p> As you can see, when you use the subscripted name, the subscript
+            (index) does not <b>have</b> to be a constant. You can use a
+            variable or an expression as long as the result is an integer
+            value.
+        </p>
+        <p> Although the type of the variable <code>grades</code> is
+            <code>char[]</code> (<b>array of char</b>), the type of the
+            individual elements (<code>grades[0]</code>) is
+            plain-old <code>char</code>. You treat each of the individual
+            elements just as if it were a simple <code>char</code> variable.
+        </p>
+    <h4>Errors</h4>
+        <p> Of course, this means you have to remember to store only
+            compatible values. If you try this, for instance:
+        </p>
+        <p class="code">grades[1] = 3.2;</p>
+        <p> you'll get a <b>compiler error</b> because you can't store a
+            <code>double</code> value, (3.2), in a <code>char</code> variable.
+        </p>
+        <p> A more common mistake is to create a <b>runtime error</b> by
+            trying to store values (or retrieve values) from an element
+            outside the bounds of the array. The most common cause of this
+            error is forgetting that a  five-element array, like
+            <code>grades</code>, has subscripts that range from
+            zero to four. The expression
+        </p>
+        <p class="code">grades[5] = 'C';</p>
+        <p> will trigger a runtime error, (an <code>ArrayIndexOutOfBounds</code>
+            exception). You'll learn how to deal with this error later
+            in the semester when you look at exceptions.
+        </p>
+    <h4>The <b>length</b> Field</h4>
+        <p> Every array variable has a <code>public</code> <b>field</b> named
+            <code>length</code> that you can use to discover how many
+            elements are in the array. There are two things you should
+            remember when using the <code>length</code> field:
+        </p>
+        <ul>
+            <li>In an array, <code>length</code> is a field; in a
+                <code>String</code>, <code>length()</code>
+                is a method. It's easy to get the two of these confused.
+                <p class="code">
+                    String s = "Abara";<br>
+                    int lenS = s.length();<br>
+                    int lenA = grades.length;
+                </p>
+            </li>
+            <li>The <code>length</code> field stores the <b>number of
+                elements</b> in the array, <b><i>not</i></b> the highest
+                subscript number, which is always <code>length-1</code>.
+                <p class="code">
+                    grades[length] = 'C';&nbsp;&nbsp; <span class="cmt">// NO</span><br>
+                    grades[length-1] = 'C'; <span class="cmt">// OK</span>
+                </p>
+            </li>
+        </ul>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned how to <b>declare array variables</b> and
+            how to use the <code>new</code> operator to allocate an actual array.
+            You also learned how to <b>initialize</b> the elements in an
+            array by using an initializer list. You also learned how to use
+            access the individual elements in an array.
+        </p>
+        <p> In the next lesson we'll look at using loops and methods to
+            process arrays.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

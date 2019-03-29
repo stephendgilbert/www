@@ -1,0 +1,977 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <script src="../cs170.js"></script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+        <title>An HTML Primer</title>
+    </head><body>
+    <div class="title">
+        <img src="images/f.jpg" alt="CS 170 Lesson F logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Optional Lesson
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            An HTML Primer
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">A</span>s you learned</b> in the first lesson
+            this week, <b>H</b>yper<b>T</b>ext <b>M</b>arkup
+            <b>L</b>anguage (<b>HTML</b>) documents are regular text files
+            that are stored on a server. When a <i>client</i> program such as a
+            Web browser requests a particular document it is delivered to the
+            client by an HTTP or <i>Web server</i>. When it reaches the client, the
+            plain text is interpreted and displayed, just like the page you
+            are viewing now.
+        </p>
+         <p> This optional lesson will teach you the <b>basic</b> syntax of
+            HTML, the language used to encode Web pages so that they
+            can be interpreted by your browser. Of course, since this
+            is a class in <b>Java</b> programming, not HTML, the emphasis
+            is on the <b>basic</b>. If you want to learn about HTML
+            programming, (in-depth), OCC has several classes to help you,
+            including:
+        </p>
+        <ul>
+            <li>CIS 123 - Basic HTML Programming</li>
+            <li>CIS 171 - JavaScript Programming</li>
+            <li>CIS 223 - Advanced HTML Programming (CSS and DHTML)</li>
+        </ul>
+        <p> To create Java Applets using Eclipse, you actually don't need
+            to know any HTML at all. If you want to <b>deploy</b> your
+            applet on your own Web site, though, you'll need at least some
+            knowledge of HTML tags.
+        </p>
+    <h3>Basic HTML</h3>
+        <p> Many programmers get very offended when you call <b>HTML</b> a
+            <b>programming language</b>; after all, it has no variables,
+            no loops, no selection statements; it has none of the programming
+            language features that mark FORTRAN, COBOL, C, and Java. How
+            can it be a language?
+        </p>
+        <p> The answer is quite simple: <b>it says so!</b> Its name is
+            HyperText Markup <b><i>Language</i></b>, and, let's
+            face it, if Political Science and Computer Science can get away
+            with calling themselves <i>sciences</i>&#8212;no matter what those stuffy
+            folks in Physics and Biology say&#8212;then we're duty bound to honor
+            HTML's modest claims.
+        </p>
+        <p> As the name says, HTML is a <b>markup language</b>,
+            the most prolific of a family of languages that began with
+            <b>SGML</b> (Standard Generalized Markup Language) and that
+            includes <b>XML</b> (eXtensible Markup Language) as well as
+            <b>XHTML</b>, the "official" successor to HTML. To be perfectly
+            accurate, though, markup languages <b>are not</b> general-purpose
+            programming languages like Java; they only do one thing: specify
+            the structure of a document in a specific way.
+        </p>
+        <p class="note"><b>NOTE:</b> XML is becoming the "next big thing",
+            but it's pretty complex.
+            <b><a href="http://www.ibiblio.org/xml/" target="_blank">
+            Cafe con Leche</a></b> has a number of links that will help
+            you if you want to learn more. If you just want to "get
+            acquainted", you might start with the
+            <b><a href="http://www.ibiblio.org/xml/slides/sd2002west/introxml/" target="_blank">Intro to XML</a></b> presentation found
+            there.
+        </p>
+        <p> Let's take a look at the basic structure of an HTML document,
+            starting with <b>elements</b> and <b>tags</b>.
+        </p>
+        <h3>Tags and Elements</h3>
+        <p> An HTML document is a plain-text file that has been broken
+            into different <b>structural elements</b> by the use of
+            <b>tags</b>. Structural elements are the "chunks" of an
+            HTML document, in the same way that characters, words,
+            sentences, paragraphs, and pages are the "chunks" of
+            a regular document.
+        </p>
+        <p>Tags are special "punctuation" commands that tell your
+            Web browser how to display your HTML document. Here
+            are the basic rules used to write HTML tags:
+        </p>
+        <ul>
+            <li>HTML tags are enclosed in angle
+                brackets like this :
+                <span class="inlinecode">&lt;tag&gt;</span>
+            </li>
+            <li>The actual tag names are case-insensitive. For instance,
+                you can write
+                    <span class="inlinecode">&lt;html&gt;</span>,
+                    <span class="inlinecode">&lt;HTML&gt;</span>, or even
+                    <span class="inlinecode">&lt;hTmL&gt;</span>. All of
+                these are treated identically by your browser.
+                <p class="note"><b>Note :</b> In <b>XHTML</b> (the W3C&#8212;annointed
+                successor to HTML 4), all tags must be in lowercase.</p>
+            </li>
+        </ul>
+        <h4>Container Tags</h4>
+        <p> Almost all tags come in pairs: an opening tag and a closing
+            tag. The closing tag uses the same command, but the command
+            is preceded by a forward slash (/), like this:
+            </p><p class="code">
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Headline text&lt;/h1&gt;
+            </p>
+            <p>Paired tags act as <b>delimiters</b>, or <b>containers</b> for
+            the text appearing between them. The opening tag, the closing
+            tag, and all the text in between make up an HTML element, such
+            as the <b>h1 element</b> shown here.
+        </p>
+        <p>The tags <span class="inlinecode">&lt;h1&gt;</span> and
+            <span class="inlinecode">&lt;/h1&gt;</span> are the "level-1 head"
+            tags. All of the text that appears between these two tags will be
+            interpreted by your browser as a level-1 (largest) headline, and
+            displayed appropriately. Your browser will not display the tags
+            themselves.
+        </p>
+
+        <p class="note"><b>Note :</b> For some elements in HTML, the
+            closing tag is optional. In XML and XHTML, however, all
+            elements must have a closing tag. If a tag has no body
+            content, (like the break tag &lt;br&gt;), then you can
+            use a single tag with a special short-hand closing brace
+            like this: &lt;br /&gt;
+        </p>
+        <h4>Tag Attributes</h4>
+        <p> Many tags require additional pieces of information.
+            These additional pieces of information are called
+            <b>attributes</b>, and they are placed <b>inside the
+            opening tag</b>. (That is, before the &gt; symbol.)
+            Attributes can be either <b>mandatory</b> or <b>optional</b>.
+        </p>
+        <ul>
+            <li>Every attribute is represented by an <b>attribute
+                name</b>. Like tag names, the attribute name is
+                <i>not</i> case-sensitive in HTML (but is in XHTML).
+            </li>
+            <li>Attribute names are followed by an equals sign and a
+                value. The value may be placed in quotes (either
+                single or double). (This is not required in HTML,
+                but it is required in XHTML.)
+            </li>
+            <li>Even though the attribute name may not be case-sensitive,
+                the value <b>may</b> be case sensitive.
+            </li>
+        </ul>
+        <p class="note">When you supply a value to the <b>code</b>
+            attribute in a Java <b>&lt;applet&gt;</b> tag, it is
+            <b>always</b> case sensitive. On the other hand, when you
+            supply a URL as a value to an <b>href</b> attribute, inside an
+            <b>&lt;a&gt;</b> tag, it is <b>sometimes</b> case sensitive. (It
+            will be case sensitive if placed on our UNIX server,
+            but it would not be case sensitive if used on
+            your local Windows or Mac machine.)<br>&nbsp;
+            <br>
+            The best advice is to assume that all values <b>are</b> case sensitive,
+            and to double check your pages and links once you've published
+            them.
+        </p>
+
+        <p>Now, let's take a look at some specific tags.</p>
+
+        <h3>Structural Elements</h3>
+        <p>These HTML tags form the "sections" of your document.
+            These tags are:
+        </p>
+        <table summary="Basic HTML Elements" border="1" cellpadding="10">
+        <tbody>
+            <tr>
+                <th class="tcode">&lt;html&gt;<br>&lt;/html&gt;</th>
+                <td class="tdata">Placed at the beginning and end of your
+                HTML document. Inside these tags, your document is divided
+                into two parts, a header and a body.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;head&gt;<br>&lt;/head&gt;</th>
+                <td class="tdata">Text inside this section does not
+                appear on your page, with the exception of text appearing
+                between <b>title</b> tags,
+                [which you'll meet in the next section].</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;body&gt;<br>&lt;/body&gt;</th>
+                <td class="tdata">This section follows the <b>head</b>
+                section. Text that appears between these tags will
+                appear on your Web page.</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <p>Make sure that you don't "overlap" beginning and ending tags. The
+           following structure would be incorrect, because the
+           <span class="inlinecode">&lt;/head&gt;</span> and
+           <span class="inlinecode">&lt;body&gt;</span> tags overlap:
+           </p><p class="code">
+                &lt;html&gt;<br>
+                &lt;head&gt;<br>
+                &lt;body&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </p>
+            The correct structure would look like this:
+            <p class="code">
+                &lt;html&gt;<br>
+                &nbsp;&nbsp;&lt;head&gt;<br>
+              <span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: red;">
+                &nbsp;&nbsp;&lt;/head&gt;<br>
+                &nbsp;&nbsp;&lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;/body&gt;<br>
+              </span>
+                &lt;/html&gt;
+            </p>
+            <p class="note">Note how indentation can help you
+                "line up" the tags correctly.</p>
+        <h4>Try it out</h4>
+        <p> Let's do some "hands-on" HTML.</p>
+        <div class="box">
+        <ol>
+            <li>Start Notepad or any other text editor and, before you
+                type in anything else, <b>save</b> the empty file in your
+                working directory as <b>index.html</b>. When you save
+                the file in Notepad, put quotes around
+                the file name when you save it, as shown here:<br>
+                <img src="images/e01.gif" alt="Saving a file in Notepad" vspace="15" border="1">
+            </li>
+            <li>Add the HTML structural tags,
+                and save your file once again.
+            <br>&nbsp;
+            </li>
+            <li>Start your Web browser,
+                choose <b>File-&gt;Open</b>,<br>
+                <img src="images/e02.gif" alt="Opening a file in Internet Explorer" vspace="15" border="1"><br>
+                press <b>Browse</b> from the <b>Open</b> dialog,<br>
+                <img src="images/e03.gif" alt="Browsing for file in Internet Explorer" vspace="15" border="1">
+                <br>and navigate to where you saved <b>index.html</b>.<br>
+                <img src="images/e04.gif" alt="Navigating to an HTML file in your browser" vspace="15" border="1">
+                <br>
+                Select the file and press <b>Open</b> to view your
+                new HTML file.
+            </li>
+        </ol>
+        </div>
+        <p> What do you see when you open your file in your Web brower?
+            If you said <b>"Nothing"</b>, you're absolutely correct. None
+            of the tags you typed in show up; you've just created the basic
+            <b>structure</b> for your page. The next step is to add some
+            <b>content</b>.
+        </p>
+        <p class="note">How do you know if you're actually viewing the
+            Web page you created? Choose <b>View Source</b> from your
+            Web Browser's <b>View</b> menu, and you'll see the HTML
+            code that you've written.
+        </p>
+        <h3>Headlines, Paragraphs, and Rules</h3>
+        <p> Once you've written the basic structure, you're ready
+            to add some <b>content</b> elements. (Text typed between the <b>body</b>
+            tags, but that does not appear between any of the tags
+            here, will be displayed in the default browser "Normal" text
+            style. You really shouldn't have any content that <i>isn't</i>
+            inside another tag, such as the paragraph tag, however.)
+        </p>
+        <p>Here are the basic tags you'll use:</p>
+        <table summary="Content Elements" border="1" cellpadding="10">
+        <tbody>
+            <tr>
+                <th class="tcode">&lt;title&gt;<br>&lt;/title&gt;</th>
+                <td class="tdata">The <b>title</b> element can only appear
+                    inside the <b>head</b> section of your document.
+                    Text delimited by the <b>title</b> tags is used as the
+                    document's title and may appear in the title bar of your
+                    browser.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;h1&gt;<br>&lt;/h1&gt;</th>
+                <td class="tdata">Text delimited by these tags is considered
+                    a "level-1" headline. The actual size of the font used
+                    to display the text will depend upon the user's browser
+                    settings. In addition to the <b>h1</b> tags [which
+                    is the largest] there are also <b>h2</b> to <b>h6</b>
+                    tags, each one successively smaller.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;p&gt;<br>&lt;/p&gt;</th>
+                <td class="tdata">This tag is inserted into text to create
+                    a new paragraph. HTML ignores the line breaks and spaces
+                    you place in your HTML source code. All line breaks and
+                    spaces are replaced with a single space on output.
+                    Thus, to start a new paragraph, you need to insert the
+                    <b>p</b> tag. The closing <b>/p</b> tag is optional and
+                    was seldom used in the past. In <b>xhtml</b>, however,
+                    all optional closing tags are required, and it doesn't
+                    hurt to put them in.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;br&gt;</th>
+                <td class="tdata">Like the paragraph tag, this tag causes
+                    your browser to start a new line. The main difference
+                    between <b>p</b> and <b>br</b> is that <b>p</b> will
+                    generally insert extra spacing to signify  a paragraph break.
+                    There is no closing <b>/br</b> tag in HTML.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;hr&gt;</th>
+                <td class="tdata">This tag inserts a horizontal rule.
+                    The rule will generally appear on a line by itself.
+                    Like <b>br</b>, the <b>hr</b> tag has no closing twin
+                    in HTML.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;pre&gt;<br>&lt;/pre&gt;</th>
+                <td class="tdata">This tag is used to delimit "preformatted"
+                    text. What this means is that text placed between these
+                    two tags will appear exactly as it does in the source
+                    document, including all spacing and line breaks. You'll
+                    use <b>pre</b> when you want to include programming code
+                    (including HTML code) in your Web pages, or when you
+                    want precise control over the horizontal positioning
+                    of your text. Preformatted text will be displayed in
+                    a "monspaced" (typewriter-style) font, such as courier.
+                </td>
+            </tr>
+
+        </tbody>
+        </table>
+    <h4>Exercises</h4>
+        <p> Complete these exercises to get some practice
+            writing "raw" HTML:
+        </p>
+    <div class="exercise">
+        <ol>
+            <li>Add an element so that your browser's title bar
+                displays the text: <b>Stephen Gilbert's Home Page</b>.
+                (Replace my name with yours, of course.)
+            </li>
+            <li>Now add a top-level heading to your page. Have it say
+                something like <b>Steve's Home Page</b>, replacing my
+                name again.
+            </li>
+            <li>Add two horizontal rules underneath your title, and below
+                the last rule, add the line: <b>Last updated by
+                Stephen Gilbert on February 14, 2006</b>. Use your
+                name and today's date.
+            </li>
+
+            <li>Add two second-level heads, <b>Who am I?</b> and <b>
+                Contact Me</b>. Place these between the two horizontal
+                rules.
+            </li>
+            <li>Under the <b>Who am I?</b> section, add a couple of
+                paragraphs of text telling everyone about you. Use the text
+                from your CS 170 intro why don't you?
+            </li>
+            <li>Under the <b>Contact Me</b> section, put your phone
+                number and email address, each on a separate line,
+                but part of the same paragraph.
+            </li>
+        </ol>
+
+    </div>
+
+    <h3>The Anchor Element</h3>
+        <p>Now that you know how to create a basic Web page, it's time
+            to put the <b>HyperText</b>
+            in HTML, by learning how to create <b>hyperlinks</b>. The tag you
+            use is generally called the <b>anchor</b> element, but its keyword is
+            actually just the letter <b>a</b>. Here's how it works.
+        </p>
+        <p> The anchor element is the HTML element that makes hyperlinks
+            possible. The element uses the delimiting tags
+            <span class="inlinecode">&lt;a&gt;&lt;/a&gt;</span>. All text
+            appearing <b>between</b> the tags will be highlighted, and, when the
+            user clicks on any portion of the text, her or she will be
+            transported to...
+        </p>
+        <p>Well, where, exactly? </p>
+
+        <p> The anchor tag is the first tag you've used which <b>requires an
+            attribute</b>. The attribute is called <b>href</b>, (short for
+            <b>h</b>ypertext <b>ref</b>erence), and its value
+            is the <b>location</b>, or <b>Web address</b>, of the document you
+            want to display&#8212;the <b>URL</b>.
+        </p>
+
+        <p>Thus, a basic anchor element (or hyperlink) would look like this:</p>
+            <p class="code">
+                &lt;a href="Go Here"&gt;Text to Display&lt;/a&gt;
+            </p>
+        <p> Note that the attribute appears <b>inside</b> the
+            opening tag. The words "Text to Display" will appear highlighted,
+            and when the user clicks on any part, the current page will be
+            replaced with the location represented by the words "Go Here".
+        </p>
+
+        <p> The words "Go Here" must represent a valid <b>URL</b> (<b>Uniform
+            Resource Locator</b>). Let's take a quick look at those.
+        </p>
+
+    <h3>URLs</h3>
+        <p>URLs consist of three parts:</p>
+        <ul>
+            <li><b>How</b> we want to communicate. This is called the <b>
+                protocol</b>.
+            </li>
+            <li><b>Where</b> the machine is. Called the <b>host name</b>.</li>
+            <li><b>What</b> we want. Called the <b>file specifier</b> or
+                <b>path</b>.
+            </li>
+        </ul>
+        <img src="images/url.gif" alt="The parts of a URL" vspace="10" width="514" border="1" height="148"><br>
+
+        <p>Let's look a little closer at these parts:</p>
+        <h4>The Protocol</h4>
+            <p>The protocol can be any of the common Internet services:
+                http, ftp, gopher, smtp, telnet, etc. When you specify a
+                protocol, you are indicating which server program, (on the
+                remote machine), should respond to your request. If the
+                host you are trying to contact is not running that service,
+                then your request will fail.
+            </p>
+            <p> The protocol (how to communicate) is separated from the
+                host name by a
+                colon and two forward slashes (://). This is not part of
+                the protocol name; it's just a separator, like the comma
+                or the semicolon in this sentence.
+            </p>
+
+        <h4>The Host</h4>
+            <p>The host name is composed of two parts. One part is the
+                <b>domain name</b>. Here at Orange Coast College, for
+                instance, our domain name is <b>occ.cccd.edu</b>.
+                This name represents all of the servers here at OCC.
+                (For those of you technically inclined, this consists of
+                the IP numbers in the range 159.115. Note also that
+                several domain names may refer to the same set of IP
+                numbers. The domain <b>orangecoastcollege.com</b> also
+                refers to IP numbers in the range 159.115.).
+            </p>
+            <p> To retrieve a document, however, you need to specify more
+                than just the neighborhood; you need to know exactly what
+                <b>server</b> at OCC the document is stored on. Each of the
+                servers here on campus have a unique address, and many of
+                them have a unique name as well. For instance:
+            </p>
+
+            <ul>
+                <li>The host
+                    <span class="inlinecode">csjava.occ.cccd.edu</span> is
+                    the Computer Science/Computer Information Systems Sun
+                    machine where <b>my</b> home page is stored.
+                </li>
+
+                <li> The server <span class="inlinecode">occonline.occ.cccd.edu</span>
+                    is the Sun Enterprise server that hosts both your WebCT
+                    class, as well as the OCC class schedule.
+                </li>
+                <li> The server <span class="inlinecode">www.orangecoastcollege.edu</span>
+                    is a Windows 2003 Server that hosts the main OCC Web site.
+                </li>
+            </ul>
+            <p class="note">
+                <span style="background: transparent; font-size: medium;">
+                <b>What are Ports?</b></span><br>
+                Sometimes, a Web site will have a colon and an additional
+                number tacked on to the end of the host URL. This additional
+                number is called a <b>port specifier</b>. The port specifier
+                allows a single machine to run two servers of the same type,
+                (that is, two completely separate Web servers, for instance).
+            </p>
+
+        <h4>The File Specifier</h4>
+            <p>Once you've contacted the Web server (by using <b>http</b>
+                as the protocol and by supplying the URL for a
+                specific host name), you still have to
+                tell the server <b>what file</b> or other
+                resource you want to download.
+            </p>
+            <p> File specifiers begin with a forward slash like this: /.
+                This is called the <b>root</b> directory. However, <b>this</b>
+                root directory is <b>not</b> the same as the <b>physical</b>
+                root directory used by host server file system. Instead, it
+                is the <b>Web server's root directory</b>, sometimes also
+                called the <b>document root</b>. The actual files you want
+                will most often be located in a subdirectory below the
+                document root directory.
+            </p>
+
+            <p> Let's take a look at how we'd use a URL to make some
+                hyperlinks. Here's how you'd make a link to James
+                Gosling's (the inventor of Java) biography page named
+                <b>index.html</b> located in the directory <b>/jag/bio</b>
+                on the host named <b>weblogs.java.net</b>:
+                </p>
+                <p class="code">
+                    &lt;a href="http://weblogs.java.net/jag/bio/index.html"&gt;
+                    <br>&nbsp;&nbsp;&nbsp;James Gosling's Bio<br>
+                    &lt;/A&gt;
+                </p>
+
+        <h4>Relative URLs</h4>
+            <p> As you might guess, fully specifying a URL for every link
+                can quickly become tedious. More importantly, it can make
+                your Web pages <b>much less portable</b>.
+                If you use the fully specified URL (called an <b>absolute URL</b>)
+                to refer to links between pages stored on your site, then
+                <b>all</b> of the links need to be rewritten when you move
+                your pages to a new location.
+            </p>
+            <p> To avoid this problem, you can use <b>relative</b>
+                URLs in any links to other pages on your own site. A relative
+                URL does not have the protocol or host portion that an
+                absolute URL uses; it only contains the path or file-specifier
+                portion.
+            </p>
+            <p> Relative URLs come in two varieties: those that begin with a
+                forward slash, and those that don't. When a Web server
+                encounters a link that lacks a protocol and a host, it
+                automatically adds the http protocol and the current host
+                name in front of the location. If the path portion of the
+                URL begins with anything but a slash, then the current
+                path is also added to form the URL.
+            </p>
+
+            <p>Here are some interesting relative URLs:</p>
+            <table summary="Interesting URLs" border="1" cellpadding="10">
+            <tbody>
+                <tr>
+                    <th class="tcode">fun.html</th>
+                    <td class="tdata">Refers to a file in the same directory
+                        as the file which contains the link.</td>
+                </tr>
+                <tr>
+                    <th class="tcode">stuff/fun.html</th>
+                    <td class="tdata">Refers to a file in a subdirectory
+                        named <b>stuff</b> which is below the directory that
+                        contains file that contains the link.</td>
+                </tr>
+                <tr>
+                    <th class="tcode">../fun.html</th>
+                    <td class="tdata">Refers to a file in the directory above
+                        [parent] the directory that contains the file that
+                        contains the link.</td>
+                </tr>
+                <tr>
+                    <th class="tcode">/fun.html</th>
+                    <td class="tdata">Refers to a file in the Web server's
+                        document root directory.</td>
+                </tr>
+
+            </tbody>
+            </table>
+
+    <h3>Appearances and Images</h3>
+        <p>Often, you'll want individual pieces
+            of text to take
+            on a different appearance. To do that, you can use several
+            <b>appearance</b> tags.
+        </p>
+
+        <p> HTML programming purists often distain the use of appearance tags,
+            pointing out, correctly, that HTML is supposed to describe the
+            <b>structure</b> of your document, and <b>not</b> its appearance,
+            since it is up to the client to actually render the page.
+        </p>
+
+        <p>Even if you use the newer appearance tags, like
+            <span class="inlinecode">&lt;font&gt;</span> for instance, it's never
+            a good idea to specify a specific font, because it may not be
+            available on your client's browser, and, what actually gets
+            rendered, may appear illegible.
+        </p>
+    <h4>Basic Appearance Tags</h4>
+        <p>Here are the basic tags which are usually safe to use : </p>
+        <table summary="Appearance Tags" border="1" cellpadding="10">
+        <tbody>
+            <tr>
+                <th class="tcode">&lt;b&gt;&lt;/b&gt;<br>
+                    &lt;strong&gt;&lt;/strong&gt;</th>
+                <td class="tdata">Text between these tags will appear
+                    strong or bold.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;i&gt;&lt;/i&gt;<br>
+                    &lt;em&gt;&lt;/em&gt;</th>
+                <td class="tdata">Text between these tags appears
+                    emphasized or italic.</td>
+            </tr>
+            <tr>
+                <th class="tcode">&lt;u&gt;&lt;/u&gt;</th>
+                <td class="tdata">Text between these tags <b>may</b> appear
+                    as underlined, providing the browser supports it.</td>
+            </tr>
+        </tbody>
+        </table>
+
+        <p>This last tag brings up a good point; what happens if you use
+            one of the new appearance tags like this:</p>
+            <p class="code">
+                &lt;font face="Candy" size="+10"&gt;Abazaba&lt;/font&gt;
+            </p>
+            <p>and the user's browser doesn't support the tag?
+        </p>
+        <p>The answer is, thankfully, <b>nothing</b>. HTML is a very
+            forgiving language. If you insert a tag that it doesn't
+            understand, it doesn't do anything. <flub>For instance, if you
+            use your browser to view the source code for this page, you'll
+            find that this line is enclosed in a set of
+            <span class="inlinecode">&lt;flub&gt;&lt;/flub&gt;</span> tags.
+            However, since no browser currently supports the
+            <span class="inlinecode">&lt;flub&gt;</span> tag, the text appears
+            just like normal.</flub>
+        </p>
+    <h4>Images</h4>
+        <p> Web pages can, as
+            I'm sure you've noticed, contain <b>images</b>. For best results, those
+            images must be in GIF or JPG format, (although most modern browsers
+            also support PNG&#8212;Portable Network Graphics files, and Internet
+            Explorer will even let you use Windows Bitmap, BMP files).
+        </p>
+        <p>To display an picture on your page, you'll use the <b>img</b> tag.
+            The <b>img</b> tag does not have a closing partner, but it does
+            have one <b>required</b> attribute, named <b>src</b>, which
+            works almost exactly like the anchor element's <b>href</b>
+            attribute. The <b>src</b> attribute contains the URL of the
+            image you want to display.
+        </p>
+        <p> Here's an example of an <b>img</b> tag used in a URL:</p>
+        <p class="code">
+            &lt;img src='http://sofia.fhda.edu/gallery/java/images/gilbert.jpg'&gt;
+        </p>
+        <p> When your Web browser encounters an <b>img</b> element when
+            translating an HTML page, the browser automatically contacts
+            the server and downloads the image file to your local machine; it does
+            this for each <b>img</b> tag in your page. Because each image
+            requires a separate (though automatic) download, the URL used
+            as the <b>src</b> attribute does not have to be on the same
+            server as the HTML page that contains it.
+        </p>
+        <h4>Additional Attributes</h4>
+        <p> In addition to required <b>src</b> attribute, the <b>img</b> tag
+            has some optional attributes that you might find useful: </p>
+            <ul>
+                <li><b>height</b> and <b>width</b>
+                    allow you to display an image at a size other than its
+                    "natural" size. (Don't use this for "thumbnails" however.
+                    The Web server still downloads the entire image to the
+                    browser, which can take some time.)
+                </li>
+                <li> <b>align</b> allows you to align the image to the
+                    left or right of the page so that text will flow
+                    around it.</li>
+            </ul>
+        <p>If you grab an HTML reference, you'll see that there are actually
+            21 different attributes that you can use to fine-tune the
+            appearance of your images, but this should keep you for now.
+        </p>
+    <h3>Checking Your Code</h3>
+        <p> One of the <b>frustrating</b> things about HTML is that
+            not all Web browsers display your pages in exactly the same way;
+            many browsers have bugs that cause them to display perfectly
+            correct HTML in an incorrect manner.
+        </p>
+        <p> It's even more frustrating, though, when you write <b>incorrect</b>
+            HTML code, and your browser doesn't let you know about it. That's
+            because your pages may look fine when viewed under one browser,
+            but not be visible at all under some other browser. Microsoft's
+            Internet Explorer is probably the worst offender in this regard;
+            it is extremely easy to create "IE only" pages that are invisible
+            to everyone else on the Internet. That kind of defeats the purpose
+            of using HTML, eh?
+        </p>
+
+        <h4>The W3C Validator</h4>
+        <p> One way around this problem is to test your program
+            against every single version of every single browser, which is
+            a difficult task. A better solution is to use a program that
+            checks your HTML to see if it contains errors.
+            <b>HTML validator</b> programs don't display your Web pages,
+            like a Web browser does; instead, they compare your HTML code
+            against the rules for correct HTML, and let you know if there is
+            a problem, so you can correct it.
+        </p>
+        <p>To use the validator, point your browser at :
+            <b><a href="http://validator.w3.org/detailed" target="_blank">
+            http://validator.w3.org/detailed</a>
+            </b> as shown here: <br>
+               <img src="images/validator-b.gif"
+                   alt="Running the W3C validator service."
+                   vspace="10" border="1">
+            <br>
+            Enter the URL for your page, the Character Encoding and
+            Document Type as shown above, and then press the <b>Validate</b>
+            button to check your page. If you haven't posted your page yet,
+            you can submit a file instead, using the <b>File Upload</b>
+            tab.
+        </p>
+        <p class='note'>If you turn on the "Source Listing" option as
+            shown in the screen shot, the validator will add a <code>DOCTYPE</code>
+            line to the top of your file, and an <code>meta http-equiv</code>
+            tag to the <code>head</code> section of your document. You can
+            copy and paste these lines into any new HTML documents you create
+            to specify exactly which version of HTML your page is using, and
+            which character set. After doing this, you can let the validator
+            discover the Character Encoding and Document Type automatically.
+        </p>
+    <h2>HTML and Java Applets</h2>
+        <p><b><span class='cap'>L</span>ike everything else in HTML</b>,
+            you use a <b>tag</b> to include
+            a Java applet in your Web page. The tag is called, appropriately,
+            the <b>&lt;applet&gt;</b> tag. Here are the basic pieces. We'll
+            cover some other attributes and tags (such as <b>&lt;param&gt;</b>)
+            later in the semester.
+        </p>
+        <table style="border: 1px solid silver; margin-left: 2em;" summary="Applet tags" cellspacing="5">
+        <tbody>
+            <tr style="background: navy;color: white;">
+                <th class="thead">Code</th>
+                <th class="thead">Example</th>
+                <th class="thead">Description</th>
+                <th class="thead">Required?</th>
+
+            </tr>
+            <tr>
+                <td class="tcode"><b>&lt;applet</b></td>
+                <td><br></td>
+                <td class="tdata">Opening tag</td>
+                <td class="tdata" style="text-align: center;">Yes</td>
+            </tr>
+
+            <tr bgcolor="#e6e6ff">
+                <td class="tcode"><b>&nbsp;&nbsp;&nbsp;code= </b></td>
+                <td class="tcode"><b>"Myapp.class"</b></td>
+                <td class="tdata">Class name of applet</td>
+                <td class="tdata" style="text-align: center;">Yes</td>
+            </tr>
+            <tr>
+
+                <td class="tcode"><b>&nbsp;&nbsp;&nbsp;height= </b></td>
+                <td class="tcode"><b>"100"</b></td>
+                <td class="tdata">Height allowed (in pixels)</td>
+                <td class="tdata" style="text-align: center;">Yes</td>
+            </tr>
+            <tr bgcolor="#e6e6ff">
+                <td class="tcode"><b>&nbsp;&nbsp;&nbsp;width= </b></td>
+
+                <td class="tcode"><b>"300"</b></td>
+                <td class="tdata">Width allowed (in pixels)</td>
+                <td class="tdata" style="text-align: center;">Yes</td>
+            </tr>
+            <tr>
+                <td class="tcode"><b>&nbsp;&nbsp;&nbsp;codebase= </b></td>
+                <td class="tcode"><b>"/classes/"</b></td>
+
+                <td class="tdata">URL where file located</td>
+                <td class="tdata" style="text-align: center;">No</td>
+            </tr>
+            <tr bgcolor="#e6e6ff">
+                <td class="tcode"><b>&nbsp;&nbsp;&nbsp;archive= </b></td>
+                <td class="tcode"><b>"acm.jar"</b></td>
+                <td class="tdata">User-specified library</td>
+
+                <td class="tdata" style="text-align: center;">No</td>
+            </tr>
+            <tr>
+                <td class="tcode"><b>&gt;</b></td>
+                <td class="tcode"><b>&nbsp;</b></td>
+                <td class="tdata">Close bracket (opening tag)</td>
+
+                <td class="tdata" style="text-align: center;">Yes</td>
+            </tr>
+            <tr bgcolor="#e6e6ff">
+                <td class="tcode"><b>&lt;/applet&gt;</b></td>
+                <td class="tcode"><b>&nbsp;</b></td>
+                <td class="tdata">Closing tag</td>
+                <td class="tdata" style="text-align: center;">Yes</td>
+
+            </tr>
+        </tbody>
+        </table>
+        <p>As you can see, the opening applet tag has three <b>required</b>
+            attributes: <code>code</code>, <code>height</code>, and
+            <code>width</code>.
+        </p>
+        <ul>
+            <li>The <code>code</code> attribute contains
+                the name of the compiled Java class file. The
+                extension (.class) is optional; it is assumed if you
+                leave it off.
+            </li>
+            <li>The <code>height</code> and <code>width</code> attributes
+                are <b>required</b> because an applet doesn't have a "natural
+                size" like an image does.
+            </li>
+        </ul>
+        <p> Note that the <code>codebase</code> and <code>archive</code> attributes
+            are <b>optional</b>. You use <code>codebase</code> when the compiled
+            class file is in a different directory from the HTML file containing
+            the tag. You use <code>archive</code> when you want to use classes
+            contained in a user-defined library, and not just the classes from
+            the built-in Java class libraries.
+        </p>
+
+    <h3>A Few Examples</h3>
+    <p>Here are HTML examples for adding applets to your page.</p>
+    <p class="note">You usually don't want to add several applets to a
+        single page. Each applet uses up memory, and adding several
+        can make the page very slow to load. In this lesson, I've
+        provided links to the actual applets, instead of embedding
+        them in this page.
+    </p>
+    <h4>Example 1: Use a regular hyperlink</h4>
+        <p>If you simply want to link to an applet running on
+            another page, then use a regular HTML hyperlink. You don't
+            need to use the <b>&lt;applet&gt;</b> tag at all.
+        </p>
+        <p>For instance, you might want to check out Ben Permadi's
+            <a href="http://www.permadi.com/java/moire/index.html" target="_blank">
+            <b>Moire Patterns</b></a> applet, his
+            <a href="http://www.permadi.com/java/battletank/index.html" target="_blank">
+            <b>Battle Tank 3D</b></a> applet, or his
+            <a href="http://www.permadi.com/java/spaint/index.html" target="_blank">
+            <b>Kaleidoscope Painter</b></a> applet.
+            Mr. Permandi requests that you link to
+            his page rather than using the binary Java class files on your
+            own page. No matter where the binary class files are originally
+            stored, however, the actual binary Java programs
+            are downloaded to the client, (or Web browser), of
+            the person who views them.
+        </p>
+
+    <h4>Example 2: Link to a "local" applet</h4>
+        <p>If the <b>.class</b> file for an applet is in the same
+            directory as the HTML file that hosts it, you only need
+            supply arguments for <b>code</b>, <b>height</b>, and <b>width</b>.
+            You don't need to use the <b>codebase</b> attribute.
+        </p>
+        <p>Here, for instance, is the <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/Wormhole.html',0,0,525,375);">
+        <b>Wormhole applet</b></a> that we've used in previous semesters.
+        Both the HTML file, and <b>Wormhole.class</b> are in the same folder
+        on the same server, so the <b>applet</b> tag looks like this:
+            </p><p class="code">
+            &lt;applet code="Wormhole" width="500" height="350"&gt;<br>
+            &lt;/applet&gt;
+            </p>
+        Notice that the <code>code</code> attribute does not have
+        to have the <b>class</b> extension. If you don't add an extension,
+        then <b> .class</b> is assumed. (Of course, the actual binary Java
+        file <b>must</b> have the <b>.class</b> extension.)
+
+    <h4>Example 3: Code in a Folder</h4>
+    <p> Sometimes, you don't want to put the Java <b>.class</b>
+        files and your HTML files in the same directory. You might,
+        for instance, want to put all of your applets in an <b>applets</b>
+        folder, and all of your images in an <b>images</b> folder.
+    </p>
+    <p>With images, you can just use a relative URL when you fill
+        in the <b>src</b> attribute, like this:</p>
+        <p class="code">
+            &lt;img src="images/thisImage.gif"&gt;
+        </p>
+    <p>
+        That <b><span class="red">doesn't work</span></b> for applets, however, because the <b>code</b>
+        attribute is not a URL, but simply the name of the class. If you
+        want the applet stored in another folder, then supply the URL
+        of the folder where the code is stored (either absolute or relative)
+        using the <b>codebase</b> attribute.
+    </p>
+    <p> Here's the applet tag for David Krider's
+        <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/samples/BallDrop.html',0,0,425,425);">
+        <b>BallDrop</b></a> applet. The HTML file is stored on my server
+        in a folder called <b>applets/samples</b>, while the actual
+        (binary) code is located in a directory called <b>classes</b> which
+        is a subdirectory of the <b>applets/samples</b> folder.
+        </p><p class="code">
+            &lt;applet<br>
+            &nbsp;&nbsp;&nbsp;codebase="classes"<br>
+            &nbsp;&nbsp;&nbsp;code="BallDrop.class"<br>
+            &nbsp;&nbsp;&nbsp;width="300"<br>
+            &nbsp;&nbsp;&nbsp;height="300" &gt;<br>
+            &lt;/applet&gt;
+        </p>
+    <h4>Example 4: A user-defined library</h4>
+        <p> Because (theoretically) all of the thousands of classes in the Java
+            class library are already installed on your user's computer, those
+            classes used by your applet don't need to be downloaded from the
+            Web server. Sometimes, though, you'll want to use code that's <b>not</b>
+            part of the built-in classes. These are often called <b>user-defined</b>
+            libraries, to distinguish them from the built-in libraries that come
+            with Java. These libraries are contained in files that have the extension
+            <b>.jar</b>, (which stands for <b>J</b>ava <b>AR</b>chive).
+        </p>
+        <p> In this class, for some of our programs we'll use a set of classes
+            developed by the Association for Computing Machinery, contained in
+            the JAR file, <b>acm.jar</b>. The ACM libraries will allow us to
+            easily create programs that run as both applications and applets,
+            so we can put our console-mode programs on the Web. It also provides
+            an easy way for us to create our own graphical objects, like
+            those shown here.
+        </p>
+        <p> Here's an applet called
+        <a href="javascript:popUpWindow('http://csjava.occ.cccd.edu/~gilberts/applets/DragFace.html',0,0,550,450);">
+        <b>DragFace</b></a> that uses the ACM graphics classes to create a
+            portrait that you can drag around the screen. The applet tag, which uses
+            the <b>archive</b> attribute to download the ACM libraries, looks
+            like this:
+        </p>
+        <p class="code">
+            &lt;applet<br>
+            &nbsp;&nbsp;&nbsp;code="DragFace"<br>
+            &nbsp;&nbsp;&nbsp;width="500"<br>
+            &nbsp;&nbsp;&nbsp;height="350"<br>
+            &nbsp;&nbsp;&nbsp;<b>archive="acm.jar"</b><br>
+            &gt;<br>
+            &lt;/applet&gt;
+        </p>
+
+    <h4>Example 5: Code on another server</h4>
+        <p>If the compiled (class) files for a Java applet are on another
+        server, you can still include that applet in your own Web pages.
+        (In other words, the class files and the HTML files don't need
+        to be on the same server.)
+        You do that by setting the <b>codebase</b> attribute to point to
+        the <b>absolute URL</b> of the <b>directory</b> where the class files
+        are stored.
+        </p><p class="note"><b>Note : </b>Remember when you do this, that
+            the applet may <b>move</b> at any time.</p>
+
+        <p>In the example below, the name of the class is <b>centipedo.class</b>,
+           and the class file is located on a directory somewhere
+           out on the Internet. Note that, as with all HTML, it makes no
+           difference whether you put <b>CODEBASE</b> or <b>codebase</b>,
+           or <b>HEIGHT</b> or <b>height</b>. This is <b style="color: red;">
+            NOT</b> true for the arguments to the <b>code</b> or
+            <b>codebase</b> attributes, however. If you type
+            <span class="inlinecode">CODE=CENTIPEDO</span> instead of
+            <span class="inlinecode">CODE=centipedo</span>, the Web server
+            will <b style="color: red;">NOT</b> give you the applet.
+        </p>
+        <p>Here's the <b>applet</b> tag:</p>
+            <p class="code">
+                &lt;applet&nbsp;<br>
+                &nbsp;&nbsp;codebase="http://javaboutique.internet.com/centipedo/classes"<br>
+                &nbsp;&nbsp;code="centipedo.class"&nbsp; <br>
+                &nbsp;&nbsp;width="600"<br>
+                &nbsp;&nbsp;height="450"&gt;<br>
+                &lt;/applet&gt;
+            </p>
+        <p>    And here's the applet, embedded in the page, this time:
+            </p>
+            <div style='width:625px;margin:2em;padding:2em;border:1px dotted silver;'>
+            <applet codebase="http://javaboutique.internet.com/centipedo/classes"
+                code="centipedo.class" height="450" width="600">
+            </applet>
+            </div>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

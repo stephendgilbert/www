@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/b.jpg" alt="CS 170 Lesson B logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src="images/c01.gif" class="right" alt="A Font object.">
+            <b><span class="cap">N</span>ow that you know how to create your
+            own object variables</b>, and how
+            to use a <b>constructor</b> to initialize the fields of the object,
+            Let's use Java's <code>Font</code> class as an occasion for review, and see if
+            you can apply what you just learned to a different class.
+        </p>
+        <p> If you are typing along with this lesson, go back to <b>FirstApplet</b>
+            and find the <code>paint()</code> method. At the beginning of the method,
+            add this code to change the font used by your message to a larger font:<br>
+            <img src='images/setFont.gif' class='inline' alt='Using the setFont() method.'>
+        </p>
+    <h3>Creating Font Objects</h3>
+        <p>As you can see, the <code>Graphics</code> class has a <code>
+            setFont()</code> method that works pretty much like the
+            <code>setColor()</code> method you met earlier in this lesson.
+            Now all we have to do is find out <b>how to create a
+            <code>Font</code> object</b>. How do we do that?
+        </p>
+        <div class="box" style="text-align: center;">
+            <img src="images/c06.gif" alt="Homer Simpson."><br>
+            <span class="red" style="font-size: x-large;">Doh!</span>
+        </div>
+        <p> <b>We already know</b> how to create a <code>Font</code> object!!!
+            We just use the <code>Font</code> constructor, whose name
+            is...you guessed it, <code>Font()</code>.
+        </p>When we look up the <code>Font</code> class in the <b>JavaDocs</b>,
+            we see that there are <b>two</b> constructors:
+            <img src="images/c07.gif" class="inline" alt="The Font constructors.">
+            One looks <i>completely</i> incomprehensible, (to me too!), but the
+            <b>other</b> <code>Font()</code> constructor
+            requires three parameters&#8212;<b>name</b>, <b>style</b>, and
+            <b>size</b>&#8212;and each paremeter is something that we know how to
+            supply, <code>String</code> and <code>int</code> parameters.
+        <p></p>
+        <p> Let's look at the values we should supply.</p>
+    <h4>Font Name</h4>
+        <p> The first parameter to the <code>Font</code> constructor is
+            a <code>String</code> that contains one of these five names:
+            </p><ul>
+            <li>"Serif"
+            </li><li>"SansSerif"
+            </li><li>"Monospaced"
+            </li><li>"Dialog"
+            </li><li>"DialogInput"
+            </li></ul>
+        <p> These are known as <i>logical</i> font names. (In the first version
+            of Java, you could also use the names "Courier", "Helvetica" and
+            "TimesRoman" as logical font names.) Starting with Java 1.2, you can
+            also specify a specific <i>physical</i> font, such as "MS Comic Sans",
+            or "Jokerman", but, as with HTML, this only works if the requested
+            font is located on the user's machine.
+        </p>
+        <p> As with HTML, you should normally use the platform-independent logical
+            font names that will be replaced with Arial or Helvetica or
+            New Times Roman, etc. depending upon the platform the
+            application runs on, if you're going to distribute your program
+            as an applet.
+        </p>
+    <h4>Font Style</h4>
+        <p>The <b>font style</b> parameter is an <code>int</code>, but you should
+            always use one of the <b>class constants</b> that
+            have been predefined inside the <code>Font</code> class.
+            These work very much like the constants <code>Color.RED</code>,
+            etc. which are predefined inside the <code>Color</code> class.
+        </p>
+        <p> The values you can use for this second parameter are: </p>
+        <ul>
+            <li><code>Font.PLAIN</code>,
+            </li><li><code>Font.BOLD</code>
+            </li><li><code>Font.ITALIC</code>, or
+            </li><li><code>Font.BOLD + Font.ITALIC</code>
+        </li></ul>
+        <p> Using something like <code>Font.PLAIN + Font.BOLD</code>
+            doesn't make any sense, but it won't create a syntax error.
+            Make sure you get the capitalization right on these. Note that
+            the words PLAIN and BOLD are ALL CAPS, while Font is capitalized,
+            but also contains lowercase letters.
+        </p>
+    <h4>Font Size</h4>
+        <p> The last parameter required by the  constructor is
+            the <b>size</b> of the <b>Font</b>. This is, theoretically,
+            supplied as the <b>point size</b> for the font. Point size
+            is a measurement used in printing. There are 72 points to an inch,
+            and normal body text is usually 10 or 12 points.
+        </p>
+        <p class="note">In fact, Java's <code>Font</code> class seems to
+            use the short-cut of equating pixels and point size.
+            That works OK when your monitor is set to 72 dpi, but if
+            you use a higher resolution such as 96 or 120 dpi, which is
+            pretty common now days, your fonts will seem a little
+            too small.
+        </p>
+    <h4>The Results</h4>
+        <p>Now that you know the arguments required to create a <code>Font</code>,
+            you shold be able to finish off <b>FirstApplet.java</b> yourself.
+            Let's say we want to use a half-inch high, bold, typewriter-style
+            font. How would you construct it?
+        </p>
+        <p> All you have to do is replace the line in <b>FirstApplet.java</b>
+            that now contains a comment with the following:
+        </p>
+        <p class="code">
+            Font bigFont = new Font("Monospaced", Font.BOLD, 36);
+        </p>
+        <p> We use 36 for the size, because there are 72 points to the
+            inch, so 36 is about a half-inch. The logical font name
+            "Monospaced" represents typewriter-style fonts like Courier.
+        </p>
+        <p class="note">
+            <b>Note :</b> Make sure you don't accidentally transpose the
+            <b>style</b> and <b>size</b> parameters when you create a
+            <code>Font</code> object. Doing so won't create a syntax error,
+            but it does result in a font that is too small to see.
+        </p>
+        <p>
+            If you don't want to bother with the <b>variable</b>, you
+            can just create the <code>Font</code> <b>object</b> when you call
+            the <code>setFont()</code> method, like this:
+        </p>
+        <p class="code">
+            pen.setFont(new Font("Monospaced", Font.BOLD, 36));
+        </p>
+        <p>Here's the result, running on my computer:<br>
+            <img src="images/c08b.gif" class="inline" alt="Running FirstApplet.java">
+        </p>
+    <h4>Whoops! What's Wrong?</h4>
+        <p> As you can see, changing the font creates all kinds of problems.</p>
+        <p>Why? What's wrong?</p>
+        <p> Remember that with graphical programs, output is <b>not</b> line oriented.
+            You have to specify exactly where the output should appear. That means
+            the output that looked fine with a 12-point font, is all scrambled when
+            you change to a larger font.
+        </p>
+        <p> For now, we'll fix this just by adjusting the parameters we used when
+            printing the output. (I've done this here, more or less, using plain old
+            trial-and-error.)<br>
+            <img src='images/FirstAppletLargeFont.gif' class='inline' alt='FirstApplet after adjusting the font spacing.'>
+            Later, you'll see how to accurately measure the
+            height of each line of text and display the output accordingly.
+            Here's what the program looks like after adjusting the output spacing:<br>
+            <img src="images/c08c.gif" class="inline" alt="Running FirstApplet.java">
+        </p>
+    <h3>Mutators and Accessors</h3>
+        <p> Objects have several different kinds of methods:</p>
+        <ul>
+            <li>Some methods carry out an action, but don't change
+                the object that carries out the action. I'll call
+                these <b>simple methods</b>. The <code>drawString()</code>
+                method is this kind of method.
+            </li>
+            <li>Some methods carry out an action, <b>and</b> make
+                a change to the object that carries out the action.
+                These are called <b>mutator</b> methods, because they
+                change the object itself, just like a genetic mutation
+                does. The <code>setColor()</code> method is a mutator,
+                because after you call it, the <code>Graphics</code>
+                object continues to draw in the new color; it's been
+                changed.
+            </li>
+            <li>Some methods <b>return information about</b> a particular
+                object. These kinds of methods, called <b>accessors</b>,
+                may tell you the number of characters in a <code>String</code>,
+                or the amount of red or blue inside a <code>Color</code>
+                object.
+            </li>
+            <li>Finally, some methods just <b>perform a calculation</b>
+                and return the calculation to the person who called the
+                method. We've called these <b>functions</b> in previous
+                lessons.
+            </li>
+        </ul>
+        <p> The signature for a simple method, (one that simply carries
+            out an action), and the signature for a <i>mutator</i>,
+            (a method that changes the state of an object), always starts
+            with the keyword <code>void</code>. All of the methods
+            you've used so far in this lesson, such as <code>drawString()</code> or
+            <code>setColor()</code>, have been these kinds of methods.
+        </p>
+        <p> Methods that provide information about an object, and methods
+            that perform a calculation, are often called
+            "value-producing" methods, because you can use the method
+            in any situation where you could use a value of the same
+            type. Both <b>functions</b> (methods that perform a calculation),
+            and <b>accessors</b> (methods that provides some information about
+            an object) are value producing methods. I'll often call both
+            of these kinds of methods "functions" as a shorthand description.
+        </p>
+    <h4>Recognizing Value-Producing Methods</h4>
+        <p> If you look through the <b>JavaDocs</b> for the <code>Font
+            </code> class, which you just met, you'll see that there are
+            a few value-producing methods. The secret is to look in the left-hand
+            column, in the <b>Method Summary</b> section. If the column <b>does
+            not</b> contain the word <code>void</code> then it is a "function."
+            <img src="images/c09.gif" class="inline" alt="Font methods.">
+            As you can see, almost <b>every method</b>, (except one),
+            produces a value.
+        </p>
+        <p> Let's look at these three simple ones:
+        </p>
+        <p class="code">
+            int getSize()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="cmt">// Returns point size of font<br></span>
+            String getFontName() &nbsp;<span class="cmt">// Returns font name<br></span>
+            int getStyle()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="cmt">// Returns font style</span>
+        </p>
+    <h4>Review: Using Functions</h4>
+        <p>There is only one way to call a procedure or simple method:
+            </p><div class="box">
+            <code style="font-size: 12pt;">receiver.methodName(<i>parameters</i>);</code>
+            </div>
+            For instance, to call the simple method
+            <code>drawString()</code> you write:
+        <p></p>
+        <p class="code">
+            pen.drawString("Hi Mom", 24, 27);
+        </p>
+        <p> With value-producing methods, you have a choice of <b>three
+            different ways</b> to use the method. You can:</p>
+        <ol>
+            <li>ignore the returned value</li>
+            <li>store the return value in a variable</li>
+            <li>use the return value directly</li>
+        </ol>
+        <p> To ignore the returned value, simply call the method as you
+            would a simple method. This is common in the C/C++ world, where
+            functions typically both carry out an action <b>and</b> return
+            a status code.
+        </p>
+        <p class="note">Even in C/C++, ignoring a return value is a bad habit
+            to get into, and you should avoid it. 99.99% of the time when I see
+            code where the return value is ignored, it is a mistake; <b><br>
+            Don't do it</b>.
+        </p>
+        <p>
+        </p><p> If you want to store the value, and use it later, you must create
+            a variable of the correct type, and then use the method to
+            initialze the variable. Here are some examples that
+            show the correct and incorrect way to do it:
+        </p>
+        <p class="code">
+            <span class="cmt">// This is OK, getSize() returns an int</span><br>
+            int size = curFont.getSize();<br>
+            <br>
+            <span class="cmt">// This is OK getFontName() returns String</span><br>
+            String name = curFont.getFontName(); <br>
+            <br>
+            <span class="cmt">// NO! getStyle() returns an int</span><br>
+            String style = curFont.getStyle();
+        </p>
+        <p> To correct the last example, change the type of the variable named
+            <code>style</code> from a <code>String</code> to an <code>int</code>.
+        </p>
+        <p class="note">
+            Even though you use names like <code>Font.BOLD</code> and
+            <code>Font.ITALIC</code> for the style when you <b>create</b> your
+            <code>Font</code> objects, the value is stored as a
+            simple <code>int</code>, and that's what's returned by
+            <code>getStyle()</code>.
+        </p>
+        <p> If you only need to use the value temporarily, you can
+            avoid creating a variable, and just use the function directly.
+            For instance, if you want to print the name of the <code>Font</code>
+            used in your applet, you can write this:
+        </p>
+        <p class="code">
+            pen.drawString(curFont.getName(), 10, 20);
+        </p>
+        <p>rather than this:</p>
+        <p class="code">
+            String name = curFont.getFontName();<br>
+            pen.drawString(name, 10, 20);
+        </p>
+    <h3>Measuring Classes</h3>
+        <p>We'll end this lesson by looking
+            at three "helper" or "utility" classes that are used throughout
+            the Java Class Libraries: <code>Point</code>, <code>Dimension</code>,
+            and <code>Rectangle</code>.
+        </p>
+    <h4>The Rectangle Class</h4>
+        <p> The <code>Rectangle</code> class is often used when talking
+            about the size and position of a visual component, such as
+            a button or a label, on the screen. For such objects,
+            there are four relevant pieces of information:
+        </p>
+        <ul>
+            <li><b>x</b> : the number of pixels from the left-hand side
+                of the component's container to the left-hand edge of the
+                component.
+            </li>
+            <li><b>y</b> : The number of pixels from the top of the
+                component's container to the upper edge of the component.
+            </li>
+            <li><b>width</b> : The number of pixels across the component
+                in a horizontal direction.
+            </li>
+            <li><b>height</b> : The number of pixels across the component
+                in a vertical dimension.
+            </li>
+        </ul>
+        <p> The <code>Rectangle</code> class bundles together these four
+            pieces of information in one convenient package.
+        </p>
+    <h5>Creating a Rectangle</h5>
+        <p> Even though the <code>Rectangle</code> class is often used to
+            specify the size and position of graphical components, it is
+            <b>not</b> a graphical component itself, so we can't display it
+            in your applet. You can, however, display the "state" of the rectangle,
+            just by using its <code>toString()</code> method as we'll see shortly.
+        </p>
+        <p> The easiest way to see this is to use an interactive environment like
+            <b>BlueJ's Code Pad</b> or the <b>Dr. Java Interactions Pane</b> from
+            the Eclipse Dr. Java plugin, which is what I'll do here.
+        </p>
+        <p> The <code>Rectangle</code> class has several constructors. The one
+            you'll use most often, (the 4-parameter <code>Rectangle</code> constructor),
+            wants its parameters passed as x, y, width, and height. In the screenshot
+            shown here, I've created a <code>Rectangle</code> object that is
+            100 units wide, 150 units high, and is located at the point
+            10,10. I've named the object variable <b>r1</b>:<br>
+            <img src='images/rect02.gif' class='inline' alt='Creating a Rectangle object.'>
+            Note, also, that since the <code>Rectangle</code> class is located in the
+            <code>java.awt</code> package, I needed to import that package into my
+            Dr. Java session, before I created any <code>Rectangle</code> objects.
+        </p>
+    <h5>Inspecting the State</h5>
+        <p> All Java objects have a <code>toString()</code> method that <i>usually</i>
+            displays information about each of the object's attributes in a human-readable,
+            (that is a <code>String</code>) format. In an interactive enviroment like
+            Dr. Java, you can call the <code>toString()</code> method and display the
+            results in the Dr. Java console, by simply leaving off the semi-colon
+            when calling the accessor method, like this:<br>
+            <img src='images/rect03.gif' class='inline' alt='Displaying the state of a Rectangle object.'>
+            When Dr. Java prints out the values of the <b>object</b> <b>r1</b>,
+            notice that the parameters supplied (10, 10, 150, 100),
+            are now stored in the fields <code>x</code>, <code>y</code>,
+            <code>width</code>, and <code>height</code>.
+        </p>
+        <p> Remember that a value producing method, like the <code>toString()</code>
+            accessor, <b>returns a value</b> to the caller. Such values are <b>expressions</b>
+            which Dr. Java displays, surrounded by quotes, to indicate that it is a
+            <code>String</code> value.
+        </p>
+        <p> For <i>most</i> Java objects, you can also invoke the <code>toString()</code>
+            method by using concatenation. In fact, in Dr. Java you can simply type the name
+            of the object and hit Enter, without ending the line with a semi-colon. When
+            you do this, Dr. Java will call the <code>toString()</code> method and then
+            print the results exactly as if you'd called the console <code>println()</code>
+            method:<br>
+            <img src='images/rect04.gif' class='inline' alt='Displaying the state of a Rectangle object.'>
+            Notice that the state of the object is <b>not</b> surrounded by quotes
+            when you do this.
+        </p>
+    <h5>Rectangle Mutators</h5>
+        <p> If you look at the documentation for the <code>Rectangle</code>
+            class, you'll see several <b>mutator</b> methods: methods that
+            change the <b>state</b> of the object itself.
+        </p>
+        <p> Here are three of them:
+        </p>
+        <p class="code">
+            <span class="cmt">// Change all four fields</span><br>
+            void setBounds(int x, int y, int width, int height)<br>
+            <br>
+            <span class="cmt">// Change the location (x,y) fields</span><br>
+            void setLocation(int x, int y)<br>
+            <br>
+            <span class="cmt">// Change the size (width,height) fields</span><br>
+            void setSize(int width, int height)<br>
+        </p>
+        <p> Mutator methods <b>do not</b> return a value; they change the object
+            you are using. That means that you call a mutator method just like
+            a simple procedure. Here's an example:<br>
+            <img src='images/rect05.gif' class='inline' alt='Mutating a Rectangle object.'>
+            Notice how both the <code>x</code> and <code>y</code> oject attributes
+            are changed by the mutator methods.
+        </p>
+    <h5>Rectangle Accessors</h5>
+        <p> Instead of using the <code>toString()</code> method, we can use the
+            other <code>Rectangle</code> class <b>accessor</b> methods to
+            examine the state of the object <b>r1</b>. Remember, an accessor
+            is a method that "tells you" about some part of the object's
+            <b>state</b>.
+        </p>
+        <p> The <code>Rectangle</code> class has methods called <code>getX()</code>,
+            <code>getY()</code>, <code>getWidth()</code>, and <code>getHeight()</code>,
+            that allow you to find out the values in each specific field. (For
+            some reason, even though the fields themselves hold <code>int</code>
+            values, the accessor methods return <code>double</code>s).
+        </p>
+        <p> Let's try out an accessor method using Dr. Java. Type
+            in the code below, and press Enter:
+        </p>
+        <div class="box" style="text-align: center;">
+            <img src="images/rect06.gif"  class='inline' alt="Calling an accessor like a mutator."><br>
+            <span class="red" style="font-size: x-large;">
+            How come nothing is printed out?
+            </span>
+        </div>
+        <p> Remember that when you call
+            a value-producing method, you <b>can</b> call it just like a simple
+            method, (as we did above). However, when you do that, the
+            returned value, (in this case, the width of the rectangle),
+            is simply <b>discarded</b>. Instead, you have to store the value
+            in a variable, or pass it to another method, like
+            <code>System.out.println()</code> like this:<br>
+            <img src="images/rect07.gif"  class='inline' alt="Calling an accessor and passing the result to System.out.">
+            Instead of doing that, though, you can use the Dr. Java shortcut method.
+            Remember that if you type in an expression, <b>and leave off the semicolon</b>,
+            Dr. Java will <b>evaluate</b> the expression and print the result in the
+            Interactions Pane window. This is ideal for testing out value-producing
+            methods, as shown here:<br>
+            <img src="images/rect08.gif"  class='inline' alt="Calling an accessor and evaluating the result.">
+            Note that in the screenshots, the <b>statement</b> <code>r1.getWidth();</code>
+            didn't do anything, while the <b>expression</b>
+            <code>r1.getWidth()</code> (no semicolon), printed out a value.
+        </p>
+    <h5>Public Fields</h5>
+        <p> The fields inside the <code>Rectangle</code> class also have one
+            other unusual characteristic that's not found in most classes:
+            instead of being <code>private</code>, which is the normal state
+            for an instance variable, the <code>Rectangle</code> fields are
+            <code><b>public</b></code>. This means that you can <b>directly</b>
+            access the fields inside the object <b>r1</b>, including changing
+            the object just by assigning a new value, or reading the
+            current value, like this:
+        </p>
+        <p class="code">
+            r1.width = 75;<br>
+            r1.x = 10;
+            System.out.println("r1.x is " + r1.x);
+        </p>
+        <div class="note"> Both the <code>Dimension</code> and <code>Point</code> classes
+            also have <code>public</code> fields like this. The designers of
+            the Java class libraries, (folks like Joshua Bloch, for instance),
+            have loudly said that this was a real mistake:
+            <blockquote><i>
+            "Several classes in the Java platform libraries violate
+            the advice that public classes should not expose fields
+            directly. Prominent examples include the Point and Dimension
+            classes in the java.awt package. Rather than examples to be
+            emulated, these classes should be regarded as cautionary tales.
+            As described in Item 37, the decision to expose the internals
+            of the Dimension class resulted in a serious performance problem
+            that could not be solved without affecting clients."
+            </i></blockquote>
+            <a href="http://java.sun.com/developer/Books/effectivejava/Chapter5.pdf">
+            Effective Java, page 99.</a>
+        </div>
+        <p>Java's <code>Component</code> class makes use of the <code>Rectangle
+            </code> class to store the current size and position of any of
+            the objects on-screen. To retrieve the current size and position
+            of any <code>Component</code>, you send it the
+            <code>getBounds()</code> message and it gives you back a
+            <code>Rectangle</code> object.
+        </p>
+        <p> Since the <code>Applet</code> class is a descendant of
+            <code>Component</code>, this works for your applets as well.
+            You can find out how wide and high your applet is by
+            calling its <code>getBounds()</code> method to retrieve
+            a <code>Rectangle</code> object, and then calling the
+            <code>Rectangle toString()</code> method to get a
+            <code>String</code> translation, like this:
+        </p>
+        <p class="code">
+            public void paint(Graphics g)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Rectangle r = this.getBounds();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String rs = r.toString();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;g.drawString(rs, 10, 25);<br>
+            }
+        </p>
+        <p> Note that to call an applet method, we use the name <code>this</code>
+            for the receiver. You could also just write: <code>getBounds()</code>.
+        </p>
+        <p>If you place this code in an applet, and then change the
+            applet tag HTML width and height, you'll see something like
+            this:
+            <img src="images/e10.gif" alt="Running the TestBounds applet" class="inline">
+            The <code>toString()</code> method helpfully prints out
+            the values of each field in the <code>Rectangle</code> object.
+            Since the applet is the "top-level" container, the <code>x,y</code>
+            fields are always 0, but the <code>width</code> and <code>height
+            </code> will change as you modify the applet tag.
+        </p>
+    <h4>The Dimension Class</h4>
+        <p>The <code>Component</code> class also has methods that allow
+            you to set and retrieve just the <code>height</code> and
+            <code>width</code> of a <code>Component</code>, separately from
+            its position on your applet. These methods are <code>getSize()
+            </code> and <code>setSize()</code>.
+        </p>
+        <p class="note">
+            Although, technically, it should work, most browsers ignore the
+            <code>setSize()</code> method when it refers to an applet.
+            There is no easy and reliable way for an applet to size itself;
+            it always relies on the values set in the HTML applet tag.
+        </p>
+        <p> Rather than using a <code>Rectangle</code> object, these methods
+            work with a class named <code>Dimension</code>. A <code>
+            Dimension</code>, like a <code>Rectangle</code>, contains
+            <code>public</code> fields that can be used directly. Instead
+            of four fields, like the <code>Rectangle</code>
+            class, the <code>Dimension</code> class has two:
+            <code>width</code> and <code>height</code>.
+        </p>
+    <h4>The Point Class</h4>
+        <p> Just as you can change the size of a <code>Component</code>
+            without changing its position, you can also change the position,
+            without changing the size. The methods you use for this are
+            <code>setLocation()</code>, <code>getLocation()</code>, and
+            <code>getLocationOnScreen()</code>.
+        </p>
+        <p> These methods work with yet a third "helper" class, the
+            <code>Point</code> class. Just as a <code>Dimension</code>
+            contains only the <code>height</code> and <code>width</code>
+            fields that a <code>Rectangle</code> object would have, a
+            <code>Point</code> object contains only the <code>x</code>,
+            <code>y</code> fields.
+        </p>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned about how to create <code>Font</code> objects,
+            and how to use <b>accessor</b> and <b>mutator</b> methods. You also
+            met the three "measuring classes", <code>Rectangle</code>,
+            <code>Dimension</code> and <code>Point</code>.
+        </p>
+        <p> In the next lesson you'll learn how to use the <code>Graphics</code>
+            class to draw different kinds of lines and shapes.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075,<script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

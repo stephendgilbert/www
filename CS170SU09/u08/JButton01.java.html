@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> * Displays a few JButtons using different constructors</span>
+<span class="linenum">03: </span><span class="comment"> * </span>
+<span class="linenum">04: </span><span class="comment"> * @author Stephen Gilbert</span>
+<span class="linenum">05: </span><span class="comment"> * @version 1.0, September 2005</span>
+<span class="linenum">06: </span><span class="comment"> */</span>
+<span class="linenum">07: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">08: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">09: </span><span class="preproc">import</span> <span class="normal">javax</span><span class="symbol">.</span><span class="normal">swing</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">10: </span>
+<span class="linenum">11: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">JButton01</span> <span class="keyword">extends</span> <span class="normal">JPanel</span>
+<span class="linenum">12: </span><span class="cbracket">{</span>
+<span class="linenum">13: </span>    <span class="keyword">private</span> <span class="normal">JLabel</span> <span class="normal">outputLabel</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">JLabel</span><span class="symbol">(</span><span class="string">"Output will appear here!!!"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">14: </span>    
+<span class="linenum">15: </span>    <span class="comment">/**</span>
+<span class="linenum">16: </span><span class="comment">     * Constructor for objects of class JButton01</span>
+<span class="linenum">17: </span><span class="comment">     */</span>
+<span class="linenum">18: </span>    <span class="keyword">public</span> <span class="function">JButton01</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">19: </span>    <span class="cbracket">{</span>
+<span class="linenum">20: </span>        <span class="function">setBackground</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">Color</span><span class="symbol">(</span><span class="number">196</span><span class="symbol">,</span> <span class="number">196</span><span class="symbol">,</span> <span class="number">255</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">21: </span>        
+<span class="linenum">22: </span>       <span class="comment">// 1. Create three JButtons</span>
+<span class="linenum">23: </span>       <span class="normal">JButton</span> <span class="normal">btn1</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">JButton</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">ImageIcon</span><span class="symbol">(</span><span class="string">"Car1.GIF"</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">24: </span>       <span class="normal">JButton</span> <span class="normal">btn2</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">JButton</span><span class="symbol">(</span><span class="string">"Plain Text"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">25: </span>       <span class="normal">JButton</span> <span class="normal">btn3</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">JButton</span><span class="symbol">(</span><span class="string">"Car2.GIF"</span><span class="symbol">,</span>
+<span class="linenum">26: </span>                      <span class="keyword">new</span> <span class="function">ImageIcon</span><span class="symbol">(</span><span class="string">"Car2.GIF"</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">27: </span>
+<span class="linenum">28: </span>       <span class="comment">// 2. Set mnemonics &amp; tooltips for JButtons</span>
+<span class="linenum">29: </span>       <span class="normal">btn1</span><span class="symbol">.</span><span class="function">setMnemonic</span><span class="symbol">(</span><span class="normal">KeyEvent</span><span class="symbol">.</span><span class="normal">VK_F1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">30: </span>       <span class="normal">btn1</span><span class="symbol">.</span><span class="function">setToolTipText</span><span class="symbol">(</span><span class="string">"Click here to order a blue car"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">31: </span>       <span class="normal">btn2</span><span class="symbol">.</span><span class="function">setMnemonic</span><span class="symbol">(</span><span class="string">'P'</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">32: </span>       <span class="normal">btn2</span><span class="symbol">.</span><span class="function">setToolTipText</span><span class="symbol">(</span><span class="string">"This is only text"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">33: </span>       <span class="normal">btn3</span><span class="symbol">.</span><span class="function">setMnemonic</span><span class="symbol">(</span><span class="normal">KeyEvent</span><span class="symbol">.</span><span class="normal">VK_1</span><span class="symbol">)</span><span class="symbol">;</span> <span class="comment">// Alt-1</span>
+<span class="linenum">34: </span>       <span class="normal">btn3</span><span class="symbol">.</span><span class="function">setToolTipText</span><span class="symbol">(</span><span class="string">"Another helpful message"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">35: </span>
+<span class="linenum">36: </span>       <span class="comment">// 3. Set the action commands for the buttons</span>
+<span class="linenum">37: </span>       <span class="normal">btn1</span><span class="symbol">.</span><span class="function">setActionCommand</span><span class="symbol">(</span><span class="string">"cut"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">38: </span>       <span class="normal">btn2</span><span class="symbol">.</span><span class="function">setActionCommand</span><span class="symbol">(</span><span class="string">"copy"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">39: </span>       <span class="normal">btn3</span><span class="symbol">.</span><span class="function">setActionCommand</span><span class="symbol">(</span><span class="string">"paste"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">40: </span>
+<span class="linenum">41: </span>       <span class="comment">// 4. Add the action listener to the buttons</span>
+<span class="linenum">42: </span>       <span class="normal">ButtonListener</span> <span class="normal">listener</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">ButtonListener</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">43: </span>       <span class="normal">btn1</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="normal">listener</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">44: </span>       <span class="normal">btn2</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="normal">listener</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">45: </span>       <span class="normal">btn3</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="normal">listener</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">46: </span>
+<span class="linenum">47: </span>       <span class="comment">// 5. Add the buttons to the application</span>
+<span class="linenum">48: </span>       <span class="function">add</span><span class="symbol">(</span><span class="normal">btn1</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">49: </span>       <span class="function">add</span><span class="symbol">(</span><span class="normal">btn2</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">50: </span>       <span class="function">add</span><span class="symbol">(</span><span class="normal">btn3</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">51: </span>       <span class="function">add</span><span class="symbol">(</span><span class="normal">outputLabel</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">52: </span>       
+<span class="linenum">53: </span>    <span class="cbracket">}</span>
+<span class="linenum">54: </span>    
+<span class="linenum">55: </span>    <span class="comment">/**</span>
+<span class="linenum">56: </span><span class="comment">     * The class responds to clicks from a JButton</span>
+<span class="linenum">57: </span><span class="comment">     */</span>
+<span class="linenum">58: </span>    <span class="keyword">private</span> <span class="keyword">class</span> <span class="normal">ButtonListener</span> <span class="keyword">implements</span> <span class="normal">ActionListener</span>
+<span class="linenum">59: </span>    <span class="cbracket">{</span>
+<span class="linenum">60: </span>        <span class="keyword">public</span> <span class="type">void</span> <span class="function">actionPerformed</span><span class="symbol">(</span><span class="normal">ActionEvent</span> <span class="normal">ae</span><span class="symbol">)</span>
+<span class="linenum">61: </span>        <span class="cbracket">{</span>
+<span class="linenum">62: </span>            <span class="normal">outputLabel</span><span class="symbol">.</span><span class="function">setText</span><span class="symbol">(</span><span class="string">"The button clicked says "</span> <span class="symbol">+</span> 
+<span class="linenum">63: </span>                                 <span class="normal">ae</span><span class="symbol">.</span><span class="function">getActionCommand</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">64: </span>        <span class="cbracket">}</span>
+<span class="linenum">65: </span>    <span class="cbracket">}</span>
+<span class="linenum">66: </span>    
+<span class="linenum">67: </span>    <span class="comment">/**</span>
+<span class="linenum">68: </span><span class="comment">     * The main() method creates the JFrame and the application panel</span>
+<span class="linenum">69: </span><span class="comment">     */</span>
+<span class="linenum">70: </span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="function">main</span><span class="symbol">(</span><span class="normal">String</span><span class="symbol">[</span><span class="symbol">]</span> <span class="normal">args</span><span class="symbol">)</span>
+<span class="linenum">71: </span>    <span class="cbracket">{</span>
+<span class="linenum">72: </span>        <span class="normal">JFrame</span> <span class="normal">frame</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">JFrame</span><span class="symbol">(</span><span class="string">"JButton01"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">73: </span>        <span class="normal">frame</span><span class="symbol">.</span><span class="function">setDefaultCloseOperation</span><span class="symbol">(</span><span class="normal">JFrame</span><span class="symbol">.</span><span class="normal">EXIT_ON_CLOSE</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">74: </span>        <span class="normal">frame</span><span class="symbol">.</span><span class="function">getContentPane</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">.</span><span class="function">add</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">JButton01</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">75: </span>        <span class="normal">frame</span><span class="symbol">.</span><span class="function">setSize</span><span class="symbol">(</span><span class="number">350</span><span class="symbol">,</span> <span class="number">150</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">76: </span>        <span class="normal">frame</span><span class="symbol">.</span><span class="function">setVisible</span><span class="symbol">(</span><span class="keyword">true</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">77: </span>    <span class="cbracket">}</span>
+<span class="linenum">78: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

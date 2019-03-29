@@ -1,0 +1,497 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">W</span>e've already covered <i>some</i> of
+            the material from Chapter 9 in your text</b>. In this lesson,
+            we'll pick up a couple more pieces, and finish up the chapter
+            in the next few units, when we talk about inheritance and
+            polymorphism.
+        </p>
+        <p> The topics we'll discuss in this lesson all deal, either
+            directly or indirectly, with "class design" and
+            "writing methods". The specific topics we'll discuss are:</p>
+        <ul>
+            <li><b>Variable scope</b>: which variables are visible from where?</li>
+            <li><b>Static members</b>: what are <code>static</code> fields
+                and <code>static</code> methods, and when do you use them?
+            </li>
+        </ul>
+        <p> Along the way, we'll also revisit the topics of parameter passing
+            and method design. Let's start, though, by looking at
+            method <b>scope</b>.
+        </p>
+    <h3>Scope and Identifiers</h3>
+        <p> <img src="images/f01.gif" class="right" alt="A young man using binoculars.">
+            Most of us are pretty attuned to the sound of our names.
+            If you are at a party, and you hear someone call out "Sam!",
+            you'll probably look around and see if someone is trying to
+            get your attention. (Assuming your name is Sam, of course.)
+        </p>
+        <p> On the other hand, if you hear the name "Sam" in a movie, or
+            on TV, you're unlikely to do the same thing, because the
+            context makes it clear that <i>you're</i> not the Sam under discussion.
+        </p>
+        <p> Variable names work in a similar way; the same name can mean
+            different things, depending upon the context. As I'm sure you
+            remember, a variable is simply a <b>named</b>
+            memory location that stores a value. You'll also remember that
+            instance variables are different than local variables.
+            One of the things differentiating instance variables and local
+            variables is the <b>scope of variable names</b>.
+        </p><p>
+        </p><p> Scope is word that simply means "visibility", or ...
+        </p>
+        <p class="pullquote">...where is the name of a variable visible?</p>
+        <p> In this section, we'll look
+            at two kinds of scope: <b>local scope</b> and <b>class scope</b>.
+        </p>
+    <h3>Local Scope</h3>
+        <p> Variables created inside a method, or inside a method "block"
+            have <b>local scope</b>. (A method block is the part of a method
+            enclosed in braces; normally a method block is the body of a
+            loop or of a selection statement.) Formal paramater variables
+            also have local scope.
+        </p>
+        <p> Here are several examples that illustrate the rules Java
+            uses for local scope.
+        </p>
+    <h4>Same Scope</h4>
+        <p> Two variables in the same scope <b>may not</b> have the same name:</p>
+        <p class="code">
+            public void methodOne(String s)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 5; <span class="cmt">// <span class="red">ERROR</span>, x already in this scope</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;long s = 3L; <span class="cmt">// <span class="red">ERROR</span>, s already in this scope</span><br>
+            }<br>
+        </p>
+        <p> Notice that we cannot create the <code>double</code> variable
+            named <code>x</code> because there is already an <code>int</code>
+            variable of that name defined in the same method. The same with
+            the <code>long</code> variable named <code>s</code>. While there
+            is no local variable of that name, there <b>is</b> a formal
+            parameter named <code>s</code> and its scope extends from
+            the point where it is declared (in the parameter list), to
+            the end of the method.
+        </p>
+    <h5>Scope and Blocks</h5>
+        <p> In Java, you cannot "hide" one local variable by creating a
+            new local variable inside a nested block. (This is different
+            than C/C++, which does allow this.) Here's an example,
+            using the body of an <code>if</code> statement to create a
+            local nested block.
+        </p>
+        <p class="code">
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int x = 3; <span class="cmt">&nbsp;&nbsp;&nbsp;// OK, no other X</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = 5; <span class="cmt">// <span class="red">ERROR</span>, cannot nest local scopes in Java</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        </p>
+        <p> <b>However</b>, if there is no variable in the outer block,
+            you <b>may</b> create variables of the same name inside a block.
+            The scope of those variables is the block they are created in.
+            Here's an example of that:
+        </p>
+        <p class="code">
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = 5; <span class="cmt">// OK, local to the body of the if statement</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if ( . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = 2.0; <span class="cmt">// OK; this is a <b>different</b> scope</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+        </p>
+    <h5>for Loop Headers</h5>
+        <p> Variables declared inside a <code>for</code> loop header are
+            local to the <b>body</b> of the <code>for</code> loop. Variables
+            declared <b>before</b> the header, are local to the method
+            or block that contains the <code>for</code> loop.
+        </p>
+        <p> Here's an example:</p>
+        <p class="code">
+            public void methodOne()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <b style='color:red;'>SITUATION 1: IN THE HEADER</b></span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// i is in-scope inside the loop body</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// i is out-of-scope after the loop body</span><br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <b style='color:red;'>SITUATION 2: BEFORE THE HEADER</b></span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int j; <span class="cmt">// j declared before the loop header</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (j = 0; . . . )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// j is in-scope inside the loop body</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// j is still in-scope after the loop body</span><br>
+            }<br>
+        </p>
+    <h4>Different Scope</h4>
+        <p> Variables in different local scopes may have the same name.
+            Here's an example that is OK:
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { int x = 5; }<br>
+            }
+        </p>
+        <p> The variable <b>x</b> defined inside <code>methodOne()</code>
+            is different than the variable <b>x</b> defined inside
+            <code>methodTwo()</code>. The body of <code>methodOne()</code>
+            is a <b>different</b> local scope than the body of
+            <code>methodTwo()</code>.
+        </p><p>
+        </p><p> Variables in different local scopes are <b>invisible</b> to each
+            other, and may not be accessed from another local scope.
+            Here's an example that illustrates this:
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne() { int x = 3; }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo() { x = 5; } <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// <span class="red">ERROR</span>, x from methodOne() is invisible in methodTwo()</span><br>
+            }
+        </p>
+
+    <h4>Formal Parameters</h4>
+        <p> Formal parameter variables have local scope for the entire
+            method. That is, you cannot have a local variable that has
+            the same name as one of the method's formal arguments.
+        </p>
+        <p> In the example shown here, <code>methodOne()</code> is illegal
+            because the formal parameter <b>x</b>, and the local variable
+            <code>x</code> have the same name.
+        </p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne(int x) { int x = 3; } <span class="red">// ERROR</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodTwo(int y) { int x = 5; } <span class="cmt">// OK, different names</span><br>
+            }
+        </p>
+    <h3>Class Scope</h3>
+        <p> Class scope refers to the scope rules that apply to instance
+            variables (fields). The scope of an instance variable is the
+            class it is defined in.
+            This means you <b>cannot</b> have two
+            instance variables with the same name, in the same class, just
+            like you cannot have two local variables with the same name
+            in the same method.
+        </p>
+        <p class="note">Scope is also affected by the access
+            modifiers <code>public</code>, <code>private</code>, and
+            <code>protected</code>. We'll ignore that complication for
+            right now and just look at basic visiblity.
+        </p>
+    <h4>Different Classes</h4>
+        <p> What happens when two instance variables, in two different
+            classes, have the same name, like this?
+        </p>
+        <p class="code">
+            public class A { private int x = 3; }<br>
+            public class B { private double x = 3.3; }
+        </p>
+        <p> This is fine. Both <code>class A</code>, and <code>class B</code>
+            are different class scopes, so
+            the names don't clash with each other at all. That means,
+            just like with local variables, <b>methods</b> in <code>class A</code> cannot
+            access the instance variable <b>x</b> in <code>class B</code>, and vice-versa.
+        </p><p>
+    </p>
+    <h4>Inherited Classes</h4>
+        <p> What happens if we change the picture slightly, and make
+            <code>class B</code> a subclass of <code>class A</code>?
+            Then we end up with this piece of code:
+        </p>
+        <p class="code">
+            public class A { int x = 3; }<br>
+            public class B extends A { double x = 3.3; }
+        </p>
+        <p> Surprisingly, this also is fine; however in this case the
+            instance variable <b>x</b>,
+            defined in <code>class B</code>, "<b>shadows</b>" or
+            "<b>hides</b>" the variable <b>x</b>
+            declared in <code>class A</code>.
+        </p>
+        <p> When a superclass instance variable is shadowed by a
+            subclass instance variable, the <b>more local</b> variable
+            takes precedence. In this case, if a method in <code>class B</code>
+            wished to make changes to the instance variable <b>x</b> declared
+            in <code>class A</code>, it would have to use the <code>super</code>
+            keyword like this:
+        </p>
+        <p class="code">
+            public class B extends A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 3.3;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 5.2; &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// This is in class B</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.x = 7; <span class="cmt">// This is from class A</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p class='note'>This example <b>only</b> works if there is <b>no</b>
+            access specifier used when the original instance variable was
+            defined in class A, or, if the access specifier was
+            <code>protected</code> or <code>public</code>. If you make
+            your instance variables <code>private</code>, as recommended,
+            you won't have to deal with the complications of shadowing
+            with subclasses. You <b>will</b> still need to deal with
+            instance-variable/local-variable shadowing, though.
+        </p>
+    <h4>Instance and Local Variables</h4>
+        <p> Instance variables and local variables exist in different scopes,
+            so <b>a local variable may have the same name as an instance
+            varible</b> without triggering a syntax error. This is actually
+            very common, and it is incredibly annoying. (You can set Eclipse
+            to warn you when this happens, and the workspace we are using
+            has this warning activated.)
+        </p>
+        <p> When that happens, the <b>most local</b> variable name
+            takes precedence. Here's an example:</p>
+        <p class="code">
+            public class A<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;double x = 2.2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public void methodOne()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">&nbsp;&nbsp;// OK; in local scope, hides field x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = 7; <span class="cmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// This is the <b>local variable</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.x = 5.5; <span class="cmt">// This is the <b>field</b> x</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Just like with inherited instance variables, the <b>most local</b>
+            identifier takes precedence. That means that the local variable
+            <b>x</b> "wins out" over the field <b>x</b>. If the method needs
+            to access the <b>field</b> x, it can do so by prefixing the word
+            <code>this</code> as in the last line of <code>methodOne()</code>.
+        </p>
+        <p class="note">Remember, if an inherited field is hidden, you use the
+            keyword <code>super</code> to access the hidden inherited
+            field (provided the field is <b>not</b> a <code>private</code>
+            instance variable, like most are.) If a field is hidden
+            by a local variable, you use the keyword <code>this</code> to
+            access the field. Hiding a field with a local variable is a common
+            source of errors, so that's one of the things we had Eclipse warn us
+            about when we configured its compiler.
+        </p>
+    <h3>Static Members</h3>
+        <p> <img src="images/f02.gif" class="right" alt="Captain Static cartoon character.">
+            A <code>static</code> object
+            is one that persists as long as your program is running.
+            In Java, we have both <b>static fields</b> and
+            <b>static methods</b>.
+        </p>
+        <p> Let's start by looking at <code>static</code> fields.</p>
+    <h4> Static Fields</h4>
+        <p> Static fields are <b>shared</b> fields. You can think
+            of them as <i>semi-global</i> variables; they're <b>not</b>
+            accessible everywhere in your program, but they <b>are</b>
+            shared among all the objects in a class.
+        </p>
+        <p> A <code>static</code> is often called a
+            <b>class variable</b>, as opposed to an <b>instance
+            variable</b>. You can think of it as belonging to the class
+            as a whole, rather than to any individual object.
+        </p>
+        <p> When you create an object from a class, that object gets a
+            <b>copy</b> of each of the instance variables defined by the
+            class. The same object, however, does <b>not</b> get a copy
+            of the class variables; there is only <b>one</b> copy of each
+            class variable, "living" inside the class.
+        </p>
+        <div class="sidebar" style="background: ghostwhite none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+        <p style="border-bottom: 1px solid silver; font-size: larger; font-weight: bold; text-align: center; color: navy;">
+        A Useful Analogy
+        </p>
+        <p> Here's an analogy that I read in a discussion group, and that I
+            thought was very useful. Suppose that you're building a piece of
+            software that simulates an iPod factory. Each iPod would have
+            certain data associated with it, and one of those pieces of data
+            would be the individual iPod <i>serial number</i>. In your program,
+            <code>serialNumber</code> would be an <b>instance variable</b> because
+            each iPod would have a unique value and that value should be
+            attached to the individual iPod object.
+        </p>
+        <p> In the iPod constructor, you'd want to initialize the serial
+            number field, but you'd also have to make sure that no two iPods
+            had the <u>same</u> serial number. How would you do that?
+        </p>
+        <p> The easiest way is for the iPod class itself to keep a "master
+            serial number" that individual iPod objects can access, and that
+            gets updated to "the next number" whenever the current one is
+            used by an iPod object.
+        </p>
+        <p> If you think of a class as a "factory" for producing objects,
+            then the <code>serialNumber</code> belongs to the individual
+            iPod, while the <code>masterSerialNumber</code> data belongs
+            to the iPodFactory.
+        </p>
+        </div>
+    <h5>Defining Class Variables</h5>
+        <p> To define a class variable, you just add the keyword
+            <code>static</code> as one of the modifiers appearing before
+            the variable type. There are no rules about the order of
+            modifiers, as long as it comes before the type.
+        </p>
+        <p> Here's an example that illustrates shows both a class variable
+            and an instance variable. (This is from a "SpaceWars" type game.)
+        </p>
+        <p class="code">
+            public class XFighter extends Fighter<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private int serialNo; <span class="cmt">// Instance variable</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;private <span class="red">static</span> int numShips = 0; <span class="cmt">// Class variable</span><br>
+            }
+        </p>
+        <p> The class variable <code>numShips</code> is an example of a
+            <b>population counter</b>. In the "SpaceWars" game, each
+            <code>XFighter</code> object would get its own
+            <code>serialNo</code>  value, but all of the
+            <code>XFighters</code> would share the single copy of
+            <code>numShips</code>.
+        </p>
+        <p> The constructor would be responsible for giving each ship
+            a serial number, and incrementing the total number of
+            ships:
+        </p>
+        <p class="code">
+            public XFighter(int serialNo)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.serialNo = serialNo; <span class="cmt">// set the serial number</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips + 1; <span class="cmt">// increase the number of ships</span><br>
+            }
+        </p>
+        <p> When the ship was destroyed, a method could decrease the
+            total number of <code>XFighter</code> objects in existence,
+            like this:
+        </p>
+        <p class="code">
+            public void dieDieDIE()<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">// Make neat explosion noises, etc.</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;numShips = numShips - 1; <span class="cmt">// decrease the number of ships</span><br>
+            }
+        </p>
+    <h4> Static Methods</h4>
+        <p> While the counter <code>numShips</code> works fine for keeping
+            track of the number of <code>XFighter</code> objects, it has
+            one nagging problem: only <code>XFighter</code> objects can
+            find out how many <code>XFighter</code> exist! How does the
+            <b>UniversalOverlord</b> object find out if he (or she!) needs
+            to create more <code>XFighters</code>?
+        </p>
+        <p> A regular method won't work in this case. Assume that you
+            had a method named <code>getNumShips()</code>, defined like this:
+        </p>
+        <p class="code">
+            public int getNumShips() { return numShips; }
+        </p>
+        <p> How does the <code>UniversalOverlord</code> use the class?
+            Like this?
+        </p>
+        <p class="code">
+            XFighter temp = new XFighter(0);<br>
+            int numXFighters = temp.getNumShips() - 1;<br>
+            temp.dieDieDIE();
+        </p>
+        <p> Well, that's <span style="background: transparent none repeat scroll 0% 0%; color: red; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><b>
+            stupid!</b></span> We had to create, and destory, a dummy
+            <code>XFighter</code>, just to find out how many fighters
+            exist. Then we had to subtract one from the result just
+            to eliminate the dummy variable we created. (Not to mention
+            putting up with the pyrotechnics generated by <code>dieDieDIE()</code>.
+            <b>This</b> is where we need the <code>static</code> method.
+        </p>
+    <h5>Defining and Using a Static Method</h5>
+        <p> To define a <code>static</code> method, just add the word
+            <code>static</code> as one of the modifiers; it must go
+            before the return type, but does not have to go before
+            the access specifier (<code>public</code> or <code>private</code>).
+        </p>
+        <p class="code">
+            public <span class="red">static</span> int getNumShips() { return numShips; }
+        </p>
+        <p> Inside the body of the static method, you <b>cannot</b> refer
+            to any instance variables. You may create local variables, and
+            you can refer to <code>static</code> fields, but not
+            instance variables. Since the <code>getNumShips()</code>
+            method only refers to the <code>static</code> variable
+            <code>numShips</code>, the code it contains is fine.
+        </p>
+        <p> To use a <code>static</code> method, you use the name of the
+            <b>class</b>, instead of the name of an object, when
+            calling the method. Here's the code that <code>UniversalOverlord</code>
+            would use to call the method:
+        </p>
+        <p class="code">
+            int numXFighters = <span class="red">XFighter</span>.getNumShips();
+        </p>
+        <p> Note that we need neither create, nor destroy, an <code>XFighter</code>
+            object, to find out how many exist.
+        </p>
+    <h5>More Static Methods</h5>
+        <p> The <code>Math</code> class, which consists of methods that perform
+            arithmetic, (as you'd expect), consists entirely of <code>static</code>
+            methods. Write static methods whenever you need a method that
+            will work without first creating an object.
+        </p>
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, we looked at two topics:
+            <b>method and variable scope</b>, and <b>static fields</b>
+            along with <b>static methods</b>.
+        </p>
+        <p> That's it for the online lessons this week. Head on over to
+            the Exercise page, where you'll get some practice defining
+            your own classes.
+        </p>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div></body></html>

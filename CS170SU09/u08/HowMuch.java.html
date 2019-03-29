@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> *  HowMuch.java</span>
+<span class="linenum">03: </span><span class="comment"> *  CS 170 Exercise Solution</span>
+<span class="linenum">04: </span><span class="comment"> *</span>
+<span class="linenum">05: </span><span class="comment"> *  @author Stephen Gilbert</span>
+<span class="linenum">06: </span><span class="comment"> *  @version 2.0, Fall 2005</span>
+<span class="linenum">07: </span><span class="comment"> *</span>
+<span class="linenum">08: </span><span class="comment"> *  An  applet  that  calculates  the  "real"  cost  of  a  "time"  purchase</span>
+<span class="linenum">09: </span><span class="comment"> */</span>
+<span class="linenum">10: </span>
+<span class="linenum">11: </span><span class="comment">// 1. Add your import statments here</span>
+<span class="linenum">12: </span><span class="preproc">import</span>  <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">13: </span><span class="preproc">import</span>  <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">14: </span><span class="preproc">import</span>  <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="normal">event</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">15: </span><span class="preproc">import</span>  <span class="normal">java</span><span class="symbol">.</span><span class="normal">text</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">16: </span>
+<span class="linenum">17: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">HowMuch</span> <span class="keyword">extends</span> <span class="normal">Applet</span>
+<span class="linenum">18: </span><span class="cbracket">{</span>
+<span class="linenum">19: </span>    <span class="comment">// 2. Create your object attributes here</span>
+<span class="linenum">20: </span>    <span class="comment">//    You'll have exactly 6 objects: three Labels,</span>
+<span class="linenum">21: </span>    <span class="comment">//    two TextFields, and one Button</span>
+<span class="linenum">22: </span>    <span class="keyword">private</span> <span class="normal">TextField</span>  <span class="normal">interestTF</span>   <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">TextField</span><span class="symbol">(</span><span class="number">20</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">23: </span>    <span class="keyword">private</span> <span class="normal">TextField</span>  <span class="normal">amountTF</span>     <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">TextField</span><span class="symbol">(</span><span class="number">20</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">24: </span>    <span class="keyword">private</span> <span class="normal">TextField</span>  <span class="normal">yearsToPayTF</span> <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">TextField</span><span class="symbol">(</span><span class="number">20</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">25: </span>
+<span class="linenum">26: </span>    <span class="keyword">private</span> <span class="normal">Label</span>  <span class="normal">paymentLbl</span>   <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">""</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">27: </span>    <span class="keyword">private</span> <span class="normal">Label</span>  <span class="normal">totalCostLbl</span> <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">""</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">28: </span>
+<span class="linenum">29: </span>    <span class="keyword">private</span> <span class="normal">Button</span> <span class="normal">calcCostBtn</span>  <span class="symbol">=</span>  <span class="keyword">new</span>  <span class="function">Button</span><span class="symbol">(</span><span class="string">"Calculate  Cost"</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">30: </span>
+<span class="linenum">31: </span>    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">32: </span>    <span class="cbracket">{</span>
+<span class="linenum">33: </span>        <span class="comment">// This line simply arranges the components</span>
+<span class="linenum">34: </span>        <span class="comment">// Do NOT remove this line or put any code before it</span>
+<span class="linenum">35: </span>        <span class="function">setLayout</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">GridLayout</span><span class="symbol">(</span><span class="number">0</span><span class="symbol">,</span> <span class="number">2</span><span class="symbol">,</span> <span class="number">5</span><span class="symbol">,</span> <span class="number">5</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">36: </span>        <span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">white</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">37: </span>
+<span class="linenum">38: </span>        <span class="comment">// 3. Add the components to your applet. For each</span>
+<span class="linenum">39: </span>        <span class="comment">//    line in the finished calculator, you'll need</span>
+<span class="linenum">40: </span>        <span class="comment">//    to create and add a local descriptive label,</span>
+<span class="linenum">41: </span>        <span class="comment">//    and then add one of the fields created in</span>
+<span class="linenum">42: </span>        <span class="comment">//    section 2. You won't have a label for the</span>
+<span class="linenum">43: </span>        <span class="comment">//    last row that contains the button.</span>
+<span class="linenum">44: </span>        <span class="function">add</span><span class="symbol">(</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">"Amount  of  Purchase:"</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">45: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">amountTF</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">46: </span>
+<span class="linenum">47: </span>        <span class="function">add</span><span class="symbol">(</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">"Interest  Rate  [like  7.5]  :"</span><span class="symbol">,</span><span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">48: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">interestTF</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">49: </span>
+<span class="linenum">50: </span>        <span class="function">add</span><span class="symbol">(</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">"Years  to  Pay  :"</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">51: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">yearsToPayTF</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">52: </span>
+<span class="linenum">53: </span>        <span class="function">add</span><span class="symbol">(</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">"Monthly  Payment  :"</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">54: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">paymentLbl</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">55: </span>
+<span class="linenum">56: </span>        <span class="function">add</span><span class="symbol">(</span>  <span class="keyword">new</span>  <span class="function">Label</span><span class="symbol">(</span><span class="string">"Total  Purchase  Cost  :"</span><span class="symbol">,</span>  <span class="normal">Label</span><span class="symbol">.</span><span class="normal">RIGHT</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">57: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">totalCostLbl</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">58: </span>
+<span class="linenum">59: </span>        <span class="function">add</span><span class="symbol">(</span><span class="normal">calcCostBtn</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">60: </span>
+<span class="linenum">61: </span>        <span class="comment">// 4. Hook-up the Java event system</span>
+<span class="linenum">62: </span>        <span class="normal">calcCostBtn</span><span class="symbol">.</span><span class="function">addActionListener</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">ButtonHandler</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">63: </span>    <span class="cbracket">}</span>
+<span class="linenum">64: </span>
+<span class="linenum">65: </span>    <span class="comment">/**</span>
+<span class="linenum">66: </span><span class="comment">     *  Responds to ActionEvents from the button</span>
+<span class="linenum">67: </span><span class="comment">     */</span>
+<span class="linenum">68: </span>    <span class="keyword">private</span> <span class="keyword">class</span> <span class="normal">ButtonHandler</span> <span class="keyword">implements</span> <span class="normal">ActionListener</span>
+<span class="linenum">69: </span>    <span class="cbracket">{</span>
+<span class="linenum">70: </span>        <span class="keyword">public</span> <span class="type">void</span> <span class="function">actionPerformed</span><span class="symbol">(</span><span class="normal">ActionEvent</span> <span class="normal">ae</span><span class="symbol">)</span>
+<span class="linenum">71: </span>        <span class="cbracket">{</span>
+<span class="linenum">72: </span>            <span class="comment">// 5. Extract text from each text field</span>
+<span class="linenum">73: </span>            <span class="normal">String</span>  <span class="normal">interestStr</span>    <span class="symbol">=</span>  <span class="normal">interestTF</span><span class="symbol">.</span><span class="function">getText</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">74: </span>            <span class="normal">String</span>  <span class="normal">amountStr</span>      <span class="symbol">=</span>  <span class="normal">amountTF</span><span class="symbol">.</span><span class="function">getText</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">75: </span>            <span class="normal">String</span>  <span class="normal">yearsToPayStr</span>  <span class="symbol">=</span>  <span class="normal">yearsToPayTF</span><span class="symbol">.</span><span class="function">getText</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">76: </span>
+<span class="linenum">77: </span>            <span class="comment">// 6. Create numeric variables and convert text</span>
+<span class="linenum">78: </span>            <span class="comment">//  Note: these are the Java 1.1 conversion methods. You could also use</span>
+<span class="linenum">79: </span>            <span class="comment">//           Double.parseDouble() if you only wanted your applet to run under</span>
+<span class="linenum">80: </span>            <span class="comment">//           Java 2 browsers</span>
+<span class="linenum">81: </span>            <span class="type">double</span>  <span class="normal">interest</span>   <span class="symbol">=</span>  <span class="normal">Double</span><span class="symbol">.</span><span class="function">valueOf</span><span class="symbol">(</span><span class="normal">interestStr</span><span class="symbol">)</span><span class="symbol">.</span><span class="function">doubleValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">82: </span>            <span class="type">double</span>  <span class="normal">amount</span>     <span class="symbol">=</span>  <span class="normal">Double</span><span class="symbol">.</span><span class="function">valueOf</span><span class="symbol">(</span><span class="normal">amountStr</span><span class="symbol">)</span><span class="symbol">.</span><span class="function">doubleValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">83: </span>            <span class="type">double</span>  <span class="normal">yearsToPay</span> <span class="symbol">=</span>  <span class="normal">Double</span><span class="symbol">.</span><span class="function">valueOf</span><span class="symbol">(</span><span class="normal">yearsToPayStr</span><span class="symbol">)</span><span class="symbol">.</span><span class="function">doubleValue</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">84: </span>
+<span class="linenum">85: </span>            <span class="comment">// 7. Make the necessary calculations</span>
+<span class="linenum">86: </span>            <span class="type">double</span>  <span class="normal">monthlyRate</span>    <span class="symbol">=</span>  <span class="normal">interest</span>  <span class="symbol">/</span>  <span class="number">100</span>  <span class="symbol">/</span>  <span class="number">12</span><span class="symbol">;</span>
+<span class="linenum">87: </span>            <span class="type">double</span>  <span class="normal">payment</span>  <span class="symbol">=</span>  <span class="symbol">(</span><span class="normal">amount</span>  <span class="symbol">*</span>  <span class="normal">monthlyRate</span><span class="symbol">)</span>  <span class="symbol">/</span>
+<span class="linenum">88: </span>                        <span class="symbol">(</span><span class="number">1</span><span class="symbol">-</span><span class="symbol">(</span><span class="normal">Math</span><span class="symbol">.</span><span class="function">pow</span><span class="symbol">(</span><span class="number">1</span><span class="symbol">/</span><span class="symbol">(</span><span class="number">1</span>  <span class="symbol">+</span>  <span class="normal">monthlyRate</span><span class="symbol">)</span><span class="symbol">,</span>  <span class="normal">yearsToPay</span>  <span class="symbol">*</span>  <span class="number">12</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">89: </span>            <span class="type">double</span>  <span class="normal">totalCost</span>  <span class="symbol">=</span>  <span class="normal">yearsToPay</span>  <span class="symbol">*</span>  <span class="number">12</span>  <span class="symbol">*</span>  <span class="normal">payment</span><span class="symbol">;</span>
+<span class="linenum">90: </span>
+<span class="linenum">91: </span>            <span class="comment">// 8. Display the formatted results</span>
+<span class="linenum">92: </span>            <span class="normal">NumberFormat</span>  <span class="normal">fmt</span>  <span class="symbol">=</span>  <span class="normal">NumberFormat</span><span class="symbol">.</span><span class="function">getCurrencyInstance</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">93: </span>            <span class="normal">paymentLbl</span><span class="symbol">.</span><span class="function">setText</span><span class="symbol">(</span><span class="normal">fmt</span><span class="symbol">.</span><span class="function">format</span><span class="symbol">(</span><span class="normal">payment</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">94: </span>            <span class="normal">totalCostLbl</span><span class="symbol">.</span><span class="function">setText</span><span class="symbol">(</span><span class="normal">fmt</span><span class="symbol">.</span><span class="function">format</span><span class="symbol">(</span><span class="normal">totalCost</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">95: </span>        <span class="cbracket">}</span>
+<span class="linenum">96: </span>    <span class="cbracket">}</span>
+<span class="linenum">97: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

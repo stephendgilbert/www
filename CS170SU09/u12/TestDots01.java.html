@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+    "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 1.11
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>source file</title>
+<link rel="stylesheet" href="../examples/code.css" type="text/css">
+</head>
+<body>
+<pre><tt><span class="linenum">01: </span><span class="comment">/**</span>
+<span class="linenum">02: </span><span class="comment"> *  TestDots.java</span>
+<span class="linenum">03: </span><span class="comment"> *  CS 170 Exercise 2005</span>
+<span class="linenum">04: </span><span class="comment"> *  Copyright (c) 2005 Stephen Dean Gilbert</span>
+<span class="linenum">05: </span><span class="comment"> *</span>
+<span class="linenum">06: </span><span class="comment"> *  Nov 19, 2005</span>
+<span class="linenum">07: </span><span class="comment"> */</span>
+<span class="linenum">08: </span>
+<span class="linenum">09: </span><span class="comment">/**</span>
+<span class="linenum">10: </span><span class="comment"> * @author Stephen Gilbert</span>
+<span class="linenum">11: </span><span class="comment"> * @version 1.0, 2005</span>
+<span class="linenum">12: </span><span class="comment"> */</span>
+<span class="linenum">13: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">applet</span><span class="symbol">.</span><span class="normal">Applet</span><span class="symbol">;</span>
+<span class="linenum">14: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">awt</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">15: </span><span class="preproc">import</span> <span class="normal">java</span><span class="symbol">.</span><span class="normal">util</span><span class="symbol">.</span><span class="symbol">*</span><span class="symbol">;</span>
+<span class="linenum">16: </span>
+<span class="linenum">17: </span><span class="keyword">public</span> <span class="keyword">class</span> <span class="normal">TestDots</span> <span class="keyword">extends</span> <span class="normal">Applet</span>
+<span class="linenum">18: </span><span class="cbracket">{</span>
+<span class="linenum">19: </span>    <span class="comment">/**</span>
+<span class="linenum">20: </span><span class="comment">     * Create some dots and scatter them around</span>
+<span class="linenum">21: </span><span class="comment">     * the applet. Use component methods to set the</span>
+<span class="linenum">22: </span><span class="comment">     * size, location, and background color</span>
+<span class="linenum">23: </span><span class="comment">     */</span>
+<span class="linenum">24: </span>    <span class="keyword">public</span> <span class="type">void</span> <span class="function">init</span><span class="symbol">(</span><span class="symbol">)</span>
+<span class="linenum">25: </span>    <span class="cbracket">{</span>
+<span class="linenum">26: </span>        <span class="function">setBackground</span><span class="symbol">(</span><span class="normal">Color</span><span class="symbol">.</span><span class="normal">yellow</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">27: </span>        <span class="normal">Random</span> <span class="normal">rand</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Random</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">28: </span>        <span class="function">setLayout</span><span class="symbol">(</span><span class="keyword">null</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">29: </span>        
+<span class="linenum">30: </span>        <span class="type">int</span> <span class="normal">width</span> <span class="symbol">=</span> <span class="function">getWidth</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">31: </span>        <span class="type">int</span> <span class="normal">height</span> <span class="symbol">=</span> <span class="function">getHeight</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">32: </span>        
+<span class="linenum">33: </span>        <span class="keyword">for</span> <span class="symbol">(</span><span class="type">int</span> <span class="normal">i</span> <span class="symbol">=</span> <span class="number">0</span><span class="symbol">;</span> <span class="normal">i</span> <span class="symbol">&lt;</span> <span class="number">10</span><span class="symbol">;</span> <span class="normal">i</span><span class="symbol">+</span><span class="symbol">+</span><span class="symbol">)</span>
+<span class="linenum">34: </span>        <span class="cbracket">{</span>
+<span class="linenum">35: </span>            <span class="normal">Dot</span> <span class="normal">aDot</span> <span class="symbol">=</span> <span class="keyword">new</span> <span class="function">Dot</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">36: </span>            <span class="function">add</span><span class="symbol">(</span><span class="normal">aDot</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">37: </span>            <span class="normal">aDot</span><span class="symbol">.</span><span class="function">setLocation</span><span class="symbol">(</span><span class="normal">rand</span><span class="symbol">.</span><span class="function">nextInt</span><span class="symbol">(</span><span class="normal">width</span><span class="symbol">)</span><span class="symbol">,</span> 
+<span class="linenum">38: </span>                             <span class="normal">rand</span><span class="symbol">.</span><span class="function">nextInt</span><span class="symbol">(</span><span class="normal">height</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">39: </span>            <span class="normal">aDot</span><span class="symbol">.</span><span class="function">setForeground</span><span class="symbol">(</span><span class="keyword">new</span> <span class="function">Color</span><span class="symbol">(</span><span class="normal">rand</span><span class="symbol">.</span><span class="function">nextInt</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">40: </span>            <span class="normal">aDot</span><span class="symbol">.</span><span class="function">setRadius</span><span class="symbol">(</span><span class="normal">rand</span><span class="symbol">.</span><span class="function">nextInt</span><span class="symbol">(</span><span class="number">25</span><span class="symbol">)</span> <span class="symbol">+</span> <span class="number">3</span><span class="symbol">)</span><span class="symbol">;</span>
+<span class="linenum">41: </span>        <span class="cbracket">}</span>
+<span class="linenum">42: </span>    <span class="cbracket">}</span>
+<span class="linenum">43: </span><span class="cbracket">}</span>
+</tt></pre>
+</body>
+</html>

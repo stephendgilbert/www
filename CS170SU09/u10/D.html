@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][4].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script></head>
+
+    <body>
+    <div class="title">
+        <img src="../images/e.jpg" alt="CS 170 Lesson E logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src='images/frustrated02.png' class='right' alt='A frustrated programmer.'>
+            <b><span class='cap'>H</span>ow many of you have all of your
+            programs run perfectly the first time?</b> Not many of you,
+            I'll bet. You might be surprised to find out that I find
+            that just as frustrating as you do.
+        </p>
+        <p> It's also pretty frustrating when
+            your program runs incorrectly and you aren't sure why. You
+            could just change things at random and hope to get better
+            results the next time, but that's really not very effective.
+        </p>
+        <p> To actually find the source of the problem, you can insert
+            <b>diagnostic print statements</b> into your code, so you can
+            examine the state of your variables at different points. Once
+            you've located the general area where the problem appears,
+            then you can insert more print statements to drill down to the
+            line of code that's causing the problem like this:
+            <img src='images/debugger02.png' class='inlineCenter' alt='Diagnostic println statements.'>
+            Of course, this can be a tedious and time-consuming process,
+            since you have to a) insert the print statements, b) analyze them,
+            c) adjust them, and then d) <b>remove</b> them once you've
+            found and corrected the bug.
+        </p>
+        <p>
+            <img src='images/debug01b.png' class='right' alt='A microscope illustration'>
+            Wouldn't be nice if you could just put your
+            program into a state of suspended animation, and then just
+            look at the contents of your variables, using some kind of
+            "virtual microscope"?
+        </p>
+        <p> The good new is, you can. </p>
+        <p> In this lesson, you'll learn how to use a program called a
+            <b>debugger</b>. A debugger really is a "virtual microscope"
+            that helps you find the cause of bugs (discovered
+            by your unit tests, of course). Debuggers work by:
+        </p>
+        <ol>
+            <li><b>tracing</b> through the program,</li>
+            <li><b>pausing</b> it temporarily, </li>
+            <li>and then <b>examining</b> any variables you're interested in, </li>
+            <li>before <b>resuming</b>.</li>
+        </ol>
+        <p> Debuggers vary widely from one system to another, but the
+            <b>Eclipse debugger</b>, which we'll examine in this lesson, is really
+            quite sophisticated. The basic debugging skills you'll learn and
+            use, though, will work on any system; only the names of the
+            commands will change as you move from IDE to IDE.
+        </p>
+    <h3>Using a Debugger</h3>
+        <p> Modern IDEs, like Eclipse, contain debugging programs that
+            allow you to <b>interactively</b> execute your programs. You can
+            stop and restart your program and see the contents of
+            variables whenever your program is temporarily suspended.
+            At each stop, you have the choice of what variables to inspect
+            and how many program steps to run until the next stop.
+        </p>
+        <p> <img src='images/lazy.png' class='right' style='margin-top:-2em;' alt='Illustrating lazy programmers.'>
+            Debuggers are not really a tool for lazy programmers, though. If you
+            don't know what your program is <i>supposed to do</i>, and you
+            don't know what <i>values your variables are supposed to
+            contain</i>, then a debugger <b>won't help you at all</b>.
+        </p>
+        <p> While using a debugger is more convenient than inserting
+            diagnostic print commands, is not cost-free. It takes time to
+            set up and carry out an effective debugging session.
+            That's what you'll learn to do in this lecture.
+        </p>
+    <h4>Three Useful Commands</h4>
+        <p> As your Java programs get larger, you'll find that simple print
+            statements are just no longer adequate. You really will need to
+            learn how to use a debugger.
+            Fortunately, <b>three very basic
+            commands</b> will cover 80 or 90% of the debugging that you'll
+            need to do:
+        </p>
+        <ul>
+            <li style='margin-top:1em;'>
+            <img src='images/RunProgram.jpg' style='float:left; margin-right:.75em;' alt='Run to a particular location'>
+                First, you'll need to be able to identify a particular location
+                in your program where you want to stop, and then just
+                <b>run the program normally until that point is reached</b>.
+                When your program comes to the stopping point you've specified,
+                it will go into the special debugging <b>"suspended" state</b>.
+                These special stopping locations are called <b>breakpoints</b>, and your
+                program can have any number of them.
+            </li>
+            <li style='margin-top:1.5em;'>
+                <img src='images/inspect.gif' style='float:left; margin-right:.75em;' alt='Inspecting variables'>
+                With your program suspended, you'll then want to
+                <b>examine the state of your variables by inspecting them</b>. A
+                good debugger will let you examine local variables and
+                instance variables and both object and primitive types.
+                You'll often be given the opportunity to specify which
+                variables you want to examine (called a "watch") so you
+                don't have to go hunting through dozens of variables to
+                find the ones you're interested in.
+            </li>
+            <li style='margin-top:1.5em;'>
+                <img src='images/walk.gif' style='float:left; margin-right:.75em;' alt='Walking icon.'>
+                Finally, if you don't immediately find the problem by
+                inspecting the variables, you'll need to know how to
+                <b>run your program in slow motion</b>, a line at a time.
+                Debuggers allow
+                you to execute a single line and then pause again, so that
+                you can inspect the changes made by that line. They will
+                also let you specify whether a line containing a method
+                call should be followed, thus <b>stepping into</b> the method, or
+                whether you should just call the method, thus <b>stepping
+                over</b> it.
+        </ul>
+        <p> While debuggers vary from platform to platform, every
+            debugger will support these three operations, even if the
+            names and techniques are slightly different. That means that
+            learning to create breakpoints, watch variables, and step over
+            your code using Eclipse will be valuable, even if you end up
+            working with a different IDE.
+        </p>
+    <h3>Eclipse Debugging Session</h3>
+        <p> To have a realistic example for running a debugger, let's walk
+            through a sample debugging session. To do this, we'll
+            study a class named <code>Word</code> whose primary purpose is to count
+            the number of syllables in a word. (This example is from Cay Horstmann's
+            <i>Big Java</i>, but I've modified the code a bit.)
+        </p>
+        <p> To follow along, create a new project in Eclipse and then download
+            and import the two Java source code files, <a href='Word.java' target='_blank'>
+            <b>Word.java</b></a> and <a href='SyllableCounter.java' target='_blank'>
+            <b>SyllableCounter.java</b></a>, into your current project. Once you have
+            the project created and the files imported, go ahead select the <b>Word.java</b>
+            in the Eclipse editor window.
+        </p>
+        <p> Here's the rule that the class is <i>supposed</i> to use to count syllables:</p>
+        <ul>
+            <li>Each group of adjacent vowels (a, e, i, o, u, y) counts as
+                one syllable (for example, the "ea" in "peach" contributes
+                one syllable, but the "e . . . o" in "yellow" counts as two
+                syllables). However, an "e" at the <b>end</b> of a word <b>doesn't</b>
+                count as a syllable. Each word has at least one syllable,
+                even if the previous rules give a count of 0.
+            </li>
+            <li>Any non-letter characters that appear at the beginning and end of
+                the string are <b>ignored</b>, since we don't want to count quotation
+                or punctuation marks.
+            </li>
+        </ul>
+        <p> OK, let's get started. Run the testing program,
+            <b>SyllableCounter</b>, and then enter "hello yellow peach." as the
+            input.
+            As you'll see, when you run the program, it tells you that
+            there is one syllable in hello, one syllable in yellow and one
+            syllable in peach. I guess one in three isn't bad, but we can do
+            better.<br>
+            <img src='images/debugger04.png' class='inline' alt='Entering the input.'>
+            The debugger will allow us to run the program step-by-
+            step and examine it. To do this, we'll need to put the program
+            into suspended animation when it encounters the portion of
+            the program that we want to examine. The only question is,
+            "where to start?"
+        </p>
+    <h4>Run To a Particular Line</h4>
+        <p> <img src='images/debugging02.gif' style='float:left;margin-left:-3em;margin-right:.5em;' alt='A magnifying-glass icon.'>
+            Using a debugger <b>won't</b> answer that question for you, but it
+            does give you a way to <b>find the answer</b>. Remember, your
+            debugger is a tool you'll use to investigate your program: you'll
+            still have to use your logic skills to ferret out the clues.
+        </p>
+        <p> So, <b>here's a clue</b>. What <b>part</b> of the program is incorrect?
+            That's easy; obviously the code that calculates the <b>number of
+            syllables</b> doesn't seem to work.
+        </p>
+        <p> So, look
+            through the <code>Word</code> class and there, you'll find a method named
+            <code>countSyllables()</code>. That seems like a really promising place to
+            start our investigation.
+        </p>
+        <p> To start debugging your program at the <b>countSyllables()</b>
+            method, we need to put a <b>breakpoint</b> on the line containing the
+            method header. Simply
+        </p>
+        <ol>
+            <li>find the line, and then </li>
+            <li>right-click in the margin, just to the left of the line number.</li>
+            <li>From the context menu, select <b>Toggle Breakpoint</b>.
+        </ol>
+        <p> Once you've done that, your screen should look like this:<br>
+            <img src='images/debug02.png' class='inlineCenter' alt='Setting a breakpoint.'>
+        </p>
+    <h4>Starting the Debugger</h4>
+        <p> Now that you have the breakpoint set, you need to <b>start the
+            debugger</b>. That's pretty easy. Just make sure that:
+        </p>
+        <ul>
+            <li><b>SyllableCounter</b> is the selected file. (This won't work if
+                <b>Word.java</b>, where you put the breakpoint is still selected,
+                since it doesn't have a <code>main()</code> method). I've marked
+                this step #1 in the screenshot shown here:<br>
+                <img src='images/debug03.png' class='inlineCenter' alt='Starting the debugger.'>
+            </li>
+            <li>Then, click the icon that looks like a little beetle; it's obviously
+                supposed to be a "bug".
+            </li>
+        </ul>
+        <p> The first time you debug <b>SyllableCounter</b> you'll see the little
+            dialog that asks "how" you want to debug it. Choose "Java
+            Application" (since we're not running anything on a server),
+            and click OK, like this:<br>
+            <img src='images/debug04.png' class='inlineCenter' alt='Selecting the debugging type.'>
+            The program will start running, just like it did before. When
+            asked to enter your sentence, enter <b>hello yellow peach.</b>, just
+            as before:<br>
+            <img src='images/debug05.png' class='inlineCenter' alt='Entering your input.'>
+            At this point, you're presented with another dialog, which is
+            kind of jarring. Don't worry. All it's saying is that when you
+            debug your program, it will switch away from the Java
+            perspective to the Debug perspective:<br>
+            <img src='images/debug06.png' class='inlineCenter' alt='Switching perspectives.'>
+            That's what we want. I'd
+            go ahead and click the little checkbox I've marked #1, so you
+            don't have to click OK each time you start debugging your
+            program.
+        </p>
+    <h4>The Debug Perspective</h4>
+        <p> Once the debug perspective pops up, you should see something
+            that looks like this:<br>
+            <img src='images/debug07.png' class='inlineCenter' alt='The debug perspective.'>
+            Let's look quickly at the relevant views, and then we'll
+            customize it to optimize your debugging experience.
+        </p>
+        <ol>
+            <li class='d'>On the left at #1 is the <b>Debug Pane</b> which
+                acts as a sort of <b>global debugging control panel</b>;
+                it shows you which programs are
+                active and suspend and what line is currently executing.
+                As you can see, we're debugging the SyllableCounter
+                program. The main method called countSyllables at line
+                25 and then the main thread was suspended at line 43 on
+                the entry to countSyllables.
+            </li>
+            <li class='d'>On the top of the of the Debug Pane is a <b>small
+                toolbar</b>
+                (marked #2) containing buttons allowing you to <b>step
+                through your code</b>, line by line. We'll be using these
+                buttons shortly. The toolbar also contains icons that allow
+                you to easily re-run the same tests. Using this button is
+                often more convenient than using the main run button, since
+                you don't have to switch back to the test class to use it.
+            </li>
+            <li class='d'>The <b>Source Code Pane</b> appears in the center of the
+                screen at #3. Notice the green line highlighting line 43,
+                along with the small arrow appearing in the left-hand
+                margin. This shows you which line of code is "in the
+                wings" waiting to be executed next. This line of code has
+                not yet run, however.
+                <p class='note'>Why your program didn't stop on
+                    the heading line, where you actually put the breakpoint?
+                    Because a method header doesn't contain any executable
+                    statements. You can put a breakpoint on any line of code
+                    in your program, but the debugger will stop on the first line
+                    of executable code at or following the breakpoint.
+                </p>
+            </li>
+            <li class='d'>
+                <img src='images/debug08.png' class='right' alt='The variables pane.'>
+                Since line 43 hasn't yet executed, the variable count is not
+                yet created. In #4, the <b>Variables Pane</b>, we can see and
+                examine each of the
+                variables as they are created. The only thing in the
+                window now is the variable named <code>this</code>, which refers to the
+                current object. If you click the little plus sign to its left, you
+                can see the instance variables contained in the current
+                object, like this.
+            </li>
+            <li class='d'>Finally, #5 shows the <b>Breakpoints Pane</b>, where you can
+                see a list of all active breakpoints and activate and
+                deactivate them without going through the source code
+                window. This is really useful when debugging multi-file
+                programs.
+            </li>
+        </ol>
+    <h5>Configuring the Debug Perspective</h5>
+        <p>OK. Let's simplify this perspective a little bit.<br>
+            <img src='images/debug09.png' class='inlineCenter' alt='Configuring the debug perspective.'>
+
+        <ol>
+            <li class='d'>Close the Outline window. It's really not necessary.</li>
+            <li class='d'>Drag the Breakpoints tab over into the same pane as the
+            Variables, and then
+            <li class='d'> minimize the pane appearing at the
+                bottom of the screen in the center.
+            </li>
+        </ol>
+        <p> Finally, let's add an <b>Expressions</b> (or <b>Watch</b>)
+            <b>View</b> to the
+            Variables Pane as well, like this:<br>
+            <img src='images/debug10.png' class='inline' alt='Adding an Expressions View.'>
+            Here's what your finished Debug Perspective should look like:
+            <img src='images/debug11.png' class='inlineCenter' alt='The configured debug perspective.'>
+        </p>
+    <h4>Step Over and Into</h4>
+        <p> Now, let's look at the code. First, the <code>countSyllables()</code>
+            method needs to check the <b>last</b> character of the word
+            being examined, to see if it is a letter 'e'. Remember that
+            we're <b>not</b> going to count a trailing 'e'
+            as a syllable.
+        </p>
+        <p> As you can see in the code here, the program
+            calculates the position of the last character (at <code>text.length() –
+            1</code>) and then uses the </code>charAt()</code> method to extract the character
+            and store it in the <code>char</code> variable named <code>ch</code>.<br>
+            <img src='images/debug12.png' class='inlineCenter' alt='Checking the position of a syllable.'>
+            Let's <b>go forward to that point</b> and see if <code>ch</code>
+            actually contains the value that we expect. Since our the
+            first word we entered was <i>"hello"</i>, the last character
+            <b>should be</b> the cahracter <code>'o'</code>. Let's see
+            if that's true.
+        </p>
+        <p class='note'>This is really the <b>key to successful debugging</b>;
+            knowing what values your variables <b>should</b> contain at any
+            given point, and then checking to see <b>if the actual value is
+            what you expect</b>.
+        </p>
+        <p> To run our program in "slow motion", we'll use the various
+            <b>"step"</b> commands on the Debug Pane toolbar, shown below.
+            <img src='images/debug13.png' class='inlineCenter' alt='Debug window toolbar commands.'>
+            You'll probably want to memorize the keyboard shortcuts as
+            well, because that can be much more efficient. Here's what
+            the various commands do:
+        </p>
+        <ul>
+            <li>The <b>Step Over</b> command (the arrow on the right),
+                executes the "current" line of code, but if the line of code
+                contains a method call, it <b>does not</b> step "into" the
+                method, but simply calls the method (running at full speed)
+                and then returns to the next line in the current code.
+                In other words, after doing a "step over",
+                you'll find yourself in the <b>same source
+                file</b>, on the next line of executable code.
+                <p class='note'>You should <b>always use Step Over</b>
+                    if a line of code contains a library
+                    function, like line 44 which calls the <code>String
+                    length()</code> method. You <b>don't</b> want to start
+                    debugging the Java class libraries.
+                </p>
+                The keyboard shortcut for Step Over is <b>F6</b>.
+            </li>
+            <li>The Step <b>Into</b> steps into any method or function
+                being called, instead of running the method at full speed
+                before returning to step mode. That means that your cursor
+                will <b>jump to the first line inside any method
+                called on the current line</b>. If
+                there are multiple method calls on that line, then you'll
+                jump into them in the order that they are evaluated in the
+                expression.
+                <p class='note'>Usually you'll <b>only</b> use Step Into to
+                    examine a) your own code, and b) only when you have
+                    already narrowed down the problem to a particular method.#
+                </p>
+                The keyboard shortcut for Step Into is <b>F5</b>.
+            </li>
+            <li>The <b>Run menu</b> also has a handy <b>Run to Line</b>
+                command that is useful if you don't want to step over several
+                different lines. You place the cursor on the line you want
+                to jump to in your source code. The keyboard shortcut for
+                Run to Line is <b>Control + R</b>.
+            </li>
+        </ul>
+        <p> If you're following along, use these techniques to run to the line
+            following the line where <code>ch</code> is assigned a value. (That's line 49
+            in the screenshots here, but it might be different on your computer,
+            depending on the source formatting.) That's the line that starts
+            with <code>if (ch == 'e')</code>.
+        </p>
+    <h4>Inspecting Variables</h4>
+        <p> With the program stopped, you can now <b>inspect the value
+            stored in the variable <code>ch</code></b>. Eclipse has several ways to do this.
+        </p>
+        <ul>
+            <li>First, you can simply <b>hover your cursor over the variable</b>
+                in the source code. This is known as a quick watch:<br>
+                <img src='images/debug14.png' class='inlineCenter' alt='Hovering your mouse over a variable.'>
+            </li>
+            <li>Second, you can use the <b>Variables Pane</b>. The Variables Pane
+                displays the contents of <b>all variables that are in scope</b>.
+                To inspect the constents of <b>instance variables</b> in the
+                current class, you'll need to expand the <code>this</code> node,
+                like you saw earlier. Local variables will appear and disappear
+                as they go in and out of scope:<br>
+                <img src='images/debug15.png' class='inlineCenter' alt='Using the Variables view.'>
+                In the Variables Pane you can also <b>change</b> the value of a
+                variable at any point and then <b>continue</b> debugging. This can
+                be really handy because when you notice a mistake you don't
+                have to stop your debugging session, make the change to
+                your source code to fix the mistaken value, and then step
+                through your code so you can pick up at the point you left off.
+                Instead, you can just make the change, like this, and continue
+                on as if the value were correct.
+            </li>
+        </ul>
+        <p class='note'>A word of warning, though. If you do make changes to
+            variables using the Variables Pane, make sure you write
+            yourself a note so that you remember to change the source
+            code after your debugging session is over. If you don't, your
+            program will still be incorrect, even if you got through the
+            debugging session successfully.
+        </p>
+        <p> Now, look at the value for <code>ch</code>. You can see that
+            <code>ch</code> contains the value <code>'l'</code>. That is
+            strange. Look at the source code. The <code>end</code>
+            variable was set to <code>text.length() - 1</code>, which
+            <b>is</b> the last position in the text string, and
+            <code>ch</code> <b>is</b> the character at that position.
+        </p>But, if the word is "hello", then the last character
+            <b>should be</b> 'o'. What this means is that
+            <b>we've encountered our first bug</b>.
+        </p>
+        <p> Unfortunately, we still don't know what caused it!
+        </p>
+    <h4>Watching Variables</h4>
+        <p> Eclipse has one more way for you to examine variables: by
+            creating a <b>Watch</b> expression in the <b>Expressions Pane</b>.
+            This allows you to specify <b>exactly which</b> variables or
+            expressions that you want to see, and not have to sort through
+            <b>all</b> of the variables in
+            and out of scope in the Variables Pane.
+        </p>
+       <p> To <b>create a Watch</b>, switch to the Expressions Pane and
+            right-click. From the context menu, select <b>Add Watch
+            Expression</b> like this:<br>
+            <img src='images/debug16.png' class='inlineCenter' alt='Adding a Watch expression.'>
+            When the Add Watch Expression dialog appears, simply type
+            in the variable you want to watch and click OK.<br>
+             <img src='images/debug17.png' class='inlineCenter' alt='Typing a Watch expression.'>
+        </p>
+        <p class='note'>Do <b>NOT</b> press
+            the enter key after typing in your variable name. That creates
+            an expression consisting of your variable name along with a
+            newline, which is not what you want.
+        </p>
+        <p>
+            Now, as your program runs, you'll be able to see (and
+            optionally change) the values of only the variables you are
+            really interested in. Since <code>ch</code> contains the
+            value <code>'l'</code>, when it <b>should</b> contain <code>'o'</code>,
+            let's look at the second variable in our code, <code>end</code>.
+            Go ahead and add these two watches:
+            <img src='images/debug18.png' class='inlineCenter' alt='Adding the watches.'>
+        </p>
+    <h4>Restarting</h4>
+        <p> OK. Now the problem is obvious. Since the <code>end</code>
+            contains <code>3</code>, that means that instead of <i>"hello"</i>
+            we're <b>really</b> looking at the last character in the word
+            <i>"hell"</i>. It looks like we've already gone
+            <b>past the problem</b>.
+        </p>
+        <p> While you can step <i>forward</i> into your code, there are no
+            buttons for "rewinding" or stepping backwards. Instead, you'll
+            need to <b>terminate the program</b>, and then, set a second
+            breakpoint earlier in your code. You may need to do this
+            several times as you attempt to narrow down the section of
+            code where the error first appears.
+        </p>
+        <p> To terminate your current debugging session, click the little
+            red "stop" square appearing in the screenshot here:
+            <img src='images/debug19.png' class='inlineCenter' alt='Terminating the current debug session.'>
+            The <code>countVowels()</code> method processes the characters
+            contained in the instance variable named <code>text</code>.
+            What we need to find is <b>where the <code>text</code> variable
+            is initialized</b>.
+        </p>
+        <p> That's not too hard
+            because, as you know, you'll usually initialize your instance
+            variables inside the class constructor.
+            Go ahead and:
+        </p>
+        <ul>
+            <li>put a breakpoint on the <code>Word</code> constructor.
+            <li>add watches for the variables <code>i</code>,
+                <code>j</code> and <code>text</code>.
+            </li>
+        </ul>
+        <p> Once you've done that, <b>single step</b>
+            through the code (or run to line) so that you're on the line
+            where the <code>text</code> instance variable is assigned a
+            value. Then, start single step and watch each of the variables.
+        </p>
+    <h4>Tracking Down the Problem</h4>
+        <p> To see the problem, look at the values in your
+            Watch window:<br>
+            <img src='images/debug20.png' class='inlineCenter' alt='Tracking down the problem.'>
+        </p>
+        <ol>
+            <li class='d'>As you can see, <code>i</code> and <code>j</code>
+                contain <code>0</code> and <code>4</code>, which is what
+                you'd expect for the word <i>"hello"</i>. (Remember that the
+                first character is 0, so the last index is going to be one
+                less than the length.) It looks like both of them are OK.
+            </li>
+            <li class='d'>When we look at the value for <code>text</code>,
+                though, you can see it only contains <b>four, not five
+                characters</b>.
+            </li>
+            <li class='d'>That means that we can definitely say that the
+                bug occurs <b>on the line the assigns the value</b> to the
+                instance variable named <code>text</code>.
+            </li>
+        </ol>
+        <p> Since <code>i</code> and <code>j</code> are correct, apparently
+            we've made a mistake using the <code>substring()</code> method.
+            And, that seems to be the case. You remember that while the
+            first parameter in the <code>substring()</code> method is the
+            character we want to start with, the last parameter <b>is not</b>
+            the ending index, but the index that is "one past" the end.
+        </p>
+        <p> That means that to correctly grab the characters <code>i</code>
+            through <code>j</code>, we need to use the expression
+            <code>j + 1</code> as the second parameter when calling the
+            <code>substring()</code> method.
+        </p>
+    <h4>Try Again</h4>
+        <p> OK, so we've fixed the problem. Everything should be just
+            great, right?
+        </p>
+        <p> Well, let's see.</p>
+        <p> <img src='images/debug21.png' class='right' alt='Disabling breakpoints.'>
+            Switch over to the Breakpoints pane and
+            <b>disable</b> both of the two breakpoints by "unchecking" the
+            checkbox next to the name like this. Run the program by using
+            the "Run" button and enter <i>"hello yellow peach."</i> once again.
+        </p>
+        <p> Do you get what you expect? Nope; still doesn't work right.
+        </p>
+        <p> It looks like we have to investigate further.
+            Re-enable just the breakpoint for the <code>countSyllable()</code>
+            method and then start debugging again. This time, instead of
+            entering <i>"hello yellow peach"</i>, just enter
+            <i>"hello"</i> followed by a period.
+        </p>
+        <p> Since the problem seem to be with the variable <code>count</code>,
+            (which reports the number of syllables) create a watch
+            expression for <code>count</code> and another for <code>ch</code>
+            (if you deleted it previously).
+            Remember that we want to count a syllable <b>whenever we get
+            a sequence of vowels</b>. That means we should count a syllable
+            when we encounter the 'e' in hello, and a second one when
+            we encounter the 'o'.
+        </p>
+        <p> Let's see if that happens by single-stepping through the
+            <code>countSyllables()</code> method.
+        </p>
+    <h4>Checking Vowels</h4>
+        <p> Here's what you should see as you trace through the program.</p>
+        <ol>
+            <li class='d'>Notice that at the beginning of the loop which will process
+                the instance variable <code>text</code>, the
+                <code>boolean</code> variable <code>insideVowelGroup</code>
+                is <code>false</code> and <code>count</code> is 0. That
+                looks OK:<br>
+                <img src='images/debug22.png' class='inline' alt='First step tracking problem.'>
+            </li>
+            <li class='d'>Now, inside the body of the loop, the first
+                character is extracted (the <code>'h'</code> from
+                <i>hello</i> shown at  #1 here) and a test
+                is made at #2 to see if it's a vowel. It obviously isn't
+                a vowel, so the <b>entire body</b> of the <code>if</code>
+                statement is skipped and execution jumps back to the next
+                repetition of the for loop for the next character. This
+                also seems correct:<br>
+                <img src='images/debug23.png' class='inline' alt='Second tracking step.'>
+            </li>
+            <li class='d'>The next time through the loop, the second
+                character is an <code>'e'</code> (at #1). Since <b>that is
+                a vowel</b> (at #2), we go up to the second <code>if</code>
+                statement. Since <code>insideVowelGroup</code> is still
+                <code>false</code> (remember that it was set right before
+                the loop began), we'll <b>enter</b> the nested <code>if</code>
+                statement, increment the variable <code>count</code> (counting
+                the first syllable), and then set <code>insideVowelGroup
+                true</code> so that any subsequent vowels <b>in this group</b>
+                won't be counted as separate syllables:<br>
+                <img src='images/debug24.png' class='inline' alt='Third tracking step.'>
+            </li>
+            <li class='d'>Our second syllable should be counted when we come
+                to the <code>'o'</code> at the end of the string. Stepping
+                through the code to that point, we find that we enter the
+                first <code>if</code> statement, correctly, but the
+                <code>insideVowelGroup</code> variable is still true,
+                indicating that the <code>'o'</code> is part of an
+                existing group of vowels (even though the last character
+                was the <code>'l'</code> immediately before the
+                <code>'o'</code>, which is <b>definitely NOT a vowel</b>.)
+            </li>
+        </ol>
+        <p> <img src='images/debug25.png' class='inline' alt='Fixing the error.'>
+            Looking carefully at the code, you can probably see the error
+            now. When we encounter the first vowel in a group, we set the
+            <code>boolean</code> flag <code>insideVowelGroup</code>.
+            We <b>forgot</b>, though <b>to reset it to false</b>, when we
+            left the vowel group. To do that, it looks like all we need is
+            an <code>else</code> statement here that sets
+            <code>insideVowelGroup</code> to <code>false</code> anytime
+            we read a character that is not a vowel.
+        </p>
+        <p> Go ahead and make this fix. Then run your
+            program again with "hello yellow peach." It should run
+            correctly now.
+        </p>
+    <h3>The Debugging Process</h3>
+        <p><b><span class='cap'>D</span>ebugging your code is a process</b>—a
+            series of steps that help
+            you find and fix the errors in your program. The process
+            <b>begins</b> when you determine that your program is producing
+            the wrong output (something you'll normally discover by
+            testing.) The goal of the process is to fix the program, and this
+            is best done in <b>several disciplined steps</b>; it's altogether too
+            easy to fix one problem, and, in the process, introduce
+            another.
+        </p>
+        <p> To avoid that, you should perform each of the following steps
+            in the debugging process, in order:
+        </p>
+        <ul>
+            <li>break it,</li>
+            <li>isolate it,</li>
+            <li>fix it</li>
+            <li>and test it</li>
+        </ul>
+    <h4>Break It</h4>
+        <p> <img src='images/broken.png' style='float:left;margin-left:-3em;margin-right:1em;' alt='Breaking your program.'>
+            It might seems strange that the first step in fixing your program
+            is to <b>break it</b>; after all, if your program wasn't already broken to
+            begin with, you certainly wouldn't be debugging it now.
+        </p>
+        <p> Well, that's not what breaking it means. Rather than
+            introducing new errors, breaking it refers to your ability to
+            <b>force your program to fail reliably</b>; that is,
+            repeatedly and at will. If your program bugs appear sporadically
+            and unexpectedly, then you don't really have a very good chance
+            of catching them.
+        </p>
+        <p> Breaking a program involves <b>reproducing the conditions under
+            which it fails</b>. Ask yourself what numbers you entered, where
+            did you click the mouse, what input was provided, what
+            controls were clicked and in what order. Then, sit down and
+            perform exactly the same actions making sure that you've
+            isolated the circumstances where the error occurs.
+        </p>
+        <p class='pullquote'> Don't try to fix the program until you can
+            break it at will.
+        </p>
+        <p> Until
+            that occurs, you don't really know what the problem is.
+        </p>
+    <h4>Isolate and Understand</h4>
+        <p> <img src='images/locate.png' class='right' alt='Locating a bug.'>
+            The next step, to <b>locate, isolate and understand</b> the bug, is the most
+            difficult of the four, so be patient and be prepared to take your
+            time. To do this, you'll use the techniques of <b>divide and
+            conquer</b>. Here's how.
+        </p>
+        <ul>
+            <li>If you have no idea where in your code the error occurs,
+                place a breakpoint on the <code>main()</code> method and start
+                <b>Stepping Over</b> each of the methods that appear there.
+                After you step over each method, examine the variables or
+                output to see if the error you are trying to fix has occurred.
+            </li>
+            <li>When the error occurs, locate the <b>last method right before
+                the error occurred</b>. Then, <b>Step Into</b> that procedure and
+                repeat the process; Stepping Over each line inside that
+                procedure. In this way, you'll repeatedly <b>narrow your
+                search until you'll come to the single statement that
+                causes the error</b>.
+            </li>
+        </ul>
+        <p> Once you've located the bug, before you can fix it you'll have
+            to <b>understand exactly what caused the problem</b>. To
+            understand the bug, you have to have a firm grip on <b>what your
+            program should do</b>. What that means is:
+        </p>
+        <ul>
+            <li>Before you inspect a variable, how have to know the
+                <b>expected</b> values. Just looking at the values won't help at
+                all, if you don't know what the values <b>should be</b>.
+            </li>
+            <li>When the value is correct, don't be afraid to look
+                elsewhere. Often this requires you to rethink what is
+                causing the problem. If multiple variables are used in a
+                calculation, for instance, make sure you look at all of
+                them, not just the final "output" variable.
+            </li>
+            <li>Make sure you <b>double-check your computations</b>,
+                especially if they involve integers and floating point
+                number or library methods. If you are calling a method,
+                like the <code>substring()</code> method in the example
+                in this lesson, revisit the documentation to make sure
+                you are doing it correctly. Just because you don't
+                have a syntax error
+                doesn't mean that you are using a method correctly.
+            </li>
+        </ul>
+        <p> Sometimes understanding the problem simply means <b>putting things
+            aside for a bit</b> and then <b>coming back to the problem later</b>.
+            This gives your subconscious mind a chance to chew on the problem a bit.
+        </p>
+    <h4>Fix and Test</h4>
+        <p>  <img src='images/fixit.gif' style='float:left;margin-left:-3em;margin-right:1em;' alt='Fixing your program.'>
+            Once you understand your program well enough to see why
+            it's not working, <b>you're ready to fix it</b>. Think through the
+            changes you need to make. Look at the big picture, especially
+            when you are working with large numbers or performing a
+            complex calculation. Is the answer you're getting generally
+            reasonable?
+        </p>
+        <p> Sometimes the change you need to make is simple and
+            involve only a single line of code; other times you may realize
+            that your whole concept was flawed and you'll need to
+            redesign an entire method or even an entire class.
+        </p>
+        <p> If you've ever watched television, you've probably seen the
+            situation-comedy episode where the well-meaning father
+            decides to fix the roof or the shower instead of calling in an
+            expensive professional. This plot device has endured for so
+            many years because it is so true to human nature; all of us
+            tend to rush in blindly, "fixing" things but leaving the situation
+            worse than when we began.
+        </p>
+        <p> To avoid having to call in the "software plumber" to repair your
+            fixes, it's always a good idea to make a backup of your code
+            before performing radical surgery. For more modest changes,
+            you might want to comment out the original line of code <b>before</b>
+            adding your new changes, in the event that you discover your
+            original code was correct after all.
+        </p>
+        <p> At this point, 90% of the programmers will pack up their tools
+            and head for home. A good craftsman always performs one
+            more step: <b>testing the repair</b> to see if the new kitchen light
+            actually can be turned on and off.
+        </p>
+        <p> Testing and debugging are not the same thing. Debugging
+            begins when you learn that your program contains an error. It
+            is the process of isolating the bug and removing it. Testing, on
+            the other hand, is aimed at determining exactly what bugs still
+            remain in your program.
+        </p>
+        <p> Testing turns into debugging when an error is found and
+            debugging should always transition back to testing to make
+            sure your fixes are good. In the testing-debugging process you
+            will constantly bounce back and forth between these two until
+            you're sufficiently confident that no serious bugs remain.
+        </p>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson, you learned how to use the <b>Eclipse Debugger</b>
+            to pause your program while it was running, and to examine the state
+            of your variables to locate and squash any remaining bugs. You also
+            learned how to structure a debugging session by first <b>breaking
+            your program</b> and then <b>locating</b>, <b>understanding</b>
+            and then <b>fixing</b> its bugs.
+        </p>
+        <p> In the last lesson this week, we'll leave testing and debugging behind
+            and return to a topic you all love: <b>arrays</b>. This week you'll
+            learn how to create and instantiate <b>object arrays</b>, and how
+            to process arrays that contain both valid and invalid data.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

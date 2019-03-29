@@ -1,0 +1,143 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import static java.lang.System.out;
+
+public class ProcessProperties
+{
+    static String MTWT = "", MW = "", TTA = "", TTE = "";
+    
+    // Constants for start times and ends
+    // Allow 5 minutes after start, 30 minutes after end
+    static final String MTS = "11:20 AM", MTE = "1:00 PM", 
+        MWS = "2:30 PM", MWE = "6:00 PM",
+        TAS = "2:30 PM", TAE = "6:00 PM",
+        TES = "6:10 PM", TEE = "9:00 PM";
+    
+    static int week;
+    static String year = "";
+    static Date weekStart = null, weekEnd = null;
+    static String[] assignDate = new String[4];
+    static String section = "";
+    
+    public static void addToAll(String ps)
+    {
+        MTWT += ps + "\n";
+        MW += ps + "\n";
+        TTA += ps + "\n";
+        TTE += ps + "\n";
+    }
+
+    /**
+     * Homework due at the beginning of class.
+     */
+    public static void processHW(String line)
+    {
+        MTWT += line + assignDate[0] + " " + MTS + "\n";
+        MW += line + assignDate[1] + " " + MWS + "\n";
+        TTA += line + assignDate[2] + " " + TAS + "\n";
+        TTE += line + assignDate[3] + " " + TES + "\n";
+    }
+
+    /**
+     * Labs due at the end of class.
+     */
+    public static void processLab(String line)
+    {
+        MTWT += line + assignDate[0] + " " + MTE + "\n";
+        MW += line + assignDate[1] + " " + MWE + "\n";
+        TTA += line + assignDate[2] + " " + TAE + "\n";
+        TTE += line + assignDate[3] + " " + TEE + "\n";
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        Scanner cin = new Scanner(System.in);
+        out.print("Which week do you want to process? ");
+        int targetWeek = cin.nextInt();
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("d/m");
+        
+        Scanner min = new Scanner(new File("master.properties"));
+        while (min.hasNext() && week <= targetWeek)
+        {
+            String line = min.nextLine();
+            if (line.startsWith("#"))
+            {
+                if (line.startsWith("#YEAR"))
+                {
+                    year = line.substring(line.indexOf(' ') + 1);
+                }
+                else if (line.startsWith("#WK"))
+                {
+                    //System.out.println(line);
+                    Scanner tin = new Scanner(line);
+                    tin.next(); // throw away #WK
+                    week = Integer.parseInt(tin.next());
+                    weekStart = fmt.parse(tin.next() + year);
+                    weekEnd = fmt.parse(tin.next() + year);
+                }
+                else if (line.startsWith("#IC"))
+                {
+                    Scanner tin = new Scanner(line);
+                    section = tin.next().substring(3); // throw away #IC
+                    assignDate[0] = tin.next() + "/" +year;
+                    assignDate[1] = tin.next() + "/" + year;
+                    assignDate[2] = tin.next() + "/" + year;
+                    assignDate[3] = tin.next() + "/" + year;
+                }
+                else if (line.startsWith("# MASTER"))
+                {
+                    // don't print that line.
+                }
+                else
+                {
+                    addToAll(line);
+                }
+            }
+            else 
+            {
+                // Due at end of class
+                if (line.startsWith("L") || line.startsWith("PQ") || line.startsWith("Q"))
+                {
+                    if (check(line))
+                        processLab(line);
+                    else
+                        System.err.println("INVALID:" + line);
+                }
+                else if (line.startsWith("H"))  // due at beginning
+                {
+                    if (check(line))
+                        processHW(line);
+                    else
+                        System.err.println("INVALID:" + line);
+                }
+                else // usually a blank line
+                {
+                    addToAll(line);
+                }
+                    
+            }
+        }
+        
+        // Write the output
+        saveProperties("MTWT", MTWT);
+        saveProperties("MW", MW);
+        saveProperties("TT-AFT", TTA);
+        saveProperties("TT-EVE", TTE);
+        
+    }
+    
+    public static boolean check(String line)
+    {
+        return line.indexOf('=') > 0 && line.indexOf('|') > 0 &&
+            line.indexOf('|') != line.lastIndexOf('|');
+    }
+    public static void saveProperties(String name, String properties) throws Exception
+    {
+        PrintWriter out = new PrintWriter(name + ".properties");
+        out.println("#" + name + " Schedule ------------");
+        out.println(properties);
+        out.close();
+    }
+}

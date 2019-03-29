@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src='images/pb07.png' class='right' alt='The PolarBounce2 program.'>
+            <b><span class='cap'>S</span>o far, it looks like inheritance
+            is really helpful</b>. Extending
+            the <code>GOval</code> class allowed your new <code>GBall</code>
+            to <b>inherit</b> literally hundreds of methods. All for free!
+        </p>
+        <p> That's correct, <b>but it's not the end of the story</b>.
+            You may have inherited a little more than you counted on!
+        </p>
+        <p> Consider this version of the bouncing program,
+            <a href='PolarBounce3.java' target='_blank'><b>
+            PolarBounce3</b></a> that changes the size of each
+            ball as it hits the wall. When a ball hits the side walls,
+            we increase it's hiegth by a fraction and decrease its width,
+            like it would in real life.
+        </p>
+        <p> If we hit the top or bottom,
+            then we do the opposite:<br>
+            <img src='images/pb06.png' class='inlineCenter' alt='PolarBounce3 application.'>
+            Unfortunately, when the program runs, the bouncing balls <b>no longer
+            maintain their pristine round shape</b>; in fact, they are no longer
+            really balls at all:<br>
+            <img src='images/pb05.png' class='inlineCenter' alt='Running the PolarBounce3 application.'>
+        </p>
+        <p> This problem occurs because we've really <b>misidentified</b>
+            an isA relationship. A <code>GBall</code> really <b>isn't</b>
+            a <code>GOval</code>, since balls <b>should</b> retain their
+            circular shape. What we <b>really</b> wanted to use as a
+            superclass was the <code>GCircle</code>, but the ACM class libraries
+            didn't come with one, so we went ahead and used the
+            <code>GOval</code> class instead.
+        </p>
+        <p> Unfortunately, the <code>GOval</code> class includes some methods
+            that really <b>don't apply</b> to <code>GBall</code> objects,
+            but, since inheritance models an <b>isA</b> relationship, there
+            is no way to eliminate the peskey extra methods.
+        </p>
+        <div class='note'>
+        <p><img src='images/penguins.png' class='right' alt='Rare flying penguins.'>
+            Scott Meyers, in his excellent book
+            Effective C++, calls this the
+        </p>
+            <ul>
+            <li>All Birds Can Fly</li>
+            <li>Penquins are Birds</li>
+            <li>Penguins can fl—-  <b>Uhh-oh!</b></li>
+            </ul>
+        <p> problem. Meyers offers no quick fix however. In Java, as
+            in C++, the only solution is to go back to the drawing board
+            and revise the class relationships.
+        </p>
+        </div>
+    <h4>Inheritance of Implementation or Contraction</h4>
+        <p> One potential solution to the "penquins can't fly" problem
+            is called <b>implementation inheritance</b>, and that's actually
+            what we did with the <code>GBall</code> class.
+            While you should be aware of this form of inheritance,
+            you should <b>avoid using it in your designs</b>.
+        </p>
+        <p> For an exaggerated
+            example, suppose you have a class that models a virtual automobile
+            called, perhaps, <code>Cadillac</code>. This class has an exceptionally fine
+            stereo system, which required a lot of effort to implement and
+            of which you're especially proud. Now you discover that you need
+            to create a <code>GiPod</code> class, for sale over the Web:<br>
+            <img src='images/cadillac.png' class='inlineCenter' alt='A 1958 Cadillac.'>
+            Because you’ve
+            already gone to all the work of creating the <code>Cadillac</code> class, why
+            not just create a new subclass, and then eliminate all the methods
+            that have nothing to do with playing music, transforming the car
+            into a mere sound system?
+            <img src='images/cadillac02.png' class='right' alt='Extending the Cadillac class to create a GiPod.'>
+        </p>
+        <p> This practice, <b>called contraction</b>, is an especially easy trap to
+            fall into when you begin maintaining an existing system. Because
+            the class hierarchy is already in place, you may feel a lot of
+            pressure not to "tear things up."
+        </p>
+        <p> So, in an effort to reuse the
+            code you’ve already written, you replace <code>brake()</code>,
+            <code>accelerate()</code>, and all the other "extraneous" methods
+            from the <code>Cadillac</code> class with empty braces. In
+            traditional computer-science terms, you replace
+            them with a <b>NOP</b> (No OPeration). You should avoid doing this
+            in your designs for two reasons:
+        </p>
+        <ul>
+            <li>Because you're <b>violating the substitutability rule</b>, you
+                will undoubtedly break some code that relied on all
+                <code>Cadillac</code>
+                objects carrying out a certain set of operations. Because,
+                according to your new hierarchy, a <code>GiPod</code>
+                <b>isA</b> Cadillac, you are obligated by the
+                <code>Cadillac</code> "contract" to perform those
+                operations.
+            </li>
+            <li>It’s more work than doing the right thing! If you really
+                want to use a <code>Cadillac</code> object as a super sound system, simply
+                use <b>composition</b>: Add a <code>Cadillac</code> object as one of the fields
+                in your <code>GiPod</code> class. Now you not only have avoided the
+                semantic pitfalls of saying one thing and doing another,
+                you’ve also saved yourself the work of overriding all those
+                useless methods.
+            </li>
+        </ul>
+        <p> And that's really what's happend with our <code>GBall</code>. If we
+            were just to "<b>NOP</b>" <code>setSize()</code> and <code>setBounds()</code>
+            and the other inappropriate <code>GOval</code> methods, our
+            <code>GBall</code> would no longer "fit into" the <code>GObject</code>
+            family, since we wouldn't be keeping the <code>GOval</code>
+            "contract".
+        </p>
+        <p> Let's see how we could fix this problem by using <b>composition</b>
+            instead. It may look like more work, but it really is a
+            better solution to the problem.
+        </p>
+    <h3>Introducing Composition</h3>
+        <b><span class='cap'>I</span></b>nheritance is a simple and powerful
+            way to reuse and extend existing software components</b>.
+            Inheritance lets you define your own version of existing classes,
+            customized for your special needs, and you can do this with
+            pretty much <b>any</b> class library, including the regular
+            Java Foundation Class Libraries.
+        </p>
+        <p> Suppose, for instance, that your corporate policy requires
+            that all applications use 14-point font in their applet's
+            <code>JTextField</code>s and 18-point bold <code>JLabel</code>s.
+            Using inheritance, you can simply create a pair of new classes
+            by extending the <code>JTextField</code> and <code>JLabel</code>
+            classes, and avoid the extra work of sending the
+            <code>setFont()</code> message to <b>every</b>
+            <code>JTextField</code> and <code>JLabel</code> object in
+            your entire application.
+        </p>
+        <p> Inheritance <b>isn't the right solution for every situation</b>,
+            however. What if you need a component that <b>combines</b>
+            both a <code>JLabel</code> and a <code>JTextField</code>
+            object? Inheritance doesn't help in this situation.
+        </p>
+        <p> If you try to write:</p>
+        <p class='code'>
+            public class LabeledTextField extends JLabel, JTextField<br>
+            {<br>
+            }
+        </p>
+        <p> Java <b>goes ballistic</b>. It won't even <b>compile</b> your
+            code. Java's hard-and-fast rule is that <b>each class can
+            extend only a single superclass</b>.
+        </p>
+    <h4>What is Composition?</h4>
+        <p> Fortunately, there is a simple solution. You can bundle both
+            your <code>JLabel</code> <b>and</b> your <code>JTextField</code>
+            <b>together in a single class</b>, making each of them
+            <b>fields</b> or <b>instance variables</b> in the new class.
+            This technique is called <b>composition</b>.
+        </p>
+        <p><img src='images/bicycle03.png' class='right' alt='Bicycle seat.'>
+            The idea of a composition relationship is really quite simple:
+            In the composition relationship, an object is <b>composed of
+            other objects</b>, which make up its "parts." That's why it's
+            called (informally) a <b>hasA</b> relationship; because we
+            can say that:
+        </p>
+        <ul>
+            <li> A car <b>has a</b> motor, or</li>
+            <li>A bicycle <b>has a</b> seat, or</li>
+            <li>A computer <b>has a</b> CPU</li>
+        </ul>
+        <p> You've already used composition in your programs of course:
+            when building graphical applications or applets that contain both
+            <code>JLabels</code> and <code>TextFields</code>. These
+            components are part of your application applet; they "live"
+            only as long as the application lives, and they exist only to
+            serve the purposes of your program.
+        </p>
+    <h3>Composition and the ACM Graphics Classes</h3>
+        <p> To create classes that "work together" with the ACM class libraries,
+            you'll have to use inheritance; only <code>GObject</code>s and their
+            subclasses can be added to the <code>GCanvas</code> that makes up
+            the central stage in an ACM <code>GraphicsProgram</code>. Similarly,
+            in the Java AWT world, only subclasses of the <code>Component</code>
+            class can be added to your applet (as we saw with the <code>Dot</code>
+            class in the last lesson).
+        </p>
+        <p> When you use <b>composition</b> with the ACM graphical classes,
+            you have three choices for your superclass:
+        </p>
+        <ul>
+            <li>you can extend the <code>GObject</code> class. This gives
+                you the most control over the exact way that the new
+                component works, but it requires the more work on
+                your part.
+            </li>
+            <li>you can extend the <code>GPolygon</code> class, using it to
+                create new geometric shapes, like stars and hexagons.
+            </li>
+            <li>you can extend the <code>GCompound</code> class. This
+                class was added to the ACM graphical classes for the
+                sole purpose of creating new components using
+                composition.
+            </li>
+        </ul>
+        <p> Let's look at creating a <code>GBall2</code> class using
+            <code>GCompound</code> first. Then, in the next lesson, we'll
+            look at creating <code>GBall3</code>
+            using <code>GObject</code> as the base class.
+        </p>
+    <h4>The GCompound Class</h4>
+        <p> As the JTF Tutorial points out, the ACM graphical shape classes
+            are like a set of basic building blocks that allow you to build
+            more complicated structures. You can think of them as the
+            &#147;atoms&#148; of the <code>acm.graphics</code> world.
+            As your programs become more complex, though, its useful to
+            assemble several atomic shapes into a &#147;molecule&#148;
+            that you can then manipulate as a unit.
+        </p>
+        <p> In the <code>acm.graphics</code> package, the <code>GCompound</code>
+            class provides this ability. One way to think of the
+            <code>GCompound</code> class as the <b>union</b> of the
+            methods available in the <code>GObject</code> class and of those
+            available in the <code>GCanvas</code> class.  As a
+            <code>GObject</code>, a <code>GCompound</code> responds to method
+            calls like <code>setLocation</code> and <code>move</code>;
+            as an implementer (like <code>GCanvas</code>) of the
+            <code>GContainer</code> interface, it supports methods like
+            <code>add</code> and <code>remove</code>.
+        </p>
+        <p> You can find a list of the important <code>GCompound</code>
+            methods by browsing the ACM Javadocs, available from your class
+            Web page.
+        </p>
+    <h4>The GBall2 Example</h4>
+        <p>You can see several <code>GCompound</code> example programs by
+            following the link to the JTF Home page from the class <b>Links</b>
+            page. In this lesson, I want to walk through each of the steps for
+            creating a new "bouncing ball" class using <b>composition</b>.
+            Along the way, I'll talk about some of the features of the
+            <code>GCompound</code> class in general.
+        </p>
+        <p> As I mentioned earlier, I'm calling this version of our bouncing
+            ball, <code>GBall2</code>. I used the Eclipse Class Wizard to create
+            the class skeleton. While you <b>can</b> fill in the superclass
+            (<code>acm.graphics.GCompound</code>) on the Class Wizard dialog page,
+            I usually leave the superclass set to <code>java.lang.Object</code> and
+            then add the <code>extends</code> clause (along with the required
+            <code>import</code> statements), manually:
+            <img src='images/gball201.png' class='inlineCenter' alt='The GBall2 skeleton.'>
+            By filling in those portions manually, I can use a <b>wildcard</b>
+            <code>import</code> for the <code>acm.graphics</code> package, instead of
+            the <b>class-specific</b> <code>import</code> statements written
+            by the Eclipse Class Wizard. In the starter code shown above, you
+            can see:
+        </p>
+        <ul>
+            <li>I've imported the <code>java.awt</code> package (to make use of the
+                <code>Color</code> class at a minimum) as well as the
+                <code>acm.graphics</code> package.
+            </li>
+            <li>I've added <code>extends GCompound</code> to the class header.</li>
+        </ul>
+        <p> In addition, you can see that <b>the class compiles correctly</b> without
+            any additional changes. As you remember from extending the <code>GOval</code>
+            class, that means that the <code>GCompound</code> class <b>must already
+            have a no-arg or default constructor</b>.
+        </p>
+    <h4>GBall2 Instance Variables and Constructor</h4>
+        <p> With composition, you create new classes by <b>combining objects</b> of
+            existing classes. In other words, your new class contains <b>instance
+            variables</b> that consist of the "parts" you want to use.
+        </p>
+        <p> In our case, we'll use the <code>GOval</code> class, just as we did with
+            our original ball, but this time we won't <b>extend</b> the class, but
+            instead, we'll add a <code>GOval</code> field like this:<br>
+            <img src='images/gball202.png' class='inlineCenter' alt='The GBall2 GOval instance variable.'>
+            Along with the <code>GOval</code> instance variable, we have a
+            couple of <code>double</code>s for <code>distance</code> and
+            <code>direction</code>, just like our previous version of <code>GBall</code>.
+        </p>
+        <p> To initialize the instance variable, of course, we'll need <b>a
+            constructor</b>. Let's use the <b>same</b> constructor that we
+            used for the original <code>GBall</code> class, with a few changes.
+            Here's the original:<br>
+            <img src='images/gball203.png' class='inlineCenter' alt='The GBall constructor marked up.'>
+            As you can see, <b>at a minimum</b> we'll need to:
+        </p>
+        <ol>
+            <li class='d'>Change the name of the constructor to match the class.
+                That's a "no-brainer".
+            </li>
+            <li class='d'>Initialize the <code>GBall</code> object <b>instead of</b> calling
+                the superclass constructor. This is a little more complex. In the
+                original <code>GBall</code>, the <code>location</code> parameter initialized
+                the position of the center of the <code>GOval</code> on the screen. In this program,
+                the <code>radius</code> and <code>color</code> will initialize the
+                <code>GOval</code>, but the <code>location</code> will set the position
+                of the <code>GCompound</code> subclass, <code>GBall2</code>, which is
+                a little different.
+            </li>
+            <li class='d'>Finally, the <code>setFilled()</code> and <code>setFillColor()</code>
+                are <b>no longer inherited</b> since <code>GCompound</code> doesn't implement
+                the <code>Fillable</code> interface. Instead, we have to apply these to
+                the <code>GOval</code> <b>instance variable</b>, <code>ball</code>.
+            </li>
+        </ol>
+        <p> Here's what those changes look like when added to the
+            <code>GBall2</code> class:<br>
+            <img src='images/gball205.png' class='inlineCenter' alt='The GBall2 constructor.'>
+            Let's walk through the changes, one by one.
+        </p>
+        <ol>
+            <li class='d'><img src='images/gball204.png' class='right' alt='Positioning the GOval.'>
+                The first section initializes the <code>GOval</code>
+                instance variable. It looks a little strange at first, so make
+                sure that you spend some time understanding what's going on.
+                The four parameters to the <code>GOval</code> constructor are
+                <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code>.
+                Both <code>x</code> and <code>y</code> are set to <b>a negative</b> <code>radius</code>.
+                <p>In other words, the upper-left corner (or origin) of the ball is moved
+                left and up, so that the <b>center of the ball sits on the origin
+                of the <code>GCompound</code> object</b> (here represented by
+                the dashed rectangle. Now, when the <code>GBall2</code> object is
+                positioned, the <code>GOval</code> will be drawn centered on
+                that point.
+                <p>In addition to positioning the <code>GOval</code> on the
+                <code>GCompound</code> object, the oval actually has to be
+                physically <b>added</b> to the surface of the component, just
+                as if we were adding it to a <code>GCanvas</code>.
+            </li>
+            <li class='d'>Since the <code>GBall</code> class extended the <code>GOval</code>
+                class, setting the location of the ball <b>isn't</b> the same as setting the
+                location of the component. In this case, the <code>location</code>
+                parameter is used to set the location of the <code>GBall2</code>,
+                <b>not</b> the location of the <code>Goval</code> it contains. (Notice
+                that the <code>setLocation()</code> method wants a <code>GPoint</code>
+                as a parameter. It would probably be better to make the location a
+                <code>GPoint</code> parameter instead of a <code>Point</code>. I only
+                left it as a <code>Point</code> because the original constructor was
+                written that way.
+            </li>
+            <li class='d'>Section 3 uses the same code as the original, except that
+                this time the <code>GOval</code> object named <code>ball</code> is
+                filled and its fill color is set, instead of the component itself.
+            </li>
+            <li class='d'>Finally, the <code>direction</code> and <code>distance</code>
+                are initialized using exactly the same code as before.
+            </li>
+        </ol>
+    <h4>Moving the GBall2</h4>
+        <p> The code for moving the ball is almost the same as the original
+            <code>GBall</code>. The only difference is that we need to use
+            the bounds of the <code>GOval</code> to decide when to bounce
+            the ball. That's done by adding the code shown here to set up
+            some local variables:<br>
+            <img src='images/gball206.png' class='inlineCenter' alt='Position of the ball in the component.'>
+            Using <code>left</code>, <code>right</code>, <code>top</code> and <code>bottom</code>,
+            the new "bouncing" code is a little simpler than the previous version
+            of <code>GBall</code>:<br>
+            <img src='images/gball207.png' class='inlineCenter' alt='Bouncing off the walls.'>
+        </p>
+        <p> You can download the finished version of <a href='GBall2.java' target='_blank'>
+            <b>GBall2.java</b></a> by clicking the link in this sentence. If you want to
+            try out the new component, <a href='PolarBounce4.java' target='_blank'>
+            <b>PolarBounce4.java</b></a> is a version of the array bouncer with only
+            the object type used by the array modified.
+        </p>
+     <h3>Coming Up . . .</h3>
+        <p> In this lesson, you learned how to use <b>composition</b> to
+            <b>combine</b> existing objects, creating new objects. You also
+            learned how to work with the ACM <code>GCompound</code> class.
+        </p>
+        <p> In the next lesson, you'll continue working with the <code>GCompound</code>
+            class, using it to create a reusable <code>PlayingCard</code> class.
+            Along the way, you'll be introduced to the need for Java's
+            <b>enumerated types</b>.
+        </p>
+
+    </div>
+
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

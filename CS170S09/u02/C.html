@@ -1,0 +1,752 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><b><span class="cap">W</span>hen you "look under the hood" of a
+            Java program</b>, what
+            you find is a community of cooperating objects.
+            <iframe src="http://csjava.occ.cccd.edu/~gilberts/applets/samples/example5A.html" title="The Hyaluronic Acid Molecule - (Use your Mouse)" alt="The Hyaluronic Acid molecule (Use your mouse to scroll)" scrolling="no" width="250" align="right" frameborder="0" height="250">
+                Your browser must support internal frames to see this illustration.
+            </iframe>
+            And, when you
+            take a closer look at those cooperating objects, what you find
+            are more objects; the <code>Graphics</code> objects and
+            <code>String</code> objects and <code>Scanner</code> objects
+            that make up the attributes of the programs you've built so far.
+        </p>
+        <p> But, what do you find if you look even <b>deeper</b>, putting each
+            of <b>those</b> attributes "under the microscope"? There, you'll
+            discover a different kind of entity&#8212;the <b>primitive type</b>.
+        </p>
+        <p> Here in the
+            "real" world, all of us understand that the objects we
+            deal with every day&#8212;our cars and homes and even our pets and
+            neighbors&#8212;are all constructed of simpler, and amazingly similar,
+            primitive components: chemical compounds, molecules, (like the
+            Hyaluronic acid molecule, shown to your right), and atoms.
+        </p>
+        <p>
+            The same is true in the computer programming world&#8212;no matter
+            what the language, at some level, if you drill down deep
+            enough, <b>everything is just bits</b>.
+        </p>
+        <p class="note">The Hyaluronic acid molecule is displayed via an
+            applet called <b>MoleculeViewer</b>. Use your mouse to rotate
+            the model in space. This is one of the standard
+            demo programs that come with the J2SE SDK. You'll find it
+            in your SDK folder under /demos/applets/MoleculeViewer.
+        </p>
+    <h3>The Great Divide</h3>
+        <p>While Java <b>does</b> have facilities for dealing directly with
+            bits&#8212;the most primitive elements in the computer
+            cosmology&#8212;you may never have to use one. (These <b>bitwise
+            operators</b> are covered in Appendix L, starting
+            on page 1142 of your text.)
+        </p>
+        <p> There is a second
+            kind of Java creature, however, that you're certain
+            to encounter. These are the creatures that live midway between
+            the minimalist world of the bit and the comfortable world
+            of objects. We call these creatures <b>primitives</b>,
+            <b>types</b>, or <b>fundamental types</b>.
+        </p>
+    <h4>What Are Primitives?</h4>
+        <p> Primitives are much like Java objects, because they
+            have <b>identity</b>, <b>state</b>, and <b>behavior</b>.
+            They differ from full-fledged objects, however, in three
+            important ways:
+        </p>
+        <ul>
+            <li>Primitive variables can hold only a <b>single</b> value.
+                Objects, by contrast, usually have many attributes, all
+                of which can take on different values.
+            </li>
+            <li>Primitive values are manipulated only by <i>operators</i>,
+                while Java objects respond to messages (or method
+                invocation.)
+            </li>
+            <li>The behavior of primitives is built-in. You cannot change
+                the way that a number responds to the addition operator,
+                for instance. With objects, on the other hand, if you don't
+                like a behavior, you can change it by creating your own
+                subclass and writing a new method.
+            </li>
+        </ul>
+    <h4>Why Primitives?</h4>
+        <p>Many "pure" object-oriented languages, such as Smalltalk,
+            have no primitive types. In those languages, <b>everything</b>
+            is an object: not just <code>Strings</code> and
+            <code>Graphics</code>, but also numbers and characters.
+            This has the advantage
+            of consistency; users don't have to think about <b>how</b> to do
+            an operation because all objects work in a similar way.
+        </p>
+        <p> On the other hand, having both primitive types for numbers and
+            characters, in addition to more complex object (or reference)
+            types, also has some advantages. The two most important
+            advantages are:
+        </p>
+        <ul>
+            <li><b><u>Simplicity</u> :</b> For arithmetic, at least,
+                primitive types, along with operators and operands,
+                seems easier to understand. Think about summing two numbers,
+                for instance.
+                For most of us, the thought of telling a number object to
+                add itself to another number object and then go tell a
+                third number object the result is not nearly as intuitive
+                as writing <code>sum = price + tax</code>.
+            </li>
+            <li><b><u>Efficiency</u> :</b> In general, primitive types
+                consume less memory than objects do, and operations on
+                primitive types run faster than equivalent operations
+                on objects using methods.
+            </li>
+        </ul>
+        <p>Java has four "families" of primitive types:
+        </p><ul>
+            <li>integers</li>
+            <li> floating-point numbers</li>
+            <li> characters</li>
+            <li> true/false values called <code>boolean</code></li>
+        </ul>
+        <p> In this lesson, we'll look at the integer and floating-point
+            families of numeric primitives. This material is covered
+            on in Section 2.5 and Section 4.1 in your text.
+        </p>
+    <h2>Meet the Integers</h2>
+        <p><b><span class="cap2">I</span>ntegers</b> are <b><u>whole</u></b>
+            numbers, including the counting numbers, zero and the negative
+            numbers. <code>27</code> is an integer, as is <code>-345</code>.
+            <code>7.25</code> is <b>not</b> an integer, because it is not
+            a whole number.
+        </p>
+        <p> <img src="images/d03.jpg" class="right" alt="Different popcorn sizes.">
+        In math, integers are infinite. Think of the biggest whole number
+            you can imagine. No matter how big you make it, you can
+            always make it bigger by adding one more digit onto the end.
+        </p>
+        <p>
+            In constrast, integer primitves&#8212;in the computer sense&#8212;are
+            <b>finite</b> because each integer number must be stored in
+            a <u>fixed-size region of memory</u>. This is just like the
+            different tubs of popcorn at the movie theater: you get the
+            <b>same kind</b> of popcorn in each tub, but the Small size
+            doesn't hold as much as the Super size.
+        </p>
+        <p> A computer type, like <code>int</code>, isn't <b>really</b>
+            an integer in the pure mathematical sense; instead, it's
+            just a representation of the <i>abstract integer concept</i>,
+            in the same way that a black-and-white photograph is a
+            limited representation of reality; both are subject to
+            certain constraints.
+        </p>
+        <p> These "computer-style" integers come in two "flavors":
+            <b>signed</b> integers, which represent both positive and
+            negative whole numbers (as well as zero), and <b>unsigned</b>
+            integers, which represent only zero and the positive whole
+            numbers. All of Java's integers are signed integers, but
+            other languages, like C++, have unsigned integer types
+            as well.
+        </p>
+        <p> Unsigned integers can represent numbers of a
+            greater <b>magnitude</b> than an equivalently sized signed
+            number, but both kinds have the <b>same range</b>. For instance,
+            the largest unsigned integer that can be represented using
+            two bytes of storage is 65,535, while the largest signed
+            integer, using the same amount of storage, is 32,767. Both
+            types, though, can represent 65,536 distinct integer values.
+        </p>
+    <h3>Java Integer Specifics</h3>
+        <p> Java's integer family has four members, the <code>byte</code>,
+            the <code>short</code>, the <code>int</code>, and the
+            <code>long</code>. Each of these primitive integer types uses
+            a specific amount of memory and thus, has a specific range of
+            values that can be represented.
+        </p>
+        <p>Here are the specifics: </p>
+        <ul>
+            <li>The <code>byte</code> type uses, as you'd expect, a byte (8
+                bits) of memory, and can represent 256 different numbers:
+                the numbers from -128 to +127.
+            </li>
+            <li>A <code>short</code> uses two bytes (16 bits) of memory
+                and thus can represent 65,536 different numbers&#8212;any
+                whole number in the range -32,768 to + 32,767.
+            </li>
+            <li>An <code>int</code>, the most common number type you'll
+                use in Java, uses four bytes (32 bits) of memory and can
+                hold any number in the range -2,147,483,648 to
+                +2,147,483,647, or, roughly, plus-or-minus two billion.
+            </li>
+            <li>The grandaddy of all integer types is the <code>long</code>,
+                which uses eight bytes (64 bits) of memory and can
+                hold values between, roughly, plus-or-minus nine quintillion.
+                (-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 to
+                be exact about it.)
+            </li>
+        </ul>
+        <p class="note"> You can look up the exact sizes in Table 1
+            in Section 4.1 of your text. You don't have to memorize
+            the exact ranges, but you should have a rough idea without
+            looking up the types. (+/-128, +/-32,000, +/-2 billion)
+        </p>
+
+    <h3>Integer Variables</h3>
+        <p> To construct an integer variable, you just use one
+            of these four <b>types</b> in the variable declaration statement
+            like this:
+        </p>
+        <p class="code">
+            <span class="red">byte</span> &nbsp;myAge &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &lt;initial value here&gt;<br>
+            <span class="red">short</span> milesToGo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &lt;initial value here&gt;<br>
+            <span class="red">int</span> &nbsp;&nbsp;populationUSA &nbsp;&nbsp;= &lt;initial value here&gt;<br>
+            <span class="red">long</span> &nbsp;populationWorld = &lt;initial value here&gt;
+        </p>
+        <p> To initialize your new integer variables you can use integer
+            literals, existing integer variables, expressions, or input
+            methods. Let's look at using integer literals first.
+        </p>
+        <p> To write an integer literal you simply write
+            out the number, <b>without commas or decimals</b>, like this:
+        </p>
+        <p class="code">
+            byte &nbsp;myAge &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="red">59;</span><br>
+            short milesToGo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="red">23455;</span><br>
+            int &nbsp;&nbsp;populationUSA &nbsp;&nbsp;= <span class="red">263456732;</span><br>
+            long &nbsp;populationWorld = <span class="red">5374678328L;</span>
+        </p>
+        <p> You may also use an optional <b>sign</b> character (+ or -),
+            immediately preceding the digits, but nothing else. (As a stylistic
+            matter, you really shouldn't ever use a plus (+) sign, since it is
+            doesn't really have any meaning. Also, if you use a minus sign,
+            don't leave a space between the sign and the first digit. That
+            will make it easier for those reading your code to understand
+            your intentions.)
+        </p>
+    <h4>Literal Storage</h4>
+        <p> When standing by themselves, or when used in a calculation,
+            plain <b>integer literals</b> use 32 bits of memory; in other
+            words, integer literals are of the <code>int</code> type.
+            If a number is very small, (for instance, the literal number 3
+            which could easily be stored in a byte), it
+            <b>still</b> uses 32 bits of memory, not just 8.
+        </p>
+        <p> When used to initialize variables smaller than an
+            <code>int</code>, such as <code>myAge</code> or
+            <code>milesToGo</code> (in the example at the beginning of this
+            section), Java copies the appropriate number
+            of bits from the <code>int</code> literal into a variable of the
+            specified size, after first making sure it will fit.
+        </p>
+        <p> Here's are two examples:</p>
+        <p class="code">
+            <span class="cmt">// Literal 10 uses 32 bits of storage</span><br>
+            byte aByte = 10;&nbsp;<span class="cmt"> // Copy 8 bits into aByte</span><br>
+            byte bByte = 150; <span class="cmt"> // Too large to fit into 8 bits; error</span>
+        </p>
+        <p> The literal values 10 and 150 <b>both</b> occupy 32 bits (or 4 bytes) in
+            memory. When the compiler examines this code, it "notices" that
+            no information will be lost in the first case, if three of those
+            bytes are discarded and the remaining byte is transferred to the
+            variable <code>aByte</code>. In the second case, though, the
+            compiler sees that information <b>will</b> be lost if only one
+            byte from the literal 150 is transferred to the variable
+            <code>bByte</code>, and so it refuses to allow it.
+        </p>
+        <p> While
+            Java always uses the <code>int</code> type for integer literals,
+            you can force it to use 64 bits to store an integer by appending
+            an L (for <code>long</code>) to the value like this:
+            <code>3L</code>.
+            You'll find this useful when you learn about <b>overloaded
+            methods</b> because it allows you to call a specific method
+            by varying the type of the argument you pass.
+        </p>
+        <p class="code">
+            myObject.someMethod( 3 ); &nbsp;<span class="cmt">// calls someMethod( int )</span><br>
+            myObject.someMethod( 3L ); <span class="cmt">// calls someMethod( long )</span>
+        </p>
+        <p> You also need to append an L when you want to write very
+            large literal numbers, like that used to initialize the
+            <code>populationWorld</code> variable in the example shown
+            at the beginning of this section. If you fail to add the
+            L at the end, the compiler will complain that the number
+            you've typed isn't a valid integer.
+        </p>
+    <h4>Integer Bases</h4>
+        <p> When you write integer literals of any type, Java assumes
+            you are using the decimal (<i>base 10</i>) number system.
+            (These are still integers, however. Don't start thinking <i>decimal
+            point</i>!) For those of you with a need to write literals in a base
+            other than 10, you have two options:
+        </p>
+        <ul>
+            <li>Java interprets an integer literal that starts with
+                <b>zero</b> as an <b>octal</b> (or <i>base 8</i>) number.
+            </li>
+            <li>Java interprets literal numbers that start with <b>zero-x</b>,
+                (or <b>zero-X</b>), as <b>hexadecimal</b> ( or <i>base 16</i>)
+                numbers.
+            </li>
+        </ul>
+        <p> For those of you with a need to write your integer literals in some
+            <b>other base</b>, base-five or base-twelve, for instance,
+            you're out of luck.
+        </p>
+    <h5>Some Examples</h5>
+        <p class="code">
+            int ten = 10; <span class="cmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 1 ten + zero ones</span><br>
+            int eight = 010;<span class="cmt">&nbsp;&nbsp;&nbsp;&nbsp;// 1 eight + zero ones</span><br>
+            int sixteen = 0x10;<span class="cmt">&nbsp;// 1 sixteen + zero ones</span>
+        </p>
+        <p> Why would you even <b><i>want</i></b> to use an octal or
+            hexadecimal literal instead of the more comfortable base-10
+            numbers we humans are used to? Well, for some applications,
+            hexadecimal is much more convenient. Here, for instance, is
+            the (typically convoluted) code for a Web page:<br>
+            <img src="images/d04b.gif" alt="Some HTML code." vspace="15" hspace="15">
+            <br>Like many HTML pages, the background and foreground colors
+            are specified using hexadecimal numbers. If you were writing an
+            applet whose color need to match the background color shown here,
+            then using decimal, like this:
+</p><pre>Color bgColor = new Color(13421772);
+</pre>
+            is much more confusing than using hexadecimal, like this:
+<pre>Color bgColor = new Color(0Xcccccc);
+</pre>
+    <h4>Which Integer Type Should You Use?</h4>
+        <p> Since you have the option of using four different types
+            of integers, which one should you use? The general
+            rule-of-thumb is that you should use the smallest type
+            that will hold the largest value you expect.
+        </p>
+        <p> Unfortunately, this rule of thumb can lead to some surprising
+            problems because:
+        </p>
+        <ul>
+            <li>Smaller sizes won't necessarily save memory.
+                Calculations <b>always</b> use <code>int</code>
+                or <code>long</code>, never <code>byte</code> or
+                <code>short</code>. You'll only save memory if you
+                have large collections (arrays) of <code>byte</code>s
+                or <code>short</code>s, and you don't need to do
+                individual calculations on the elements.
+            </li>
+            <li>Using an <code>int</code> when you should have
+                used a <code>long</code> can create <b>overflow</b>
+                problems, and you will not be warned. This can occur
+                when any part of a calculation using <code>int</code>
+                values becomes greater than (approximately) 2 billion.
+                When this overflow occurs, your calculation will be
+                incorrect. When deciding which type to use, you have
+                to consider all intermediate calculations as well as
+                the final result.
+            </li>
+        </ul>
+        <p> The best rule of thumb is:</p>
+        <p class="pullquote">Always use int; unless you <b>must</b> use
+            something else!
+        </p>
+    <h2>Real Numbers</h2>
+        <p><b><span class="cap">A</span>s you saw at the beginning of this
+            lesson</b>, Java has both object types, such as <code>Graphics</code> and
+            <code>String</code>, and <b>primitive types</b>, which consist
+            of numbers, characters, and true-false values.
+            <img src="images/d10.gif" class="right" alt="A fraction.">
+            You just met the four Java <b>integer types</b>:
+            <code>byte</code>, <code>short</code>, <code>int</code>, and
+            <code>long</code>. Each integer type represents a set of signed,
+            whole numbers of a particular range; <code>byte</code> has the
+            smallest range, and <code>long</code> has the largest. None of
+            these integer types, however, can represent fractional
+            or "real" numbers.
+        </p>
+        <p>
+            Real numbers in Java are represented by
+            the two <b>floating-point</b> types, <code>float</code> and
+            <code>double</code>. Floating-point primitive types
+            can hold fractional values in addition to whole numbers. These
+            types are the topic of this lesson.
+        </p>
+    <h3>How Floating-Point Numbers Are Stored</h3>
+        <p> To understand how floating-point numbers are stored in memory,
+            we first need to understand a little about how binary
+            numbers work. Appendix B in your textbook (page 665)
+            has more information.
+        </p>
+        <p><img src="images/c08.gif" class="right" alt="A decimal number.">
+            Internally, <b>all computers</b> and <b>all programs</b>
+            use <b>binary numbers</b> to represent <b>everything</b>.
+            Everything includes text, numbers, sound, and graphics.
+        </p>
+        <p> A binary number is just like the decimal numbers you grew
+            up with, except it uses <b>base 2</b> instead of
+            <b>base 10</b>. We call our decimal number system
+            base 10, because it uses <b>ten digits</b>: 0 to 9.
+            When we combine these digits together to produce larger
+            numbers, the value of each digit depends upon its
+            position in the number as a whole.
+        </p>
+        <p> If the digit is in the first position, it represents the
+            number of ones, the second position represents the
+            number of tens, the third the number of hundreds,
+            followed by thousands, ten-thousands, etc.
+        </p>
+        <p> Here's an example. Consider the number 4,123:</p>
+        <ul>
+            <li>Starting in the right-hand position is the digit
+                3. Since it's in the right hand position, this
+                means our number has 3 ones.
+            </li>
+            <li>The next position is the number of tens, and
+                the digit in this position is 2 so we add 2 * 10
+                or 20.
+            </li>
+            <li>The third position is the hundreds, and here we
+                have the digit 1, so we add 1 * 100 or 100.
+            </li>
+            <li>Finally, in the fourth position, we have the
+                digit 4. Since this is the thousands position,
+                we have 4 * 1000 or 4000.
+            </li>
+        </ul>
+        <p> If we add all of those together&#8212;<b>4000 + 100 + 20 + 3</b>&#8212;we
+            end up with our final number.
+        </p>
+    <h4>Unsigned Binary Numbers</h4>
+        <p><img src="images/c09.gif" class="right" alt="A binary number.">
+            In the base two or binary number system, there are
+            only <b>two digits</b>, <b>0</b> and <b>1</b>, not ten
+            digits. (Of course, that's why binary is used for
+            digital computers, because electronic components like
+            transistors, which can be on or off, can easily
+            represent the binary digits in a binary number.)
+        </p>
+        <p> Because we have only two digits, the positions in the
+            number take on a different meaning. Instead of the
+            ones, tens, hundreds, and thousands places, we have
+            the ones, twos, fours, eights, and sixteens places.
+            (Notice that each place is simply two times the place
+            value to its right, just like in the decimal system,
+            each place is just ten times the place value to its
+            right.)
+        </p>
+        <p> If we look at the binary number <b>1101</b>, you can
+            see that, in decimal, it represents 1 one, plus 0 twos,
+            plus 1 four, plus 1 eight, or 13.
+        </p>
+    <h4>Floating-point Storage</h4>
+        <p> Floating-point numbers can store fractional values
+            because they use a different <b>internal</b> format than
+            binary integers. Instead of storing one simple binary value,
+            floating-point numbers are stored as <b>two</b> binary
+            numbers: an integer value, called the <b>exponent</b>,
+            and a binary fraction known as the <b>significand</b> or,
+            more informally, the <b>manitissa</b>. In addition,
+            floating-point numbers keep one bit reserved to store
+            the <b>sign</b> of the number.<br>
+            </p><center>
+            <img src="images/z01.gif" alt="Floating-point storage" vspace="15" border="1"><br>
+            </center>
+            When the actual value is used, a mathematical operation is
+            performed by your computer using the two binary numbers to
+            compute the final amount.
+        <p></p>
+        <div class="redbox">
+        <p> Here's an example. Suppose we want to store the real number
+            13.75 as a floating point number. We'd first convert the
+            whole number part to the binary number <code>1101</code>
+            as shown in the previous section. But, how do we represent
+            the .75 part?
+        </p>
+        <p> The fractional portion of a binary number works just the
+            same way as the fractional portion of a decimal number.
+            In a decimal number the first place to the right of the
+            decimal is 1/10, the next 1/100, and the next 1/1000.
+            With the binary, or base 2 system, the first postion to
+            the right is 1/2, the next 1/4, and the following 1/8.
+        </p>
+        <p> Given this information, you can see that we can represent
+            the decimal number <code>13.75</code> as the binary number
+            <code>1101.11</code>, where the <code>.11</code> represents
+            1/2 + 1/4 or .75 in decimal.
+        </p>
+        <p> To store this number in the floating-point format, we move
+            the binary point to the left by 4 places, so we have a
+            mantissa of <code>110111</code> and an exponent of
+            <code>100</code> (4 in decimal).
+        </p>
+        <p> If you're interested, you can learn more about how
+            floating-point numbers are stored by reading the
+            <a href="http://en.wikipedia.org/wiki/Floating_point" target="_blank">
+            <b>Wikipedia</b></a> article on floating-point numbers.
+        </p>
+        </div>
+    <h4>Floating-point Limitations</h4>
+        <p> Because of this scheme, floating point numbers are
+            often only an approximation of the <b>actual</b> number you are
+            trying to represent.
+        </p>
+        <p> Most of us are familiar with this concept from fifth and
+            sixth grade when we learned about fractions and decimal numbers.
+            In fifth grade we learned that 1 divided by 3 was 1/3, and
+            1/3 + 1/3 + 1/3 was 1.
+        </p>
+        <p> <img src="images/z02.gif" alt="Windows Calculator after dividing 1 by 3" align="right" hspace="15">
+            When decimal numbers came round the next year, however, things
+            got a little more complex; 1 divided by 3 became .3333333
+            and there didn't seem to be anyway to get back to where you
+            started by adding the results together.
+        </p>
+        <p> The same <b>kind of thing</b> occurs with binary floating point
+            numbers. Just as you <b>cannot</b> accurately represent the
+            number 1/3 as a decimal (base 10) number, there are certain
+            numbers that cannot be represented in binary (base 2).
+            The only difference is that there are <b>more</b> repeating
+            fractions with binary numbers, than there are in decimal.
+        </p>
+        <p> This type of problem is called a <b>representational error</b>,
+            or, sometimes, a <b>rounding error</b>.
+        </p>
+        <p> Floating-point numbers are also susceptible to other kinds of
+            errors that can snare the unwary or the extra-weary. If you add
+            a very small number and a very large number together, for
+            instance, you will often exceed the number of digits that the
+            floating-point number can accurately represent. You can find
+            out more in the Wikipedia article referenced earlier.
+        </p>
+    <h3>Java's Floating-point Numbers</h3>
+        <p> Java has two different primitive types for storing
+            floating-point numbers, the <code>float</code> and the
+            <code>double</code>. As with the different types in the
+            integer family, each of these two types uses a different
+            amount of memory and can represent a different range of
+            numbers.
+        </p>
+        <p> While the different integer types differ only in their range,
+            floating-point types differ in their <b>precision</b> as well. The
+            precision of a floating point number is measured by the
+            number of <b>significant digits</b> in its presentation.
+            Here's an example applet that shows you how precision works.
+        </p>
+        <div class="redbox">
+        <p> Here is a large number, easily within the
+            <b>range</b> of a <code>float</code> or <code>double</code>:
+        </p>
+        <p> Click your mouse in the text field, and
+            then press the ENTER key. The applet redisplays the number
+            just above the text field. You'll see that Java only retains
+            a certain number of digits, and seems to "lose" the
+            fractional portion of the number all together.
+        </p>
+        <center>
+        <div class="box">
+            <applet code="Float01.class" codebase="http://csjava.occ.cccd.edu/~gilberts/applets" alt="The Float01 applet demonstrates the limits to floating-point precision" height="60" width="300">
+            </applet>
+        </div>
+        </center>
+        </div>
+        <p>Here are the stats, (range and precision), for the two
+            members of the floating-point family:
+        </p>
+    <h4>double</h4>
+        <p>The <code>double</code>, (which is the default format
+            for floating-point literals, just like <code>int</code>
+            is the default format for integer literals), uses eight
+            bytes (64 bits) of storage.
+        </p>
+        <p> The <b>range</b> of numbers it can represent include the
+            positive and negative numbers as small as 4.94E-324,
+            and positive or negative numbers as large as 1.79E+308.
+        </p>
+        <p class="note">For those of you not conversant with
+            exponential notation, that last is the number 1.79 with
+            the decimal point moved to right by 308 places. That is a
+            <b>very</b> big number.
+        </p>
+        <p> The <b>precision</b> for a double is approximately 16
+            significant digits.
+        </p>
+    <h4>float</h4>
+        <p> The <code>float</code> uses half the storage as a
+            <code>double</code>, at four bytes (32 bits).
+        </p>
+        <p> The float has about 8 digits of <b>precision</b>, and its
+            <b>range</b> can represent very small positive or negative
+            numbers from 1.4E-45, and very large positive
+            or negative numbers up to 3.4E+38.
+        </p>
+        <p class="note"> As you can see, the <code>double</code> type has
+            a range approximately ten times that of the <code>float</code>,
+            although its precision is only about twice the <code>float</code>.
+            That is the meaning of the name <code>double</code>, which is
+            short for <b>double precision</b>. For the same reason, some
+            other languages, such as Visual Basic, call the <code>float</code>
+            type, a <code>single</code>.
+        </p>
+    <h3>Floating-point Variables</h3>
+        <p> Just as with integers, you create floating-point variables
+            by specifying the <b>type</b>, (<code>float</code> or
+            <code>double</code>), and a <b>name</b>, optionally followed by
+            an initializer. As with the integers, you can use
+            to write <b>floating-point literals</b>, previously initialized
+            <b>variables</b>, <b>expressions</b>, or <b>user-input methods</b>
+            to initialize your floating-point variables.
+        </p>
+        <p>You can write floating-point literals in two different ways:</p>
+        <ul>
+            <li>using decimal notation, or</li>
+            <li>using exponential, (or scientific), notation.</li>
+        </ul>
+        <p> When you use decimal notation, you may use an <b>optional sign</b>,
+            followed by digits and a single decimal point. You may have digits
+            on either side (or both sides) of the decimal-point, but you
+            don't <b>have</b> to have digits on both sides of the decimal,
+            as you do in some languages (such as Pascal).
+        </p>
+        <p> These are both valid variables, initialized using floating-point
+            literals and written using decimal notation:
+        </p>
+        <p class="code">
+            double first = .234; &nbsp;&nbsp;&nbsp;<span class="cmt">// No digit before</span><br>
+            double second = 7.5432; <span class="cmt">// Digits on both sides</span><br>
+        </p>
+    <h4>About Those floats</h4>
+        <p> When you write a floating-point literal, Java automatically
+            uses the <code>double</code> type. This creates a problem when
+            you want to store the number in a <code>float</code> variable.
+        </p>
+        <p> Remember that floating-point numbers are stored in a different
+            format than binary integers. To store a <code>double</code>
+            value in a <code>float</code> variable, Java <b>cannot</b>
+            simply copy part of the number, as it does for integers. Instead,
+            Java has to recompute both the mantissa and the exponent
+            portion of the number, which it <b>does not do automatically</b>.
+        </p>
+        <p> Because of this, when you want to store a literal floating-point
+            number in a <code>float</code> variable, you <b>must</b> add an
+            <b>F</b> at the end of the number like this:
+        </p>
+        <p class="code">
+            float third = 3.5F;<br>
+            float fourth = .2756f;
+        </p>
+        <p class="note">Note that you may use either an uppercase <b>F</b>
+             or a lowercase <b>f</b>. You may alos append an uppercase
+             <b>D</b> or a lowercase <b>d</b> to a literal to signify that
+             it is of type <code>double</code>. This is occassionally useful:
+             the literal <code>7</code>, for instance, is an <code>int</code>,
+             while <code>7d</code> and <code>7.0</code> are both
+             <code>double</code>.
+        </p>
+    <h4>Exponential Notation</h4>
+        <p> You can also write floating-point literals using exponential,
+            (aka scientific), notation. To use exponential notation,
+            write the first digit of your number, followed by a
+            decimal point and all of the rest of your digits.
+        </p>
+        <p>For instance, to write the number <b><code>23456.789</code></b>
+            in exponential notation, start by writing:
+        </p>
+        <div class="box">
+            <code><b>2.3456789</b></code>
+        </div>
+        <p> Immediately following this, write an <b><code>e</code></b>
+            or an <b><code>E</code></b>&#8212;making sure you don't
+            add any spaces&#8212;followed by the number of places required
+            to move the decimal when the number is "decoded."
+        </p>
+        <p> In our example, we need to move the decimal <u>to the right</u>
+            by four places to reconstruct our original, so the finished
+            number would look like this:
+        </p>
+        <div class="box">
+            <b><code>2.3456789E4</code></b>
+        </div>
+        <p> If the number you're working with is small&#8212;say
+            <b><code>.000004572</code></b>&#8212;you do the same thing.
+            The only difference is you use a <u>negative exponent</u> which says,
+            "move the decimal point to the left, not the right". To write
+            the preceeding number in exponential notation you'd write:
+        </p>
+        <div class="box">
+            <b><code>4.572e-6</code></b>
+        </div>
+        <p class="note">Make sure you don't confuse using a negative
+            exponent (where the sign goes after the E/e) and a negative
+            number, where the sign goes <u>before the first digit</u>.
+        </p>
+    <h4>Which Should You Use?</h4>
+        <p> Choosing between using scientific notation and decimal
+            notation when you write your literals is usually not difficult.
+            If you have very large numbers or very small numbers, you
+            should use scientific notation. If you have "numbers of everyday
+            experience", you probably want to use regular decimal notation.
+        </p>
+        <p> Deciding between the types <code>float</code> and <code>double</code>
+            also is usually not very difficult. The type <code>double</code>
+            is the "natural" type for most floating-point hardware today,
+            so, unless you have some compelling reason to use
+            <code>float</code>, don't.
+        </p>
+        <p> Finally, what about choosing between <code>int</code> and
+            <code>double</code>? Why not just do everything as a <code>
+            double</code> so you only have to deal with one numeric type?
+            As tempting as that sounds, doing calculations with <code>double
+            </code> is significantly slower than using <code>int</code>.
+        </p>
+        <p> In general:</p>
+        <p></p>
+        <p class="pullquote">
+            Always use <b>int</b> unless you need fractions.<br>
+            If you need fractions, use <b>double</b>. <br>
+            Use the other numeric types only if you have compelling reason.<br>
+        </p>
+
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, you learned how to create variables
+            using each of the four integer types and both of the
+            floating-point types available in Java. You also learned
+            how to initialize those variables using literals.
+        </p>
+        <p> In the lesson you'll learn how to
+            use these primitive types in <b>calculations</b>.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

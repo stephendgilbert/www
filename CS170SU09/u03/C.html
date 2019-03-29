@@ -1,0 +1,963 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/c.jpg" alt="CS 170 Lesson C logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p><img src="images/cooper.jpeg" class="right" alt="Gary Cooper.">
+            <b><span class="cap2">E</span>ven Gary Cooper</b>, a
+            man of notoriously few words, was not reduced to speaking in
+            single characters. Most communication requires <i>groups</i>
+            of characters. In human speech we call these phrases and
+            sentences. In Java, we store phrases and sentences in
+            <code>Strings</code>.
+        </p>
+        <p> In Unit 2, you met the <code>String</code>
+            class and worked with literals, escape sequences, output,
+            and concatenation. In this lesson we'll take a look at the <b>methods</b>
+            available to <code>String</code> objects. But first,
+            a little review.
+        </p>
+        <p>In Java, a <code>String</code> is: </p>
+        <p class="pullquote">
+            an immutable sequence of 0..n characters.
+        </p>
+        <p> There are two things to notice about this definition that
+            makes Java <code>String</code> objects different than characters,
+            and different than strings in other programming languages.
+        </p>
+        <ul>
+            <li>First, Java strings are <b>immutable</b> or constant.
+                Just as the character literal 'A' cannot suddenly morph
+                into 'B', so a <code>String</code> object, once created,
+                can <b>never</b> be changed. It will always be composed
+                of <b>exactly</b> the same sequence of characters.
+                <p class="note">This is much different than C or Pascal, where you
+                can change the individual characters that a string
+                contains. Java has the <code>StringBuilder</code> and
+                <code>StringBuffer</code> classes, which work more like strings
+                in other programming languages. There is more information on
+                these classes in your textbook, if you are interested.</p>
+            </li>
+            <li> Second, Java strings can hold <b>0..n</b> characters,
+                while a <code>char</code> variable must always hold
+                <b>exactly</b> one character.
+            </li>
+        </ul>
+        <p> Let's take a closer look at the nature of the <code>String</code>
+            class.</p>
+    <h3>Object or Primitive?</h3>
+        <p> Because Java has a strong syntactical resemblence to
+            the C programming language, programmers often expect Java
+            <code>String</code> objects to act like "null-terminated arrays of
+            <code>char</code>", which is what strings are in C.
+            Java's <code>String</code> objects don't act like that at all!
+        </p>
+        <p> In fact, Java <b>String</b>s act a little bit like objects,
+            (but with some unusual features), and a little bit like primitive types.
+            <code>String</code> objects, for instance, are the <b>only</b>
+            object type that allows you to initialize them using
+            <b>literals</b>, without using the <code>new</code> operator.
+        </p>
+        <p> Furthermore, unlike the other object types, <code>String</code>
+            objects can be manipulated with several different
+            <b>operators</b>.
+        </p>
+        <p> <img src="images/z06b.gif" alt="The image shows two String variables, first and second, that both refer to [or point to] the same sequence of characters" class="right">
+            <code>Strings</code> are <b>not</b> primitive, or fundamental
+            types, however. Unlike primitive types, <code>String</code>
+            variables hold <b>references</b> to <code>Strings</code>,
+            not the actual character values. That means that two
+            <code>String</code> variables can refer to the same,
+            actual <code>String</code> object like that shown
+            in the screenshot to the right.
+        </p>
+        <p> As you can imagine, if one of the <code>String</code> variables
+            shown here were allowed to change the contents of the
+            <code>String</code> object, "<b>Hello Dolly</b>", it would
+            have a serious impact on the other. That's the reason that
+            <code>String</code> objects are immutable in Java.
+        </p><p></p>
+        <p> Which is not to say that you can't manipulate a <code>String</code>.
+            Unlike the numeric and character primitives, the
+            <code>String</code> has a rich variety of methods that can be
+            used to control them; they are not restricted to operator
+            manipulation. To look up those methods, you'll use the
+            <b>online JavaDoc</b> documentation system, which you'll
+            learn how to use shortly.
+        </p>
+    <h4>String Literals</h4>
+        <p> You'll recall from Unit 2 that you to
+            initialize a <code>String</code> variable using a <b>literal</b>,
+            just form your <code>String</code> using regular characters,
+            and enclose the whole thing in double quotes, like this:
+        </p>
+        <p class="code">
+            String greeting = "G'day Mate!";
+        </p>
+        <p> Note that you don't have to use the escape character with the
+            single quote, when the single quote is used inside
+            a <code>String</code> literal.
+        </p>
+        <p> An embedded escape sequence inside a <code>String</code> will
+            be expanded when the characters are stored. In a Unicode enabled
+            environment, for instance, you could write:
+        </p>
+        <p class="code">
+            String message = "\u00BC is \u00BD of \u00BD";<br>
+            <span class="cmt">// Says "¼ is ½ of ½"</span>
+        </p>
+    <h4>The null String</h4>
+        <p> A <code>String</code> variable that points to "nothing" is
+            called the <b>null</b> <code>String</code>. You cannot send
+            any messages to a <b>null</b> <code>String</code> or apply
+            any operations to a <b>null</b> <code>String</code>, except
+            for the assignment operator.
+        </p>
+        <p> Here are two field definitions that illustrate the <b>null</b>
+            <code>String</code>:
+        </p>
+        <p class="code">
+            String s1; <span class="cmt">// Not inititialized; value is null</span><br>
+            String s2 = null;
+        </p>
+        <p> In the first case, the <code>String</code> <b>s1</b> is not
+            assigned a value, so it is given the value <b>null</b> by
+            default. In the second example, the special object constant
+            value <b>null</b> is assigned to the <code>String</code>
+            <b>s2</b>.
+        </p>
+        <p class="note">Note that if the <code>String</code>
+            <b>s1</b> is a <u>local variable</u>, Java <b>won't</b>
+            compile your code if you attempt to use the variable. If
+            <b>s1</b> were an instance or class variable, though,
+            (which we'll be covering later), Java wouldn't
+            prevent you from using the variable, but a runtime
+            error would occur when you used it, just as it would
+            for the variable <b>s2</b>.
+        </p>
+    <h4>The Empty String</h4>
+        <p> A <b>null</b> <code>String</code> does not refer to anything.
+            The <b>empty</b> <code>String</code>, in contrast, refers to
+            a valid <code>String</code> object, one that contains <b>zero</b>
+            characters. Unlike the <b>null</b> <code>String</code>, the
+            empty <code>String</code> responds to messages and may be used
+            in <code>String</code> expressions.
+        </p>
+        <p> To create an empty <code>String</code> you use a pair of
+            adjacent double-quotes with no intervening spaces like this:
+        </p>
+        <p class="code">
+            String emptyString = "";
+        </p>
+    <h4>String Operations</h4>
+        <p> Although <code>Strings</code> are really reference types,
+            like other objects, there are also have several operators
+            that act upon <code>String</code> operands.
+        </p>
+        <p> When used with <code>Strings</code>, the "plus sign" (+) acts to
+            "paste" two <code>Strings</code> together to form a new
+            <code>String</code>, a process called <b>concatenation</b>,
+            (as you saw in previous units.)
+            In addition, though, the shorthand operator (<b>+=</b>)
+            also performs concatenation when its left-hand operand is a
+            <code>String</code> variable.
+        </p>
+        <p> Here are some examples of <code>String</code> concatenation:</p>
+        <p class="code">
+            String s1 = "How";<br>
+            String s2 = "now";<br>
+            String s3 = "cow?";
+            <br>
+            String s4 = s1 + " " + s2;<br>
+            s4 += " brown " + s3;
+        </p>
+        <p> Note that you can concatenate both variables and
+            <code>String</code> literals. You can use the += operator only
+            when the value on the left is a <code>String</code>
+            <b>variable</b>, as in the last line.
+        </p>
+    <h2>String Methods and the JavaDocs</h2>
+        <p> <img src='images/fishing02.gif' class='right' alt='A fisherman.'>
+
+            <b><span class="cap">T</span>here's an old saying</b>, you've
+            probably heard a hundred times:
+        </p>
+        <p class="pullquote">
+            Give a man a fish and you feed
+            him for a day. Teach a man to fish,
+            and you feed him for his life.
+        </p>
+        <p> Programming is a lot like that. Learning <b>about</b>
+            the <code>Math</code> and <code>String</code> classes is
+            not <b>nearly</b> as important as learning <b>how to learn about</b>
+            the <code>Math</code> and <code>String</code> classes.
+        </p>
+        <p> In Java, you can learn about all the Java classes by using the
+            online Java Documentation, often called the <b>JavaDocs</b>
+            after the program which generates the HTML help files from
+            comments embedded in the Java source code.
+        </p>
+        <p> In this lesson, you'll learn how to get to the docs from
+            the Web, how to search for the class you want to find, and
+            how to interpret the documentation that you find there.
+        </p>
+
+    <h3>Locating the Documentation</h3>
+        <p> To find the documentation for any of the Java classes, you can use
+            your Web browser to access the online version at <b>Sun</b>.
+            The online docs are always available at:
+        </p>
+        <p class="screen">
+            <a href="http://java.sun.com/javase/6/docs/api/index.html" target="_blank">
+
+            <b>http://java.sun.com/javase/6/docs/api/index.html</b></a>
+        </p>
+        <p> Of course, sometimes it's hard to remember something like that, so
+            I've placed a link to the Java API docs on the class syllabus page.
+            You'll find the link in the upper-right corner; it should look
+            something like this.<br>
+            <img src='images/javadoclink.gif' class='inline' alt='The syllabus link to the Java Docs.'>
+        </p>
+        <p> <img src='images/javadoc-eclipse-external.gif' class='right' alt='Opening the Javadocs in Eclipse.'>
+            If you're working in Eclipse and you don't want to visit the CS 170 home
+            page, Eclipse will open the JavaDocs on the Sun site in your browser. Just:
+        </p>
+        <ol>
+            <li class='d'> Expand the <b>JRE System Library</b> node in the Package Explorer.</li>
+            <li class='d'> Select the file <b>rt.jar</b> that appears there.</li>
+            <li class='d'> From the <b>Navigate</b> menu, choose <b>Open External Javadoc</b>
+                and Eclipse will launch your browser.
+            </li>
+        </ol>
+        <p class="note"> If you aren't
+            connected to the Internet, or, if you have a slow
+            connection, you might want to read the documentation on
+            your local machine. Visit the <b>Sun</b> site
+            (<b>http://java.sun.com</b>) and download the Java
+            documentation package and unzip it. Then, simply double-click the file
+            <b>index.html</b>, located in the <b>docs/api</b> directory.
+        </p>
+        <h4>Eclipse Auto-Lookup</h4>
+        <p> Perhaps an even easier way to look up the documentation from within
+            Eclipse is to let Eclipse do the searching for you from inside your
+            editor. If, for instance, you want to look up the documentation for
+            the <code>String</code> class, you can just highlight the word
+            <code>String</code> (anywhere in your current document), and press
+            the <b>F1</b> key to bring up the help system.
+        </p>
+        <p> When the Help window appears, you can select <i>Javadoc for
+            'java.lang.String'</i> from the <b>Related Topics</b> window like this:<br>
+            <img src='images/eclipsehelp.gif' class='inlineCenter' alt='Selecting the
+            Eclipse Help Window.'>
+            The Javadoc API for the <code>String</code> class will then open inside
+            the Eclipse help window. When the Javadoc appears, you can maximize the
+            help window by double-clicking the title tab.
+        </p>
+        <p> You can also use this auto-lookup to open the external Javadoc API in
+            your Web browser. Just press <b>Shift+F2</b> instead of F1.
+        </p>
+
+    <h3>The JavaDoc API Window</h3>
+        <p> Once you open the API documentaion, you'll start at the main
+            <b>JavaDoc</b> window, which you can see below. The
+            <b>JavaDoc</b> interface consists of three frames:<br>
+        <img src="images/g15.gif" alt="The JavaDocs window in Firefox."
+            class='inline'>
+        </p>
+        <ol>
+            <li class='d'>First, the <b>package browser</b> in the upper left-hand
+                corner allows you to select individual packages, so that only
+                the classes in that package appear inside the <b>class browser</b> window
+                below it. You can also click individual packages by selecting
+                the links in the center frame. I usually close this frame by
+                sliding the bottom bar up to the top, since I don't find it
+                very useful to restrict my searching to a single package.
+                When you first arrive, the package browser is set to display all classes.
+            </li>
+            <li class='d'>Second, the <b>class browser</b> in the lower-left corner consists
+                of hyperlinks to all of the classes and interfaces in the currently
+                selected package. Since these are in alphabetical order, it's a
+                simple matter to scroll down and find the class you want.
+            </li>
+            <li class='d'>Third, the <b>content pane</b> in the center is where you'll
+                find the documentation for the class you're interested in.
+            </li>
+        </ol>
+        <p>Let's look at the documentation for a class we've already met, the
+            <code>String</code> class.
+            Scroll thorugh the class list (in the lower-left frame) until you
+            find the link, as hown here (1), and <b>click it</b>:
+            <img src="images/finding-string.gif" alt="The String class docs online."
+                class='inline'>
+            The class documentation is displayed in the
+            right-hand (larger) frame (marked 2). Let's take a look
+            at what you'll find there.
+        </p>
+    <h4>The Contents Window</h4>
+        <p><b>Finally</b>, some meaningful information!
+        The <b>JavaDoc</b> for each class is broken up into several
+        sections. Most of these won't make a lot of sense to you until
+        you've learned a little more about Java. For right now,
+        we're only concerned about three sections:
+        </p><ol>
+            <li class='d'>Introduction and Class Summary</li>
+            <li class='d'>Method Summary</li>
+            <li class='d'>Method Details</li>
+        </ol>
+        <p>Let's start with the introduction.</p>
+    <h4>Introduction and Class Summary</h4>
+        <p> At the very top of every class documentation page, there is an
+            introduction to help you get oriented. The introduction starts
+            with the class name (class <code>String</code>. in the picture)
+            and is followed by a visual "ladder" of inheritance.
+            <img src="images/stringdocs.gif"
+                alt="The String class introduction."
+                class='inline'>
+            This is important because some methods may be inherited from a "parent"
+            or "super" class, so this gives you a place to start looking.
+        </p>
+        <p> Right <i>above</i> the class name is the name of the <b>package</b>
+            that contains the class; in the case of the <code>String</code> class,
+            that's the <code>java.lang</code> package. Remember that the <code>java.lang</code>
+            package is <i>automatically</i> imported into every Java program.
+            For most other classes, though, you'll use the package name you find here
+            when you write your <code>import</code> statements.
+        </p>
+        <p> Right below the inheritance hierarchy, you'll normally find more introductory
+            information. In the picture, you'll see the very beginning of the introductory
+            section for the <code>String</code> class. For most classes you'll find:
+        </p>
+        <ul>
+            <li>A simple <b>explanation</b> that tells you what the class does and,
+                often more important, why it exists.
+            </li>
+            <li> A simple code <b>example</b>. For some of the more complex classes,
+                the explanation is not enough; a code example is "worth its weight in
+                gold", (to worry an old cliche).
+            </li>
+            <li> A <b>picture</b> of the component for the basic visual classes.</li>
+        </ul>
+        <p> It never hurts to revisit this introductory material from time
+            to time, especially when new versions of the SDK are released.
+        </p>
+    <h4>The Method Summary</h4>
+        <p> Scroll down through the documentation until you come to the
+            section titled <b>Method Summary</b> as shown here:
+            <img src="images/f02c.gif" alt="Method Summary for the String class."
+                class='inline'>
+            Methods, (you'll remember from our discussion of the <code>System.out</code>
+            object), correspond to the <b>messages</b> that an <b>object</b> responds to.
+            In that sense, they are <i>similar</i> to the functions you've been using.
+            The big difference, is that the methods in the <code>String</code> class
+            are each "attached" to a particular <code>String</code> object, and so
+            the code you use to call the method is slightly different than the
+            code you'd use to call a function.
+        </p>
+        <p> The Java documentation provides the tools you'll need to make yourself
+            understood by any Java object. The "dictionary" of commands that any
+            given object understands is listed in its method summary. These are the
+            things that you can tell a <code>String</code> object to do or to calculate.
+        </p>
+        <p> As you can see here, a <code>String</code>
+            object "knows how to do" more than sixty different things; that is, the
+            <code>String</code> class contains more that sixty methods.
+        </p>
+        <p class="note">In fact, the <code>String</code>
+            class also inherits eight methods from its parent class,
+            <code>Object</code>, so the actual number of things it can do
+            is closer to seventy.
+        </p>
+        <h4>Deciphering the Docs</h4>
+        <p> Making sense of the <b>JavaDocs</b> is one of the <b>most important
+            things you can do</b> at this point, so
+            scroll on down through the method summary and let's take a closer look
+            at two different <code>String</code> examples: the <code>toUpperCase()</code>
+            method and the <code>lastIndexOf()</code> method. When you've found them,
+            and let's get to decoding:<br>
+            <img src='images/stringmethods.gif' class='inline' alt='Summary of two String methods.'>
+        </p>
+        <p>
+            The left-hand column (1) shows the <b>return type</b> of the method.
+            If you see the word <code>void</code> here, then the method just
+            carries out an action, it doesn't calculate and return a value. If anything
+            else appears, the method is a <i>function</i> that calculates and returns
+            a value.
+        </p>
+        <p> As you can see, the <code>toUpperCase()</code> method returns a new <code>String</code>,
+            while the <code>lastIndexOf()</code> method returns an <code>int</code>.
+            Ignore, for now, the words
+            <code>abstract</code> or <code>static</code> that appear
+            in many places in this column. These are advanced features
+            that we'll cover later in the semester.
+        </p>
+
+        <h5>The Signature</h5>
+            <p>In the right-hand column, the lines that reads:<br>
+            </p><p class="code">
+                toUpperCase()<br>
+                lastIndexOf(String str, int fromIndex)
+            </p>
+            is called the <b>method signature</b>. It consists of
+            two parts: (2) the <b>name</b> of the method, and (3) the
+            <b>argument or parameter list</b>.
+        </p>
+
+        <p class='note'>In the CS world,
+            the words argument and parameter are often interchanged.
+            Your book usually uses the term parameter, so I've tried
+            to change my lessons to match. Sometimes, though, you'll
+            see the word argument slip through.
+        </p>
+        <p> If you're paying attention, you've probably noticed that the
+            <b>signature</b> looks very much like the <b>method header</b>
+            used when the class is defined. The method signature is
+            important, because it tells you how to invoke or call the
+            method, mostly by letting you know the kinds of
+            additional information you need to supply.
+        </p>
+    <h5>Actual Parameters</h5>
+        <p> In the <b>parameter list</b>, the type and name of each piece
+            of information is listed; each parameter is separated from its
+            neigbors by a comma.
+            As you can see in the picture, there are no parameters defined for
+            the <code>toUpperCase()</code> method, so you don't need to supply
+            any additional information when you call it. The <code>lastIndexOf()</code>
+            method, though, has two parameters defined.
+        </p>
+        <p> The first is a <code>String</code> named <code>str</code> and the second
+            is an <code>int</code> named <code>fromIndex</code>.
+            That means that when you call the <code>lastIndexOf()</code> method,
+            inside of the parentheses you have to supply a <code>String</code> value,
+            (either a variable or text between double quotes), followed by an integer
+            value, (either a variable or a literal whole number like 17). You'll
+            separate the two values (which are called <b>actual parameters</b>), with a comma.
+        </p>
+        <p> Just to recap:</p>
+        <ul>
+            <li>If you see a parameter with a type of <code>String</code>,
+                put "text between double quotes" in that position.
+            </li>
+            <li>If you see a parameter with a type of <code>int</code>,
+                put a whole number in that position.
+            </li>
+            <li>If you see a parameter with a type of <code>double</code>,
+                put a real number (that is, a number with a decimal point) in that position
+            </li>
+        </ul>
+        <p> The last portion of the method summary documenation is a simple, one-line
+            explanation of the method's behavior. You can get a
+            more complete explanation by clicking the name of the method.
+        </p>
+    <h4>Using the Documentation</h4>
+        <p>To use the method, you simply follow the instructions from
+            Unit 2 when we discussed <b>sending messages</b> to the
+            <code>System.out</code> object. For each of the
+            arguments listed in the signature, replace it with a
+            value of that type.
+        </p>
+        <p> Given the documenation of the two methods above,
+            here's how you'd use these two methods (along with the <code>readLine()</code>
+            method in the <code>ConsoleProgram</code> class:
+        </p>
+        <p class="code">
+            String yourName = readLine("Enter your name like this (Last, First MI.):");<br>
+            String upperName = yourName.toUpperCase(); <span class='cmt'>// No parameters</span><br>
+            int lastSpace = yourName.lastIndexOf(" ", 0); <span class='cmt'>// Start looking at character 0</span>
+        </p>
+        <p> Well, that's the basics. Now let's look at some of the <code>String</code>
+            methods you'll use most often.
+        </p>
+    <h3>String Methods</h3>
+        <p> When you first met the <code>String</code> class, you
+            saw that <code>Strings</code> had some of the characteristics of
+            primitives and some characteristics of objects. One of the ways
+            in which <code>Strings</code> are like objects is that the
+            <code>String</code> class has a rich set of methods you can use
+            to manipulate <code>String</code> objects.
+        </p>
+        <p>Let's look at a few.</p>
+    <h4>String Length</h4>
+        <p> If a <code>String</code> is a sequence of 0 to <i>n</i>
+            characters, <b>how</b> do you find out what <i>n</i> is?
+            It's actually pretty easy; you just ask the <code>String</code>
+            object how <b>long</b> it is, by calling its <code>length()</code>
+            method.
+        </p>
+        <p> You don't have to supply any arguments when you call the
+            <code>length()</code> method. The returned value is an <code>
+            int</code>. Here are a couple examples:
+        </p>
+        <p class="code">
+            <span style="background: transparent; color: gray;">1:&nbsp;&nbsp;</span>String s1 = "Conch", s2 = "fritter", s3 = "", s4;<br>
+            <span style="background: transparent; color: gray;">2:&nbsp;&nbsp;</span>int len1 = s1.length();<br>
+            <span style="background: transparent; color: gray;">3:&nbsp;&nbsp;</span>println("s2 has " + s2.length() + " characters");<br>
+            <span style="background: transparent; color: gray;">4:&nbsp;&nbsp;</span>s3.length();<br>
+            <span style="background: transparent; color: gray;">5:&nbsp;&nbsp;</span>println("s4.length() is " + s4.length());<br>
+        </p>
+        <div class="box" style='padding-top:0;'>
+        <h5>Analysis</h5>
+        <ul>
+            <li>Line 1 creates four <code>String</code> variables,
+                <code>s1</code>, <code>s2</code>, <code>s3</code>, and
+                <code>s4</code>. The first three are initialized using
+                literals.
+            </li>
+            <li>Line 2 sends the <code>length()</code> message to <code>s1</code>
+                and stores the "answer" in the <code>int</code> variable
+                <code>len1</code>. After this line runs, <code>len1</code>
+                will contain <b>5</b>, because "Conch" contains 5 characters.
+            </li>
+            <li>Line 3 calls the <code>length()</code> method using the
+                variable <code>s2</code>. This time, instead of storing the
+                result in a variable, the <code>int</code> value <b>7</b>
+                (the number of characters in "fritter") is converted to
+                a <code>String</code> and combined with several literals,
+                using <i>concatenation</i>. Instead of saving the returned
+                value, we just use it directly.
+            </li>
+            <li>Line 4 calls the <code>length()</code> method, using the
+                variable <code>s3</code>. The <code>String s2</code> contains
+                0 characters; it's the empty string. While this line
+                compiles and runs, it actually contains a <b>logic error</b>.
+                The <code>length()</code> method returns a value, but in
+                Line 4, we simply ignore that value, using it like a simple
+                action-producing method. The line, effectively, does
+                nothing.
+            </li>
+            <li>Line 5 attempts to send the <code>length()</code> message
+                to the <code>String</code> object referenced by the
+                variable <code>s4</code>. Since <code>s4</code> was
+                never intialized, though, Java won't compile your code,
+                if <code>s1</code> is a local variable.
+            </li>
+        </ul>
+        </div>
+    <h4>Retriving Characters</h4>
+        <p> <img src="images/zz07.gif" class="right" alt="The String Conch in memory.">
+            If you were to "peer inside" the <code>String</code> object
+            referred to by the variable <code>s1</code>, you'd see that
+            the individual characters were stored right next to each
+            other in memory. Because of this, Java lets you access
+            the individual characters using an <b>index</b> value.
+        </p>
+        <p> Most other languages use a similar scheme, but some languages
+            start their counting at <b>1</b>, (VB and Pascal), and others
+            start their counting at <b>0</b>, (Java and C++).
+            As you can see from the picture shown here, the first
+            character in a Java <code>String</code>, like the capital
+            "C" in "Conch", is associated with the index position 0.
+        </p>
+        <p> To retrieve the individual characters that make up a
+            <code>String</code>, use the <code>charAt(int position)</code>
+            method. Pass your variable the index position of the character
+            you want, and the <code>charAt()</code> method return the
+            character itself.
+        </p>
+        <p class="note">There ae two things you should note. First,
+            the value returned from <code>charAt()</code> is a <code>char</code>,
+            not a 1-character <code>String</code>. If you want to use the
+            returned value with other strings, you'll have to use concatenation
+            to convert it back into a <code>String</code> object.
+            <br><br>
+            Second, the <b>last</b> character in any Java <code>String</code> will
+            always be a position <code>length() - 1</code>.
+        </p>
+        <p> Here are a couple examples. Assume that <code>s1</code> and
+            <code>s2</code> from the previous example are still in scope:
+        </p>
+        <p class="code">
+            <span style="background: transparent; color: gray;">1:&nbsp;&nbsp;</span>char firstChar = s1.charAt(0);<br>
+            <span style="background: transparent; color: gray;">2:&nbsp;&nbsp;</span>char lastChar = s2.charAt(s2.length()-1);<br>
+            <span style="background: transparent; color: gray;">3:&nbsp;&nbsp;</span>char whatChar = s3.charAt(0);<br>
+            <span style="background: transparent; color: gray;">4:&nbsp;&nbsp;</span>char thatChar = "What".charAt(0);<br>
+        </p>
+        <div class="box" style='padding-top:0'>
+        <h5>Analysis</h5>
+        <ul>
+            <li>Line 1 stores the character 'C' in the variable <code>firstChar</code>.</li>
+            <li>Line 2 uses <code>charAt()</code> to retrieve the last character in "fritters",
+                and then stores it in the <code>char</code> variable <code>lastChar</code>. Note
+                that <code>length()-1</code> is used as the index value passed to <code>charAt()</code>.
+            </li>
+            <li>Line 3 causes a <b>runtime error</b> since the empty <code>String</code> does not
+                have a character at position 0.
+            </li>
+            <li>Line 4 stores the character 'W' in the variable <code>thatChar</code>. Note that
+                you can <b>call methods using <code>String</code> literals as the receiver</b>.
+            </li>
+        </ul>
+        </div>
+<!--
+    <h4>String Comparison</h4>
+        <p> One of the commonest <code>String</code> operations is to
+            compare two <code>Strings</code>. You <b><span class="red">should
+            not</span></b> use the equality operator (<code>==</code>) to see
+            if two <code>Strings</code> are equal, because that only
+            compares whether two <code>String</code> variables refer to the
+            same actual <code>String</code>. When used with <code>Strings
+            </code>, as with other objects, the equality operator measures
+            <b>identity</b>.
+        </p>
+        <p> Instead of the equality operator, you should use one of these
+            methods:
+        </p>
+    <h5>equals(String right)</h5>
+        <p> Returns <code>true</code> if the contents of two <code>Strings
+            </code> exactly match, <code>false</code> otherwise.
+        </p>
+        <p class="code">
+            "cat".equals("cat"); <span class="cmt">// true</span><br>
+            "cat".equals("Cat"); <span class="cmt">// false</span><br>
+        </p>
+    <h5>equalsIgnoreCase(String right)</h5>
+        <p> Returns <code>true</code> if the contents of two <code>Strings
+            </code> match when case is not considered, <code>false</code>
+            otherwise.
+        </p>
+        <p class="code">
+            "cat".equalsIgnoreCase("cat"); <span class="cmt">// true</span><br>
+            "cat".equalsIgnoreCase("Cat"); <span class="cmt">// true</span><br>
+            "cat".equalsIgnoreCase("dog"); <span class="cmt">// false</span>
+        </p>
+    <h5>compareTo(String right)</h5>
+        <p> Use this when you need to know which <code>String</code> "comes
+            first", when compared "alphabetically".
+        </p>
+        <p> Returns 0 if both <code>Strings</code> are equal. Returns a
+            negative number if the <code>String</code> on the left, (the
+            one calling the method), is "lower" than the <code>String</code>
+            on the right, (the one passed as an argument).
+        </p>
+        <p class="code">
+            "cat".compareTo("cat"); <span class="cmt">// 0 - equal</span><br>
+            "cat".compareTo("Cat"); <span class="cmt">// Positive num, "cat" &gt; "Cat"</span><br>
+            "cat".compareTo("dog"); <span class="cmt">// Negative, "cat" &lt; "dog"</span>
+        </p>
+        <p class="note"> Note that the ordering is not strictly alphabetic, but is based
+            upon the underlying Unicode ordering, where 'c' appears later
+            (and larger) than 'C'. You can find a longer discussion of this
+            on page 369 in your text.
+        </p>
+    <h4>Equality vs Identity</h4>
+        <p> When you use the equality and inequality operators
+            with <code>Strings</code> or objects, you are comparing the
+            <b>identity</b> of the two objects, <b>not their contents</b>.
+            Specificially, you are asking, "do both object references refer
+            to the same object?"
+        </p>
+
+        <p> Here's an example using <code>Buttons</code>:</p>
+        <p class="code">
+            Button a = new Button("Hi Mom");<br>
+            Button b = new Button("Hi Mom");<br>
+            Button c = b;
+        </p>
+
+        <p> Remember that <b>object</b> variables contain the <b>address</b>,
+            (a <i>reference</i>), of the object they refer to. In this
+            example, two <code>Button</code> objects are created, (using
+            <code>new</code>), and the reference stored in the variables
+            <b>a</b> and <b>b</b>. A third object variable, <b>c</b>,
+            is the created, and the value stored in <b>b</b> is copied
+            to <b>c</b>, using the assignment operator.
+        </p>
+
+        <p> Here's what memory looks like after this:<br>
+            <img src="images/zz04.gif" hspace="15" vspace="15"
+                alt="Assignment with buttons">
+            <br>
+            Now, let's use these <code>Button</code> objects in
+            some relational expressions, and look at the results:
+        </p>
+        <p class="code">
+            a == b; <span class="cmt">// false - different buttons</span><br>
+
+            b == c; <span class="cmt">// true - same button</span><br>
+            a == c; <span class="cmt">// false - different buttons</span>
+        </p>
+    <h4>String Relations</h4>
+        <p><code>String</code> objects, <b>work just like buttons</b>:
+            if you use the equality operator, you are asking whether these
+            two <code>String</code> objects <b>are the same
+            <code>String</code> object</b>.
+        </p>
+
+        <p> If we take that to heart and write almost identical code
+            like this:
+        </p>
+        <p class="code">
+            String a = "Hi Mom";<br>
+            String b = "Hi Mom";<br>
+            String c = b;
+        </p>
+        <p>and then draw a picture like we did for <code>Button</code>
+
+            objects, we should end up with something like this:<br>
+            <img src="images/zz05.gif" vspace="15" hspace="15"
+                alt="String objects and assignment">
+
+        </p>
+        <p> Unfortunately, when we write and run the same relational
+            expressions we used for the <code>Button</code> objects,
+            we find that <b><span class='red'>all three
+            are true!</span></b> What's going on here?
+        </p>
+
+    <h5>Under the Hood</h5>
+        <p> Well, it may <b>look</b> like Java is treating <code>String</code>
+            objects specially, comparing the contents of each <code>String</code>,
+            like Pascal and Visual Basic do. Don't be deceived, however;
+            that's not what's happening at all!
+        </p>
+        <p> The problem is, that our <i>mental picture</i> of what
+            happened in memory is faulty. Because <code>String</code>
+
+            objects are <b>immutable</b>, Java automatically shares the
+            same actual <code>String</code> between several references.
+        </p>
+        <p>
+            In our example, Java actually stores the characters "Hi Mom"
+            only once. The line where the <code>String</code> variable
+            <b>b</b> is created <b>does not</b> create a second copy of
+            the words "Hi Mom". Thus, all three <code>String</code> variables,
+            <b>a</b>, <b>b</b>, and <b>c</b>, refer to exactly the same
+            characters in memory: like this:<br>
+
+            <img src="images/zz06.gif" vspace="15" hspace="15"
+                alt="The actual layout of the strings a, b, and c">
+            <br>
+            The bottom line is that you <b>should not</b> use the
+            relational operators to see if two <code>Strings</code>
+            are equal. The answer you get back is usually wrong! Instead,
+            you should <b>always</b> compare <code>String</code> objects
+            using the <code>equals()</code> or <code>equalsIgnoreCase()</code>
+
+            methods like this:
+        </p>
+        <p class="code">
+            boolean exactMatch = aString.equals("Bob");<br>
+            boolean ignoreMatch = aString.equalsIgnoreCase("bob");
+        </p>
+-->
+    <h4>Searching Methods</h4>
+        <p> The <code>charAt()</code> method is useful when you know
+            the position of a particular value. Often, though, with
+            user-supplied data, you'll need to search through the
+            string to find the value you want.
+        </p>
+        <p> The <code>String</code> class has several methods that will
+            let you <b>search</b> for specific
+            values, or, the postitions of specific values. Here are some
+            interesting ones:
+        </p>
+    <h5>indexOf(arg), lastIndexOf(arg)</h5>
+        <p> There are several versions of each of these
+            methods, which search the <code>String</code> on the left,
+            (the one calling the method), for the value on the right,
+            (the parameter passed to the method). The parameter can
+            be either a character <b>or</b> a <code>String</code>.
+        </p>
+        <p> The <code>indexOf()</code> methods start searching at the
+            <b>beginning</b> of the <code>String</code>, and the
+            <code>lastIndexOf()</code> methods start searching at the
+            <b>end </b>
+            of the <code>String</code>. Both methods return the <b>index
+            position</b>, measured from the beginning of the string,
+            where the searched-for value was found. Both methods also
+            return -1 if the character or <code>String</code> searched for is
+            not found.
+        </p>
+        <p> Here are some examples:</p>
+        <p class="code">
+            <span style="background: transparent; color: gray;">1:&nbsp;&nbsp;</span>String s1 = "Abadabadoo";<br>
+            <span style="background: transparent; color: gray;">2:&nbsp;&nbsp;</span>int p1 = s1.indexOf("daba"); <span class="cmt">// 3</span><br>
+            <span style="background: transparent; color: gray;">3:&nbsp;&nbsp;</span>int p2 = s1.indexOf('o'); <span class="cmt">// 8</span><br>
+            <span style="background: transparent; color: gray;">4:&nbsp;&nbsp;</span>int p3 = s1.lastIndexOf('o'); <span class="cmt">// 9</span><br>
+            <span style="background: transparent; color: gray;">5:&nbsp;&nbsp;</span>int p4 = s1.indexOf("doom"); <span class="cmt">// -1</span><br>
+        </p>
+        <div class="box" style='padding-top:0'>
+        <h5>Analysis</h5>
+        <ul>
+            <li>Line 1 stores the address of the literal "Abadabadoo" in the variable
+                <code>s1</code>.</li>
+            <li>Line 2 uses <code>indexOf()</code> to retrieve the index position of the
+                word <code>"daba"</code> contained inside <code>s1</code>. Since the
+                first character is at position 0, you can see that the phrase
+                starts at position <b>3</b> which is stored in the <code>int</code>
+                variable <code>p1</code>.
+            </li>Lin3 3 also uses the <code>indexOf()</code> method, only this time the
+                method searches for a <code>char</code> parameter, <b>not</b> a <code>String</code>.
+                "Abadabadoo" contains the character 'o' twice, in positions 8 and 9. The
+                <code>indexOf()</code> method returns the position of the <i>first</i>
+                match it finds.
+                <p class="note">
+                This is actually a <b>different version</b> of the <code>indexOf()</code> method
+                than that used in Line 2, since each method has to specify what kind of parameters
+                it requires. That means a method cannot be written so that a user can provide
+                either a <code>String</code> or a <code>char</code>. To get the same effect,
+                programmers can write <i>different versions</i> of the same method, using the
+                same name. Different versions of a method, using the same name but requiring
+                different parameters, are known as <i>overloaded</i> methods.
+                </p>
+
+            <li>Line 4 <b>also</b> searches for the character 'o', but this time a
+                version of the <code>lastIndexOf()</code> method is used. As its name
+                suggests, this method starts searching from the end of the <code>String</code>
+                until it finds a match. Since it finds the character 'o' immediately at
+                the end of the string, it returns its position, <b>9</b>, which is stored
+                in the variable <code>p3</code>.
+            </li>
+            <li>Finally, Line 5 searches the <code>Abadabadoo</code> for the word "doom".
+                Since doom occurs nowhere in the string, the variable
+                <code>p4</code> is given the value <b>-1</b>.
+            </li>
+        </ul>
+        </div>
+        <p> Two more searching methods that will prove useful once you
+            learn about selection, (since they return <code>boolean</code>
+            values), are:
+        </p>
+    <h5>endsWith(suffix), startsWith(prefix)</h5>
+        <p> Both of these methods return <code>true</code> if the
+            <code>String</code> on the left, (the <code>String</code>
+            calling the method), ends with or starts with the
+            <code>String</code> on the right, (the <code>String</code>
+            passed as an argument).
+        </p>
+        <p class="code">
+            "Junk.java".endsWith(".java"); <span class="cmt">// true</span><br>
+            "testFile.txt".startsWith("test"); <span class="cmt">// true</span>
+        </p>
+    <h4>Builder Methods</h4>
+        <p> Because <code>Strings</code> are <b>immutable</b>, the Java
+            <code>String</code> class has <b>no</b> mutator methods. In
+            place of these, however, there are a number of <b>"builder"</b>
+            methods that <b>produce a new <code>String</code></b> by
+            <i>tranforming</i> an existing <code>String</code>.
+        </p>
+        <p> When you use any of these transforming builder methods, you have
+            to remember to <b>save the results</b> using a <code>String</code>
+            variable.
+        </p>
+        <p> Here are some of the methods you'll use most often:</p>
+    <h5>toUpperCase(), toLowerCase()</h5>
+        <p> Returns the <code>String</code> on the left, (the one calling
+            the method), translated into either upper or lower case.
+        </p>
+        <p class="code">
+            String upperPet = "pet".toUpperCase(); <span class="cmt">// "PET"</span><br>
+            String lowerPet = "Pet".toLowerCase(); <span class="cmt">// "pet"</span><br>
+            upperPet.toLowerCase(); <span class="cmt">// logical error</span>
+        </p>
+        <p class="note">The first two lines in this example call a transforming
+            method and store the results in a new variable. The last line shows
+            a common logic error; the programmer <b>thought</b> the code was converting
+            <code>upperPet</code> to lowercase, but instead it creates a
+            new <code>String</code> object and then simply abandons the
+            new object altogether. The variable <code>upperPet</code> is
+            <b>not</b> modified.
+        </p>
+    <h5>replace(char a, char b)</h5>
+        <p> Returns a <code>String</code> with <b>all</b> occurances of character
+            <b>a</b> replaced by character <b>b</b>, not just the first occurance.
+        </p>
+        <p class="code">
+            String mod = "Mom".replace('m', 'd'); <span class="cmt">// Mod</span><br>
+            String bad = "Dad".replace('D', 'B'); <span class="cmt">// Bad</span>
+        </p>
+        <p class="note"> Note that prior to Java 5 there was no
+            <code>replace</code> method for <code>String</code> parameters.
+            Java 5 contains a version of <code>replace()</code> that works on
+            classes implementing the <code>CharSequence</code> interface,
+            which the <b>String</b> class does. The bottom line? You can
+            use <code>replace</code> with <code>String</code> arguments
+            in Java 5, but if you want your code to work in 1.4, use
+            <code>replaceAll()</code>.
+        </p>
+    <h5>substring(start), substring(start, end)</h5>
+        <p> This method, which has two overloaded versions,
+            returns a portion of the <code>String</code> on the left.
+            The returned <code>String</code> starts with the element
+            passed as <b>start</b>, with the first element being 0.
+        </p>
+        <p> The second version returns the portion of the <code>String</code>
+            starting (and including) position <b>start</b>, up to, and
+            <b>excluding</b>, position <b>end</b>.
+        </p>
+        <p class="code">
+            <span style="background: transparent; color: gray;">1:&nbsp;&nbsp;</span>String s1 = "Hello, World!";<br>
+            <span style="background: transparent; color: gray;">2:&nbsp;&nbsp;</span>String s2 = s1.substring(7); <span class="cmt">// World!</span><br>
+            <span style="background: transparent; color: gray;">3:&nbsp;&nbsp;</span>String s3 = s1.substring(7, 12); <span class="cmt">// World</span><br>
+        </p>
+        <div class="box"  style='padding-top:0'>
+        <h5>Analysis</h5>
+        <ul>
+            <li><img src="images/zz08.gif" class="right" alt="Hello World! in memory.">
+                Line 1 creates the <code>String</code> variable <code>s1</code> and
+                assigns it to the literal "Hello World!".
+            </li>
+            <li>Line 2 uses the <code>substring()</code> method to extract the
+                portion of <code>s1</code> <i>starting with</i> the character at
+                position 7.
+            </li>
+            <li>Line 3 uses an overloaded version of <code>substring()</code> to
+                extract the portion of <code>s1</code> starting at position 7,
+                and going up to, but not including, the character at position 12.
+            </li>
+        </ul>
+        <p> The fact that you need to supply two index values is a little
+            awkward. One nice thing, though, is that you can easily use the
+            two index values to compute the length of the substring, by subtracting
+            the starting index from the ending index. If you want to extract
+            a substring of a particular size, just do it like this:
+        </p>
+        <p class="code">
+            String s4 = s1.substring(7, 7+5); <span class="cmt">// World</span><br>
+        </p>
+        </div>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned how to use the Java Documentation
+            and then learned how to find and work with some of the methods
+            from the <code>String</code> class.
+        </p>
+        <p> In the next lesson, you'll learn how to convert between numbers
+            and <code>Strings</code> and how to nicely format your
+            numeric output.
+        </p>
+
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

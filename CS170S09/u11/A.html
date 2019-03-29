@@ -1,0 +1,692 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][1].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+    <body>
+    <div class="title">
+        <img src="images/a.jpg" alt="CS 170 Lesson A logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+        <p>
+            <b><span class='cap'>C</span>lassification is one of the
+            primary mechanisms</b> that we
+            use to understand the natural world around us. Starting
+            as infants we begin to recognize the difference between
+            <b>categories</b> like food, toys, pets, and people.
+            <img src='images/pet.png' class='right' alt='A child and a chicken.'>
+            As we mature,
+            we learn to divide these general categories or classes into
+            <b>subcategories</b> like siblings and parents, vegetables and
+            dessert.
+        </p>
+        <p> When faced with a <b>new</b> object, we try to understand
+            it by fitting it into the categories with which we’re
+            acquainted:
+        </p>
+        <ul>
+            <li>Does it taste good? Perhaps it’s dessert.
+            <li>Is it soft and fuzzy? Maybe it’s a pet.
+            <li>Otherwise, it’s most certainly a toy of some sort!
+        </ul>
+        <p> <b>Encapsulation</b>—the specification of attributes and behavior
+            as a single entity—allows us to build on this understanding
+            of the natural world as we create software. By creating
+            classes and objects that <b>model categories</b> in the "real world,"
+            we have confidence that our software solutions closely track
+            the problems we are trying to solve.
+        </p>
+        <p> Once we've learned how to design our own classes, instead of
+            thinking in terms of computer files and variables, our
+            programs can be expressed in terms of <b>Customers</b>,
+            <b>Invoices</b>, and <b>Products</b>.
+        </p>
+    <h3>Introducing Inheritance</h3>
+        <p> <img src='images/pie.png' class='right' alt='Broccoli and pie.'>
+            <b>Inheritance</b> adds to encapsulation the ability to express
+            <b>relationships between classes</b>. Think back to the categories
+            "desserts" and "vegetables." Cherry pie and broccoli are both,
+            at least arguably, edible items; for humans, they belong to
+            the <b>food</b> class.
+        </p>
+        <p> Yet most of us recognize that, in addition
+            to belonging to the food class, cherry pie is a <b>kind of
+            dessert</b>, whereas broccoli is a <b>kind of vegetable</b>.
+            Both <b>desert</b> and <b>vegetable</b> represent subcategories
+            of foods.
+        </p>
+        <p> If you ponder this for a moment, you’ll realize that you can
+            draw three conclusions:
+        </p>
+        <ul>
+            <li>Although both cherry pie and broccoli are kinds of food,
+                the food class itself consists of, thankfully, <b>more</b> than
+                just these two items. Cherry pie and broccoli are just
+                two small <b>subsets</b> of all possible food types.
+                Thus, the <b>relationship</b> between the food class and
+                the cherry pie class is one of <b>superset</b> (food)
+                and <b>subset</b> (cherry pie).
+                In object-oriented terminology, we call this the
+                <b>superclass-subclass relationship</b>.
+            </li>
+            <li><img src='images/food.png' class='right' alt='The food pyramid.'>
+                Superclasses and subclasses can be arranged in a
+                <b>hierarchy</b>, with one superclass divided into
+                numerous subclasses, and each subclass divided into
+                more specialized kinds of subclasses. That’s what we
+                find with the food class.
+            </p>
+            <p> It can be divided into desserts, vegetables, soups,
+                salads, and entrees. Each category can be further divided
+                into <b>more specialized</b> kinds of food.
+            </li>
+            <li>A classification hierarchy represents an organization based on
+                <b>generalization and specialization</b>. The superclasses in such
+                a hierarchy are very general, and their attributes few; the
+                only thing that a class must do to qualify as food, for
+                instance, is to provide nutrients.
+            </li>
+        </ul>
+        <p>As you move down the
+                hierarchy, the subclasses become more specialized, and
+                their attributes and behavior become more specific. Thus,
+                although broccoli qualifies as food (it is, after all,
+                digestible), it lacks the necessary qualifications to
+                make it into the dessert class.
+        </p>
+    <h4>Inheritance and Programming</h3>
+        <p> When you create your own new, reusable components, there are really
+            three different strategies you can use:
+        </p>
+        <ul>
+            <li> You can build your component completely from scratch,
+                like we did with the various versions of the <code>Ball</code>
+                class in Unit 9.
+            </li>
+            <li> You can <b>combine</b> simpler parts together, such as
+                a <code>JLabel</code> and a <code>JTextField</code>, to
+                create a more complex component.
+            </li>
+            <li>You can <b>extend</b> a more basic component by adding
+                new features or behaviors.
+            </li>
+        </ul>
+        <p> Since you've alread learned how to build a class from scratch,
+            in this lesson we'll take a look at these last two techniques.
+            We'll start by <b>extending</b> an existing component to
+            create a new class that <b>inherits</b> methods and fields
+            from its superclass.
+        </p>
+    <h4>Has-A and Is-A</h4>
+        <p> These two different strategies are used to express two different
+            kinds of "class relationships":
+        </p>
+        <ul>
+            <li>The <b>has-a</b> relationship, when one class is a combination
+                of other objects. We can say that a <code>JLabel</code>
+                object <b>has-a</b> background color property. In this kind of
+                <b>has-a</b> relationship one component is composed of different
+                parts. A <code>Bicycle</code> class thus may contain two instances
+                of the <code>Wheel</code> class.
+            </li>
+            <li><img src='images/inheritance01.png' class='right' alt='Bicycles and inheritance.'>
+                The <b>is-a</b> relationship, when one class is an extension
+                or "kind of" another class. The <b>is-a</b> relationship occurs
+                when members of one class form a <b>subset</b> of another class,
+                like the Animal, Mammal, Rodent example we discussed back
+                in Unit 8. This is also called an <b>inheritance</b>
+                relationship. In the inheritance relationship shown here,
+                we'd say that a <code>MountainBike</code> <b>is-a</b>
+                <code>Bicycle</code>.
+            </li>
+        </ul>
+        <p> Back in Unit 9 we used the original applet version of a "bouncing
+            ball" program to develop, step-by-step, a bouncing-ball <b>class</b>;
+            one that contained constructors, accessors, and mutators, and that
+            "knew" how to bounce around the screen. The bouncing ball class that
+            we developed, though, doesn't work inside ACM graphics programs,
+            because it wasn't a member of the <code>GObject</code> family,
+            like all of the other ACM graphical objects.
+        </p>
+        <p> In later lessons, we'll create two versions of the bouncing-ball
+            class, both designed to work with ACM graphics programs. One will
+            use <b>inheritance</b>, and one will use <b>composition</b>.
+            Before we do that, though, let's look at how inheritance works
+            in Java.
+        </p>
+    <h2>Inheritance: Syntax and Semantics</h2>
+        <p> <img src='images/nonagon.png' class='right' alt='A nonagon with all 36 edges connected.'>
+            <b><span class='cap'>I</span>t's really tempting to dive right
+            in</b> and start by extending some of the ACM classes, making
+            a new <b>ImageBall</b> or <b>PlayingCard</b>
+            class, or perhaps fill in some of the missing geometric shapes;
+            anyone up for a new <b>GNonagon</b> class?
+        </p>
+        <p> The only problem with that strategy is that inheritance actually
+            <b>introduces quite a few new possiblities</b> into your programs,
+            and each of those possibilities needs to be handled in a
+            very specific way. Starting with a more complex class, even though
+            it might be more interesting, makes it easy to miss some of the
+            details that you really <b>must</b> master to make
+            effective use of the object-oriented technique of inheritance.
+        </p>
+        <p> So, instead of working with fun stuff, like card games and shooting
+            down aliens, in this lesson I'll return to the old, boring
+            finger-exercises type of examples that let you concentrate on
+            one piece of the inheritance puzzle at a time.
+        </p>
+    <h3>Topic 1: Extending a Class</h3>
+        <p> <img src='images/inheritance02.png' class='right' alt='Classes in Inheritance01.java.'>
+            <b>When you create a new class using inheritance</b>, you use the
+            <code>extends</code> keyword to specify the parent or
+            <b>superclass</b> when you define the child or <b>subclass</b>.
+            For our first example, let's look at a simplest possible class
+            that represents people: the <code>Person</code> class. Then,
+            we'll create a new <b>kind</b> of <code>Person</code>, the
+            <code>Student</code>.
+        </p>
+        <p> To the right is the UML (Unified Modeling Language) class diagram for
+            the two classes we'll start with. You can download the source
+            code for the Java program that contains these classes,
+            <a href='Inherit01.java' target='_blank'><b>Interit01.java</b></a>
+            by clicking the link in this sentence.
+        </p>
+        <p class='note'> As we develop these classes,
+            instead of placing them in their own files, I'll put both classes
+            in a single file, along with a public test class. That way I
+            won't have to change the names or projects, since we'll have several
+            different versions. However, for the versions that you download,
+            I <b>have</b> changed the names of the classes to <code>Student1</code>
+            and <code>Person1</code>, so that you can run them all in the same
+            project, without getting an error.
+        </p>
+        <p> Here's what you should notice about each of these classes.
+        </p>
+    <h4>The Person Class</h4>
+        <p> <img src='images/person01b.png' class='right' alt='The Person UML diagram.'>
+            The <b>Person</b> class has a single attribute, <code>name</code>
+            which is stored as a <code>String</code>. The minus sign preceding
+            <code>name</code> tells us that the instance variable used to
+            store this attribute will be marked <code>private</code>.
+        </p>
+        <p> The class has one mutator, <code>setName()</code> that allows
+            us to change the name of the <code>Person</code>. There is also
+            one accessor method, <code>getName()</code> which is a "getter"
+            method that allows us to read the value of the attribute. The
+            plus sign appearing before the method says that the method is
+            <code>public</code>. The <code>void</code> appearing at the
+            end of the entry is the method return type.
+        </p>
+    <h4>The Student Class</h4>
+        <p> <img src='images/student01b.png' class='right' alt='The Student UML diagram.'>
+            The <b>Student</b> class is a <b>subclass</b> of <code>Person</code>.
+            The hollow-headed arrow pointing from <code>Student</code> to
+            <code>Person</code> says that <code>Student</code> <b>inherits
+            from</b> or (in Java) <code>extends</code> the <code>Person</code>
+            class.
+        </p>
+        <p> <code>Student</code> also has one private attribute, the
+            <code>studentID</code> which will be stored as a <code>long</code>.
+            To initialize both the student's name and their ID, the class
+            has a public constructor that takes two paraemters.
+        </p>
+        <p> The class has an accessor or "getter" method to retrieve the
+            value stored in the <code>studentID</code> field. There are no
+            methods to set or change the ID. While a student might change
+            their name (because of marriage, for instance) they can never
+            change their student ID.
+        </p>
+    <h4>Inherited Methods and Fields</h4>
+        <p> Let's create an object of the <code>Student</code> class,
+            and then call some of the methods:<br>
+            <img src='images/inherit01a.png' class='inline' alt='Creating a student and calling methods.'>
+            <img src='images/inherit01c.png' class='right'  alt='Calling inherited and new methods.'>
+            Notice that when I create the <code>Student</code> object named
+            <code>steve</code>, I can call the <code>getID()</code> method,
+            which was defined in the <code>Student</code> class.
+        </p>
+        <p>
+            However, I can <b>also</b> call the <code>setName()</code>
+            and <code>getName()</code> methods which were not defined
+            in <code>Student</code>, but in <code>Person</code>. More
+            importantly, I'm also able to access the <code>name</code>
+            field in the <code>Person</code> class if I use these
+            methods. Why is that?
+        </p>
+        <p> When we create <code>Student</code> objects, each subclass
+            object contains <b>all of the attributes and methods
+            of its superclass</b>. If we were to look at a "logical"
+            diagram of the student class, it would look something like
+            that shown here:<br>
+            <img src='images/student01.png' class='inlineCenter' alt='The "virtual" Student class'>
+            However, (<i>and this is very important</i>), <b>most</b> of the
+            fields, and some of the methods <b>will not be accessible</b>
+            to the subclass object, because they were declared
+            <code>private</code> in the superclass.
+        </p>
+        <p> So, for instance,
+            if we were to change the <code>Student</code> constructor
+            so that it attempted to set the <code>private name</code>
+            field directly, (instead of using the <code>setName()</code>
+            method), we'd get an error like this:<br>
+            <img src='images/inherit01b.png' class='inline' alt='Trying to access a private field from a subclass.'>
+            Even though you can't access the <code>private name</code> field
+            from the subclass, the field is are there nonetheless. You know
+            that because the <b>inherited</b> <code>setName()</code> and
+            <code>getName()</code> methods work correctly.
+        </p>
+        <p> Those methods (and fields) that are not declared <code>private</code>
+            in the superclass are called <b>inherited</b> methods (and fields).
+            An object may use its inherited methods and fields without any
+            further qualification, exactly as if they were defined inside
+            the object's own class (as I've done in the example here.)
+        </p>
+        <p class='note'>While <code>private</code> methods are not inherited
+            at all, <code>private</code> instance variables <b>are</b>
+            inherited, in the sense that each subclass object contains
+            a copy of each <code>private</code> variable defined in
+            the superclass, even though the methods in the subclass
+            object are not free to directly access that variable.
+        </p>
+    <h5>The Protected Modifier</h5>
+        <p> If a superclass wishes to allow a subclass access to an instance
+            variable, but not allow <code>public</code> access, the method
+            or field can be given the <code>protected</code> modifier.
+            Protected fields and methods are kind of half-way between
+            <code>public</code> and <code>private</code>; the children can
+            access them, but the general public cannot.
+        </p>
+        <p> These different access specifiers work kind of the same way most
+            of us manage our households. My children are free to access the
+            refridgerator, getting a glass of orange juice without asking
+            me; you, on the other hand, would have to knock at the front
+            door, and ask first. My refridgerator has something similar to
+            <code>protected</code> access.
+        </p>
+        <p> On the other hand, even my children aren't permitted to
+            grab my credit card and charge up a storm on the Internet;
+            my credit card is <code>private</code>.
+        </p>
+    <h4>Specialization and Extension</h4>
+        <p> Normally, a subclass <code>extends</code> an existing
+            class by <b>adding</b> additional fields or methods. That is
+            because logically, a subclass represents <b>specialization</b>.
+            The <code>Elephant</code> class represents a specialized form of
+            <code>Mammal</code>, and the <code>Mammal</code> class represents
+            a specialized form of <code>Animal</code>.
+        </p>
+        <p> In our case, the <code>Student</code> class added one new
+            field and one new method, along with a constructor.
+        </p>
+    <h4>Implicit Inheritance</h4>
+        <p> Every class without an explicit <code>extends</code> clause
+            <b>implicitly</b> inherits from the Java <b>root</b> class
+            named <code>Object</code>. Just as with explicit inheritance,
+            the implicit subclass (<code>Person</code>) <b>inherits</b>
+            several fields and methods from its superclass.
+        </p>
+        <p> One of these is the <code>toString()</code> method. Even though
+            neither the <code>Person</code> nor the <code>Student</code>
+            class <b>have not defined</b> a <code>toString()</code> method, we can
+            <b>call</b> the <code>toString()</code> method <b>inherited</b> from
+            the <code>Object</code> class like this:<br>
+            <img src='images/inherit01d.png' class='inline' alt='The inherited toString() method.'>
+            Of course, as you can see, the results are not very satisfying.
+            The <code>Object</code> version of <code>toString()</code> just
+            prints out the name of the class followed by the <b>memory
+            address</b> where the actual object is located in memory.
+        </p>
+        <p class='note'>The example shown here <b>explicitly</b> calls
+            the inherited <code>toString()</code> method. The code can be
+            made even simpler, like this:<br>
+            <img src='images/inherit01e.png' class='inline' alt='The implicit toString() method.'>
+            When you use any kind of object with string concatenation like
+            I've done here, Java <b>implicitly</b> call's the object's
+            <code>toString()</code> method to perform the concatenation.
+        </p>
+        <p> Of course, as you can see, in this case the inherited method
+            really doesn't work the way we'd like. Which brings us to
+            the second inheritance topic: <b>method overriding</b>.
+        </p>
+    <h3>Topic 2: Method Overriding</h3>
+        <p> When an inherited method doesn't do exactly what you want,
+            you can write a replacement method. This is called
+            <b>overriding</b> the method. The new version of the
+            method can either <b>completely replace</b> the existing version,
+            or you can <b>add some new actions</b> to the original. (You
+            <b>can't</b> however, just use <i>some</i> of the existing
+            behavior.)
+        </p>
+        <p> To illustrate this, we'll add <code>toString()</code> methods
+            to both of our demo classes. You can find the finished code
+            in <a href='Inherit02.java' target='_blank'><b>Inherit02.java</b></a>,
+            which you can download by clicking the link in this sentence.
+            The first change just adds <code>toString()</code> to the
+            <code>Person</code> class like this:<br>
+            <img src='images/inherit02a.png' class='inline' alt='The Person.toString() method.'>
+            When you override a method like <code>toString()</code> you must:
+        </p>
+        <ol>
+            <li class='d'>Use <b>exactly</b> the same number and type of
+                parameters as the original method in the superclass. There
+                are no conversions between <code>int</code> and <code>double</code>
+                for instance.
+            </li>
+            <li class='d'>Return <b>exactly</b> the same type as the original
+                method.
+            </li>
+            <li class='d'>Use an access specifier that is <b>at least</b> as
+                permissive as the superclass method. In other words, you can't
+                override a <code>public</code> method with a <code>private</code>
+                method.
+            </li>
+        </ol>
+        <p> With this new version of <code>toString()</code> our <b>Inherit02</b>
+            sample code looks like this when it runs:<br>
+            <img src='images/inherit02b.png' class='inline' alt='Using the Person toString() method.'>
+            Note that the variable <code>pete</code> prints out the name as
+            you'd expect (since <code>pete</code> is a <code>Person</code>
+            object). The variable <code>steve</code> <b>also</b> uses the
+            new overridden <code>toString()</code> method defined in <code>Person</code>,
+            <b>instead</b> of the original version defined in the <code>Object</code>
+            class.
+        </p>
+        <p> When we replaced <code>toString()</code> for the <code>Person</code>
+            class, we <b>also</b> replaced it for <b>all of its subclasses</b>.
+        </p>
+    <h4>Writing Student toString()</h4>
+        <p> Now, let's override <code>toString()</code> in the <code>Student</code>
+            class as well. Here's a first attempt:<br>
+            <img src='images/inherit02c.png' class='inline' alt='Student toString() attempt 1.'>
+            As you can see, though, the field <code>name</code> is <b>not
+            accessible</b>. This is the same problem we had earlier trying
+            to access <code>name</code> from the <code>Student</code> constructor.
+        </p>
+        <p> There we were able to get around the problem by using the inherited
+            <code>getName()</code> accessor method, and we can do the same thing
+            here, like this:<br>
+            <img src='images/inherit02d.png' class='inline' alt='Student toString() attempt 2.'>
+            While this works, though, it doesn't take advantage of the fact
+            that we've <b>already written</b> the <code>toString()</code>
+            code for the <code>Person</code> class. Essentially, in the
+            <code>Student</code> version of <code>toString()</code>, we're
+            writing exactly the same code again.
+        </p>
+        <p> Isn't there some way we can run the original version of the
+            <code>toString()</code> method, and just <b>add on</b> the
+            new parts we want, like printing the student ID? Isn't there
+            someway we can <b>combine</b> inherited and overridden methods?
+        </p>
+        <p> <b>Yes</b>, there is.</p>
+    <h4>Calling Superclass Methods</h4>
+        <p> As you saw earlier, the <code>Student</code> class automatically
+            <b>inherited</b> both the <code>getName()</code> and the
+            <code>toString()</code> methods from the <code>Person</code>
+            class. When we created a <code>Student</code> object, we could
+            use both of those methods just as if they were defined in the
+            student class.
+        </p>
+        <p> Furthermore, when we defined new methods in the <code>Student</code>
+            class, we could <b>call</b> those inherited methods (such as
+            <code>getName()</code>), just as if they were defined inside
+            the <code>Student</code> class.
+        </p>
+        <p> Let's see if we can put that to work by calling the <b>inherited</b>
+            version of <code>toString()</code>, which already prints the
+            object's name, from inside the new overridden <code>toString()</code>
+            method. Here's what that looks like, and here's what happens:<br>
+            <img src='images/inherit02e.png' class='inline' alt='Student toString() attempt 3.'>
+            The good news is that doing this is <b>not</b> syntactically
+            incorrect. The bad news is that your program blows up with
+            a <code>StackOverflowError</code> when you try to run it.
+        <p>
+        <p> The reason your program crashes is because when you call the
+            <code>toString()</code> method from inside a class that has
+            a definition for a <code>toString()</code> method, then the
+            overridden or <code>Student</code> version is used; it has
+            <b>replaced</b> the inherited <code>Person</code> version.
+            You are, in effect, calling the <code>Student</code> version
+            of <code>toString()</code> <b>from inside itself</b>. This
+            is called <b>recursion</b> and while it can be a powerful
+            problem-solving technique, doing it accidentally like this
+            usually results in a program crash.
+        </p>
+    <h5>The super Modifier</h5>
+        <p> This problem is similar to the one we encountered when we
+            had instance variables and local variables that both had
+            the same name. When that happened, we were able to use the
+            special identifier named <code>this</code> to differentiate
+            between the two variables.
+        </p>
+        <p> In this case we have an <b>inherited</b> superclass method named
+            <code>toString()</code> and an <b>overridden</b> subclass method
+            named <code>toString()</code>.
+            We can differentiate between them by using the special
+            identifier named <b>super</b>, like this:
+            <img src='images/inherit02f.png' class='inline' alt='Student toString() attempt 4.'>
+            Now, the overriden <code>toString()</code> method calls the
+            superclass <code>toString()</code> method to do a portion of
+            its work.
+        </p>
+        <p class='note'>Don't confuse method <b>overriding</b> (which is
+            what we're doing here), with method <b>overloading</b>. With
+            overloading, two or more methods have the same name, but different
+            parameter lists. Overloaded methods can exist in the same class
+            or in a subclass. (This is different than C++). Overriding methods
+            can only exist in a subclass and they must have exactly the
+            same parameters and return type as the method that they are
+            replacing.
+        </p>
+    <h3>Topic 3: Inheritance and Constructors</h3>
+        <p> The last thing you'll need to master to work with inheritance
+            is how it affects constructors. You remember that a class
+            constructor <b>must</b> have the same name as the class. That
+            means that when you create a new class, the new class
+            <b>doesn't inherit any of the superclass constructors</b>.
+            Instead, it needs to define new constructors of its own.
+        <p>
+        <p> To see how that works, let's add two constructors to the
+            <code>Person</code> class, which currently uses only the
+            <b>default</b> constructor that is automatically written
+            by Java, when you don't supply any explicit constructors:<br>
+            <img src='images/inherit03a.png' class='inline' alt='Two constructors for the Person class.'>
+            Both constructors just print a message so we can keep track of
+            when they've been called. The working constructor uses its
+            <code>String</code> parameter to initialize the <code>name</code>
+            instance variable in addition to printing a diagnostic message.
+            I've also added a similar diagnostic message to the
+            <code>Student</code> class constructor.
+        </p>
+        <p> The test program creates two objects, one <code>Person</code> and
+            one <code>Student</code>, and prints out their info, just like
+            the previous example. When we run the test code in
+            <a href='Inherit03.java' target='_blank'>
+            <b>Inherit03.java</b></a> (which you can download by clicking the
+            link in this sentence), you'll see that instead of two constructors,
+            <b>both</b> <code>Person</code> constructors have been called,
+            along with the <code>Student</code> constructor:<br>
+            <img src='images/inherit03b.png' class='inline' alt='Running the Inherit03 sample program.'>
+            Why is that?
+        </p>
+    <h4>Constructor Chaining</h4>
+        <p> When you call a subclass constructor, before the constructor
+            can do <b>any</b> of its work, it first needs to make sure that
+            its superclass constructor has been called. This happens
+            <b>before</b> the first line in the subclass constructor
+            ever runs.
+        </p>
+        <p> You don't have to do anything special to make this happen.
+            When your constructor runs, if implicitly calls the <b>no-arg</b>
+            constructor in the superclass as its first line of code, and that
+            constructor calls <b>its</b> superclass constructor, and so on,
+            all the way up to the <code>Object</code> class. This is called
+            <b>constructor chaining</b>.
+        </p>
+        <p> So, consider for a second, the <code>Student</code> class
+            constructor shown here:<br>
+            <img src='images/inherit03c.png' class='inline' alt='The Student constructor.'>
+            Even though you don't see it in the code,
+            <b>in reality</b> the following set of commands are run
+            when the <code>Student</code> construct is invoked
+            (after memory has been allocated and all instance variables
+            have been initialized):
+        </p>
+        <ol>
+            <li class='d'>call the <code>Object</code> no-arg constructor</li>
+            <li class='d'>call the <code>Person</code> no-arg constructor</li>
+            <li class='d'>assign the parameter to the instance variable</li>
+            <li class='d'>call the <code>setName()</code> inherited method</li>
+            <li class='d'>print the diagnostic message</li>
+        </ol>
+        <p> That's why we saw three diagnostic messages in the sample program,
+            when we only created two objects. When we created the <code>Student</code>
+            object named <code>steve</code>, the <code>Student</code> constructor
+            <b>first</b> called the <b>no-arg</b> constructor for the <code>Person</code>
+            class. If the <code>Object</code> class no-arg constructor printed out
+            diagnostic messages, like our constructors do, then you won't have seen
+            two of those as well: one for the <code>Student</code> object and
+            one for the <code>Person</code> object.
+        </p>
+    <h4>Default and No-Arg Constructors</h4>
+        <p> What happens if we <b>remove</b> the no-arg constructor from the
+            <code>Person</code> class? If you comment it out, you'll see that
+            it doesn't affect the <code>Person</code> class at all, but the
+            <code>Student</code> constructor stops working:<br>
+            <img src='images/inherit03d.png' class='inline' alt='The Student constructor with no explicit Person constructor.'>
+            As the Eclipse error message points out, every time you extend a class,
+            the superclass <b>must</b>:
+        </p>
+        <ol>
+            <li class='d'>have a <b>no-arg constructor</b> like <code>Person()</code>, or</li>
+            <li class='d'>have a <b>default</b> constructor which is automatically
+                written if the superclass has <b>no</b> explicit constructors, or</li>
+            <li class='d'>the <b>subclass</b> (<code>Student</code> in this case) must
+                <b>explicitly</b> call <b>another</b> constructor.
+            </li>
+        </ol>
+        <p> That's what we want to look at now. How exactly do you explicitly call
+            a superclass constructor?
+        </p>
+    <h4>Calling super()</h4>
+        <p> You remember when you wrote overloaded constructors in Unit 9, that
+            you could <b>invoke one constructor from another</b> by using the special
+            syntax <code>this()</code>. When you use <code>this()</code> to call
+            another constructor, it needed to appear on the first line of the
+            method.
+        </p>
+        <p> With inheritance, instead of calling another, overloaded constructor
+            in the same class, you can <b>call a constructor in your immediate
+            superclass</b>. Instead of using <code>this()</code>, you use
+            <code>super()</code> in a similar manner. As with <code>this()</code>,
+            <code>super()</code> must appear on the first line of the constructor
+            body. Of course that means you can use <code>this()</code> or
+            <code>super()</code>, not both.
+        </p>
+        <p> Here's how you'd modify the <code>Student</code> constructor to call
+            the <code>Person(String)</code> constructor, instead of using
+            the <code>setName()</code> method, as we've done up until now:<br>
+            <img src='images/inherit03e.png' class='inline' alt='Using super() with the Student constructor.'>
+            Notice that the <code>setName()</code> method can be removed alltogether
+            once you do this. This is the <b>normal way to write subclass constructors</b>.
+        </p>
+        <p> Now, when we run our sample program, instead of implicitly calling the
+            <code>Person</code> no-arg constructor (which no longer exists), we
+            <b>explicitly</b> chain to the <code>Person(String)</code> constructor
+            to initialize the <code>name</code> field:<br>
+            <img src='images/inherit03f.png' class='inline' alt='Explicit constructor chaining.'>
+        </p>
+    <h3>Topic 4: Final Classes and Methods</h3>
+        <p> Since subclasses are free to provide replacement methods
+            for <b>every</b> public method defined in the superclass, it's
+            <b>possible</b>
+            for a subclass to replace a method that the original class
+            designer wanted left alone.
+        </p>
+        <p> If you look at the <code>Person</code> class, for instance, you
+            can see that the <code>getName()</code> method just returns the
+            name of the person. <b>This method works fine as is</b>, and there's
+            really no reason for a subclass to change it. Because of the
+            way the superclass was written, though, <b>nothing prevents a
+            subclass from overriding it</b> like this to change the way
+            the method works:
+        </p>
+        <p class='code'>
+            class Flatterer extends Person<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;public String getName()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><span style='color:red;'>return "Emperor " + super.getName();</span></b><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </p>
+        <p> Although the subclass has no access to the <code>private</code>
+            instance variable <code>name</code>, because the <code>getName()</code>
+            method could be overridden, the subclass was able to change the
+            access to this method.
+        </p>
+        <p> To prevent this, when you design a base or superclass, you need
+            to consider which methods you want to allow others to extend
+            and which ones should be "set in stone". In our <code>Person</code>
+            class, there is no reason to let anyone change the way that
+            <code>getName()</code> or <code>setName()</code> work, so we can
+            <b>seal</b> them by using the keyword <code>final</code> like this:<br>
+            <img src='images/inherit03g.png' class='inlineCenter' alt='Creating a final method.'>
+            When a method is marked <code>final</code> then subclasses are
+            <b>prevented</b> from overriding it.
+        </p>
+    <h5>Final Classes</h5>
+        <p> When you are designing a collection of classes, you normally
+            <b>won't want all of the classes to be extensible</b>. In the Java
+            Class Libraries, for instance, there are several classes that
+            you <b>can't extend</b>, such as <code>String</code> and <code>Math</code>.
+            The designers of the Java Class Libraries felt that allowing
+            people to create their own versions of the <code>String</code>
+            class would open up various security holes in the language.
+        </p>
+        <p> To prevent others from extending your class, just add
+            <code>final</code> to the class header, just like you
+            did for the method header. If you make a class non-extendable
+            by making it <code>final</code>, then there is no reason
+            to make the methods <code>final</code> as well.
+        </p>
+        <p> Well that's it for the boring finger exercises. Let's get back to the fun stuff.</p>
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned about the <b>syntax and semantics
+            of inheritance</b>. You learned how to <b>create a subclass</b> and
+            use the new classes <b>inherited methods</b>. You also learned how
+            to <b>override</b> superclass methods and how to write
+            <b>constructors</b> in a subclass.
+        </p>
+        <p> In the next lesson, we'll put some of these finger exercises
+            to work creating new components that work with the ACM
+            graphics framework and with the Java Class Libraries.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+  </body></html>

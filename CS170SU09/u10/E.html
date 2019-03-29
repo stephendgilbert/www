@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src="images/tb01.png" class="right" alt="An application that uses object arrays.">
+            <b><span class="cap">T</span>his lesson will teach you</b> how to
+            create and use arrays that contain <b>objects</b> instead of
+            those that contain primitive values. Instead of using individual
+            <code>JButton</code> objects in your applets, you may want to
+            use <i>arrays</i> of <code>JButtons</code>, like those
+            pictured in the applet here.
+        </p>
+        <p> In addition, you'll learn to work with <b>partial arrays</b>.
+            Sometimes, you don't need to process <i>all</i> of the elements in
+            an array, and so the algorithms you studied in previous lessons
+            don't exactly fit the bill.
+        </p>
+        <p> You'll want to use partial-array-processing algorithms when:</p>
+        <ul>
+            <li>your array is constructed at run-time using user-supplied
+                data. Since you <b>don't know how many elements the array will
+                contain</b>, you'll need to know how to process a portion of an
+                array by using sentinel loops, to keep track of how
+                many elements the array contains.
+            </li>
+            <li>your want to <b>insert or delete elements</b> from an array. To do
+                this, you need to supply space for the extra elements, and
+                also keep track of which elements are valid. That means that
+                you'll need to work with algorithms that modify a portion
+                of an array by inserting or deleting elements.
+            </li>
+        </ul>
+        <p> Let's start, though, by looking at storing objects in POA (or
+            <b>Plain Old Arrays</b>). Along the way, we'll look at what
+            you need to do if you want to use the <code>JButton</code>
+            and other Swing Widgets in your Java applets.
+        </p>
+    <h3>Arrays Of Objects</h3>
+        <p> You create an array of objects using exactly the same syntax
+            you use to create an array of primitive types.
+            Here, for instance, is how you create an array of
+            <code>JButton</code> objects for the toolbar that appears
+            at the top of the applet pictured at the beginning of this
+            lesson:
+        </p>
+        <p class="code">
+            private JButton[] toolBar = new JButton[5];
+        </p>
+        <p> Up to this point, objects and primitive arrays work just the
+            same. Now, however, the two diverge.
+        </p>
+    <h4>Initializing the Elements</h4>
+        <p>If <code>toolBar</code> were an array of <code>double</code>
+            or <code>int</code>, each element would automatically
+            be initialized to 0, so you could use the array immediately.
+            With object arrays, however, each element is initialized to
+            the special value <code>null</code> like this:<br>
+            <img src="images/z04b.png" class='inline' alt="Creating an instance of an object array">
+            <br>The value <code>null</code> is not very useful in its own
+            right. Actually, its not useful <b>at all</b>. Before you
+            can use <code>toolBar</code> you have to fill each element
+            with a valid <code>JButton</code> reference by using the
+            <code>new</code> operator on each element in the array
+            like this:
+        </p>
+        <p class="code">
+            int len = toolBar.length;<br>
+            for (int i=0; i &lt; len; i++)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;toolBar[i] = new JButton(""+(i+1));<br>
+            }
+        </p>
+        <p> Once you're finished, each element in the <code>toolBar</code>
+            array points to a new <code>JButton</code> object, as this
+            illustration shows:<br>
+            <img src="images/z05.png" class='inline' alt="The toolBar array after initialization">
+            As you can see, every object array requires three steps to be
+            useful:
+        </p>
+        <ol>
+            <li>Declare an <b>array variable</b>.</li>
+            <li>Create (or <i>instantiate</i>) the <b>array object</b>.</li>
+            <li>Create and attach objects <b>for each element</b> in the
+                array.</li>
+        </ol>
+        <p> Here's a little longer example you can study to make sure you
+            understand how to create and use arrays of objects. Rather than
+            showing you the entire listing for
+            <a href='javascript:var%20w=window.open("Toolbar.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>Toolbar.java</b></a>, we'll just look at a few
+            snippets. To view the entire listing, just click the link in
+            the previous sentence.
+        </p>
+    <h4>JApplet versus Applet</h4>
+        <p> If you want to use the Swing widgets, such as <code>JButton</code>,
+            inside your Java applets, then you <b>can't</b> use the
+            <code>Applet</code> class. Instead, you have to switch to the
+            Swing version of the class, named <code>JApplet</code>. This
+            requires you to make some changes to your code:<br>
+            <img src="images/tb02.png" alt="The Toolbar applet heading." class='inline'>
+            The first two immediate changes you'll notice are:
+        </p>
+        <ul>
+            <li>You don't need to import the <code>java.applet</code> package.
+                Even though the <code>JApplet</code> class is a <i>subclass</i>
+                of applet, it's actually defined inside the <code>javax.swing</code>
+                package, along with <code>JButton</code> and friends. Since you
+                want to use Swing widgets, you'd need that anyway.
+            </li>
+            <li>Of course, since we're creating a <code>JApplet</code> instead
+                of an applet, the class heading needs to reflect that
+                as well.
+            </li>
+        </ul>
+     <h4>The Toolbar init() Method</h4>
+        <p> The <code>init()</code> method of <b>Toolbar.java</b> lays out the
+            user interface, initializes the <code>toolBar</code> array, and
+            hooks up event-handler methods to each button. Here's what it
+            looks like:<br>
+            <img src="images/z06.png" alt="The Toolbar.java init() method" class="inline">
+            The first thing that you'll notice is that, unlike an ACM
+            <code>GraphicsProgram</code>, you need to create the panels that
+            are used to house your buttons by yourself.
+        </p>
+        <p> The section marked (1) shows the syntax for creating a
+            <code>JPanel</code> object and adding a <b>layout manager</b>
+            which will size and position the components placed in the
+            panel. The <code>GraphicsProgram</code> class contains several
+            fragments of already written code, very similar to this, to
+            create the panels where you placed your widgets in your
+            ACM programs.
+        </p>
+        <p> The loop at the bottom of the <code>init()</code> method shows how
+            to create a series of <code>JButton</code> objcts and place them
+            int a <code>JButton[]</code> array, using a loop and <b>a second,
+            parallel array</b> of <code>String</code> objects for that
+            contain the <code>JButton</code> captions.
+            Inside the loop, these three things occur for each element of
+            the <code>JButton[]</code> array <code>toolBar</code>:
+        </p>
+        <ol start='2'>
+            <li class="d">Each element in the <code>String</code> array,
+                <code>captions</code>, is passed as an argument to the
+                <code>JButton</code> constructor creating the
+                <code>JButton</code> objects for the <code>toolBar</code> array.
+            </li>
+            <li class="d">Each <code>toolBar</code> element is attached to an
+                <code>ActionListener</code> as it is created. Since the
+                applet <code>extends ActionListener</code>, every
+                <code>JButton</code> is "pointed" to the applet's
+                own <code>actionPerformed()</code> method.
+            </li>
+            <li class="d">The <code>JPanel</code> object, here named <code>p</code>,
+                and created at the top of the <code>init()</code> method, is
+                used to keep all of the <code>JButton</code> objects together
+                visibily. Inside the loop, each <code>JButton</code> object is
+                added to the <code>JPanel</code> as it is created.
+            </li>
+        </ol>
+        <p class="note">The <code>captions</code> array, which works in concert with
+            the <code>toolBar</code> array is known as a <b>parallel array</b>.
+            Parallel arrays are used when multiple, related values need to
+            be processed for each element in a collection. In this case, each
+            <code>JButton</code> needs its own caption value, so storing those
+            captions in a separate array is one solution.
+        </p>
+    <h5>Adding the Panels</h5>
+        <p> Adding the panels to the applet, and painting the applet
+            are both a little more complex than they are with ACM
+            programs, or with old-style applets. (This is true for
+            "pure Java" graphical applications as well.)
+        </p>
+        <p> Here's the code at the bottom of the <code>init()</code> method
+            that places both the panel containing the buttons, and a second
+            <code>JPanel</code> object, named <code>canvas</code> that will
+            be used to display our message:<br>
+            <img src='images/tb03.png' class='inline' alt='Placing the panels on the applet.'>
+            Unline regular applets, you can't add panels or buttons or anything
+            else directly to the <code>JApplet's</code> surface. Instead,
+            you want to add your base components to the applet's
+            <code>ContentPane</code>. This is a generic <code>Container</code>
+            that is alread installed when the applet starts up. All you
+            do is call the <code>JApplet getContentPane()</code> method,
+            and store the result in a <code>Container</code> variable,
+            (traditionally called <code>c</code>).
+        </p>
+        <p> Once you have a variable for the content pane, you usually
+            install a <b>layout manager</b>. The code shown here installs
+            a <code>BorderLayoutManager</code>, the same layout manager that
+            your ACM programs used to allow you to add components to the
+            north, south and so on.
+        </p>
+        <p> The last step is to add your components to the content pane.
+            In your ACM programs, you could use the literals <code>NORTH</code>
+            and <code>SOUTH</code> when using the <code>add()</code> method.
+            With the standard Java Library GUI classes, you need to
+            specify <code>BorderLayout.NORTH</code> and so on, as I've done
+            here for both the panel containing the buttons (which goes at
+            the top), and the panel we'll use to display the message
+            (which goes in the center.)
+        </p>
+
+    <h4>The actionPerformed() Method</h4>
+        <p> Since <b>all of the</b> <code>JButton</code> objects created
+            in the <code>init()</code> method are "hooked up" to the same
+            <code>actionPerformed()</code> method,
+            you have to find a way to tell <b>exactly which</b>
+            <code>JButton</code> was clicked, when the
+            <code>actionPerformed()</code>
+            method is called.
+        </p>
+        <p> Using an array of objects makes that quite easy. Using
+            individual objects, instead of an array, you'd have to use an
+            <code>if-else-if-else</code> structure. With an array, you can
+            use a <code>for</code> loop as explained here.
+        </p>
+    <h5>Step 1: Who Fired?</h5>
+        <p> The first step is to retrieve the <code>Object</code> that
+            generated the event. To do this, you call the <code>ActionEvent
+            getSource()</code> method, using the <code>ActionEvent</code>
+            object passed to the <code>actionPerformed()</code>
+            method as its <b>event parameter</b>.
+            <img src="images/z09.png" class='inline' alt="Retrieving the object that clicked">
+        </p>
+    <h5>Step 2: Match It Up</h5>
+        <p>Create an <code>int</code> variable&#8212;here I've named it
+           <code>clicked</code>&#8212;<b>outside</b> of your <code>for</code> loop.
+           It's important you <b>don't</b> create this variable in the
+           initializer section of your <code>for</code> loop, because
+           you need to reference it <b><u>after</u></b> the loop terminates.
+           <img src="images/z10.png" alt="Matching the object and its button" class="inline">
+            Write a <code>for</code> loop that steps through each
+            element in your <code>toolBar</code> array, and compares
+            the element to the <code>Object</code> that generated the
+            event. When you locate the correct object, simply
+            <code>break</code> out of the loop.
+        </p>
+        <p class='note'>Notice that the loop uses the <code>==</code> operator,
+            <b>not</b> the <code>equals()</code> method, to see if
+            <code>obj</code> and the array elements match. That's because
+            we're checking to see if the two variables contain the same
+            refrerence, <b>not</b> checking the <i>contents</i> of the
+            respective elements. Of course, if two variables contain the
+            same reference value, then they both point to <b>exactly the
+            same object</b>.
+        </p>
+    <h5>Step 3: Take Action</h5>
+        <p>Now, you have an <code>int</code> variable you can use in a
+            <code>switch</code> statement to take the appropriate action.
+           <img src="images/z11.png" alt="Taking action based upon the button clicked" class="inline">
+           Notice that rather than changing the background color for the
+           entire applet, you have to change the background color for
+           the <code>canvas</code> panel instead. After changing the
+           color, you should make sure that you send the <code>repaint()</code>
+           command so that your message is redisplayed.
+        </p>
+            You can
+            <a href="javascript:popUpWindow('http://faculty.orangecoastcollege.edu/sgilbert/applets/Toolbar.html',0,0,575,450);">
+            <b>run the applet</b></a> by clicking the link in
+            this sentence. If you don't want to run the applet, then
+            here's a snapshot for your perusal:<br>
+            <img src="images/z08.png" alt="Running the Toolbar applet" class="inline">
+        </p>
+    <h3>Processing Part of an Array</h3>
+        <p> There are several situations when you only want to process <b>part</b>
+            of an array, rather than the whole thing. That means that instead of using
+            the "natural" loop bounds, (from 0 to less-than the length), you'll need
+            to keep track of which elements you actually want to process. It also
+            means that you <b>can't</b> use the <i>foreach</i> version of the
+            <code>for</code> loop.
+        </p>
+        <p> The most common reason for processing only "part" of an array
+            is when only a portion of the array actually contains valid data.
+            Since the size of an array can't be changed after it's created,
+            programmers often "plan for the worst case", and make their arrays
+            large enough to hold the maximum amount of data that could possibly
+            be required.
+        </p>
+    <h4>InputArray</h4>
+        <p> In the <b>SumAvgCount</b> applet, we filled all of the elements with
+            random numbers. Let's create an ACM console-mode program that allows the
+            user to input <i>any number of values</i>, instead of automatically
+            filling the array.
+            Here's a program
+            <a href='javascript:var%20w=window.open("InputArray.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>InputArray</b></a>
+            that shows you how you'd do it.
+        </p>
+        <h5>Capacity and Size</h5>
+        <p> To do this, we need to keep track of how many values the user
+            has entered, <b>and</b> how many empty slots are still available. Traditionally,
+            these two numbers are known as the array's <b><u>capacity</u></b>
+            and its <b><u>size</u></b>. Here's a picture that might make things
+            a little clearer:<br>
+            <img src="images/b17.gif" alt="An array with a capacity of 10 and a size of 4." class='inline'>
+            The array shown here has a <code>length</code> of 10, which is also its
+            <b>capacity</b>. Only the first four elements have meaningful values,
+            though, so the <b>size</b> of the array is 4.
+        </p>
+        <p> In the <b>InputArray</b> program, we first create a <code>Scanner</code>
+            variable to read the user's input. Of course, since this is an ACM
+            <code>ConsoleProgram</code>, we <b>could</b> use the built-in
+            <code>readDouble()</code> method. However, the <code>ConsoleProgram</code>
+            read methods can only read one number per line, while the <code>Scanner</code>
+            methods let you place several numbers on the same line, and then "pick them off."<br>
+            <img src="images/b16.png" class="inline" alt="The capacity and size variable declarations.">
+            The prior examples you've seen of the <code>Scanner</code> class all use
+            <code>System.in</code> to initialize the <code>Scanner</code> object. You
+            do that if you want to read from the <b>system console</b>. We want to read
+            from the ACM program console, though, so we initialize our <code>Scanner</code>
+            using the <code>getReader()</code> method designed for just this purpose.
+        </p>
+        <p> After creating the <code>Scanner</code>, the program creates two
+            variables to store these numbers:
+        </p>
+        <ul>
+            <li><code>capacity</code>, which stores the maximum number of items the
+                user <b>could</b> enter,
+            </li>
+            <li> and a separate variable, <code>size</code>, to keep track of how
+                many values have <b>actually</b> been entered.
+            </li>
+        </ul>
+        <p> We initialize <code>capacity</code>
+            using the built-in array <code>length</code> variable:
+        </p>
+        <h5>Reading the Input</h5>
+        <p> To initialize the array, you'll use a sentinel loop along with the user input.
+            As each value is entered, you'll store it in the array,
+            and then increment the variable indicating the number of
+            items in the array like this:
+            <img src="images/b18.png" class="inline" alt="The input loop.">
+            The input loop works like this:
+        </p>
+        <ol>
+            <li class="d">The user is told what to enter and how to end
+                the input (with a 0 or negative number).
+            </li>
+            <li class="d">A "loop and a half" is used for input, with the
+                <b>necessary bounds</b>, (that is, the maximum number of values
+                have been entered), used to control the loop.
+            </li>
+            <li class="d">Because we're using a loop-and-a-half, we need only
+                one input statement, into the local variable <code>num</code>.
+            </li>
+            <li class="d">The loop's <code>if</code> statement checks to see if
+                <code>num</code> is the sentinel value, and exits the loop if
+                it is.
+            </li>
+            <li class="d">If <code>num</code> is a valid value, it is stored into
+                the array, using the <code>size</code>
+                variable as the index.
+            </li>
+            <li class="d">Finally, the <code>size</code> variable is incremented,
+                so that the next input value will be stored in the next element
+                of the array.
+            </li>
+        </ol>
+        <h5>Print the Results</h5>
+        <p> The <b>SumAvgCount</b> program used a <i>foreach</i>
+            loop to process the array. With <b>InputArray</b>, though, you can't do that,
+            because not all of the values may in use. Instead, this program has to use
+            a traditional <code>for</code> loop because we only process the
+            "valid" elements, using the <code>size</code> variable to
+            control the loop:<br>
+            <img src="images/b19.png" class="inline" alt="Printing out the loop values.">
+            We'd like the output to look similar to the syntax used to write
+            an array literal, because it's a familiar form. That means that the
+            loop we use to print out the values must put a comma after each element,
+            except for the last.
+        </p>
+        <p> The easiest way to do this is to first, check the <b>postcondition</b>
+            value of <code>size</code> to make sure that the user has actually entered
+            <b><u>any</u></b> values. Otherwise, if the array is "empty", the loop would
+            "blow up" when we tried to print the first element in the array.
+        </p>
+        <p> If the array does contain valid elements. The loop prints the first
+            element, and then all of the remaining elements starting at the
+            second. (Notice that the <code>for</code> loop index starts with
+            1 and not with 0.) Each output statement begins by printing the
+            following comma from the previous element, followed by the current
+            array element value.
+        </p>
+        <p> Here's the output of the program with a few numbers entered:
+            <img src="images/b15.png" class="inline" alt="Running the InputArray program.">
+        </p>
+    <h3>Inserting and Removing Array Elements</h3>
+        <p> The final algorithms that we'll cover in this lesson involve
+            <b>inserting</b> items into, and <b>removing</b> items from.
+            an array. Suppose, for instance, that instead of simply adding
+            items to the end of the "unoccupied" section of numbers in the
+            <b>InputArray</b> program, we placed each number into its
+            correct position in the array.
+        </p>
+        <p> Here's a picture that shows what I mean:
+            <img src="images/b21.gif" class="inline" alt="Placing each number into its correct position.">
+            As you can see, the array is partially filled, and the next number, 3.25,
+            has been input by the user. To put the number in its correct location
+            we need to:
+        </p>
+        <ol>
+            <li class="d">Locate the first number that is <b>larger</b> than the
+                number we're going to insert into the array. In this case, that's
+                the number 7.1. That's where we'll place our new number.
+            </li>
+            <li class="d">Before we can store the number in the array, though,
+                the element that's currently occupying that spot, (7.1), needs to be
+                moved to the right, and the number occupying the spot it is
+                moving to, (9.5), needs to be moved to the right as well. Since
+                9.5 is the last valid value in the array, we can stop there, but
+                if the array contained additional numbers, they'd have to be moved
+                as well.
+            </li>
+        </ol>
+        <p> Finally, after all of the existing numbers have been moved to the right,
+            we can come back and put our new number in the spot that's been opened
+            up for it.
+        </p>
+        <p class="note"> These algorithms usually only make sense when used with
+            partially filled arrays, those that use a separate <b>size</b> variable
+            indicating how many elements are actually occupied.
+            If you insert an element into a completely filled array, then
+            the last element in the array will be lost when the previous
+            items are moved to make room for the inserted item. In a similar
+            way, when you remove an item from regular array, you have to way
+            of indicating that the last value no longer contains a valid
+            entry.
+        </p>
+    <h4>InsertArray</h4>
+        <p> The program
+            <a href='javascript:var%20w=window.open("InsertArray.java.html","","width=675,height=700,scrollbars=yes");'>
+            <b>InsertArray.java</b></a> modifies the <b>InputArray</b> program from
+            the previous section, so that the individual elements are added
+            in sorted order.
+        </p>
+        <p> We'll just look at the three sections that are <i>different</i> that
+            those appearing inside <b>InputArray.java</b>.
+        </p>
+        <h5>Find the Position</h5>
+        <p> The first step is to find the position where the new element should
+            be inserted. You do that by writing a loop that looks for the first
+            element that is <b>larger</b> than the element you want to insert.
+            Here's the code that does that:
+            <img src="images/b23.png" class="inline" alt="Locating the position for the inserted element.">
+            Note that the index value used in the <code>for</code> loop <b>is not</b>
+            declared inside the loop initializer section (although it is initialized there).
+            That's because, after the loop is finished, the variable <code>i</code> will
+            contain the location where the new element should be inserted. If we
+            declared the variable inside the loop initializer, we couldn't use it
+            outside of the loop body.
+        </p>
+        <p> Note also that if there are <b>no</b> elements in the array that are larger
+            than the number you are inserting, that <code>i</code> will contain the same
+            value as <code>size</code> when the loop ends, and that the number will then
+            be added to the end of the current elements, which is what we want.
+        </p>
+        <h5>Move the Existing Elements</h5>
+        <p> Before we can store <code>num</code> in the array, we need to move the
+            existing elements to the right, to "open up a hole" for the new value.
+            Here's the code from <b>InsertArray</b> that does that:
+            <img src="images/b25.png" class="inline" alt="Moving the array elements to the right.">
+            Note that rather than copying the elements from left to right, which
+            wouldn't work correctly, we start at the <b>end</b> of the array, and
+            move to the left, until we get to the location where we intend to insert
+            the new element.
+        </p>
+        <h5>Insert the New Element</h5>
+        <p> After moving the elements, you'll simply copy the new number into the
+            insert location, and then update the value of <code>size</code> as shown
+            here:
+            <img src="images/b26.png" class="inline" alt="Inserting the new element into the array and updating the size.">
+            If we run the program, using exactly the same input as we used when
+            we ran <b>InputArray</b> earlier in this lesson, you'll see that the
+            numbers that are printed are now in sorted order:
+            <img src="images/b22.png" class="inline" alt="Runnin InsertArray.java.">
+        </p>
+    <h4>Removing Elements</h4>
+        <p> Removing the elements in an array works in an almost identical manner
+            as inserting elements, <b>except</b>, instead of moving a portion of the
+            array to the right, to "open up a hole", you need to move all of the
+            elements to the right of the deleted element leftwards to "close up
+            the gap".
+        </p>
+        <p> Here's a small fragment of code that does that. The variable <code>delPos</code>
+            is the location of the element you want to delete:
+        </p>
+        <p class="code">
+        for (int i = delPos; i &lt; size-1; i++)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;ar[i] = ar[i + 1];
+        </p>
+        <p> Note that the bounds of this loop is <b>not</b> <code>i &lt; size</code>,
+            but <code>i &lt; size-1</code>. That's because, in the loop body we need
+            to grab the value to copy from <code>ar[i + 1]</code>. If we used
+           <code>size</code> as the bounds, we'd copy from an invalid element.
+        </p>
+
+    <h3>Coming Up Next ...</h3>
+        <p> In this lesson, we looked at two array topics. You first learned how
+            to create arrays that contain objects. Because objects are references,
+            an object array requires an additional initialization, used to instantiate
+            the objects that the array elements refer to.
+        </p>
+        <p> In addition, you learned how to process arrays that are only <b>partially
+            filled</b>. Use this when you need to process varying amounts of user
+            data, or, when you need to insert or delete elements in an array.
+        </p>
+        <p> That's the last of the online lessons for this week. In the mean time,
+            I'm sure you have some testing and debugging to get to. See you next
+            week!
+        </p>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

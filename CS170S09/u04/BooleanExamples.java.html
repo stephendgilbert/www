@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>BooleanExamples.java</title>
+<meta name="Generator" content="SciTE - www.Scintilla.org" />
+<style type="text/css">
+.S0 {
+	color: #808080;
+}
+.S2 {
+	font-family: 'Consolas';
+	color: #007F00;
+	font-size: 10pt;
+}
+.S3 {
+	font-family: 'Consolas';
+	color: #3F703F;
+	font-size: 10pt;
+}
+.S4 {
+	color: #007F7F;
+}
+.S5 {
+	font-weight: bold;
+	color: #00007F;
+}
+.S6 {
+	color: #7F007F;
+}
+.S10 {
+	font-weight: bold;
+	color: #000000;
+}
+.S18 {
+	font-family: 'Consolas';
+	color: #804020;
+	font-size: 10pt;
+}
+span {
+	font-family: 'Consolas';
+	color: #000000;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<span><span class="S5">import</span><span class="S0"> </span>acm<span class="S10">.</span>program<span class="S10">.*;</span><br />
+<span class="S5">import</span><span class="S0"> </span>acm<span class="S10">.</span>io<span class="S10">.*;</span><br />
+<br />
+<span class="S3">/**</span><br />
+<span class="S3">&nbsp;* &nbsp;Some short Boolean and Relational Examples.</span><br />
+<span class="S3">&nbsp;*</span><br />
+<span class="S3">&nbsp;* &nbsp;</span><span class="S18">@author</span><span class="S3"> Stephen Gilbert</span><br />
+<span class="S3">&nbsp;* &nbsp;</span><span class="S18">@version</span><span class="S3"> Spring 2009</span><br />
+<span class="S3">&nbsp;*/</span><br />
+<span class="S5">public</span><span class="S0"> </span><span class="S5">class</span><span class="S0"> </span>BooleanExamples<span class="S0"> </span><span class="S5">extends</span><span class="S0"> </span>ConsoleProgram<br />
+<span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S3">/**</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;Create and display some boolean varaibles and values.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>run<span class="S10">()</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// Boolean variables</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S0"> </span>fileName<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>readLine<span class="S10">(</span><span class="S6">"Enter a file name:"</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">boolean</span><span class="S0"> </span>isSourceCode<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>fileName<span class="S10">.</span>endsWith<span class="S10">(</span><span class="S6">".java"</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span>fileName<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">" ends with .java? "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>isSourceCode<span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>String<span class="S0"> </span>answer<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>readLine<span class="S10">(</span><span class="S6">"Continue (Yes or No)? "</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">boolean</span><span class="S0"> </span>isDone<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>answer<span class="S10">.</span>equalsIgnoreCase<span class="S10">(</span><span class="S6">"No"</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span>answer<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">" means you are done? "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>isDone<span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 1. Comparing different types</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">float</span><span class="S0"> </span>a<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">2.34F</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>b<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">2.34</span><span class="S10">;</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"a == b is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span><span class="S0"> </span>a<span class="S0"> </span><span class="S10">==</span><span class="S0"> </span>b<span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"a &gt; b is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>a<span class="S0"> </span><span class="S10">&gt;</span><span class="S0"> </span>b<span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"a &lt; b is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>a<span class="S0"> </span><span class="S10">&lt;</span><span class="S0"> </span>b<span class="S10">));</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 2. Comparing two mathematically equivalent values</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>c<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">*</span><span class="S0"> </span><span class="S4">10.0</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>d<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S10">+</span><span class="S0"> </span><span class="S4">.1</span><span class="S10">;</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"c == 1.0 is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>c<span class="S0"> </span><span class="S10">==</span><span class="S0"> </span><span class="S4">1.0</span><span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"d == 1.0 is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>d<span class="S0"> </span><span class="S10">==</span><span class="S0"> </span><span class="S4">1.0</span><span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"c == d is "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span>c<span class="S0"> </span><span class="S10">==</span><span class="S0"> </span>d<span class="S10">));</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 3. Another example (from Cay Horstmann's Big Java, p. 196)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>root<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>Math<span class="S10">.</span>sqrt<span class="S10">(</span><span class="S4">2</span><span class="S10">);</span><span class="S0"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// square root of 2</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">double</span><span class="S0"> </span>result<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>root<span class="S0"> </span><span class="S10">*</span><span class="S0"> </span>root<span class="S0"> </span><span class="S10">-</span><span class="S0"> </span><span class="S4">2</span><span class="S10">;</span><span class="S0"> &nbsp;&nbsp;&nbsp;</span><span class="S2">// subtract 2 from 2</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"Subtracting 2 from 2 gives "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>result<span class="S10">);</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">// 4. A check to see if numbers are "close enough"</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">final</span><span class="S0"> </span><span class="S5">double</span><span class="S0"> </span>EPSILON<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S4">10E</span><span class="S10">-</span><span class="S4">14</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">boolean</span><span class="S0"> </span>isEqual<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>Math<span class="S10">.</span>abs<span class="S10">(</span>c<span class="S0"> </span><span class="S10">-</span><span class="S0"> </span>d<span class="S10">)</span><span class="S0"> </span><span class="S10">&lt;=</span><span class="S0"> </span>EPSILON<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"c and d 'isEqual' ? "</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>isEqual<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>println<span class="S10">(</span><span class="S6">"result is effectively 0 ? "</span><span class="S0"> </span><span class="S10">+</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">(</span>result<span class="S0"> </span><span class="S10">&lt;=</span><span class="S0"> </span>EPSILON<span class="S10">));</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S3">/**</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* The standard Java entry point. DON'T MODIFY.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* </span><span class="S18">@param</span><span class="S3"> args the command-line arguments.</span><br />
+<span class="S3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">public</span><span class="S0"> </span><span class="S5">static</span><span class="S0"> </span><span class="S5">void</span><span class="S0"> </span>main<span class="S10">(</span>String<span class="S10">[]</span><span class="S0"> </span>args<span class="S10">)</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">new</span><span class="S0"> </span>BooleanExamples<span class="S10">().</span>start<span class="S10">(</span>args<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<span class="S10">}</span><br />
+<span class="S0"></span></span>
+</body>
+</html>

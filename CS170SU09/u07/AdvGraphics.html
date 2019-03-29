@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+        <title>Additional Graphics Examples</title>
+    </head><body>
+    <div class="title">
+        <img src="images/e.jpg" alt="CS 170 Lesson E logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Unit 7 Addendum
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            Additional Graphics Examples
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <b><span class="cap">T</span>his week you learned how to
+            use</b> some of the drawing methods in the <code>Graphics</code>
+            class. This addendum contains some larger and more complex
+            examples.
+        </p>
+        <p class='redbox'>I've supplied this material for those of you
+            who want more information and larger examples. You won't be
+            tested on this material, so it is completely optional.
+        </p>
+    <h3>The Spirograph Example</h3>
+        <p> <img src='images/spin.gif' class='right' alt='The Spinner applet.'>
+            Using <code>drawLine()</code> you can plot
+            a series of line segments to draw very complex curves, which
+            can be really useful in graphing equations and
+            writing isualization applications.
+        </p>
+        <p> Let's look at a fairly complex applet that draws "Spirograph"
+            shapes, similar to those drawn by the Hasbro toy you probably
+            had as a child.
+        </p>
+        <p class='note'>The shapes produced by the Spirograph are mathematical
+            curves of the variety technically known as hypotrochoids and epitrochoids
+            according to Wikipedia. The equations are fairly complex.<br><br>This is
+            one of those times where you should "step-back" and make sure
+            you understand the general idea of using lines to graph a curve;
+            don't get concerned if you don't understand the math.
+        </p>
+        <p> <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/Spinner.html","","width=400,height=450,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. You can download
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/Spinner.java'
+            target='_blank'> <b>Spinner.java</b></a>
+            by clicking the link in this sentence.
+        </p>
+    <h4>Calculating the Curves</h4>
+        <p> I borrowed the code for drawing the different curves on this applet
+            from Anu Garg's <b>Spiro</b> applet which is considerably more
+            complex. You can see the original applet at:
+            <a href='http://www.wordsmith.org/anu' target='_blank'>
+            <b>http://www.wordsmith.org/anu</b></a>.
+        </p>
+        <p> A Spirograph is a curve defined by these two equations:</p>
+        <p class='screen'>
+        x = (R+r)*cos(t) - (r+O)*cos(((R+r)/r)*t)<br>
+        y = (R+r)*sin(t) - * (r+O)*sin(((R+r)/r)*t)
+        </p>
+        <p> where <b>R</b> and <b>r</b> are the radii of a fixed circle and
+            a moving circle, and O is the offset of the moving circle.
+            (No, I don't understand the equations, and you don't need to
+            either.)
+        </p>
+        <p> The <b>Spinner</b> applet's <code>paint()</code> method begins by
+            creating variables for each of the variables used in the equation,
+            and then using <code>Math.random()</code> to initialize them.<br>
+            <img src='images/spin01.gif' class='inline' alt='The Spinner variables.'>
+        </p>
+    <h4>Line Segments</h4>
+        <p> Since we'll be drawing curves using radians, we have to calculate
+            how many radians are needed. We'll also need to decide on a step
+            size for the loop, which will control how fine the resulting
+            curves will be. Here's the code that does that:<br>
+            <img src='images/spin02.gif' class='inline' alt='The Spinner radians and step size.'>
+        </p>
+    <h4>Preparing to Paint</h4>
+        <p> Before we start drawing lines, we have to find the current center of the
+            applet to draw with. We can do that by using the <code>getSize()</code>
+            method, which returns a <code>Dimension</code> object which you met in
+            the last lesson:<br>
+            <img src='images/spin03.gif' class='inline' alt='Spinner center and color.'>
+            To calculate the center of the applet, you use the <code>Dimension</code>
+            <code>height</code> field, divide that by 2 and store the result in the
+            variable <code>offset</code>
+        </p>
+        <p> A few more variables are needed to draw each of the line segments:
+            Variables for the line end-points (<code>x</code> and <code>y</code>)
+            and the previous end points (<code>prevx</code> and <code>prevyy</code>).
+            We also need a variable to store the sum of the two radii as the
+            lines are drawn.
+        </p>
+        <p> Finally, a single <code>setColor()</code> is used for all of the lines.
+            If you wanted to make more colorful shapes, you chould change the
+            colors inside the loop as the different line segments are drawn.
+        </p>
+    <h4>The Drawing Loop</h4>
+        <p> The loop that draws the line segments is fairly straightforward
+            (except, of course, for the complex formulas that define the curves
+            in the first place.)<br>
+            <img src='images/spin04.gif' class='inline' alt='The Spinner for loop.'>
+            Basically, the loop just:
+        </p>
+        <ul>
+            <li>goes from 0 to <code>nRadians</code> in <code>stepSize</code> increments.
+            </li>
+            <li>Note that the loop control variable, <code>step</code>, is a <code>double</code>.
+            </li>
+            <li>saves the previous values of <code>x</code> and <code>y</code>.</li>
+            <li>calculates a new expression value using <code>step</code> the sum of the
+                radii and the moving radii.
+            </li>
+            <li>using the expression result, new values are calculated for <code>x</code>
+                and <code>y</code>.
+            </li>
+            <li>the new values, along with the previous values, are used to draw the
+                current line segment.
+            </li>
+        </ul>
+    <h4>Repainting the Applet</h4>
+        <p> To make the applet a little more interesting, I've added code after
+            the painting loop that calls the applet's <code>repaint()</code>
+            method. When you call <code>repaint()</code>, the AWT schedules another
+            call to your <code>paint()</code> code as soon as possible<br>
+            <img src='images/spin05.gif' class='inline' alt='Repainting the Spinner applet.'>
+            The next time the <code>paint()</code> method is called, the
+            <code>Math.random()</code> method calculates different values for the
+            different equation parameters, and so a different Spirograph shape is
+            drawn.
+        </p>
+        <p> To make sure you have enough time to see the current image, though,
+            I've added a little "pause" of three seconds between calls to
+            <code>repaint()</code>. We'll talk about how this code
+            works a little bit later in the semester.
+        </p>
+    <h3>The Sphere Example</h3>
+        <p> <img src='images/sphere.gif' class='right' alt='The Sphere applet.'>
+            By changing the color transparency as well as the colors
+            themselves, you can actually use <code>fillOval()</code> to
+            create some spherical 3D effects, like that shown here.
+        </p>
+        <p> <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/Sphere.java' target='_blank'><b>Sphere.java</b></a> is
+            an applet that uses a loop, along with the <code>fillOval()</code>
+            method to draw a sphere with a "3D" effect. Let's see how that works.
+        </p>
+        <p> The applet begins by setting the applet's background
+            to black in the <code>init()</code> method. This is important
+            because the first circle drawn in the sphere will be completely
+            transparent. Then, as we move toward the center of the sphere,
+            our circles will become more and more opaque.
+        </p>
+        <p> We'll draw each of our spheres by drawing 255 concentric rings.
+            The outer ring will be completely transparent while the inner
+            ring will be completely opaque:<br>
+            <img src='images/sphere02.gif' class='inline' alt='The Sphere paint method.'>
+            This applet uses the size of the applet to decide how big to
+            make the finished sphere. If the applet is 255 pixels high, then each
+            concentric circle will be 1 pixels high. At any other size, though,
+            we will need to make the band of color larger or smaller (logically).
+        </p>
+        <ul>
+            <li> To start the <code>paint()</code> method, define a variable
+                to hold the <code>diameter</code> of the sphere. Here, I've used the applet's
+                <code>getHeight()</code> method to initialize the sphere diameter.
+            </li>
+            <li> Since the diameter could be less than 255, we need to figure
+                out how wide each color band will be. For that we need
+                a <code>double</code> variable which I've called <code>bandSize()</code>.
+                This is initialized to the diameter divided by the
+                number of loop repetitions that I intend to draw.
+            </li>
+            <li> Finally, we need the variables for <code>x</code>, <code>y</code>,
+                <code>width</code> and <code>height</code>. Since we're drawing a
+                sphere, both <code>x</code> and <code>y</code> will have the same
+                value, so we only need one of them. We'll use <code>diameter</code>
+                for the width and height.
+            </li>
+        </ul>
+        <p> The last variable here, <code>white</code> is going to be used halfway
+            through the loop to change the red color to a pink and then to a white.
+            This is how we'll write the code for the spectral reflection on the
+            sphere.
+        </p>
+    <h4>The Painting Loop</h4>
+        <p> Here's the loop that actually paints the sphere on the applet:<br>
+            <img src='images/sphere03.gif' class='inline' alt='The Sphere painting loop.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>I first determine how much white to add to
+                the current band of color. For the first 128 bands,
+                there is no additional white. Each band after that gets
+                an additional two units, up to a maximum of 255.
+            </li>
+            <li class='d'>Next, I set the color for the current band.
+                The red value is set to 255. The transparency is set to
+                the value of the loop index. That means that the first
+                band of color will be completely transparent (with the
+                value 0), while the last will be completely opaque (with
+                the value 255). The last band of color, which is completly
+                white, represents the light reflection in the center
+                of the sphere.
+            </li>
+            <li class='d'>Drawing each band is fairly straightforward.
+                Since we are drawing a sphere, we don't need separate
+                values for <code>x</code> and <code>y</code>, or for
+                <code>width</code> and <code>height</code>. We can use
+                the single value <code>x</code> for the location and
+                <code>diameter</code> for the size.
+            </li>
+            <li class='d'>Lastly, we need to update both <code>x</code>
+                and the <code>diameter</code>. For each revolution,
+                <code>x</code> needs to increase by the size of each band.
+                If the sphere is larger than 255 pixels in diameter, then
+                this will be more than a single pixel; if less, it will
+                be a fraction of a pixel. That's why <code>x</code> has
+                to be a <code>double</code> and not an <code>int</code>.
+                <p>As <code>x</code> increases, the <code>diameter</code>
+                needs to <b>decrease by twice</b> the amount that
+                <code>x</code> was increased.
+            </li>
+        </ol>
+        <p> You can <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/Sphere.html","","width=600,height=650,scrollbars=yes");'>
+            <b>click this link</b></a> to run the applet in your browser.
+        </p>
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

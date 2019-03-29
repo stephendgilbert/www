@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][6].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Unit " + unit + "Exercises";
+        </script>
+        <style type='text/css'>
+            li {
+                margin-bottom:.5em;
+            }
+        </style>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/hw.jpg" alt="CS 170 Exercise logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            <script>document.write("Unit " + unit);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            Exercises and Assignments
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+    <div class="content">
+
+    <p><b><span class='cap'>T</span>his week your homework assignments
+        involve defining classes</b>. To submit your assignments, we'll
+        go back to using Web-CAT to grade three of these assignments.
+        I've also included an extra-credit assignment that uses multiple
+        classes for those of you who want a challenge.
+    </p>
+    <ol>
+        <li class='d'>
+            <b>Homework 27 (PongPaddle)</b>:
+            This week you learned how to defining your own classes. In Lab, we
+            completed the <code>PongBall</code> class
+            for a game of <b>Pong</b> For this assignment I want you to follow
+            those steps on your own, and complete the class,
+            <code>PongPaddle</code>.
+            <p>If you didn't copy the project from class, you can download
+                the <a href='pong-project.zip' target='_blank'>
+                <b>Eclipse starter project</b></a> from this link. The
+                starter project includes the OLD Co. Specification document
+                that you'll need to complete the project, but it
+                doesn't include the two classes we completed during lab.
+                You may find copies of those on the class discussion
+                board.
+            </p>
+            <p>
+            Submit the file <code>PongPaddle.java</code> to Web-Cat before the deadline.
+            You can use the Eclipse Submitter plugin, or you can just upload the file
+            through the Web interface.
+            The assignment will be graded on a <b>combination</b> of a set of tests
+            that I've designed (called the <i>reference tests</i>), and 10% on style.
+            The Web-Cat scoring is set to 50 points, which will be scaled down to 5 points.
+        </li>
+        <li class='d'>
+            <b>Homework 28 (The Employee Class) </b>:
+            Implement the class <code>Employee</code>. An employee has a name (a string)
+            and a salary (a double). Provide the following constructor and methods:
+            <p class='code'>
+                public Employee(String name, double initialSalary)<br>
+                public String getName()<br>
+                public double getSalary()<br>
+                public void raiseSalary(double byPercent)
+            </p>
+            These methods return the name and salary, and raise the employee's salary
+            by a certain percentage. Here's a sample usage:
+            <p class='code'>
+                Employee steve = new Employee("Gilbert, Steve", 75000.0);<br>
+                steve.raiseSalary(10);  <span class='cmt'>// gimme a 10% raise</span>
+            </p>
+            Submit the file <code>Employee.java</code> to Web-Cat before the deadline.
+            You can use the Eclipse Submitter plugin, or you can just upload the file
+            through the Web interface.
+            The assignment will be graded on a <b>combination</b> of a set of tests
+            that I've designed (called the <i>reference tests</i>), and 10% on style.
+            The Web-Cat scoring is set to 50 points, which will be scaled down to 5 points.
+        <li class='d'>
+            <b>Homework 29 (The Student Class)</b>:
+            Implement a class <code>Student</code>. For the purpose of this exercise,
+            a student has a name and a total quiz score. Supply an appropriate constructor.
+            (Remember, when you create a student, the total quiz score will be 0, so you don't
+            need to pass that as a parameter.) Also, supply the following methods:
+            <p class='code'>
+                getName()<br>
+                addQuiz(int score)<br>
+                getTotalScore()<br>
+                getAverageScore()
+            </p>
+            To compute the last method, remember that you'll also need to keep track of how
+            many quizzes the student actually took.
+            <p>
+            Submit the file <code>Student.java</code> to Web-Cat before the deadline.
+            You can use the Eclipse Submitter plugin, or you can just upload the file
+            through the Web interface.
+            The assignment will be graded on a <b>combination</b> of a set of tests
+            that I've designed (called the <i>reference tests</i>), and 10% on style.
+            The Web-Cat scoring is set to 50 points, which will be scaled down to 5 points.
+        </li>
+        <li class='d'>
+            <b>Extra-Credit Assignment #3 (Multiple Interacting Classes)</b>:
+            For those of you looking for a challenge, complete the game of <b>NIM</b>.
+            Here's what the program should look like when you run it:<br>
+            <img src='images/ec03.gif' class='inline' alt='Running the game of Nim.'>
+            This larger problem makes use of multiple classes, and those classes must
+            cooperate to play the game shown here. The <a href='ec03.pdf' target="_blank">
+            <b>Extra-Credit #3 Handout</b></a> (PDF) has all of the information on
+            completing the assignment. Use the information found in
+            <a href='jars.pdf' target='_blank'>
+            <b>this handout</b></a> to convert your program to an
+            executable JAR file.
+            <p>
+            To submit the assignment, package your program as an executable JAR file,
+            named <b>LastFirst_ec03.jar</b>, and mail it (as an attachment) to <b>cs170s09@gmail.com</b>
+            using <b>LastFirst ec03</b> as the subject line. Replace Last and First
+            with your actual name; <b>use a single space, not an underscore,
+            between your name and the assignment number in the subject line</b>. Do not
+            put a space between your first and last name, or between
+            "ec" and "03". <b>Don't forget to attach the executable JAR file!</b><br>
+            (5 points)
+        </li>
+        <li class='d'>Finish Chapter 3  and Chapter 8 in your textbook.
+            Complete the Unit 9 Quiz online before the deadline.
+        </li>
+    </ol>
+    <p> Remember that all of these assignments are due
+        <span style='color:red'><b>before the deadline</b></span>,
+        so make sure you don't get "caught short".
+    </p>
+</div>
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

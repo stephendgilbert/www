@@ -1,0 +1,801 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script src='../cs170.js'></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][3].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet" />
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head>
+<body>
+    <div class="title">
+        <img src="../images/c.jpg" alt="CS 170 Lesson C logo" align="left" border="1" height="100" hspace="15" width="80">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p><img src='images/bugs01.png' class='right' alt='Bugs.'>
+            <b><span class='cap'>W</span>hen you test your programs</b>,
+            there are really three kinds of
+            techniques you can use to, locate and correct the
+            defects in your code.
+
+        </p>
+        <ul>
+            <li><b>Assertions and exceptions</b> can be place placed inside
+                your code to make a method's preconditions and
+                postconditions <i>explicit</i>. If a method takes a
+                parameter and it <i>assumes</i> that the parameter always
+                contains the values 1, 2, 3, or 4, you'd check the parameter
+                value before it was used, and throw an exception
+                if it was incorrect. Exceptions and assertions are
+                used to expose errors made when <i>calling methods</i>,
+                not when defining them.
+            </li>
+            <li><b>Tracing or logging</b> is used when errors occur during
+                program runtime, but you don't want to interrupt the
+                program like you would with an exception. Instead a log
+                file is created that can later be examined to track down
+                errors.
+            </li>
+            <li>Finally, <b>debugging</b> is the <i>interactive examination of your
+                program</i>. You'll learn how to debug your code using the
+                Eclipse debugger in the <i>Swatting Bugs</i> lecture this week.
+            </li>
+        </ul>
+        <p> While assertions, logging and debugging are all important
+            techniques, in this lecture, we want to look at the single most
+            important testing tool at your disposal: <b>the unit test</b>.<br>
+            <center>
+            <img src='images/test07.png' class='inline' alt='Object testing cartoon.'>
+            </center>
+            Unit testing isn't anything new for you, of course. From the
+            very beginning of the course, your homework assignments and
+            exams have been graded using Web-Cat and the unit tests that
+            I've written. And, last week, you began writing your own,
+            "hand-crafted" unit tests, using <code>println()</code> statements.
+        </p>
+        <p> In this lecture you'll learn how to write unit tests using Eclipse,
+            and the JUnit testing framework that powers Web-CAT. With Eclipse,
+            we'll use the latest version of JUnit, JUnit 4:<br>
+            <img src='images/test01.png' class='inline' alt='Running a JUnit test.'>
+            Rather than hand-crafted unit tests, you'll learn how to write your
+            unit tests by calling the methods in the JUnit <code>Assert</code> class.
+        </p>
+
+    <h3>Testing: the Big Ideas</h3>
+        <p> Testing and debugging are really two sides of the same
+            coin; both are designed to <i>ensure that your program runs
+            correctly</i>. Testing is designed to <b>expose errors</b>, while
+            debugging is used to <b>locate and fix the errors</b> that are
+            discovered through testing. Of course once you've fixed an
+            error, you need to make sure you test it to show that it does
+            what you expect.
+        </p>
+        <p> <img src='images/djikstra.png' class='right' alt='Esgar Djikstra.'>
+            One person who has been very influential in the area of
+            testing is Edsgar Dijstra, the Dutch professor famous for his
+            ACM "Goto considered harmful" paper that's often credited with
+            sparking the structured programming revolution in the sixties
+            and seventies.
+        </p>
+        <p> Dijkstra is responsible for
+            two really big ideas when it comes to testing:
+        </p>
+        <ul>
+            <li>testing <b>does not</b> prove that your program is correct.</li>
+            <li><b>exhaustive testing</b> is impossible.</li>
+        </ul>
+    <h4>Testing and Correctness</h4>
+        <p> First is the idea that <b>testing can never prove that your
+            program is correct</b>. Thorough testing can show the
+            <b>presence</b> of bugs, but it can never prove that all the bugs
+            in your code have been found.
+        </p>
+        <p> Dijkstra was a proponent
+            of <i>software verification</i> and the discipline known as <i>formal
+            methods</i>; he wanted to make a very clear distinction
+            between <b>verified code</b>&#8212;that is, code that is
+            mathematically proven to be correct&#8212;and code that was
+            merely well tested.
+        </p>
+        <p> In fact, though,
+            the promise of formal verification has not proved to be as
+            useful as Dijkstra first hoped, both because of the
+            difficulty and the cost.
+        </p>
+    <h4>Exhaustive Testing</h4>
+        <p> Of course, if you could test <b>every possible input value</b>, then
+            maybe you <b>could</b> prove that your code has no bugs. Dijkstra
+            anticipated this objection as well, and proved that such
+            exhaustive testing was physically impossible.
+        </p>
+        <p> Here's a quote from his original paper which dealt with the microcode
+            contained in a CPU:
+        </p>
+        <div class='note'>
+        <p> Let us restrict, for a moment, our attention to the hardware
+            and let us wonder to what extent one can convince oneself of
+            its being properly constructed. Some years ago a machine
+            was installed on the premises of my University; in its
+            documentation it was stated that it contained, among many
+            other things, circuitry for the fixed-point multiplication of two
+            27-bit integers. A legitimate question seems to be: "Is this
+            multiplier correct, is it performing according to the
+            specifications?".
+        </p>
+        <p> The naive answer to this is: "Well, the number of different
+            multiplications this multiplier is claimed to perform correctly is
+            finite, viz. 254, so let us try them all." But, reasonable as this
+            answer may seem, it is not, for although a single
+            multiplication took only some tens of microseconds, the total
+            time needed for this finite set of multiplications would add up
+            to more than 10,000 years! We must conclude that
+            exhaustive testing, even of a single component such as a
+            multiplier, is entirely out of the question.
+        </p>
+        </div>
+        <p> Today, you might write a function that takes two 32-bit ints.
+            Using Djikstra's calculations, if you could test a million
+            calculations a second, then testing all possible combinations
+            of those two 32-bit ints would take you 585,000 years.
+        </p>
+    <h3>What Are Unit Tests?</h3>
+        <p> Testing involves not only carefully deciding what values to feed
+            into your program, but for every input value, you absolutely must
+            know <b>exactly what the expected output should be</b>. Simply
+            <i>calling</i> a method is not the same as <i>testing</i> the method.
+        </p>
+        <p class='pullquote'> Testing is when you call a method and then
+            compare it's <b>expected</b> output with its <b>actual</b> output.
+        </p>
+        <p> Of course, for that to work, you have to know the expected output ahead of
+            time. Not only that, but you have to be able to examine the results
+            and easily see when the expected and actual outputs differ. For that,
+            you'll use a <b>test harness</b>.
+        </p>
+    <h4>The Test Harness</h4>
+        <p> A test harness is a program that is designed to feed
+            arguments to your class or methods and then, to evaluate the
+            correctness of the results. This simplest kind of test harness
+            is the "hand-rolled" test program, similar to the
+            <b>PongBallTest</b> program you wrote in class.
+        </p>
+        <p> A hand-rolled test program creates an instance of the class
+            you are testing, and then calls each of the methods in the class.
+            Each time a method is called, the test program
+            prints out the expected and actual values of
+            the object's instance variables.
+        </p>
+        <p> Hand-rolled tests are fine, but the real problem comes with
+            evaluating the results. In class, when we wrote the
+            <b>PongBallTest</b> program, for instance, many of you didn't
+            notice if the <i>actual</i> values for <code>x</code> and
+            <code>y</code> were <b>different</b> from the <b>expected</b>
+            values because there was <b>so much output</b>.
+        </p>
+        <p> Carefully examining each line of output in a test program
+            is very, very time consuming. That's where automated unit tests are
+            much more efficient.
+        </p>
+        <p> Automated unit testing programs are an entire category of
+            software. The most popular is the JUnit family of programs.
+            The most recent version of JUnit is version 4, and that's what
+            we'll use with our Eclipse programs.
+        </p>
+    <h3>Testing the Calculator Class</h3>
+        <p> We're going to start our examination of JUnit by writing some
+            tests for a class named
+            <a href='Calculator.java' target='_blank'>
+            <b>Calculator.java</b></a> which was originally written by
+            Stephen Edwards at Virginia Tech. (He's the developer of the
+            Web-CAT grading system we've been using.)
+            Download the code by clicking the hyperlink in this
+            paragraph and then add it to an existing or
+            new Eclipse project:<br>
+            <img src='images/calc01.png' class='inline' alt='The Calculator program.'>
+            Then, go ahead and open it in the Eclipse editor. Add your own
+            author and version tags to the header.
+        </p>
+        <p> Note that there's at least one (possibly more)
+            <b>Checkstyle</b> errors. You can check any file using the built-in
+            Eclipse Checkstyle plugin by just right-clicking the file and
+            selecting <b>Check Code with Checkstyle</b> from the context menu
+            like this:<br>
+            <img src='images/checkstyle02.png' class='inline' alt='Checking code with Checkstyle'>
+            Once that's done, go ahead and correct all of the Checkstyle errors. The
+            warnings will appear as a small magnifying glass icon in the left margin.
+            If you <b>hover</b> over the icon, you'll see a small popup like that
+            shown in the picture here.
+        </p>
+        <p> You can also <b>activate</b> Checkstyle for all of the code in
+            your project. To do that:<br>
+            <img src='images/checkstyle.png' class='inline' alt='Activating Checkstyle'>
+        </p>
+        <ul>
+            <li>right-click the <b>project</b> (not the file)</li>
+            <li>choose <b>Properties</b> on the context menu</li>
+            <li>select <b>Checkstyle</b> from the tree on the left</li>
+            <li>select the <b>CS 170 checks</b> as the global checks to apply</li>
+            <li>check the <b>Checkstyle active for this project</b> checkbox</li>
+        </ul>
+    <h4>The Calculator Class</h4>
+        <p> Before we get to testing, let's spend a few minutes looking through
+            the source code of the <b>Calculator</b> class.
+        </p>
+        <ul>
+            <li>The class has a single field (<code>value</code>) which acts as
+                the <b>accumulator</b> for the calculator:<br>
+                <img src='images/calc02.png' class='inline' alt='The accumulator.'>
+            </li>
+            <li>The constructor initializes the accumulator to zero (although that's
+                really not necessary of course):<br>
+                <img src='images/calc03.png' class='inline' alt='The constructor.'>
+            </li>
+            <li>There are methods to get, set and clear the
+                accumulator, as well as the normal four functions that you'd
+                expect in a calculator: add, subtract, multiply and divide:<br>
+                <img src='images/calc04.png' class='inline' alt='Some methods.'>
+            </li>
+        </ul>
+        <p> Each of the arithmetic operations puts its result back into the accumulator
+            and uses the accumulator as its left-hand operand.
+        </p>
+    <h4>Creating the Test Case</h4>
+        <p> With JUnit, you'll put your unit tests inside a <b>TestCase</b> class
+            that can include a number of tests. To create the <b>CalculatorTest</b>
+            class, right-click on the <b>Calculator.java</b> file in the Package
+            Explorer (on the left) and then select <b>New->JUnit Test Case</b>
+            from the context menu:<br>
+            <img src='images/calc05.png' class='inline' alt='Creating a new test case.'>
+            This will activate a wizard
+            in Eclipse to help you create your test case class for the
+            Calculator class.
+        </p>
+    <h4>Test Class Wizard</h4>
+        <p> When the Test Class Wizard appears, as shown here:<br>
+            <img src='images/calc06.png' class='inline' alt='Test Wizard Part 1.'>
+            start by clicking the radio button to <b>select JUnit 4
+            as the testing framework</b>, as shown in the screenshot.
+        </p>
+        <p> In the center of the dialog there are three items you'll want
+            to pay attention to:<br>
+            <img src='images/calc07.png' class='inline' alt='Test Wizard Part 2.'>
+            <ul>
+                <li>Notice that the name <b>CalculatorTest</b> has been
+                    automatically generated by the Test Class Wizard, based
+                    on the file selected in the Package Explorer window.
+                </li>
+                <li>Also, make sure that the checkbox next to <code>setUp()</code>
+                    is selected to generate a stub for a <b>test fixture</b>,
+                    (which I'll explain shortly.)
+                </li>
+                <li>Finally, I'd go ahead and have Eclipse generate
+                    comments as well.
+                </li>
+            </ul>
+        </p>
+        <p> Finally, at the bottom of the dialog, make sure that <b>Calculator</b>
+            is the class under test and then click the <b>Next</b> button,
+            (<b>not</b> the Finish button!)<br>
+            <img src='images/calc08.png' class='inline' alt='Test Wizard Part 3.'>
+        </p>
+    <h5>Generating Test Methods</h5>
+        <p> In the next step of the wizard, you will see a tree view
+            showing the <b>methods</b> contained in the <b>Calculator</b> class.<br>
+            <img src='images/calc09.png' class='inline' alt='Generating test methods.'>
+            For each instance method you check in this view, the wizard
+            will create a <b>test method stub</b>. In my example, you can
+            see I've checked <code>setValue()</code>, <code>add()</code>,
+            and <code>divideBy()</code>. Normally, you'll want to test all
+            of your methods, and you'll have several test methods for each
+            method under test. I use this screen just to generate a few
+            empty test methods to get started.
+        </p>
+        <p> When you're done, click the <b>Finish button</b>. If this is
+            the first test case class in this project, you'll be told
+            that the JUnit libraries are not in the build path:<br>
+            <img src='images/calc10.png' class='inline' alt='Adding JUnit to the build path.'>
+            Just click the radio button shown here and click <b>OK</b>.
+            Eclipse will add the necessary libraries to your project.
+            Then, Eclipse will generate a new <b>CalculatorTest.java</b> file in your
+            project, and open this new file in the editor:<br>
+            <img src='images/calc11.png' class='inline' alt='CalculatorTest starter file.'>
+        </p>
+    <h4>Run the Tests</h4>
+        <p> To run the test, first make sure that <b>CalculatorTest.java</b>
+            is the selected file in the editor. (You can select the file tab
+            at (1) or double-click the file in the Package Explorer view (the
+            left pane):<br>
+            <img src='images/calc12.png' class='inline' alt='Running the unit tests.'>
+            From the <b>Run</b> menu, select <b>Run As->JUnit Test</b>. This will
+            run all of the test cases in your new test class. Not, remember,
+            the tests are just stubs at this point! All of them are designed to
+            fail.
+        </p>
+        <p> You can see the results in the JUnit tab to the right of to the
+            Package Explorer tab. The test case stubs that were
+            generated by the wizard have all failed. Let's look at the
+            output briefly:
+            <img src='images/calc13.png' class='inline' alt='Running the unit tests.'>
+        </p>
+        <ol>
+            <li class='d'>  At the top of the window is a little tool bar you can use to
+                re-run your tests. Right below that, (at #1) is what I call a
+                "scoreboard". It tells you how many tests were run, how
+                many had errors and how many failed. (Errors mean that
+                the test couldn't be run for some reason, like a missing
+                class.) Below that is a bar that will contain green and red
+                segments: red for failures and green for successes. In our
+                case all the tests fail, so it's solid red.
+            </li>
+            <li class='d'>At #2 is a tree showing each test that failed. By clicking
+                on an individual test you can see a more detailed message in the
+                <b>Failure Trace</b> pane, which I've marked #3 below.
+            </li>
+            <li class='d'>If you examine the code in <b>CalculatorTest.java</b>,
+                you will see that each test case is a <code>public void</code>
+                method that has <b>no parameters</b>. It is <b>preceded</b> by
+                a Java <b>annotation</b>, <code>@Test</code>, that is used by
+                JUnit to identify test methods.
+            </li>
+        </ol>
+        <p> By convention, test method names begin with
+            the prefix "test"; this was required in earlier versions of JUnit
+            but is not required in JUnit 4. Each generated test case stub
+            contains just a single line in its body:
+        </p>
+        <p class='code'>
+            fail( "Not yet implemented." );
+        </p>
+        <p>Which I've marked as #5.</p>
+    <h4>Examining the JUnit4 "Skeleton" Code</h4>
+        <p> Now that we have the <i>stubs</i>, we need to write the <b>actual code</b>
+            to test the <b>Calculator</b> class. Before we write our tests, though,
+            let's look a little more at the JUnit Test Case file and some of the
+            Java features it uses.
+        </p>
+    <h5>Static Imports</h5>
+        <p> The first feature is the use of <b>static imports</b>. When you
+            add a static import like that shown in line 1, you can then
+            use any of the <code>static</code> methods in the imported <i>class</i>
+            <b>without</b> using the class name:<br>
+            <img src='images/calc15.png' class='inline' alt='Static imports.'>
+            Notice that when you use a static import, the star at the end
+            of the line means "import all of the <b>static methods</b> in the
+            specified <b>class</b>".
+        </p>
+        <p> With a regular (non-static) import, the star means "import all of
+            the <b>classes</b> in the specified <b>package</b>". You probably
+            remember static imports from Unit 4. There you learned that if you
+            add the line:
+        </p>
+        <p class='code'>import static java.lang.Math.*;</p>
+        <p> to your program, you can then use methods like <code>min()</code>
+            and <code>max()</code> without having to add the <code>Math</code>
+            prefix. JUnit4 programs do the same thing for the methods in the
+            <code>org.junit.Assert</code> class.
+        </p>
+    <h5>Annotations</h5>
+        <p> The second feature employed by JUnit 4 is the use of
+            <b>annotations</b>. Annotations are special markers added to
+            your code that allows an external tool (like JUnit) to
+            process it in special ways:<br>
+            <img src='images/calc16.png' class='inline' alt='Annotations.'>
+            JUnit 4 uses the annotations:
+        </p>
+        <ul>
+            <li><code>@Test</code> to identify <b>test methods.</b></li>
+            <li><code>@Before</code> to identify methods that should be
+                called <b>immediately before</b> each test is run.
+            </li>
+            <li><code>@After</code> to identify methods that should be
+                run <b>immediately after</b> each test is finished.
+            </li>
+        </ul>
+        <p> Each of these annotations needs to be
+            imported using a regular (not <code>static</code>) import like that
+            shown in the previous screenshot. Notice that while the starter code
+            contains imports for <code>org.junit.Before</code> and
+            <code>org.junit.Test</code>, there is no import for
+            <code>org.junit.After</code> because I didn't specify a
+            <code>tearDown()</code> method when filling in the first
+            dialog in the Test Case Wizard.
+        </p>
+        <p class='note'>The <code>setUp()</code> and
+            <code>tearDown()</code> names were used in earlier versions of
+            JUnit for the <code>@Before</code> and <code>@After</code> methods.
+            Most programmers still use these original names, but JUnit 4
+            doesn't require this.
+        </p>
+    <h4>Writing Test Methods</h4>
+        <p> To test your class, you'll write at least one separate test
+            method for each operation. (The Test Case Wizard creates one
+            test method for each checked method in the class you are testing.)
+        </p>
+        <p> Inside each test method you will normally:</p>
+        <ul>
+            <li><b>create an object</b> of the class you are testing, and make
+                sure that it is placed in a <b>known state</b>. In our case
+                we'll create a <code>Calculator</code> object,
+                with the accumulator set to 0.
+            </li>
+            <li>Then, you'll <b>call the different mutator methods</b> that
+                you are testing. Each test method should generally make only
+                one change to the object.
+            </li>
+            <li>Finally, after calling the mutator, you'll call an accessor method and
+                compare the <b>expected value</b> with the <b>actual value</b>
+                returned by the accessor.
+            </li>
+        </ul>
+        <p> Let's try a simple example. Here's some code you can add to
+            the <code>testSetValue()</code> method. Delete the line of
+            code that the method currently contains and replace it with
+            the code shown here:
+            <img src='images/calc17.png' class='inline' alt='The testSetValue() method.'>
+            Once that's done, save the test program and run your tests again.
+            Note how this method:
+        </p>
+        <ul>
+            <li><b>Creates</b> a <code>Calculator</code> object</li>
+            <li><b>Modifies</b> the calculator by calling <code>setValue()</b></li>
+            <li>Compares the <b>expected value</b> (5) with the <b>actual value</b>
+                returned by calling <code>getValue()</code>
+            </li>
+        </ul>
+        <p> This last step is done by using a special <b>JUnit assertion</b>. Let's go
+            ahead and look at that now.
+        </p>
+    <h4>JUnit Assertions</h4>
+        <p> <img src='images/calc18.png' class='right' alt='Running the JUnit tests.'>
+            JUnit assertions <b>do not</b> use the <code>assert</code> keyword, which you
+            learned about in the last lesson. When you use the <code>assert</code>
+            keyword, you place it inside your normal source code, and, if the assertion
+            fails, the program is terminated.
+        </p>
+        <p> Instead, JUnit assertions are special methods
+            that JUnit uses to compare actual and expected values inside a
+            JUnit test program (not inside your regular source code). When you
+            run the JUnit Test Case class, your program does not stop when a test is
+            failed. Instead, <b>all of the tests</b> are run, and the results are
+            displayed in the special JUnit window.
+        </p>
+        <p> The JUnit assertion method that you'll use most
+            often is named <code>assertEquals()</code>. When you use
+            <code>assertEquals()</code>, the first parameter is the value you expect
+            and the second parameter is the actual value produced by calling one of
+            your object's accessors.
+        </p>
+    <h4>Failed Assertions</h4>
+        <p> <img src='images/calc19.png' class='right' alt='Changing the expected value.'>
+            Now that you know what both a passed test and a failed test
+            look like, let's change the test we used a little, so you
+            can see what a <i>real</i> failure looks like.
+        </p>
+        <p> Change the <b>expected value</b> to 4 as shown in the
+            screenshot to the right. Since the actual value will be
+            5, not 4, the test will fail.
+        </p>
+        <p> Re-run the tests, and this time, examine the <b>Failure Trace</b>
+            area immediately below the list of tests that were run:<br>
+            <img src='images/calc20.png' class='inline' alt='Examining the failure trace.'>
+            Notice how the message points out the actual and expected values.
+        </p>
+    <h4>Other Assertion Methods</h4>
+        <p> If you want to supply a hint or other information about what
+            the test is doing (to help in debugging, you can use a
+            three-parameter version of <code>assertEquals()</code> like
+            this:<br>
+            <img src='images/calc21.png' class='inline' alt='Supplying an additional error message.'>
+            The first parameter is an error message that you want to have displayed
+            whenever the selected test fails. Often, you can use other variables
+            when composing the message, to help you track down problems that can
+            occur. Here's what the failure looks like after adding a message
+            parameter:<br>
+            <img src='images/calc22.png' class='inline' alt='Failure trace with an error message.'>
+    <h5>Floating-Point Assertions</h5>
+        <p> For <code>double</code> or floating-point tests, you'll
+            often have situations that are <b>logically and mathematically</b>
+            equal, but where your tests still fail.
+            Here, for instance, is an assertion comparing two values that
+            are mathematically equal:<br>
+            <img src='images/calc23.png' class='inline' alt='A rounding error.'>
+            When you use the "regular" version of <code>assertEquals()</code>,
+            you'll see that the result fails with the following error message:<br>
+            <img src='images/calc24.png' class='inline' alt='A rounding error message.'>
+            In these cases, you
+            can pass another parameter to <code>assertEquals()</code>,
+            following the actual value. (If you supply an error message,
+            then it would be a fourth parameter; if you don't add your
+            own error message, then it will be the third parameter.)
+        </p>
+        <p> This extra parameter is a <b>tolerance value</b> that is
+            used to determine when two values are <b>effectively equal</b>.
+            You can use <code>1E-14</code> as a general-purpose tolerance value,
+            like this:<br>
+            <img src='images/calc25.png' class='inline' alt='Adding a tolerance value.'>
+            With this change, the test shown here no longer fails.
+        </p>
+    <h5>Boolean Tests</h5>
+        <p> To test <code>boolean</code> methods or Boolean expressions,
+            use the <code>assertTrue()</code> and <code>assertFalse()</code>
+            methods. You can also use these in place of <code>assertEquals()</code>
+            by creating an expression using relational operators, but if you do,
+            then the error messages are not very informative. ("Test failed. Too bad."):<br>
+            <img src='images/calc26.png' class='inline' alt='A boolean assertion.'>
+            As with the other assertions, the use of a user-supplied error message,
+            like I've used here, is optional. Although my message here is kind of
+            silly, if you use the JUnit Boolean assertions, you'll want to make
+            sure that your error messages let you know exactly what failed, since
+            you won't be shown the actual and expected values, <b>or</b> the
+            Boolean expression that was tested and failed.
+        </p>
+    <h5>Testing for null</h5>
+        <p> Sometimes, for objects, you may need to test if an
+            object reference is <code>null</code> or not. You can do that with
+            the <code>assertNull()</code> and <code>assertNotNull()</code>
+            methods.
+        </p>
+        <p>
+            If you'd like to see more of the JUnit 4 assertions you can look
+            them up in the online JavaDoc at
+            <a href='http://junit.sourceforge.net/javadoc_40/' target='_blank'>
+            <b>http://junit.sourceforge.net/javadoc_40/</b></a>.
+        </p>
+    <h4>Writing a Test Fixture</h4>
+        <p> In the test method that we just wrote, we first created a
+            <code>Calculator</code> object set to its default state. In fact, probably
+            <b>all</b> of your test methods will require this <b>exact line of code</b>.
+            To simplify your code, you might be tempted to create the
+            <code>Calculator</code> object as an instance variable and
+            then initialize it in the test class constructor.
+        </p>
+        <p> Unfortunately, that won't work, because you want all of your
+            test methods to be <b>completely independent</b>. You don't
+            know (nor should you know) what order the tests you write will
+            be run in, and no single test should be able to affect the outcome
+            of any other test.
+        </p>
+        <p> If you create the <code>Calculator</code> as an
+            instance variable, it will be initialized when the class loads,
+            but it <b>won't be reinitialized</b> for subsequent test methods;
+            you won't be running with a clean slate. You also can't assume
+            that test methods will run in any particular order, so you can't create
+            sequences of tests that take prior method modifications into
+            account. Basically every test has to be self-contained.
+        </p>
+        <p> That doesn't mean that you have to write the same duplicate
+            object creation code in each test method though. The solution is to:<br>
+             <img src='images/calc27.png' class='inline' alt='The test fixture'>
+        </p>
+        <ul>
+            <li>create an instance variable that contains the object under test</li>
+            <li>and then, create a <code>setUp()</code> method that initializes the
+                instance variable putting it into the "clean slate" state you
+                need before each test runs.
+            </li>
+        </ul>
+        <p> The <code>setUp()</code> method, which is known as a <b>test fixture</b>,
+            will be run before each test. With JUnit 4, the method does not <code>need</code>
+            to be named <code>setUp()</code> (although it usually is by convention), but
+            it <b>does</b> need to be preceded by the <code>@Before</code> annotation.
+        </p>
+        <p> One you have the test fixture done, why don't you finish up
+            <code>CalculatorTest</code> by writing test methods for all of the other
+            methods in <code>Calculator</code>. You can just copy the existing,
+            working method (that's what I do), and then just change the
+            name and modify the code. To do that, though, you'll need to
+            also think about <b>what</b> you should test. Let's look at
+            that briefly before we finish up this lesson.
+        </p>
+<!--
+    <h3>Questions About Testing</h3>
+        <p> To meaningfully test your program, you have to start by
+            asking three questions:
+        </p>
+        <ol>
+            <li class='d'> First, <b>what kind of test data</b> is needed?
+            </li>
+            <li class='d'>Second, <b>where</b> are you going to <b>get</b> your test data.
+            </li>
+            <li class='d'>Finally, how do you tell <b>if your program works</b> correctly?
+            </li>
+        </ol>
+        <p> Let's take a closer look at each of these.</p>
+    <h4>1. What Kind of Test Data?</h4>
+        <p> Since you can't test every single combination of input, you'll need
+            to provide some kind of <b>representative data</b>.
+            A representative test is a test that "stands in" for the larger group.
+            Specifically,
+            you'll want a sampling of data that includes those values that are
+            <b>most likely to fail and expose the errors in your code</b>.
+        </p>
+        <p> Here's an example. Suppose you have a method called <code>isOdd()</code>,
+            that tells you whether a number is odd or not. To test your method you'd
+            certainly want to see if it works by sending it a few odd numbers, and
+            making sure that it returns true.
+        </p>
+        <p> You shouldn't stop there, however. What if the method returned
+            <code>true</code> for <b>every number</b>? In addition to the odd
+            numbers, you'd want to pass some even numbers as well, to make
+            sure your method could correctly identify them.
+        </p>
+        <p> After testing and verifying that your method can correctly separate
+            even from odd, you may think that your done. To be safe, however,
+            you should run at least three more tests:
+        </p>
+        <ol>
+            <li class='d'>Check that zero and negative numbers are handled correctly.</li>
+            <li class='d'>Check that very large and very small numbers are handled
+                correctly.
+            </li>
+            <li class='d'>Check that invalid input values are handled appropriately
+                if it is possible for incorrect values to be supplied to the
+                method.
+            </li>
+        </ol>
+        <p> These are called <b>boundary conditions</b> and you might not need them
+            in every case. For the <code>isOdd()</code> function, for intstance, the
+            Java compiler will prevent you from passing any invalid input to the
+            function. In cases where there are preconditions on the inputs (using
+            exceptions or assertions), you should make sure that you check those
+            as well.
+        </p>
+    <h5>Geometric Relationships</h5>
+        <p> Of course, the <code>isOdd()</code> method is relatively easy
+            to test because there are only two possible outputs&#8212;<code>true</code>
+            or <code>false</code>&#8212;and the relationship between the inputs
+            and outputs is well established and clearly understood.
+        </p>
+        <img src='images/test02.png' class='right' alt='Representative tests.'>
+        <p> With the addition of more inputs, a wider range of outputs, or
+            more complex relationships between the various inputs and outputs,
+            things can quickly become more complicated.
+        </p>
+        <p>
+            One technique that is frequently used is to first identify a
+            valid input range, and then create a test suite using values
+            that have a "geometric" relationship to each other. You certainly
+            want to test:
+        </p>
+        <ol>
+            <li class='d'>Values at the beginning and end of the range.</li>
+            <li class='d'>Values immediately below and above of the range.</li>
+            <li class='d'>Values clearly inside the range.</li>
+            <li class='d'>Zero and negative numbers, if input is numeric.</li>
+            <li class='d'>The empty String if input is a String</li>
+            <li class='d'>The value null if input is an object or String</li>
+        </ol>
+        <p> Here's an example of a set of representative tests you might use
+            for a menu system that only accepts the numbers 2-5 as input. (Of
+            course, with only four input values, you'd test them all. However
+            the principle use to decide which values to test would still
+            apply if there were 400 or 4,000 values.)
+        </p>
+
+    <h4>2. Where is the Data?</h4>
+        <p> Once you've decided on what data is needed, you need to
+            determine how you'll get it into your program. While
+            informal, ad-hoc tests can generate the test data using keyboard
+            input, that quickly becomes very tedious.
+        </p>
+        <p> Normally you'll want to hand-select your input values and then write a
+            representative selection of tests using those values. Sometimes, it may
+            be useful to use a loop and random-number generation as well to
+            create a larger sample of input values.
+        </p>
+        <p> When running your test program, your input data can be either embedded
+            as statements inside your program, or stored in separate files and
+            imported when your tests are run.
+        </p>
+-->
+    <h4>Selecting Test Cases</h4>
+        <p> Now that you know how to write a test case, let's talk about
+            <b>what kind</b> of test cases you should write. You already know
+            that you should have at least one test case for each method
+            in the class you are testing, but actually, you'll need quite a
+            few more, each one handling a particular kind of input.
+        </p>
+        <ul>
+            <li>First, you should have some values that represent
+                <b>legitimate values</b> that your program is expected to handle
+                normally. You don't need a lot of these. In a square root
+                program, you'd test some values greater than 0. In a
+                grade calculating program you'd test values for each of
+                the grades: A – F.
+            </li>
+            <li>Next, you need to test<b> boundary cases</b>. Boundary cases
+                include those values that are legitimate, but <b>likely to
+                produce incorrect output if there is an error in your code</b>.
+                If you are calculating letter grades from percentages, for
+                example, testing 85% for the "B" grade would be a
+                regular legitimate value. You'd also need to test the
+                boundary conditions 80% and 79% in case you had used
+                the relational operators incorrectly. These would be the
+                boundary conditions.
+            </li>
+            <li>Finally, you need to handle some <b>negative cases</b>: input
+                that you expect to fail. You want to make sure that if you
+                supply the wrong kinds of values, that the method doesn't
+                some how magically produce output.
+            </li>
+        </ul>
+    <h4>Regression Testing</h4>
+        <p> Whenever you fix a bug in your code, you want to make sure
+            that the bug doesn't reappear later. Of course, this really
+            applies to code in the "real" world, and not the code that you'll
+            turn in for homework assignments. You don't want a bug that
+            was fixed in Version 1 of your program to magically reappear
+            when you release Version 5, a problem known as <b>cycling</b>.
+        </p>
+        <p> The best way to prevent this is to add a test to your Test
+            Case class that specifically tests for that bug. As time goes
+            on, the Test Case class will get larger and larger as more
+            bugs are fixed and tests are added.
+        </p>
+        <p> Then, every time you fix a new bug, you'll run all of the tests
+            you've collected, so your new fix can't reintroduce an old bug.
+            This practice of testing your code against a collection of tests
+            from past bugs is known as <b>regression testing</b>, and it's
+            another reason to keep your test data, and to use automated
+            testing tools like JUnit.
+        </p>
+    <h4>Black-box and White-box</h4>
+        <p> One last type of testing you should know about is the
+            difference between black-box and white-box testing.
+            So far, all of the testing that we've done tests the program's
+            actual behavior against the expected output. That means
+            we're <i>testing against what the program should be doing, or
+            the specification</i>. This is called <b>black-box testing</b>.
+        </p>
+        <p> The only problem with black-box testing is that it doesn't
+            ensure that all the <i>internal</i> portions of the code are actually
+            tested. It's possible that your inputs don't test every single
+            branch in an <code>if</code> or <code>switch</code> statement.
+        </p>
+        <p> <b>White-box testing</b> "looks inside" your code and tries to make
+            sure that <b>every portion of your code is actually tested</b>. The
+            most common kind of white box testing is called <b>coverage
+            testing</b>. Coverage testing uses specialized tools that are
+            actually very expensive. One common tool is named
+            <b>Clover</b>. While we don't have a copy of that here at
+            OCC, Web-Cat actually uses Clover to measure the percentage
+            of your code is actually tested, and your homework assignments
+            this week will include coverage testing as part of the grading.
+        </p>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson, you learned how to use Eclipse and JUnit 4 to
+            write <b>unit tests</b> that test your code against a program
+            specification. You also learned how to select test cases and
+            how to check for test coverage.
+        </p>
+        <p> In the next lesson, we'll look at using the Eclipse <b>debugger</b>
+            to help you fix those errors your tests exposed.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

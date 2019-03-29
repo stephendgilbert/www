@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type='text/javascript'>
+        var events = [
+            ['June 17', 'June 18', 'June 19', 'June 20'],
+            ['June 24', 'June 25', 'June 26', 'June 27'],
+            ['July 1', 'July 2', 'July 3', 'July 4'],
+            ['July 8', 'July 9', 'July 10', 'July 11'],
+            ['July 15', 'July 16', 'July 17', 'July 18'],
+            ['July 22', 'July 23', 'July 24', 'July 25'],
+        ];
+    </script>
+    <style type='text/css'>
+        table { width: 760px; margin: auto; border: 1px solid red; }
+        td { font-family: georgia garamond serif; font-style: italic; font-weight: bold; color: navy; }
+        td { width: 25%; height: 160px; border: 1px solid black; padding: 1em; vertical-align: top; }
+    </style>
+</head>
+<body>
+<table>
+<thead>
+    <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+    </tr>
+</thead>
+<tfoot>
+</tfoot>
+<tbody>
+<script type='text/javascript'>
+    for (var r = 0; r < 6; r++)
+    {
+        document.writeln('<tr>');
+        for (var c = 0; c < 4; c++)
+        {
+            document.write('<td>');
+            var d = new Date(events[r][c]);
+            d.setFullYear(2013);
+            document.write(d.toLocaleDateString());
+            document.write('</td>');
+        }
+
+
+        document.writeln('</tr>');
+    }
+</script>
+<!--
+<tr>
+    <td>June 17<br></td>
+    <td>June 18<br></td>
+    <td>June 19<br></td>
+    <td>June 20<br></td>
+<tr>
+<tr>
+    <td>June 24<br></td>
+    <td>June 25<br></td>
+    <td>June 26<br></td>
+    <td>June 27<br></td>
+<tr>
+<tr>
+    <td>July 1<br></td>
+    <td>July 2<br></td>
+    <td>July 3<br></td>
+    <td>July 4<br></td>
+<tr>
+<tr>
+    <td>July 8<br></td>
+    <td>July 9<br></td>
+    <td>July 10<br></td>
+    <td>July 11<br></td>
+<tr>
+<tr>
+    <td>July 15<br></td>
+    <td>July 16<br></td>
+    <td>July 17<br></td>
+    <td>July 18<br></td>
+<tr>
+<tr>
+    <td>July 22<br>Chapter 13&mdash;Testing and Class Design<br>PQ09&mdash;Implementing Classes</td>
+    <td>July 23<br>Chapter 14&mdash;Introduction to Inheritance</td>
+    <td>July 24<br>Chapter15&mdash;Abstract Classes and Polymorphism<br>PQ 10 - Inheritance</td>
+    <td>July 25<br>Makeup PQuizzes<br>Final Exam</td>
+<tr>
+-->
+</tbody>
+</table>
+</body>
+</html>

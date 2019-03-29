@@ -1,0 +1,58 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <link href="toc_data/cs170.css" type="text/css" rel="stylesheet">
+    <script src="toc_data/cs170.js"></script>
+    <script>
+        var unit = parent.unit;
+        var current = 0;
+        function displayTitle()
+        {
+            if (document.getElementById || document.all)
+            {
+                var el = document.getElementById
+                    ? document.getElementById("lessonTitle")
+                    : document.all["lessonTitle"];
+                if (el && typeof el.innerHTML != "undefined")
+                {
+                    if (current == 0)
+                        el.innerHTML = "Introduction";
+                    else
+                        el.innerHTML = "Lesson " + lessons[unit-1][current];
+                }
+            }
+        }
+    </script>
+    <!-- base -->
+</head><body style="margin: 4px;">
+<table style="border: 1px solid silver; margin: 0pt 25px 0pt 15px; padding: 2px; width: 94%;">
+    <tbody><tr>
+        <td class="breadcrumbsLeft">
+            <script>
+                document.write("<a href='intro.html' onclick=javascript:current=0;displayTitle();>Unit " + unit + "</a> : "
+                            + lessons[unit-1][0]);
+                document.write("<span style='font-weight:normal;font-size:90%;background:white;'>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<a class='info' href='A.html' " +
+                        "onclick=javascript:current=1;displayTitle();><span>" +
+                        lessons[unit-1][1] +"</span> A </a>|");
+                document.write("<a class='info' href='B.html' " +
+                        "onclick=javascript:current=2;displayTitle();><span>" +
+                        lessons[unit-1][2] +"</span> B </a>|");
+                document.write("<a class='info' href='C.html' " +
+                        "onclick=javascript:current=3;displayTitle();><span>" +
+                        lessons[unit-1][3] +"</span> C </a>|");
+                document.write("<a class='info' href='D.html' " +
+                        "onclick=javascript:current=4;displayTitle();><span>" +
+                        lessons[unit-1][4] +"</span> D </a>|");
+                document.write("<a class='info' href='E.html' " +
+                        "onclick=javascript:current=5;displayTitle();><span>" +
+                        lessons[unit-1][5] +"</span> E </a>|");
+                document.write("<a class='info' href='exercise.html' " +
+                        "onclick=javascript:current=6;displayTitle();><span>" +
+                        lessons[unit-1][6] +"</span> HW </a>]</span>");
+            </script><a href="file:///U:/CS170/CS170S09/u02/intro.html" onclick="javascript:current=0;displayTitle();">Unit 2</a> : Output, Variables and Procedures<span style="background: white none repeat scroll 0% 0%; font-weight: normal; font-size: 90%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<a class="info" href="file:///U:/CS170/CS170S09/u02/A.html" onclick="javascript:current=1;displayTitle();"><span>A. Historic Programming</span> A </a>|<a class="info" href="file:///U:/CS170/CS170S09/u02/B.html" onclick="javascript:current=2;displayTitle();"><span>B. OOP Concepts</span> B </a>|<a class="info" href="file:///U:/CS170/CS170S09/u02/C.html" onclick="javascript:current=3;displayTitle();"><span>C. Java Syntax</span> C </a>|<a class="info" href="file:///U:/CS170/CS170S09/u02/D.html" onclick="javascript:current=4;displayTitle();"><span>D. Sending Messages</span> D </a>|<a class="info" href="file:///U:/CS170/CS170S09/u02/E.html" onclick="javascript:current=5;displayTitle();"><span>E. Java and the Web</span> E </a>|<a class="info" href="file:///U:/CS170/CS170S09/u02/exercise.html" onclick="javascript:current=6;displayTitle();"><span>Exercises</span> HW </a>]</span>
+        </td>
+        <td class="breadcrumbsRight" style="color: navy;" id="lessonTitle">Lesson A. Historic Programming</td>
+    </tr>
+</tbody></table><table>
+</table></body></html>

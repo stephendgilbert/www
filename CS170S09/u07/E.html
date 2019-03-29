@@ -1,0 +1,721 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+        <script src="../cs170.js"></script>
+        <script>
+            var unit = parent.unit;
+            var lessn = lessons[unit-1][5].toString();
+            var lettr = lessn.charAt(0);
+            var titl = lessn.substring(3);
+        </script>
+        <link href="../cs170.css" type="text/css" rel="stylesheet">
+
+        <script>
+            document.title="Lesson " + unit + lessn;
+        </script>
+    </head><body>
+    <div class="title">
+        <img src="images/d.jpg" alt="CS 170 Lesson D logo" width="80" align="left" border="1" height="100" hspace="15">
+        <br>
+        <b><span style="font-size: 1em; background-color: transparent;">
+            Lesson <script>document.write(unit+lettr);</script>
+        </span><br>
+        <span style="font-size: 2em; background-color: transparent;">
+            <script>document.write(titl);</script>
+        </span>
+        </b>
+    </div>
+    <br clear="all">
+
+    <div class="content">
+        <p> <img src="images/artist.gif" class="right" alt="Portrait of the artist as a young man.">
+            <b><span class="cap">A</span>s you look through the JavaDocs</b>
+            for the <code>Graphics</code> class, you can see that it "knows how"
+            to do a lot of things. However, up until now, you've really only
+            seen one example. In this lesson, we'll look at some of the
+            <code>Graphics</code> methods for drawing shapes, and
+            show you <b>several</b> new examples.
+        </p><p>You'll learn:</p>
+        <ul>
+            <li>how to draw simple lines</li>
+            <li>how to draw filled and outline rectangles</li>
+            <li>how to draw ovals</li>
+            <li>how to draw 3D shapes</li>
+        </ul>
+        <p>One "role" of the
+            <code>Graphics</code> object passed into the <code>paint()</code>
+            method, is to provide methods that act as "artist's assistants."
+            These methods draw lines, simple shapes, and complex geometric
+            patterns. As you'll see later, these assistants know
+            how to work with JPEGs and GIFs as well.
+        </p>
+        <p> The simplest of these methods is the one that draws lines.
+            Let's take it for a spin, right now.
+        </p>
+    <h3>Drawing Lines</h3>
+        <p> The <code>drawLine()</code> method takes four <code>int</code>
+            arguments, representing the two end-points of a line. Here
+            is the method signature:
+        </p>
+        <p class="code">
+            void drawLine(int x1, int y1, int x2, int y2)
+        </p>
+        <p>The arguments <code>x1,y1</code> represent the horizontal (x),
+            and vertical (y) point at one end of the line, while
+            <code>x2,y2</code> represent the point at the other end. Since
+            all four arguments are <code>int</code>, you simply substitute
+            a whole number for each argument when calling the method.
+        </p>
+        <p> When you draw lines in Java, all lines are 1 pixel thick, and
+            use the default <code>Graphics</code> brush color (retrieved
+            from your component's foreground property). You can change the
+            color of the brush, used to paint the lines, but you can't
+            change the thickness of the line.
+        </p>
+        <p class="note">Java actually <b>can</b> draw fancier lines with
+            different thicknesses, styles and end-types. To do so, though, you
+            have to use the Java 2D package and the <code>Graphics2D</code> class,
+            which is slightly more complex than what I've shown you here. Once
+            you've learned how to use the simpler <code>Graphics</code> class,
+            you'll find the <code>Graphics2D</code> <i>much</i> easier to
+            understand.
+        </p>
+        <p> The algorithm used to draw lines in Java is <b>inclusive</b>; both
+            the point <code>x1,y1</code> and the point <code>x2,y2</code> are
+            <b>included</b> in the line. Thus, if you want to draw a single
+            pixel on the screen&#8212;at point 100,100, for instance, you do it
+            like this:
+        </p>
+        <p class="code">
+            g.drawLine(100, 100, 100, 100);
+        </p>
+        <p> Here's a sequence of <code>drawLine()</code> calls that
+            creates a five-sided star:
+            <img src="images/f04.gif" alt="The DrawStar applet source code" class="inline">
+            Here's how it works:
+            </p><ul>
+                <li>Line 13 starts at 101 pixels in from the left side, (since
+                    the first pixel is numbered 0), and 0 pixels down from the top,
+                    (on the first line, in other words). It then draws to
+                    position 200,200, which is 201 pixels from the left side,
+                    and 201 pixels down from the top.
+                </li>
+                <li>Line 14 picks up where line 13 left off, that is, at position
+                    200,200. It draws a line from that position, to position 0x,
+                    (that is, against the left-hand margin), and 100y, (that is,
+                    101 pixels down from the top).
+                </li>
+                <li>Line 15 picks up from there and draws a horizontal
+                    line clear across the applet. Not that the "y" parameter
+                    for the two end-points is both set to 100. The "x"
+                    parameter starts at 0 (the left-hand side), and goes
+                    to 200 (the right-hand side).
+                </li>
+                <li>Line 16 continues, drawing from the right-hand margin over
+                    to the lower-left corner, and line 17 continues that
+                    line up to the original starting point at 100,0.
+                </li>
+            </ul>
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/DrawStar.html","","width=500,height=350,scrollbars=yes");'><b>Click this link</b></a> to run the applet
+            in your browser. <a href='javascript:var%20w=window.open("DrawStar.java.html","","width=500,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to view the applet source in your
+            browser (so you can copy it if you like).
+        <p></p>
+        <p class="note"> Note that when I write the
+            <code>paint()</code> method, I can call the <code>Graphics</code>
+            object anything I like; here I've named it <b>bob</b>. You
+            don't have the same freedom to rename the word
+            <code>Graphics</code>, or the method name <code>paint()</code>,
+            however; they both must be spelled exactly as shown.
+        </p>
+        <img src='images/sticks01.gif' class='right' alt='The Sticks applet'>
+    <h4>The Sticks Program</h4>
+
+        <p>
+            Before I was in kindergarden, my parents bought me a game
+            called "pickup sticks". Basically, it was a can filled with
+            colored sicks that you threw on the ground and then tried
+            to pick up without disturbing any of the other sticks.
+        </p>
+        <p> That's the inspiration for Doug Cooper's <b>Sticks</b> program
+            from the 4<sup>th</sup> edition of <i>Oh! Pascal</i>. Here's
+            a Java translation that I wrote:<br>
+            <img src='images/sticks02.gif' class='inline' alt='The Sticks program.'>
+            Here are the important parts:
+        </p>
+        <ol>
+            <li class='d'>We want to use random colors and line sizes, so
+                the applet creates a <code>Random</code> <b>class variable</b>
+                named <code>randGen</code>.
+            </li>
+            <li class='d'>The <code>paint()</code> method uses a loop to draw
+                one line for each row in the applet, using the
+                <code>getHeight()</code> method to get the loop bounds.
+            </li>
+            <li class='d'>The pen color is set to a random color using
+                the single-<code>int</code>-parameter version of the <code>Color</code>
+                constructor and our random number generator.
+            </li>
+            <li class='d'>Random numbers are generated for the <code>x1</code>,
+                <code>y1</code>, <code>x2</code> and <code>y2</code> line
+                end-points. The height and width of the applet are used
+                when calling <code>nextInt()</code> to make sure that each
+                line completely fits inside of the applet.
+            </li>
+        </ol>
+        <p> <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/Sticks.html","","width=600,height=425,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. You can download
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/Sticks.java'
+            target='_blank'> <b>Sticks.java</b></a>
+            by clicking the link in this sentence.
+        </p>
+    <h4>Graphing Curves</h4>
+        <p> <img src='images/spin.gif' class='right' alt='The Spinner applet.'>
+            The Sticks applet is really very simple, but you can use
+            a series of line segments to draw very complex curves, which
+            can be really useful in graphing equations and
+            writing isualization applications.
+        </p>
+        <p> Here's a fairly complex applet that draws "Spirograph"
+            shapes, similar to those drawn by the Hasbro toy you probably
+            had as a child. Even though the shapes look very complex,
+            they are actually drawn by simply using a loop to draw
+            a series of line segments whose end-points are caculated
+            by using a particular set of equations.
+        </p>
+        <p class='note'>The shapes produced by the Spirograph are mathematical
+            curves of the variety technically known as hypotrochoids and epitrochoids
+            according to Wikipedia.
+        </p>
+        <p> <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/Spinner.html","","width=400,height=450,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. You can download
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/Spinner.java'
+            target='_blank'> <b>Spinner.java</b></a>
+            by clicking the link in this sentence.
+        </p>
+        <p> The equations used in the applet are fairly complex, and so
+            I won't present them here. All you really need to understand is that
+            even though <code>drawLine()</code> is a simple method, you can use
+            it to produce some sophisticated effects. If you'll like to know more
+            about the math and the details behind the Spinner applet, you can
+            read the <b>entirely optional</b> addendum containing
+            <a href='AdvGraphics.html' target='_blank'>
+            <b>additional Graphics examples</b></a>.
+        </p>
+    <h3>Polygons and Polylines</h3>
+        <p> If you need to draw many, many lines in your program,
+            instead of putting twenty pages worth of <code>drawLine()</code>
+            statements into one humongous <code>paint()</code> method,
+            you can use a loop and calculate the end-points for each
+            line segment; that's what the Spinner applet does to draw
+            its spirograph curves.
+        </p>
+        <p> That only works, though, if the calculations for the end
+            points of each line segment can be expressed as a system
+            of equations. If your line segments consist of a more
+            complex series of data, such as a series of observations
+            that need to be graphed in some whay, then you'll need to
+            take another tack. That's where arrays come back into the
+            picture.
+        </p>
+    <h4>Parallel Arrays and the Graphics Class</h4>
+        <p> Sometimes, you'll want to make use of two or more arrays
+            that contain related information, and that are processed
+            as a single unit. Such interdependent arrays are called
+            <b><i>parallel arrays</i></b>.
+        </p>
+        <p> The <code>Graphics</code> class method, <code>drawPolyLine()</code>
+            uses interdependent parallel arrays to specify the points connecting
+            a line to be drawn on the display. The <code>drawPolyline()</code>
+            method is useful when you want to draw a sequence of connected
+            line segments.
+        </p>
+        <p> With the regular <code>drawLine()</code> method, you
+            specify the endpoints of each line; with <code>drawPolyline()</code>,
+            you supply <b>two arrays</b>, representing the x and y coordinates
+            for each point in the line, along with the number of lines.
+        </p>
+        <p> Here's the method's signature:</P>
+        <p class='code'>
+            drawPolyline(int[] ax, int[] ay, int n);
+        </p>
+          <img src='images/linechart.gif' class='right' alt='The LineChart applet.'>
+   <h4>The LineChart Applet</h4>
+        <p>
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/LineChart.java'
+            target='_blank'><b>LineChart.java</b></a> is a short applet that
+            illustrates the use of parallel arrays, and the
+            <code>polyDraw()</code> method to graph the relationship
+            between player's salaries and the number of hits per time at bat
+            that each player earned using data from Major League Baseball in
+            1987.
+        </p>
+        <p> You can see what the program looks like in the picture to the right.
+            You can
+            <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/LineChart.html","","width=500,height=475,scrollbars=yes");'>
+            <b>run the applet</b></a> in your Web browser by clicking the
+            link in this sentence.
+        </p>
+
+        <p> Here's how the applet works.</p>
+    <h4>The Arrays</h4>
+        <p> The program defines two arrays of integer values as
+            <b>instance variables</b>, that is, variables defined
+            outside of a method. Since they are defined outside of
+            a method, we can refer to them both in the <code>init()</code>
+            method and inside the <code>paint()</code> method:<br>
+            <img src='images/linechart01.gif' class='inline' alt='The LineChart arrays.'>
+            Each array, <code>salaries</code> and <code>hits</code> represent
+            data collected from the 1986 season of Major League Baseball.
+            The data was downloaded from the Carnegie Mellon StatLib
+            Data Set Archive at <a href='http://lib.stat.cmu.edu/datasets/' target='_blank'>
+            <b>http://lib.stat.cmu.edu/datasets/</b></a>.
+        </p>
+        <p> Both arrays are the same size. The <code>salaries</code> array
+            contains the player's salaries in $10,000 increments, so the
+            first entry in the array represents a salary of $2,400,000.
+            The first element in the <code>hits</code> array represents
+            the same player's hits as an integer percentage, (that is,
+            the number of hits divided by the number of times at bat.)
+        </p>
+    <h5>Manipulating the Arrays</h5>
+        <p> Before we can graph the raw data, we need to manipulate it
+            a little to make sure that the points will appear "on-screen".
+            Since both arrays are instance variables, we can do that in
+            the <code>init()</code> method like this:<br>
+            <img src='images/linechart02.gif' class='inline' alt='The LineChart init() method.'>
+            Our applet will graph the number of hits on the Y axis. Since
+            the Java graphics coordinate system uses an increasing Y axis,
+            we need to do a little calculation to "reverse" the sense
+            of each data element. I've also scaled them by 10% since,
+            in fact, it looks like most players, regardless of salary,
+            are clustered between 20% and 35% when it comes to hitting.
+        </p>
+        <p> I've also increased the salary values to move them away from
+            the left margin, to allow room for the Y-axis labels.
+        </p>
+    <h5>Graphing the Data</h5>
+        <p> The <code>paint()</code> method itself is fairly simple.
+            Almost all of the code it contains is concerned with
+            drawing the labels for each axis. The code that actually
+            draws the graph is a single <code>drawPolyline()</code>:
+            <img src='images/linechart03.gif' class='inline' alt='The LineChart paint() method.'>
+        </p>
+        <p> <img src='images/f14.gif' class='right' alt='The PolyDraw applet.'>
+            When you call <code>drawPolyLine()</code>, Java marches through
+            the array, using the argument <code>n</code> as the <code>for</code> loop bound,
+            and extracts the corresponding value from each of the arrays
+            during each repetition. You are responsible for making sure that
+            both the <code>ax</code> and <code>ay</code> arrays each
+            have <code>n</code> number of elements.
+        </p>
+    <h4>Polygon Drawing</h4>
+        <p> You've already seen the <code>drawPolyline()</code> method, which draws
+            a series of connected line segments. The <code>Graphics</code> class
+            polygon drawing methods work almost identically except that the
+            polygon methods assume you are drawing a <b>closed</b> figure,
+            so the first and last point in the series are automatically
+            connected if required.
+        </p>
+        <p> The two polygon drawing methods are:</p>
+
+        <p class='code'>
+            drawPolygon(int[] ax, int[] ay, int n);<br>
+            fillPolygon(int[] ax, int[] ay, int n);
+        </p>
+        <p> The <code>fillPolygon()</code> method uses the "odd-even" fill rule
+            to fill the different parts of the polygon when two lines overlap. Both
+            methods ignore any call where <b>n</b> is less than three.
+        </p>
+
+    <h3>Drawing Shapes</h3>
+        <p>In addition to lines, the <code>Graphics</code> class knows how to
+            draw simple geometric shapes, including rectangles, ovals, arcs,
+            round-cornered rectangles, and polygons.
+        </p>
+        <p> Java's simple geometric shapes use the principle of a <i>bounding
+            box</i> to specify their location and size. A bounding box is the
+            smallest rectangle that can <i>contain</i> the object you are
+            drawing. This rectangle is known as the shape's <b>bounds</b>:
+            <center>
+            <img src="images/bound_box.gif" alt="The bounding box used by Graphics methods" class="inline">
+            </center>
+            You specify a bounding box by passing <code>x,y</code> values for
+            the <b>location</b> of the shape, (that is, the upper-left corner
+            of the bounding box), along with two additional parameters for
+            its <b>size</b>: the <code>width</code> (first) and the
+            <code>height</code> (second). Each of the values used for
+            the bounding box should be a positive whole number.
+        </p>
+        <p class="note"><b>Note : </b><u>Do not</u> supply values for the
+            lower-right corner when drawing simple shapes. This is easy to forget,
+            because the <code>drawLine()</code> method <b>does</b> use <i>end-points</i>
+            (<code>x1,y1</code> and <code>x2, y2</code>)
+            rather than <code>width</code> and <code>height</code>, so it's easy to
+            get them confused.
+        </p>
+    <h4>Drawing Plain Rectangles</h4>
+        <p>There are three methods that allow you to draw, fill, or
+            clear a given rectangle:
+        </p>
+        <p class="code">
+            drawRect(int x, int y, int width, int height)<br>
+            fillRect(int x, int y, int width, int height)<br>
+            clearRect(int x, int y, int width, int height)<br>
+        </p>
+        <p>Here's how these methods work:</p>
+    <div class="box">
+        <ul>
+            <li>The <code>drawRect()</code> method draws a 1-pixel wide
+                outline rectangle that starts at <code>x,y</code>, and
+                goes to <code>width + 1</code> and <code>height + 1</code>.
+                With most components, the color of the line is taken from
+                the default foreground color. You can change it at will,
+                of course, by using <code>Graphics setColor()</code>
+                method.
+            </li>
+            <li>The <code>fillRect()</code> method uses the same pen color
+                as <code>drawRect()</code>, but paints a solid block starting
+                at <code>x,y</code> and extending <code>width</code>
+                and <code>height</code> pixels. A rectangle drawn with
+                <code>fillRect()</code> will fall one pixel short on the
+                right and bottom, compared to a rectangle drawn with
+                <code>drawRect()</code>.
+            </li>
+            <li>The <code>clearRect()</code> method works exactly like
+                <code>fillRect()</code> except it draws using the component's
+                background color rather than the foreground or
+                <code>Graphics</code> color attribute.
+            </li>
+        </ul>
+    </div>
+        <p> Here's the code for a simple applet, <b>SimpleRect.java</b>,
+            that draws four rectangles. The rectangle in the upper-left
+            quadrant is created using <code>drawRect()</code>. The rectangles
+            in the lower-left and upper-right are drawn using
+            <code>fillRect()</code>, and the rectangle in the lower-right
+            was drawn using <code>clearRect()</code>:
+            <img src="images/f05.gif" alt="The SimpleRect applet source code" class="inline">
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/SimpleRect.html","","width=475,height=365,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser. <a href='javascript:var%20w=window.open("SimpleRect.java.html","","width=600,height=450,scrollbars=yes");'>
+            <b>Click this link</b></a> to view the applet source in your
+            browser (so you can copy it if you like).
+        </p>
+        <p> Note that all four rectangles should be 100 pixels high and
+            100 pixels wide. If you run the applet, however,
+            and magnify the area in the center of the applet like this:
+            <img src="images/f07.gif" alt="A closeup of the SimpleRect applet" class="inline" border="1">
+            you'll see that the rectangle created by using
+            <code>drawRect()</code> is actually 101 pixels wide and
+            high. The reason for this is kind of esoteric
+            (see the note following); just remember that all of the
+            <code>Graphics drawXXX()</code> methods add one to the height
+            and width, while the <code>fillXXX()</code> and <code>clearXXX()</code>
+            methods do not.
+        </p>
+        <p class="note"><b><u>
+            Sun's Explanation</u></b><br>
+            Coordinates are infinitely thin and lie between the pixels of
+            the output device. Operations which draw the outline of a
+            figure operate by traversing an infinitely thin path between
+            pixels with a pixel-sized pen that hangs down and to the right
+            of the anchor point on the path. Operations which fill a figure
+            operate by filling the interior of that infinitely  thin path.
+        </p>
+         <img src='images/randrect.gif' class='right' alt='The RandRect applet.'>
+    <h5>The RandRect Example</h5>
+        <p>
+            Here's a more extensive example program,
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/RandRect.java'
+            target='_blank'><b>RandRect.java</b></a>, that draws twenty-five
+            random outline rectangles on the left side of the screen, and
+            another twenty-five random filled rectangles on the right.
+        </p>
+        <p> <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/RandRect.html","","width=600,height=400,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet in your browser.
+        </p>
+    <h5>Thicker Lines</h5>
+        <p> When the <code>Graphics</code> class draws a "outline-version"
+            rectangle or oval, it uses a 1-pixel-wide pen, just like the
+            <code>drawLine()</code> method does. Drawing thicker lines is
+            fairly difficult, especially if the line is drawn at a slope,
+            because you have to draw several strokes side-by-side, and
+            then calculate the differing end-points.
+        </p>
+        <p> Drawing thicker rectangles (and ovals) is much easier: you simply
+            use a <b>sequence</b> of <code>drawRect()</code> calls, and each
+            time you add 1 to x and add 1 to y. In addition, you need to <b>decrease</b>
+            both the width and height, so that the new rectangle fits snug
+            inside the existing one. Because you already added one to x and y,
+            you need to <b>subtract 2</b> from both width and height.
+        </p>
+        <p> Here's a fragment that draws a rectangle with a line 3 pixels thick:</p>
+        <p class="code">
+            g.drawRect(10, 10, 100, 100);<br>
+            g.drawRect(11, 11,  98,  98);<br>
+            g.drawRect(12, 12,  96,  96);
+        </p>
+        <p> If you have a very thick line, though, it can be pretty tedious to
+            type in a long list of <code>drawRect()</code> calls. In that case,
+            you can use a combination of <code>fillRect()</code> and <code>clearRect()</code>
+            to do the same thing.
+        </p>
+        <p> Here, for instance, is a rectangle with a
+            10-pixel-wide outline; instead of using ten statements, it
+            uses only two:
+        </p>
+        <p class="code">
+            g.fillRect(10, 10, 100, 100);   // draw the outline<br>
+            g.clearRect(20, 20,  80,  80);  // clear the interior
+        </p>
+    <h4>Rounded Rectangles</h4>
+        <p>In addition to the plain old rectangles, the <code>Graphics</code>
+            class can also draw two fancier rectangles: the <b>rounded
+            rectangle</b> and the <b>3D rectangle</b>. Let's take a
+            quick look at the rounded rectangle first.
+        </p>
+        <p> There are two methods to draw rounded rectangles: one to draw an
+            outline and one to draw a filled shape. There is no "clear"
+            method, but you can easily write your own by setting the
+            <code>Graphics</code> color using <code>getBackground()</code>
+            before filling the rectangle.
+        </p>
+        <p>Here are the rounded rectangle methods:</p>
+        <p class="code">
+            void drawRoundRect(int x, int y, int width, int height,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int
+xArc, int yArc)<br>
+            <br>
+            void fillRoundRect(int x, int y, int width, int height,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int
+xArc, int yArc) </p>
+
+        <p> Like plain-old-rectangles, rounded rectangles are specified by
+            supplying an <code>x,y</code> coordinate along with a
+            <code>width</code> and <code>height</code>. The outline rounded
+            rectangles are one pixel higher and wider than their filled
+            brethren, just as with plain-old rectangles.
+        </p>
+        <p> Notice though, that the rounded rectangle methods require <b>six</b>
+            parameters instead of <b>four</b> like the plain rectangles.
+            The two additional parameters determine how "round" the corners of
+            each rectangle will be. The value you supply is interpreted as
+            the diameter of an oval placed against the corner of the bounding
+            box like this:
+            </p><center>
+            <img src="images/draw_round_rect.gif" alt="Use of the xArc and yArc arguments to the drawRoundRect() method." class="inline" border="1">
+            </center>
+            If you use the same values for <code>width</code> and
+            <code>xArc</code>, along with identical values for
+            <code>height</code> and <code>yArc</code>, you'll end up with
+            an ellipse. The corners will "consume" all the rectangle portion
+            of your shape. If all four parameters&#8212;<code>width</code>,
+            <code>height</code>, <code>xArc</code>, <code>yArc</code>&#8212;are
+            the same, then you end up with a circle.
+        <p></p>
+    <h4>3-D Rectangles</h4>
+        <p> In addition to the regular and rounded rectangles, the
+            <code>Graphics</code> class has an additional
+            method for drawing "3D" rectangles:</p>
+        <p class="code">
+            void draw3DRect(int x, int y, int width, int height, <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean raised)
+        </p>
+        <p> Like the rounded rectangles, the 3D variety requires additional
+            information, in the form of an extra parameter. The last parameter
+            to the <code>draw3DRect()</code> method, <code>raised</code>, is
+            a <code>boolean</code>, or true/false value.
+            When a method takes a <code>boolean</code>
+            argument like this, just type in the words <code>true</code> or
+            <code>false</code>, without quotes.
+        </p>
+        <p> If you pass <code>true</code> to the <code>draw3DRect()</code> method,
+            the rectangle will "pop out" like a button; if you pass
+            <code>false</code>, the rectangle will appear sunken. There
+            are two <b>complications</b> when using <code>draw3DRect()</code>:
+        </p>
+        <ul>
+            <li>Even with 3D rectangles Java draws using a one-pixel pen.
+                If you want to create "deeper" or "higher" rectangles, you need
+                to draw several rectangles, nested inside each other.
+            </li>
+            <li>The default foreground and background color, (black and
+                white), don't allow the 3D effect to work; you have to
+                change the drawing color and the background color, so
+                that both are the same. If you do that with other shapes,
+                you won't be able to see the shape, because the "paper"
+                color and the "pen" color are identical. With the
+                <code>draw3DRect()</code> method, it changes the
+                colors of the lines automatically, to create the
+                raised (or lowered) effect.
+            </li>
+        </ul>
+        <p>Let's see how this works.</p>
+    <h4>The ThreeDRect Applet</h4>
+        <p> Here's some more code, this time for an applet,
+            <b>ThreeDRect.java</b>, that draws a 4-pixel thick raised
+            rectangle in the middle of the applet.
+            <a href='javascript:var%20w=window.open("http://csjava.occ.cccd.edu/~gilberts/applets/ThreeDRect.html","","width=475,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet
+            in your browser.
+            <a href='javascript:var%20w=window.open("ThreeDRect.java.html","","width=675,height=475,scrollbars=yes");'>
+            <b>Click this link</b></a> to view the applet source in your
+            browser (so you can copy it if you like).
+        </p>
+        <p> There are a couple of new pieces to this applet. First,
+            since <code>draw3DRect()</code> doesn't work in black and
+            white, there are two lines that change the drawing color,
+            and then use <code>fillRect()</code> to erase the background
+            using light gray:
+            <img src="images/f09.gif" alt="Erasing the background color" class="inline">
+        </p>
+        <p> The second thing that's new is duplicating (or repeating) the
+            same statement several times, but just changing the arguments
+            to get a different effect. In the code shown here:
+            <img src="images/f10.gif" alt="Drawing the 3D rectangles" class="inline">
+            each call to <code>draw3DRect()</code> moves the starting
+            position down and to the right by one pixel, and then decreases
+            <code>width</code> and <code>height</code> by two pixels. The
+            result is a series of decreasing rectangles, each one nested
+            inside the previous one, giving the illusion of a line that
+            is 4-pixels thick:
+            <img src="images/f11.gif" alt="Running the ThreeDRect applet" class="inline">
+        </p>
+    <h3>Drawing Ovals</h3>
+        <p> Drawing ovals works almost exactly like drawing plain rectangles.
+            There are two methods:
+        </p>
+        <p class="code">
+            void drawOval(int x, int y, int width, int height)<br>
+            void fillOval(int x, int y, int width, int height)
+        </p>
+        <p> There is no <code>clearOval()</code> method. Each of these draws
+            an oval that touches an imaginary "bounding box" represented by
+            coordinates passed as <code>x</code>, <code>y</code>,
+            <code>width</code> and <code>height</code>.
+        </p>
+    <h4>Thicker Ovals</h4>
+        <p>As with the rectangles, "drawn" ovals are 1-pixel wider and higher
+            than "filled" ovals. Like rectangles, ovals are drawn using a
+            line that is one-pixel wide. You can simulate thicker lines by
+            drawing several ovals, one inside the other.
+        </p>
+         <p>This scheme is not as effective for ovals as for rectangles,
+            because of the <b>aliasing</b> ("stairstepping" or "jaggies")
+            that occurs as each one-pixel-wide oval is drawn.
+        </p>
+       <img src='images/drawovals.gif' class='right' alt='The DrawOvals applet.'>
+       <p> A better solution is to draw just <b>two</b> ovals using
+            <code>fillOval()</code>. Draw the larger oval first, using the
+            "line" color. Then draw the inside oval using the background
+            color like this example
+
+        </p>
+        <p class="code">
+            g.fillOval(10, 10, 50, 50);<br>
+            g.setColor(getBackground());<br>
+            g.fillOval(15, 15, 40, 40);
+        </p>
+        <p>which draws an oval using a 5-pixel wide brush.
+        </p>
+        <p> Here's an applet
+            <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/DrawOvals.java'
+            target='_blank'><b>DrawOvals.java</b></a>
+            that uses both methods to draw a 10-pixel-wide blue oval. As you
+            can see, the line for the oval on the left has several pixelated
+            drop-out sections.
+            <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/DrawOvals.html","","width=400,height=350,scrollbars=yes");'>
+            <b>Click this link</b></a> to run the applet in your browser.
+        </p>
+
+    <h4>More With Ovals</h4>
+        <p> <img src='images/sphere.gif' class='right' alt='The Sphere applet.'>
+            By changing the color transparency as well as the colors
+            themselves, you can actually use <code>fillOval()</code> to
+            create some spherical 3D effects, like that shown here.
+        </p>
+        <p> <a href='http://faculty.orangecoastcollege.edu/sgilbert/applets/Sphere.java' target='_blank'><b>Sphere.java</b></a> is
+            an applet that uses a loop, along with the <code>fillOval()</code>
+            method to draw a sphere with a "3D" effect.
+            You can <a href='javascript:var w=window.open("http://faculty.orangecoastcollege.edu/sgilbert/applets/Sphere.html","","width=600,height=650,scrollbars=yes");'>
+            <b>click this link</b></a> to run the applet in your browser.
+        </p>
+        <p> If you're interested in an explanation of how the applet works,
+            you can find those details at the bottom of the optional
+            addendum containing <a href='AdvGraphics.html' target='_blank'>
+            <b>additional Graphics examples</b></a>.
+        </p>
+    <h3>Drawing Arcs</h3>
+        <p> The <code>Graphics</code> class has two method for drawing and
+            filling arcs:
+        </p>
+        <p class='code'>
+            void drawArc(int x, int y, int w, int h, int start, int end)<br>
+            void fillArc(int x, int y, int w, int h, int start, int end)
+        </p>
+        <p> Both methods use the same parameters. The first four specify
+            the bounding box for an imaginary oval. The last two parameters
+            specify the starting and ending angles of the arc in degrees.
+        </p>
+        <p> Here is some code that draws an arc with a start angle of 0
+            degrees and an end angle of 270 degrees:<br>
+            <img src='images/arc01.gif' class='inline' alt='Drawing an arc.'>
+            I've added some code that uses <code>drawRect()</code> to
+            display the bounding box in a light gray color, just to
+            help you visualize the process.
+        </p>
+        <p> Here's what the program looks like as it runs. Notice that
+            the starting angle is at the "3 o'clock" position, and that
+            the angles sweep counter-clockwise around 270 degrees:<br>
+            <img src='images/arc02.gif' class='inline' alt='Drawing an arc.'>
+            Note that the 270 is <b>not</b> the position on the circle,
+            but the number of degrees "traveled". If we wanted to sweep the
+            other direction (clockwise), and end up at the same point on
+            the bounding box, we'd <b>supply a negative number for the
+            ending position</b>.
+        </p>
+        <p> Here's the same program using -90 as the ending parameter:<br>
+            <img src='images/arc03.gif' class='inline' alt='Drawing an arc.'>
+            This causes us to sweep clockwise 90 degrees, which is the same
+            point as sweeping counter-clockwise 270 degrees.
+        </p>
+    <h4>Filled Arcs</h4>
+        <p> <img src='images/arc04.gif' class='right' alt='Drawing a PacMan'>
+            The arc is the only unclosed shape that can be filled in
+            the <code>Graphics</code> class. The <code>fillArc()</code>
+            method fills the interior of the as if there were lines
+            drawn to the center of the bounding box.
+        </p>
+        <p> Here's a PacMan figure painted using <code>fillArc()</code>.
+            Note, though, that the figure is <b>not</b> outlined. To
+            draw the outline, you have to use <code>drawArc()</code> which
+            does <b>not</b> draw the closing lines to the radius. To draw
+            those, you have to use separate <code>drawLine()</code>
+            statements, along with the appropriate mathematical calculations:<br>
+            <img src='images/arc05.gif' class='inline' alt='Drawing a PacMan.'>
+            These are fairly straightforward calculations for circles, but can
+            become more complex for other ellipses.
+        </p>
+
+    <h3>Coming Up ...</h3>
+        <p> In this lesson you learned about how to use the <code>Graphics</code>
+            class to draw lines, shapes and polygons.
+        </p>
+        <p> This is the last lesson in Unit 7. Make sure you complete the quiz and
+            head on over to the Exercise page to see the assignments this week.
+        </p>
+    </div>
+
+
+    <div class="footer">
+        Materials on this web site © 1995-2075, <script>doEmail();</script><a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,18 @@
+Debugging
+The eclipse debugger is powerful. To learn it we'll debug DebugLab.java, which contains a DebugLab class with a simple method and a very simple Useless class. We will set breakpoints (at lines of code where we want Java to pause during execution so we can examine the values of variables and so forth).
+
+   1. Create a new project and create a new class called DebugLab in the project.
+   2. Copy the contents of the DebugLab.java< file to that class (or alternatively copy DebugLab.java< to the directory of the project and refresh the project).
+   3. You will set breakpoints to suspend the execution of your program. To add a breakpoint to any line in the code, press Ctrl+Shift+B while you are on that line. (Alternatively, choose Run -> Toggle Breakpoint from the menu.) For our purposes, add a breakpoint to the line that has the debug method.
+   4. For debugging to work, you have to run your program in Debug mode. To do that you can press Alt+Shift+D, J or choose Debug As -> Java Application from the context menu. Once you run your program, it will execute up to first breakpoint it encounters and stop at that point, Eclipse will ask you to switch to Debug perspective automatically as it happens.
+   5. Debug perspective contains a call stack at the top left corner, a summary of variables in top right corner. You can also get a list of breakpoints at the same place. At the bottom, you can see the console which will show any output.
+   6. Our aim will be to analyze the values of Useless object u and the integer array a. There are several ways to do this:
+          * You can highlight u in the code panel and choose Inspect from the context menu. This will open a small window listing all instance variables of u.
+          * From the variables panel at the top, you can expand u and get a list of its instance variables.
+          * As the last option, you can add an expression to be watched. In order to do that, you have to open Expressions window by choosing Window -> Show View -> Expressions. This will open a new tab on top right corner. You can right click anywhere on that tab and choose Add Watch Expression, any expression you type here will be watched throughout the debugging process. For example you can type u.a to watch a field of Useless object u. Note that this only works as long as the object that's being watched is in scope.
+          * Similarly, you can repeat all of the above to view any index of array.
+   7. You also have different options to continue running your code. You can access the buttons explained below on the Debug pane.
+          * Resume (F8): Resumes your program until the next breakpoint or until the end of execution.
+          * Step Into (F5): Only executes one line in the program. If the current line is a method call, it will go into that method. For example, if you do Step Into at our current breakpoint, your program will stop at the first line of debug method.
+          * Step Over (F6): Only executes one line in the program. If the currently line is a method call, it completes the execution of that method and goes to next line. It doesn't go into the called method like Step Into. So if you do a step over at the current breakpoint, it will execute debug method and goes to next line which is the end of the program.
+          * At any time, you can terminate the execution of the program by pressing Terminate button.
