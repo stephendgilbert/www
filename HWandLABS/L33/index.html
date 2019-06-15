@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>L33, L34 &amp; L35&mdash;Multi-way Branches</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab 33, 34 &amp; 35</p>
+        <p id='lessonTitle'>Multi-way Branches</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><span class="cap">Y</span>ou can combine decisions by using
+            the logical operators</b>, as you saw in the last set of lab
+            exercises. You can do something similar by implementing
+            <b>multi-way</b> branches, using <b>sequential if statements</b>,
+            or by <b>nesting</b>. To get started, make sure you have
+            read <i>Section 6.5&mdash;Multiple Choice</i>, and completed
+            both <i>H18&mdash;Date Fashion</i> and <i>H19&mdash;Parrot Trouble</i>.
+            That will prepare you to work on these problems.
+        </p>
+        <div class='green-alert'>
+            Complete these problems using <b>sequential or nested if</b> statements.
+            <b>Do not</b> use the logical operators, like <b>&amp;&amp;</b> or
+                <b>||</b>.
+        </div>
+    <h3>L33&mdash;Evenly Spaced</h3>
+        <p> Write the function named <b><code>evenlySpaced()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i>Given three <code>int</code>s, <code>a b c</code>, one of
+                them is small, one is medium and one is large.
+                Return <code>true</code> if the three values are <b>evenly spaced</b>,
+                so the difference between small and medium is the same as the
+                difference between medium and large.
+            </i>
+        </blockquote>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param a the first number.</code></li>
+            <li><code>@param b the second number.</code></li>
+            <li><code>@param c the third number.</code></li>
+            <li><code>@return true if the numbers meet the conditions described.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>evenlySpaced(2, 4, 6) returns true</code></li>
+            <li><code>evenlySpaced(4, 6, 2) returns true</code></li>
+            <li><code>evenlySpaced(4, 6, 3) returns false</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/logic-evenlySpaced-nested/logic-evenlySpaced-nested.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+        <div class='alert'>
+            <p> Remember that many of my videos for the function exercises that we
+                will do in this class make use of the <b>Codingbat.com</b> Web site
+                put up by Nick Parlante at Stanford. When <b>you</b> do the
+                exercise in DrJava, you will need to write the method heading
+                yourself, something that Coding.bat does for you.
+            </p>
+        </div>
+    <h3>L34&mdash;Lucky Sum</h3>
+        <p> Write the function named <b><code>luckySum()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given 3 <code>int</code> values, <code>a b c</code>, return their sum.
+                However, if one of the values is <code>13</code> then it
+                does not count towards the sum <b>and</b> values to
+                its right do not count. So for example,
+                if <code>b</code> is <code>13</code>, then <b>both</b>
+                <code>b</code> and <code>c</code> do not count.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param a the first number.</code></li>
+            <li><code>@param b the second number.</code></li>
+            <li><code>@param c the third number.</code></li>
+            <li><code>@return the lucky sum as calculated here.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>luckySum(1, 2, 3) returns 6</code></li>
+            <li><code>luckySum(1, 2, 13) returns 3</code></li>
+            <li><code>luckySum(1, 13, 3) returns 1</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/logic-luckySum/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>L35&mdash;Making Bricks</h3>
+        <p> Write the function named <b><code>makeBricks()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> We want to make a row of bricks that is <b>goal</b>
+                inches long. We have a number of <b>small</b> bricks
+                (1 inch each) and <b>big</b> bricks (5 inches each).
+                Return <code>true</code> if it is possible to make the goal
+                by choosing from the given bricks. This is a little harder
+                than it looks and can be done without any loops.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param small number of small bricks.</code></li>
+            <li><code>@param big number of big bricks.</code></li>
+            <li><code>@param goal number of bricks in desired row.</code></li>
+            <li><code>@return true if possible with available bricks.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>makeBricks(3, 1, 8) returns true</code></li>
+            <li><code>makeBricks(3, 1, 9) returns false</code></li>
+            <li><code>makeBricks(3, 2, 10) returns true</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/logic-makeBricks/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <div class='alert'>
+        <p>After you <b>Check</b> each problem, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the lab, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the lab assignments after the lab period,
+            but your scores <b>won't</b> be recorded after class is over.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

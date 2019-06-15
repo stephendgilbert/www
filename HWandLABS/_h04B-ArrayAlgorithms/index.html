@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Array Algorithms</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Array Algorithms</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+        <b><span class="cap">L</span>et's finish up our array algorithm
+            exercises</b>, by looking at some problems which may require
+            a little more thought. As always, you should try to solve the
+            problems without looking at the solution. If you need help,
+            though, be sure to use the videos. If you need to look up
+            the solution, then when you are finished, try erasing what
+            you did, and doing it again from scratch.
+        </p>
+    <h3>Big Diff</h3>
+        <p> Write the function named <b><code>bigDiff()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given an array length 1 or more of <code>int</code>s,
+                return the difference between the <b>largest</b>
+                and <b>smallest</b> values in the array.
+            </i>
+        </blockquote>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the array to search.</code></li>
+            <li><code>@return the difference between the largest and smallest numbers in the array.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>bigDiff({10, 3, 5, 6}) returns 7</code></li>
+            <li><code>bigDiff({7, 2, 10, 9}) returns 8</code></li>
+            <li><code>bigDiff({2, 10, 7, 2}) returns 8</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one this video:
+            <a href='../../movies/array2-bigDiff/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+
+        <div class='alert'>
+            <p> Remember that many of my videos for the function exercises that we
+                will do in this class make use of the <b>Codingbat.com</b> Web site
+                put up by Nick Parlante at Stanford. When <b>you</b> do the
+                exercise in DrJava, you will need to write the method heading
+                yourself, something that Coding.bat does for you.
+            </p>
+        </div>
+    <h3>Is Everywhere</h3>
+        <p> Write the function
+            named <b><code>isEverywhere()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> We'll say that a value is "everywhere" in
+                an array if, for every pair of adjacent
+                elements in the array, at least one
+                of the pair is that value. Return
+                <code>true</code> if the given value is everywhere
+                in the array.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the array to examine.</code></li>
+            <li><code>@param val value to check inside the array.</code></li>
+           <li><code>@return true if value appears in every adjacent pair.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>isEverywhere({1, 2, 1, 3}, 1) returns true</code></li>
+            <li><code>isEverywhere({1, 2, 1, 3}, 2) returns false</code></li>
+            <li><code>isEverywhere({1, 2, 1, 3, 4}, 1) returns false</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/array2-isEverywhere/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>Match Up</h3>
+        <p> Write the function
+            named <b><code>matchUp()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given arrays <code>nums1</code> and <code>nums2</code>, of the
+                same length, for every element in <code>nums1</code>,
+                consider the corresponding element in <code>nums2</code>
+                (at the same index). Return the count of
+                the number of times that the two elements
+                differ by 2 or less, <b>but</b> are not equal.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums1 the first array to examine.</code></li>
+            <li><code>@param nums2 the second array to examine.</code></li>
+            <li><code>@return number of times matching values meet conditions described.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+       <ul>
+            <li><code>matchUp({1, 2, 3}, {2, 3, 10}) returns 2</code></li>
+            <li><code>matchUp({1, 2, 3}, {2, 3, 5}) returns 3</code></li>
+            <li><code>matchUp({1, 2, 3}, {2, 3, 3}) returns 2</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/array2-matchUp/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    </div>
+    <div class="footer" style='width:750px;margin:auto;'>
+        Materials on this web site &copy; 1995-2075,<a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

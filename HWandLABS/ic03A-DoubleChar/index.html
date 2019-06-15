@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>For Loop Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>For Loop Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap2">C</span>hapter 3 in your textbook taught you how to make
+            <i>decisions</i></b>, while Chapter 4 will introduce you to the concept
+            of <i>iteration</i>, or <i>repeating</i> different actions. Using
+            Java's <code>for</code> loop, we can use that technique to
+            write functions that produce different kinds of <code>String</code>
+            patterns.
+        </p>
+        <p> In this assignment, we want to <b>marry</b> those two concepts together,
+            and learn how to write functions that process
+            <code>String</code>s and numbers using the <code>for</code> loop.
+            These are similar to the problems you'll see on your CS 170 programming proficiency quizzes.
+        </p>
+
+    <h3>Time to Double Down</h3>
+        <p> To do that, open <code class='b'>DoubleChar.java</code> from this week's
+            starter folder in DrJava. Once you have it open,
+            you'll find the documentation for this problem:<br>
+            <img src="images/stringfunc10.gif" class="inlineCenter" alt="The doubleChar problem.">
+            As before you have:
+        </p>
+        <ol>
+            <li class='d'>The name of the function you need to write.</li>
+            <li class='d'>The Javadoc parameters and return type.</li>
+            <li class='d'>A short "problem statement".</li>
+            <li class='d'>Some examples.</li>
+            <li class='d'>A comment you should replace with the actual function.</li>
+        </ol>
+
+        <p> Before you start typing, though, let's take a look at
+            some <b class='ry'>basic strategy</b>.
+            You'll normally want to attack these kinds of problems using
+            the same general strategy. Here's how I do that.
+        </p>
+    <h4>Step 1: Skeleton and Return Type</h4>
+        <p> Even though all of these simple loop problems <b>process</b>
+            <code>Strings</code>, they don't necessarily <b>return</b>
+            <code>String</code> values. Some will, but others will return
+            <code>int</code> or <code>boolean</code> values.
+        </p>
+        <p> My first step (after I've written the header, of course), is to
+            always to create an "empty" variable of the
+            correct type and then add a return statement, so that I can
+            run the program and see what the tests do. Here's what you'd
+            do for <code>doubleChar()</code>:<br>
+            <img src="images/stringfunc12.gif" class="inlineCenter" alt="Step 1: the returned value.">
+        </p>
+    <h4>Step 2: Loop through the String</h4>
+        <p> These problems all require the use of loops.
+            Because you can easily find the length of the <code>String</code>,
+            you'll almost always use the <code>for</code> loop. Here's the
+            general pattern that I follow, even before I give any thought
+            to what my code is actually going to do:<br>
+            <img src="images/stringfunc13.gif" class="inlineCenter" alt="Step 2: string length and loop.">
+        </p>
+    <h4>Step 3: What's the Goal?</h4>
+        <p> Now we're ready to look at what the output should be. In this
+            case, we want our output to contain two characters for each
+            character in input.
+        </p>
+        <p> In general, if you want to examine every character, you can do
+            it like this:
+        </p>
+        <p class="code" style='font-size:1.2em;'>
+            char ch = str.charAt(i);
+        </p>
+        <p> <b class='ry'>or</b>, you can do it like this:</p>
+        <p class="code" style='font-size:1.2em;'>
+            String chStr = str.subString(i, i + 1);
+        </p>
+        <p> The first technique gives you back a <code>char</code>
+            variable which is easy to compare using the various
+            relational operators. You'll have to use the second
+            technique if you need to process more than one character
+            on each repetition.
+        </p>
+        <p> In this case, we can go either way. We need to grab each
+            character and then "paste" that character onto the output
+            <code>String</code> two times to double it. Here's a version
+            using <code>charAt()</code>:<br>
+            <img src="images/stringfunc14.gif" class="inlineCenter" alt="Step 3: processing characters.">
+        </p>
+        <div class='alert'>
+        <p> Notice that you need to concatenate the characters with the
+            <code>String</code> output, not <b>add</b> the two characters
+            together and concatenate that. Concatenation works with
+            <code>Strings</code>, <b>not</b> characters. If you were to
+            write this:<br><br>
+            <span class='code' style='font-size:1.2em;'>
+            result += c + c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <br><br>
+            then the two characters would be <b>added</b> as Unicode characters and
+            the resulting <b>numeric</b> value would be pasted onto the
+            end of your <code>String</code>.
+        </p>
+        </div>
+        <p> Here's a version of the same loop, using the <code>substring()</code>
+            method instead of <code>charAt()</code>:<br>
+            <img src="images/stringfunc15.gif" class="inlineCenter" alt="Step 3: processing strings with substring.">
+            Note that because the variable <code>cStr</code> is a <code>String</code>
+            rather than a <code>char</code>, you <b>can</b> use the shorthand
+            assignment operator in this instance.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

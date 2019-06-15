@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Arrays and Methods</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercises</p>
+        <p id='lessonTitle'>Arrays &amp; Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">T</span>his week, you learned how to use
+            methods with arrays</b>. For these three assignments, I want to
+            to write methods that take (and processes)
+            arrays as <b>parameter</b>, or that return arrays.
+            Before you start this assignment, make sure you have
+            read <i>Section 6.4&mdash;Using Arrays with Methods</i>.
+        </p>
+    <h3>Same First &amp; Last</h3>
+        <p> Write the function named <b><code>sameFirstLast()</code></b>.
+            You'll find the file (<b>SameFirstLast.java</b>) in this
+            week's code folder, <b>not</b> ArrayMethodProblems.java as
+            shown in the help video.) Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> The function has one parameter: an array of <code>int</code>,
+                and it returns <code>true</code> if the array has at least
+                one element, and, the first and last elements are the
+                same.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the array of ints to examine.</code></li>
+            <li><code>@return true if the array is at least length one and the first and last elements are the same.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>sameFirstLast({1, 2, 3}) returns false</code></li>
+            <li><code>sameFirstLast({1, 2, 3, 1}) returns true</code></li>
+            <li><code>sameFirstLast({1, 2, 1}) returns true</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you can't solve the
+            problem, or you run into difficulty, you may want to watch this video:
+            <a href='../../movies/IC10-4-SameFirstLast/index.html' target='_blank'>
+            <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>Swap Ends</h3>
+        <p>Array parameters are different than
+            primitive parameters, because array parameters are
+            references. Even though the parameter is passed "by value",
+            the value (or array reference), still refers to the original
+            array that was created outside of the method.
+        </p>
+        <p> That means that array parameters can be used as <b>function
+            outputs</b>. By using output parameters, even a
+            <code>void</code> procedure can return information to
+            its caller.
+        </p>
+        <p> Write the <b class='ry'>procedure</b> named <b><code>swapEnds()</code></b>.
+            You'll find the file (<b>SwapEnds.java</b>) in this
+            week's code folder.) Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i>The <code>swapEnds()</code> <b>procedure</b> is passed an
+                array of <code>int</code>s named <code>nums</code>.
+                You should <b>swap</b> the first and last elements in the
+                array. Since this is a procedure, you won't have any
+                return value. (The array length will be at least 1.)
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums an array of int to be modified.</code></li>
+            <li><code>No @return because this is a procedure.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>swapEnds({1, 2, 3, 4}) changes nums to {4, 2, 3, 1}</code></li>
+            <li><code>swapEnds({1, 2, 3}) changes nums to {3, 2, 1}</code></li>
+            <li><code>swapEnds({8, 6, 7, 9, 5}) changes nums to {5, 6, 7, 9, 8}</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you can't solve the
+            problem, or you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/IC10-5-SwapEnds/index.html' target='_blank'>
+            <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>Returning Arrays</h3>
+         <p>A procedure can modify one of its
+            array parameters for output, but a function can actually
+            create and return an entirely new array.
+        </p>
+       <p> Write the function named <b><code>makePI()</code></b>.
+            You'll find the file (<b>MakePI.java</b>) in this
+            week's code folder.) Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i>The function has no parameters, but returns the first
+                three digits of PI as an <code>int</code> array.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@return an int array containing the first three digits of PI.</code></li>
+        </ul>
+        <p> Here is only one example:</p>
+        <ul>
+            <li><code>makePi() returns the int[] array {3, 1, 4}</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you can't solve the
+            problem, or you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/IC10-6-MakePI/index.html' target='_blank'>
+            <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+        <div class='alert'>
+        <p> After you <b>Check</b> the homework. Then head over to Codingbat and
+            paste your code into the text area. Make sure that you are logged in
+            when you do so, otherwise your scores <b>won't</b> be recorded.
+            Note also that this handout includes three problems so that it
+            will be worth 15 points.
+        </p>
+        </div>
+    </div>
+    <div class="footer" style='width:750px;margin:auto;'>
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+
+</body>
+</html>

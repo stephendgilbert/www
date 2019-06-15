@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>More For Loop Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>More For Loop Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap2">I</span>n the DoubleChar problem</b>, you used the
+            <code>for</code> loop to produce a new <code>String</code> containing
+            a set of doubled characters. Now, let's look at a problem where we
+            need to <b>process multiple characters</b>, and combine our
+            loop with a <b>decision</b>.
+        </p>
+
+    <h3>Counting Greetings</h3>
+        <p> Open <code class='b'>CountHi.java</code> from this week's
+            starter folder in DrJava. Once you have it open,
+            you'll see the documentation, like this:
+            <img src="images/stringfunc16.gif" class="inlineCenter" alt="The countHi Problem.">
+            For this, all you need to do is count the number of times
+            that the word "hi" appears in the given <code>String</code>.
+        </p>
+        <p> The first step is exactly like <code class='b'>DoubleChar</code>. Because the
+            return type of this function is <code>int</code>, I create a
+            numeric variable (instead of a <code>String</code>), and return that:<br>
+            <img src="images/stringfunc17.gif" class="inlineCenter" alt="Step 1: return type.">
+        </p>
+    <h4>A Small Twist</h4>
+        <p> The second step is very similar to last problem, but has a
+            <i>little twist</i> that you need to pay attention to. In the
+            first problem, our loop <b>visited each character</b>
+            in the <code>String</code>.
+        </p>
+        <p> In this problem, we are looking for
+            a <b>two-character</b> wide <code>String</code>, so we <b>can't</b>
+            loop through the <b>entire</b> <code>String</code>, because we
+            will be examining (or "extracting") two characters at a time, instead of only
+            one. If we looped through the entire <code>String</code>, then
+            when we got to the last character, and then tried to get a
+            substring consisting of the <b>next two characters</b>, the
+            program would generate an "out of bounds" <b>runtime error</b>.
+        </p>
+        <p> In general, if was intend to extract or examine <b>n</b>
+            characters, then our loop should go <b>from 0 to len - (n - 1)</b>
+            like I've done here:<br>
+            <img src="images/stringfunc18.gif" class="inlineCenter" alt="Step 2: extract substring.">
+            Note also, that the <code>substring</code> extraction code
+            <b>always</b> looks like <code>str.substring(i, i + n)</code>
+            where <b>n</b> is the number of characters for the resulting
+            substring, and the loop condition always looks like
+            <code>i &lt; len - (n - 1)</code>. In this case, since we want to get
+            two characters, "n" is 2 and the loop condition is <code>i &lt; len - 1</code>.
+        </p>
+    <h4>A Final Twist</h4>
+        <p> Finally, to compare the extracted substring with the literal
+            value "hi", you need to use the <code>equals()</code> method.
+            If <code>equals()</code> returns <code>true</code>, then you'll
+            <b>increment</b> your counter. Here's what the final loop
+            looks like:<br>
+            <img src="images/stringfunc19.gif" class="inlineCenter" alt="Step 3: counting matches.">
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

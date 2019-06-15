@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Lab Exercises&mdash;Counting and Finding</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab Exercies</p>
+        <p id='lessonTitle'>Counting and Finding</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><span class="cap">N</span>ow that you know how to repeat a
+            set of actions</b>, let's put the <code>for</code> loop to
+            work by <b>finding</b> and <b>counting</b> things. To do
+            this, you'll have to marry the <code>for</code> loop with
+            one or more <code>if</code> statements.
+        </p>
+        <p> To get started, make sure
+            you have read <i>Section 4.3&mdash;The for Loop</i>, and completed
+            the homework exercises from last week.
+            That will prepare you to work on these problems.
+        </p>
+    <h3>Cats and Dogs</h3>
+        <img src='images/cats_n_dogs.png' class='right' alt='Some cats and dogs' style='margin-top:-6em;'>
+        <p> Write the function named <b><code>catDog()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given a <code>String str</code>, return <code>true</code> if
+                the words "cat" and "dog" appear the same number of times
+                in the string.
+            </i>
+        </blockquote>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param str the String to examine.</code></li>
+            <li><code>@return true if there ar the same number of cats and dogs.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>catDog("catdog") returns true</code></li>
+            <li><code>catDog("catcat") returns false</code></li>
+            <li><code>catDog("1cat1cadodog") returns true</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one of these two videos.
+            (<i>While both of these videos are very similar, there are small
+                differences in the way the problem is solved. One uses
+                returns a <code>boolean</code> expression, while the
+                other uses an <code>if</code> statement, for instance</i>):
+            <a href='../../movies/string2-catDog2/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+            <a href='../../movies/string2-catDog/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+
+    <h3>Counting Code</h3>
+        <img src='images/code.png' class='right' alt='Some code' style='margin-top:-4em;'>
+        <p> Here's something a little harder. Write the function
+            named <b><code>countCode()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given a <code>String str</code>, return the <b>number of times</b>
+                that the word "code" appears anywhere in <code>str</code>,
+                <b class='ry'>except</b> we'll accept <u><b>any</b></u> letter
+                for the <code>'d'</code>, so <code>"cope"</code> and
+                <code>"cooe"</code> both count.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param str the String to process.</code></li>
+            <li><code>@return the number of times "co?e" appears in str.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>countCode("aaacodebbb") returns 1</code></li>
+            <li><code>countCode("codexxcode") returns 2</code></li>
+            <li><code>countCode("cozexxcope") returns 2</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one of these two videos.
+            <a href='../../movies/string2-countCode/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+            <a href='../../movies/string2-countCode2/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>Is Bob There?</h3>
+        <img src='images/bob.png' class='right' alt='Some "bobs"' style='margin-top:-5em;'>
+        <p> Now, let's look at <i>searching</code> instead of
+            <i>counting</code>. Write the function named
+            <b><code>bobThere()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given a <code>String str</code>, return <code>true</code>
+                if the given string contains a "bob" string. As with
+                the <code>countCode()</code> function, we really don't
+                care aobut the middle <code>'o'</code> character, which
+                can be anything character at all.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param str the input String to process.</code></li>
+            <li><code>@return true if the word "b?b" appears in the input.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>bobThere("abcbob") returns true</code></li>
+            <li><code>bobThere("b9b") returns true</code></li>
+            <li><code>bobThere("bac") returns false</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one of these two videos.
+            <a href='../../movies/string2-bobThere/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+            <a href='../../movies/string2-bobThere2/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+        <div class='alert'>
+            <p> Once you have created your functions, compile them and
+                then <b>Check</b> your results. Keep trying until you get a perfect
+                score. Then, paste your code into CodingBat (where requested) to
+                record your score. Make sure you are logged in when you do it,
+                though, or I'll never see your results.
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

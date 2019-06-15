@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>While Loop Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>While Loop Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap2">E</span>ven though Java has the <code>for</code>
+            loop</b>, which is specially designed for writing counter-controlled
+            loops, you <b>can</b> actually use the simpler, more general purpose
+            <code>while</code> loop to solve the same problems. It's just not
+            as convenient as using <code>for</code>.
+        </p>
+
+    <h3>Mixing Strings</h3>
+        <p> To get some practice using the <code>while</code> loop, open
+            <code class='b'>MixString.java</code> in this chapter's code folder,
+            and then locate the problem statement at the top of the
+            file:<br>
+            <img src='images/mixString01.gif' class='inlineCenter' alt='The mixString problem.'>
+            As you can see, the <code>mixString()</code> method has two
+            input <code>String</code>s, <code>a</code> and <code>b</code>,
+            and your method is going to produce a new <code>String</code>
+            with the characters from <code>a</code> and <code>b</code>
+            <b>interleaved</b>. If one input <code>String</code> is
+            larger than the other, then the extra characters will appear
+            at the <b>end</b> of the output <code>String</code>.
+        </p>
+        <div class='alert'>
+        <p> While you <b>could</b> solve this problem using the <code>for</code>
+            loop, the purpose of the assignment is to learn how to use the
+            <code>while</code> loop. Because of that, the test program actually
+            has to read your source code to see if you are using <code>while</code>
+            instead of <code>for</code>. That means you can't have <b>any</b>
+            <code>for</code> loops inside
+            your method, even if they are commented out.
+        </p>
+        </div>
+    <h4>Solving the Problem</h4>
+        <p>So, where do we start, now that we're working with <code>while</code>
+            loops instead of <code>for</code> loops?<br>
+            <img src='images/pinky.png' class='inlineCenter' alt='Pinky solves a CS 170 problem.'>
+        </p>
+        <p style='font-weight:bold; font-size:xx-large;color:red;text-align:center;'>
+            We Start With the Method Skeleton!<br>
+            <img src='images/mixString02.gif' class='inlineCenter' alt='The skeleton for mixString.'>
+        </p>
+        <p> Once you have the header, the results and the <code>return</code>
+            expression, you can run your tests.<br>
+            <img src='images/mixString03.gif' class='inlineCenter' alt='Tests with no while loops.'>
+            HMMM. That's kind of annoying. It looks like we really <b>do</b>
+            need to use the <code>while</code> loop, or the test program
+            won't even check the program.
+        </p>
+    <h4>The while Loop Skeleton</h4>
+        <p> No worries though. Just like we had a standard loop skeleton for
+            a <code>for</code> loop, we can do the same thing for <code>while</code>.
+            (You'll find this skeleton in <i>Section 7.4&mdash;Counted While Loops</i>) Applying that to
+            the <code>mixString</code> problem gives us this:<br>
+            <img src='images/mixString04.gif' class='inlineCenter' alt='The while loop skeleton.'>
+            In this case I:
+        </p>
+        <ol>
+            <li class='d'>Create a "dummy" variable for ending the loop.</li>
+            <li class='d'>Create a counter before the loop starts.</li>
+            <li class='d'>Compare the counter to the loop bounds in the
+                <code>while</code> conditional expression.
+            </li>
+            <li class='d'>Update my counter at the end of each loop
+                repetition.
+            </li>
+        </ol>
+        <p> A textbook example. Now let's think about our loop <b>plan</b>
+            and see how we actually solve the problem.
+        </p>
+    <h4>What is the Loop's Bounds?</h4>
+        <p> In this problem, we want to interleave the characters from
+            two <code>String</code>s, but each may have a different length.
+            That means that our loop will have to <b>stop</b> when the
+            shorter <code>String</code> has been processed.
+        </p>
+        <p> We can use that information to set our bounds variable
+            <code>len</code> to the length of the shorter <code>String</code>,
+            like this:<br>
+            <img src='images/mixString05.gif' class='inlineCenter' alt='The while loop bounds.'>
+            Now, the loop will stop at the right place.
+        </p>
+        <p> We've already taken care of the bounds precondition and advancing
+            the loop by using our ready-made while-loop skeleton. So let's
+            move on to the goal.
+        </p>
+    <h4>The Loop Operations</h4>
+        <p> Our generic function skeleton took care of Step 4 in our
+            standard loop-development plan (creating variables to hold the
+            loop's output.) Let's move on to Step 5: the loop operations.
+        </p>
+        <p> What we want to do in each repetition, is place one character
+            from <code>a</code> in the output, followed by the character
+            at the same index position from <code>b</code>. We can do that
+            easily by using this code:<br>
+            <img src='images/mixString06.gif' class='inlineCenter' alt='The while loop operation.'>
+            At this point, our method should pass all of the tests
+            where the input <code>String</code>s are both the same length.
+            Unfortunately, the fellow who wrote the tests was especially
+            devious, and so only 3 of the 13 tests actually have equal-length
+            parameters. <b class='ry'>Bummer</b>.
+        </p>
+    <h4>The Loop Post-Conditions</h4>
+        <p> That means, to solve this problem, we'll have to think of the
+            <b>post-conditions</b> to the loop. Remember, a loop ends because
+            its bounds are reached, <b>not</b> because its goal has been
+            accomplished.
+        </p>
+        <p> How can we tell if our loop has accomplished all we desired?
+            By using the <code>if</code> statement to check if conditions
+            are as we expect. In this case, if the variable <code>len</code>
+            is less than the length of either input <code>String</code>,
+            then we still have some characters left over. We need to
+            "paste" them onto the end of the output like this:<br>
+            <img src='images/mixString07.gif' class='inlineCenter' alt='The while loop post-condition.'>
+            Notice that because we're using a counted <code>while</code> loop
+            <b>instead of</b> a <code>for</code> loop, that the counter
+            <code>i</code> is still available after the loop ends. That
+            means we can use <code>i</code> to extract the rest of either
+            <code>a</code> or <code>b</code> if necessary.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

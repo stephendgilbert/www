@@ -1,0 +1,244 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>H01&mdash;Your First Java Program</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework 01</p>
+        <p id='lessonTitle'>Your First Java Program</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap2">I</span>n the <i>Java Mechanics</i> chapter of your
+            textbook, you learned about the mechanical steps you follow to write your own
+            programs.</b> For this homework assignment you'll put
+            that theory to work. In this, and the next two homework assignments,
+            you'll learn how to use DrJava to create three different kinds of programs:
+        </p>
+        <ul>
+            <li>a simple Java console-mode application.</li>
+            <li>a graphical application, using simple popup windows.
+            </li>
+            <li>a Java <b>applet</b> that can be embedded inside a
+                Web page.
+            </li>
+        </ul>
+        <p> Each of these "simplest possible programs"
+            will just print your own name, along with a little message,
+            when you run them.
+        </p>
+        <div class='alert'>
+        <p> <img src='images/drjava06.png' class='right' style='margin-top:-2em;border:none;'
+                title='Click to visit the official DrJava Web site.'
+                alt='The DrJava logo.'>
+            Make sure you have installed and configured the <b>OCDJ 2014</b> OCC version of
+            DrJava before you start.
+        </p>
+        </div>
+        <p> Go ahead and start DrJava on your own machine, by clicking the
+            <b>OCDJ-14.jar</b> file in the <b>tools</b> folder. You
+            always need to start DrJava in this manner, and from this folder.
+            Then, follow along with the rest of these instructions.
+        </p>
+
+    <h3>Step 1: Source Code</h3>
+        <p> As you know from the textbook, the first step in
+            writing a computer program is to type the Java instructions
+            that your program should follow. In DrJava, you'll type your
+            source code in the <b>Definitions Pane</b> in the top-right
+            portion of the screen:<br>
+            <img src='images/ocdj11b.gif' class='inlineCenter' alt='Your first Java program'>
+            When DrJava starts up, it creates an <b>Untitled</b> blank file
+            in the left pane (called the <b>Files Pane</b>). All you have
+            to do is to add the rest of the code!
+            Of course, you don't <b>know</b> the Java programming language
+            (yet!!!), so all you have to do right now is type in the code
+            I've supplied here:<br>
+            <img src='images/firstapp04.png' class='inlineCenter' alt='Your first program.'>
+            Make sure you replace the text following the <code>@author</code> tag with
+            your name. (Delete everything following, including the parentheses).
+            Do the same thing with the following (<code>@version</code>) line, replacing the
+            placeholder with the date that you completed the work.
+        </p>
+        <p> Finally, make sure you replace my name with your own in the third
+            statement inside the <code>main()</code> method. (Line 16 in
+            the screenshot.) When you've typed in all of the code shown here,
+            save your file. Since we haven't saved this file before, navigate
+            over to the Chapter01 folder, and save the file<br>
+            <img src='images/firstapp03.png' class='inlineCenter' alt='Saving your program.'>
+            Notice that DrJava automatically supplies a name (<b>MyFirstConsoleProgram</b>)
+            that matches the name of the class in the definitions pane. DrJava
+            also supplies the <code>.java</code> extension if you fail to type
+            it in.
+        </p>
+    <h3>Step 2: Compile Your Code</h3>
+        <p> Once your program is successfully saved, you'll need to convert
+            it to Java machine code (called <b>bytecode</b>) that the computer
+            can understand. You can do this in two ways:<br>
+            <img src='images/compile.png' class='inlineCenter' alt='Compiling your code.'>
+        </p>
+        <ul>
+            <li>Right-click the name of the file you want to compile in
+                the <b>Files Pane</b>, and select <b>Compile</b> from
+                the context menu. This is how you compile a single file.
+            </li>
+            <li>Click the <b>Compile</b> button on the toolbar. This
+                compiles <b>all</b> open files.
+            </li>
+        </ul>
+        <p> Both of these commands are also available from the <b>Tools</b>
+            menu and by using the hot-keys <b>F5</b> and <b>Shift-F5</b><br>
+            <img src='images/compile02.gif' class='inlineCenter' alt='Compiling from the Tools menu.'>
+            If you have no typos in your code (called <b>syntax errors</b> or
+            <b>compile-time errors</b> in programmer-speak), you'll see a message
+            from DrJava that looks like this:<br>
+            <img src='images/compile03.gif' class='inlineCenter' alt='No compiler errors.'>
+        </p>
+        <p> <img src='images/compile04.png' class='right' style='width:350px;' alt='The compiled class file.'>
+            If you look in the directory where you saved your file, (using
+            Windows Explorer or the Mac Finder), your folder now has
+            two files: <b>MyFirstConsoleProgram.java</b> and the compiled
+            bytecode file, <b>MyFirstConsoleProgram.class</b>.
+        </p>
+    <h4> Fixing Errors</h4>
+        <p> If you make a mistake when writing your program,
+            then DrJava will display an error message when you try to compile
+            your code. For instance, if you misspell the word <code>static</code>
+            as <code>statix</code>, you'll see something that looks like
+            this:<br>
+            <img src='images/compile05.gif' class='inlineCenter' alt='Compiler errors.'>
+            As you select the different errors in the <b>Compiler Output Pane</b>,
+            DrJava will do its best to place the cursor near or at the error
+            in the editor.
+        </p>
+        <div class='alert'>
+        <p> Remember, you must <b>compile</b> your code (without errors), before
+            you can <b>run</b> your program.
+        </div>
+    <h3>Step 3: Run Your Program</h3>
+        <p> Compared to what you've gone through so far, running your
+            program is kind of simple:
+            <img src='images/run03.gif' class='inlineCenter' alt='Running a Java application.'>
+            You can:
+        </p>
+        <ul>
+            <li>use the menu command <b>Tools->Run Document's Main Method</b>.</li>
+            <li>press the <b>F2</b> key.</li>
+            <li>click the <b>Run</b> button on the toolbar.</li>
+        </ul>
+        <p> If all goes well, your output will appear in the DrJava
+            <b>Interactions Pane</b> like this:<br>
+            <img src='images/run04.gif' class='inlineCenter' alt='Running MyFirstConsoleProgram.java'>
+            Notice that the Interactions Pane shows (1) the command used to
+            launch your program (just as if you typed it at the shell window),
+            and (2) the <b>output</b> of your program.
+        </p>
+        <p> DrJava also has a <b>Console Pane</b> where you can see the
+            output without seeing the command used to run your program:<br>
+            <img src='images/run05.gif' class='inlineCenter' alt='Running MyFirstConsoleProgram.java'>
+        </p>
+    <h4>Other Errors</h4>
+        <p> Of course, even if your program compiles and runs, that doesn't
+            mean it's correct! When you run your program, it may contain
+            <b>runtime errors</b> that cause it to crash or hang, like this:<br>
+            <img src='images/runtime.gif' class='inlineCenter' alt='A runtime error.'>
+        </p>
+        <p> Even if your program doesn't crash, it still may not produce the
+            output that you expect. This time of error is called a <b>logic
+            error</b>. Here's an example:<br>
+            <img src='images/logicerror.gif' class='inlineCenter' alt='A logic error.'>
+        </p>
+    <h3>Step 4: Test Your Program</h3>
+        <p> As you just saw, even though your program produces output, that
+            output may not be "correct". What do we mean by correct output?
+            Well, correct output is when your program does "what it is
+            supposed to do". Let me give you an example:
+        </p>
+        <p> In this case, your program is supposed to:</p>
+        <ul>
+            <li>Produce two lines of output</li>
+            <li>Contain your name, not mine, on the second line</li>
+        </ul>
+        <p> You can <b>test</b> your program by running it and then
+            manually looking at the output to see that it meets those
+            requirements. For a simple program like this, that's fairly
+            easy. For more complex programs, though, that can get pretty
+            tedious, and error-prone.
+        </p>
+        <p> A better solution is to run a <b>unit test</b>. A unit test is
+            simply a program that runs <i>your</i> program, and then
+            compares its <b>actual output</b> to the output it would
+            produce if it ran correctly. Later on, you'll learn to write
+            your own unit test programs, (that's what the DrJava "Test"
+            options on the Tools menu do), but for the first portion of the course, you'll
+            just use unit test programs that I've written.
+        </p>
+    <h4>Running CheckResults</h4>
+        <p> To run the unit tests for your exercises or homework assignments,
+            you'll use the <b>CheckResults</b> program that I've supplied:<br>
+            <img src='images/check.png' class='inlineCenter' alt='Checking your code.'>
+            To test your code:
+        </p>
+        <ol>
+            <li class='d'>Click the <b>Check</b> button on the DrJava tool bar.</li>
+            <li class='d'>When the Check Your Assignments dialog window appears,
+                locate the prewritten unit test program that I've supplied.
+                Since I've supplied you with a test program for
+                <b>MyFirstConsoleProgram</b>, you'll choose that.
+                </li>
+            <li class='d'>Finally, just click <b>OK</b> and the unit tests
+                for you program will be run in the DrJava Interactions Pane
+                window.
+            </li>
+        </ol>
+        <p> When the tests are run, each test will be listed, along with "weight"
+            assigned to that test. As you can see, some tests count more than others.<br>
+            <img src='images/check-results.png' class='inlineCenter' alt='Running the Tests.'>
+            Passing tests are printed in green, and failing tests are printed in
+            red. As you can see, my program passed all of the tests <b>except</b> for
+            the one that checked to see if you replaced my name with yours.
+            (Of course, my name <i>really is</i> Stephen Gilbert,
+            so I guess that doesn't count.) At the very bottom, you'll see the
+            weighted average of the number of tests that pass.
+        </p>
+    <h4>Checking Style</h4>
+        <p> Although the majority of your programming problems will be evaluated based
+            on <b>correctness</b>, as reported by the Check program, on the
+            Proficiency Quizzes, between ten and fifteen percent of your
+            grade will be based on <b>style</b>: your adherence
+            to a specific set of layout and naming conventions.
+        </p>
+        <p> You can find out more about the specific CS 170 style rules in the
+            textbook. For right now, though, you can
+            check the program you've just written by clicking the <b>Style</b>
+            button on the toolbar:
+            <img src='images/cs03.png' class='inlineCenter' alt='Running the Check Style program.'>
+            When you click the button, you'll be able to see the number of
+            style errors along with a short error message about each problem.
+            In my case, there are two errors, since I haven't added
+            my name or date to the beginning of the file in the form that
+            it was required.
+        </p>
+        <div class='info'>
+        <p> If you run Style and see any errors that talk about <b>indentation</b>,
+            simply select all the lines in the file (with Control + A) and then
+            choose <b>Indent Lines</b> from DrJava's <b>Edit</b> menu.
+        </p>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

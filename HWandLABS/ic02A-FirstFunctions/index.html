@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Your First Functions</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Your First Functions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <img src='images/workout.png' class='right' style='margin-top:-8em;' alt='A weight-lifter.'>
+            <b><span class="cap">N</span>ow, it's your turn to get some practice writing your
+            own functions</b>. You'll want to start getting into
+            shape for the programming proficiency problems, right?
+        </p>
+    <h3>Writing helloName</h3>
+        <p> In DrJava, open the file <code class='b'>HelloName.java</code>, which you'll find
+            in the <code class='b'>Week02</code> folder, and we'll take a look at our first
+            function exercise.
+        </p>
+        <p> As you can see, there is not much in the class except
+            for a Javadoc comment providing the documentation for
+            the function that I want you to write.
+            The first one of these is the <b>helloName</b>
+            problem, which is the simplest <b>string function</b> exercise
+            that I could come up with.:<br>
+            <img src='images/string-functions02.gif' class='inlineCenter' alt='The helloName function.'>
+            For each function problem you're given, you'll find:
+        </p>
+        <ol>
+            <li class='d'>The name of the function you are supposed to write.
+                In this case, you are writing a function named <code>helloName</code>.
+            </li>
+            <li class='d'>You'll be given some brief instructions about what the
+                function should calculate. In this example, the function combines
+                the name (passed as a parameter) with a greeting, and returns the
+                whole thing.
+            </li>
+            <li class='d'>One of the most useful pieces of information you'll get
+                is a set of examples. The examples will show different input and
+                the expected output for those inputs.
+            </li>
+            <li class='d'>Every function problem will also provide Javadoc tags
+                for all the parameters (one <code>@param</code> tag for each
+                parameter, in the order they are used), and an <code>@return</code>
+                tag for the function. Usually, the description and examples are
+                more useful for me.
+            </li>
+            <li class='d'>Finally, you'll see a comment line that says something
+                like <code> //TODO WRITE YOUR CODE HERE</code>.
+                <b class='ry'>Replace that line</b> with the header for your function.
+            </li>
+        </ol>
+    <h4>Start With the Skeleton</h4>
+        <p><img src='images/skeleton.png' class='right' style='margin-top:-6em;' alt='A skeleton for illustration.'>
+            <b><span class='cap' style='color:navy;'>Always</span> start by writing the "skeleton" for
+            your function</b>. You want to make sure that your code starts out
+            syntactically correct, and then stays that way. As a side benefit,
+            often a bare-bones syntactically correct function skeleton will
+            actually pass some of the final tests, so you're sure to get some
+            points, even if you don't know how to completely finish a problem.
+        </p>
+        <p> For a function, the first step towards writing a skeleton or "stub" is
+            to combine the return type, name, and parameters to write the header
+            and then add some braces to make the body. Here's an example:<br>
+            <img src='images/string-functions03.gif' class='inline' alt='First stab at a skeleton.'>
+            <br>Notice that:
+        </p>
+        <ol>
+            <li class='d'>We got the <b>return type</b> by looking at the example
+                and the <code>@return</code> Javadoc tag.
+            </li>
+            <li class='d'>We got the <b>function name</b> by looking at the first
+                line in the problem definition as well as the examples. <b>Make
+                sure you spell the name exactly correct.</b>
+            </li>
+            <li class='d'>We got the <b>parameter name</b> and type by looking
+                at both the example and the Javadoc <code>@param</code> tag.
+            </li>
+        </ol>
+        <div class='alert'>
+        <p> NOTE: make sure that your functions are <code>public</code>. If
+            you forget to add the <code>public</code> then I won't be able
+            to test your code.
+        </p>
+        </div>
+    <h4>Complete the Skeleton</h4>
+        <p> Notice that if you compile at this point, DrJava will tell you
+            that your function skeleton is actually
+            <b class='ry'>syntactically incorrect</b>.<br>
+            <img src='images/missing-return.gif' class='inlineCenter' alt='Missing return statement.'>
+            That's because we are missing the
+            <code>return</code> statement that <b>every</b> function
+            <b>must</b> have.
+        </p>
+        <p> Here's how to write the "first-cut", "no-thought" <code>return</code>
+            statement, just to get your code to compile and test.
+        </p>
+        <ol>
+            <li class='d'> Create a local variable, <b>of the same type as
+                the function return type</b>. I usually name this <code>result</code>.
+                In this example, <code>helloName</code> has a return type of
+                <code>String</code>, so your first line should look like this:<br>
+                <img src='images/string-functions04.gif' class='inline' alt='Declaring the return value.'>
+                I usually initialize the <code>results</code> variable to the "empty" value for
+                the type: <code>""</code>, <code>0</code>, or <code>false</code>.
+            </li>
+            <li class='d'> Now, at the very end of your function, just add
+                <code>return result;</code>. This makes your function syntactically
+                correct, so that it compiles and can be tested.<br>
+                <img src='images/string-functions05.gif' class='inline' alt='Declaring the return value.'>
+            </li>
+        </ol>
+    <h4>Informal Testing</h4>
+        <p> Obviously, the <code>helloName()</code> function doesn't <b>yet</b>
+            do what it's supposed to do, since it only returns the empty
+            <code>String</code>, instead of a greeting. Once you've added the
+            code to construct the greeting, though, how will you know if you've
+            done it correctly?
+        </p>
+        <p> Good question! Notice that this file only contains functions;
+            it <b>doesn't</b> have a <code>main()</code> method. The fastest
+            way to try out the function is to use the interactions pane,
+            like this:<br>
+            <img src='images/testing.png' class='inline' alt='Ad-hoc testing your function.'>
+            Notice that in the Interactions Pane you can:
+        </p>
+        <ol>
+            <li class='d'>Call the function directly (after you've compiled, of course)
+                by using the name of the class that contains it (like you
+                would with the functions in the <code>Math</code> class.
+            </li>
+            <li class='d'>You can add a <code>static import</code> line, like
+                the one I've shown here, so that you can then call the
+                functions <i>without</i> needing the class name in front
+                of the methods.
+            </li>
+            <li class='d'> Finally, when you do call the function, don't use
+                a semicolon, and the DrJava Interactions Pane will print out
+                the returned value for you to see.
+            </li>
+        </ol>
+        <p> When you do this, you can then
+            compare the result printed with the expected returned value
+            supplied in the comment for the method.
+        </p>
+    <h4>Using Check</h4>
+        <p> While you're free to use the DrJava Interactions Pane for
+            <b>ad-hoc</b> informal testing, you'll want to run the
+            <b>Check</b> program that I've supplied, for more
+            extensive (and actually easier) testing.
+        </p>
+        <p> Here's the output running <b>Check</b> on our <code>helloName()</code>
+            skeleton:<br>
+            <img src='images/string-functions07.gif' class='inline' alt='CheckResults testing your program.'>
+            As you can see, <b>half of the tests pass</b> because the testing program
+            is able to find and run the function (so it is syntactically correct).
+            If your program is syntactically correct, the tests that check syntax <b>do
+            pass</b> at this point, even though you haven't added any logic
+            to your function yet. Of course none of the <b>correctness</b> tests
+            pass yet.
+        </p>
+        <div class='info'>
+        <p> Note that although the method that we are testing is named
+            <code>helloName()</code> (starting with a lowercase letter,
+            like the standard Java conventions recommend), the test program
+            will always start with a <b>capital</b> letter. Please
+            <b>don't</b> start your functions with a capital though.
+        </p>
+        </div>
+        <div class='alert'>
+        <p> Remember, your function <b>must</b> be syntactically correct before it
+            can be tested. Unless your program compiles without errors, the test
+            program will not be able to run it. The easiest way to do that is to
+            practice writing function skeletons, like the one I've shown you here,
+            until it just becomes second nature.
+        </p>
+        </div>
+    <h4>Finish Up helloName</h4>
+        <p>After all this work, actually finishing <code>helloName</code> is
+            kind of anticlimactic. Remember that the purpose of a function is
+            to transform inputs into output. In our case, we have one input,
+            the <code>String</code> parameter <code>name</code>, and one
+            output, the <code>String</code> variable <code>result</code>.
+        </p>
+        <p> We can use simple concatenation to combine <code>name</code>
+            and a greeting, to produce the results specified by the problem
+            description like this:<br>
+            <img src='images/string-functions08.gif' class='inline' alt='Finish helloName.'>
+            Run Check after making these changes and you'll see that
+            all of the tests now pass:<br>
+            <img src='images/string-functions09.gif' class='inline' alt='A last check for helloName.'>
+        </p>
+    <h3>The makeOutWord Function</h3>
+        <p> Let's try one more example: <b>MakeOutWord.java</b>, which you'll
+            find in your code folder this week.
+            You should <b class='ry'>stop reading right now</b> and try to solve
+            the <code>makeOutWord()</code> problem. If you have difficulty, come
+            back here for some clues.
+        </p>
+    <h4>The Spec</h4>
+        <p> Here's the specification for the problem with the function name (1),
+            the Javadoc parameter and return value specification (2), a
+            narrative description (3), and several examples (4):
+            <img src='images/string-functions10.gif' class='inline' alt='The makeOutWord Spec.'>
+        </p>
+    <h4>The Skeleton</h4>
+        <p> Using the narrative, you should be able to complete the basic
+            function skeleton, which looks like this:<br>
+            <img src='images/string-functions11.gif' class='inline' alt='The makeOutWord skeleton'>
+        </p>
+    <h4>The Completed Function</h4>
+        <p> To complete the function, you need to split the first parameter (<code>out</code>)
+            in two pieces. The specification guarantees that the first parameter
+            will always be four characters long. That means you can use the
+            two-parameter version of the <code>substring()</code> function to
+            grab the first two characters (which I've stored in a variable named
+            <code>first</code>), and the one-parameter version of <code>substring()</code>
+            to grab the last two characters:<br>
+            <img src='images/string-functions12.gif' class='inline' alt='The makeOutWord finished function.'>
+            Once you have the first parameter split in two, you just paste the
+            two pieces around the second parameter (<code>word</code>) using
+            concatenation, and store the result back in <code>result</code>.
+        </p>
+        <p> If you run CheckResults, you'll see that everything is now just fine:<br>
+            <img src='images/string-functions13.png' class='inline shadow round' 
+                style="width:600px;"
+                alt='The makeOutWord CheckResults.'>
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

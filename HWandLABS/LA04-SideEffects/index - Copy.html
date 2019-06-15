@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <script type='text/javascript' src='validate.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+    </style>
+    <title>L16 &amp; L17&mdash;Side Effects, Scrubbing and Parsing</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab 16 and 17</p>
+        <p id='lessonTitle'>Side Effects, Scrubbing and Parsing</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><b><span class="cap">Y</span>our third programming exam involves
+            <i>parsing</i></b> and <b></i>formatting</i></b>,
+            converting between <code>String</code>s and different
+            kinds of numbers. The Lab problems today require
+            you to <b>scrub</b> different kinds of input so
+            that it can correctly be converted to numbers,
+            through the process called <i>parsing</i>. Before we
+            get to that, though, let's take a look at different
+            kinds of <b>side-effect</b> operators.
+        </p>
+    <h3>L16: Side Effects</h3>
+        <img src='images/meditate02.png' class='right' style='margin-top:-2em;' alt='Be the computer.'>
+        <h4>Part I&mdash;Increment and Decrement</h4>
+        <p> OK, it's your turn to "Be the Computer". I've created columns for
+            the variables <code>a</code>, <code>b</code> and <code>c</code>.
+            You should <b>trace</b> their value as the program runs.
+            Tracing simply means to <b>mentally</b>
+            execute each line of code and then enter the state or value
+            of each variable in the appropriate column.
+        </p>
+        <p> <b>You must have DrJava closed before you do this part of the
+            lab.</b> I've already completed line # 1. As you can see, if a variable
+            is undefined, then you should  use a capital U.
+        </p>
+<form action="https://docs.google.com/spreadsheet/formResponse?formkey=dHV6WHl2Y3JrWFhiM1Npd2ZFb29GblE6MQ&amp;ifq"
+    method="POST" id="ss-form">
+<input type="hidden" name="entry.47.single" value="" id="student_id">
+<input type="hidden" name="entry.48.single" value="" id="student_name">
+<input type="hidden" name="entry.49.single" value="" id="section">
+<input type="hidden" name="entry.50.single" value="" id="lab_points">
+<input type="hidden" name="lab_no" value="" id="lab_no">
+
+        <table class='trace' style='width:95%; font-size:1.2em;'>
+            <tr><th>&nbsp;</th><th>a</th><th>b</th><th>c</th></tr>
+            <tr><td>int a = 5, b = 6, c;</td><td>5</td><td>6</td><td>U</td></tr>
+            <tr><td>a = b++ + 3;</td>
+                <td><input name="entry.0.single" id='2a' type='text' size='5'></td>
+                <td><input name="entry.1.single" id='2b' type='text' size='5'></td>
+                <td><input name="entry.2.single" id='2c' type='text' size='5'></td>
+            </tr>
+            <tr><td>c = 2 * a + ++b;</td>
+                <td><input name="entry.4.single" id='3a' type='text' size='5'></td>
+                <td><input name="entry.6.single" id='3b' type='text' size='5'></td>
+                <td><input name="entry.8.single" id='3c' type='text' size='5'></td>
+            </tr>
+            <tr><td>b = 2 * ++c - a++;</td>
+                <td><input name="entry.10.single" id='4a' type='text' size='5'></td>
+                <td><input name="entry.12.single" id='4b' type='text' size='5'></td>
+                <td><input name="entry.14.single" id='4c' type='text' size='5'></td>
+            </tr>
+        </table>
+    <h4>Part II&mdash;Casting and Conversion</h4>
+        <img src='images/meditate02.png' class='right' style='margin-top:-2em;' alt='Be the computer.'>
+        <p> Let's finish up with one last exercise. Mentally
+            execute each line of code below, and place the resulting
+            values of each variable into the appropriate column.
+        </p>
+        <table class='trace' style='width:95%; font-size:1.2em;'>
+            <tr><th>&nbsp;</th><th>a</th><th>b</th><th>c</th><th>sum</th></tr>
+            <tr><td>int a = 3, b = 5, sum;<br>
+                    double c = 14.1;</td><td>3</td><td>5</td><td>14.1</td><td>U</td></tr>
+            <tr><td>sum = a + b + (int) c;</td>
+                <td><input name="entry.16.single" id='5a' type='text' size='5'></td>
+                <td><input name="entry.18.single" id='5b' type='text' size='5'></td>
+                <td><input name="entry.20.single" id='5c' type='text' size='5'></td>
+                <td><input name="entry.22.single" id='5sum' type='text' size='5'></td>
+            </tr>
+            <tr><td>c /= a;</td>
+                <td><input name="entry.24.single" id='6a' type='text' size='5'></td>
+                <td><input name="entry.26.single" id='6b' type='text' size='5'></td>
+                <td><input name="entry.28.single" id='6c' type='text' size='5'></td>
+                <td><input name="entry.30.single" id='6sum' type='text' size='5'></td>
+            </tr>
+            <tr><td>b += (int)c - a;</td>
+                <td><input name="entry.32.single" id='7a' type='text' size='5'></td>
+                <td><input name="entry.34.single" id='7b' type='text' size='5'></td>
+                <td><input name="entry.36.single" id='7c' type='text' size='5'></td>
+                <td><input name="entry.38.single" name="entry.0.single" id='7sum' type='text' size='5'></td>
+            </tr>
+            <tr><td>a *= 2 * b + (int)c;</td>
+                <td><input name="entry.40.single" id='8a' type='text' size='5'></td>
+                <td><input name="entry.42.single" id='8b' type='text' size='5'></td>
+                <td><input name="entry.44.single" id='8c' type='text' size='5'></td>
+                <td><input name="entry.46.single" id='8sum' type='text' size='5'></td>
+            </tr>
+        </tbody>
+        </table>
+<div class='submit'>
+<input type='button' id='validate' value=" Check Lab 16 ">
+<span id='score'>&nbsp;</span>
+<input type="submit" id='submit' name="submit" value=" Submit Lab 16 ">
+</div>
+</form>
+
+<iframe id='post-results' name='google-result'></iframe>
+    <div class='alert'>
+        <p> After you submit Lab 16, open DrJava and make sure that your
+            score for Lab 16 was recorded. Then, you can start on
+            Lab 17, below.
+        </p>
+    </div>
+    <h3> L17: Parsing Strings</h3>
+        <p>Parsing means to convert a "human-readable" (that is,
+            a <code>String</code> or text version of a) value into another
+            type. You may be required to parse a date like "September 3, 1962"
+            into the appropriate <code>Date</code> object, for instance.
+            For this exercise, though, we'll limit ourselves to parsing
+        <b>numbers</b>.
+        </p>
+
+        <p> Open the starter file, <b>ParseExercise.java</b>, which you'll find
+            in your Chapter04 folder. The program consists of several
+            <code>String</code> variables, each of which contains a
+            <code>String</code>, initialized in a different way. The
+            values are initialized with <b>random numbers</b>, so you
+            can't just change the initial values manually.<br>
+            <img src='images/parseex.png' class='inlineCenter' alt='The ParseExercise program.'>
+            Below the six <code>String</code> constants, you'll find
+            six <b>variables</b> that you need to initialize: three
+            <code>int</code> variables, <code>i1</code> to <code>i3</code>,
+            and three <code>double</code> variables, <code>d4</code> through
+            <code>d6</code>.
+        </p>
+        <p> Next, you'll find six different <b>procedures</b>,
+            <code>testStr1()</code> through <code>testStr6()</code>.
+            Inside each procedure, you'll place the necessary
+            <b>scrubbing and parsing</b> code to make the requested
+            assignment.<br>
+            <img src='images/parse2.png' class='inlineCenter' alt='The ParseExercise program.'>
+        <p>
+        </p>Once you have created the program, compile it and
+            then <b>Check</b> your results. Keep trying until you get a perfect
+            score. If you have any difficulties, grab the person next
+            to you for help. There is no video for this assignment.
+        </p>
+    <div class='alert'>
+        <p> After you <b>Check</b> Lab 17, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the lab, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the lab assignments after the lab period,
+            but your scores <b>won't</b> be recorded after class is over.
+        </p>
+    </div>
+
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

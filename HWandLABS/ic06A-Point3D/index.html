@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Inheritance</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Inheritance &amp; Overriding</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+                <img src='images/Point3D.png' class='right'
+            style='width:45%;' alt='The UML diagram.'>
+
+        <p class='firstLine' style='margin-top:0;'>
+        <b><span class="cap">T</span>his week you learned how to
+            add features to a class by <i>extending</i> it; this
+            is called <i>inheritance</i></b>. You also learned how
+            to use <b>constructors</b> with inheritance, and how to
+            <b>redefine</b> existing inherited methods, using the
+            process called <b>overriding</b>.
+        </p>
+        <p> For this lab, you're going
+            to create a new version of the simplified
+            <code class='b'>SimplePoint</code> class shown here. Your new
+            <code class='b'>Point3D</code> class should <code>extend</code>
+            the <code>SimplePoint</code> class and add support for
+            a "Z" order.
+        </p>
+    <h3>The Point3D Class</h3>
+        <p>
+            To the right you'll find a simplified UML diagram for the
+            <code>SimplePoint</code> class, along with the UML diagram
+            for your new <code>Point3D</code> class. The upward-facing arrow
+            in the diagram means that <code>Point3D</code> is a <b><i>subclass</i></b>
+            of the <code>SimplePoint</code> class.
+        </p>
+        <p> Your new class should have: </p>
+        <ul>
+            <li>Two overloaded <b>constructors</b>. One that sets all three fields
+                to <code>0</code>, and one that initializes all three fields. Of course,
+                both constructors should call the <code>super()</code> constructor to
+                initialize the <code>x</code> and <code>y</code> fields contained in
+                the superclass <code>Point</code>.
+            </li>
+            <li>An <b>accessor</b> method, <code>getZ()</code> that retrieves the
+                Z value of the point. (Of course, you use the <b>inherited</b> methods,
+                <code>getX()</code> and <code>getY()</code> to retrieve the other
+                two inherited fields.)
+            </li>
+            <li>An <b>overloaded</b> mutator method, <code>setLocation()</code> that
+                allows you to set all three fields at once.
+            </li>
+            <li>An <b>overriden</b> version of <code>equals()</code> that returns
+                <code>true</code> when all three coordinates are equivalent. Remember that when
+                writing <code>equals()</code> you:
+                <ol>
+                    <li>first check to see if the parameter matches the type of your
+                        class, using <code>instanceof</code> and return <code>false</code>
+                        if not.
+                    </li>
+                    <li> then you <b>cast</b> the <code>Object</code> parameter to the
+                        correct type before doing the comparison.
+                    </li>
+                </ol>
+            </li>
+            <li>Extend the class by adding a <code>distanceTo()</code> method that returns
+                the distance between this point and another. The formula for finding the
+                distance between two 3D points is:<br>
+                <img src='images/distance.png' class='inline' style='width:80%;'
+                    alt='Distance formula.'>
+            </li>
+        </ul>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Digital Pictures</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Digital Pictures</p>
+    </div>
+    <div class="content">
+        <p class='firstLine'>
+        <p><b><span class="cap">F</span>or this Lab exercise</b>,
+            you're going to work with your own digital picture,
+            scaling it and drawing on it. Download your picture from 
+            Facebook, or take one with your phone.
+        </p>
+    <h3>Your Small Picture</h3>
+        <p> In lecture you learned about the <code>Picture</code> class.
+            For this lab you're going to create a small, framed
+            version of <b>your</b> picture, with your name on it.
+            Here are the instructions, and here's an example with one of my pictures.
+            <img src='images/StephenGilbert-smaller.jpg' class='right' alt='Stephen Gilbert modified Picture.'>
+            <ol>
+                <li>Copy your digital picture into the project folder.
+                    <b class='ry'>Rename</b> the picture so that it includes both your first and last
+                    name, and so that it's easy to enter into your source code.
+                </li>
+                <li>Open <code class='b'>MySmallPicture.java</code> in the editor.</li>
+                <li>Create a <code>Picture</code> object using your digital picture.
+                    Don't use the <code>FileChooser</code> class; just use the name
+                    of the file (with no path) to create your picture. Leave the
+                    code I've supplied to calculate the full path to the picture.
+                </li>
+                <li><b class='ry'>Scale the picture</b> so that the finished size is 275 pixels wide
+                    and 200 pixels high. To see what that is in percentages you'll
+                    have to use the <code>getWidth()</code> and <code>getHeight()</code>
+                    methods on the original picture.
+                    <div class='alert'>
+                        <p>Note: this requires you to do some calculations.</p>
+                    </div>
+                </li>
+                <li>Use <code>createGraphics()</code> to get a pen to paint with
+                    on the new, smaller picture. This pen will be type <code>Graphics2D</code>.
+
+                </li>
+                <li>Uncomment the line that smoothes the drawing.</li>
+                <li>Draw a square frame around your picture. This may take
+                    repeated <code>drawRect()</code> or some creative
+                    <code>fillRect</code> statements.
+                </li>
+                <li>Draw your name at the bottom of your portrait, in the center.</li>
+                <li>Save the picture in the same folder, using the same name, but
+                    with the addition of "-smaller". Modify the original <code>fileName</code>
+                    variable, and use the <code>write()</code> method.
+                </li>
+            </ol>
+        <p> Once you have created the program, <b>compile it and run it</b>.
+        </p>
+    <h3>Quick Reference</h3>
+    <p> Here are the pieces of code you'll need to complete this assignment. You can find
+        all of the Javadocs for the classes I've used <a href="http://faculty.orangecoastcollege.edu/sgilbert/media-comp-docs/">
+        <b>here</b></a></p>
+    <ol>
+        <li><b>Get a file name</b> (provided you don't already have one):<br>
+            <code>String fname = FileChooser.picAFile();</code>
+        </li>
+        <li><b>Create</b> a <code>Picture</code> object: 
+            <code>Picture pic = new Picture(fname)</code>
+        </li>
+        <li><b>Display</b> a <code>Picture</code> object:
+            <code>pic.show();</code> or <code>pic.explore();</code>
+        </li>
+        <li><b>About</b> a <code>Picture</code>:
+            <code>int width = pic.getWidth();</code> (or <code>getHeight();</code>)
+        </li>
+        <li><b>Scale</b> a <code>Picture</code>:
+            <code>Picture smaller = pic.scale(.5, .5);</code>
+        </li>
+        <li>Retrieve a <b>pen</b>:
+            <code>Graphics2D pen = pic.createGraphics();</code>
+        </li>
+        <li>Change the pen's <b>color</b>: 
+            <code>pen.setColor(Color.MAGENTA);</code>
+        </li>
+        <li><b>Draw a rectangle</b>:
+            <code>pen.drawRect(x, y, width, height);</code>
+        </li>
+        <li><b>Draw text</b>:
+            <code>pen.drawString("text", left, bottom);</code>
+        </li>
+        <li><b>Save</b> your picture:
+            <code>pic.write(path);</code>
+        </li>
+    </ol>
+    
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

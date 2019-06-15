@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .mailing {
+            width: 90%;
+            margin-left: 0;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            background-color: #CFC;
+            padding-top: 0;
+            padding-bottom: 5px;
+        }
+        .close {
+          float: right;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 20px;
+          color: #000000;
+          text-shadow: 0 1px 0 #ffffff;
+          opacity: 0.2;
+          filter: alpha(opacity=20);
+        }
+
+        .close:hover {
+          color: #000000;
+          text-decoration: none;
+          cursor: pointer;
+          opacity: 0.4;
+          filter: alpha(opacity=40);
+        }
+
+        button.close {
+          padding: 0;
+          cursor: pointer;
+          background: transparent;
+          border: 0;
+          -webkit-appearance: none;
+        }
+
+    </style>
+    <title>Digital Pictures</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab Exercise</p>
+        <p id='lessonTitle'>Digital Pictures</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><span class="cap">F</span>or this Lab exercise</b>,
+            you're going to work with your own digital picture,
+            scaling it and drawing on it. If you forgot to bring a
+            picture (and you can't download one from Facebook, or
+            take one with your phone), I'll take one for you.
+        </p>
+    <h3>Your Small Picture</h3>
+        <p> In class you worked with the <code>Picture</code> class.
+            For this lab you're going to create a small, framed
+            version of <b>your</b> picture, with your name on it.
+            Here are the instructions, and here's an example with one of my pictures.
+            <img src='images/StephenGilbert-smaller.jpg' class='right' alt='Stephen Gilbert modified Picture.'>
+            <ol>
+                <li>Copy your digital picture into DrJava's <b>Chapter08</b> folder.
+                    <b class='ry'>Rename</b> the picture so that it includes both your first and last
+                    name, and so that it's easy to enter into your source code.
+                </li>
+                <li>Open <b>MySmallPicture.java</b> in the Chapter08 folder. </li>
+                <li>Create a <code>Picture</code> object using your digital picture.
+                    Don't use the <code>FileChooser</code> class; just use the name
+                    of the file (with no path) to create your picture. Leave the
+                    code I've supplied to calculate the full path to the picture.
+                </li>
+                <li><b class='ry'>Scale the picture</b> so that the finished size is 275 pixels wide
+                    and 200 pixels high. To see what that is in percentages you'll
+                    have to use the <code>getWidth()</code> and <code>getHeight()</code>
+                    methods on the original picture.
+                    <div class='alert'>
+                        <p>Note: this requires you to do some calculations.</p>
+                    </div>
+                </li>
+                <li>Use <code>createGraphics()</code> to get a pen to paint with
+                    on the new, smaller picture. This pen will be type <code>Graphics2D</code>.
+
+                </li>
+                <li>Uncomment the line that smoothes the drawing.</li>
+                <li>Draw a square frame around your picture. This may take
+                    repeated <code>drawRect()</code> or some creative
+                    <code>fillRect</code> statements.
+                </li>
+                <li>Draw your name at the bottom of your portrait, in the center.</li>
+                <li>Save the picture in the same folder, using the same name, but
+                    with the addition of "-smaller". Modify the original <code>fileName</code>
+                    variable, and use the <code>write()</code> method.
+                </li>
+            </ol>
+        <div class='info'>
+            <p>Read the lecture slides (on your desktop) for hints on the code
+                you'll need to complete this assignment.
+            </p>
+        </div>
+        <p> Once you have created the program, <b>compile it and run it</b>.
+            Only when it looks like you want, should you try to
+            <b>Check</b> it. The <b>Check</b> program only grades the basic syntax and
+            structure of your program. When you check your program,
+            I'll take your smaller picture and put it on the monitor at the front
+            of the room. Once your picture appears there, and you are
+            happy with it, you can close DrJava and go home.
+        </p>
+    <!--
+        <div class='alert'>
+            <p> Notice that the Check program gives you 100%, even if
+                you <b>don't do anything</b>. I <b>will</b> check the
+                actual picture produced, and <b>take points off</b>
+                (up to 100%), if it doesn't meet the requirements.
+                <b>Check your work on the screen!</b>
+            </p>
+        </div>
+        <div class='mailing'>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4>Notice</h4>
+            <p> <b>Only</b> if the <b>Check</b> program tells you that you need
+            to email your image, find the image in your Chapter09 folder,
+            and attach it to an email at:
+            </p>
+            <ul>
+            <li><b><a href="mailto:cs170F12@gmail.com?&subject=L07">cs170F12@gmail.com</a></b></li>
+            <li>The subject line should be: <b>L45, Your CS 170 ID (that you log into DrJava with),
+                followed by your last name and first name</b>.
+            </li>
+            <li>For instance, my subject would be: <b>L45, sgilbert, Gilbert Stephen</b></li>
+        </ul>
+        </div>
+    -->
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

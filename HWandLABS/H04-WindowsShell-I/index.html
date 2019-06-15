@@ -1,0 +1,1159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+        <script type='text/javascript' src='validate.js'></script>
+        <title>H04&mdash;The Windows Shell I</title>
+
+        <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+        <link href='h03.css' type='text/css' rel='stylesheet'>
+</head>
+
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework 04</p>
+        <p id='lessonTitle'>The Windows Shell Part I</p>
+    </div>
+    <br style='clear:both;'>
+<div class='content'>
+<p class='firstLine'><b><span class="cap2">T</span>he
+<i>operating system</i> manages the
+resources of a computer</b>, such as its internal memory, the disk drives,
+keyboard, monitor screen, mouse, printers, and network connections. People who
+use a computer to browse the web or play games have minimal contact with the
+operating system. Most of their time is spent with <span style="font-weight: bold;">application programs</span>. <br>
+</p>
+
+<p>These users tend to use the operating system only to fix problems, for
+example with a failed internet connection. The most recent versions of popular
+operating systems (such as Windows 7) have become very much oriented towards
+the consumer, hiding all but the most basic tasks from the casual user.<br>
+</p>
+<h2>The User Interface</h2>
+<p>Computer programmers have more advanced needs than people who use the
+computer as a tool. Programmers need to compile and launch programs and
+automate recurring tasks. This tutorial is written for programmers who are
+already familiar with the basics of using a computer.&nbsp; <br>
+</p>
+
+<p>If you have prior experience using a computer for playing games or writing
+reports and are now learning to program, you will need to learn more about your
+operating system. Some students are reluctant to embark on this effort, either
+because they feel that they already know how to use their computer, or because
+they already have their hands full learning about programming. However, that is
+a short-sighted attitude. Without knowing the operating system, many common
+programming tasks seem tedious or even impossible. <br>
+</p>
+
+<p>Operating systems come with two different kinds of <span style="font-weight: bold;">user interface:</span></p>
+<ul>
+  <li>a graphical user interface or GUI</li>
+  <li>a command line interface, also called a <span style="font-weight: bold;">shell</span><br>
+  </li>
+</ul>
+
+<p>&nbsp;Most computer users are familiar with the graphical user interface or GUI.
+Most GUI environments display a desktop that is populated with <span style="font-weight: bold;">windows</span>, <span style="font-weight: bold;">icons</span> and <span style="font-weight: bold;">menus</span>. You use a <span style="font-weight: bold;">pointer</span> (directed by a mouse or trackball) to
+select items on the desktop. These interfaces are sometimes called <span style="font-weight: bold;">WIMP</span> interfaces, after the first letters of
+the words <span style="text-decoration: underline;">w</span>indow, <span style="text-decoration: underline;">i</span>con, <span style="text-decoration: underline;">m</span>enu, and <span style="text-decoration: underline;">p</span>ointer. Here is a screen capture of
+a typical WIMP interface:</p>
+<br>
+&nbsp; <img src="images/wimp7.png" title="" alt="A Windows 7 desktop." style="width: 543px; height: 312px;"><br>
+<br>
+The other user interface is a <span style="font-style: italic;">command
+shell</span>. A command shell is simply a window without any graphical
+decorations. You type commands, using the keyboard, and you see the results of
+the commands displayed as text. There are no icons, and you can use the mouse
+only in limited circumstances. Here is a typical command shell:<br>
+<br>
+<img src="images/shell.png" title="" alt="." style="width: 669px; height: 331px;"><br>
+<br>
+A command shell is not a good user interface for casual users. However,
+experienced users find that the command shell is indispensible for many tasks.
+<br>
+<br>
+Look at it this way. If you just want to snap vacation photos, you'll use a
+"point and shoot" camera. It requires no training and takes decent pictures.
+<br>
+<br>
+<img src="images/fuji.jpg" title="" alt="." style="width: 150px; height: 115px;"><br>
+<br>
+But if you want your photos to be published in a magazine, you will need a
+professional camera. You will need to spend time learning rather technical
+concepts such as <a href="http://en.wikipedia.org/wiki/F-stop">f-stops</a> and
+shutter speeds. <br>
+<br>
+<img src="images/hasscamerapic.gif" title="" alt="." style="width: 181px; height: 168px;"><br>
+<br>
+
+
+<p>We don't want to leave you with the impression that the command shell is the
+best tool for every job. Sometimes, you are better off using the GUI,
+particularly if you spend some effort learning how to use it efficiently. Just
+like a professional photographer chooses the best instrument for the job, you
+will need to learn when to use the GUI and when to use the command shell. </p>
+
+<p>In this tutorial, you will learn some tricks that make the GUI faster and
+more efficient, and you will learn the basics of the command shell. </p>
+
+<h3>Keyboard Shortcuts</h3>
+
+<p>After you log on to your computer, you see a <b>desktop</b>, which may or
+may not contain some <b>icons</b> (small pictures representing programs,
+services, or resources). At the bottom left of the screen is the <b>Start</b>
+button. Across the bottom, is the <b>task bar</b> which contains buttons for
+all currently running programs. If you are reading this document in a web
+browser (and not from a printout), then there should be a button corresponding
+to the browser program.&nbsp; At the bottom right of the screen is a clock, possibly
+together with some<span style="font-weight: bold;"></span>smaller icons.</p>
+
+<p>You probably know how to launch programs by clicking on the start button or
+on desktop icons. We will now introduce another method. </p>
+
+<p>Type the keyboard shortcut <b>Ctrl+Esc</b>. That is, hold down the <span style="font-weight: bold;">Ctrl</span> key, and, without lifting your finger
+off it, hold down the <span style="font-weight: bold;">Esc</span> key. Then let
+go of both keys (in either order). This keyboard shortcut simulates a click on
+the <span style="font-weight: bold;">Start</span> button. An even simpler
+method is to just tap the <b>Windows</b> key that appears between the
+Ctrl and Alt keys.</p>
+
+<p>Why use a keyboard shortcut? It is much faster to hit
+    the Windows key or even to press
+    <span style="font-weight: bold;">Ctrl+Esc</span> than it is to </p>
+<ol>
+  <li>grab the mouse<br>
+  </li>
+  <li>move the mouse to the lower left corner of the screen</li>
+  <li>click the mouse button</li>
+</ol>
+
+<p>For a programmer, the first step ("grab the mouse") is the most painful.
+Programmers need to type a lot of code and therefore have their hands on the
+keyboard most of the time. In this regard, programmers are very different from
+casual computer users who have a hand on the mouse much of the time.</p>
+
+<p>You will see a <b>popup menu</b>, containing icons and names. The exact
+layout of the menu depends on the version of Windows and on the customization
+of the start menu. Here is one example. Your dialog may well be quite
+different. </p>
+<img src="images/startmenu7.png" title="" alt="." style="width: 426px; height: 444px;"><br>
+<p>Let's try to open the <b>Notepad</b> program that is built into Windows.
+Just start typing the word <span style="font-family: monospace;">notepad</span>.
+As you start typing, the Windows 7 start menu attempts to find a program
+that matches your typing:</p>
+<img src="images/notepad01.png" title="" alt="Typing notepad into the start menu."
+    style="width: 425px; height: 438px;"><br>
+
+<p>In most dialog boxes, hitting the <span style="font-weight: bold;">Enter</span> key is the same as clicking the
+<span style="font-weight: bold;">Ok</span> button. Typing <span style="font-weight: bold;">Esc</span> dismisses the dialog, just as if you had
+clicked the <span style="font-weight: bold;">Cancel</span> button.</p>
+
+<p>Hit the <span style="font-weight: bold;">Enter</span> key now. The Notepad
+program launches.
+</p>
+
+<form action="https://docs.google.com/spreadsheet/formResponse?formkey=dHZzS1k5WkhoNlk4RXE3c05WSlZoV2c6MQ&amp;ifq"
+    method="POST" id="ss-form">
+
+<input type="hidden" name="entry.4.single" value="" id="lab_points">
+
+<input type="hidden" name="pageNumber" value="0">
+<input type="hidden" name="backupCache" value="">
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 1</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Which keystrokes are required to launch
+        the Notepad program without touching the mouse? <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.5.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<p>In earlier versions of Windows, you could use the <b>Run</b> dialog to
+    do almost the same thing. Tap the <b>Windows</b> key along with the
+    <b>R</b> key and you'll open the <b>Run</b> dialog, shown here:
+</p>
+<img src="images/rundialog.png" title="" alt="Typing notepad into the start menu."
+    style="width: 428px; height: 227px;"><br>
+<p> Notice with the <b>Run</b> dialog, you have to type the entire name
+of the program you want to run.
+</p>
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 2</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">What is the advantage of using the <span style="font-weight: bold;">Run</span> dialog
+        or the <b>Start Menu</b> to launch the Notepad
+        program? Hint: Locate the Notepad program in the start menu tree. In
+        which submenu did you find it? How long did it take you to find it?
+        Will it be in the same position on your friend's computer? <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.6.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Toggling between programs<br>
+</h3>
+
+<p>The next step of this tutorial assumes that you currently have a web browser
+running. If you are reading these instructions from a printout, go ahead and
+start a browser. Close any windows except for the browser and the notepad
+window. <br>
+</p>
+
+<p>You now have two windows on your desktop: the browser and the Notepad
+program. This is an extremely common situation for a programmer. You will often
+write a program in one window while consulting documentation in another window.
+It is essential that you can switch quickly between the windows, even if some
+windows hide others.<br>
+</p>
+
+<p>The fastest way of switching between windows is the <span style="font-weight: bold;">Alt+Tab</span> keyboard shortcut. Press <span style="font-weight: bold;">Alt+Tab</span> now. You will get a dialog that lists
+all windows. Release both keys. You instantly switch to the next window. <br>
+</p>
+
+<p>Start the calc program (<span style="font-weight: bold;">Start calc
+Enter</span>). You should now have three programs running. Hit <span style="font-weight: bold;">Alt+Tab</span> again, but this time keep the <span style="font-weight: bold;">Alt</span> key depressed and repeatedly hit the
+<span style="font-weight: bold;">Tab</span> key. You toggle through the program
+icons. Let go of both keys when you have reached the browser program. <br>
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 3</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Run three programs, for example, a
+        browser, the notepad, and the calc program. Switch to the browser
+        program if it is not currently active (either with the mouse or with
+        <span style="font-weight: bold;">Alt+Tab</span>).&nbsp; Hit <span style="font-weight: bold;">Alt+Tab</span> and let go immediately. Which
+        program is selected now? Hit <span style="font-weight: bold;">Alt+Tab</span> again and let go immediately.
+        Which program is selected now? Why is the result surprising? Why is it
+        useful?<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.7.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Managing windows</h3>
+
+<p>When the time has come to close an unwanted window, you can close it by
+clicking on the X icon in the top right corner, or you can use a keyboard
+shortcut. There are actually two shortcuts. The combination <span style="font-weight: bold;">Alt+F4</span> closes the active window, but even
+keyboard enthusiasts will find it hard to remember.</p>
+
+<p>More useful is the <span style="font-weight: bold;">Alt+Space</span>
+shortcut. It brings up the <span style="font-weight: bold;">window
+menu</span>:</p>
+&nbsp; <img src="images/winmenu.png" title="" alt="." style="width: 143px; height: 129px;"><br>
+<br>
+Select <span style="font-weight: bold;">C</span> to close the window.<br>
+<br>
+The window menu has a number of other useful options:<br>
+
+<ul>
+  <li>Ma<span style="text-decoration: underline;">x</span>imize: Make the
+    window fill the entire desktop <br>
+  </li>
+  <li><span style="text-decoration: underline;">R</span>estore: Restore the
+    window to its original size, before maximizing<br>
+  </li>
+  <li>Mi<span style="text-decoration: underline;">n</span>imize: Temporarily
+    remove the window from the screen&nbsp; (to reduce clutter)<br>
+  </li>
+</ul>
+You can get a minimized window back onto the desktop by cycling to it with
+<span style="font-weight: bold;">Alt+Tab</span>.<br>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 4</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Suppose you want to see as much
+        information as possible in your browser window. What keystrokes do you
+        use to maximize the browser window? <br>
+      </td>
+    </tr>
+  </tbody>
+    <tr>
+        <td>
+        <textarea name='entry.8.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+</table>
+
+<h3>Cut, Copy and Paste</h3>
+
+<p>One of the most common operations for text manipulation is cut-and-paste:
+transferring information from one place to another. Because these operations
+are so common, there are special keyboard shortcuts for them.</p>
+
+<p>Switch to the notepad window. </p>
+
+<p>Pull down the <span style="font-weight: bold;"><span style="text-decoration: underline;">E</span>dit</span> menu by typing <span style="font-weight: bold;">Alt+E</span>. Note the underlined <span style="text-decoration: underline;">E</span> in the menu name. You pull down a
+menu by typing the <span style="font-weight: bold;">Alt</span> key and the
+underlined letter.</p>
+<br>
+<img src="images/editmenu.png" title="" alt="." style="width: 130px; height: 220px;"><br>
+<br>
+
+
+<p>The <span style="font-weight: bold;">Edit</span> menu has commands for the
+Cu<span style="text-decoration: underline;">t</span>, <span style="text-decoration: underline;">C</span>opy, and <span style="text-decoration: underline;">P</span>aste operations. Thus, a perfectly
+reasonable keyboard shortcut for copying text would be <span style="font-weight: bold;">Alt+E C</span>. However, because the copy operation
+is so common, there is an <span style="font-weight: bold;">accelerator</span>,
+<span style="font-weight: bold;">Ctrl+C</span>, that lets you access the
+operation with a single key combination. You can see the accelerator listed in
+the menu. Similarly, there are accelerators for cut (<span style="font-weight: bold;">Ctrl-X</span>) and paste (<span style="font-weight: bold;">Ctrl-V</span>). These key combinations are perhaps
+not as easy to remember. You may find it helpful to visualize the X as crossing
+out text, and the V as an insert mark for adding text:</p>
+<br>
+<img src="images/cutpaste.png" title="" alt="." style="width: 300px; height: 100px;"><br>
+
+
+<p>Also note that the letters X, C, V are located next to each other,
+conveniently close to the <span style="font-weight: bold;">Ctrl</span> key (at
+least, on the standard English QWERTY keyboard layout).<br>
+</p>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 5</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Now switch to the browser window. If it
+        doesn't currently show a document, then visit your favorite web site.
+        Use the mouse to select a phrase of your choice. Your task is to copy
+        the selected text to the Notepad program, without further use of the
+        mouse. What keystrokes to you use?<br>
+      </td>
+    </tr>
+     <tr>
+        <td>
+        <textarea name='entry.9.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+ </tbody>
+</table>
+<br>
+
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/note.gif" alt="{short description of image}" style="width: 72px; height: 67px;" title=""> </td>
+      <td>NOTE: Many programs also support alternate keyboard shortcuts: <span style="font-weight: bold;">Shift+Delete</span> for cut, <span style="font-weight: bold;">Ctrl-Insert</span> for copy, and <span style="font-weight: bold;">Shift-Insert</span> for paste. However,
+        these shortcuts are not as universally supported as <span style="font-weight: bold;">Ctrl-X, Ctrl-C, Ctrl-V</span>. <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Moving the Cursor and Selecting Text</h3>
+You can move the cursor by clicking on the desired location, and you should do
+that if the desired location is far from the current location. However, if you
+just need to move the cursor by a small amount, it is often faster to use the
+following keys:<br>
+
+<ul>
+  <li>The arrow keys <span style="font-weight: bold;">Left</span>, <span style="font-weight: bold;">Right, Up, Down</span> move the cursor one
+    position</li>
+  <li><span style="font-weight: bold;">Ctrl+Left</span>, <span style="font-weight: bold;">Ctrl+Right</span> move the cursor one <span style="font-weight: bold;">word</span> to the left or right<br>
+  </li>
+  <li><span style="font-weight: bold;">Home</span>, <span style="font-weight: bold;">End</span> (above the arrow keys) move the
+    cursor to the beginning or end of the line</li>
+  <li><span style="font-weight: bold;">PageUp</span>, <span style="font-weight: bold;">PageDown</span> (above the arrow keys) scroll
+    the page up or down. This is often faster than using the scroll bars. <br>
+  </li>
+</ul>
+<img src="images/keyboard.gif" title="" alt="." style="width: 591px; height: 316px;"><br>
+You know that you can select text with the mouse, by clicking on the beginning
+of the text and dragging the mouse to the end. Indeed, that is often the
+fastest method. However, if you need to select a short amount of text and your
+fingers are on the keyboard, then it is useful to know a shortcut. <br>
+<br>
+Hold down the <span style="font-weight: bold;">Shift</span> key and move the
+arrow keys. You will see that a portion of text is selected. You can also use
+keys such as <span style="font-weight: bold;">Home</span> and <span style="font-weight: bold;">End</span> to extend the selection to the beginning
+and the end of a line. <br>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 6</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Switch to the notepad. It should still
+        contain some text from a preceding exercise. If not, paste or type a
+        couple of lines. Now highlight the entire line containing the cursor,
+        using as few keystrokes as possible. What keystrokes to you use?<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.10.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Navigating in Dialogs</h3>
+It is handy to know how to move quickly through the fields of a dialog box
+without using the mouse. <br>
+
+
+<p>In any dialog box, you can use the <b>Tab</b> key to cycle through all of
+the fields and buttons. Consider for example the following dialog from the
+Notepad program. (The menu option is <span style="font-weight: bold;"><span style="text-decoration: underline;">E</span>dit -&gt; <span style="text-decoration: underline;">R</span>eplace</span>.)<br>
+</p>
+<img src="images/replace7.png" title="" alt="." style="width: 376px; height: 206px;">
+
+<p>Type the <span style="font-weight: bold;">Fi<span style="text-decoration: underline;">n</span>d what</span> entry, then hit the
+<span style="font-weight: bold;">Tab</span> key to quickly get to the <span style="font-weight: bold;">Re<span style="text-decoration: underline;">p</span>lace with</span> field. The <span style="font-weight: bold;">Tab</span> key is particularly handy for dialogs
+that have many text fields. <br>
+</p>
+
+<p>When you use the <span style="font-weight: bold;">Tab</span> key to cycle
+through the dialog box, observe how the <span style="font-weight: bold;">focus</span> shifts from one field to the next. A
+text field with focus has a blinking cursor. A button with focus has a dotted
+rectangle around the button label. The focus tells you which part of the dialog
+box receives keyboard input. For example, if a button or checkbox has focus,
+then hitting the <span style="font-weight: bold;">Space</span> bar is the same
+as clicking it with the mouse.<br>
+</p>
+
+<p>If an item name has an underlined letter (such as <span style="font-weight: bold;">Match <span style="text-decoration: underline;">c</span>ase</span>), then you can type
+<span style="font-weight: bold;">Alt</span> together with the underlined letter
+to reach it quickly. For example, <span style="font-weight: bold;">Alt+C</span>
+is the same as clicking the <span style="font-weight: bold;">Match <span style="text-decoration: underline;">c</span>ase</span> checkbox. <br>
+</p>
+
+<p>Finally, most dialogs respond to two special keys. Typing <span style="font-weight: bold;">Esc</span> dismisses the dialog, just as if you had
+clicked the <span style="font-weight: bold;">Cancel</span> button. Typing <span style="font-weight: bold;">Enter</span> is the same as clicking the <span style="font-weight: bold;">Ok</span> button.<br>
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 7</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Open up the <span style="font-weight: bold;">Find</span> dialog in Notepad. What
+        keystrokes do you need to find the next occurrence of <span style="font-family: monospace;">Hello</span>, with <span style="font-weight: bold;">Match <span style="text-decoration: underline;">c</span>ase</span> checked?
+        Keystrokes only, no mouse! </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.11.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<p>You know know the most common keyboard shortcuts. After a short amount of
+practice, you will probably agree that the keyboard is mightier than the mouse
+for many routine tasks. </p>
+
+<h2>The File System</h2>
+
+<h3>Disk drives</h3>
+
+<p>Disk drives for computers come in two main types, removable (floppy, CD ROM)
+and non removable (hard). Whether hard or floppy, a computer disk drive
+essentially contains a round, flat, object, and it reads its surface with a
+magnetic or optical head.<br>
+</p>
+
+<p>In addition to the disk drives that are physically present in a computer,
+there may be several <b>mapped drives</b> that are provided by the network
+server. These are not actual drives at all, but look to the operating system
+(and to you) as though they are.</p>
+
+<p>The drives that hold the disks are named by a letter followed by a colon
+(<b>:</b>). The names <b>a:</b> (and perhaps <b>b:</b>) are the floppy drives.
+The names <b>c: </b>and <b>d:</b> are usually used to name hard disk drives in
+that same computer. CD ROMS come next, labeled <span style="font-weight: bold;">e:</span> (or <span style="font-weight: bold;">d:
+</span>if there is only one hard disk). Higher letters like <b>j:</b>,
+<b>k:</b>, ... are mapped network drives.<br>
+</p>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/note.gif" alt="{short description of image}" style="width: 72px; height: 67px;" title=""> </td>
+      <td>NOTE: Sometimes, a single hard drive has multiple <span style="font-weight: bold;">partitions</span>. Even though there is only
+        a single physical drive, it divided into several areas, each of which
+        has its own drive letter (c:, d:, ...). If you set up your own
+        computer, it is an excellent idea to set up two partitions, one for the
+        operating system (c:) and one for your personal data (d:). That setup
+        enables you to reinstall the operating system without interfering with
+        your personal data. (Unfortunately, the Windows operating system is
+        notorious for becoming unreliable over time, as more software is
+        installed and programs and drivers interfere with each other. The best
+        remedy is to periodically wipe the c: partition clean and reinstall
+        Windows.)<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/penguin.gif" title="" alt="." style="width: 52px; height: 61px;"><br>
+      </td>
+      <td>NOTE: In Linux/Unix/Mac OS X, there are no drive letters. Instead, CD
+        ROM and floppy drives are accessed through paths such as <span style="font-family: monospace;">/mnt/cdrom</span> and <span style="font-family: monospace;">/mnt/floppy</span>.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+
+<p>There are many ways to find drives and view their contents using Windows.
+The program we will use is called <b>Windows Explorer</b>. (This is <span style="font-style: italic;">not</span> the same program as <span style="font-weight: bold;">Internet Explorer</span>, Microsoft's web browser.
+The Windows Explorer program explores the file system, not the internet.) <br>
+</p>
+
+<p>To start the Explorer program, use the key combination <b>Windows+E</b>:</p>
+<!--
+open the Run dialog (<span style="font-weight: bold;">Ctrl+Esc</span>,
+<span style="font-weight: bold;">R</span>) and type <span style="font-family: monospace;">explorer</span> followed by the <span style="font-weight: bold;">Enter</span> key. <br>
+</p>
+-->
+<img src="images/explorer7a.png" title="" alt="." style="width: 600px; height: 398px;">
+
+<p>The look of the Explorer has changed greatly with different versions of
+Windows, and it can also be configured in many ways. Don't worry if your
+Explorer window looks quite different from this screen shot.<br>
+</p>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 8</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">List all available drives with their
+        names and drive letters. (You may need to open the <span style="font-weight: bold;">My Computer</span> item.)<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.12.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+
+<p>Each drive contains <span style="font-weight: bold;">files</span> and <span style="font-weight: bold;">directories</span> (also called <span style="font-weight: bold;">folders</span>). In the Explorer program, click on a
+drive to see the files and folders. The files are depicted with an icon that
+looks like a file folder. Files have different icons that depend on their type.
+<br>
+</p>
+<img src="images/files7.png" title="" alt="." style="width: 597px; height: 654px;"><br>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 9</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">List all files and directories that are
+        inside your c: drive. (Don't look inside the directories.) <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.13.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Directory Trees<br>
+</h3>
+
+<p>A typical hard disk holds thousands of files. It is therefore essential to
+organize your files on the disk. As you accumulate files on a disk, you&nbsp; store
+them in groups by creating <span style="font-weight: bold;">directories</span>.
+Directories are also called <b>file folders</b>. Generally, programmers prefer
+the term "directory", and we will use that term in this tutorial. <br>
+</p>
+
+<p>Each directory can contain any number of files and other directories called
+<b>subdirectories</b>. This arrangement is known as a <span style="font-weight: bold;">hierarchical</span> or <b>treelike</b> directory
+structure. <br>
+</p>
+
+<img src='images/expand-contract.png' style='float:right;margin:1em;' alt='Expand-contract a folder.'>
+<p>To visualize the hierarchy of directories, it is best to look at the <span style="font-weight: bold;">tree view</span> to the left of the Explorer
+window.&nbsp; Note that each drive has a small triangle to the left of it. The
+triangle is either facing to the right (that is, facing the folder), or it is
+"twisted downward". This indicates whether the next level of the directory hierarchy is
+hidden or expanded. Click on the triangle to twist it down and expand a hidden level,
+and click it again it twist it up to hide an expanded level.
+</p>
+<!--
+<p>To visualize the hierarchy of directories, it is best to look at the <span style="font-weight: bold;">tree view</span> to the left of the Explorer
+window.&nbsp; Note that each drive has a small box next to it with either a + or -
+sign in it. This indicates whether the next level of the directory hierarchy is
+hidden or expanded. Click on the + icon to expand a hidden level, on the - icon
+to hide an expanded level. <br>
+</p>
+-->
+<p>On each drive, the hierachy starts with the <b>root directory</b>. The name
+of the root directory is simply the drive name followed by a backslash (such as
+c:<b>\</b>). The root directory contains files (such as c:\logfile.txt) and
+directories (such as c:\windows). The windows directory contains other files
+(such as c:\windows\notepad.exe) and directories (such as c:\windows\system).
+<br>
+</p>
+
+<p>The sequence of subdirectories from the root to a given file or directory is
+called the <span style="font-weight: bold;">path</span>. For example,
+c:\windows\system is the full path name of the system directory inside the
+windows directory inside the c: drive. <br>
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 10</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">List an additional file and an
+        additional directory in the c:\windows directory. List a file and a
+        directory in the c:\windows\system32 directory.&nbsp; Give the full path
+        names for the files and directories.<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.14.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 11</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Find the files explorer.exe and
+        write.exe. Give the full path names. (Hint: You may find it easier to
+        look for files if you select the list view rather than the icon view
+        for directories. Choose the <span style="font-weight: bold;">View -&gt;
+        List</span> menu option.) <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.15.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<p>In the title bar of Windows Explorer, you'll see a set of <b>bread crumbs</b> that
+    you can click to navigate back to a particular folder. If you want to see the
+    path itself, just click in the empty space at the end of the path like this:
+</p>
+<img src='images/path.png' style='clear:both;margin:1em;' alt='Setting the path.'>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 12</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Find a file whose full path names
+        contains at least four directories. <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.16.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/penguin.gif" title="" alt="." style="width: 52px; height: 61px;"><br>
+      </td>
+      <td>NOTE: In Linux/Unix/Mac OS X, directories are separated by forward
+        slashes (/). For example, <span style="font-family: monospace;">/usr/local/java/bin</span>. That is the
+        same convention as for web page addresses. Only Windows uses
+        backslashes (\).<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Making Directories</h3>
+
+<p>For this part of the tutorial, you need to find a directory into which you
+are allowed to place files and folders. On your own computer, you can simply
+use <b>My Documents</b> folder which you'll find in
+Libraries->Documents->My Documents. If you click in the title bar, you'll
+see that this <i>special name</i> is actually an alias for your personal
+documents fodler inside the C:\Users directorcy:<br>
+<img src='images/MyDocuments.png' alt='My Documents in Windows 7' style='padding:1em;clear:both;'>
+<p>If you are working the computer lab, you
+will need to find out the name of the directory that was created for your use.
+In the OCC computer lab, that's the U:\ drive.
+</p>
+<p>View your directory in the Explorer program. Select <b>File -&gt; New -&gt;
+Folder</b> (<b>Alt+F </b><span style="font-weight: bold;">W F</span>). This
+command places a folder icon inside the directory and gives it the temporary
+name <b>New Folder</b>. It also leaves the cursor in the name field, allowing
+you to change it immediately. Hit <b>Delete</b> to erase the name, and give it
+a new name. A good choice for a name is your own name, contracted to a single
+word without spaces (such as joe or jqsmith). </p>
+
+<p>If you use your own computer, create this directory now. From now on, place
+all files in this directory. If you use a computer in a lab and someone else
+has already given you a directory with your name (perhaps d:\jqsmith or
+c:\users\jqsmith), then you can skip this step. </p>
+
+<p>We will refer to "your" directory as the c:\yourname directory in this
+tutorial, even though it will certainly be something else (unless, of course,
+your name is Yolanda O. Urname...) </p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 13</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Create a subdirectory called <span style="font-family: monospace;">tutorial</span> inside the <span style="font-family: monospace;">c:\yourname</span> directory.
+        (Substitute the actual directory that you created.) List <span style="font-style: italic;">all</span> steps, starting with launching
+        the Explorer program. (Close it first if it is currently running). <br>
+      </td>
+    </tr>
+     <tr>
+        <td>
+        <textarea name='entry.17.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+ </tbody>
+</table>
+<br>
+
+
+<h3>File and Directory Names</h3>
+
+<p>You can use letters, numbers, the underscore (_) and the hyphen (-)
+character in file names. Obviously, you can't use symbols such as : and \ in
+file names, or they would be confused with drive and directory separators.
+There are a few other special characters that you can use, but the details
+depend on whether the drive is a local drive or a networked drive. It is best
+to avoid file names with exotic symbols such as !@#$.</p>
+
+<p>You can use spaces in file names, but programmers rarely do that, because
+spaces in file names create problems when you use a command shell. Instead, use
+- or _ to separate words: <span style="font-family: monospace;">myproject-ver0.01.java</span> or <span style="font-family: monospace;">letter_to_fifi.txt</span>. </p>
+
+<p>Both uppercase and lowercase letters are permitted in file and directory
+names, but Windows will not distinguish between names that differ only in the
+case of the letters. </p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 14</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Create another subdirectory called <span style="font-family: monospace;">TUTORIAL</span> inside the <span style="font-family: monospace;">c:\yourname</span> directory.
+        (Substitute the actual directory that you created.) What error message
+        does Windows give you? What does it do after you click OK? </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.18.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Files</h3>
+
+<p>Start the Notepad program: <b>Windows notepad Enter</b>.
+Type a few words. Select <span style="font-weight: bold;">File -&gt; Save As</span> from the menu. You will
+get the Windows file dialog. <br>
+</p>
+<img src="images/filedialog7.png" title="" alt="." style="width: 678px; height: 495px;">
+
+<p>The dialog suggests a file name <span style="font-family: monospace;">*.txt</span>. However, you can't actually use
+the <span style="font-family: monospace;">*</span> character in a filename.
+Also, the current directory is likely to be wrong. Fortunately, in most
+versions of Windows, the useless default is also highlighted, so you can
+overtype it.
+</p>
+
+<p>Simply type c:\yourname\. (Actually, type the name of your personal
+directory.) Type the letters s l o w l y and pay close attention to the entry
+field. You will see that a small menu below the entry field is filled with the
+names that match what you have typed at this point.<br>
+</p>
+<img src="images/incremental7.png" title="" alt="." style="width: 658px; height: 127px;">
+
+<p>This feature is a great time-saver. As soon as you see the name that matches
+what you want to type, hit the <span style="font-weight: bold;">Down</span>
+arrow button to select it. Presenting all choices that match the typed letters
+is called <span style="font-weight: bold;">incremental search</span>. Clearly,
+incremental search is a marvelous convenience because it minimizes the number
+of keystrokes. <br>
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 15</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">What choices do you get after you type
+        the letter <span style="font-family: monospace;">c</span> (or whatever
+        the drive letter of your personal directory is)? What choices do you
+        get after you type c:\ and the first letter of the directory name?&nbsp;
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.19.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/note.gif" alt="{short description of image}" style="width: 72px; height: 67px;" title=""> </td>
+      <td>NOTE: Very old versions of Windows do not offer incremental search in
+        the file dialog.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Save the file as <span style="font-family: monospace;">c:\yourname\tutorial\sample.txt</span>. Be sure
+to supply the <span style="font-weight: bold;">extension</span> <span style="font-family: monospace;">.txt</span>. That extension signifies that the
+file is a text document. (Remember to replace c:\yourname with the actual path
+to the directory you created at the start of this section.)<br>
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 16</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Close the Notepad program and locate the
+        file that you just saved in the Explorer program. What icon does it
+        have? What name is displayed for the file? What happens when you
+        double-click on the file name? </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.20.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Depending on the configuration of Windows, the extension <span style="font-family: monospace;">.txt</span> may not be displayed when you view
+the file in the Explorer program. By default, Windows hides the extensions,
+presumably because naive users are confused about file names such as <span style="font-family: monospace;">letter to aunt tilly.txt</span>. <br>
+</p>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td width="5%"><img src="images/note.gif" alt="{short description of image}" style="width: 72px; height: 67px;" title=""> </td>
+      <td>NOTE: Hiding extensions is primarily helpful for virus writers. Many
+        Windows users have eagerly double-clicked on icons labeled something
+        like <span style="font-family: monospace;">prettygirl.gif</span>, only
+        to launch a virus program whose real name was <span style="font-family: monospace;">prettygirl.gif.exe</span>. <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As a programmer, you don't want the operating system to hide information
+from you. Fire up Windows Explorer program and select <span style="font-weight: bold;">Organize -&gt; Folder and Search Options</span> and select the
+<span style="font-weight: bold;">View</span> tab. <br>
+</p>
+<img src="images/folderoptions7.png" title="" alt="." style="width: 411px; height: 496px;">
+<p>Make sure the check box next to "Hide file extensions for known file
+types" is unchecked. Click on it if it is checked.&nbsp; Then hit <b>Enter</b> or
+click OK. <i>Make sure to repeat this step on
+every Windows computer that you use. <br>
+</i>
+</p>
+<p>Windows uses the file extension to figure out what to do with the file when
+you double-click on it. Double-clicking on a <span style="font-family: monospace;">.txt</span> file brings up Notepad.
+Double-clicking on a program file (with extension <span style="font-family: monospace;">.exe</span>) executes the program.
+</p>
+
+<h3>Context Menus<br>
+</h3>
+
+<p>Items such as file and directory icons in the Explorer display have <span style="font-weight: bold;">context menus</span> that contains commands directly
+related to the item. This menu can be displayed by clicking on the object's
+icon with the <span style="font-weight: bold;">right</span> mouse button.<br>
+</p>
+<p>Right-clicking on the file and choosing <b>Open With...</b> will give you
+    let you see what program is the default program associated with a particular
+    file. You can select a different program, and, if you like, change the
+    default selection by clicking <b>Choose Default Program...</b>.
+</p>
+<img src='images/choosedefault.png' alt='Choosing a default program.'>
+<!--
+<p>You can find out which program corresponds to a particular extension. In the
+Explorer program, select the <span style="font-weight: bold;">Tools -&gt;
+Folder and Search ptions </span><span style="font-weight: bold;">File Types</span> tab.
+You get a list of all file types that are registered with Windows. You (or a
+program that you install) can modify these associations. </p>
+-->
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 17</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Which program is associated with the
+        extension <span style="font-family: monospace;">.html</span>? Which
+        program is associated with the extension <span style="font-family: monospace;">.gif</span>?<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.21.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>One of the most useful entries in the context menu of a file is
+<b>Rename</b>. To rename a file, right-click on the file, select <b>Rename</b>
+and type the new file name.&nbsp;</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 18</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">What are the commands listed in the
+        context menu for the c: drive? What are the commands listed in the
+        context menu for the <span style="font-family: monospace;">c:\yourname\tutorial\sample.txt</span>
+        file?<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.22.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<h3>Moving and Copying Files</h3>
+
+<p>Files and directories often need to be copied. There are two methods for
+copying files with the Explorer program.</p>
+
+<p>The most intuitive method is <b>drag-and-drop</b>: select a file with the
+mouse, drag it to another directory, and drop it. If you hold down the <span style="font-weight: bold;">Ctrl</span> key while dragging the file, it is
+copied, not moved.</p>
+
+<p>With some manual dexterity, you can also drag a group of files. To select
+more than one file, depress the <span style="font-weight: bold;">Ctrl</span>
+button and click on all files in the group. For selecting multiple files with
+similar properties (such as the same extension, or similar modification dates),
+you may find it helpful to switch to a tabular view (menu option <span style="font-weight: bold;">View -&gt; Detail</span>). Depress the <span style="font-weight: bold;">Shift</span> button and use the <span style="font-weight: bold;">Up</span> and <span style="font-weight: bold;">Down</span> arrow keys to select a contiguous set of
+files. </p>
+
+<p>The difficulty with drag-and-drop is that both the source and target
+directory need to be on the desktop. You can overcome that problem by cutting
+and pasting files. Select the files you want to move or copy. Then select <span style="font-weight: bold;">Edit -&gt; Cut</span> (or simply <span style="font-weight: bold;">Ctrl+X</span>), move to the directory into which you
+want to move the files, and select <span style="font-weight: bold;">Edit -&gt;
+Paste</span> (<span style="font-weight: bold;">Ctrl+V</span>). To copy the
+files, use <span style="font-weight: bold;">Edit -&gt; Copy</span> instead. </p>
+<br>
+
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 19</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Copy all files with extension <span style="font-family: monospace;">.txt</span> from the
+        <code>c:\yourname\tutorial</code>&nbsp;directory into the <span style="font-family: monospace;">c:\yourname</span> directory. What
+        sequence of keystrokes and mouse operations did you use? (Make sure to
+        copy the files. Do not move them!) <br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.23.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<h3>Backing up your work</h3>
+
+<p>Computers are fairly reliable, but their parts do have a finite lifetime.
+Also, important files can sometimes be destroyed by careless computer users.
+You should make it a habit to back up all important files. Your instructor will
+likely not accept "The computer ate my file!" as an excuse for late or missing
+homework.</p>
+
+<p>In ancient times, floppy disks were used to back up data. However, floppy
+disks are actually more fragile than hard disks. Also, the disk drive
+alignments of different computers can vary, sometimes so much so that it
+becomes impossible to read a floppy disk that was written on another computer.
+It is best if you use floppy disks as a matter of last resort.</p>
+
+<p>On your own computer, the most convenient backup method is having a second
+external hard drive. These are fairly inexpensive and come with built-in
+backup software. The next best option is to use a DVD
+burner. Windows has a rudimentary feature set for burning DVDs and
+backing up your computer. Finally, you might want to back up your files
+using a USB thumb drive, although the capacity of USB thumb drives is
+fairly small, so this technique is best suited to keeping backups for
+separate classes or projects.
+</p>
+
+<p>The best method for backing up your work in a computer lab is an online
+service such as <a href="http://www.dropbox.com/">Dropbox</a>. You
+can save files on an external server and load them back either onto the same
+computer (in case you need to restore a lost or corrupted file), or onto
+another computer (in case you need to move your work between your lab and home
+computers). Gmail also makes a good storage location for non-executable
+backups.
+</p>
+
+<table class='question'>
+  <tbody>
+    <tr>
+      <th>Exercise 20</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Back up the file <span style="font-family: monospace;">c:\yourname\tutorial\sample.txt</span>,
+        either onto an online service or onto a floppy.&nbsp; Describe the steps
+        that you took. Now delete the file and restore it from your backup.
+        What steps did you take to restore the file?<br>
+      </td>
+    </tr>
+    <tr>
+        <td>
+        <textarea name='entry.24.single' rows='5' style='width:100%;'></textarea>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<div id='identify'>
+    <h3>Identify Yourself</h3>
+    <table class='question'>
+    <tbody>
+    <tr>
+        <td style='width:40%'>Enter your CS 170 login ID: (student email w/o @student...)</td>
+        <td><input type="text" name="entry.1.single" value="" id="student_id"></td>
+    </tr>
+    <tr>
+        <td>Enter your name (LastFirst):</td>
+        <td><input type="text" name="entry.2.single" value="" id="student_name"></td>
+    </tr>
+    <tr>
+        <td>Enter your section<br>(MTWT, MW, TT-AFT, TT-EVE):</td>
+        <td><input type="text" name="entry.3.single" value="" id="section"></td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+<div class='submit'>
+<input type='button' id='validate' value=" Check Your HW ">
+<span id='score'>&nbsp;</span>
+<input type="submit" id='submit' name="submit" value=" Submit Your HW ">
+</div>
+</form>
+    <div id='attribution'>
+        <p>Based on the...<br><b>Windows Shell Tutorial</b><br>
+        by Cay S. Horstmann<br>
+        <i>Updated for Windows 7 by Stephen Gilbert</i>
+        </p>
+       <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons License" style="float:right;" src="images/88x31.png"></a><br>
+        <span href="http://purl.org/dc/dcmitype/Text" rel="dc:type">Windows Shell
+        Tutorial</span> by <a href="http://www.horstmann.com/" rel="cc:attributionURL">Cay Horstmann</a> is licensed under a<br> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative Commons
+        Attribution-Noncommercial-Share Alike 3.0 United States License</a>.</p>
+
+    </div>
+<iframe id='post-results' name='google-result'>
+</iframe>
+</div>
+</body></html>

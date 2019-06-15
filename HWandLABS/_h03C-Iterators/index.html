@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Iterators and File Stats</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Iterators &amp; File Stats</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap2">I</span>n lecture and in Chapter 7 of your textbook</b>,
+            you learned how to use the <code>Scanner</code> class as an
+            <b>iterator</b>, an object that allows you to loop through
+            all of the data elements in an input stream.
+        </p>
+        <p> To see how an iterator works, let's build a
+            program that asks the user for the name of the file to open,
+            and then uses the <code>Scanner</code> class to loop through
+            the file and count them the words, lines and characters.
+        </p>
+    <h3>File Stats</h3>
+        <p> Start by creating a console program named <code class='b'>FileStats</code>.
+            Place it inside the <code class='b'>Week03</code> code folder, where you'll
+            find the text file <code class='b'>moby.txt</code>.
+            Here's what the program should look like as it runs:<br>
+            <img src="images/fs01.gif" class="inlineCenter" alt="Running FileStats.java.">
+            Here are the steps you'll need to follow to complete the
+            program.
+        </p>
+    <h4>Getting Started</h4>
+        <p> Our program needs to use the <code>Scanner</code> class, which is
+            located in the <code>java.util</code> package and the
+            <code>File</code> class which is part of the
+            <code>java.io</code> package, which we'll need to open
+            the file.
+        </p>
+        <p> Step 1 is to <code>import</code> those two packages,
+            like this:<br>
+            <img src="images/fs02.gif" class="inlineCenter" alt="FileStats imports.">
+        </p>
+    <h4>Opening the File</h4>
+        <p> Here's the code from the program that opens the file:<br>
+            <img src="images/fs03.gif" class="inlineCenter" alt="FileStats open the file.">
+            The code shown here:
+        </p>
+        <ol>
+            <li class="d">first adds the clause <code>throws Exception</code>
+                to the end of the <code>main()</code> method heading. Without
+                this line, we won't be able to open the file without
+                explicitly adding code to deal with errors.
+            </li>
+            <li class="d">Next, the program creates a "regular" <code>Scanner</code>
+                connected to the console, and then asks the user for the name of
+                the file to open. The "keyboard" <code>Scanner</code> is used
+                to read the response from the user, which is stored in the
+                <code>String</code> variable named <code>filename</code>
+            </li>
+            <li class="d">Finally, the method creates <b>another</b>
+                <code>Scanner</code> object to process (or <i>iterate over</i>)
+                the contents of file. As I did earlier, I named this object
+                <code>fin</code>, but <code>fItr</code> (for file iterator)
+                is also popular. To construct the <code>Scanner</code> object,
+                I need to call the <code>File</code> constructor with the
+                name of the file to open.
+            </li>
+        </ol>
+    <h4>Reading the File</h4>
+        <p> We'll use <b>this</b> iterator (<code>fin</code>) to
+            process the data file <b>a line at a time</b>. Here's the code that
+            does that<br>
+            <img src="images/fs04.gif" class="inlineCenter" alt="FileStats read the file.">
+            Here's how it works:
+        </p>
+        <ol>
+            <li class="d">Before we start reading the file, we need to
+            create and initialize <b>counter variables</b> to hold the
+            number of lines, words and characters that we encounter.
+            </li>
+            <li class="d">Because this is a <b>data-bound</b> loop, we'll
+                keep going as long as there are more lines in the file.
+                Do that by using the iterator's <code>hasMoreLines()</code>
+                method.
+            </li>
+            <li class="d">Inside the loop, we actually <b>read</b> the
+                line by using the iterator's <code>nextLine()</code>
+                method and storing the result in a <code>String</code>
+                variable.
+            </li>
+            <li class="d">Once we've read a line of text we can update
+                our word and character counters.
+            </li>
+        </ol>
+        <div class='alert'>
+        <p> One thing you should note
+            is that <code>nextLine()</code> does <b>not</b> save the
+            newline characters at the end of each line of text, so
+            the number of characters we'll report will not include those.
+            If it is important to have an accurate count, you can call
+            <code>System.getProperty("line.separator")</code>. This will return
+            a <code>String</code> containing the <i>end-of-line</i> character
+            for the platform you are running on. Append this to each line
+            as it is read and you'll have an accurate count.
+        </p>
+        </div>
+    <h4>Counting Words</h4>
+        <p> To count the words in the file, we'll create a <b>third</b>
+            <code>Scanner</code> object, and use it to <b>iterate over the
+            line of text</b> that we retrieved from the file. Here's what
+            that code looks like:<br>
+            <img src="images/fs05.gif" class="inlineCenter" alt="FileStats read the words.">
+            Here's how it works:
+        </p>
+        <ol>
+            <li class="d">The new <code>Scanner</code> object, <code>wordItr</code>,
+                is constructed by passing the line of text read from the
+                file. <b>Notice that this iterator will be iterating over a
+                <code>String</code> instead of a file</b>.
+                That's the beauty of iterators: it doesn't
+                matter what you're looping over, the methods are the same.
+            </li>
+            <li class="d">Because we want to read token-by-token, we use
+                another data-bound <code>while</code> loop, using the
+                <code>has.next()</code> (instead of <code>hasNextLine()</code>)
+                iterator method.
+            </li>
+            <li class="d">Inside the loop, we read the next token (using
+                the <code>next()</code> method. We aren't going to further
+                examine it, so we don't bother saving it in a variable;
+                instead, we just count the word.
+            </li>
+            <li class="d">Finally, after the loop, we have a regular
+                formatted print statement displaying the statistics
+                on our file.
+            </li>
+        </ol>
+    <h4>When Things Go Wrong</h4>
+        <p> What happens if you type in a name for a file and your
+            program can't find the file you've requested? Unfortunately,
+            the error message that is printed on the console is not
+            really fit for "regular users":<br>
+            <img src="images/fs06.gif" class="inlineCenter" alt="Bad file name.">
+        </p>
+        <p> You can anticipate this problem, and make your program look
+            a little more professional, by first checking to see
+            if the file you want to open actually exists. You can do
+            that by first creating a <code>File</code> object using the
+            filename retrieved from the user, and then using its
+            <code>exists()</code> function, to make sure the filename
+            is valid. If it isn't valid, then you can use a <code>return</code>
+            statement like this:<br>
+            <img src="images/fs07.gif" class="inlineCenter" alt="Checking for a file.">
+            Once you know that the filename is valid, you can pass the
+            <code>File</code> object to the <code>Scanner</code> constructor.
+        </p>
+        <div class='alert'>
+        <p>If the file isn't found, I simply exit the program
+            by using a plain <code>return</code> statement. Since the
+            <code>main()</code> procedure is <b>not a function</b> it
+            doesn't <b>need</b> a <code>return</code> statement. If
+            you want to leave a procedure early, though, you can always
+            use a plain <code>return</code> with no expression following it.
+        </p>
+        </div>
+    <h4>Closing the File</h4>
+        <p> In this program, we open a disk file and never close it.
+            That's a really bad habit to get into. We can close the
+            file by closing the <code>Scanner</code> object we used
+            to read the file in the first place.
+        </p>
+        <p> Add this line to the end of your <code>main()</code> method
+            and all will be well:
+        </p>
+        <p class='code' style='font-size:1.25em;'>
+            fin.close();
+        </p>
+        <p> Note that you <b>don't</b> need to close the <code>Scanner</code>s
+            used to read from <code>System.in</code> or from the individual
+            lines of text.
+        </p>
+     </div>
+   </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

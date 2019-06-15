@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .mailing {
+            width: 90%;
+            margin-left: 0;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            background-color: #CFC;
+            padding-top: 0;
+            padding-bottom: 5px;
+        }
+        .close {
+          float: right;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 20px;
+          color: #000000;
+          text-shadow: 0 1px 0 #ffffff;
+          opacity: 0.2;
+          filter: alpha(opacity=20);
+        }
+
+        .close:hover {
+          color: #000000;
+          text-decoration: none;
+          cursor: pointer;
+          opacity: 0.4;
+          filter: alpha(opacity=40);
+        }
+
+        button.close {
+          padding: 0;
+          cursor: pointer;
+          background: transparent;
+          border: 0;
+          -webkit-appearance: none;
+        }
+
+    </style>
+    <title>L69&mdash;Inheritance, Constructors &amp; Overriding</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab 69</p>
+        <p id='lessonTitle'>Inheritance, Constructors &amp; Overriding</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+                <img src='images/Point3D.png' class='right'
+            style='width:45%;' alt='The UML diagram.'>
+
+        <p class='firstLine'>
+        <b><span class="cap">T</span>his week you learned how to
+            add features to a class by <i>extending</i> it; this
+            is called <i>inheritance</i></b>. Today, you learned how
+            to use <b>constructors</b> with inheritance, and how to
+            <b>redefine</b> existing inherited methods, using the
+            process called <b>overriding</b>.
+        </p>
+        <p> For this lab, you're going
+            to create a new version of the simplified
+            <code>SimplePoint</code> class shown here. Your new
+            <code>Point3D</code> class should <code>extend</code>
+            the <code>SimplePoint</code> class and add support for
+            a "Z" order.
+        </p>
+    <h3> L69&mdash;The Point3D Class</h3>
+        <p>
+            To the right you'll find a simplified UML diagram for the
+            <code>SimplePoint</code> class, along with the UML diagram
+            for your new <code>Point3D</code> class. The upward-facing arrow
+            in the diagram means that <code>Point3D</code> is a <b><i>subclass</i></b>
+            of the <code>SimplePoint</code> class.
+        </p>
+        <p> Your new class should have: </p>
+        <ul>
+            <li>Two overloaded <b>constructors</b>. One that sets all three fields
+                to <code>0</code>, and one that initializes all three fields. Of course,
+                both constructors should call the <code>super()</code> constructor to
+                initialize the <code>x</code> and <code>y</code> fields contained in
+                the superclass <code>Point</code>.
+            </li>
+            <li>An <b>accessor</b> method, <code>getZ()</code> that retrieves the
+                Z value of the point. (Of course, you use the <b>inherited</b> methods,
+                <code>getX()</code> and <code>getY()</code> to retrieve the other
+                two inherited fields.)
+            </li>
+            <li>An <b>overloaded</b> mutator method, <code>setLocation()</code> that
+                allows you to set all three fields at once.
+            </li>
+            <li>An <b>overriden</b> version of <code>equals()</code> that returns
+                <code>true</code> when all three coordinates are equivalent. Remember that when
+                writing <code>equals()</code> you:
+                <ol>
+                    <li>first check to see if the parameter matches the type of your
+                        class, using <code>instanceof</code> and return <code>false</code>
+                        if not.
+                    </li>
+                    <li> then you <b>cast</b> the <code>Object</code> parameter to the
+                        correct type before doing the comparison.
+                    </li>
+                </ol>
+            </li>
+            <li>Extend the class by adding a <code>distanceTo()</code> method that returns
+                the distance between this point and another. The formula for finding the
+                distance between two 3D points is:<br>
+                <img src='images/distance.png' class='inline' style='width:80%;'
+                    alt='Distance formula.'>
+            </li>
+        </ul>
+        <div class='alert'>
+            <p> Test your work with the <b>Check</b> program.
+                Then click the <b>Progress</b> button to
+                make sure your score is recorded by DrJava. Then, when you are finished with
+                the lab, <b class='ry'>close DrJava</b> to upload your score to the
+                CS 170 server. You may work on the lab assignments after the lab period,
+                but your scores <b>won't</b> be recorded after class is over.
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

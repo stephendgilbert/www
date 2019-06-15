@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Nested Logic</title>
+    <style type='text/css'>
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+        .green-alert h4 {
+            margin-top: 0;
+            margin-left: .2em;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Nested Logic</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap">L</span>t's look at a different selection problem that
+            require you to handle several different branches</b>. We'll solve this one by
+            using <b>nested</b> <code>if</code> statements, instead of sequential
+            <code>if</code> statements. You'll find this problem in 
+            <code class='b'>ParrotTrouble.java</code>,
+            inside this week's code folder.
+        </p>
+    <h3>The Trouble With Parrots</h3>
+        <p> <img src='images/parrot.png' class='right' style='margin-top:-3em;' alt='A singing parrot?'>
+            For the <b>parrotTrouble</b> problem, we have a loud talking parrot.
+            The "hour" parameter is the current hour time in the range 0..23.
+            We are in trouble with our neighbors if the parrot is talking and
+            the hour is before 7 or after 20. Your function should return true
+            if we are in trouble.
+        </p>
+    <h4>Step 1: Guess What?</h4>
+        <p> I don't even have to tell you this part, do I? By now you should
+            be able to whip out that skeleton without even being asked:<br>
+            <img src='images/parrot01.gif' class='inlineCenter' alt='parrotTrouble skeleton.'>
+            Of course, since it's a Boolean function, you should pass about
+            half of the tests. If you don't, just change the default value
+            for <code>result</code> from <code>false</code> to <code>true</code>.
+            (A little test-taking tip!)
+        </p>
+    <h4>Step 2: Examine the Parameters</h4>
+        <p> Notice now that we have two kinds of parameters; in other words,
+            we're going to test two things:
+        </p>
+        <ol>
+            <li>Whether the parrot is talking or singing</li>
+            <li>What time it is</li>
+        </ol>
+        <p> That's <i>kind of like</i> the income tax example, where we <i>first</i>
+            tested the filing status and <i>then</i> tested the income level.
+            In this case, we want to write an <code>if</code> statement that
+            tests if the bird is talking. If it is, we'll set <code>result</code>
+            to false like this:<br>
+            <img src='images/parrot02.gif' class='inlineCenter' alt='parrotTrouble first if.'>
+            Of course none of you would think of writing <code>if (isTalking == true)</code>
+            because that would be redundant, right?
+        </p>
+        <p> Good. I thought not! Now let's test our code:<br>
+            <img src='images/parrot03.gif' class='inlineCenter' alt='parrotTrouble test 1.'>
+            Well, 75% is pretty good, but it looks like our <code>if</code> statement
+            actually broke some tests that worked before. It says that we're in trouble
+            even though it's now 7 AM, and our parrot should be able to squawk without
+            causing a ruckus!
+        </p>
+        <div class='green-alert'>
+            <h3 style='text-align: center;margin:0; padding: 0; border: 0;'>
+            Looks like we need a nested <code>if</code> statement!
+            </h3>
+        </div>
+    <h4>Step 3: A Nested Selection</h4>
+        <p> After we check to see if the parrot is talking, we need to check
+            again and see if it's actually "no-talking" time. We do that by
+            adding a <b>nested <code>if</code> statement</b> to our code,
+            like this:<br>
+            <img src='images/parrot04.gif' class='inlineCenter' alt='A nested if statement.'>
+        </p>
+        <p> Once you have created the program, compile it and
+            then <b>Check</b> your results. Keep trying until you get a perfect
+            score.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

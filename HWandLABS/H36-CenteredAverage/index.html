@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>Centered Average</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercise</p>
+        <p id='lessonTitle'>Centered Average</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap2">W</span>hen working with arrays</b>,
+            you need to know how to code several different fundamental
+            algorithms. You should be able to <b>count</b> the number of
+            elements that meet a condition. You should also be able to
+            <b>add them up</b> or <b>average</b> them. Finally, you should
+            be able to find the smallest or largest element (or <b>both</b>)
+            in a collection of data.
+        </p>
+
+    <h3>Loop Algorithms&mdash;Centered Average</h3>
+        <p> Open <b>CenteredAverage.java</b>, which you'll find in
+            your <b>Chapter11</b> folder, in DrJava and write the <code>centeredAverage()</code>
+            function. Here's what the problem definition looks like:<br>
+            <img src='images/centered-average.gif' class='inlineCenter' alt='The centeredAverage problem.'>
+            As you can see:
+        </p>
+        <ul>
+            <li>The problem requires you to calculate the average of a number of
+                quizzes. To do that, you'll have to first sum the elements in the
+                array.
+            </li>
+            <li>This average excludes the largest and smallest values, so you'll
+                also have to compute both extreme values in the array.
+            </li>
+        </ul>
+        <p> That means to solve the problem you'll have to put to work
+            <b>all</b> of the fundamental array algorithms we learned last week
+            and this week. Why don't you see if you can solve the problem on
+            your own, then come back here and check your answer?
+        </p>
+    <h4>Step 1: Guess What????</h4>
+        <p> Solving an array problem is really no different than solving a
+            simple function or a loop problem. <b>You always start with the
+            function skeleton</b>!.
+        </p>
+        <p> Here's the basic skeleton for the <code>centeredAverage</code>
+            problems:<br>
+            <img src='images/centered-average02.gif' class='inlineCenter' alt='The centeredAverage skeleton.'>
+            As you can see, the function has a return type of <code>int</code>
+            (which you can learn from both the example code and the @return tag),
+            and a single parameter of type <code>int[]</code>, the array variable
+            named <code>nums</code>.
+        </p>
+        <p> Once we've written the skeleton, the code should compile and we can
+            test it like this:<br>
+            <img src='images/centered-average03.gif' class='inlineCenter' alt='The centeredAverage skeleton.'>
+            As the picture points out, the test I've supplied is <b>only</b> checking
+            for correct output, but on the exams, I'll normally give you 25% if the
+            syntax is correct (as this is).
+        </p>
+    <h4>Step 2: Summing the Elements</h4>
+        <p> Most array problems will require you to use a loop. Let's start by using
+            the "sum skeleton" that we just got finished reviewing. Here's what that
+            code looks like when we use the enhanced for loop:<br>
+            <img src='images/centered-average04.gif' class='inlineCenter' alt='The centeredAverage sum loop (enhanced foreach).'>
+            and here's what it looks like with the traditional <code>for</code>:<br>
+            <img src='images/centered-average05.gif' class='inlineCenter' alt='The centeredAverage sum loop (traditional for).'>
+            Of course both loops leave the <b>sum</b>, not the <b>average</b> in the
+            variable <code>result</code>, so none of the tests will pass yet.
+        </p>
+    <h4>Step 3: Subtracting the Extreme Elements</h4>
+        <p> Because we want a <b>centered</b> average, we first need to find
+            the largest and smallest elements in the array, and then remove
+            them before calculating the value. We <b>could</b> use another loop,
+            but that's not necessary. We can use the same loop to calculate the
+            sum, <b>and</b> to calculate the largest and smallest values.
+        </p>
+        <p> Here's what that code should look like:<br>
+            <img src='images/centered-average06.gif' class='inlineCenter' alt='The centeredAverage sum extreme values.'>
+            Notice that:
+        </p>
+        <ol>
+            <li class='d'>First we need to create variables for <code>largest</code> and
+                <code>smallest</code>, and then initialize those elements to
+                the first element in the array.
+            </li>
+            <li class='d'>Then, inside the loop, we need to compare the current
+                element against the <code>largest</code> and <code>smallest</code>
+                variables, and reassign those values if necessary.
+            </li>
+        </ol>
+        <p> As you can see, the code is <b>exactly</b> the same as the example
+            code we looked at in the review section.
+        </p>
+    <h4>Step 4: Finish the Calcs</h4>
+        <p> Now we have all of the parts we need to finish our calculation.
+            All you have to do is:
+        </p>
+        <ol>
+            <li class='d'>Remove the largest and smallest values from the
+                sum you calculated.
+            </li>
+            <li class='d'>Calculate the average by using the <code>length</code>
+                of the array. Of course, since we removed two elements from
+                our sum, we'll want to subtract 2 from the length as well.
+            </li>
+        </ol>
+        <p> Here's the finished code that does that:<br>
+            <img src='images/centered-average07.gif' class='inlineCenter' alt='The centeredAverage final calcs.'>
+            And here's CheckResults with all tests passing:<br>
+            <img src='images/centered-average08.gif' class='inlineCenter' alt='The centeredAverage final calcs.'>
+        </p>
+
+        <p> Run the <b>Check</b> program to test your work.
+        </p>
+<!--
+        <div class='alert'>
+        <p> After you <b>Check</b> the homework, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the assignment, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the assignments after the submission
+            deadline has passed, but your scores <b>won't</b> be recorded.
+        </p>
+        </div>
+-->
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>L52, 53 &amp; L54&mdash;Arrays &amp; Methods</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab 52, 53 &amp; 54</p>
+        <p id='lessonTitle'>Arrays &amp; Methods</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">P</span>rofiency Quiz 7&mdash;Basic Arrays</b>,
+            will require you to create, initialize and access the elements of
+            one-dimensional arrays. You will also be asked to write methods
+            that accept arrays as parameters, and that return information by
+            creating a new array, or by using an array parameter for output.
+        </p>
+        <p> For this lab, you'll solve three problems that require arrays and
+            methods. Note, none of these problems require you to write loops;
+            you'll do that for PQ08.
+        </p>
+    <h3>L52&mdash;Mid Three</h3>
+        <p> Write the function named <b><code>midThree()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given an array of <code>int</code>s, (of odd length), return a new array
+                length 3 containing the elements from the middle of the array. The array
+                length will be at least 3.
+            </i>
+        </blockquote>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the original array to process.</code></li>
+            <li><code>@return a new array as specified above.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>midThree({1, 2, 3, 4, 5}) returns {2, 3, 4}</code></li>
+            <li><code>midThree({8, 6, 7, 5, 3, 0, 9}) returns {7, 5, 3}</code></li>
+            <li><code>midThree({1, 2, 3}) returns {1, 2, 3}</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one this video:
+            <a href='../../movies/array1-midThree/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+
+        <div class='alert'>
+            <p> Remember that many of my videos for the function exercises that we
+                will do in this class make use of the <b>Codingbat.com</b> Web site
+                put up by Nick Parlante at Stanford. When <b>you</b> do the
+                exercise in DrJava, you will need to write the method heading
+                yourself, something that Coding.bat does for you.
+            </p>
+        </div>
+    <h3>L53&mdash;Rotate Left 3</h3>
+        <p> Write the function
+            named <b><code>rotateLeft3()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given an array of <code>int</code>s of length 3, return an
+                array with the elements "rotated left" so passing <code>{1, 2, 3}</code> returns
+                an new array containing <code>{2, 3, 1}</code>
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the array to rotate.</code></li>
+            <li><code>@return a new, rotated array. Do not modify the original array.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>rotateLeft3({1, 2, 3}) returns {2, 3, 1}</code></li>
+            <li><code>rotateLeft3({5, 11, 9}) returns {11, 9, 5}</code></li>
+            <li><code>rotateLeft3({7, 0, 0}) returns {0, 0, 7}</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program.
+            I have a video solution for a similar problem (on CodingBat), but
+            this solution <b class='ry'>will not pass the checks</b>. For this problem,
+            you <b>must make a new array</b>, and <b class='ry'>not</b> modify
+            the array parameter (as the video does).
+            <a href='../../movies/array1-rotateLeft3/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>L54&mdash;Make Last</h3>
+        <p> Write the function
+            named <b><code>makeLast()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given an <code>int</code> array, return a new array with
+                <b>double the length of the original</b> where its last element
+                is the same as the original array, and all
+                the other elements are <code>0</code>. The original array
+                will be length <code>1</code> or more.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param nums the original array to process.</code></li>
+            <li><code>@return a new array as specified above.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>makeLast({4, 5, 6}) returns {0, 0, 0, 0, 0, 6}</code></li>
+            <li><code>makeLast({1, 2}) returns {0, 0, 0, 2}</code></li>
+            <li><code>makeLast({3}) returns {0, 3}</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/array1-makeLast/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <div class='alert'>
+        <p>After you <b>Check</b> each problem, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the lab, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the lab assignments after the lab period,
+            but your scores <b>won't</b> be recorded after class is over.
+        </p>
+    </div>
+    </div>
+    <div class="footer" style='width:750px;margin:auto;'>
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+
+</body>
+</html>

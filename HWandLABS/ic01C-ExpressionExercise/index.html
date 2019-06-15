@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Expression Exercises</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Expression Exercises</p>
+    </div>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">N</span>ow that you know a little
+            bit about converting mathematical formulas into
+            Java expressions</b>, let's put this concept to work?
+        </p>
+        <p> These programs are based on the ExpressionTest program used by Rich Pattis and Norm
+            Jacobson for UCI's ICS 21 course. Open the ExpressionExercise program in DrJava, then
+            compile, run it and <b>Check</b> it. Now, look
+            at the following picture:<br>
+            <img src='images/formulas.png' class='inlineCenter' alt='Different formulas.'>
+            As you can see, it contains 13 formulas on three different lines.
+            The first line has seven, while the second and third lines each
+            have three.
+        </p>
+        <p> Your job is to <b>translate</b> each of these mathematical formulas
+            into the equivalent Java code, and then <b>Check</b> the program to see
+            if you've done it correctly. To get started, I'll help you
+            with the first formula.
+        </p>
+    <h3>Fahrenheit to Celsius</h3>
+        <p> The first formula shown here asks you to convert Fahrenheit to Celsius. This
+            should be pretty simple. Try it out. Put your formula in
+            the source-code like this:
+            <img src='images/formula00.png' class='inlineCenter' alt='The first formula. First try.'>
+            Then, compile your code and run your program. <br>
+            <img src='images/formula01.png' class='inlineCenter' alt='Running the first formula.'>
+            Compare the
+            expected output to the actual value calculated by your formula.
+        </p>
+        <p><b class='ry' style='font-size:larger'>OOPS!!!</b></p>
+        <p> Of course, most of you caught the error when I made it right?
+            While the expression <code>5 / 9</code> is perfectly OK in
+            algebra, in Java it is entirely different than <code>5.0 / 9.0</code>,
+            which is what the formula actual expects.
+        </p>
+    <h4>Checking</h4>
+        <p> The only problem is, what if you <b>don't know</b> what the answer
+            is <b>supposed to be?</b>. That's where the <b>Check</b> program
+            comes in. Run <b>Check</b> and you'll see:<br>
+            <img src='images/formula02.png' class='inlineCenter' alt='Checking the first formula.'>
+            Notice that when a checked line fails, it shows you both what was
+            <b>expected</b> and what <b>was</b> actually printed.
+        </p>
+        <ul>
+            <li>In both cases,
+            it inserts <b>brackets</b> around the portion that didn't match.</li>
+            <li>A set of empty brackets (like we have in the <b>was</b> portion
+            of the example here, shows that something was supposed to be
+            printed but is <b>missing</b> in the output.</li><li> If there are a
+            set of empty brackets in the <b>expected</b> portion, it means
+            you have printed something that was not supposed to be
+            shown.</li>
+        </ul>
+        <p> Go ahead and fix the code, changing the formula to <code>5.0 / 9.0</code>
+            and you'll see that the program checks correctly.<br>
+            <img src='images/formula03.png' class='inlineCenter' alt='Correcting the first formula.'>
+        </p>
+    <h3>Other Calculations</h3>
+        <p> <img src='images/formula03.gif' class='right' style='margin-top:-2em;' alt='The second formula.'>
+            Now, look at the next formula. As you can see, it involves
+            the variable <code>Z</code>, both cubed and squared. There
+            are two ways you can handle this: using simple multiplication
+            like this:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            2 * (z * z * z) + 1
+        </p>
+        <p> Or, by using the <code>Math.pow()</code> function like
+            this:
+        </p>
+        <p class='code' style='font-size:1.2em;'>
+            2 * Math.pow(z, 3) + 1
+        </p>
+        <p> Of course, for powers greater than 3, (such as the sixth and
+            seventh formulas in this problem set), you'll <b>always</b> want
+            to use the <code>Math.pow()</code> function instead of using
+            simple multiplication.
+        </p>
+        <div class='alert'>
+        <p> Because of the nature of floating-point numbers, your answer
+            may be slightly different than the expected answer. In this
+            case, the last digit (or two) of the answer may vary depending
+            on the order and type of your calculations. In a test situation,
+            I always allow a little "fudge factor" to take this into
+            account.
+        </p>
+        </div>
+        <p> For the third and fourth formulas (and for many of the
+            others as well), you'll need to use the <code>Math.sqrt()</code>
+            function. You'll need to use <code>Math.abs()</code> for the
+            fifth formula, and the constants <code>Math.PI</code> and
+            <code>Math.E</code> for the last formula in the second row. Also,
+            even though you can use <code>Math.exp()</code> to solve this problem,
+            please use <code>Math.pow()</code> instead. There is a small difference
+            in the results using these two methods that my testing program cannot
+            check for.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href="mailto:sgilbert@occ.cccd.edu">Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

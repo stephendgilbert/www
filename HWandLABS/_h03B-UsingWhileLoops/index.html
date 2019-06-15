@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Using while Loops</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Using while Loops</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+        <p><span class="cap">I</span>n the last lab period</b>,
+            you used the <code>for</code> loop to repeat a set of
+            actions. Now, we want to look at the <code>while</code>
+            loop. The <code>while</code> loop has a simpler syntax,
+            but using it for counter-controlled loops can often
+            be a little tricky, because there are more details
+            that you have to manage yourself. Nevertheless, sometimes,
+            (as in the problems below), a counted <code>while</code>
+            loop is the way to go.
+        </p>
+    <h3>Repeat Separator</h3>
+        <img src='images/fencepost.png' class='right' alt='Fencepost illustration.' style='margin-top:-6em;'>
+        <p> Write the function named <b><code>repeatSeparator()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given two <code>String</code> inputs, <code>word</code> and
+                <code>separator</code>, along with a third <code>int</code>
+                input <code>count</code>, return a big <code>String</code>
+                consisting of <code>count</code> copies of <code>word</code>,
+                each separated by <code>separator</code>.
+            </i>
+        </blockquote>
+        <div class='info'>
+            <p>This is a very common algorithm, called the <b>fencepost
+                algorithm</b>, because just like building a fence, you
+                need 11 fenceposts to hold up 10 sections of fence. In
+                the illustration shown here, the white panels will be
+                your separators, while the vertical lines will be your
+                words.
+            </p>
+        </div>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param word the first String parameter.</code></li>
+            <li><code>@param separator the second String parameter.</code></li>
+            <li><code>@param count the number of times to repeat word.</code></li>
+            <li><code>@return a new String as described here.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>repeatSeparator("Word", "X", 3) returns "WordXWordXWord"</code></li>
+            <li><code>repeatSeparator("This", "And", 2) returns "ThisAndThis"</code></li>
+            <li><code>repeatSeparator("This", "And", 1) returns "This"</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch one this video:
+            <a href='../../movies/string2-repeatSeparator/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+
+        <div class='alert'>
+            <p> Remember that many of my videos for the function exercises that we
+                will do in this class make use of the <b>Codingbat.com</b> Web site
+                put up by Nick Parlante at Stanford. When <b>you</b> do the
+                exercise in DrJava, you will need to write the method heading
+                yourself, something that Coding.bat does for you.
+            </p>
+        </div>
+    <h3>Xyz in the Middle</h3>
+        <img src='images/xyz.png' class='right' alt='A zyzzyx T shirt.' style='margin-top:-4em;'>
+        <p> Here's another problem that is a little harder than it looks. Write the function
+            named <b><code>xyzMiddle()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given a <code>String str</code>, does "xyz" appear in
+                the "middle" of the string. To define <b>middle</b>,
+                we'll say that the number characters to the left and
+                right of the "xyz" must differ by, at most, one.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param str the String to examine.</code></li>
+            <li><code>@return true if xyz is in the "middle" of str.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>xyzMiddle("AAxyzBB") returns true</code></li>
+            <li><code>xyzMiddle("AxyzBB") returns true</code></li>
+            <li><code>xyzMiddle("AxyzBBB") returns false</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/string2-xyzMiddle/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>Same Star Char</h3>
+        <img src='images/star.png' class='right' alt='A star.' style='margin-top:-5em;'>
+        <p> Now, let's look at <i>searching</code> again.
+            Write the function named <b><code>sameStarChar()</code></b>.
+            Here are the specifications:
+        </p>
+        <blockquote>
+            <i> Given a <code>String str</code>, return <code>true</code>
+                if for every '*' (star) in the string, if there are
+                chars both immediately before and after the star,
+                they are the same.
+            </i>
+        </blockquote>
+        <div class='info'>
+            <p>This is a little tricker than it looks. One way to look
+                at the problem is to see in what circumstances you should
+                return <code>false</code>. In this case, you only return
+                <code>false</code> if the characters on either side of
+                the * are different. That means that if there are <b>not</b> characters in front of,
+                or behind the *, then you should return <code>true</code>,
+                not <code>false</code>.
+        </div>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param str the input String to process.</code></li>
+            <li><code>@return true if the characters before and after are the same.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>sameStarChar("xy*yzz") returns true</code></li>
+            <li><code>sameStarChar("xy*zzz") returns false</code></li>
+            <li><code>sameStarChar("*xa*az") returns true</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/string2-sameStarChar/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    </div>
+    <div class="footer" style='width:750px;margin:auto;'>
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

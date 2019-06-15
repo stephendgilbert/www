@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <script type='text/javascript' src='validate.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>Lab01&mdash;Exploring Memory</title>
+</head>
+<body>
+    <div id='form-result'>
+    </div>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab 01</p>
+        <p id='lessonTitle'>Exploring Memory</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">S</span>o far, our exploration of memory
+        has been a little <i>theoretical</i></b>; I'd like to make it a little more
+        <b>concrete</b> by having you look at the <b>actual
+        contents</b> of memory using a simple Java program
+        named <b>MemoryView</b>.
+    </p>
+    <p> MemoryView is a program that lets you open any kind of file
+        into memory, and then look at how your data is represented
+        once it is stored in memory. We'll use MemoryView to:
+    </p>
+    <ul>
+        <li>look at the contents of a text file</li>
+        <li>look at the contents of an image file</li>
+        <li>look at the contents of an executable file</li>
+    </ul>
+    <p> Feel free to look at any other kind of file you have on
+        your computer.
+    </p>
+    <h3>Getting Started</h3>
+    <p> Make sure you've downloaded the "starter" files from
+        the lecture. In your Week01 folder you'll find a plain
+        text file titled <b>SamWasAMan.txt</b>. Double-click the file and your operating
+        system will open the default text editor and display the file for
+        you. (In Windows, that is usually the <b>Notepad</b> program; other
+        operating systems will have a different text editor installed.)<br>
+        <img src='images/mv01.png' class='inlineCenter' alt='Opening a text file in Notepad.'>
+        When Notepad opens, you'll see the phrase "Sam was a man",
+        (without the quotes), as you can see here. (I've made the font a little
+        larger in Notepad, so you can see the characters more easily in the
+        picture.)
+    </p>
+    <p> If you count the characters in the file, you'll see that
+        there are ten letters so you might think that your file
+        should be 10 bytes long, since each character should use
+        up one ASCII byte. Let's see if that's correct.
+    </p>
+    <p> In Windows Explorer, if you right-click the file and then select
+        <b>Properties</b> you'll be able to see that <i>actual</i> size of
+        the file, both in memory and as stored on disk:<br>
+        <img src="images/mv02.png" alt="Properties of SamWasAMan.txt" class='inlineCenter'>
+        As you can see, the size of the file is really <b>18 bytes, not
+        10 bytes</b>. Where did the extra 8 bytes come from? Let's use the
+        <b>MemoryView</b> program to find out!
+    </p>
+    <h3>Starting MemoryView</h3>
+    <p> Start the MemoryView executable Java program (with the name
+        <b>MemoryView.jar</b>) by locating and then double-clicking it.
+        (You should find it in the same folder as SamWasAMan.txt.)
+        If you have the Java runtime (JRE)
+        installed correctly on your computer, your operating system will
+        launch the MemoryView program like this:<br>
+        <img src="images/mv03.png" alt="Starting MemoryView.jar" class='inlineCenter'>
+        The picture here shows the program running in Windows XP; it will look
+        different on Windows 7, the Mac or on Linux. If the program does not
+        start when you double-click it, follow the instructions provided by
+        your instructor for installing a Java runtime (JRE) on your system.
+    </p>
+    <p> To load and examine the bytes from your text file into memory:<br>
+        <img src="images/mv04.png" alt="Loading the text file." class='inlineCenter'>
+    </p>
+    <ol>
+        <li class='d'> Click the <b>Load a File</b> button and select the
+            file using the standard file chooser dialog that appears.
+        </li>
+        <li class='d'> If all goes well, you should see a <b>confirmation message</b>
+            once the file has been loaded. If there is an error, a message
+            will be displayed in the same place.
+        </li>
+        <li class='d'> Since we want to see the "raw" memory after loading
+            the file, you should press the <b>Dump Memory</b> button.
+        </li>
+    </ol>
+    <h4>4. Memory Addresses</h4>
+        <p> On the left side of the display are the <b>memory addresses</b>
+            that we discussed earlier. In Java programs (unlike C++ or
+            Assembly language), the operating system keeps track of the
+            actual physical address where the data is loaded. This allows
+            Java programs to rearrange their data elements in memory without
+            disturbing your programs.
+        </p>
+        <p> Because of that MemoryView
+            starts displaying its data at address 0000. Notice that
+            the first line of memory that is displayed starts at
+            address 0000, the next line starts at address 0010, the
+            third line at address 020, etc. Of course, our file contains only
+            a little data, so only the first two lines display.
+        </p>
+    <h4>5. Raw Byte Data</h4>
+        <p>Each line on the display contains 16 bytes, and each byte
+            is displayed in the <b>hexadecimal</b> number format we
+            discussed earlier. For instance, the first byte is the
+            hexadecimal number 53, which is 5 sixteens + 3 ones, or
+            the decimal number 83.
+        </p>
+        <p class="note">Since each line displays 16 bytes,
+            you might wonder why the address for each line only
+            increases by ten. That's because all of the numbers used
+            in debug are hexadecimal, not just the binary byte values.
+            Each row increases by 10 hexadecimal, which is 1 sixteen
+            and no ones.
+        </p>
+    <h4>6. ASCII Text Translation</h4>
+    <p>
+        On the right-hand side is the text translation of each
+        line of memory. We loaded SamWasAMan.txt so the
+        ASCII codes from the file were stored in memory starting at
+        address 0000. Note, for instance, that the first byte,
+        which is 53H or 83 decimal, is actually the capital letter
+        "S" in the ASCII chart. On the right-hand side, you can
+        see the ASCII translation of each of the bytes. If there
+        is no ASCII translation, then the program displays a dot instead.
+    </p>
+    <h3>Examining Control Characters</h3>
+    <p> So, where did we pick up the extra 8 bytes? If you look
+        in the ASCII translation, you'll see two periods after
+        each word. MemoryView only shows the <b>printable</b> ASCII
+        characters in its display; all other characters are
+        replaced with periods. <br>
+        <img src="images/mv05.png" alt="Examining the carriage-return line-feed pairs." class='inlineCenter'>
+        If you compare the "raw" memory and the ASCII translation, you'll see that
+        the periods correspond to four instances of the sequence <b>OD OA</b>, which
+        are the ASCII values 13 and 10.
+    </p>
+    <p> Those two "invisible" characters were inserted into the text file
+        when I pressed the Enter key after each word in
+        Notepad. If I had typed the text without pressing the
+        Enter key, the file would only contain 10 bytes, as expected.
+    </p>
+    <p> Since I did press the Enter key after each word though,
+        the file ended up being 18 bytes long. The first byte,
+        the ASCII value 13 is called the Carriage Return, after
+        the typewriter carriage that sends the platen back to
+        the beginning of the line. The second character, ASCII
+        value 10, is called the <b>newline</b> or <b>end of line</b>
+        character, and moves the platen down to the next line.
+    </p>
+    <p class="note">Unfortunately, not all computer systems
+        use these <b>same</b> two characters in the same way.
+        If I had created the text file in Unix, instead of Windows, each
+        line would end with only a newline character; if I had created the
+        file on my Mac, each line ends with a single carriage return.
+        In Windows, of course, we have the best of both worlds.
+        <img src='../images/smiley.gif' style='vertical-align:top;' alt='A similey face.'>
+    </p>
+<!--
+<form action="https://docs.google.com/spreadsheet/formResponse?formkey=dHpWOHktbW5JZks5UTlwNHlqM2FOY1E6MQ&amp;ifq" method="POST" id="ss-form">
+<input type="hidden" name="entry.0.single" value="" id="student_id">
+<input type="hidden" name="entry.1.single" value="" id="student_name">
+<input type="hidden" name="entry.2.single" value="" id="section">
+<input type="hidden" name="entry.3.single" value="" id="lab_points">
+<input type="hidden" name="lab_no" value="" id="lab_no">
+-->
+<form>
+    <div class='exercise'>
+    <img src='../images/exercise.png' class='left' style='margin-top:-35px;margin-right:0;margin-bottom:0;'>
+    <h5>Exercise Set 1</h5>
+    <p> Open SamWasAMan.txt in your text editor, and and change the name Sam
+        to your own first name and adjust your gender appropriately.
+        (If your first name <i>is</i> Sam, then use your last name instead.)
+        Save the file and then load it into the MemoryView program and
+        display its contents.
+    </p>
+    <p> Then, show me:</p>
+    <div class='questions'>
+        <div>
+            <label>The ASCII (human-readable) portion of your name (copied from
+                the appropriate area in MemoryView):<br>
+            <input type="text" name="entry.4.single" value="" id='q01'><span class='v-err'></span>
+            </label>
+        </div>
+        <div>
+            <label>The numeric, hexadecimal numbers that represent your name (copied from
+                the appropriate area in MemoryView):<br>
+            <input type="text" name="entry.23.single" value="" id='q02'><span class='v-err'></span>
+            </label>
+        </div>
+    </div>
+    </div>
+    <h3>Image Data</h3>
+    <p> Let's load another kind of file into memory and look at it.
+        Instead of text file, we'll load a digital image created with
+        a common digital camera, and stored as a <b>jpeg</b> file.
+    </p>
+    <p> Click the <b>Load a File</b> button again, and then select
+        <b>steve.jpg</b> which you'll find in the same folder. Dump the
+        file data and you'll see something that looks like this:<br>
+        <img src="images/mv06.png" alt="Examining a jpg file." class='inlineCenter'>
+        Notice that except for the <b>signature fragment</b>, Exif II,
+        which appears near the front of the file, and which identifies the
+        kind of image data the file contains, most of the characters cannot
+        be translated as text.
+    </p>
+    <p> <b class='ry'>This is an important concept.</b> Even though every byte
+        contains the same 256 possible values as the bytes in a text file,
+        the <b>arrangement and meaning</b> of those bytes is different. This
+        arrangement and interpretation is what changes raw data into
+        <b>information</b>. Instead of interpreting the bytes as a text
+        encoding, each byte represents the different color levels in the
+        individual pixels in a picture.
+    </p>
+    <p> To see the bytes interpreted in this way, just press the <b>Show as Picture</b>
+        button, and MemoryView tries to make sense of the bytes you've
+        loaded by translating them as pixels like this:<br>
+        <img src="images/mv07.png" alt="Displaying a jpg file." class='inlineCenter'>
+    </p>
+    <h3>Exploring Other File Types</h3>
+    <p> The MemoryView program can load any kind of file you like. Try loading some
+        executable (exe) files, some sounds, some Word and Excel documents and see
+        what you it shows you. You might also try loading some Java source code files,
+        (with the extension .java) and see if you can read them.
+    </p>
+    <h4>Executable Files</h4>
+    <p> Window <b>executable files</b> consist of native binary code that can be
+        executed directly by your hardware's CPU. Let's see what that looks like
+        under the hood. Locate an executable program (with the file extension .exe)
+        <b>on the C: drive</b>, and load it
+        into MemoryView. Then dump the contents of the first page.
+    </p>
+    <div class='exercise'>
+    <img src='../images/exercise.png' class='left' style='margin-top:-35px;margin-right:0;margin-bottom:0;'>
+    <h5>Exercise Set 2</h5>
+    <p> Show me:
+    </p>
+    <div class='questions'>
+        <div>
+            <label>The full full path of the file you are opening. You can copy this
+                from the <i>Path:</i> area at the bottom of MemoryView, by selecting the text
+                and then using Control+C. The Copy menu won't work for this:<br>
+            <input type="text" name="entry.21.single" value="" id='q03'><span class='v-err'></span>
+            </label>
+        </div>
+        <div>
+            <label>What are the two human-readable (ASCII) codes that mark the
+                beginning of the file?<br>
+            <input type="text" name="entry.24.single" value="" id='q04'><span class='v-err'></span>
+            </label>
+        </div>
+        <div>
+            <label>What do you suppose those two characters stand for? (You'll have to do
+                some Googling to find out.)<br>
+            <input type="text" name="entry.25.single" value="" id='q05'><span class='v-err'></span>
+            </label>
+        </div>
+        <div>
+            <label>What is the human-readable phrase that appears on the first page
+                of the executable program you opened? <br>
+            <input type="text" name="entry.19.single" value="" id='q06'><span class='v-err'></span>
+            </label>
+        </div>
+    </div>
+    </div>
+    <p> Do you suppose that every Windows executable file starts with the same
+        two characters and has the same message on the "opening page"? See
+        if you can find out.
+    </p>
+    <h4>Java "Executable" (.class) Files</h4>
+    <p> Java executable code, called <b>bytecode</b> is stored in <code>.class</code>
+        and (compressed) <code>.jar</code> files. Java bytecode looks a little bit
+        different than native code. Open up a Java executable, (you'll find several
+        different <code>.class</code> files in the Chapter01 folder),
+        and see what it looks like.
+    </p>
+    <div class='exercise'>
+    <img src='../images/exercise.png' class='left' style='margin-top:-35px;margin-right:0;margin-bottom:0;'>
+    <h5>Exercise Set 3</h5>
+    <p> Show me:
+    </p>
+    <div class='questions'>
+        <div>
+            <label>The full full path of the Java file you are opening.<br>
+            <input type="text" name="entry.17.single" value="" id='q07'><span class='v-err'></span>
+            </label>
+        </div>
+        <div>
+            <label>What is the numeric code that the Java .class file begins
+                with? (The first 4 bytes in hexadecimal.) <br>
+            <input type="text" name="entry.26.single" value="" id='q08'><span class='v-err'></span>
+            </label>
+        </div>
+    </div>
+    </div>
+
+<!--
+<input type="hidden" name="pageNumber" value="0">
+<input type="hidden" name="backupCache" value="">
+-->
+<div class='submit'>
+<input type='button' id='validate' value=" Check Your Lab ">
+<span id='score'>&nbsp;</span>
+<!--
+<input type="submit" id='submit' name="submit" value=" Submit Your Lab ">
+-->
+</div>
+</form>
+<!--
+<iframe id='post-results' name='google-result'>
+</iframe>
+-->
+    <div class="footer">
+        Materials on this web site © 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

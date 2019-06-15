@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Logical Operators</title>
+    <style type='text/css'>
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+        .green-alert h4 {
+            margin-top: 0;
+            margin-left: .2em;
+        }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Logical Operators</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+            <b><span class="cap">T</span>his week, the focus is on <i>logic</i></b>. Now, it's
+            your turn to get some practice writing your own <b>logical functions</b>.
+            Place your function inside
+            <code class='b'>CigarParty.java</code> which you'll find in this week's starter
+            folder.
+        </p>
+    <h3>Time for a Cigar Party</h3>
+        <p>
+            <b><span class='cap2'>I</span>n the first section this week</b>
+            you you learned how to write functions that used
+            <code>if</code> statements</b>. But, what if your function needs
+            to test several conditions? Well, you can use
+            Java's <b>logical</b> operators to combine several Boolean
+            conditions into a single test and use <b>that</b> as
+            your <code>if</code> condition.
+        </p>
+        <p> <img src="images/cigar.gif" class="right" alt="Cartoon cigar.">
+            Nick Parlente, the Stanford Computer Science professor who
+            hosts the <i>Nifty Assignments</i> panel at the annual
+            SIGCSE conference, is something of an expert on squirrels,
+            like those that hang around the OCC Computing Center.
+        </p>
+        <p> According to Nick, "when squirrels get together for a party,
+            they like to have cigars," much like Tom and Jerry from this
+            old cartoon created when I was a kid.
+        </p>
+        <p> Now, according to Nick, "a squirrel party is successful
+            when the number of cigars is between 40 and 60, inclusive.
+            Unless it is the weekend, in which case there is no upper
+            bound on the number of cigars."
+        </p>
+        <p> Let's use Java to write a function named <code>cigarParty()</code>
+            using the <code>if</code> statement to give our furry friends
+            some decision-making help. Here's the documentation for the
+            function:<br>
+            <img src='images/cigarparty00.gif' class='inlineCenter' alt='The cigarParty specs.'>
+            Just like the string functions you worked on earlier, this problem:
+        </p>
+        <ol>
+            <li class='d'>Tells you the <b>name</b> of the function you need
+                to write; in this case, <code>cigarParty</code>.
+            </li>
+            <li class='d'>Tells you the name and type of each parameter.
+                In this case, the first parameter, named <code>cigars</code>
+                is a number. (This doesn't tell you what <i>kind</i> of
+                number, but the examples section later on can provide some
+                additional hints.) The second parameter, <code>isWeekend</code>
+                is <code>true</code> or <code>false</code> so you know that
+                it has to be a <code>boolean</code>
+            </li>
+            <li class='d'>Tells you what kind of value the function is going
+                to return. Since this function returns <code>true</code> or
+                <code>false</code>, we know it's a <code>boolean</code>
+                function.
+            </li>
+        </ol>
+    <h4>Before Everything: Write a Skeleton</h4>
+        <p> At this point, without knowing anything else, you can write
+            a syntactically correct function, that compiles and can be
+            tested. Add your code at the section marked 6 in the previous
+            picture:<br>
+            <img src='images/cigarparty01.gif' class='inlineCenter' alt='The cigarParty skeleton.'>
+            Notice how we can write the header by knowing the return type,
+            name and parameters. We write the "skeleton" body by:
+        </p>
+        <ol>
+            <li class='d'>Creating a <code>result</code> variable of the same
+                type as the function return type and initializing it to some
+                value. (Usually <code>false</code>, <code>0</code> or the
+                empty <code>String</code>, depending on the function type.)
+            </li>
+            <li class='d'>Returning the <code>result</code> at the end of
+                the function.
+            </li>
+        </ol>
+        <p> Once this is done, you can run the <b>Check</b> program to
+            test the function. You'll see it passes some of the tests,
+            (since there are only two possible return types with a
+            Boolean function), but fails others. To complete the problem,
+            you'll need to go back to the problem description and
+            use some logic to actually solve the problem.
+        </p>
+
+    <h4>Attempt 1: One Condition at a Time</h4>
+        <p> Before we look at using the <b>logical</b> operators,
+            let's see if we can solve the problem the "old-fashioned
+            way". To do that, you just need to
+            break it into several discreet steps, and think of one part
+            of the problem at once. Let's just consider the upper bounds.
+        </p>
+        <p> Since our result starts
+            out as <code>false</code>, let's start by handling the
+            parameter <code>isWeekend</code>. If it's the weekend,
+            we know that there is no upper limit on the number of
+            cigars. Let's not worry about the lower limit just yet
+            and say that, if it's the weekend, the party is a
+            success.
+        </p>
+        <p> Here's the code we can use to implement that assumption:<br>
+            <img src="images/cigarparty04.gif" class="inline" alt="cigarParty solution step 1.">
+            When we submit the problem, you'll see that more than half of the
+            tests now pass:<br>
+            <img src='images/cigarparty05.gif' class='inlineCenter' alt='Testing after condition 1.'>
+        </p>
+    <h4>Attempt 2: Refine the Results</h4>
+        <p> Now we've handled the case where it's the weekend. Let's handle the
+            upper bounds when it's <b>not</b> a weekend. We know in that case,
+            our party will be successful if there are no more than 60 cigars.
+            Here's how we'd implement Step 2:<br>
+            <img src='images/cigarparty06.gif' class='inlineCenter' alt='cigarParty step 2.'>
+            When we submit the problem, you'll see that we now pass about 64% of the
+            tests. More importantly, the only tests we fail are those where the
+            number of cigars is less than 40:<br>
+            <img src='images/cigarparty07.gif' class='inlineCenter' alt='Testing cigarParty step 2.'>
+        </p>
+    <h4>Attempt 3: Handling the Failure</h4>
+        <p> Our two previous <code>if</code> statements took care of all of
+            the upper bounds conditions. We are correctly returning
+            <code>false</code> any time the squirrels are given more than
+            40 cigars on a weekday. Adding one last condition to <i>re-set</i>
+            the result back to <code>false</code> in those cases where there
+            are too few cigars, leaves us with this:<br>
+            <img src='images/cigarparty08.gif' class='inlineCenter' alt='cigarParty step 3.'>
+            Since that handles all the remaining problems, testing now shows no
+            errors:<br>
+            <img src='images/cigarparty09.gif' class='inlineCenter' alt='Testing cigarParty step 3.'>
+        </p>
+    <h4>Attempt 4: The Logical Operators</h4>
+        <p> Although you <b>can</b> solve most logic problems using
+            "brute force" like this, most of them will be much easier
+            (not to mention <b>shorter</b>), once you pull the logical
+            operators out of your toolbox.
+        </p>
+        <p> Notice that, in this case a party is successful if the
+            number of cigars is at least 40 and no more than 60
+            on the weekdays. We can combine that into a single
+            condition, like this:<br>
+            <img src='images/cigarparty10.gif' class='inlineCenter' alt='cigarParty with logical operators.'>
+            Notice the parentheses surrounding the last two relational
+            expressions. Remember that <code>&amp;&amp;</code> has higher
+            precedence than <code>||</code>. The parentheses make sure
+            that the last two conditions are checked first, and the result
+            (either it is the weekend or the maximum number of cigars is
+            not more than 60) is combined with the first condition (the
+            number of cigars is at least 40). If both of <b>those</b>
+            are true, then the party is a success.
+        </p>
+        <p> If you remove the parentheses, though, you are saying that
+            if the cigars are at least forty and it is the weekend,
+            or, if the cigars are not more than 60, the party is a success.
+            Of course that means that the party will be successful with
+            no cigars anytime, and a weekend party with a hundred cigars
+            would be a failure:<br>
+            <img src='images/cigarparty11.gif' class='inlineCenter' alt='cigarParty with logical operators, missing parentheses.'>
+            Who knew parentheses could be such a big deal?
+        </p>
+    <h4>A Final Simplification</h4>
+        <p> You'll notice that the solution for the Cigar Party first
+            creates a <code>result</code> variable, sets it to <code>false</code>
+            and then returns it. That's a good habit to get into when you
+            are first developing a function; working step-by-step to develop
+            a skeleton helps you to avoid skipping a step.
+        </p>
+        <p> After you finish, though, you may want to simplify things a
+            little, by just using the Boolean test expressions as the
+            return value for your function. After all, if the condition
+            is <code>true</code> you return <code>true</code>, and, if the
+            condition is <code>false</code> you return <code>false</code>.
+            That means you can rewrite <code>cigarParty()</code> like
+            this:<br>
+            <img src='images/cigarparty12.gif' class='inlineCenter' alt='cigarParty with predicate return value.'>
+            This is a very common form for Boolean or <b>predicate</b> functions.
+        </p>
+        <p> Once you have created the program, compile it and
+            then <b>Check</b> your results. Keep trying until you get a perfect
+            score.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

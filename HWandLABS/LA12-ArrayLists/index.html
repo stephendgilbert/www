@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Working with ArrayLists</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab Exercises</p>
+        <p id='lessonTitle'>Working with ArrayLists</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <b><span class="cap">W</span>e'll finish up our look at the
+            <code>ArrayList</code> class</b> by looking at some problems
+            which would be really difficult to do using regular arrays,
+            but are pretty easy with the <code>ArrayList</code> type.
+            As always, you should try to solve the
+            problems without looking at the solution. If you need help,
+            though, you'll find a video with all of the solutions, (including
+            those for the <code>ArrayList</code> homework assignments), at the
+            bottom of this page. As usual, if you need to look up
+            the solution, then when you are finished, try erasing what
+            you did, and doing it again from scratch.
+        </p>
+    <h3>Merge Two</h3>
+        <p> Write the function named <b><code>mergeTwo</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Start with two <code>ArrayList</code>s of <code>String</code>,
+                <code>A</code> and <code>B</code>, each with its elements
+                in alphabetical order and without any duplicates.
+                Return a new list containing the first <code>N</code>
+                elements from the two lists. The result list should be
+                in alphabetical order and without duplicates.
+                <code>A</code> and <code>B</code> will both have a size which
+                is <code>N</code> or more. Your solution should make
+                a single pass over <code>A</code> and <code>B</code>,
+                taking advantage of the fact that they are in alphabetical
+                order, copying elements directly to the new list.
+            </i>
+        </blockquote>
+        <div class='alert'>
+            <p>Remember, to see if one <code>String</code> is "greater than"
+                or "less than" another, you need to use the <code>compareTo()</code>
+                method, <b>not</b> the <code>&lt;</code> or <code>&gt;</code>
+                operators.
+            </p>
+        </div>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param a an ArrayList of String in alphabetical order.</code></li>
+            <li><code>@param b an ArrayList of String in alphabetical order.</code></li>
+            <li><code>@param n the size of the resulting list to return.</code></li>
+            <li><code>@return a list of n elements in alphabetical order.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>mergeTwo(["a", "c", "z"], ["b", "f", "z"], 3) returns ["a", "b", "c"]</code></li>
+            <li><code>mergeTwo(["a", "c", "z"], ["c", "f", "z"], 3) returns ["a", "c", "f"]</code></li>
+            <li><code>mergeTwo(["f", "g", "z"], ["c", "f", "g"], 3) returns ["c", "f", "g"]</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. </p>
+
+    <h3>Score Up</h3>
+        <p> Write the function named <b><code>scoreUp()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> The "key" list containing the correct answers to an exam,
+                like <code>["a", "a", "b", "b"]</code>. The "answers" list
+                contains a student's answers, with <code>"?"</code> representing a
+                question left blank. The two lists are not empty and
+                are the same length. Return the score for this list
+                of answers, giving <code>+4</code> for each correct answer, <code>-1</code>
+                for each incorrect answer, and <code>+0</code> for each blank answer.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param key a list of correct answers to an exam.</code></li>
+            <li><code>@param answers the student's answers to the exam.</code></li>
+           <li><code>@return the score as described above.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>scoreUp(["a", "a", "b", "b"[, ["a", "c", "b", "c"]) returns 6</code></li>
+            <li><code>scoreUp(["a", "a", "b", "b"], ["a", "a", "b", "c"]) returns 11</code></li>
+            <li><code>scoreUp(["a", "a", "b", "b"], ["a", "a", "b", "b"]) returns 16</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program.
+        </p>
+    <h3>Words Without</h3>
+        <p> Write the function
+            named <b><code>wordsWithout()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given an <code>ArrayList</code> of <code>String</code>,
+                return a new list where all the strings of the given
+                length are omitted.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param list the list of Strings to process.</code></li>
+            <li><code>@param n the size of words to remove.</code></li>
+            <li><code>@return a new list of words with the indicated size removed.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+       <ul>
+            <li><code>wordsWithout(["a", "bb", "b", "ccc"], 1) returns ["bb", "ccc"]</code></li>
+            <li><code>wordsWithout(["a", "bb", "b", "ccc"], 3) returns ["a", "bb", "b"]</code></li>
+            <li><code>wordsWithout(["a", "bb", "b", "ccc"], 4) returns ["a", "bb", "b", "ccc"]</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program.
+            </a>
+        </p>
+    <div class='alert'>
+        <p>After you <b>Check</b> each problem, then paste your code into the
+            appropriate text area in the PDF file. Then, when you are finished with
+            the lab, save and upload your PDF to Blackboard.
+            You may want to watch this video which covers all of the
+            <code>ArrayList</code> problems this week including the homework:
+                <a href='../../movies/S11-ArrayListProblems/S11-ArrayListProblems.html' target='_blank'>
+                    <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                    title='Click to watch video solution.'
+                    alt='Click to watch video solution.'>
+                </a>.
+        </p>
+    </div>
+    </div>
+    <div class="footer" style='width:750px;margin:auto;'>
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+
+</body>
+</html>

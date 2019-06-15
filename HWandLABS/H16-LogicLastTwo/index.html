@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>Logic and the Last Two</title>
+    <style type='text/css'>
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 2em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+        .green-alert h4 {
+            margin-top: 0;
+            margin-left: .1em;
+        }
+    </style>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercise</p>
+        <p id='lessonTitle'>Logic and Last Two</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">T</span>his week, the focus is on <i>logic</i></b>. Now, it's
+            your turn to get some practice writing your own <b>logical functions</b>.
+            Make sure that you've read <i>Section 6.3&mdash;Introducing Selction</i>
+            first. For this problem, I want you to write a function that
+            make decisions using the <code>if</code> statement.
+
+        </p>
+    <h3>The lastTwo Function</h3>
+        <p> Place your solution in <b>LastTwo.java</b>, which you'll find in this
+            chapter's code folder.
+            Here's the documentation for your function:<br>
+            <img src='images/lastTwo01.gif' class='inlineCenter' alt='The lastTwo specs.'>
+            Just like the functions you worked on earlier, this problem:
+        </p>
+        <ol>
+            <li class='d'>Tells you the <b>name</b> of the function you need
+                to write; in this case, <code>lastTwo</code>.
+            </li>
+            <li class='d'>Tells you the name and type of each parameter.
+                This function has only one <code>String</code> parameter,
+                named <code>str</code>.
+            </li>
+            <li class='d'>Tells you what kind of value the function is going
+                to return. This function returns a new <code>String</code>.
+            </li>
+        </ol>
+        <p> As with the other examples you've seen, there is also a
+            narrative explanation, and a few examples, but you really
+            don't need that to get started, do you?
+        </p>
+    <h4>Before Everything: Write a Skeleton</h4>
+        <p> At this point, without knowing anything else, you can write
+            a syntactically correct function, that compiles and can be
+            tested. Add your code at the section marked 6 in the previous
+            picture:<br>
+            <img src='images/lastTwo02.gif' class='inlineCenter' alt='The lastTwo skeleton.'>
+            Notice how we can write the header by knowing the return type,
+            name and parameters. We write the "skeleton" body by:
+        </p>
+        <ol>
+            <li class='d'>Creating a <code>result</code> variable of the same
+                type as the function return type and initializing it to some
+                value. (Usually <code>false</code>, <code>0</code> or the
+                empty <code>String</code>, depending on the function type.)
+            </li>
+            <li class='d'>Returning the <code>result</code> at the end of
+                the function.
+            </li>
+        </ol>
+        <div class='alert'>
+            <p>Note that you don't <b>have</b> to use the <code>static</code> keyword on
+                your functions. You don't need it if all of your testing is
+                going to be with the DrJava <b>Check</b> program. If you want to add
+                a <code>main()</code> method and <b>call</b> your function
+                from that <code>main()</code> method, then you will need
+                to add the <code>static</code> keyword. <b>Check</b>
+                will work fine either way.
+            </p>
+        </div>
+        <p> Once this is done, you can run the <b>Check</b> program to
+            test the function. You'll see it passes at least one of the tests,
+            but fails all the others.<br>
+            <img src='images/lastTwo03.gif' class='inlineCenter' alt='Testing the lastTwo skeleton.'>
+            To complete the problem,
+            you'll need to go back to the problem description and
+            use some logic to actually solve the problem.
+        </p>
+    <div class='green-alert'>
+        <h4>Sanity Check First</h4>
+        <p> Suppose, when writing the skeleton for your function, you had
+            written <code>public static <b>void</b> lastTwo...</code>,
+            using <code>void</code> for the return type, instead of
+            <code>String</code>, as the problem requires.
+        </p>
+        <p> Although your code would compile, I can't actually test it
+            correctly, since the test program expects a <code>String</code>
+            result, but you've supplied nothing.<br>
+            <img src='images/sanity.png' class='inlineCenter' alt='Running the "sanity checks"'>
+            To check this, the <b>first four tests</b> every time you
+            <b>Check</b> a function, are <i>sanity check</i> tests. The
+            test to see if you've spelled the name correctly, you've
+            made your function public, you have the correct return type,
+            and you've passed the correct number and type of parameters.
+        </p>
+        <p> If any of these first four checks fail, <b>you must fix that
+            before going on</b>. None of the other checks will work until
+            those four are correct.
+        </p>
+
+    </div>
+    <h4>Handle the Normal Logic</h4>
+        <p> Rather than thinking about the exceptional situations, try to
+            figure out how to solve the "normal" situation. What steps would
+            you need to perform, for instance, if every input <code>String</code>
+            was guaranteed to be at least two characters long?
+        </p>
+        <p> Well, that's pretty straightforward. Here's some code that
+            does it:<br>
+            <img src='images/lastTwo04.gif' class='inlineCenter' alt='The lastTwo function.'>
+        </p>
+        <ol>
+            <li class='d'>First, find out how long the input <code>String</code>
+                is and store that in a variable. We can use the <code>String
+                length()</code> function for that.
+            </li>
+            <li class='d'>Next, use the <code>substring()</code> method, along
+                with the length to grab the front part of the input string;
+                everything except for the last two characters.
+            </li>
+            <li class='d'>To grab the last two characters, we can use the
+                <code>String charAt()</code> method and store the results
+                in another pair of variables: <code>char</code> variables
+                this time. (Remember that the last character is at position
+                length - 1 and the next-to-last character will be at
+                length - 2).
+            </li>
+            <li class='d'>Finally, we can put everything together by using
+                concatenation, simply reordering the last and next-to-last
+                characters when the result is reassembled.
+            </li>
+        </ol>
+        <p> When we run the tests this time, you'll see that all of them
+            pass except two. As you can see from the picture, these are the
+            tests where the input <code>String</code> is less than two
+            characters long:<br>
+            <img src='images/lastTwo05.gif' class='inlineCenter' alt='Testing the normal lastTwo() method.'>
+            <b class='ry'>This is where we need the <code>if</code> statement</b>.
+        </p>
+    <h4>Handling Unusual Input</h4>
+        <p> Since the failed tests only occur when the length of the
+            input <code>String</code> is less than two, we can add an
+            <code>if-else</code> statement to only perform the normal
+            processing when the input has adequate characters. If the
+            input <code>String</code> is too short, we'll just set
+            result equal to the original input.
+        </p>
+
+        <p> Once you have created the program, compile it and
+            then <b>Check</b> your results. Keep trying until you get a perfect
+            score.
+        </p>
+        <!--
+        <div class='alert'>
+        <p> After you <b>Check</b> H16, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the assignment, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the assignments after the submission
+            deadline has passed, but your scores <b>won't</b> be recorded.
+        </p>
+        </div>
+        -->
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

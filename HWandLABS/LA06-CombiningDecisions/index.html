@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+    </style>
+    <title>Combining Decisions</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Lab Exercises</p>
+        <p id='lessonTitle'>Combining Decisions</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+        <p><span class="cap">Y</span>ou can get some extra practice
+            with the logical operators</b> by completing these
+            <i>predicate</i> functions. To get started, make sure you have
+            read <i>Section 6.4&mdash;Logical Operators</i>, and completed <i>Cigar Party</i>.
+            That will get you started so you can continue with these problems.
+        </p>
+        <p> Here are three function exercises that will give you
+            some practice.
+        </p>
+        <div class='green-alert'>
+            Complete these problems using <b>if</b> statements along
+                with the binary Boolean operators like <b>&amp;&amp;</b> and
+                <b>||</b>, along with the <b>not</b> operator (<b>!</b>).
+        </div>
+    <h3>Near Hundred</h3>
+        <p> Write the function named <b><code>nearHundred()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i>Given an <code>int n</code>, return <code>true</code> if it is
+                <b>within 10</b> of 100 or 200. Note <code>Math.abs(n)</code>
+                returns the absolute value of a number.
+            </i>
+        </blockquote>
+        <p>Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>param n is the int passed as a parameter.</code></li>
+            <li><code>@return true if n is within 10 of 100 or 10 of 200.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>nearHundred(93) returns true</code></li>
+            <li><code>nearHundred(90) returns true</code></li>
+            <li><code>nearHundred(89) returns false</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/warmup1-nearHundred/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+        <div class='alert'>
+            <p> Remember that many of my videos for the function exercises that we
+                will do in this class make use of the <b>Codingbat.com</b> Web site
+                put up by Nick Parlante at Stanford. When <b>you</b> do the
+                exercise in DrJava, you will need to write the method heading
+                yourself, something that Coding.bat does for you.
+            </p>
+        </div>
+    <h3>Red Ticket</h3>
+        <p> Write the function named <b><code>redTicket()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i>You have a red lottery ticket showing <code>int</code>s
+                <code>a</code>, <code>b</code>, and <code>c</code>,
+                each of which is <code>0</code>, <code>1</code>, or <code>2</code>.
+                If all of the numbers have the value <code>2</code>, then
+                the payout is <code>10</code>. Otherwise, if they are
+                all the same, the payout is <code>5</code>. Otherwise,
+                so long as <b>both</b> <code>b</code> and <code>c</code>
+                are <b>different</b> from <code>a</code>, then the payout
+                is <code>1</code>. Otherwise, the payout is <code>0</code>.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param a first number on the ticket.</code></li>
+            <li><code>@param b second number on the ticket.</code></li>
+            <li><code>@param c third number on the ticket.</code></li>
+            <li><code>@return payout (integer) as described above.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>redTicket(2, 2, 2) returns 10</code></li>
+            <li><code>redTicket(2, 2, 1) returns 0</code></li>
+            <li><code>redTicket(0, 0, 0) returns 5</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/logic-redTicket/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <h3>In One To Ten</h3>
+        <p> Write the function named <b><code>in1To10()</code></b>. Here are the
+            specifications:
+        </p>
+        <blockquote>
+            <i> Given a number <code>n</code>, return <code>true</code> if
+                <code>n</code> is in the <b>range</b> <code>1..10</code>,
+                inclusive. <b>Unless</b> "outsideMode" is <code>true</code>,
+                in which case return <code>true</code> if the number is less
+                or equal to <code>1</code>, or greater or equal to <code>10</code>.
+            </i>
+        </blockquote>
+        <p> Here are the Javadoc tags:</p>
+        <ul>
+            <li><code>@param n the number to compare.</code></li>
+            <li><code>@param outsideMode if true, change the way the calculation is done.</code></li>
+            <li><code> @return true if n meets the conditions above.</code></li>
+        </ul>
+        <p> Here are some examples:</p>
+        <ul>
+            <li><code>in1To10(5, false) returns true</code></li>
+            <li><code>in1To10(11, false) returns false</code></li>
+            <li><code>in1To10(11, true) returns true</code></li>
+        </ul>
+        <p> Test your function with the <b>Check</b> program. If you run into
+            difficulty, you may want to watch this video:
+            <a href='../../movies/logic-in1To10/index.html' target='_blank'>
+                <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a>
+        </p>
+    <!--
+    <div class='alert'>
+        <p>After you <b>Check</b> each problem, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the lab, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the lab assignments after the lab period,
+            but your scores <b>won't</b> be recorded after class is over.
+        </p>
+    </div>
+    -->
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <title>Multiple Choice</title>
+    <style type='text/css'>
+        .green-alert {
+            width: 90%;
+            margin: 1em;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #090;
+            background-color: #CFC;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #CCC;
+            font-family: georgia, garamond, serif;
+            font-style: italic;
+        }
+        .green-alert h4 {
+            margin-top: 0;
+            margin-left: .2em;
+        }
+        .cap { font-family:'special elite'; }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Multiple Choice</p>
+    </div>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap">N</span>ow, let's look at a problem that requires
+            you to handle several different branches</b>. In DrJava, open up
+            <code class='b'>DateFashion.java</code> which is part of this chapter's code folder.
+            For your homework assignment, you'll simulate the thorny problem of
+            getting a table at a tony restaurant, by writing the function
+            <code>dateFashion()</code>.
+        </p>
+    <h3>Are You Stylish?</h3>
+        <p> <img src='images/fashion.png' class='right' style='margin-top:-3em;' alt='Yes, no or maybe?'>
+            For this problem, you and your date are trying to get a table at
+            a restaurant. The parameter "you" is the stylishness
+            of your clothes, in the range 0 to 10, and "date" is
+            the stylishness of your date's clothes. The result
+            getting the table is encoded as an int value with 0
+            meaning no, 1 meaning maybe, and 2 meaning yes.
+        </p>
+        <p> If either of you is <i>very</i> stylish, (8 or more), then
+            the result is 2 (definitely a yes!). There's one little exception,
+            though: if either of you has style of 2 or less, then the result
+            is 0 (no). Otherwise  the result is 1 (maybe).
+        </p>
+    <h4>Step 1: The Skeleton</h4>
+        <p> Before you get too emotionally wrapped up in whether or not
+            you're going to get into the restaurant, take a deep breath,
+            relax, and, just like you've done with every other method,
+            <b>write the skeleton</b>:<br>
+            <img src='images/dateFashion-skeleton.gif' class='inlineCenter' alt='The dateFashion skeleton.'>
+            As with all methods:
+        </p>
+        <ol>
+            <li class='d'>Start with the header. Since this function will return 0, 1, or 2,
+                the return type should be <code>int</code>. Both parameters, <code>you</code>
+                and your <code>date</code> will also be <code>int</code> parameters,
+                since they'll contain the stylishness of your clothes (0..10).
+            </li>
+            <li class='d'>The next step is always to create the return variable. Since
+                this function returns an <code>int</code>, create an <code>int</code>
+                variable named <code>result</code> and set it to 0. (That doesn't mean
+                that you're a pessimist, assuming you won't get in; it just means you
+                have to set the default return type to something!)
+            </li>
+            <li class='d'>Finally, to make the function <b>syntactically correct</b>,
+                you need to end the function with a <code>return</code> statement
+                as shown here.
+            </li>
+        </ol>
+        <p> Now that you've created the skeleton, you can try out the <b>Check</b>
+            program tests to see what you need to fix:<br>
+            <img src='images/check-results01.gif' class='inlineCenter' alt='First-pass check results.'>
+            Wow 50% Of course we only passed for the times we were turned down
+            for a table, so that's kind of depressing.
+        </p>
+    <h4>Step 2: Turned Down</h4>
+        <p> It might seem silly to check for a situation where we're turned
+            down, since we already <b>passed</b> all of those tests. However,
+            the other tests really rely on the fact that neither you nor your
+            date have committed a fashion faux-pas.
+        </p>
+        <p> Here's what the first-pass condition should look like:</p>
+        <pre style='font-size:1.1em;'>if (date &lt;= 2) result = 0;
+else if (you &lt;= 2) result = 0;</pre>
+        </p> Of course, there's no reason testing again, since all the answers
+            are still zero.
+        </p>
+    <h4>Step 3: Very Stylish</h4>
+        <p> Now that we've eliminated any chance of getting turned down, though,
+            we can look at our two remaining options. The easiest to handle is
+            if we are very stylish. It's important to add this as a "ladder" or
+            <code>else if</code> statement, and not as another <code>if</code>
+            or as an <code>else</code>.
+        </p>
+        <p> Here's the code for this step:</p>
+        <pre style='font-size:1.1em;'>if (date &lt;= 2) result = 0;
+else if (you &lt;= 2) result = 0;
+else if (date &gt;= 8) result = 2;
+else if (you &gt;= 8) result = 2;</pre>
+        </p>Now, if you run the tests, you'll see that only the maybe cases
+            are left:<br>
+            <img src='images/check-results02.gif' class='inlineCenter' alt='Second-pass check results.'>
+        </p>
+    <h4>Step 4: Maybe</h4>
+        <p> Since we've taken care of both the stylish and the "off" days,
+            it's time to handle the normal case: not too marvelous and not
+            too dorky, but just right. Since that's <b>everything else</b>,
+            you <b>don't</b> use <code>else if</code>, but end the sequence
+            with an <code>else</code>.
+        </p>
+    <h4>Formatting Options</h4>
+        <p> As I mentioned earlier, you don't <b>need</b> to use braces if
+            the body of your <code>if</code> statements contains only a
+            single line. However, if you don't use braces, you should generally
+            try to keep the statement on one line, as I've done here.
+        </p>
+        <p> Once you have created the program, compile it and
+            then <b>Check</b> your results. Keep trying until you get a perfect
+            score.
+        </p>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body></html>

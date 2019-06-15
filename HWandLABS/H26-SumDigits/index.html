@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>Sum Digits</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercise</p>
+        <p id='lessonTitle'>Summing Digits</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap2">I</span>n <i>Section 9.2&mdash;Java's Jumps</i></i></b>,
+            you learned how to use the <code>break</code> and <code>continue</code>
+            statements to "fine-tune" the operation of your loops.
+            Let's put the <code>continue</code> statement to work solving
+            a problem you met earlier in the semester, <b>SumDigits</b>.
+        </p>
+
+    <h3>Summing Digits by Jumping</h3>
+        <p> Let's look at an example from where you might want to
+            use the <code>continue</code> statement with a <code>for</code>
+            loop. We've already seen two programs that sum the digits in
+            an integer. How about summing the digits in a <code>String</code>?
+        </p>
+        <p> Well, that's easy. To turn a <code>String</code> containing digits
+            into an integer, you can use the <code>Integer.parseInt()</code>
+            method. You can walk through the <code>String</code> with a
+            <code>for</code> loop, extracting each single-character
+            digit substring. Use <code>Integer.parseInt()</code> on the substring,
+            and add that to the running total.
+        </p>
+        <p>There are two complications, though:</p>
+        <ul>
+            <li>all of the characters inside the <code>String</code>
+                <b>may not be digits</b>. If a character <b class='ry'>isn't a digit</b>,
+                then you'll want to skip it.
+            </li>
+            <li>our plan depends on extracting single-character substrings,
+                but the <code>Character.isDigit()</code> method, which we
+                need to use to determine if an individual character is a
+                digit, takes a <code>char</code> parameter, not a
+                <code>String</code>.
+            </li>
+        </ul>
+        <p> Neither of these are huge problems, but they mean that the
+            code is a little bit more complex than the original plan
+            would suggest. The <code>continue</code> statement can make
+            the solution a little simpler. Open <b>SumDigits.java</b>
+            in this chapter's code folder, and find the problem summary:<br>
+            <img src='images/sumdigits07.gif' class='inlineCenter' alt='The sumDigits problem statement.'>
+    <h4>The Solution</h4>
+        <p> The first step in solving this problem is to put in the
+            "boiler-plate" skeleton code; that is, the code you really don't
+            need to think about. Here's what that looks like:<br>
+            <img src="images/sumdigits08.gif" class="inlineCenter" alt="The sumDigits function with boilerplate code.">
+            Notice that:
+        </p>
+        <ol>
+            <li class="d">As with any function, our first step is to
+                create and initialize a variable to hold the returned
+                value (<code>result</code> in this case), and then add a
+                <code>return</code> statement at the end of the function.
+            </li>
+            <li class="d">Since we need a loop, the next step is to determine
+                the loop bounds. As with most <code>String</code> functions,
+                you'll use the length as a count bounds. Since we are
+                going to visit every character, we don't need to subtract
+                anything from the length, like we would if we were comparing
+                substrings of different lengths.
+            </li>
+            <li class="d">Finally, we need to add the "reading" or data input
+                part. We know that we'll need to process each character,
+                so we can use the <code>charAt()</code> function like this.
+            </li>
+        </ol>
+    <h4>Using continue</h4>
+        <p> Now that we have a character, we have two choices. If it is
+            a digit, we want to convert it to an integer and add it to
+            a sum. If it is anything else, we want to just ignore it and
+            go get the next character.
+        </p>
+        <p> This is where the <code>continue</code> statement comes into
+            play. Use the <code>Character.isDigit()</code> method to check
+            if the character is a digit. If it is <b>not</b>, the
+            <code>continue</code> statement sends you right back up
+            to the loop update expression, like this:<br>
+            <img src="images/sumdigits09.gif" class="inlineCenter" alt="The sumDigits function with the continue.">
+        </p>
+    <h4>Converting the Digit: Two Methods</h4>
+        <p> At this point, we know that the character is a digit,
+            and so we want to convert it to an integer, and add
+            that integer to the sum. (Don't just add the character
+            to the sum. The numeric Unicode value of the digit '1'
+            is 49, and that is what would be added. You won't get
+            the answer that you expect.)
+        </p>
+        <p>To convert your digit to an integer, you can use
+            <code>Integer.parseInt()</code> like this:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            sum += Integer.parseInt("" + ch);
+        </p>
+        <p> Note you have to use <code>String</code> concatenation
+            because <code>Integer.parseInt()</code> only accepts
+            <code>String</code> parameters.
+        </p>
+    <h4>Method 2: Character Arithmetic</h4>
+        <p> Another alternative is to take advantage of the fact that
+            all of the digit characters are <b>contiguous</b>, located
+            right next to each other in the Unicode (or any other
+            character set.) Since <code>char</code> variables are actually
+            16-bit numbers, you can use them in arithmetic expressions,
+            including subtraction.
+        </p>
+        <p> Now, suppose <code>ch</code> contains the digit character
+            zero. If you subtract the <code>char</code> literal
+            <code>'0'</code> from <code>ch</code> you'll get the
+            <b>integer</b> value 0. The same thing works for the
+            other digit characters, since they are right next to
+            each other in the character set.
+        </p>
+        <p> Thus, instead of using concatenation and
+            <code>Integer.parseInt()</code>, you can just do the
+            conversion and the addition like this:<br>
+            <img src="images/sumdigits10.gif" class="inlineCenter" alt="The sumDigits function with the conversion.">
+            Go ahead and run <b>Check</b>,
+            and all of your tests should now pass.
+        </p>
+        <!--
+        <div class='alert'>
+        <p> After you <b>Check</b> the homework, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the assignment, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the assignments after the submission
+            deadline has passed, but your scores <b>won't</b> be recorded.
+        </p>
+        </div>
+        -->
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

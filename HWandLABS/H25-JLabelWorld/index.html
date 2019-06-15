@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>JLabel World</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercise</p>
+        <p id='lessonTitle'>JLabel World</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap2">I</span>n <i>Section 8.5&mdash;Meet
+            the Widgets</i></i></b>, you learned the <i>theory</i> behind
+            Java's Widget library called Swing. But, as I mentioned in
+            the lesson,  there
+            <b class='ry'>is no real Widget class</b>. Now that you've
+            seen the pattern, though, you can apply it to the first,
+            and one of the simplest, of the real <b>JFC</b> core components,
+            the <code>JLabel</code>.
+        </p>
+        <div class='info'>
+        <p> Before you start this assignment, make sure you have read
+            <i>Section 8.5&mdash;Meet the Widgets</i>.
+        </p>
+        </div>
+
+    <h3>Swing Widgets&mdash;JLabelWorld</h3>
+        <img src='images/labelworld02.gif' class='right' alt='The JLabelWorld app.'>
+        <p> The <code>JLabel</code> class defines a set of objects that:
+        </p>
+        <ul>
+            <li> can hold a single line of text.</li>
+            <li> know how to display themselves</li>
+            <li> can be positioned and moved around the screen.</li>
+            <li> contains a surprising amount of information about their appearance,
+                such as font size, text color, alignment, and so on.
+            </li>
+        </ul>
+        <p> The <code>JLabel</code> is <b>very similar</b> to the ACM <code>GLabel</code>
+            class, but with a few differences: a <code>JLabel</code> has a background
+            and can display images, for instance. Also, <code>JLabel</code> objects
+            use their upper-left corner for positioning, while <code>GLabel</code>
+            object use the <i>text baseline</i>, like the <code>drawString()</code>
+            method does.
+        </p>
+    <h4>Step 1: Create JLabelWorld</h4>
+        <p> For our first example, we're going to modify <b>WidgetWorld.java</b>
+            to use the <code>JLabel</code> class. Here are the steps to follow:
+        </p>
+        <ol>
+            <li class='d'>Save <b>WidgetWorld.java</b> as
+                <b>JLabelWorld.java</b> in the same folder as <b>WidgetWorld.java</b>.
+            </li>
+            <li class='d'>Change the class name from <code>WidgetWorld</code>
+                to <code>JLabelWorld</code>.
+            </li>
+            <li class='d'>Finally, use DrJava's search and replace feature to replace each
+                instance of the word "Widget" with the word "JLabel". Make sure you check
+                "Match Case" and "Whole World" when you search and replace as shown here:<br>
+                <img src='images/replace.gif' class='inlineCenter' alt='Changing JLabelWorld Widgets.'>
+            </li>
+        </ol>
+        <p> Here's what you get when you're done:<br>
+            <img src="images/widget07.gif" class="inlineCenter" alt="Adding JLabels.">
+        </p>
+    <h4>JLabel Constructors</h4>
+        <p> Now, if you compile and then run the <b>JLabelWorld</b> program, you'll
+            see that it
+            compiles and runs just fine. The only problem is, <b class='ry'>it doesn't
+            look like much</b>, since we've used the no-argument constructor
+            for each of the <code>JLabel</code> objects.
+            The <code>JLabel</code> class actually has
+            <b>six different constructors</b> that you can use.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JLabel()<br>
+            JLabel(String message)<br>
+            JLabel(String message, int alignment)
+        </p>
+
+        <p>The first three constructors, shown here, are used for creating
+            labels that display text values:
+        </p>
+        <ul>
+            <li>Use the first constructor, the one that takes no parameters, if
+                you intend to modify the message displayed as your program
+                runs, but don't have a valid message when the program first
+                starts up. If your <code>JLabel</code> object is going to
+                display the results of a calculation, for instance, you
+                might not want to display <b>anything</b> until the calculation
+                is complete.
+            </li>
+            <li>The second constructor is the most common. Simply provide
+                a message when you construct your <code>JLabel</code>, and the
+                object itself will take care of the painting chores.
+            </li>
+        </ul>
+        <p> Using this info, change the sample code so that it
+            actually displays something by rewriting the label-creation
+            line as so:<br>
+            <img src="images/widget08.gif" class="inlineCenter" alt="The JLabel(String) constructor.">
+        </p>
+    <h4>Where's the Background?</h4>
+        <p> One difference between the Swing <code>JLabel</code> and its AWT cousin is that
+            Swing labels don't automatically have an opaque background. If you want the
+            label's background color to show up, you need to use the <code>setOpaque()</code>
+            method, as I've done here:
+            <img src="images/widget09.gif" class="inlineCenter" alt="The JLabel(String) constructor.">
+        </p>
+    <h4>Changing the Font?</h4>
+        <p> You can change the font used by your <code>JLabel</code> by calling its
+            <code>setFont()</code> method, passing in a <code>Font</code> object.
+            Unlike the ACM <code>GLabel</code> class, you <b>can't</b> pass a
+            <code>String</code> parameter, but you <b>can</b> call the
+            <code>Font.decode()</code> method to get the same effect.
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            myWidget.setFont(Font.decode("Serif-bold-18"));
+        </p>
+    <h4>JLabel Alignment</h4>
+        <p> The last of the three "text" constructors allows you to
+            change the <b>alignment</b> of the
+            message within the <code>JLabel</code> object itself. You do
+            that by passing a second argument, which must be one of these
+            <b>class constants</b>:</p>
+            <ul>
+                <li><code>JLabel.LEFT</code></li>
+                <li><code>JLabel.CENTER</code></li>
+                <li><code>JLabel.RIGHT</code></li>
+            </ul>
+        <p> Be careful with the spelling of these constants. Note that the
+            class name is proper-case, while the constant name is upper-case.
+            You must spell the constant correctly for this to work.
+            If you use either of the other two constructors, they
+            automatically use the <code>JLabel.LEFT</code> alignment.
+        </p>
+        <div class='alert'>
+        <p>Students are frequently frustrated when trying to
+            use the alignment constants because they don't do exactly what
+            you'd expect. Specifying <code>JLabel.CENTER</code>, for instance,
+            does <b>not</b> center the label on the program; instead, it
+            centers the text inside the label. Since the <code>JLabel</code>
+            objects normally size themselves according the text they
+            display, the effect is very hard to see. If you make the
+            label very wide, however, it becomes apparent.
+        </p>
+        </div>
+    <h4>JLabels with Images</h4>
+        <p> In addition to the three "text-only" constructors, three
+            additional constructors let you create <code>JLabel</code>s that
+            incorporate images, either alone or along with some text:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            JLabel(Icon icon)<br>
+            JLabel(Icon icon, int alignment)<br>
+            JLabel(String message, Icon icon, int alignment)
+        </p>
+        <p> Note that each of these requires you to supply an <code>Icon</code>
+            parameter, <b>not a <code>String</code></b> like you did with
+            the <code>GImage</code> class.
+        </p>
+        <p> So, how do you create an <code>Icon</code> object? It's actually
+            pretty easy using Java's <code>ImageIcon</code> class, although
+            it <b>is</b> more complicated than using <code>GImage</code>
+            which hides some of the complexity from you (just like
+            <code>GLabel</code> hides the complexity of changing fonts).
+        </p>
+    <h4>ImageIcon</h4>
+        <p> The <code>ImageIcon</code> class makes creating images
+            easy by preloading the images automatically. There are nine
+            <code>ImageIcon</code> constructors, but the one which you'll
+            use most often is this one:
+        </p>
+
+        <p class="code" style='font-size:1.25em;'>
+            ImageIcon(String filename);
+        </p>
+        <p> Using this constructor, creating an <code>ImageIcon</code> is as
+            easy as:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            ImageIcon one = new ImageIcon("car1.gif");<br>
+            ImageIcon two = new ImageIcon("images/car2.gif");
+        </p>
+        <p> The first example loads the image from a file
+            in the current directory, while the second loads the image from the
+            <b>images</b> subdirectory, immediately beneath the current directory
+            where your program is running.
+        </p>
+        <div class='info'>
+        <p>Note the use of forward slashes, even on machines, such as
+            Windows and Mac, which use different path separators.
+        </p>
+        </div>
+        <p> This constructor assumes that your application's
+            images are stored as "standalone" files. "Real" Java applications,
+            though, usually "zip up" all of their files into a Java Archive, or
+            JAR file. When you do that, the <code>ImageIcon</code> constructor
+            shown here stops working.
+            In those cases, you can use this "magic incantation" which searches
+            through the program's class path (including inside JAR files),
+            and loads the image if it can be found:
+        </p>
+        <p class="code" style='font-size:1.25em;'>
+            new ImageIcon(getClass().getResource("Car1.GIF"));
+        </p>
+        <p> Since this code works equally well for stand-alone images as
+            for those packaged inside JAR files, you should probably use
+            this code for all of your <code>ImageIcon</code> constructors.
+            The <code>GImage</code> class uses some code like this
+            "under the hood".
+        </p>
+        <p> Here's a change to the <b>JLabelWorld</b> program so that
+            <code>myWidget2</code> uses the three-parameter constructor
+            to display both an image as well as a description of the
+            image, while the anonymous <code>JLabel</code> uses the
+            "icon only" constructor to display an image of a playing card:
+            <img src="images/widget10.gif" class="inline" alt="Using images in JLabels.">
+            <img src="images/widget11.gif" class="right" alt="Displaying the labels with images.">
+            Notice that when the program runs, the panel that contains the
+            <code>JLabel</code> <b>expands</b> to contain the largest label
+            (the label using the "Ace of Spades" image).
+        </p>
+        <p> Note also that the label with the opaque background also expands
+            so that it is the same height as the other labels.
+        </p>
+    <h4>Image and Text Alignment</h4>
+        <p> The <code>JLabel</code> class has the ability to specify
+            <b>both</b> the horizontal and vertical alignment of the label
+            contents. In addition, you can specify the horizontal and
+            vertical position of the text (relative to the image), and the
+            spacing that should appear between the text and the image
+            (if any).
+        </p>
+        <p> To see how this works, let's rearrange the contents of
+            the Range Rover <code>JLabel</code>:<br>
+            <img src="images/widget13.gif" class="inline" alt="Aligning the car label.">
+        </p>
+        <ol>
+            <li class="d">
+                <img src="images/widget12.gif" class="right" alt="Displaying the aligned label.">
+                We can align the
+                <b>icon</b> at the top and center of the <code>JLabel</code>,
+                using <code>setVerticalAlignment()</code> and
+                <code>setHorizontalAlignment()</code>.
+            </li>
+            <li class="d"> Then, we can align the text separately by using the
+                <code>setHorizontalTextPosition()</code> and
+                <code>setVerticalTextPosition()</code> methods.
+            </li>
+            <li class="d"> Finally, we can set the spacing between the text and the image on the
+            <code>JLabel</code> by using the <code>setIconTextGap()</code> method.
+            </li>
+        </ol>
+
+        <div class='alert'>
+        <p> Make sure you <b class='ry'>DO NOT</b> add code shown in the
+            very last section of <i>Section 8.5&mdash;Meet the Widgets</i>,
+            which adds a Widget directly to the <code>GCanvas</code> itself.
+            You <b class='ry'>SHOULD NOT</b> have the section marked <br />
+            <span class='cmt'>// 6. Add a Widget to the program's canvas</span><br />
+            in your program.
+        </p>
+        <!--
+        <p> After you <b>Check</b> the homework, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the assignment, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the assignments after the submission
+            deadline has passed, but your scores <b>won't</b> be recorded.
+        </p>
+        -->
+        </div>
+    <div class="box">
+        <img src='../images/dragnet3.png' class='leftCorner' alt='Dragnet.'>
+        <p class='title'>
+           JLabelWorld Homework Summary
+        </p>
+        <ul>
+            <li> The <code>JLabel</code> class is similar to the ACM <code>GLabel</code>
+                class. A <code>JLabel</code> can hold a single line of text which
+                is automatically displays. Like <code>GLabel</code> you can change
+                the font and color; unlike <code>GLabel</code> you can also display
+                an icon and a background along with your text.
+            </li>
+            <li> <code>JLabel</code> objects are <b>normally transparent</b>. To
+                display their background, call the <code>setOpaque()</code> method.
+                Change the color with <code>setForeground()</code> and
+                <code>setBackground()</code>, and the font with <code>setFont()</code>.
+            </li>
+            <li> The <b>alignment of a <code>JLabel</code></b> refers to the position of
+                the text inside the label object itself, not the position of the
+                label on the screen.
+            </li>
+            <li> To create a <code>JLabel</code> <b>with images</b>, use one
+                of the constructors that take an <code>Icon</code> parameter. To
+                create the argument when calling the method, use the
+                <code>ImageIcon</code> class.
+            </li>
+            <li> When constructing an <code>ImageIcon</code> your code will be
+                more robust if you use the longer <code>getClass().getResource()</code>
+                method to retrieve the image. This works even after the images
+                for your program have been archived into a single executable.
+            </li>
+            <li> When you have <b>both text and images</b> on a <code>JLabel</code>,
+                you can position each element and control the spacing between them
+                by using the different methods, such as <code>setVerticalTextPostion()</code>
+                and <code>setIconTextGap()</code>.
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../cs17017.css" type="text/css" rel="stylesheet">
+    <style type='text/css'>
+        .media {
+            width: 550px;
+            margin: auto;
+            box-shadow: 6px 6px 12px #CCC;
+        }
+    </style>
+    <title>An Animated PacMan</title>
+</head>
+<body>
+<div id='page'>
+    <div id='lessonBanner' class="banner01">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonTitle'>Animation&mdash;Pac Man</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine' style='margin-top:0;'>
+        <p><span class="cap">I</span>n class, you learned how to apply
+            loops to the process of animation</b>. Let's put that to
+            work, (and, get a little more practice building graphical
+            applications), by writing an animated version of the
+            arcade-game PacMan character.
+        </p>
+    <h3>Animating PacMan</h3>
+        <p> The title character in the PacMan series of arcade games
+            is pretty easy to draw using a yellow-filled <code>GArc</code>.
+            Using the starter code from your <code class='b'>Week04</code> folder (which just
+            creates the window the correct size), add a PacMan character
+            at the far left side of the screen. Use the standard
+            animation skeleton to move him to the right side, where he'll reverse
+            course and start chomping his way back to the left.<br>
+            <img src='images/pacman.png' class='inlineCenter' alt='The PacMan application.'>
+        </p>
+    <h4>Step 1: Get the PacMan Displayed</h4>
+        <p> To get started, you'll need to create some instance variables.</p>
+        <ul>
+            <li>You'll need a <code>GArc</code> to represent the PacMan
+                character.
+            </li>
+            <li>You'll need a <code>double</code> variable, <code>dx</code>
+                to represent how far the PacMan moves during each frame.
+            </li>
+            <li>You'll need two <code>double</code> variables, <code>startAngle</code> and
+                <code>sweepAngle</code> to tell you where to start the
+                "mouth", and how far it should be opened or closed.
+            </li>
+            <li> You'll need a <code>double</code> variable <code>mx</code>
+                that represents how much the mouth should open or close
+                on each frame of the animation.
+            </li>
+        </ul>
+        <p> Finally, you'll need a constant for <code>MOUTH</code> set to
+                <code>90.0</code>. This is the widest that the mouth can get before
+                you need to change directions.
+        </p>
+        <p> Inside your <code>init()</code> method, initialize your
+            PacMan variable by creating a <code>GArc</code> object,
+            (make it about half or three-quarters the height of the
+            application). Initialize <code>startAngle</code> to
+            <code>45</code>, <code>sweepAngle</code> to
+            <code>360 - MOUTH</code>, and use those for the last
+            two arguments to your <code>GArc</code> constructor.
+        </p>
+        <p> Set the fill color to yellow, and make sure your <code>GArc</code>
+            is displayed as filled. Then, add it to the left side of your
+            application, in the vertical center of the app.
+        </p>
+    <h4>Step 2: Moving the Pac Man</h4>
+        <p> To move the PacMan, add the standard animation skeleton to
+            the <code>run()</code> method. Inside each frame:
+        </p>
+        <ul>
+            <li>Move the PacMan by <code>dx</code> pixels. You do this
+                by calling the <code>move()</code> method, and passing
+                <code>0</code> for the <code>y</code> parameter (since we
+                don't want to move vertically.)
+            </li>
+            <li>After moving, call the PacMan's <code>getX()</code> method
+                to find out where it is. If <code>x</code> is less than 0,
+                or, if <code>x</code> plus the width of your PacMan is
+                greater than the <code>APPLICATION_WIDTH</code>, then
+                <b>reverse the sign</b> of <code>dx</code>, and
+                <code>move()</code> the PacMan once again.
+            </li>
+        </ul>
+        <p> Check to make sure the PacMan moves across the screen and
+            bounces back when it gets to either side. Don't go on until you
+            get this part working.
+        </p>
+    <h4>Step 3: Animating the Mouth</h4>
+        <p> To animate the mouth, at each frame, subtract
+            <code>mx / 2</code> from the start angle, and
+            add <code>mx</code> to the sweep angle. When
+            the sweep angle goes to zero, or, when the sweep angle
+            gets larger than <code>360 - MOUTH</code>, then change the sign of the "change" variable,
+            <code>mx</code>.
+        </p>
+        <p> Even though the PacMan bounces correctly, when he switches
+            direction and starts moving right-to-left, his mouth is still
+            facing right-ward. In other words, he isn't "chomping" in the
+            same direction that he's traveling.
+            To change the direction of the PacMan, just add <code>180</code> to
+            <code>startAngle</code> when you change the sign of <code>dx</code>.
+        </p>
+        <p> Finally, even though you are changing the values of <code>startAngle</code>
+            and <code>sweepAngle</code>, it's <b class='ry'>NOT</b> changing
+            the PacMan object. At the end of each frame (inside your loop,
+            before you call <code>pause()</code> call the <code>GArc</code>
+            methods <code>setStartAngle()</code> and <code>setSweepAngle()</code>.
+        </p>
+        <p> Once you have the program working like you want it, should you try to
+            <b>Check</b> it. The <b>Check</b> program grades the basic
+            syntax and structure of your program. When you check your program,
+            I'll take a picture of your PacMan put it on the monitor at the front
+            of the room. Once your picture appears there, and you are
+            happy with it, you can close DrJava and go home.
+        </p>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075,<a href='mailto:sgilbert@occ.cccd.edu'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</div>
+</body>
+</html>

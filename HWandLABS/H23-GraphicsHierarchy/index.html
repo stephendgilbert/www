@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <link href="../cs170hw.css" type="text/css" rel="stylesheet">
+
+    <title>ACM Graphics Hierarchy</title>
+</head>
+<body>
+    <div id='lessonBanner' class="banner05">
+        <div id='lessonLogo'>
+        <img src='../images/javalogo.png' alt='A decorative icon.'>
+        </div>
+        <p id='lessonSubtitle'>Homework Exercise</p>
+        <p id='lessonTitle'>Graphics Hierarchy</p>
+    </div>
+    <br style='clear:both;'>
+    <div class="content">
+        <p class='firstLine'>
+            <b><span class="cap2">I</span>n Chapter 8 you learned how
+            to create GUI programs</b>, using the classes in the
+            ACM class libraries. For this assignment, you'll create
+            a <code>GraphicsProgram</code> that uses the
+            <code>GRect</code>, <code>GLine</code> and
+            <code>GLabel</code> classes to display a portion of
+            the ACM GUI class hierarchy.
+        </p>
+        <div class='info'>
+        <p> Before you start this assignment, make sure you have read
+            <i>Section 8.1&mdash;ACM Graphics Programs</i> and
+            <i>Section 8.2&mdash;Meet the GObject</i>.
+        </p>
+        </div>
+
+    <h3>ACM Graphical Shapes&mdash;GraphicsHierarchy</h3>
+        <p> Write an ACM <code>GraphicsProgram</code>, named
+            <b>GraphicsHierarchy</b> that draws the partial
+            diagram of the <code>acm.graphics</code> class hierarchy as
+            shown here:<br>
+            <img src='images/GraphicsHierarchy.gif' class='inlineCenter' alt='Homework 11.1.'>
+        </p>
+        <div class='alert'>
+            <p>The red, yellow and blue dots, and the title of the
+                window are <b>not</b> part of the assignment. This is
+                just what the program looks like when it runs on
+                the Mac. Yours will look slightly different.
+            </p>
+        </div>
+        <p> The only classes you need to create this picture are
+            <code>GRect</code>, <code>GLabel</code>, and <code>GLine</code>.
+            The tricky part is specifying the coordinates so that the
+            different elements of the picture are aligned properly. The
+            aspects of the alignment for which you are responsible are:
+            <ul>
+                <li>The width and height of the class boxes should be specified
+                    as named constants so that they are easy to change. Make each box
+                    <b>46</b> pixels high and <b>120</b> pixels wide.
+                </li>
+                <li> The labels should be centered in their boxes. You can find
+                    the width of a label by calling <code>label.getWidth()</code>
+                    and the height it extends above the baseline by calling
+                    <code>label.getAscent()</code>. If you want to center a
+                    label, you need to shift its origin by half of these
+                    distances in each direction.
+                </li>
+                <li>The connecting lines should start and end at the center of
+                    the appropriate edge of the box.
+                </li>
+                <li>The entire figure should be centered in the window.</li>
+            </ul>
+            <p> Here's a hint. Instead of doing everything inside the
+                <code>init()</code> or <code>run()</code> method, create your
+                own <b>user-defined methods</b> to do common tasks, like centering
+                a label in a box.
+            </p>
+            <p class='note'> Define the <code>public static final int</code> values
+                <code>APPLICATION_WIDTH</code> and
+                <code>APPLICATION_HEIGHT</code> to specify the width and
+                height of the application when it runs. The size should be
+                600 by 300. Define these <b>outside</b> of the <code>init()</code>
+                <i>or</i> <code>run()</code>
+                method.
+            </p>
+            <p> Run the <b>Check</b> program to test your work.
+                Here is a video that will give you step-by-step instructions
+                building the app:
+                <a href='../../movies/GraphicsHierarchy/GraphicsHierarchy.html' target='_blank'>
+                    <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                    title='Click to watch video solution.'
+                    alt='Click to watch video solution.'>
+                </a>
+            </p>
+<!--
+        <div class='alert'>
+        <p> After you <b>Check</b> the homework, then click the <b>Progress</b> button to
+            make sure your score is recorded by DrJava. Then, when you are finished with
+            the assignment, <b class='ry'>close DrJava</b> to upload your score to the
+            CS 170 server. You may work on the assignments after the submission
+            deadline has passed, but your scores <b>won't</b> be recorded.
+        </p>
+        </div>
+-->
+    </div>
+    </div>
+    <div class="footer">
+        Materials on this web site &copy; 1995-2075, <a href='mailto:StephenGilbert@gmail.com'>Stephen Gilbert</a>
+        All rights reserved.<br>
+        Any materials may be reproduced for non-profit purposes so long as<br>
+        (1) this notice remains intact and (2) you notify me of your use.
+    </div>
+</body></html>
