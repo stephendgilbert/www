@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCC CS Code Editor</title>
+  <base target="_self">
+  <meta name="description" content="Here&#39;s a snippet for the Ace Editor. Ace is a high-performance embeddable code editor written in JavaScript. It matches the features and performance of native editors such as Sublime, Vim and TextMate. It can be easily embedded in any web page and JavaScript application. " />
+  <meta name="google" value="notranslate">
+  <!--stylesheets / link tags loaded here-->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+  <style type="text/css">html,body {
+  height:100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+.row {
+  margin-left:0;
+  margin-right:0;
+}
+
+.row .sp {
+  height:150px;
+  min-height:45px;
+  padding-right:0;
+  padding-left: 0;
+  background-color: #222;
+  border-bottom:4px solid transparent;
+}
+
+.row .sp.toolbar {
+  min-height:450px;
+}
+
+.wrapper {
+  width:100%;
+  min-height: 100%; 
+  height: 100%;
+  overflow:hidden;
+}
+
+.inner {
+  overflow-y:auto;
+  overflow-x:hidden;
+  /*height:100%;*/
+  min-height:100%;
+}
+
+.outer {
+  border:0px #000 solid;
+  height:100%;
+}
+
+.pane-settings {
+  background: #002B36;
+  color:#b3b1b1;
+  position: absolute;
+  z-index: 199;
+  padding: 3px;
+  font-size: 16px;
+  opacity: .8;
+  right: 5px;
+  top: 0;
+  margin: 0;
+}
+
+.pane-label {
+  font-family: monospace;
+  background: #002B36;
+  color:#b3b1b1;
+  position: absolute;
+  z-index: 199;
+  padding: 3px;
+  font-size: 11px;
+  opacity: .7;
+  right: 10px;
+  bottom: 10px;
+  margin: 0;
+}
+
+.editable {
+  float:left;
+  margin-right:2px;
+  border:1px #ddd solid;
+  padding:1px;
+  line-height: 1.5;
+  border-radius:2px;
+}
+
+.toolbar
+{
+  padding:3px;
+  height:28px;
+}
+
+::-webkit-scrollbar {
+    width: 0.9em;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.7);
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(100, 100, 100, 0.4);
+}
+
+.ace_autocomplete {
+  width: 270px;
+  z-index: 200000;
+  background: #666;
+  color: #eee;
+  border: 0 lightgray solid;
+  position: fixed;
+  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  line-height: 1.4;
+}</style>
+
+</head>
+<body >
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#csCodeEditor">
+  Code Editor
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="csCodeEditor" tabindex="-1" role="dialog" aria-labelledby="csCodeEditorLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document" style="display:table;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="csCodeEditorLabel">OCC Code Editor</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height:750px; width:900px;">
+        <div class="inner" id="htmEditor"></div>
+      </div>
+      <div class="modal-footer">
+        <button id='btnCopy' type="button" class="btn btn-primary">Copy Code</button>
+        <button id='btnClose' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>  
+  
+  <!--scripts loaded here-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <script>
+  var htmEditor;
+$.getScript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js',function(){
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ext-language_tools.js',function(){
+
+      ace.require("ace/ext/language_tools");
+    
+      htmEditor = ace.edit("htmEditor");
+      htmEditor.getSession().setMode("ace/mode/c_cpp");
+      htmEditor.setTheme("ace/theme/merbivore");
+      htmEditor.setFontSize(22);
+      htmEditor.setShowPrintMargin(false);
+      htmEditor.setHighlightActiveLine(false);
+
+      // code insert examples
+      $('#btnCopy').click(function(){
+          navigator.clipboard.writeText(htmEditor.getValue());
+      });
+    
+  });
+});
+
+  </script>
+
+</body>
+</html>
