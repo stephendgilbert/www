@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title>A PostMessage Example</title>
+</head>
+<body>
+<iframe src='https://codecheck.it/files?repo=bj4cc&problem=ch06/c06_exp_6_105' width='100%' height='500px'>
+</iframe>
+<script>
+var win = window.frames[0];
+
+win.postMessage("getContent", "https://occ-cs.com");
+
+function receiveMessage(event)
+{
+    alert(event.origin);
+  // Do we trust the sender of this message?  (might be
+  // different from what we originally opened, for example).
+  if (event.origin !== "https://codecheck.it")
+    return;
+  alert(event.data);
+  // event.source is popup
+  // event.data is "hi there yourself!  the secret response is: rheeeeet!"
+}
+window.addEventListener("message", receiveMessage, false);
+</script>
+</body>
+</html>
