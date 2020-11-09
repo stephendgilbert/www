@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='interactivity1' id='interactvity1'><div class='hc-included'>
+<div><p>What happens when the following code is executed? </p>
+  <pre>String country = "Morocco"; <span class='hc-circled-number'>➊</span>
+int n = country.length(); <span class='hc-circled-number'>➋</span>
+String country2 = country.replace("oroc", "exi"); <span class='hc-circled-number'>➌</span>
+int n2 = country2.length(); <span class='hc-circled-number'>➍</span>
+country2 = country2.toUpperCase(); <span class='hc-circled-number'>➎</span>
+</pre>
+  <p>Remember to put quotation marks around all strings.</p>
+  <div class='horstmann_objectdiagram'><script type='text/javascript'>//<![CDATA[
+(function()
+{
+  var country = [0, 0, 'country', '']
+  var n = [0, 1, 'n', '']
+  var country2 = [0, 2, 'country2', '']
+  var n2 = [0, 3, 'n2', '']
+  horstmann_objectdiagram.setup.push({
+    show: [country, n, country2, n2],
+    instructions: [
+      { set: country, value: '"Morocco"', description: 'Initialize the <code>country</code> variable.' },
+      { set: n, value: 7, description: 'Initialize the <code>n</code> variable.' },
+      { set: country2, value: '"Mexico"', description: 'Initialize the <code>country2</code> variable.' },
+      { set: n2, value: 6, description: 'Initialize the <code>n2</code> variable.' },
+      { set: country2, value: '"MEXICO"', description: 'Update the <code>country2</code> variable.' },
+]})})() 
+   //]]>
+    </script>
+  </div>
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
