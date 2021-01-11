@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='01d-define-and-init-variables-exampletable' id='01d-define-and-init-variables-exampletable'><div class='hc-included'>
+<div>
+  <p>Define and initialize the following variables.</p> 
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Variable</th> 
+        <th>Definition</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+        <td>Define a variable <code>price</code> to contain the unit price of a single bottle, which is $1.95.
+            Use an <mark>explicit type</mark> and <mark>uniform initialization</mark>.</td> 
+        <td><code>double price{1.95};</code></td> 
+        <td>The type is <code>double</code> because a price can have a fractional part.</td> 
+      </tr> 
+      <tr>
+        <td>Define a variable <code>quantity</code> to contain the number of bottles purchased, and <mark>direct initialize</mark> it with 6. This should work in any version of C++.</td> 
+        <td><code>int quantity(6);</code></td> 
+        <td>The type of this variable is <code>int</code> because one cannot purchase fractional bottles.</td> 
+      </tr> 
+      <tr>
+        <td>Use <mark>type inferrence</mark> to define a variable <code>cost</code>. A single bottle costs $.85.</td> 
+        <td><code>auto cost = .85;</code></td> 
+        <td>The inferred type of this variable is <code>double</code> because of the fractional part.</td> 
+      </tr> 
+      <tr>
+      
+        <td>The store decides to sell bottles in packs of four instead. Write a statement to adjust the value of the <code>quantity</code> variable.</td> 
+        <td><code>quantity = 4;</code></td> 
+        <td>Note that there is no <code>int</code> type before the variable name because this variable has already been defined.</td> 
+      </tr> 
+      <tr>
+        <td>Define another variable <code>total</code> and initialize it with the total price from the <code>quantity</code> and <code>price</code> variables.</td> 
+        <td><code>double total{quantity * price};</code></td> 
+        <td>Now you need to specify the type <code>double</code> (or <code>auto</code>) because this is a new variable.</td> 
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([
+_re('double price{1.95};'),
+_re('int quantity(6);'),
+_re('auto cost = .85;'),
+_re('quantity = 4;'),
+_re('double total = quantity * price;', 
+    'double total = price * quantity;', 
+    'auto total = quantity * price;', 
+    'auto total = price * quantity;',
+    'double total{quantity * price};',
+    'double total{price * quantity};')
+])
+   //]]>
+    </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
