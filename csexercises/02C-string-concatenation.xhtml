@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+     mark {
+        font-weight: bold;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='02C-string-concatenation' id='02C-string-concatenation'><div class='hc-included'>
+<div>
+  <p>Assume you have the following code:</p>
+  <pre>string s1{"peter"}, s2{"piper"}, s3{"mary"}, ans;</pre>
+  <p>The variable <code>ans</code> will be printed after each 
+    concatenation. What is printed? <mark>Do not</mark> put quotes around your answers. 
+    Use <mark>error</mark> if the concatenation causes an error. 
+  </p> 
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Expression</th> 
+        <th>Output</th> 
+        <th>Explanation</th>
+      </tr> 
+      <tr>
+        <td><code>ans = s1 + s2;</code></td> 
+        <td><code>peterpiper</code></td> 
+        <td>Concatenation does not add spaces.</td>
+      </tr> 
+      <tr>
+        <td><code>ans = "hello" + " " + "world"</code></td> 
+        <td>error</td> 
+        <td>You cannot concatenate two string literals (as you can in Java).</td>
+      </tr> 
+      <tr>
+        <td><code>ans = s1 + " " + s2;</code></td> 
+        <td><code>peter piper</code></td> 
+        <td>You may concatenate a string literal to a string object.</td>
+      </tr> 
+      <tr>
+        <td><code>ans += " picked";</code></td> 
+        <td><code>peter piper picked</code></td> 
+        <td>The shorthand assignment operator appends to an existing string.</td>
+      </tr> 
+      <tr>
+        <td><code>ans = s4 + 42;</code></td> 
+        <td><code>error</code></td> 
+        <td>You <mark>cannot</mark> concatenate string objects and integers (as you can in Java).</td>
+      </tr> 
+      <tr>
+        <td><code>ans = s1 + ' ' + s2;</code></td> 
+        <td><code>peter piper</code></td> 
+        <td>You may concatenate <code>char</code> variables or <code>char</code> literals to string objects.</td>
+      </tr> 
+      <tr>
+        <td><code>ans = "So, " + s3 + " had";</code></td> 
+        <td><code>So, mary had</code></td> 
+        <td>You may concatenate a string literal and a string object and aother string literal.</td>
+      </tr> 
+      <tr>
+        <td><code>ans = "So, " += s3;</code></td> 
+        <td>error</td> 
+        <td>The <code>+=</code> does not work when applied to a string literal (on the left)</td>
+      </tr> 
+      <tr>
+        <td><code>ans = s3 += ", mary";</code></td> 
+        <td>mary, mary</td> 
+        <td>Using <code>+=</code> not only concatenates, but changes <code>s3</code> as well.
+            <mark>Do not do this!</mark></td>
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
