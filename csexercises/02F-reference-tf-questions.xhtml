@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='02F-reference-tf-questions' id='02F-reference-tf-questions'><div class='hc-included'>
+<div>
+<p>Assume the following variables have been defined:</p>
+<pre>int i;
+double n;
+string s;
+</pre>
+<p>Which of the following reference declarations are allowed?</p>
+  <ol class='horstmann_ma'>
+    <li class='labels'>Allowed|Not Allowed</li>
+    <li class='correct'><code>string&amp; sr1 = s;</code>
+        <div class='explanation'><code>sr1</code> is an <mark>alias</mark> for <code>s</code>.
+        If you change <code>sr1</code> you change <code>s</code> as well.
+        </div>
+    </li> 
+    <li class='correct'><code>const string&amp; sr2 = s;</code>
+        <div class='explanation'>Also allowed. Because <code>sr2</code> is <code>const</code>,
+        it <mark>cannot</mark> be used to change <code>s</code>.
+        </div>
+    </li> 
+    <li><code>string&amp; sr3 = "hello";</code>
+        <div class='explanation'>
+            A regular reference must refer to an <b>l-value</b>, but the
+            string literal "hello" is not an l-value.
+        </div>
+    </li> 
+    <li class='correct'><code>const string&amp; sr4 = "hello";</code>
+        <div class='explanation'>This is fine. A <code>const</code> reference
+            <mark>may</mark> refer to an r-value.
+        </div>
+    </li> 
+    <li><code>double&amp; dr1 = i;</code>
+        <div class='explanation'>While <code>i</code> can be used to initialize
+            a <code>double</code> variable (using conversion), it cannot be 
+            used to initialize a <code>double&amp;</code>.
+        </div>
+    </li> 
+    <li class='correct'><code>int&amp; ir1 = i;</code>
+        <div class='explanation'>
+            Fine. <code>ir1</code> refers to the <code>int</code> variable <code>i</code>.
+        </div>
+    </li>
+    <li class='correct'><code>const int&amp; ir2 = 42;</code>
+        <div class='explanation'>
+            Fine. Because <code>ir1</code> is a <code>const</code> reference,
+            it can refer to an r-value.
+        </div>
+    </li>
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
