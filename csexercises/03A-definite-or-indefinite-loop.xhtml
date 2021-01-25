@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='03A-definite-or-indefinite-loop' id='03A-definite-or-indefinite-loop'><div class='hc-included'>
+<div>
+<p>Examine the following loops. Which are <b>definite</b> and which are <b>indefinite</b>?</p>
+  <ol class='horstmann_ma'>
+    <li class='labels'>Definite|Indefinite</li>
+    <li class='correct'><code>for (int i{10}; i &gt; 0; --i) {}</code>
+        <div class='explanation'>Counter controlled loops are <b>definite</b> loops.
+        </div>
+    </li> 
+    <li><code>int i{0}, n; while (cin >> n) { ++i; }</code>
+        <div class='explanation'>
+            Although this loop uses a counter, the loop is <b>controlled</b>
+            by running out of data. This is an <b>indefinite</b> loop.
+        </div>
+    </li> 
+    <li class='correct'><code>int i{0}; while (i &lt; 10) { ++i; }</code>
+        <div class='explanation'>This is also a <b>counter-controlled</b> definite loop.
+        </div>
+    </li> 
+    <li><code>for (auto i{str.size() - 1}; str.at(i) != '.'; --i) {}</code>
+        <div class='explanation'>This loop uses a counter to access the 
+            characters in a string, but it is an indefinite <b>sentinel</b> loop.
+        </div>
+    </li> 
+    <li><code>int n, counter{0}; cin >> n; while (n != 0) { counter++; n /= 2; }</code>
+        <div class='explanation'>This is an indefinite <b>limit</b> loop.
+        </div>
+    </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
