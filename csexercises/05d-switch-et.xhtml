@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='05d-switch-et' id='05d-switch-et'><div class='hc-included'>
+<div>
+  <p>What is printed in these <code>switch</code> statements. Type <mark>error</mark> if 
+    it will not compile.
+  </p> 
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Expression</th> 
+        <th>Output</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+<td><pre>int n{1};
+switch (n)
+{
+  case 1: cout &lt;&lt; 1;
+  case 2: cout &lt;&lt; 2;
+}
+</pre>
+</td> 
+        <td><code>12</code></td> 
+        <td>There is no <code>break</code> statement</td> 
+      </tr> 
+      <tr>
+<td><pre>int n{1};
+switch (n)
+{
+  case 1: cout &lt;&lt; 1; break;
+  case 2: cout &lt;&lt; 2; break;
+}
+</pre>
+</td> 
+        <td><code>1</code></td> 
+        <td>The <code>break</code> statement means only the first line prints.</td> 
+      </tr> 
+      <tr>
+<td><pre>double n{1.0};
+switch (n)
+{
+  case 1.0: cout &lt;&lt; 1.0; break;
+  case 2.0: cout &lt;&lt; 2.0; break;
+}
+</pre>
+</td> 
+        <td><code>error</code></td> 
+        <td>You must use an <mark>integral</mark> type for a switch selector.</td> 
+      </tr> 
+      <tr>
+<td><pre>char c = 'X';
+switch (c)
+{
+  case 'A': cout &lt;&lt; 'A'; break;
+  case 'B': cout &lt;&lt; 'B'; break;
+  default: cout &lt;&lt; c; break;
+}
+</pre>
+</td> 
+        <td><code>X</code></td> 
+        <td><code>char</code> is an integral type so it can be used for a <code>switch</code>
+            selector. The selector does not match either <code>case</code> so the <code>default</code> is selected.</td> 
+      </tr> 
+      <tr>
+<td><pre>char c = 'X';
+switch (c)
+{
+  case "A": cout &lt;&lt; "A"; break;
+  case "B": cout &lt;&lt; "B"; break;
+  default: cout &lt;&lt; c; break;
+}
+</pre>
+</td>
+        <td><code>error</code></td> 
+        <td>The selector is fine, but the <code>case</code> labels must be integral constants.</td> 
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

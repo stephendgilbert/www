@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='5d-conditional-operator-et' id='5d-conditional-operator-et'><div class='hc-included'>
+<div>
+  <p>Assume that you have the following variable:</p> 
+<pre>int a, b, c;</pre>
+  <p>Use the <mark>conditional operator</mark> to write an expression that carries out
+    the requested operation.
+  </p>
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Operation</th> 
+        <th>Expression</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+        <td>Assign <code>2</code> to <code>a</code> if <code>b</code> is greater than <code>c</code>
+            and <code>1</code> otherwise.
+        </td> 
+        <td><code>a = b > c ? 2 : 1;</code></td> 
+        <td>The <code>true</code> value follows the <code>?</code>, the <code>false</code> follows the <code>:</code></td> 
+      </tr> 
+      <tr>
+        <td>Assign <code>3</code> to <code>a</code> if <code>b</code> is greater than <code>c</code>
+            and leave <code>a</code> unchanged otherwise.
+        </td> 
+        <td><code>a = b > c ? 2 : a;</code></td> 
+        <td>The variable <code>a</code> is assigned to itself if <code>b</code> is not greater than <code>c</code>.</td> 
+      </tr> 
+      <tr>
+        <td>Assign <code>4</code> to <code>a</code> if <code>b</code> is greater than <code>c</code>,
+            <code>5</code> to <code>a</code> if <code>b</code> is less than <code>c</code>
+            and leave <code>a</code> unchanged otherwise.
+        </td> 
+        <td><code>a = b > c ? 4 : b &lt; c ? 5 : a;</code></td> 
+        <td>The <code>false</code> condition uses another conditional expression.</td> 
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([
+_re('a = b > c ? 2 : 1;',
+    'a = (b > c) ? 2 : 1;',
+    'a = (c < b) ? 1 : 2;',
+    'a = c < b ? 1 : 2;'
+    ),
+_re('a = b > c ? 3 : a;',
+    'a = (b > c) ? 3 : a;',
+    'a = (c < b) ? a : 3;',
+    'a = c < b ? a : 3;'
+    ),
+_re('a = b > c ? 4 : b < c ? 5 : a;',
+    'a = (b > c) ? 4 : (b < c) ? 5 : a;',
+    'a = (b < c) ? 5 : (b > c) ? 4 : a;',
+    'a = b < c ? 5 : b > c ? 4 : a;',
+    )
+])
+   //]]>
+    </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
