@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='7e-try-catch-wt' id='7e-try-catch-wt'><div class='hc-included'>
+<div>
+  <p>This walkthrough shows how an exception is caught. 
+  The <code>stoi</code> function throws an <code>invalid_argument</code>
+   exception when it is called with a <code>string</code> that does not 
+   contain the digits of an integer. Assume that the program fragment 
+   reads the following input:</p>
+  <pre>42 five
+</pre>
+  <div class='horstmann_walkthrough'>
+<pre>int result = 0;
+int total = 0;
+while (result != -1)
+{
+   string input;
+   cin &gt;&gt; input;
+   try
+   {
+      result = stoi(input);
+      total = total + result;
+   }
+   catch (invalid_argument&amp; ex)
+   {
+      result = -1;
+   }
+}
+  </pre> 
+    <table>
+      <tr>
+        <th>result</th>
+        <th>total</th>
+        <th>input</th>
+      </tr>
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_walkthrough.setup.push([
+{ variable: 'result', value: 0},
+{ variable: 'total', value: 0},
+{ variable: 'input', line: 5, value: '"42"'},
+{ variable: 'result', line: 9, answer: 42},
+{gotoline: 10, line: 9},
+{ variable: 'total', line: 10, value: 42},
+{gotoline: 3, line: 10},
+{ variable: 'input', line: 6, value: '"five"'},
+{gotoline: [14, 12], line: 9},
+{ variable: 'result', answer: -1},
+])
+   //]]> </script> 
+  </div> 
+</div>
+
+
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
