@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='5f-byval-by-ref-et' id='5f-byval-by-ref-et'><div class='hc-included'>
+<div>
+  <p>
+   Examine the following program. Then supply the requested information. 
+   Use the following terms: block, file, static, automatic, dynamic, 
+   internal, external, none, stack, heap.
+  </p>
+<pre>int a{42};
+static int b{35};
+void func(int c)
+{
+   int d = c;
+   static int e{15};
+   int * f = new int(3);
+}
+</pre>
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Requested Information</th> 
+        <th>Answer</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+        <td>Scope of the variable <code>a</code></td> 
+        <td>file</td> 
+        <td>Visible from point of declaration to end of file.</td> 
+      </tr> 
+      <tr>
+        <td>Scope of parameter <code>c</code>
+        </td> 
+        <td>block</td> 
+        <td>It is only visible in the body of the function.</td> 
+      </tr> 
+      <tr>
+        <td>Storage class for varible <code>a</code>
+        </td> 
+        <td>static</td> 
+        <td>Stored when program loads.</td> 
+      </tr> 
+      <tr>
+        <td>Storage class for varible <code>d</code>
+        </td> 
+        <td>automatic</td> 
+        <td>Local variables are stored on the stack.</td> 
+      </tr> 
+      <tr>
+        <td>Storage class for varible pointed to by <code>f</code>
+        </td> 
+        <td>dynamic</td> 
+        <td>Variables created with <code>new</code> are stored on the heap.</td> 
+      </tr> 
+      <tr>
+        <td>Linkage of the varible <code>b</code>.
+        </td> 
+        <td>internal</td> 
+        <td>Static global variables can only be used in the file they are defined in.</td> 
+      </tr> 
+      <tr>
+        <td>Linkage of the varible <code>e</code>.
+        </td> 
+        <td>none</td> 
+        <td>Static local variables can only be used in the function they are defined in.</td> 
+      </tr> 
+      <tr>
+        <td>Where is the varaible <code>f</code> stored.
+        </td> 
+        <td>stack</td> 
+        <td>While <code>f</code> points to a variable on the heap, 
+         <code>f</code> itself is stored on the stack.</td> 
+      </tr> 
+      <tr>
+        <td>Linkage of the function <code>func</code>.
+        </td> 
+        <td>external</td> 
+        <td>Unless marked <code>static</code> functions all have external linkage.</td> 
+      </tr> 
+    </table>
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([])
+   //]]>
+    </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
