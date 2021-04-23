@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='13f-member-functions-od1' id='13f-member-functions-od1.xhtml'><div class='hc-included'>
+<div>
+  <p>What happens when the following code is executed, starting with the call <code>reg.addAitem(15)</code>?</p> 
+  <pre>struct CashRegister
+{
+// member functions
+   void clear();
+   void addItem(double amount);
+   void enterPayment(double amount2);
+   double giveChange();
+   . . .
+// data items
+   double totalPrice;
+   double payment;
+};
+...
+void CashRegister::addItem(double amount) <span class='hc-circled-number'>➊ ➋</span>
+{
+   totalPrice = totalPrice + amount; <span class='hc-circled-number'>➌</span>
+} <span class='hc-circled-number'>➍</span>
+
+void CashRegister::enterPayment(double amount2) <span class='hc-circled-number'>➎ ➏</span>
+{
+   payment = payment + amount2; <span class='hc-circled-number'>➐</span>
+} <span class='hc-circled-number'>➑</span>
+
+double CashRegister::giveChange()
+{
+   double change = payment - totalPrice; <span class='hc-circled-number'>➒ ➓</span>
+   totalPrice = 0; <span class='hc-circled-number'>⓫</span>
+   payment = 0; <span class='hc-circled-number'>⓬</span>
+   return change; 
+} <span class='hc-circled-number'>⓭</span>
+
+int main()
+{
+   CashRegister reg; reg.clear();
+   reg.addItem(15); 
+   reg.enterPayment(20); 
+   double customerChange = reg.giveChange(); 
+   ...
+}
+</pre> 
+  <div class='horstmann_objectdiagram'>
+    <script type='text/javascript'>//<![CDATA[
+(function()
+{
+  var obj = { object: ['totalPrice', 0, 'payment', 0], title: 'CashRegister'};
+  var reg = [1, 0, 'reg', obj];
+  var amount = [0, 0, 'amount', ''];
+  var amount2 = [0, 0, 'amount2', ''];
+  var change = [0, 1, 'change', ''];
+  horstmann_objectdiagram.setup.push({
+    show: [reg],
+    instructions: [
+      { add: amount, description: 'The parameter variable of the <code>addItem</code> function is created.' },
+      { set: amount, value: 15, description: 'Initialize the parameter variable.' },
+      { set: [reg, 'totalPrice'], value: 15, description: 'Update the <code>CashRegister</code> object.' },
+      { remove: amount, description: 'Remove the parameter variable.'},
+
+      { add: amount2, description: 'The parameter variable of the <code>enterPayment</code> function is created.' },
+      { set: amount2, value: 20, description: 'Initialize the parameter variable.' },
+      { set: [reg, 'payment'], value: 20, description: 'Update the <code>CashRegister</code> object.' },
+      { remove: amount2, description: 'Remove the parameter variable.'},
+
+      { add: change, description: 'The local variable <code>change</code> of the <code>giveChange</code> function is created.' },
+      { set: change, value: 5, description: 'Initialize the local variable <code>change</code>.' },
+      { set: [reg, 'totalPrice'], value: 0, description: 'Update the <code>totalPrice</code> data member.' },
+      { set: [reg, 'payment'], value: 0, description: 'Update the <code>payment</code> data member.' },
+      { remove: change, description: 'Remove the local variable.'},
+
+]})})() 
+   //]]>
+    </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

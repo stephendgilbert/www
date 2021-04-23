@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='13f-member-functions-ra-2' id='13f-member-functions-ra-2'><div class='hc-included'>
+<div><p>Rearrange the following lines of code to implement a user-defined type 
+   which represents a square with a given side length. Here is the structure definition:</p>
+<pre>struct Square
+{
+// member functions
+   void setSide(int initialLength);
+   void grow(int amount);
+   int getPerimeter() const;
+   int getSideLength() const;
+// data members
+   int sideLength;
+};
+</pre>
+<p>Place the member functions in the same order that they are declared 
+   in the structure definition. Not all lines are useful.</p>
+<div class='horstmann_rearrange'>  <pre>.void Square::setSide(int initialLength)
++{
+-void setSide(int initialLength)
++{
+. sideLength = initialLength;
++}
+- initialLength = initialLength;
++}
+-void grow(int amount)
++{
+.void Square::grow(int amount)
++{ 
+. sideLength = sideLength + amount;
++}
+- amount += sideLength;
++}
+.int Square::getPerimeter() const
++{
+-int getPerimeter() const
++{
+-void Square::getPerimeter() const
++{
+. return 4 * sideLength;
++}
+- return perimeter;
++}
+-int getSideLength() const
++{
+.int Square::getSideLength() const
++{
+. return sideLength;
++}
+</pre>
+</div>
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

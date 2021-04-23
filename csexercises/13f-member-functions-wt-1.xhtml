@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='13f-member-functions-wt-1' id='13f-member-functions-wt-1'><div class='hc-included'>
+<div>
+  <p>Trace through the calls to the <code>addItem</code> and <code>getTotal</code> member functions. 
+  Observe how the explicit parameter of the <code>addItem</code> function is initialized 
+  with each function call.
+  </p>
+  <div class='horstmann_walkthrough'>
+<pre>struct CashRegister
+{
+// member functions
+   void clear();
+   void add_item(double price);
+   int get_count() const;
+   double get_total() const;
+// data members
+   int itemCount;
+   double totalPrice;
+};
+void CashRegister::clear()
+{
+   itemCount = 0;
+   totalPrice = 0;
+}
+void CashRegister::addItem(double price)
+{
+   totalPrice = totalPrice + price;
+   itemCount++;
+}
+double CashRegister::getCount() const
+{
+   return itemCount;
+}
+double CashRegister::getTotal() const
+{
+   return totalPrice;
+}
+   
+int main()
+{
+   CashRegister reg1;
+   reg1.clear();
+   reg1.addItem(5);
+   reg1.addItem(7);
+   double amountDue = reg1.getTotal();
+}
+  </pre> 
+    <table>
+      <tr>
+        <th>reg1.itemCount</th>
+        <th>reg1.totalPrice</th>
+        <th>price</th>
+        <th>amountDue</th>
+      </tr>
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_walkthrough.setup.push([
+{variable: 'reg1.itemCount', line: 34, value: 0},
+{variable: 'reg1.totalPrice', line: 34, value: 0},
+{gotoline: 17, line: 35},
+{variable: 'price', value: 5},
+{variable: 'reg1.totalPrice', line: 19, answer: 5},
+{variable: 'reg1.itemCount', answer: 1},
+{gotoline: 36},
+{gotoline: 17},
+{variable: 'price', value: 7},
+{variable: 'reg1.totalPrice', line: 19, answer: 12},
+{variable: 'reg1.itemCount', answer: 2},
+{gotoline: 37},
+{gotoline: [26, 27, 28]},
+{gotoline: 37, line: 28},
+{variable: 'amountDue', answer: 12},
+])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
+

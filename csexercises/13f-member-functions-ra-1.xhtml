@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='13f-member-functions-ra-1' id='13f-member-functions-ra-1'><div class='hc-included'>
+<div>
+  <p>In the preceding problems, you saw two additional 
+   <code>CashRegister</code> member functions: an <code>enterPayment</code> function 
+      that records a payment, and a <code>giveChange</code> function that returns the 
+      change due and resets the cash register. Now suppose we don't have a separate 
+      data member <code>payment</code>. Instead, the <code>enterEayment</code> member 
+      function should just adjust <code>totalPrice</code> by the payment amount. 
+      Provide implementations of both member functions, in alphabetical order. 
+      Not all lines are useful.
+   </p> 
+  <div class='horstmann_rearrange'>
+    <pre>.void CashRegister::enterPayment(double amount)
+-double CashRegister::enterPayment(double amount)
+.{
+. totalPrice = totalPrice - amount;
+- payment = payment + amount;
+- amount = amount - totalPrice;
+.}
+.double CashRegister::giveChange()
+-void CashRegister::giveChange()
+.{
+. double change = -totalPrice;
+- double change = totalPrice;
+. totalPrice = 0;
+- payment = 0;
+- double totalPrice = 0;
+. return change;
+- return -totalPrice;
+.}
+</pre> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

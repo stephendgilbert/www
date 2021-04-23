@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='13f-member-functions-od-2' id='13f-member-functions-od-2'><div class='hc-included'>
+<div><p>It is a common beginner&#8217;s error to add types to assignment statements, thereby 
+   changing them into local variable declarations. Consider this example from a 
+   <code>CashRegister</code> user-defined type which has the data members 
+   <code>totalPrice</code> and <code>payment</code>:</p>
+  <pre>double CashRegister::giveChange()
+{
+   double change = payment - totalPrice; <span class='hc-circled-number'>➊ ➋</span>
+   double totalPrice = 0; <span class='hc-circled-number'>➌ ➍</span> // <span class="hc-comment">ERROR! This declares a local variable.</span>
+   double payment = 0; <span class='hc-circled-number'>➎ ➏</span> // <span class="hc-comment">ERROR! The data member is not updated.</span>
+   return change;
+} <span class='hc-circled-number'>➐</span>
+</pre>
+<p>Trace through the function with the object shown and observe that the local variables are set to zero. Then they are removed when the function exits. The state of the <code>CashRegister</code> object is not changed.</p>
+<div class='horstmann_objectdiagram'><script type='text/javascript'>//<![CDATA[
+(function()
+{
+  var obj = [1, 0, 'CashRegister', 'totalPrice', 15, 'payment', 20]
+  var change = [0, 1, 'change', '']
+  var totalPrice = [0, 2, 'totalPrice', '']
+  var payment = [0, 3, 'payment', '']
+  horstmann_objectdiagram.setup.push({
+    show: [obj],
+    instructions: [
+      { add: change, description: 'The local variable <code>change</code> of the <code>giveChange</code> function is created.' },
+      { set: change, value: 5, description: 'Initialize the local variable <code>change</code>.' },
+      { add: totalPrice, description: 'A local variable called <code>totalPrice</code> is created.' },
+      { set: totalPrice, value: 0, description: 'Initialize the local variable <code>totalPrice</code>.' },
+      { add: payment, description: 'A local variable called <code>payment</code> is created.' },
+      { set: payment, value: 0, description: 'Initialize the local variable <code>payment</code>.' },
+      { remove: [change, totalPrice, payment], description: 'Remove all three local variables.'},
+
+]})})() 
+   //]]>
+    </script>
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
