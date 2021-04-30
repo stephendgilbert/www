@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='14e-using-time-operators-et' id='14e-using-time-operators-et'><div class='hc-included'>
+<div>
+  <p>Compute the following results, using the <code>Time</code> class below:</p>
+<pre>class Time
+{
+public:
+   Time(int hour, int minutes);
+   int operator-(const Time&amp; rhs) const;  // minutes between
+   Time operator+(int minutes) const;   
+   bool operator&lt;(const Time&amp; rhs) const;
+};
+ostream&amp; operator&lt;&lt;(ostream&amp; out, const Time&amp; t); // HH:MM
+</pre>
+<p>Write <code>Time</code> answers as <code>Time(...,...)</code>. 
+   Write <code>error</code> if the expression cannot be computed.
+</p>
+<p>Assume the declarations:</p>
+<pre>
+Time lunch(12, 0)
+Time tea(16, 30)
+Time dinner(19, 00)
+</pre>
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Expression</th> 
+        <th>Value</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+        <td><code>tea - lunch</code></td> 
+        <td>270</td> 
+        <td>4 hours and 30 minutes are 270 minutes.</td> 
+      </tr> 
+      <tr>
+        <td><code>tea - dinner</code></td> 
+        <td>-150</td> 
+        <td>The result is negative because <code>dinner</code> comes later.</td> 
+      </tr>
+      <tr><td><code>tea + 150</code></td>
+        <td><code>Time(19, 0)</code></td>
+        <td>150 minutes after 16:30 is 19:00.</td>
+      </tr>
+      <tr><td><code>tea * 2</code></td>
+        <td>error</td>
+        <td>No <code>operator*</code> is defined for parameter types <code>Time</code> and <code>int</code>.</td>
+      </tr>
+      <tr><td><code>150 + tea</code></td>
+        <td>error</td>
+        <td>No <code>operator+</code> is defined for parameter types <code>int</code> and <code>Time</code>.</td>
+      </tr>
+      <tr><td><code>tea &lt; dinner</code></td>
+        <td><code>true</code></td>
+        <td><code>operator&lt;</code> returns <code>true</code> because <code>tea - dinner &lt; 0</code>.</td>
+      </tr>
+      <tr><td>The output of <code>cout &lt;&lt; tea</code></td>
+        <td><code>16:30</code></td>
+        <td><code>operator&gt;&gt;</code> prints hours and minutes, separated by a colon.</td>
+      </tr>
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([
+null, null, /Time\(19, ?00?\)/
+])
+   //]]>
+    </script> 
+  </div> 
+</div>
+
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
