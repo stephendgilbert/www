@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15a-inherited-members-wt-1' id='15a-inherited-members-wt-1'><div class='hc-included'>
+<div>
+  <p>Walk through the following code and pay attention to the function calls. Note which functions belong to the base class and which belong to the derived class.</p>
+  <div class='horstmann_walkthrough'>
+  <pre>class Question
+{
+public:
+   void setText(const string&amp; value);
+   void setAnswer(const string&amp; value);
+   bool checkAnswer(const string&amp; response) const;
+   virtual void display() const;
+};
+
+void Question::setText(const string&amp; value) { . . . }
+void Question::setAnswer(const string&amp; value) { . . . }
+bool Question::checkAnswer(const string&amp; response) const { . . . }
+void Question::display() const { . . . }
+
+class ChoiceQuestion : public Question
+{
+public:
+   void addChoice(const string&amp; choice, bool correct);
+   void display() const;
+};
+
+void ChoiceQuestion::addChoice(const string&amp; choice, bool correct) { . . . }
+void ChoiceQuestion::display() const { . . . }
+
+int main()
+{
+  ChoiceQuestion cq;
+  cq.setText("In which country was the inventor of C++ born?");
+  cq.addChoice("Australia", false);
+  cq.display();
+  string response = . . .;
+  bool result = cq.checkAnswer(response);
+  . . .
+}
+  </pre> 
+    <table>
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_walkthrough.setup.push([
+{gotoline: 10, line: 28},
+{gotoline: 29},
+{gotoline: 22},
+{gotoline: 30},
+{gotoline: 23},
+{gotoline: 31},
+{gotoline: 12, line: 32},
+])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

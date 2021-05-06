@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15a-inherited-members-wt-2' id='15a-inherited-members-wt-2'><div class='hc-included'>
+<div>
+  <p>Walk through the following code and pay attention to the function calls. 
+  Note how the <code>addChoice</code> function calls a base class function to set the 
+  value of the data member <code>m_answer</code>. 
+  Because that member is <code>private</code> to the base class, the derived class 
+  function cannot access it directly.</p> 
+  <div class='horstmann_walkthrough'>
+    <pre>class Question
+{
+public:
+   void setText(const string&amp; value);
+   void setAnswer(const string&amp; value);
+   bool checkAnswer(const string&amp; response) const;
+   virtual void display() const;
+private:
+   string m_answer;
+};
+. . .
+void Question::setAnswer(const string&amp; value)
+{
+   m_answer = value;
+}
+
+class ChoiceQuestion : public Question
+{
+public:
+   void addChoice(const string&amp; choice, bool correct);
+   void display() const;
+private:
+   vector&lt;string&gt; choices;
+};
+. . .
+void ChoiceQuestion::addChoice(const string&amp; choice, bool correct)
+{
+   choices.push_back(choice);
+   if (correct)
+   {
+      int index = choices.size();
+      string choiceStr = to_string(index);
+      set_answer(choiceStr);
+   }
+}
+
+int main()
+{
+   ChoiceQuestion cq;
+   cq.addChoice("Austria", false);
+   cq.addChoice("Canada", true);
+   . . .
+}
+  </pre> 
+    <table>
+      <tr>
+        <th>cq.m_answer</th> 
+        <th>cq.choices</th> 
+        <th>index</th> 
+        <th>choiceStr</th> 
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_walkthrough.setup.push([
+{gotoline: [26, 28], line: 40},
+{variable: 'cq.choices', value: '[Austria]', line: 28},
+{gotoline: [41]},
+{gotoline: [26, 28], line: 41},
+{variable: 'cq.choices', value: '[Austria, Canada]', line: 28},
+{gotoline: [31, 30]},
+{variable: 'index', line: 31, answer: 2},
+{variable: 'choiceStr', answer: ['"2"', 2]},
+{gotoline: [12, 14]},
+{variable: 'cq.m_answer', answer: ['"2"', 2], line: 14},
+])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
