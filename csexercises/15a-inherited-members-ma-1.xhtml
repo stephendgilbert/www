@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15a-inherited-members-ma-1' id='15a-inherited-members-ma-1'><div class='hc-included'>
+<div>
+  <p>Examine the following classes:</p>
+<pre>class Employee
+{
+public:
+   Employee();
+   void setName(const string&amp; newName);
+   void setSalary(double newSalary);
+   string getName() const;
+   virtual double getSalary() const;
+private:
+   string m_name;
+   double m_salary;
+};
+
+class Manager : public Employee
+{
+   Manager();
+   double setBonus(double amount);
+   double getSalary() const; // Returns base salary + bonus
+private:
+   double m_bonus;
+};
+</pre> 
+<p>Which member functions are <mark>inherited</mark> in <code>Manager</code>? </p> 
+  <ol class='horstmann_ma'>
+    <li class='correct'><code>void setName(string new_name);</code>
+      <div class='explanation'>This member function is defined in <code>Employee</code> and not changed in <code>Manager</code>.</div>
+    </li> 
+    <li><code>double getSalary() const;</code>
+      <div class='explanation'>This member function is <mark>overridden</mark> in the <code>Manager</code> class.</div>
+    </li> 
+    <li><code>double setBonus(double bonus_amount);</code>
+      <div class='explanation'>This member function is not defined in the <code>Employee</code> class.</div>
+    </li> 
+    <li><code>double getBonus() const;</code>
+      <div class='explanation'>This member function is not defined in either class.</div>
+    </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

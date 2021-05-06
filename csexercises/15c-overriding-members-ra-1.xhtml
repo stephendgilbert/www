@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15c-overriding-members-ra-1' id='15c-overriding-members-ra-1'><div class='hc-included'>
+<div><p>The First National Bank of Stroustrup, in its infinite generosity to its customers, 
+has no fees on withdrawals, except that there is a $5 fee for any withdrawal less than $100 
+from their checking accounts. Arrange the following lines of code to implement a 
+<code>CheckingAccount</code> class derived from <code>BankAccount</code> whose 
+<code>withdraw</code> function implements this fee rule.</p>
+  <p>Not all lines are useful.</p> 
+  <div class='horstmann_rearrange'>
+    <pre>
+-class CheckingAccount
+-class CheckingAccount : BankAccount
+.class CheckingAccount : public BankAccount
+^{
++public:
+. void withdraw(double amount);
+-private:
+- double balance;
+^};
+-void withdraw(double amount)
+.void CheckingAccount::withdraw(double amount)
+^{
++ if (amount &lt; 100)
++ {
+.  BankAccount::withdraw(amount + 5);
+-  withdraw(amount + 5);
+-  balance = balance - amount - 5;
+^ }
++ else
++ {
+.  BankAccount::withdraw(amount);
+-  withdraw(amount);
+-  balance = balance - amount;
+^ }
++}  
+</pre> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

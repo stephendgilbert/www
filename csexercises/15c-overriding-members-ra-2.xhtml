@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15c-overriding-members-ra-2' id='15c-overriding-members-ra-2'><div class='hc-included'>
+<div><p>The <code>Manager</code> class derives from the <code>Employee</code> class. Override the member function</p>
+    <pre>string Employee::getName() const </pre> 
+    <p>so that managers have a * before their name (such as <code>*Lin, Sally</code>).</p>
+  <p>Not all lines are useful.</p> 
+  <div class='horstmann_rearrange'>
+    <pre>.string Manager::getName() const
+-string Manager::getName()
+.{
+. return "*" + Employee::getName();
+- return "*" + getName();
+- return "*" + Manager::getName();
+- return "*" + m_name;
+- return "*" + this-&gt;getName();
+.}</pre> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

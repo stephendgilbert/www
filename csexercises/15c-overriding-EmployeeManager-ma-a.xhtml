@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15c-overriding-EmployeeManager-ma1' id='15c-overriding-EmployeeManager-ma1'><div class='hc-included'>
+<div>
+  <p>Consider the following classes:</p>
+  <pre>class Employee
+{
+public:
+   Employee();
+   void setName(const string&amp; newName);
+   void setSalary(double newSalary);
+   string getName() const;
+   virtual double getSalary() const; // Returns base salary
+private:
+   string m_name;
+   double m_salary;
+};
+
+class Manager : public Employee
+{
+   Manager();
+   double setBonus(double amount);
+   double getSalary() const; // Returns base salary + bonus
+private:
+   double m_bonus;
+};
+</pre>
+<p>Which of the following are a valid body for 
+   a <code>Manager::getSalary</code> function that returns the sum of 
+   the base salary and the bonus?
+</p>
+
+  <ol class='horstmann_ma'>
+    <li><pre>
+return m_salary + m_bonus;</pre>
+      <div class='explanation'>The derived class cannot access the <code>m_salary</code> data member of the base class.</div></li>
+    <li><pre>
+return getBaseSalary() + m_bonus;</pre>
+      <div class='explanation'>There is no <code>getBaseSalary</code> member function.</div>
+    </li>
+    <li><pre>
+return getSalary() + m_bonus;</pre>
+      <div class='explanation'>This is a recursive call.</div>
+    </li>
+    <li class='correct'><pre>
+return Employee::getSalary() + m_bonus;</pre>
+      <div class='explanation'>The <code>Employee::getSalary</code> member function returns the base salary.</div>
+    </li>
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

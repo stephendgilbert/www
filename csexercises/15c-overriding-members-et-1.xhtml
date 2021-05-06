@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='ebook-bc-3-ch10-sec03-exampletable-1' id='ebook-bc-3-ch10-sec03-exampletable-1'><div class='hc-included'>
+<div><p>Consider the following classes:</p>
+<pre>class Question
+{
+public:
+   virtual void display() const;
+   virtual bool checkAnswer(const string&amp; response) const;
+   virtual void setAnswer(const string&amp; answer);
+   . . .
+};
+
+class NumericQuestion : public Question
+{
+public:
+   void display() const;
+   bool checkAnswer(const string&amp; response) const;
+   void setAnswer(double answer);
+   ...
+};
+void NumericQuestion::display() const
+{
+   Question::display();
+   cout &lt;&lt; "Enter a number." &lt;&lt; endl;
+}
+bool NumericQuestion::checkAnswer(const string&amp; response) const
+{
+   double value = stod(response);
+   return abs(value - expected) &lt; 1E-12; // true if close enough
+}
+void NumericQuestion::setAnswer(double answer)
+{
+   m_answer = answer;
+}
+</pre>
+  <p>In the following table, specify which <code>NumericQuestion</code> functions</p>
+  <ul><li>extend a base class function (e) by overriding and calling it.</li>
+    <li>replace a base class function (r) by overriding without calling it.</li>
+    <li>inherit a base class function (i) without overriding it.</li>
+    <li>define a new function (n) that is not present in the base class.</li>
+  </ul>
+  <div class='horstmann_exampletable'>
+  <table><tr><th><code>NumericQuestion</code> Function</th>
+        <th>extend (e), replace (r), inherit (i), new (n)</th>
+        <th>Explanation</th>
+      </tr>
+      <tr><td><code>setText</code></td>
+        <td>inherit</td>
+        <td>This function is not defined in the derived class. The <code>setText</code> function of the <code>Question</code> base class is inherited.</td>
+      </tr>
+      <tr><td><code>display</code></td>
+        <td>extend</td>
+        <td>This function overrides the <code>display</code> function of the base class, and it extends it. First, the base class function is called, and then something else happens.</td>
+      </tr>
+      <tr><td><code>checkAnswer</code></td>
+        <td>replace</td>
+        <td>This function overrides the <code>checkAnswer</code> function of the base class, and it does not call the base class function. It completely replaces it.</td>
+      </tr>
+      <tr><td><code>setAnswer</code></td>
+        <td>new</td>
+        <td>Look carefully at the parameter types. The <code>setAnswer</code> function of the base class has a <code>string</code> parameter. This function has a <code>double</code> parameter. Therefore, this <code>setAnswer</code> function is a new function that was not present in the base class.</td>
+      </tr>
+    </table>
+
+      <script type='text/javascript'>//<![CDATA[
+horstmann_exampletable.setup.push([
+/[i_i](nherit)?/,
+/[e_e](xtend)?/,
+/[r_r](eplace)?/,
+/[n_n](ew)?/
+])
+//]]>
+      </script>
+  </div>
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

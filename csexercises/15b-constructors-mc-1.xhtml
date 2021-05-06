@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15b-constructors-mc-1' id='15b-constructors-mc-1'><div class='hc-included'>
+<div><p>Consider the following classes: </p>
+<pre>class Player
+{
+   Player(const string&amp; name, double salary);
+   string name() const;
+   double salary() const;
+   virtual void display() const;
+   ...
+private:
+   string m_name;
+   double m_salary;
+};
+ 
+class BaseballPlayer : public Player
+{
+public:
+   BaseballPlayer(const string&amp; name, double salary, 
+      int atBats, int hits, int homeRuns); 
+   double battingAvg() const;
+   void display() const;
+   ...
+private:
+   int m_atBats;
+   int m_hits;
+   int m_homeRuns;
+};
+BaseballPlayer::BaseballPlayer(const string&amp; name, double salary, 
+      int atBats, int hits, int homeRuns)
+:  _______________________
+{ 
+   m_atBats = atBats;
+   m_hits = hits;
+   m_homeRuns = homeRuns; 
+}
+</pre><p>What statement can be used to complete the constructor in the 
+   <code>BaseballPlayer</code> class?</p>
+<ol class="multiple-choice">
+   <li class="correct"><code>Player(name, salary)</code></li>
+   <li><code>Player()</code></li>
+   <li><code>Player(m_name, m_salary)</code></li>
+   <li><code>Player(name, salary, atBats, hits, homeRuns)</code></li>
+</ol>
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

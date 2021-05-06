@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15c-overriding-members-ma-1' id='15c-overriding-members-ma-1'><div class='hc-included'>
+<div>
+<p>Given these classes:</p>
+<pre>class Question
+{
+public:
+   virtual void display() const;
+   void setAnswer(const string&amp; answer);
+   . . .
+private:
+   string m_text;
+   string m_answer;
+};
+class ChoiceQuestion : public Question
+{
+public:
+   void display() const;
+   . . .
+};
+</pre>
+  <p>Which of these member function implementations are correct?</p> 
+  <ol class='horstmann_ma'>
+    <li>
+<pre>
+void ChoiceQuestion::display() const
+{
+   cout &lt;&lt; m_text &lt;&lt; endl;
+   for (int i = 0; i &lt; choices.size(); i++)
+   {
+      cout &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; choices[i] &lt;&lt; endl;
+   }
+}
+</pre>
+      <div class='explanation'>The <code>ChoiceQuestion</code> class has no access to the private data member <code>m_text</code> of the <code>Question</code> class.</div>
+    </li> 
+    <li><pre>
+void ChoiceQuestion::display() const
+{
+   this-&gt;display();
+   for (int i = 0; i &lt; choices.size(); i++)
+   {
+      cout &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; choices[i] &lt;&lt; endl;
+   }
+}</pre>
+      <div class='explanation'>The type of the <code>this</code> pointer is <code>ChoiceQuestion*</code>. Therefore, the <code>display</code> function of
+<code>ChoiceQuestion</code> is selected, and the function calls itself.</div>
+    </li> 
+    <li class='correct'><pre>
+void ChoiceQuestion::display() const
+{
+   Question::display();
+   for (int i = 0; i &lt; choices.size(); i++)
+   {
+      cout &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; choices[i] &lt;&lt; endl;
+   }
+}</pre> 
+      <div class='explanation'>Now the correct <code>display</code> function is called.</div>
+    </li> 
+    <li class='correct'><pre>
+void ChoiceQuestion::addChoice(const string&amp; choice, bool correct)
+{
+   choices.push_back(choice);
+   if (correct)
+   {
+      string numStr = to_string(choices.size());
+      Question::setAnswer(numStr);
+   }
+}
+</pre>
+      <div class='explanation'>This implementation is correct, but it was not necessary to add <code>Question::</code> before <code>setAnswer</code> because <code>setAnswer</code> is not overridden in <code>ChoiceQuestion</code>.</div>
+    </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
