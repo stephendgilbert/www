@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15b-constructors-ma-1' id='15b-constructors-ma-1'><div class='hc-included'>
+<div>
+  <p>Consider the following classes:</p>
+  <pre>class Employee
+{
+public:
+   Employee();
+   Employee(const string&amp; name, double salary);
+   void setName(const string&amp; name, double salary);
+   void setSalary(double salary);
+   virtual string name() const;
+   virtual double salary() const; // Returns base salary
+private:
+   string m_name;
+   double m_salary;
+};
+
+class Manager : public Employee
+{
+   Manager(const string&amp; name, double salary, double bonus);
+   double salary() const; // Returns base salary + bonus
+private:
+   double m_bonus;
+};
+
+</pre>
+  <p>Which of the following are a correct implementation of 
+    the <code>Manager</code> constructor?
+</p>
+  <ol class='horstmann_ma'>
+    <li><pre>Manager::Manager(const string&amp; name, double salary, double bonus)
+{
+   m_name = name; m_salary = salary; m_bonus = bonus;
+}</pre>
+      <div class='explanation'>The derived class cannot access the 
+         <code>m_salary</code> and <code>m_name</code> data members of the base class.</div></li>
+    <li class="correct"><pre>Manager::Manager(const string&amp; name, double salary, double bonus)
+{
+   setName(name); setSalary(salary); m_bonus = bonus;
+}
+</pre><div class='explanation'>This calls the <b>default</b> <code>Employee</code> constructor first.</div>
+    </li>
+    <li><pre>Manager::Manager(const string&amp; name, double salary, double bonus)
+  : Employee(name, salary, bonus) 
+{
+}
+</pre>
+      <div class='explanation'>There is no <code>Employee</code> constructor taking three arguments.</div>
+    </li>
+    <li class='correct'><pre>Manager::Manager(const string&amp; name, double salary, double bonus)
+  : Employee(name, salary) 
+{ 
+   m_bonus = bonus; 
+}
+</pre>
+      <div class='explanation'>It is preferred to call the <code>Employee</code> constructor using the initializer list.</div>
+    </li>
+    <li class='correct'><pre>Manager::Manager(const string&amp; name, double salary, double bonus)
+  : Employee(name, salary), m_bonus(bonus) 
+{ 
+}
+</pre>
+      <div class='explanation'>You can also initialize the <code>m_bonus</code> in the initializer list.</div>
+    </li>
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
