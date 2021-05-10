@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15d-polymorphism-wt-1' id='15d-polymorphism-wt-1'><div class='hc-included'>
+<div>
+  <p>Trace through the code below. Observe how the <code>showQuestion</code> 
+  <b>polymorhphic</b> function  has a parameter <code>q</code> of 
+  type <code>Question*</code>, but the correct version of the 
+  <code>display</code> function is called if <code>q</code> refers 
+  to a derived class object.</p>
+  <div class='horstmann_walkthrough'>
+<pre>class Question
+{
+public:
+   . . .
+   virtual void display() const;
+};
+void Question::display() const
+{
+   cout &lt;&lt; text &lt;&lt; endl;
+}
+
+class ChoiceQuestion : public Question
+{
+   . . .
+   virtual void display() const;
+};
+void ChoiceQuestion::display() const
+{
+   Question::display();
+   for (int i = 0; i &lt; choices.size(); i++)
+   {
+      int choice = i + 1;
+      cout &lt;&lt; choice &lt;&lt; ": " &lt;&lt; choices[i] &lt;&lt; endl;
+   }
+}
+
+void showQuestion(Question* q)
+{
+   q->display();
+   . . .
+}
+
+int main()
+{
+   Question* q1 = new Question;
+   ChoiceQuestion* q2 = new ChoiceQuestion;
+   . . .
+   showQuestion(q1);
+   showQuestion(q2);
+   . . .
+}
+  </pre> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_walkthrough.setup.push([
+{gotoline: [29, 27], line: 38 },
+{gotoline: [7, 9], line: 29 },
+{gotoline: [39, 38, 10], line: 9},
+{gotoline: [29, 27], line: 39 },
+{gotoline: [17, 19], line: 29},
+{gotoline: [7, 9], line: 19},
+{gotoline: [20, 19, 10], line: 9}
+])
+   //]]> </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15d-polymorphism-ma-2' id='15d-polymorphism-ma-2'><div class='hc-included'>
+<div>
+<p>Given these classes:</p>
+<pre>class Question { };
+class ChoiceQuestion : public Question
+{
+public:
+   void addChoice(const string&amp; ans, bool correct);
+};
+</pre>
+  <p>Which of the following statements are legal?</p> 
+  <ol class='horstmann_ma'>
+    <li class='correct'><pre>
+Question* p = new ChoiceQuestion;
+</pre>
+      <div class='explanation'>The <code>new</code> expression returns a <code>ChoiceQuestion*</code> which you can assign to a <code>Question*</code> pointer.</div>
+    </li> 
+    <li><pre>
+ChoiceQuestion* q = new Question;
+</pre>
+      <div class='explanation'>You cannot assign a base class pointer to a derived class pointer.</div>
+    </li> 
+    <li><pre>
+Question* p = new ChoiceQuestion;
+p-&gt;addChoice("Yes", true);
+</pre>
+      <div class='explanation'>Even though <code>p</code> points to a <code>ChoiceQuestion</code>, it is declared as a <code>Question*</code> and you cannot call the <code>addChoice</code> member function.</div>
+    </li> 
+    <li class='correct'><pre>
+ChoiceQuestion* q = new ChoiceQuestion;
+q-&gt;addChoice("No", false);
+</pre>
+      <div class='explanation'><code>q</code> is a <code>ChoiceQuestion*</code> and you can call the <code>addChoice</code> member function.</div>
+    </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

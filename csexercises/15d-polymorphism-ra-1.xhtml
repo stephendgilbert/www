@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15d-polymorphism-ra-1' id='15d-polymorphism-ra-1'><div class='hc-included'>
+<div>
+  <p>Using the <code>Question</code> class in this section and its derived classes:</p>
+<pre>class Question { };
+class NumericQuestion : public Question { };
+class FillInQuestion : public Question { };
+class FreeResponseQuestion : public Question { };
+</pre>
+<p>Rearrange the following lines to add appropriate objects to a list of questions. 
+  You can add them in any order. Then display all questions.</p>
+    <p>Not all lines are useful.</p> 
+  <div class='horstmann_rearrange'>
+    <pre>.vector&lt;Question*&gt; quiz;
+.quiz.push_back(new NumericQuestion("How much is 6 * 7?", 42));
+,quiz.push_back(new FillInQuestion("The first electronic computer was the _____", "Eniac"));
+,quiz.push_back(new FreeResponseQuestion("How did you spend your summer vacation?"));
+-quiz.push_back(new Answer(42));
+-quiz.push_back(new Response("Paris"));
+-quiz.push_back("What is the capital of France?");
+.for (Question* q : quiz)
+.{
+. q-&gt;display();
+- cout &lt;&lt; q &lt;&lt; endl;
+.}
+</pre> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

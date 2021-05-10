@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15d-polymorphism-ma-3' id='15d-polymorphism-ma-3'><div class='hc-included'>
+<div>
+  <p>Consider these classes:</p>
+  <pre>class Question
+{
+public:
+   Question();
+   void setText(const string&amp; question_text);
+   void setAnswer(const string&amp; correct_response);
+   virtual bool checkAnswer(const string&amp; response) const;
+   virtual void display() const;
+private:
+   string m_text;
+   string m_answer;
+};
+
+class ChoiceQuestion : public Question
+{
+public:
+   ChoiceQuestion();
+   void addChoice(const string&amp; choice, bool correct);
+   virtual void display() const;
+private:
+   vector&lt;string&gt; m_choices;
+};
+</pre>
+  <p>Which of the following statements is true?</p>
+  <ol class='horstmann_ma'>
+    <li>The <code>display</code> function in <code>Question</code> should not have been declared as <code>virtual</code>.   <div class='explanation'>This function is overridden in <code>ChoiceQuestion</code>.</div> </li> 
+    <li>The <code>checkAnswer</code> function in <code>Question</code> should not have been declared as <code>virtual</code>.  <div class='explanation'>This function is not overridden in <code>ChoiceQuestion</code>, but another derived class may want to override it (for example, to allow for roundoff or spelling errors).</div> </li> 
+    <li>The <code>addChoice</code> function in <code>ChoiceQuestion</code> should have been declared as <code>virtual</code>.   <div class='explanation'>No class derives from <code>ChoiceQuestion</code>, and if one did, it probably would not want to override this function.</div> </li> 
+    <li>The <code>display</code> function in <code>ChoiceQuestion</code> should not have been declared as <code>virtual</code>.   <div class='explanation'>It is not required to declare the overriding method as <code>virtual</code>, but many programmers do so for clarity.</div> </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

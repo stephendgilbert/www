@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15d-polymorphism-ma-1' id='15d-polymorphism-ma-1'><div class='hc-included'>
+<div>
+<p>Given these classes:</p>
+<pre>class Question { };
+class ChoiceQuestion : public Question
+{
+public:
+   void addChoice(const string&amp; ans, bool correct);
+};
+</pre>
+  <p>Which of the following statements are legal?</p> 
+  <ol class='horstmann_ma'>
+    <li class='correct'><pre>
+ChoiceQuestion q = . . .;
+Question a = q;
+</pre>
+      <div class='explanation'>This is legal, but <code>a</code> does not contain the choices. They have been <mark>sliced away</mark>.</div>
+    </li> 
+    <li><pre>
+Question a = . . .;
+ChoiceQuestion q = a;
+</pre>
+      <div class='explanation'>You cannot assign a base class object to a derived class object.</div>
+    </li> 
+    <li><pre>
+ChoiceQuestion q = . . .;
+Question a = q;
+a.addChoice("Yes", true);
+</pre>
+      <div class='explanation'><code>a</code> is a <code>Question</code> and does not have an <code>addChoice</code> member function.</div>
+    </li> 
+    <li class='correct'><pre>
+ChoiceQuestion q = . . .;
+q.addChoice("No", false);
+</pre>
+      <div class='explanation'><code>q</code> is a <code>ChoiceQuestion</code> and has an <code>addChoice</code> member function.</div>
+    </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
