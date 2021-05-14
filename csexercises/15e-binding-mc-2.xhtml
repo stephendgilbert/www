@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15e-binding-mc-1' id='15e-binding-mc-1'><div class='hc-included'>
+<div>
+<p>Consider the <code>Person</code> and <code>Student</code> classes:
+</p>
+<pre>class Person
+{
+public:
+   virtual string toString() const { return "Person"; }
+   . . .
+};
+
+class Student: public Person
+{
+public:
+   string toString() const { return "Student"; }
+   . . .
+};
+
+int main()
+{
+   Person* p = new Student;
+   cout &lt;&lt; p->toString() &lt;&lt; endl;
+}
+
+</pre>
+  <p>What happens?</p>
+  <ol class='multiple-choice'>
+    <li class='correct'>The code will print "Student", since <code>toString</code> uses late binding and is overridden in <code>Student</code>.</li>
+    <li>The code will not compile since <code>p</code> is a <code>Person*</code> so it must point to a <code>Person</code> object</li>
+    <li>The code prints "Person" since <code>toString</code> uses early binding to bind to the <code>Person *</code></li>
+    <li>The code prints both "Person" and "Student", since <code>p</code> is a <code>Person*</code> which points to a <code>Student</code> object</li>
+  </ol>  
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
+

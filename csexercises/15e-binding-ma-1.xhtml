@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15e-binding-ma-1' id='15e-binding-ma-1'><div class='hc-included'>
+<div>
+  <p>Consider these classes:</p>
+  <pre>class Question
+{
+public:
+   void setText(const string&amp; question_text);
+   void setAnswer(const string&amp; correct_response);
+   virtual bool checkAnswer(const string&amp; response) const;
+   virtual void display() const;
+   ...
+};
+
+class ChoiceQuestion : public Question
+{
+public:
+   void setText(const string&amp; question_text);
+   void addChoice(const string&amp; choice, bool correct);
+   void display() const;
+   ...
+};
+</pre>
+  <p>Which of the following statements is true?</p>
+  <ol class='horstmann_ma'>
+    <li>The <code>display</code> function uses early binding. <div class='explanation'>Because it is <code>virtual</code> it uses late binding.</div> </li> 
+    <li>The <code>setText</code> function is overridden in <code>ChoiceQuestion</code>.  <div class='explanation'>Because it was <b>not</b> <code>virtual</code> in <code>Question</code> it is not overridden, but hidden.</div> </li> 
+    <li class='correct'>The <code>setAnswer</code> function in <code>ChoiceQuestion</code> uses early binding.   <div class='explanation'>A function that is not <code>virtual</code> always uses early binding.</div> </li> 
+    <li class='correct'>The <code>display</code> function in <code>ChoiceQuestion</code> is <code>virtual</code>.   <div class='explanation'>It is not required to declare the overriding method as <code>virtual</code>, but it is still a <code>virtual</code> function.</div> </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>

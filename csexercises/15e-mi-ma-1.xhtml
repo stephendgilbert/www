@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15e-mi-ma-1' id='15e-mi-ma-1'><div class='hc-included'>
+<div>
+  <p>Consider these classes:</p>
+  <pre>class Mammal
+{
+public:
+   Mammal() { cout &lt;&lt; "I'm warm blooded" &lt;&lt; endl; }
+};
+class FlyingAnimal
+{
+public:
+   FlyingAnimal() { cout &lt;&lt; "I'm flying" &lt;&lt; endl; }
+ };
+class Bat: public Mammal, public FlyingAnimal
+{
+public:
+   Bat() { cout &lt;&lt; "I'm a bat" &lt;&lt; endl; }
+};
+int main()
+{
+   Mammal *p = new Bat;
+   Bat man;
+}
+</pre>
+  <p>Which of the following statements is true?</p>
+  <ol class='horstmann_ma'>
+    <li>The <code>Bat</code> class definition is illegal, since it has two base classes. <div class='explanation'>Multiple inheritance is legal in C++ (although not in Java).</div> </li> 
+    <li>The line <code>Mammal *p = new Bat</code> is illegal. <div class='explanation'>A <code>Bat</code> <mark>is-a</mark> <code>Mammal</code> so this is legal.</div> </li> 
+    <li class='correct'>The line <code>Mammal *p = new Bat</code> will print three lines of output.<div class='explanation'>It will. When a <code>Bat</code> is constructed it calls both base class constructors.</div> </li> 
+    <li class='correct'>The line <code>Bat man</code> produces the same output as the preceeding line. <div class='explanation'>It does.</div> </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
