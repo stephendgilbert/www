@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='15f-specification-ma-3' id='15f-specification-ma-3'><div class='hc-included'>
+<div><p>Consider the following classes:</p>
+<pre>class Pet
+{
+public:
+   virtual void speak() const = 0;
+   virtual void license() const;
+   virtual int getID() const;
+};
+class Dog final: public Pet
+{
+public:
+   void speak() const;
+   void license() const;
+};
+class Cat: public Pet
+{
+public:
+   void license() const final;
+};
+class Poodle : public Dog
+{
+public:
+   ...
+};
+class Persian : public Cat
+{
+public:
+   void speak() const;
+};
+</pre>
+  <ol class='horstmann_ma'>
+    <li class='correct'>The <code>Poodle</code> class will not compile.<div class='explanation'>It's base class, <code>Dog</code> is <code>final</code>.</div> </li> 
+    <li>The <code>Cat</code> class will not compile.<div class='explanation'>Becuase it does not override <code>speak</code> is is abstract, but it compiles.</div> </li> 
+    <li>The <code>Persian</code> class is an abstract class.<div class='explanation'>It is concrete since it overrides <code>speak</code>.</div> </li> 
+    <li class='correct'>The <code>Dog</code> class is a concrete class.<div class='explanation'>It overrides <code>speak</code>.</div> </li> 
+    <li class='correct'>The <code>Pet</code> class is an abstract class.<div class='explanation'>It has one abstract method.</div> </li> 
+    <li>The <code>Persian</code> class may override <code>license</code> as well as <code>speak</code>.<div class='explanation'>No. <code>license</code> is <code>final</code> in <code>Cat</code>.</div> </li> 
+  </ol> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
