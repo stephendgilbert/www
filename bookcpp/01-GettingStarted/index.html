@@ -1,0 +1,900 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../cs150.css' rel='stylesheet' media='all'>
+    <link href='../cs150-screen.css' rel='stylesheet' media='screen'>
+    <link href='../cs150-print.css' rel='stylesheet' media='print'>
+
+    <link href='../prism.css' rel='stylesheet'>
+    <script src='../prism.js'></script>
+
+    <title>CS 150 Reader&mdash;Chapter 1&mdash;Getting Started with C++</title>
+
+</head>
+<body>
+
+<div id='page'>
+    <div id="chapterBanner">
+        <img id='chapterLogo' src='../images/logo-ch01b.png' alt='Chapter logo.'>
+        <p id='chapterSubtitle'>The Spring 2015 CS 150 Reader</p>
+        <p id='chapterTitle'>Getting Started with C++</p>
+    </div>
+
+<div id='content'>
+
+<h1>Preface&mdash;About this Book</h1>
+    <p class='firstLine'>
+        This reader is designed for CS 150, <i>C++ Programming I</i>,
+        at Orange Coast College. CS 150 is a <b>second course</b>
+        in computer science, so you are expected to know the basic
+        programming constructs: variables, input and output,
+        calculations, loops, decisions, functions and arrays.
+    </p>
+    <p> This Spring 2015 version of the <i>CS 150 Course Reader</i>
+        is <b>goal oriented</b>.
+        Each chapter will begin with a homework problem, and the rest of the
+        chapter will show you how to solve it, presenting the necessary
+        parts of C++ as they are encountered. Unlike the text used in previous
+        semesters, this reader is shorter and more consise, focusing mostly
+        on the parts you need to get your work done.
+    </p>
+    <p> However, because our OCC prerequisite courses vary considerably
+        in what topics they cover, and how those topics are presented,
+        it is difficult to rely on any specific material. Some of you,
+        for example, will already understand C++ control structures from
+        prior experience with closely related languages such as C# or Java;
+        others of you may have taken Python or Visual Basic, and for you,
+        the structure of C++ might seem unfamiliar.
+    </p>
+    <p> Because of this disparity in background, as new language features
+        are presented, you'll find links to the companion <i>CS 150 C++ Reference</i>
+        that is organized in a more traditional manner. You will be able to
+        use a version of this reference during your programming exams, so
+        you'll want to become familiar with its organization.
+    </p>
+    <p>Here are some icons that are used in the text.</p>
+    <table class='icons'>
+    <tr>
+        <td><img src='../images/external-link.png' style='width:32px;'></td>
+        <td>Web page with more information (optional)</td>
+    </tr>
+    <tr>
+        <td><img src='../images/pdf_icon.png' style='width:32px;'></td>
+        <td>PDF document with more information (optional)</td>
+    </tr>
+    <tr>
+        <td><img src='../images/reference.png' style='width:32px;'></td>
+        <td>In-depth reference material (should read)</td>
+    </tr>
+        <tr>
+        <td><img src='../images/exercise.png' style='width:32px;'></td>
+        <td>Review exercises (should complete)</td>
+    </tr>
+
+    </table>
+
+<h2 style='page-break-before:always;'>About C++ Versions</h2>
+    <p> Unlike proprietary languages like Java or Visual basic, that are
+        controlled and owned by a particular company, C++ is a <b>standardized
+        langauge</b>, whose specification is controlled by an international
+        standards organization. Different companies are thus free to implement
+        the C++ language without fear of lawsuits, such as the suit currently
+        in litigation surrounding Java.
+    </p>
+    <p> There several different versions of C++ that have been developed
+        over the years. You should know about three of them.
+    </p>
+    <ul>
+        <li>The different versions of C++ available in the 1980s and 90s are
+            known as <b>pre-standard C++</b>. You are unlikely to encounter
+            any of these versions today, but you may see them mentioned in
+            different textbooks. Different versions of pre-standard C++
+            were often incompatible with each other.
+        </li>
+        <li> In the early 1990s, the first C++ standardization effort began,
+            culminating in the 1998 release of <b>Standard C++</b>,
+            standardized by the international standards organization (ISO).
+            This is also known as <b>ANSI</b> or <b>ISO</b> C++, or <b>C++98</b>.
+            <br /><img src='images/wg21-timeline.png'
+            style='width:85%;' alt='The C++ timeline.'>
+        </li>
+        <li>In 2011, C++ was standardized again, with several new features.
+            The current version of ISO Standard C++ is now known as <b>C++11</b>.
+        </li>
+    </ul>
+    <p> Of course this new standard is not set in stone. Just this year, the
+        <b>next</b> version of Standard C++, <b>C++14</b> was finalized, and
+        work is now proceeding on C++17.
+    </p>
+    <div class='highlight'>
+    <p> In this course we will use several C++11 features, so you'll
+        need to use a compiler that supports it. This includes <b>GCC 4.8</b>
+        on Linux or Windows, <b>XCode 5</b> on the Mac, and
+        <b>Visual Studio 2013</b> on Windows. You <b>won't</b> be able to
+        use earlier versions of these compilers.
+    </p>
+    </div>
+
+<h1 style='page-break-before:always;'>What is C++?</h1>
+    <p> In the early days of computing, programs were written in
+        <b>machine language</b>,
+        the primitive instructions that can be executed directly by your
+        computer's CPU. Machine language is also known as <b>native code</b>.
+        Programs written in machine language are difficult to understand,
+        <img src='images/Machine-language.jpg' class='right width-25'>
+        mostly because the structure of machine language reflects the
+        design of the hardware rather than the needs of programmers.
+    </p>
+    <p> Worse still, each type of computing hardware has its own machine
+        language, which means that a program written for one machine will
+        not run on other types of hardware. Machine language programs
+        are inherently <b>non-portable</b>.
+    </p>
+    <p> In the mid-1950s, programmers working under
+        <b>John Backus</b> at IBM wondered if it would be possible to
+        have the computer itself translate the formulas they were using
+        into machine language. In 1955, they produced the initial version
+        of <code>FORTRAN</code> (is a contraction of <b>FOR</b>mula
+        <b>TRAN</b>slator). This was the first example of a
+        <b>high-level programming language</b> (<tt>HLL</tt>).
+        <a href='http://faculty.orangecoastcollege.edu/sgilbert/book/02-1-EarlyHistoryOfProgramming-B/index.html'
+            target='_blank' title='Gilbert: History of Programming (CS 170)'
+            alt='Gilbert: history of programming.'><span class='external left'></span></a>
+    </p>
+
+    <h2>The C programming language</h2>
+    <p>
+        <img src='images/thompson-ritchie.png' class='right width-30' alt='Ken Thompson and Dennis Ritchie.'>
+        <a href='http://cm.bell-labs.com/cm/cs/who/dmr/hist.html'
+            target='_blank' title='Ritchie: The Evolution of the Unix Time-sharing System'
+            alt='Ritchie: history of Unix.'><span class='external left'></span></a>
+        In 1970, a pair of young researchers at
+        Bell Labs in New Jersey&mdash;Ken Thompson and Dennis
+        Ritchie&mdash;developed a portable operating system for a new
+        generation of mini-computers just coming on the market.
+        To help simplify the development of Unix, Ritchie created a new
+        programming language named <b>C</b> (because its predecessor was
+        <b>B</b>).
+        <a href='http://cm.bell-labs.com/who/dmr/chist.html'
+            target='_blank' title='Ritchie: History of C)'
+            alt='Ritchie: history of C.'><span class='external left'></span></a>
+
+    </p>
+    <p> Both Unix and C have had enormous impact on the field of
+        computing.  Many of today's most important language are based
+        on C, including C++, which still uses much of the original syntax
+        designed by Ritchie.
+    </p>
+
+    <h2>The C++ language</h2>
+    <p> <img src='images/Bjarne.jpg' class='right width-25' alt='Bjarne Stroustrup.'>
+        Around 1980, another researcher at AT&amp;T's Bell Labs,
+        Bjarne Stroustrup, began adding <b>object-oriented</b> features
+        to C. This first version of C++ was known as <b>C With Classes</b>.
+    </p>
+
+    <p>In addition to C, C++ also descends from a family of languages designed to
+        support a different style of programming; a style that has dramatically
+        changed the nature of software development in recent years.
+        <img src='images/programming_languages.png' class='inlineCenter' style='width:85%;' alt='Different programming languages.'>
+    <p>
+    <p> In the <b>procedural</b> or <b>imperative</b> programming style,
+        programs consist of a collection of procedures and functions that
+        operate on data. In <b>object-oriented programming</b>, programs
+        are viewed instead as a collection of data objects that
+        embody particular characteristics and behavior.
+    </p>
+    <p> The first object-oriented language was <tt>SIMULA</tt>,
+        a language designed in Norway for writing <b>simulations</b>.
+        Much of the vocubulary we'll use to describe the object-oriented
+        featers of C++ comes from the original 1967 specification for
+        <tt>SIMULA</tt>.
+    </p>
+    <p> There were several parallel efforts to design
+        an object-oriented language based on C, (such as <b>Objective-C</b>,
+        used on the Macintosh). The most successful was the
+        language <b>C++</b>, which was developed by <b>Bjarne Stroustrup</b>
+        at AT&amp;T Bell Laboratories, beginning in the early 1980s.
+        <a href='http://www.stroustrup.com/hopl2.pdf'
+            target='_blank' title='Stroustrup: A History of C++: 1979-1991 (PDF)'
+            alt='Stroustrup history of C++.'><span class='external pdf left'></span></a>
+    </p>
+
+    <h3>C++ as a Multi-Paradigm Language</h3>
+    <p> <a href='http://www.stroustrup.com/hopl-almost-final.pdf'
+            target='_blank' title='Stroustrup: Evolving C++ 1991-2006'
+            alt='Stroustrup evolving of C++.'><span class='external pdf left'></span></a>
+        In C++ the object-oriented and the imperative programming
+        styles are <b>complementary</b>. Even within a single application,
+        you are likely to find a use for more than one approach. As
+        a programmer, you want to look at these different styles
+        or <b>paradigms</b> as <b>tools</b> that
+        you can pull out of your toolbox when needed, so that
+        you can use the conceptual model that is most
+        appropriate to the task at hand.
+    </p>
+    <p>
+        <a href='http://www.stroustrup.com/oopsla.pdf'
+            target='_blank' title='Stroustrup: Why C++ is not just an Object-Oriented Programming Language.'
+            alt='Stroustrup: Why C++ is not just Object-Oriented.'><span class='external pdf left'></span></a>
+        Unlike <b>idealistic</b> languages that enforce a "one true path" to
+        to programming Nirvana, C++ is <b>pragmatic</b>. C++ is <b>not</b>
+        an object-oriented language; instead, it was designed to
+        be a <b>multi-paradigm language</b>; it supports
+        both procedural and object-oriented programming, as well as the
+        style known as <b>generic programming</b> which you'll meet
+        later in the semester.
+    </p>
+
+    <h2>How C++ is different than other languages</h2>
+    <p> C++ is a <b>compiled</b>, high-level language. Unlike, Java, C# or
+        Python compilers which produce an intermediate-level <b>bytecode</b>
+        that is then <b>interpreted</b> by a <b>virtual machine</b>, C++
+        compilers produce <b>native machine code</b> which runs directly
+        on the hardware without any interveining software.
+    </p>
+    <p> Because of this, C++ programs tend to be much more efficient
+        than Java, Python or C# programs. In fact, the most popular
+        version of Python, as well as the Java Virtual Machine itself,
+        are both written in C++.
+    </p>
+    <p> There are some drawbacks to writing programs in C++ as well.
+        Because your code runs directly on the hardware, instead of
+        inside a supervising virtual machine, certain kinds of runtime
+        errors, such as accessing elements outside the bounds of an
+        array, cannot be detected. In addition, C++ compilers are
+        usually not as restrictive as Java or C# compilers, and so
+        it is somewhat easier for logic errors to slip through
+        your code.
+    </p>
+
+<h1>H00&mdash;Your First C++ Program</h1>
+    <p> As I mentioned in the preface, this reader is <b>goal-oriented</b> We'll
+        always start by defining a problem and then learning how to solve it.
+        For the first few weeks of the course, we'll be working on simple
+        <b>IPO</b> or <b>I</b>nput-<b>P</b>rocessing-<b>O</b>utput style
+        programs.
+    </p>
+    <p> Here's your first problem (from <i>Savitch-Absolute C++ 5</i>).
+    </p>
+    <blockquote>
+        <p>A metric ton is 35,273.92 ounces. Write a program that will read
+            the weight of a package of breakfast cereal in ounces and output
+            the weight in metric tons as well as the number of boxes needed
+            to yield one metric ton of cereal.
+        </p>
+    </blockquote>
+    <h3>The IPO Concept</h3>
+    <img src="images/cuisinart.gif" class="right" alt="A Cuisinart food processor">
+        <p>I always like to have a mental picture for my definitions,
+        so I think of a computer as an <b>information processor</b>,
+        sort of like a <i>Cuisinart</i> for words and numbers and ideas.
+    </p>
+    <p> Instead of vegetables, we feed our computer <b>data</b>; the raw facts
+        figures and symbols we have to work with. The computer uses
+        a <b>program</b> stored in memory, to turn that data into
+        <b>information</b> that's organized, meaningful and useful.
+        (Of course, if the data contains errors, then the information
+        won't really be all that useful; that's the origin of the
+        term <b>GIGO</b>: <i>Garbage IN; Garbage OUT</i>).
+    </p>
+    <div class='highlight'>
+        <p>In fact, <b>every program</b> is based on this fundamental
+            concept: input some data, process it and produce some information.
+        </p>
+    </div>
+
+    <h3>What It Looks Like and What It Does</h3>
+    <p> The programs that we'll write for these first few weeks will
+        be <b>interactive</b> IPO programs. You'll type the input at
+        the keyboard in response to a <b>prompt</b>, and the output
+        will be displayed on your monitor. Many of you will find this
+        kind of "old fashioned", but the concepts you'll learn will
+        remain the same for even the most sophisticated program.
+    </p>
+    <p> So, let's start by thinking about what we
+        what you want the <b>interaction</b> to look like. Planning this
+        out ahead of time will make developing your code much easier.
+        Don't spend too much time on this step, though, because you'll
+        often change it as your program develops.
+    </p>
+    <p> Here's one possible interaction design, given this problem.</p>
+    <div class='consoleDisplay'>
+sgilbert-CS 150 Cereal-box Calculator<br>
+------------------------------------------------------<br>
+Enter ounces per box of cereal: <span class='blue'>10</span><br>
+Weight in metric tons: <span class='darkred'>.0002835</span><br>
+Boxes per metric ton: <span class='darkred'>3528</span><br>
+</div>
+    <p> In the illustration shown here I've displayed the input values in
+        blue, and the calculated output values in dark red. When we actually
+        run the program, of course, everything will be displayed
+        in the console in a single color. I've also displayed my
+        user name in the program heading when it runs.
+    </p>
+
+<h1 style='page-break-before:always;'>C++ Mechanics&mdash;Tools &amp; Techniques</h1>
+    <p> To create your own C++ programs, you follow a <b>mechanical
+        process</b>, a well-defined set of steps called the
+        <b>edit-build-run</b> cycle that looks like this:<br>
+        <img src='images/cpp-mechanics3.png' class='inlineCenter'
+            alt='The edit-build-run cycle.'>
+    </p>
+    <p> If you are coming from Python (or even Java or C#) this seems
+        much more complex than what you are used to. In actual practice
+        it is not any more difficult; you just have more options.
+    </p>
+    <ol>
+        <li class='d'>Create your <b>source code</b> using an editor</li>
+        <li class='d'>Build your executable using a <b>compiler toolchain</b></li>
+        <li class='d'>Run your program using your operating system facilities</li>
+    </ol>
+    <p> Learning this process is <b>necessary</b> before you can
+        learn to program, but it is <b>not</b> the same as learning
+        how to program; you <b>must</b> master the process, but mastering
+        the process doesn't mean you'll write correct and elegant programs.
+    </p>
+    <div class='highlight'>
+        <p>You'll learn more about the details of compiling and linking
+            in lecture and later in the class. Right now you just need
+            to know what is needed to get everything to work.
+        </p>
+    </div>
+
+    <h2 style='page-break-before:always;'>The GCC Toolchain &amp; the Computing Center</h2>
+    <p> As you can see from the previous section, the C++ <b>build</b>
+        process which turns your source code into an executable
+        involves several tools:
+    </p>
+    <ul>
+        <li><b>Preprocessor</b>&mdash;performs text substitution on your
+            source code.
+        </li>
+        <li><b>Compiler</b>&mdash; converts the preprocessed to code to
+            <b>object code</b>.
+        </li>
+        <li><b>Assember</b>&mdash;used by the compiler to
+            produce the object code.
+        </li>
+        <li><b>Linker</b>&mdash;combines object modules to produce an
+            executable that can be run.
+        </li>
+        <li><b>Make</b>&mdash;provides instructions for
+            building each program.
+        </li>
+        <li><b>Loader</b>&mdash;reads the executable from disk into
+            memory and starts it
+            running.
+        </li>
+        <li><b>Debugger</b>&mdash;allows you to run your program inside
+            a controlled environment.
+        </li>
+    </ul>
+    <p>
+        A particular combination a C++ compiler, linker, assembler and
+        libraries is known as a <b class='bg-yellow'>toolchain</b>. The toolchain
+        we'll be using in class and on your programming exams is a version
+        of the <b>GNU Compiler Collection</b> (<tt>GCC</tt>) that has been
+        adapted for Windows. It is called <tt>MinGW</tt>.
+    </p>
+    <p> To get started, double-click the batch file <tt>C:\Apps\GCC\C++.bat</tt>.
+        This batch file sets up the executable paths to the <tt>MingGW</tt>
+        toolchain in the Computing Center.
+        <img src='images/h00-GCC.png' class='inlineCenter'
+            alt='Starting GCC in the Computing Center.'>
+    </p>
+
+    <h3 style='page-break-before:always;'>CS 150 Starter Code</h3>
+    <p> Instead of writing every program from scratch, I&rsquo;ll
+        provide you with a set of &ldquo;starter files&rdquo; that
+        provide a framework for running and testing simple C++ programs.
+    </p>
+    <ul>
+        <li>Download the <tt>H00.zip</tt> file from Blackboard and unzip it.</li>
+        <li>Locate the <tt>h00</tt> folder that it contains and place it somewhere
+        that you can work on it (such as a <tt>cs150-home</tt> folder).</li>
+        <li> Then, drag the source file named <tt>main.cpp</tt> and drop it
+            onto the <tt>SciTE</tt> editor window where it will
+            automatically open.</li>
+    </ul>
+    <img src='images/h00-GCC-1.png' class='inlineCenter'
+        alt='Opening the starter file in SciTE.'>
+    <h3>SciTE</h3>
+    <p> <a href='../_reference/Using-GCC.pdf'
+            target='_blank' title='Using SciTE and MinGW.'
+            alt='Using SciTE and MinGW.'><span class='external pdf left'></span></a>
+        Along with GCC or MinGW we need a <b>text editor</b> to write our source code.
+        The text editor we'll use, named <tt>SciTE</tt>, is a programmer's
+        text editor that knows how to use different external
+        tools, such as compilers, linkers and interpreters, based
+        on the type of file you have open. Find out more about using
+        <tt>SciTE</tt> and <tt>GCC</tt>, including how to install the
+        files on your home computer, in the link on the left.
+    </p>
+    <h3>Identify Yourself</h3>
+    <p> There are three places you'll need to add <b>identification</b>
+        to every project you build.
+    </p>
+    <ul>
+        <li>First, in the <b>file documentation comment</b> at the top
+            of the program, add your name after the
+            <kbd>@author</kbd> tag and the
+            date after the <kbd>@date</kbd> tag.
+        </li>
+        <li style='page-break-before:always;'>Next, find the <tt>STUDENT</tt> variable and fill in in
+            with your <b>Blackboard login ID</b>. I use this as a
+            sorting key when processing the assignments; if you do
+            this wrong, you will not receive any credit for an assignment.
+        </li>
+    </ul>
+    <img src='images/identify.png' class='inlineCenter' alt='Identifying yourself.'>
+
+    <h2>Designing A Solution</h2>
+    <p> When it comes to programming, C++ is like any other language in
+        at least one way: all programming starts with <b>planning</b> and
+        <b>design</b>.<br />
+        <img src='images/compile-link.png' class='inlineCenter width-75'
+            alt='Designing a program.'>
+    </p>
+    <p> Before we can write our C++ program, we have to spend time thinking
+        bout the inputs, processing and outputs. We have to create a
+        <b>conceptual model</b> of the solution, before we can write
+        our code.
+    </p>
+    <ul>
+        <li><b>Always</b> design your programs <b>before</b> you start writing code.</li>
+        <li>What are the <b>inputs</b>, <b>outputs</b>, <b>algorithms</b>
+            and <b>assumptions</b>?
+        </li>
+        <li><b>Write it in English</b> before you ever start writing in C++.</li>
+    </ul>
+    <div class='highlight'>
+        <p><b>Remember:</b> the sooner you start writing code,
+            the longer it will take you to finish.
+        </p>
+    </div>
+
+    <h3 style='page-break-before:always;'>A Preliminary Solution</h3>
+    <p> Here is some information that we can discover from the problem
+        statement:
+    </p>
+    <ul>
+        <li><b>Input</b>: weight of a box of cereal in ounces</li>
+        <li><b>Output</b>: weight of box in metric tons <i>and</i> number of
+            boxes in one a metric ton.</li>
+        <li><b>Given</b>: metric ton is <tt>35,273.92</tt> ounces</li>
+        <li><b>Calculation</b>: the weight in metric tons is equal to
+            the weight in ounces divided by the number of metric tons per ounce.
+        </li>
+        <li><b>Calculation</b>: the number of boxes per metric ton is
+            equal to one divided by the weight of a single box in metric tons.
+        </li>
+    </ul>
+    <p> Instead of designing your program on the back of an envelope,
+        though, there is no reason you can't use your computer. One of
+        the best techniques is to put your design information into a
+        <b>program comment</b> before you begin writing your code.
+        You'll see how to do that shortly, but first, let's look
+        at the basic structure of a C++ Program.
+    </p>
+    <h2>Basic C++ Program Structure</h2>
+    <p>  <a href='../_reference/index.html#main-structure'
+            target='_blank' title='Reference: Basic C++ Program Structure'
+            alt='Basic C++ Program Structure.'><span class='external reference left'></span></a>
+        When you scroll down a little further in <tt>main.cpp</tt>
+        you'll find a <b>function</b> named <kbd>run()</kbd>
+        preceded by a <b>documentation comment</b>. Every C++ has at least
+        one function named <kbd>main()</kbd> that
+        is automatically called when your program is run.
+    </p>
+    <p> Instead of <kbd>main()</kbd>, we will be using
+        <kbd>run()</kbd> for our simple IPO
+        (Input/Processing/Output) programs to simplify the process of
+        testing your code.
+        The actual <kbd>main()</kbd> function is
+        contained inside the executable source file <tt>cs150check.cpp</tt>
+        and it changes depending on whether you are running your program
+        interactively or testing it.
+    </p>
+    <p> You can <span class='bg-yellow'>ignore these details</span> and treat the
+        <kbd>run()</kbd> function exactly as
+        <kbd>main()</kbd> is used in your
+        reference document.
+    </p>
+    <h2>Commenting Your Program</h2>
+    <p>   <a href='../_reference/index.html#comments'
+            target='_blank' title='Reference: C++ Comment Styles'
+            alt='C++ Comment Styles.'><span class='external reference left'></span></a>
+        C++ has three kinds of comments: <b>multi-line</b>, <b>single-line</b>
+        and <b>documentation comments</b>. We will not normallly use the
+        original (C-style) multi-line comments. Instead, we'll use documentation
+        comments at the top of every file, and before function. For commenting
+        inside a function, use single-line comments. The C++
+        reference link has more information on each type of comment.
+    </p>
+    <p> Every program should have a comment that describes what it does.
+        For your CS 150 programs, you'll find the information you need in
+        the problem specification that I supply you. You'll place that information
+        in the comment preceeding the <kbd>run()</kbd>
+        function. Here's an example:
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>/**
+ 	Calculate cereal box weight in terms of metric tons.
+
+	Given: metric ton is 35,273.92 ounces
+	Input: weight of a box of cereal in ounces
+	Output: weight of box in metric tons
+            number of boxes in one ton
+	Calculation: weight in metric tons ->
+            weight in ounces divided by metric tons per ounce
+	Calculation: number of boxes ->
+            1 divided by weight of box in metric tons
+
+ 	@return 0 for success.
+*/
+int run() ...</code></pre>
+
+
+<h1>Start With the Output</h1>
+    <p> With all of that out of the way, we're ready to write some code.
+        Usually, with an IPO (Input, Processing and Output) program, you
+        being by <b>mocking up the interaction</b>, using plain output,
+        substituting both input and output values with <b>literals</b>.
+    </p>
+    <p>   <a href='../_reference/index.html#std-headers'
+            target='_blank' title='Reference: the Standard Library Headers.'
+            alt='Standard Library Headers.'><span class='external reference left'></span></a>
+        Input and output are not built-into the C++ language, but are
+        part of the standard library. To use these facilities, you need
+        to add the line <tt class='teal'>#include &lt;iostream&gt;</tt>
+        at the top of your program, and introduce the <b>standard
+        namespace</b>. The starter code has already done this for
+        you, but you should read the reference material, so you'll
+        know how to do it yourself.
+    </p>
+    <p> In the C++ standard library, the <b>standard output object</b>
+        is named <tt class='teal'>cout</tt> and you use it along with the <b>insertion</b>
+        (or <b>"put to"</b>) operator <tt>&lt;&lt;</tt> like this:
+    </p>
+<pre><code class='language-cpp'>int run()
+{
+    cout &lt;&lt; STUDENT &lt;&lt; "-CS 150 Cereal-box Calculator" &lt;&lt; endl;
+    cout &lt;&lt; "------------------------------------------" &lt;&lt; endl;
+    cout &lt;&lt; "Enter ounces per box of cereal: " &lt;&lt; 10 &lt;&lt; endl;
+    cout &lt;&lt; "Weight in metric tons: " &lt;&lt; .002835 &lt;&lt; endl;
+    cout &lt;&lt; "Boxes per metric ton: " &lt;&lt; 3528 &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+    <p> Note that the <b>arguments</b> that are sent to <tt class='teal'>cout</tt>
+        are printed from left to right, with each one being separated from
+        the others by the insertion operator. The last value sent on each line,
+        <tt class='teal'>endl</tt>, is pronounced "end-ell" and it represents
+        the newline character on your platform. Each output line ends with
+        a <b>semicolon</b> which marks the end of each C++ <b>statement</b>.
+    </p>
+    <p> In this case, I have separated the numbers I expect the program to
+        print (or that I expect to receive as input from the user) from the
+        literal text which is enclosed in semicolons. This style of mockup
+        will make the subsequent development of the program a little easier
+        because you won't have to change the ouput text and possibly mess up
+        the spacing.
+    </p>
+    <h2>Compile, Link and Run</h2>
+    <p> Believe it or not, once you've entered <b class='bg-yellow'>and saved</b>
+        your source code, you're ready to <b>compile</b> and <b>link</b> it.
+        As I mentioned earlier, this is called <b>building</b> the program.
+    </p>
+    <p> With G++, building is accomplished by running a program called <tt>make</tt>,
+        but with <tt>SciTE</tt> you do that by simply choosing <tt>Build</tt> from
+        the <tt>Tools</tt> menu, like this:<br>
+        <img src='images/building.png' class='inlineCenter' alt='Building Homework 0.'>
+    </p>
+    <p> To build your program:</p>
+    <ol>
+        <li> <tt>SciTE</tt> runs the <tt>make</tt> program.</li>
+        <li>The make program reads the <tt>makefile</tt> and compiles
+            each of the <kbd>.cpp</kbd> files in the folder. In this
+            case those are the two files <kbd>main.cpp</kbd> and
+            <kbd>cs150check.cpp</kbd>.
+        </li>
+        <li>If everything compiles correctly, the <b>linker</b>
+            combines the two object-code files and produces the
+            executable.
+        </li>
+        <li>If all goes well with that, then the program runs</li>
+    </ol>
+    <p> The output appears in <tt>SciTE</tt>'s <b>Output Window</b>, and
+        it looks exactly like the interactions dialog we mocked up. So
+        let's turn our attention to <b>input</b> and <b>processing</b>.
+    </p>
+    <h3 style='page-break-before:always;'>Wait! Something Went Wrong!!!!</h3>
+    <p> Of course it's possible that your code <b class='bg-yellow'>didn't</b>
+        compile and run successfully. There are two errors that can occur
+        at this point:
+    </p>
+    <ul>
+        <li><b>Syntax</b> or <b>compiler</b> errors occur when you have
+            broken one of the grammar rules of C++. If that occurs, instead
+            of the output you expect, you'll see an (often inscrutable)
+            error message in the output pane instead, perhaps like this:<br>
+            <img src='images/compiler-error.png' class='inlineCenter' alt='A Compiler error.'>
+            When this occurs:
+            <ol>
+                <li>Scroll up to the <b>first</b> error that appears in the output window
+                    and double-click the magenta-colored line (the one with the file name
+                    and line numbers). That will scroll the error into the editor window
+                    and place the yellow dot in the  left margin.
+                </li>
+                <li>The second line of the error will attempt to show you exactly
+                    where the compiler got confused. In this case, it is right
+                    before the literal number <tt>10</tt>.
+                </li>
+                <li>Finally, go to the text editor and fix the problem. This is where
+                    things get tricky. The compiler actuall <b>doesn't know</b> what you
+                    intended to write, so the solution it recomments is often
+                    incorrect. If you do add a semicolon where it suggests, then
+                    that will just trigger another message. The actual solution
+                    in this case is to add the insertion operator (<tt>&lt;&lt;</tt>)
+                    that we've forgotten between the operands.
+                </li>
+            </ol>
+            <br>Once you've corrected <b class='bg-yellow'>and saved</b> your source
+            code, compile again to see if you've fixed the problem. You can't go
+            onto the next step until there are no errors.
+        </li>
+        <li style='page-break-before:always;'><b>Logic errors</b> or <b>bugs</b> occur when your program
+            <b>doesn't do what it is supposed to do</b>. For instance,
+            if the output of the program looks like this when you run it<br>
+            <img src='images/logic-error.png' class='inlineCenter' alt='Logic error.'>
+            then you have a logic error, becuase you removed a space that was
+            supposed to appear in the output.
+        </li>
+    </ul>
+<h1>Input, Processing and Output</h1>
+    <p> Since our program now looks exactly like the <b>interactions dialog</b>
+        we mocked up, we can turn our attention to <b>input and processing</b>.
+        To do that, we'll need to:
+    </p>
+    <ul>
+        <li>Create some variables to hold both the input
+            and the results of our calculations.
+        </li>
+        <li>Use the C++ standard library <b>input object</b>
+            named <tt class='teal'>cin</tt> (along with the <b>extraction</b>
+            or <b>input</b> operator <tt class='teal'>&gt;&gt;</tt>).
+        </li>
+        <li>Write some <b>expressions</b> that calculate the values
+            our program should produce and store those in yet another
+            set of variables.
+        </li>
+        <li>Display the results and test to see that they are correct.
+        </li>
+    </ul>
+    <h2 style='page-break-before:always;'>Reading Input</h2>
+    <p> We only need to read one input value: the number of ounces
+        per box. To do that, we'll first create a <b>variable</b> to
+        hold the input. Because cereal boxes often contain a fractional
+        portion of an ounce, we need to use the data-type
+        called <tt class='teal'>double</tt>.
+        Finally, when we name our variable, I prefer to use the <b>camelCase</b>
+        style, but some prefer to use all lowercase with underscores separating
+        the parts of the word.<br>
+        <img src='images/user-input.png' class='inlineCenter' alt='Reading user input.'>
+    </p>
+    <p> To read input from the user, we first <b>prompt</b> for
+        the information that we expect to be typed and then read
+        the input from the standard input stream <tt class='teal'>cin</tt>
+        (prounounced "cee-in"). The <tt class='teal'>cin</tt> object is
+        the counterpart to <tt class='teal'>cout</tt>.
+        Here's what the code looks like after I've added a variable
+        and read a value from the user.
+    </p>
+    <h3>Prompting for Input</h3>
+    <p>Notice that the "mockup" data
+        previously appearing on the prompt line has been removed, as
+        well as the newline (<tt class='teal'>endl</tt>) appearing
+        after the prompt.
+        When you display a prompt for input, you generally omit the
+        <tt class='teal'>endl</tt> at the end of the line so that
+        the prompt appears on the same line as the user input.
+    </p>
+    <p> In addition,
+        you should make sure that the prompt ends in a single space,
+        so that it displays the prompt but leaves the console cursor&ndash;the
+        blinking vertical bar or square that marks the current input
+        &ndash;position at the end of the line, waiting for the user's
+        response.
+    </p>
+    <h3>Converting Input Data</h3>
+    <p> This final statement in the marked section reads a sequence of
+        characters typed by the user at the keyboard, and stores the results
+        in the variable named <tt class='teal'> ouncesPerBox</tt>. Because
+        this variable was declared as a <b>floating point</b>
+        (<tt class='teal'>double</tt>) variable, the <tt class='teal'>&gt;&gt;</tt>
+        operator automatically converts the characters typed by the user into the
+        appropriate real number value.
+    </p>
+    <h2>Processing and Output</h2>
+        <p> Although we could just do our calculations as part of the output,
+            I encourage you to create variables to hold the output values
+            as well. Since we want to print two different values,
+            I'll create two different variables:
+                <tt class='teal'>weightInMetricTons</tt> and
+            <tt class='teal'>boxesPerMetricTon</tt>.
+        </p>
+        <p> In C++, variables that are not initially given a value use
+            whatever random value happens to be in memory at that time.
+            So, instead of first creating the variables and then
+            calculating and assigning a value, I recommend that you
+            create variables <b>only when you can calculate an initial value</b>.
+        </p>
+        <p> Using the algorithm we developed when designing the program, we
+            can initialize those variables like this, and then replace the "mockup"
+            values from our output with the new calculated values
+            like this.
+        </p>
+<pre><code class='language-cpp'>int run()
+{
+    cout &lt;&lt; STUDENT &lt;&lt; "-CS 150 Cereal-box Calculator" &lt;&lt; endl;
+    cout &lt;&lt; "------------------------------------------" &lt;&lt; endl;
+
+    // Get the input from the user
+    cout &lt;&lt; "Enter ounces per box of cereal: ";     // prompt
+    double ouncesPerBox;                            // hold the input
+    cin >> ouncesPerBox;                            // read the input
+
+    // Processing section
+    double weightInMetricTons = ouncesPerBox / 35273.92;
+    double boxesPerMetricTon = 1.0 / weightInMetricTons;
+
+    // Output section
+    cout &lt;&lt; "Weight in metric tons: " &lt;&lt; weightInMetricTons &lt;&lt; endl;
+    cout &lt;&lt; "Boxes per metric ton: " &lt;&lt; boxesPerMetricTon &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+    <h2>Constants</h2>
+    <p> While our program looks OK, it does have one small flaw. The original
+        problem statement we were given specified the number of ounces in a
+        metric ton using the literal value <kbd>35,273.92</kbd>. However,
+        in our calculations, we <b>don't</b> want to use literal <b>"magic"</b>
+        numbers such as this: they are too easy to mistype and they make
+        the code more confusing.
+         Instead, you should store all "given" values in <b>named constants</b>.
+    </p>
+<pre><code class='language-cpp'>// Processing section
+const double OUNCES_PER_METRIC_TON = 35273.92;
+double weightInMetricTons = ouncesPerBox / OUNCES_PER_METRIC_TON;
+
+double boxesPerMetricTon = 1.0 / weightInMetricTons;</code></pre>
+    <p>
+        Constants can appear inside your function (as I've done here), or,
+        if you intend to use them throughout your
+        program, you can enter them before the <tt class='teal'>run()</tt>
+        method.
+    </p>
+
+<h1>Testing Your Program</h1>
+    <p> When we run our program, it doesn't quite match up with what
+        our initial design anticipated. For one thing, the number of
+        decimals displayed is slightly different that we expected.
+        So, how do we know if our program is correct?
+    </p>
+    <p> Simple; wou need to <b>test</b> it. To test it, we need to
+        supply several input values, and then figure out, <b>exactly</b>
+        what the output should be. The easiest way to do that is to
+        use Excel or Google Docs like this:
+        <img src='images/test-data.png' class='inlineCenter' alt='Calculating test data.'>
+        Since we haven't formatted any of our output, you might have
+        to adjust the number of decimal places for each portion.
+    </p>
+    <h2 style='page-break-before:always;'>The CS 150 Testing Framework</h2>
+    <p>
+        The <b>CS 150 framework</b> includes a simple testing scheme for IPO
+        type programs. Here's how it works.
+    </p>
+    <ul>
+        <li> For each input you want to test, <b>add a new line</b> to the
+            file named <kbd>testcases.txt</kbd> (which you'll find in
+            the folder with your starter code). If there are multiple
+            inputs, then separate them with a space or a newline (\n).
+        </li>
+        <li>Add a vertical bar (<kbd>|</kbd>) to <b>separate the input
+            from the expected output</b>, and then type the output that
+            you want to check.
+        </li>
+        <li><b>Change the program</b> output so the values being checked appear
+            between square brackets (<kbd>[ ]</kbd>). If you have multiple outputs,
+            they must all appear between a single set of brackets.
+        </li>
+        <li> At the top of <kbd>main.cpp</kbd>, change the value of
+            <tt class='teal'>TESTING</tt> to <tt class='teal'>true</tt>.
+        </li>
+    </ul>
+    <p> When you build your program the next time, instead of reading
+        the input from the keyboard, it will be read from the text file,
+        and each line of input will be compared to the expected ouput.
+    </p>
+    <h3>Changing the Output</h3>
+    <p> To test our program, we'll need to change our
+        original interactions design to appear as something like this:
+    </p>
+    <div class='consoleDisplay'>
+        Enter ounces per box of cereal: <span class='blue'>10</span><br>
+        Weight in metric tons, boxes per ton:
+        [<span class='darkred'>0.000283496, 3527.39</span>]<br>
+    </div>
+    <p>
+        Here are the lines that need to be modified (in the output section)
+            in <kbd>main.cpp</kbd>:
+    </p>
+<pre><code class='language-cpp'>// Output section
+cout &lt;&lt; "Weight in metric tons, boxes per ton: ["
+    &lt;&lt; weightInMetricTons &lt;&lt; ", "
+    &lt;&lt; boxesPerMetricTon &lt;&lt; ", " &lt;&lt; endl;</code></pre>
+    <p>In <kbd>testcases.txt</kbd> I've already calculated several sizes of
+        boxes from 5 ounces up to 32 ounces using Google Docs, and then
+        adjusted the decimal places so that they matched the default used by C++.
+        I also set the input for the last entry to 35273.92 (the number of ounces
+        in a metric ton), just to check that we got 1 for each of our calculations.
+    </p>
+    <p> Run the program, and you'll see that it actually checks to see if
+        you have the correct values.
+        <br><img src='images/test-results.png' class='inlineCenter' alt='Test Results.'>
+        At the bottom of the run is the
+        score. Make sure that your ID correctly appears, and that the
+        assignment displayed is also correct. If these are not correct, then your completion code
+        will be incorrect as well, and you won't get credit for the
+        assignment.
+    </p>
+<h1>But WAIT...! I Want to use ...</h1>
+    <p> While you don't have to use MinGW and SciTE for your homework assignments,
+        you <b>will</b> have to use them on the programming exams; it only
+        makes sense to get some practice before that happens.
+    </p>
+    <p> If you want to use another ID, below you'll find some handouts
+        that well help you get set up for CS 150.
+    </p>
+    <ul>
+        <li> <a href='../_reference/Using-Eclipse.pdf'
+            target='_blank' title='Using Eclipse and MinGW.'
+            alt='Using Eclipse and MinGW.'><span class='external pdf left'></span></a>
+            <b>Eclipse</b> is an open-source integrated development
+            environment that you can use for C++ development on any
+            platform. However, Eclipse does not include a C++ toolchain,
+            so you'll need to use it in conjuction with MinGW or another
+            compiler-linker combination.
+        </li>
+        <li> <a href='../_reference/Using-VisualCPP.pdf'
+            target='_blank' title='Using Visual C++ 2013'
+            alt='Using Visual C++ 2013.'><span class='external pdf left'></span></a>
+            <b>Visual C++ 2013</b> is a Windows IDE that supports
+            C++ 11. You can download the free Express Edition from
+            Microsoft or use OCC's DreamSpark subscription to download
+            the Professional Edition. Before you do that, though, try it
+            out in the Computing Center (following these instructions),
+            to make sure you like it.
+        </li>
+        <li> <a href='../_reference/Using-XCode.pdf'
+            target='_blank' title='Using XCode on the Mac'
+            alt='Using XCode on the Mac.'><span class='external pdf left'></span></a>
+            <b>XCode</b> is the offical IDE for the Mac. You can download it
+            for free from the Mac App Store. It comes with the best compiler
+            of all of them (known as <b>CLANG</b>). Read the handout
+            to see how to use it for CS 150.
+        </li>
+
+    </ul>
+
+</div>
+
+<div class="footer">
+    Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+    All rights reserved.<br>
+    Any materials may be reproduced for non-profit purposes so long as<br>
+    (1) this notice remains intact and (2) you notify me of your use.
+</div>
+</div>
+</body></html>

@@ -1,0 +1,1564 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf8">
+    <!--
+    <script src='../prettify.js'></script>
+    -->
+    <script src='../prism.js'></script>
+    <link href='../prism.css' type='text/css' rel='stylesheet'>
+    <!--
+    <script src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
+    <script src="../resources/slides.js" type="text/javascript"></script>
+    -->
+    <link href="../cs150.css" type="text/css" rel="stylesheet">
+    <link href='../cs150-screen.css' rel='stylesheet' media='screen'>
+    <link href='../cs150-print.css' rel='stylesheet' media='print'>
+
+    <title>CS 150 Reader&mdash;Reference Page</title>
+    <style type='text/css'>
+    @media print {
+        #ref-header {
+            display: none;
+        }
+        pre { font-size: 85% !important; }
+    }
+    @media screen {
+        b { color: indigo; }
+    }
+    .slide { display: none; }
+    </style>
+</head>
+<body>
+
+<div id='ref-header'>
+CS 150 Course Reader&mdash;Reference Page
+<img src='../images/dragnet.png' style='width:175px;float:right; margin-right: 1em; margin-top:-.5em;'>
+</div>
+<div id='page'>
+<div id='content'>
+
+<div class='slide' id='main-structure'>
+<br />
+<h1>Basic C++ Program Structure</h1>
+<pre class='line-numbers'><code class='language-cpp'>// Basic structure of a minimal C++ program
+#include &lt;iostream&gt; // standard library declarations
+#include "other-declarations.h" // user declarations
+
+int main()  // entry point for every program
+{
+    // statements executed sequentially. For instance...
+    std::cout &lt;&lt; "Hello, world!\n";
+    return 0; // optional in main function
+}</code></pre>
+    <p> Every C++ program has a function named <code class='language-cpp'>main()</code>, which is the
+        <b>entry point</b> of the program and is automatically called when the
+        executable program is run. Your program may have only one <code class='language-cpp'>main()</code>
+        function and it must return an <code class='language-cpp'>int</code>. If you don't have a
+        <code class='language-cpp'>return</code> statement, the <code class='language-cpp'>main()</code> function automatically
+        returns <code class='language-cpp'>0</code>, which, by convention, means <i>"no error"</i>.
+    </p>
+</div>
+<div class='slide' id='comments'>
+    <h1>C++ Comment Styles</h1>
+    <p> Comments are text that is ignored by the compiler but
+        which conveys information to other programmers. </p>
+    <ul>
+    <li> C++ <b>multi-line (or C-style) comments</b> consist of text
+        surrounded by the markers <code class='language-cpp'>/*</code>
+        and <code class='language-cpp'>*/</code>
+        and may continue over several lines.
+    </li>
+    <li> Alternatively, you can also specify <b>single-line comments</b>,
+        which begin with the characters <code class='language-cpp'>//</code>
+        and extend through the end of the line.
+    </li>
+    <li>
+        <a href='http://www.stack.nl/~dimitri/doxygen/manual/commands.html'
+            target='_blank' title='Doxygen Command Reference'
+            alt='Doxygen Command Reference.'><span class='external left'
+            style='margin-left:-4em;'></span></a>
+
+        In CS 150, we'll also use <b>documentation comments</b> that
+        can be processed using the tool called <tt>Doxygen</tt>.
+        These comments begin with the sequence <code class='language-cpp'>/**</code>,
+        and are similar to the Javadoc comments used in Java. While
+        documentation comments are not a part of the C++
+        language, they are widely used in practice.
+    </li>
+    </ul>
+    <h3>File Documentation</h3>
+    <p> Every file should have a documentation comment at the
+        beginning that identifies the file. Here is a typical
+        file comment using <tt>Doxygen</tt> documentation tags:
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>/**
+    @author Stephen Gilbert     // should contain your name
+    @date January 12, 2015      // contains date information
+    @file main.cpp              // contains the name of the file
+*/</code></pre>
+    <h3>Function Documentation</h3>
+    <p> You should also provide a documention comment <b>before each
+        function</b>. Here, for instance is the documentation for a function
+        named <code class='language-cpp'>raiseToPower()</code>.
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>/**
+    Raise a number n to the power k.
+    @param n integer to raise
+    @param k the exponent to raise it to
+    @return the integer n raised to the nth power.
+*/
+int raiseToPower(int n, int k) ...</code></pre>
+    <p>
+        Note that the comment briefly describes the operation of the function
+        and then uses two special <tt>Doxygen</tt> documentation tags:
+    </p>
+    <ul>
+        <li><code class='teal'>@param</code> which describes the
+            meaning of each <b>parameter</b>.
+        </li>
+        <li><code class='teal'>@return</code> which describes
+            the meaning of the value <b>returned</b> by the function.
+        </li>
+    </ul>
+</div>
+<div class='slide' id='std-headers'>
+<h1>Commonly Used Standard Library Headers</h1>
+    <p> Modern programs are never written without using <b>libraries</b>,
+        which are collections of useful components. C++ contains a
+        <b>standard library</b> which is divided into a number of
+        modules, known as <b>headers</b>. Here are the most commonly
+        used standard library headers.
+    </p>
+
+<pre><code class='language-cpp'>#include &lt;iostream&gt;       // input-output streams
+#include &lt;iomanip&gt;        // stream manipulators (setprecision, setw)
+#include &lt;cmath&gt;          // all math functions
+#include &lt;string&gt;         // c++ style strings
+#include &lt;cctype&gt;         // character classification
+#include &lt;cstdlib&gt;        // exit codes
+#include &lt;cstddef&gt;        // size_t
+#include &lt;vector&gt;         // std::vector type
+#include &lt;stdexcept&gt;      // standard exceptions
+</code></pre>
+    <p> Before you can use any of the features in the standard library, you
+        must make their declarations available. You normally do this using
+        the <b>preprocessor directive</b> <code class='language-cpp'>#include</code>.
+        The names of the standard library headers should be included in
+        angle-brackets (<tt class='teal'>&lt; &gt;</tt>) as shown
+        in the fragments above. If you fail to include a header when necessary,
+        the results are <b>undefined</b> and platform dependent.
+    </p>
+    <h2>The Standard Namespace</h2>
+    <p> In C++, using a header file with <code class='language-cpp'>#include</code>
+        is sufficient by itself to use the components in the standard library.
+        The designers of C++ decided to segment the components stored in
+        libraries into "families" called <b>namespaces</b>.
+    </p>
+    <p>The standard C++ libraries use a namespace called <tt class='teal'>std</tt>,
+        usually pronounced <b>standard</b> instead of "es-tee-dee".
+        When you refer to any standard library component,
+        such as <tt class='teal'>string</tt> or <tt class='teal'>cout</tt>
+        you must let the compiler know to which namespace the name belongs.
+    </p>
+    <h3>Three Techniques</h3>
+    <p> To <b>fully-qualify</b> a name from the standard library,
+        explicitly add the prefix <tt class='teal'>std::</tt>.
+    </p>
+<pre><code class='language-cpp'>std::cout &lt;&lt; "Hello" &lt;&lt; std::endl;</code></pre>
+    <p> You may use an unadored named by specifying <b>exactly which names</b> from
+        the standard namespace will be used in the program. These are called
+        <b>using declaration</b> and they normally appear at the top of your
+        program, immediately after the ifor each name like this:
+    </p>
+<pre><code class='language-cpp'>using std::cout;
+using std::endl;</code></pre>
+    <p> If you want to write code that looks professional, adopt either of
+        these styles. For someone just learning the language, though,
+        all those <tt class='teal'>std::</tt> tags make programs
+        harder to read, so for CS 150 you can simply write the
+        following at the end of the library inclusion section.
+    </p>
+<pre><code class='language-cpp'>using namespace std;</code></pre>
+    <p>At times&mdash;most importantly when you start to define your
+        own header files for functions and classes&mdash;you will need
+        to remember that the fully-qualified name of <b>anything</b>
+        in the standard library namespace includes the
+        <tt class='teal'>std::</tt> prefix.
+    </p>
+    <p> For the moment, however, it is probably easiest to think of
+        <tt class='teal'>using namespace std;</tt>
+        as one of the incantations that the C++ compiler requires
+        to work its magic on your code.
+    </p>
+</div>
+<div class='slide' id='identifiers'>
+<h1>Identifiers and Names</h1>
+    <p>The names used for variables, functions, types, constants, and so
+    forth are known as <b>identifiers</b>.  In C++, the syntax rules for
+    identifiers are:
+    <ul>
+        <li>The name must start with a letter or the underscore character
+            (<kbd>_</kbd>).
+        </li>
+        <li>All other characters in the name must be letters, digits, or
+            the underscore. No spaces or other special characters are
+            permitted in names.
+        </li>
+        <li>The name <b>cannot</b> be one of the <b>reserved</b> keywords listed below.
+            You <b>can</b> use any of the names of the standard library types (such
+            as <kbd>string</kbd> or <kbd>vector</kbd>) as identifiers,
+            but doing so <b class='bg-yellow'>is just asking for trouble</b>.
+            It's much better to treat these
+            names the same as the built-in keywords.
+        </li>
+        <li>Uppercase and lowercase letters are considered to be
+            different. Thus, the name <kbd>ABC</kbd> is not the same as the name <kbd>abc</kbd>.
+        </li>
+    </ul>
+
+    <div class='highlight'>
+    <p>In addition, unless you are implementing a portion of the
+    standard library, you may not use two consecutive underscores in
+    a name or begin a name with an underscore followed by an
+    uppercase letter; nor may an identifier defined outside of a
+    function begin with an underscore.
+    </p>
+    </div>
+    <h3>C++ Keywords or Reserved Words</h3>
+    <p> This is is a list of <b>reserved keywords</b> in C++.
+        Since they are used by the language, these keywords are <b>not
+        available</b> for re-definition or overloading.
+    </p>
+<code>
+<table class='keywords'>
+<tr><td>
+alignas (since C++11)<br>
+alignof <i>(C++11)</i><br>
+and<br>
+and_eq<br>
+asm<br>
+auto<br>
+bitand<br>
+bitor<br>
+bool<br>
+break<br>
+case<br>
+catch<br>
+char<br>
+char16_t  <i>(C++11)</i><br>
+char32_t  <i>(C++11)</i><br>
+class<br>
+compl<br>
+const<br>
+constexpr  <i>(C++11)</i><br>
+const_cast<br>
+continue<br>
+decltype  <i>(C++11)</i><br>
+</td><td>
+default<br>
+delete<br>
+do<br>
+double<br>
+dynamic_cast<br>
+else<br>
+enum<br>
+explicit<br>
+export<br>
+extern<br>
+false<br>
+float<br>
+for<br>
+friend<br>
+goto<br>
+if<br>
+inline<br>
+int<br>
+long<br>
+mutable<br>
+namespace<br>
+new<br>
+</td><td>
+noexcept  <i>(C++11)</i><br>
+not<br>
+not_eq<br>
+nullptr  <i>(C++11)</i><br>
+operator<br>
+or<br>
+or_eq<br>
+private<br>
+protected<br>
+public<br>
+register<br>
+reinterpret_cast<br>
+return<br>
+short<br>
+signed<br>
+sizeof<br>
+static<br>
+static_assert  <i>(C++11)</i><br>
+static_cast<br>
+struct<br>
+switch<br>
+template<br>
+</td><td>
+this<br>
+thread_local  <i>(C++11)</i><br>
+throw<br>
+true<br>
+try<br>
+typedef<br>
+typeid<br>
+typename<br>
+union<br>
+unsigned<br>
+using<br>
+virtual<br>
+void<br>
+volatile<br>
+wchar_t<br>
+while<br>
+xor<br>
+xor_eq<br>
+</td></tr>
+</table>
+</code>
+    <h3>Naming Conventions </h3>
+    <p>You can improve your programming style by adopting <b>conventions</b>
+    for identifiers that help readers identify functions, classes,
+    constants, etc. Here are the naming conventions you should
+    follow in CS 150.
+    </p>
+
+    <ul>
+    <li>Variables and functions should begin with a lowercase letter,
+    such as limit or <kbd>main()</kbd>.
+    </li>
+    <li>If an identifier consists of several English words run
+    together, you have two choices.
+        <ol>
+            <li>You may capitalize the first letter of each word to make the
+                name easier to read, such as <kbd>raiseToPower();</kbd> this is called
+                <b>camelCase</b> notation and is similar to the standard convention for
+                Java.
+            </li>
+            <li>Alternatively, you may use underscores and make the entire name
+                lowercase, like <kbd>raise_to_power();</kbd> this is the traditional K&amp;R C
+                naming convention and the convention preferred by Bjarne Stroustrup,
+                (who feels that camelCase is "pug-ugly").
+            </li>
+        </ol>
+        <div class='highlight'>
+        <p>Either style is fine, but please don't mix them.</p>
+        </div>
+    </li>
+    <li>The names of classes and other programmer-defined data types
+    should begin with an uppercase letter, as in <kbd>Alien</kbd> or
+    <kbd>Point3D</kbd>.
+    <div class='highlight'>
+    <p>Note that the class names in the standard C++ library do not
+    follow this convention, so that a class named <kbd>Vector</kbd> would be a
+    class that you created, but <kbd>vector</kbd> is the name of the class in
+    the standard C++ library.
+    </p>
+    </li>
+    <li>Write named constants entirely in uppercase, as in <kbd>PI</kbd> or
+    <kbd>HALF_DOLLAR</kbd>. For constants, use the underscore character to mark
+    the word boundaries.
+    </li>
+    </ul>
+
+</div>
+<div class='slide' id='variable-initialization-assignment'>
+<h1>Variable: Initialization, Assignment and Scope</h1>
+    <p>There are four different ways to <b>initialize</b> a variable in modern C++:
+    </p>
+    <pre class='line-numbers'><code class='language-cpp'>int a = 0;      // assignment initialization
+int b(3);       // direct initialization
+int c = {4};    // list initialization>
+int d{5};       // also list initialization</code></pre>
+
+    <p>The last two (using curly braces) are called <b>list initialization</b>,
+    and are only available in C++11, not earlier versions. A list
+    initialized variable is <b>range-checked</b> by the compiler when it is
+    initialized, and an error or warning is produced if the value is
+    too big for the variable. In other words, list initialization
+    allows stricter type checking&mdash; similar to that available in
+    Java or C#.
+    </p>
+
+    <p>Here is what that looks like in MinGW (using the Eclipse IDE),
+        when I try to initialize a pair of
+        <kbd class='teal'>int</kbd> variables (<kbd>c</kbd> and <kbd>d</kbd>)
+        with a <kbd class='teal'>long double</kbd> variable <kbd>val</kbd>.<br>
+        <img src='images/list-initialization.png' class='inlineCenter'
+            alt='Error message from MinGW using list-initialization.'>
+        Other platforms (such as Visual C++ or Clang from OS-X) may issue
+        an error message instead of a warning like MinGW.
+    </p>
+    <h2>Changing Values with Assignment</h2>
+    <p> To put a <b>new value</b> into an existing variable, you use the
+        <b>assignment statement</b> like this:
+    </p>
+<pre><code class='language-cpp'>int run()
+{
+    int sides = 7;      // initialization
+    ...                 // more code
+    sides = 10;         // executable assignment statement
+    sides = {3.5};      // executable type-checked assignment
+}</code></pre>
+    <p>
+        The assignment statement <b>copies</b> the value on its
+        right, and stores the copy in the named memory
+        location (the variable) on its left.
+    </p>
+    <div class='info'>
+    <p><b>Technical Note : </b>There are
+        two different uses of the assignment operator.
+        In the first line shown here, the assignment operator
+        should <i>really</i> be called the <b>initialization
+        operator</b>, because you are writing a definition or
+        declaration statement, not an executable assignment statement.
+        <br><br>
+        <b>Executable assignment</b> means giving a value to a variable that
+        already exists, not to provide an initial value to a newly
+        created variable. Executable assignment statements must
+        appear inside a method, while initialization statements
+        can occur outside a method when an instance variable is
+        defined. <b>List-assignment</b>, where the value to
+        be assigned is enclosed in braces, allows the compiler
+        to perform some additional type checking.
+    </p>
+    </div>
+    <h2>lvalues and rvalues</h2>
+    <p> An <b>lvalue</b> is something that can appear on the left-hand-side of
+        an <b>assignment</b> operation. (The "el" stands for "left".) An <b>rvalue</b>
+        is something that may appear on the right-hand-side of an assignment..
+    </p>
+    <p> Variables may be <b>either</b> lvalues or rvalues. For insance, these are
+        both legal expressions:
+    </p>
+<pre><code class='language-cpp'>int x = 25; // lvalue
+int y = x; // x is used as an r-value</code>
+</pre>
+    <p> Literals may only be rvalues, while constants are non-modifiable lvalues;
+        they can appear on the left in an initialization, but never afterwards.
+        In addition, some <b>functions</b> are lvalues, such as the <kbd>at()</kbd>
+        function used in the <kbd>string</kbd> class.
+    </p>
+    <h2>Variable Scope</h2>
+    <p>When you create a variable, the rule that determines <b>where</b> that
+    variable is visible is called the <b>variable scope</b>. Scope just
+    means "where is this variable visible to my code?"
+    <img src='images/scope.png' class='right plain' style='height: 200px;' alt='Scope illustration.'>
+    </p>
+    <p>Most variables are declared within the body of a function (or
+    within a block inside a function). These are called <b>local variables</b>,
+    and their scope extends
+    </p>
+    <ul><li>from the point of declaration</li>
+    <li>to the end of the block in which they are declared </li>
+    </ul>
+    <p> When the function is called, (or the block is entered), space for
+        each local variable is allocated for the duration of that function
+        call, and, when the function returns, (or the block is exited),
+        all its local variables are destroyed.
+    </p>
+    <p>A variable declaration <b>outside</b> any function definition introduces
+    a <b>global variable</b>.  A global variable is visible anywhere in the
+    remainder of the file in which it is declared. Global
+    variables are created when your program first starts running,
+    and they exist at the same location in memory until the program is
+    finished.
+    </p>
+    <div class='bug'>
+        <p>
+        Global variables can be changed by any function
+        in a program, and it is difficult to keep those functions from
+        interfering with one another. Global variables may
+        sometimes seem tempting, your programs will be more
+        reliable if you avoid them.
+    </p>
+    </div>
+    <div id='constants'></div>
+    <h2>Constants</h2>
+        <p> Which of these two lines of code for calculating the total price
+            of a purchase are easier to understand?<br>
+            <img src='images/using-constant.png' class='inlineCenter' alt='Using a constant.'>
+            Obviously, in the second instance, you have no hint as to
+            <b>what the number .875 actually means</b>; it might be a
+            tax, a markup, a surcharge, or something else. You might use a
+            comment to let readers know that you're adding the sales
+            tax, and that would certainly help.
+            <img src='images/magic-numbers.png' class='right plain' alt='Magic Numbers album.'>
+        </p>
+        <p>
+            Because there is <b>no meaning</b> associated with such "raw" numbers,
+            a reader unfamiliar with your code can't easily tell what the
+            literal number <kbd>.875</kbd> <b>means</b>. For
+            this reason, such literals are often called <b>magic numbers</b>.
+        </p>
+
+        <p> A comment <i>won't</i> help you, though, when the tax rate
+            changes from  8&frac34;% to 7&frac14;% (we can always hope,
+            huh?) and you have to change all of your programs. When that
+            happens, you'll find yourself searching through your source
+            code looking for the number <kbd>.875</kbd> and asking yourself, "Is
+            this the sales-tax-rate, or something else?". You're also
+            likely to change some, and miss a few others.
+        </p>
+        <div class='info'>
+        <p> Of course, those of you who passed the fifth grade on the first try
+            will point out that 8&frac34;% is <b>actually</b> <kbd>.0875</kbd>,
+            <b>not</b> <kbd>.875</kbd>. But, <b class='bg-yellow'>that's the point!</b>
+            If you use magic numbers in your code, then someone inspecting your
+            program doesn't know <b>what</b> the <kbd>.875</kbd> means.
+            If you create a <b>named constant</b>, then a mistake like writing:
+            <code class='language-cpp' style='background:transparent;'>const double SALES_TAX_RATE = .875;</code>
+            becomes much easier to catch.
+        </p>
+        </div>
+        <p> Rather than using <b>magic numbers</b>, you should always
+            use <b>constants</b>. A constant is just like a variable,
+            (that is, it is a named storage area that holds a value),
+            but your compiler will prevents you from accidentally changing it
+            by assigning it a different value.
+        </p>
+    <h3>Defining Constants</h3>
+        <p> To define a constant, you use the keyword <kbd class='teal'>const</kbd>
+            as a <b>modifier</b> before the type name, and provide a value
+            by <b>initializing</b> it when you create it. (Since
+            constants can't be changed, you <b>can't</b> give it a
+            value later using the regular executable assignment operator.)
+        </p>
+        <p> You <b>can</b> create local <kbd>const</kbd>
+            values or, if you want to use the same named constant inside
+            several different functions, you can create <b>file-wide</b>
+            constants. This is actually very common.
+        </p>
+</div>
+<div class='slide' id='integer-types'>
+<h1>Integer Types</h1>
+    <p> The integer types in C++ represent whole numbers.
+        In most cases, all you need to know is the type <code class='language-cpp'>int</code>, which
+        corresponds to the standard representation of an integer on the
+        computer system you are using. C++ allow you
+        to choose between four different integer sizes&mdash;<code class='language-cpp'>short</code>,
+        <code class='language-cpp'>int</code>, <code class='language-cpp'>long</code> and <code class='language-cpp'>long</code>
+        <code class='language-cpp'>long</code>&mdash;distinguished from each other by their range.
+    </p>
+    <p> Unlike Java or C#, the C++ language does not specify an exact
+        range for these four types; instead, their range depends on the
+        machine and the compiler you're using. Here is what the language
+        guarantees:
+        <ul>
+        <li>The size used <b>cannot decrease</b> as you move from
+            <code class='language-cpp'>short</code> to <code class='language-cpp'>int</code> to 
+            <code class='language-cpp'>long</code> to <code class='language-cpp'>long long</code>.
+            On any given platform, <code class='language-cpp'>short</code> and <code class='language-cpp'>int</code> may be the same
+            size, but <code class='language-cpp'>int</code> can <b>never</b> be smaller than <code class='language-cpp'>short</code>.
+        </li>
+        <li><code class='language-cpp'>int</code> must use <b>at least</b> 2 bytes (16 bits) and be able to store
+            <kbd>32,767 (2<sup>15</sup>)-1</kbd>.
+        </li>
+        <li><code class='language-cpp'>long</code> must use <b>at least</b> 4 bytes (32 bits), and be able to store
+            the value <kbd>2,147,483,647 (2<sup>31</sup>)-1</kbd>.
+        </li>
+        <li><code class='language-cpp'>long long</code> must use at least 8 bytes of storage (64 bits), and
+            be able to store <kbd>9,223,372,036,854,775,807 (2<sup>63</sup>)-1</kbd>.
+        </li>
+        </ul>
+        <p> For those of you coming from Java or C# the only thing you'll need
+            to look out for of is the use of <code class='language-cpp'>long long</code>
+            when you <b>must</b> have a 64-bit value (similar to Java's
+            <code class='language-cpp'>long</code>). It is very common for a C++ <code class='language-cpp'>long</code> and a
+            C++ <code class='language-cpp'>int</code> to have exactly the same size. Also, you
+            should note that <code class='language-cpp'>long long</code> was added in C++11, and may not be
+            available in earlier versions of C++.
+        </p>
+    <h3 id='unsigned-types'>Unsigned Types </h3>
+    <p>In C++, (unlike Java), each of the integer types may be preceded by the keyword modifier
+    <kbd class='darkred'>unsigned</kbd>. Adding <kbd class='darkred'>unsigned</kbd> creates a new data type in which no
+    negative values are allowed.
+    </p>
+    <p>Unsigned values also offer <b>twice the range</b> of positive values
+    when compared to their signed counterparts. On modern machines,
+    for example, the maximum value of type <kbd class='darkred'>int</kbd> is typically
+    <kbd>2,147,483,647</kbd>, but the maximum value of type <kbd class='darkred'>unsigned int</kbd> is
+    <kbd>4,294,967,295</kbd>. C++ allows the type <kbd class='darkred'>unsigned int</kbd> to be
+    abbreviated to <kbd class='darkred'>unsigned</kbd>, and most programmers who use this type
+    tend to follow this practice.
+    </p>
+    <p>Here are some combinations possible: </p>
+<pre class='line-numbers'><code class='language-cpp'>int a;                 // signed int
+unsigned int b;         // unsigned int
+unsigned c;             // also unsigned int
+short int d;            // signed short int
+short e;                // also signed short int
+unsigned short f;       // unsigned short int
+long g;                 // a signed long int
+unsigned long h;        // unsigned long int
+long long i;            // signed long long int
+unsigned long long j;   // unsigned long long int</code></pre>
+
+    <h3 id='integer-literals'>Integer Literals</h3>
+    <p>An integer <b>literal</b> is written as a sequence of decimal
+    (base 10) digits, with no spaces or commas allowed. However:
+    </p>
+    <ul>
+        <li>If the number begins with the digit <kbd>0</kbd>, then the compiler
+            interprets the value as an <b>octal</b> (<i>base 8</i>) integer. The
+            literal <kbd>040</kbd> is an octal number and represents the
+            value <kbd>32</kbd> in decimal.
+        </li>
+        <li>If you begin a literal with the characters <kbd>0x</kbd>, the
+            compiler interprets the number as <b>hexadecimal</b>
+            (<i>base 16</i>). The literal <kbd>0xFF</kbd> is equivalent
+            to the decimal value <kbd>255</kbd>.
+        </li>
+        <li>In <b>C++ 14</b> you can begin a literal with the characters <kbd>0b</kbd>, 
+            and the compiler interprets the number as <b>binary</b>
+            (<i>base 2</i>). The literal <kbd>0b101</kbd> is equivalent
+            to the decimal value <kbd>5</kbd>.
+        </li>
+        <li>You can <b>explicitly</b> indicate that an integer literal is of type
+            <kbd class='darkred'>long</kbd> by adding the letter <kbd>L</kbd> at the end of the digit sequence, or
+            <kbd>LL</kbd> to indicate type <kbd class='darkred'>long long</kbd>. Thus, the literal
+            <kbd>0L</kbd> is equal to zero, but the value is explicitly of <b>type <kbd class='darkred'>long</kbd></b>,
+            while <kbd>0LL</kbd> is of type <kbd class='darkred'>long long</kbd>.
+        </li>
+        <li>Similarly, if you use the letter <kbd>U</kbd> as a suffix, the literal is
+            taken to be <kbd class='darkred'>unsigned</kbd>.
+        </li>
+        <li>Finally, in <b>C++ 14</b> you can use the <kbd>'</kbd> symbol as a visual
+            separator in your literal values. For instance, in C++ 14 you could write
+            <code class='language-cpp'>int num = 1'234;</code> and it would be interpreted correctly.
+        </li>
+    </ul>
+    <p>You can combine these different notations: </p>
+<pre class='line-numbers'><code class='language-cpp'>15;        // signed decimal int literal
+15L;        // long signed decimal literal l5
+15LL;       // long long signed decimal literal
+15ULL;      // unsigned long long decimal literal
+015ULL;     // unsigned long long octal literal
+0X15ULL;    // unsigned long long hexadecimal literal</code>
+</pre>
+    <h3 id='fixed-width-integers'>Fixed-Width Integers</h3>
+        <a href='http://en.cppreference.com/w/cpp/types/integer'
+            target='_blank' title='C++ Fixed-Width integers.'
+            alt='Fixed-Width Integers.'><span class='external left'></span></a>
+    
+    <p> Because the C++ language does not define a precise size for 
+        each integral type, interfacing with different APIs that 
+        require a specific type presents special challenges. C++ 11 attempts
+        to make this a little easier by introducing <b>fixed-width</b> 
+        integral types in the new header <kbd>&lt;cstdint&gt;</kbd>.
+    </p>
+    <p> Here are some examples:</p>
+<pre class='line-numbers'><code class='language-cpp'>int32_t; 		// signed decimal 32-bit int
+int64_t; 		// signed decimal 64-bit int
+uint32_t;		// unsigned decimal 32-bit int</code>
+</pre>
+</div>
+<div class='slide' id='floating-point-types'>
+<h1>Floating-point Types </h1>
+    <p>Numbers that include a decimal fraction are called <b>floating-point
+        numbers</b>, which are used to approximate <b>real numbers</b> in
+        mathematics. As with integers, the C++ standard does not define
+        an exact representation for these types.
+    </p>
+    <p>C++ defines three different floating-point types:</p>
+    <ul>
+        <li><kbd class='darkred'>float</kbd> is a <b>single precision</b>
+            floating point number. Usually an IEEE-754 32 bit floating point type
+            with a <b>range</b> from <kbd>+= 1.4E-45</kbd> to
+            <kbd>3.4E+38</kbd> and a <b>precision</b> of about 7
+            significant digits.
+        </li>
+        <li><kbd class='darkred'>double</kbd> is a <b>double precision</b>
+            floating point type. Usually implemented as an IEEE-754 64 bit
+            floating point type with a <b>range</b> of <kbd> += 4.94E-324</kbd>
+            to <kbd>1.79E+308</kbd> and a <b>precision</b> of about 16
+            significant digits.
+        </li>
+        <li><kbd class='darkred'>long double</kbd> is an <b>extended precision</b>
+            floating point type. Not necessarily an IEEE-754 type. Usually
+            and 80-bit x87 floating point type on x86 and x86-64 architectures.
+        </li>
+    </ul>
+    <p>Floating-point types support some special values:</p>
+    <ul>
+        <li><kbd class='teal'>infinity</kbd>. Example: <kbd>1.0/0.0 == infinity</kbd></li>
+        <li><kbd class='teal'>negative zero</kbd>. Example: <kbd>1.0/-0.0 == -infinity</kbd></li>
+        <li><kbd class='teal'>NaN</kbd>. <b>Not-a-Number</b> which does not
+            compare equal with anything (including itself).
+        </li>
+    </ul>
+    <p> Unless you are doing exacting scientific calculation, the
+        differences between these types will not make a great deal of
+        difference; unless you have a very specific reason to do
+        otherwise, use <code class='language-cpp'>double</code> rather than
+        <code class='language-cpp'>float</code> as your standard floating-point type.
+    </p>
+    <h3>Floating Point Literals</h3>
+    <p>Floating-point <b>literals</b> in C++ are written in two ways:</p>
+    <ul>
+        <li>With a decimal point and <b>fixed-point</b> notation (eg.
+            <kbd class='teal'>2.0</kbd>). The literal is stored
+            internally as a <code class='language-cpp'>double</code>.
+        </li>
+        <li>Using a form of <b>scientific notation</b> (eg.
+            <kbd class='teal'>2.9979E+8</kbd> to represent the
+            speed of light, instead of writing it as
+            <kbd class='teal'>299790000</kbd>.) The <b>exponent</b>
+            can be positive or negative and you can use an
+            uppercase or lowercase "E".
+        </li>
+    </ul>
+    <p>You can change the <b>storage class</b> of your literals
+        by appending an <kbd class='darkred'>F</kbd> for type <code class='language-cpp'>float</code>
+        and an <kbd class='darkred'>L</kbd> for a type of
+        <code class='language-cpp'>long double</code>. Here are some examples.
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>.2;        // double, fixed notation
+2.3;        // double, fixed
+2.3L;       // long double, fixed
+2.3F;       // float, fixed
+2.3e-7F;    // float, exponential notation</code></pre>
+
+</div>
+<div class='slide' id='cpp-operators'>
+<h1>Expressions and Operators</h1>
+    <p> An <b class='darkred'>expression</b> is any combination of
+        <b class='darkred'>operators</b> and
+        <b class='darkred'>operands</b> which, when evaluated, yields a value.
+    </p>
+    <ul>
+    <li> An <b>operand</b> is a symbol that indicates a <b>value</b>
+        or <b>storage location in memory</b>. Operands include:
+        <ul>
+            <li><b class='teal'>Literals : </b> which <i>represent</i> a value</li>
+            <li><b class='teal'>Variables : </b> a storage location <i>containing</i> a value</li>
+            <li><b class='teal'>Method invocations : </b> which can <i>produce</i> a value</li>
+            <li><b class='teal'>Sub-expressions : </b> which <i>compute</i> a value</li>
+        </ul>
+    </li>
+    <li>An <b>operator</b> is a symbol that is used to perform
+        a calculation on one or more operands and, subsequently,
+        produce a value. Operators have three important
+        characteristics:
+        <ul>
+            <li><b class='darkred'>Arity</b>: the number of operands required.
+                Some operators require only a single operand; we call
+                these <b>unary</b> operators. Most operators require two
+                operands; we call these <b>binary</b> operators.
+                One C++ operator requires three operands;
+                the <b>ternary</b>, <b>tertiary</b>,
+                <b>conditional</b> operator.
+            </li>
+            <li><b class='darkred'>Precedence</b>: determines which
+                operands "bind to" which operators. Operators with
+                higher precedence "stick to" their adjacent operands
+                more closely.
+            </li>
+            <li><b class='darkred'>Associativity</b>:
+                determines whether operations involving multiple
+                operators <b>at the same level of precedence</b> should
+                proceed from right-to-left, (called <i>right-associative</i>),
+                or from left-to-right, (called <i>left-associative</i>).
+            </li>
+        </ul>
+    <p>
+    <a href='http://en.cppreference.com/w/cpp/language/operator_precedence'
+    target='_blank' title='Operator Precedence.'
+    alt='Operator Precedence.'><span class='external left'></span></a>
+
+    The following table shows the <b>precedence group</b> and
+        <b>associativity</b> for all of the
+        C++ operators. Operators in the lowest group have the <b>highest</b>
+        precedence. Operators at the same level of precedence
+        use the associativity direction to "break the tie".
+    </p>
+<table class='options' style='margin-left:-2em;'>
+<tr>
+    <th> &nbsp;</th><th> Operator</th><th> Description</th><th> Associates</th>
+</tr>
+<tr>
+<th> 1
+</th>
+<td>::</td>
+<td class='desc'> Scope resolution</td>
+<td class='desc' style="vertical-align: top" rowspan="7"> Left-to-right
+</td></tr>
+<tr>
+<th rowspan="6"> 2
+</th>
+<td style="border-bottom-style: none"> ++ &nbsp;&nbsp;--
+</td>
+<td style="border-bottom-style: none" class='desc'> Suffix/postfix increment and decrement
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> <i>type</i>()<br><i>type</i>{}
+</td>
+<td class='desc' style="border-bottom-style: none; border-top-style: none"> Function-style type cast
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> ()
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Function call
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> []
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Array subscripting
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> .
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Element selection by reference
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> -&gt;
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Element selection through pointer
+</td></tr>
+<tr>
+<th rowspan="9"> 3
+</th>
+<td style="border-bottom-style: none"> ++   --
+</td>
+<td  class='desc' style="border-bottom-style: none"> Prefix increment and decrement
+</td>
+<td  class='desc' style="vertical-align: top" rowspan="9"> Right-to-left
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> +   -
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Unary plus and minus
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> !   ~
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Logical NOT and bitwise NOT
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> (<i>type</i>)
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> C-style type cast
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> *
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Indirection (dereference)
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> &amp;
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Address-of
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> sizeof
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Size-of
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> new, new[]
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Dynamic memory allocation
+</td></tr>
+<tr>
+<td style="border-top-style: none"> delete, delete[]
+</td>
+<td  class='desc' style="border-top-style: none"> Dynamic memory deallocation
+</td></tr>
+<tr>
+<th> 4
+</th>
+<td> .*   -&gt;*
+</td>
+<td class='desc' > Pointer to member
+</td>
+<td  class='desc' style="vertical-align: top" rowspan="12"> Left-to-right
+</td></tr>
+<tr>
+<th> 5
+</th>
+<td> *   /   %
+</td>
+<td class='desc' > Multiplication, division, and remainder
+</td></tr>
+<tr>
+<th> 6
+</th>
+<td> +   -
+</td>
+<td class='desc' > Addition and subtraction
+</td></tr>
+<tr>
+<th> 7
+</th>
+<td> &lt;&lt;   &gt;&gt;
+</td>
+<td class='desc' > Bitwise left shift and right shift
+</td></tr>
+<tr>
+<th rowspan="2"> 8
+</th>
+<td style="border-bottom-style: none"> &lt;   &lt;=
+</td>
+<td  class='desc' style="border-bottom-style: none"> For relational operators &lt; and = respectively
+</td></tr>
+<tr>
+<td style="border-top-style: none"> &gt;   &gt;=
+</td>
+<td  class='desc' style="border-top-style: none"> For relational operators &gt; and = respectively
+</td></tr>
+<tr>
+<th> 9
+</th>
+<td> ==   !=
+</td>
+<td class='desc' > For relational = and ? respectively
+</td></tr>
+<tr>
+<th> 10
+</th>
+<td> &amp;
+</td>
+<td class='desc' > Bitwise AND
+</td></tr>
+<tr>
+<th> 11
+</th>
+<td> ^
+</td>
+<td class='desc' > Bitwise XOR (exclusive or)
+</td></tr>
+<tr>
+<th> 12
+</th>
+<td> |
+</td>
+<td class='desc' > Bitwise OR (inclusive or)
+</td></tr>
+<tr>
+<th> 13
+</th>
+<td> &amp;&amp;
+</td>
+<td class='desc' > Logical AND
+</td></tr>
+<tr>
+<th> 14
+</th>
+<td> ||
+</td>
+<td class='desc' > Logical OR
+</td></tr>
+<tr>
+<th rowspan="6"> 15
+</th>
+<td style="border-bottom-style: none"> ?:
+</td>
+<td  class='desc' style="border-bottom-style: none"> Ternary conditional
+</td>
+<td  class='desc' style="vertical-align: top" rowspan="7"> Right-to-left
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> =
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Direct assignment
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> +=   -=
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Assignment by sum and difference
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> *=   /=   %=
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Assignment by product, quotient, and remainder
+</td></tr>
+<tr>
+<td style="border-bottom-style: none; border-top-style: none"> &lt;&lt;=   &gt;&gt;=
+</td>
+<td  class='desc' style="border-bottom-style: none; border-top-style: none"> Assignment by bitwise left shift and right shift
+</td></tr>
+<tr>
+<td style="border-top-style: none"> &amp;=   ^=   |=
+</td>
+<td  class='desc' style="border-top-style: none"> Assignment by bitwise AND, XOR, and OR
+</td></tr>
+<tr>
+<th> 16
+</th>
+<td> throw
+</td>
+<td class='desc' > Throw operator (for exceptions)
+</td></tr>
+<tr>
+<th> 17
+</th>
+<td> ,
+</td>
+<td class='desc' > Comma
+</td>
+<td class='desc' > Left-to-right
+</td></tr></table>
+</div>
+<div class='slide' id='arithmetic-operators'>
+    <h1>Arithmetic Operators</h1>
+    <p> Here are the five most used basic <b>arithmetic operators</b> that can
+        be applied to any numeric type. Each of these is a <b>binary</b> operator:
+    </p>
+        <table class='options'>
+        <tbody>
+            <tr>
+                <th class="thead">Operator</th>
+                <th class="thead">Meaning</th>
+            </tr>
+            <tr>
+                <th class="tcode">+</th>
+                <td class="desc">Addition (or unary plus)</td>
+            </tr>
+            <tr>
+                <th class="tcode">-</th>
+                <td class="desc">Subtraction (or unary minus)</td>
+            </tr>
+            <tr>
+                <th class="tcode">*</th>
+                <td class="desc">Multiplication</td>
+            </tr>
+            <tr>
+                <th class="tcode">/</th>
+                <td class="desc">Division (both integer and floating-point)</td>
+            </tr>
+            <tr>
+                <th class="tcode">%</th>
+                <td class="desc">Remainder or modulus (both integer and floating-point)</td>
+            </tr>
+        </tbody>
+        </table>
+    <h3>The Results</h3>
+        <p> When operators and operands are combined, each operator
+            is applied to its operands, and a temporary value is
+            calculated and stored in memory. Here's an example:
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>cout &lt;&lt; 10 + 1 &lt;&lt;endl;</code></pre>
+        <p> This expression uses two literal operands as well as the
+            addition (or binary plus) operator. This expression
+            <b>produces</b> or <b>creates</b> the temporary value 11.
+            The value produced by the expression can be used wherever a
+            literal value can be used.
+        </p>
+        <p> Much of the time, a temporary value is all you need. If you
+            need to store the result of an expression, however, you
+            can use assignment operator to copy the temporary
+            value into a variable.
+        </p>
+    <h2>Side-Effect Operators</h2>
+    <p>When you use the addition operator to add two numbers together, like this:</p>
+<pre class='line-numbers'><code class='language-cpp'>int sum = num1 + num2;</code></pre>
+        </p>
+        <p> the <i>operands</i>, <code>num1</code> and <code>num2</code>,
+            are not changed at all; the variable <code>sum</code>, which
+            stores the results of the calculation, <b>is</b> changed,
+            however. This kind of change is called a <b>side effect</b>.
+        </p>
+        <p> The <b>assignment</b> operator produces
+            a side effect, as do the <b>increment</b> and <b>decrement</b>
+            operators, and the various <b>shorthand assignment</b> operators.
+        </p>
+    <h3>Chained Assignment</h3>
+        <p> The <b>assignment operator</b> copies the value on its right into 
+            the <b>variable</b> on its right, <b>producing a value</b> in the
+            process. The variable on the left is modified; this is a 
+            <b>side effect</b>. (Of course, most of us use the assignment
+            operator <b>only</b> for this side effect and don't give much
+            thought to the value that is produced.)
+        </p>
+        <p> Assignment first evaluates the expression on its right
+            before copying it to the variable, so assignment is <b>right associative</b>.
+            Because of that, we can "chain" assignment statements  together like this:
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>x = y = z = 10;</code></pre>
+        <p> This expression first applies the assignment operation to the
+            variable <b>z</b>, copying the value <b>10</b> into the variable.
+            The expression <kbd>z = 10</kbd> produces a value, (<b>10</b>),
+            which is used as the right-hand operand in the next assignment,
+            where <b>10</b> is copied into <b>y</b>. In the same way,
+            assigning <b>10</b> to <b>y</b> produces a value (<b>10</b>),
+            and that value is used as the right-hand operand for the final
+            assignment to <b>x</b>.
+        </p>
+    <h3>Shorthand Assignment</h3>
+        <p> Many times, when you perform an operation on
+            a variable, you store the result of that operation right back
+            in the same variable. What you <b>really</b> want to modify an existing
+            variable, the shorthand-assignment operators give us a concise way to
+            do that.
+        </p>
+        <p> There are shorthand assignment operators corresponding to
+            most of the basic numeric operators. Here is what each of
+            them mean:
+        </p>
+        <table class='options' style='width:60%;'>
+        <tbody>
+
+            <tr>
+                <th class="thead">Original</th>
+                <th class="thead">Shorthand</th>
+            </tr>
+            <tr>
+                <td class="tcode">a = a + b</td>
+                <td class="tcode">a += b;</td>
+
+            </tr>
+            <tr>
+                <td class="tcode">a = a - b</td>
+                <td class="tcode">a -= b;</td>
+            </tr>
+            <tr>
+                <td class="tcode">a = a / b</td>
+                <td class="tcode">a /= b;</td>
+            </tr>
+            <tr>
+                <td class="tcode">a = a * b</td>
+                <td class="tcode">a *= b;</td>
+            </tr>
+            <tr>
+
+                <td class="tcode"> a = a % b</td>
+                <td class="tcode">a %= b;</td>
+            </tr>
+        </tbody>
+        </table>
+    <h3>Increment and Decrement</h3>
+        <p> A common operation is to add or subtract <b>one</b> from a 
+            variable and then store the result back into the same variable. 
+            This is called <b>incrementing</b> or, (when subtracting), 
+            <b>decrementing</b> the variable.
+        </p>
+        <p> The increment (<kbd>++</kbd>) and decrement (<kbd>--</kbd>)
+            operators are <b>unary</b> operators that can <b>only</b> be
+            applied to a <b>variable</b>; you can't use them with literals,
+            constants, or method calls. 
+        </p>
+        <p> You may place the operator either <b>before</b> or <b>after</b> the
+            variable. Here's an example:
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>int a = 5, b = 10;
+a++; // a is changed to 6
+--b; // b is changed to 9</code>
+</pre>
+    <h4>Pre and Post</h4>
+        <p> In addition to this side effect, the increment operator also
+            produces a value, which has some interesting properties.
+            When placed before the variable, it is called a <b>pre-increment</b>
+            (or decrement, depending upon the operator) expression. When
+            placed after the variable, it is called a <b>post-increment</b>
+            (or decrement) expression.
+        </p>
+        <p> As far as the side effect is concerned it doesn't make a bit
+            of difference whether the operator is placed in front
+            of, or after, a variable. In both cases, the variable is
+            left holding a value one greater (or less) than it was before.
+        </p>
+
+        <p> The <b>expression value</b> produced by an increment or decrement, however,
+            depends on whether it is a post or pre expression.
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>int a = 5, b = 10, c, d;
+c = a++; // a is changed to 6, but c is assigned 5
+d = --b; // b is changed to 9 and that is assigned to d</code>
+</pre>
+        <p> In pre-increment (decrement), the variable is first modified
+            and the result of the expression is the new (or expression) value.
+            In post-increment (decrement), the value of the expression is
+            the value the variable had <b>before</b> it was changed.
+        </p>
+</div>
+<div class='slide' id='mixed-type-expressions'>
+<h1>Mixed-Type Operations</h1>
+        <p> Not all expressions involve integers.
+            You can also have expressions using floating-point numbers,
+            characters, and <kbd>strings</kbd>. You can even have
+            expressions that involve <b>all</b> of the above.
+        </p>
+        <p> Since <b>every expression produces a value</b>, and each value
+            produced by an expression <b>has a particular type</b>. When you add
+            or subtract two integers, the result is an integer; when you add or 
+            subtract two floating-point numbers, it is a floating point number.
+            Simple, but what if....
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>a = 5 * 3.0;</code></pre>
+        <p> Now we've got a problem. What should the computer do? It has
+            no built in capability for multiplying floating-point numbers and
+            integers. 
+        </p>
+        <p> When C++ encounters an expression that uses different 
+            types of operands, it first determines the most precise of the
+            operands using this data hierarchy. Then, it creates temporary,
+            unnamed variables of the most precise type, initializing those
+            temporary variables using the less-precise values. This
+            process is called <b>promotion</b> or, a <b>widening
+            conversion</b>.
+        </p>
+        <p> Let's look at our example again. Of our two values, <b>5</b>
+            and <b>3.0</b>, <b>3.0</b> has greater precision&#8212;it is higher
+            in the data hierarchy. To perform the calculation, C++
+            creates an unnamed temporary <code>double</code> variable
+            that contains <b>5.0</b>, to take the place of the
+            <code>int</code> value <b>5</b> during the calculation.
+            The <code>int</code> value <b>5</b> is not changed in any way
+            by this.
+        </p>
+
+        <p> Finally, the multiplication is performed using the
+            <code>double</code> values <b>3.0</b> and <b>5.0</b> and the
+            result is the <code>double</code> value <b>15.0</b>.
+        </p>
+        <h3>Assignment and Mixed Expressions</h3>
+        <p> What actual values is stored in the variable <kbd>a</kbd> in the
+            previous example? It depends on the type of <kbd>a</kbd>. If the
+            variable is any type other than <kbd>double</kbd> (the result of
+            the expression), it will be <b>implicitly converted</b> 
+            or coerced into the same type as the variable.
+        </p>
+        <ul>
+            <li><b class='darken'>Widening</b> conversions occur when the
+                assignment causes a promotion, such as from <kbd>int</kbd> to
+                <kbd>double</kbd>. In Java and C# these are the only kind of
+                implicit conversions allowed.
+            </li>
+            <li><b class='darken'>Narrowing</b> conversions occur when the
+                assignment has the potential for loosing information, such
+                as assigning from <kbd>double</kbd> to <kbd>int</kbd>. Such
+                assignments are prohibited in Java and C#, but <b>are permitted</b>
+                in C++.
+            </li>
+        </ul>
+        <p>To turn off implicit narrowing conversions, C++11 added <b>brace 
+            assignment</b>; this makes C++ work more like Java/C#.
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>int a = 5 * 3.1; // 16
+int b = {5 * 3.1}; // error in C++11</code></pre>
+
+</div>
+<div class='slide' id='type-casts'>
+    <h1>Type casts </h1>
+        <p> In C++, you specify <b>explicit</b> conversion by using
+            a <b>type cast</b>, which converts from
+            one type to another. There are three legal ways to write a type
+            cast in C++: <b>C-style</b>, <b>functional-style</b>
+            and standard or <b>new-style.</b>
+        </p>
+        <p> You should generally use the new style casts. Here's an example.</p>
+<pre class='line-numbers'><code class='language-cpp'>int num = 7, denom = 5;
+double fract1 = num / denom;   // oops! fract1 holds 0.0
+double fract2 = static_cast&lt;double&gt;(num) / denom;</code></pre>
+        <ol>
+            <li><kbd>num</kbd> and <kbd>denom</kbd> are both integers</li>
+            <li><kbd>fract1</kbd> is a <kbd class='darkred'>double</kbd>, but the calculation
+                is done using integers. That means that <kbd>fract1</kbd>
+                is assigned the value <kbd class='teal'>1.0</kbd>.
+            </li>
+            <li>The <kbd class='darkred'>static_cast</kbd> creates a temporary
+                <kbd class='darkred'>double</kbd> value to "stand in" for <kbd>num</kbd>,
+                and so floating-point division is performed instead of
+                integer division.
+            </li>
+        </ol>
+        <p>There are four of these new-style casts:
+        </p>
+        <ul>
+            <li><kbd  class='darkred'>static_cast</kbd> converts from one
+                primitive type to another. This is the one you'll use
+                99% of the time.
+            </li>
+            <li><kbd  class='darkred'>const_cast</kbd> is used when you
+                want to make a constant into a changeable variable.
+                Of course this only works on variables, not literals.
+            </li>
+            <li><kbd  class='darkred'>dynamic_cast</kbd> is used for
+                certain kinds of polymorphism, in object-oriented programming.
+            </li>
+            <li><kbd class='darkred'>reinterpret_cast</kbd> changes what a
+                pointer points to.
+            </li>
+        </ul>
+        <img 
+        <p> 
+            <a href='http://www.stroustrup.com/bs_faq2.html#static-cast'
+                target='_blank' title='Bjarne Stroustrup on casts.'
+            alt='Bjarne Stroustrup on casts.'><span class='external left'></span></a>
+
+        Bjarne Stroustrup, (the inventor of C++)
+            has several convincing reasons why you should use these
+            new-style casts on his C++ FAQ.
+        </p>
+        <h2>Older Casts</h2>
+        <p><b>C-style casts</b> are written by putting the desired type in
+            parentheses in front of the value you wish to convert. For
+            instance, <kbd class='teal'>(int) 3.5</kbd> casts the
+            <kbd class='teal'>double</kbd> value <kbd>3.5</kbd> to the <kbd class='teal'>int</kbd> value
+            <kbd class='teal'>3</kbd> by truncating the fractional portion.
+            Writing <kbd class='teal'>(double) 3</kbd> converts the <kbd class='teal'>int</kbd> value
+            <kbd class='teal'>3</kbd> to <kbd class='teal'>3.0</kbd>. If you've taken Java or C# you'll
+            recognize this casting style.
+        </p>
+        <p> In pre-standard C++, <b>functional style casts</b> were introduced to
+            appear more like making a function call and to normalize the
+            casting convention between user-defined types and the built-in
+            primitive types. In this style, the name of the desired type is
+            followed by the value you wish to convert in parentheses. You
+            would write the previous example like this: <kbd class='teal'>int(3.5)</kbd>.
+            If you've taken Python, you're probably familiar with this
+            casting style.
+        </p>
+</div>
+<div class='slide' id='cin-cout-operations'>
+    <h1>Using cin &amp; cout</h1>
+    <p>The global variables <kbd class='teal'>cin</kbd> (of library class <kbd class='teal'>istream</kbd>)
+        and <kbd class='teal'>cout</kbd> (of library class <kbd class='teal'>ostream</kbd>) are automatically
+        created when you include <kbd class='teal'>iostream</kbd>. By default they are connected
+        to your operating system's standard input and standard output. Practically
+        that means that <kbd class='teal'>cin</kbd> is connected to the keyboard, and <kbd class='teal'>cout</kbd>
+        is connected to the screen.
+    </p>
+    <h2>Output with cout</h2>
+    <p>Here are the standard <kbd class='teal'>ostream</kbd> operations:</p>
+    <ul>
+        <li><b>Formatted</b> output converts the value to be displayed to its text representation.</li>
+        <li><b>Unformatted</b> output prints individual characters.</li>
+    </ul>
+<pre class='line-numbers'><code class='language-cpp'>cout &lt;&lt; 65; // formatted output "65"
+cout.put(65); // unformatted output 'A'</code></pre>
+    <p>While there are other, more specialized functions, these are what you'll normally use.</p>
+
+    <h2>Input with cin</h2>
+    <p>There are three kinds of input operations:</p>
+    <ul>
+        <li><b>Formatted</b> input where the text input read from the stream is
+            converted to values of different types before being stored in a variable.
+        </li>
+        <li><b>Unformatted</b> character-oriented input, where individual characters 
+            are read, one at a time.
+        </li>
+        <li><b>Line-oriented</b> input where lines of text are read and stored into
+            <kbd>string</kbd> variables.
+        </li>
+    </ul>
+    
+    <h2>Manipulating Input and Output</h2>
+    <p> 
+    <a href='http://en.cppreference.com/w/cpp/io/manip'
+        target='_blank' title='Output manipulators.'
+    alt='Output manipulators.'><span class='external left'></span></a>
+    Formatted output may be <b>manipulated</b> on its ultimate way to its destination. You do 
+        this by adding <kbd class='teal'>#include &lt;iomanip&gt;</kbd> along with the 
+        regular streams header. Then, insert one of the manipulators in front of the
+        value you want to change.
+    </p>
+    <ul>
+        <li><kbd>fixed</kbd> forces floating-point numbers to use fixed-point
+            notation insead of scientific. <kbd>scientific</kbd> does the opposite.
+        </li>
+        <li><kbd>setprecision(2)</kbd> causes floating-point numbers to show two
+            decimal places. Usually used along with <kbd>fixed</kbd>.
+        </li>
+        <li><kbd>setw(20)</kbd> forces the <b>next</b>, and <span style='background:yellow;'>only the next,
+            input value</span> to be printed inside a <b>field</b> or <b>column</b> 20 spaces wide.
+        </li>
+        <li><kbd>left</kbd> and <kbd>right</kbd> control 
+            which side the fill characters are added to when printing in columns.
+        </li>
+        <li><kbd>setfill('0')</kbd> causes any columns to use the specified
+            character (the <kbd>'0'</kbd> in this case) instead of spaces for padding.
+        </li>
+        <li><kbd>boolalpha</kbd> and <kbd>noboolalpha</kbd> controls whether 
+            <kbd class='darkred'>bool</kbd> values are printed or input using 
+            integers or <kbd class='teal'>true</kbd> and <kbd class='teal'>false</kbd>.
+        </li>
+        <li><kbd>ws</kbd> and <kbd>nows</kbd> controls whether <kbd>cin</kbd> skips white spaces
+            when doing formatted input.
+        </li>
+    </ul>
+
+</div>
+<div class='slide' id='string-library-type'>
+    <h1>The string Library Type</h1>
+    <p>The C++ <kbd class='teal'>string</kbd> library type allows you to work 
+        with sequences of individual characters. To use strings in your programs, add
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>#include &lt;string&gt;
+using namespace std;</code></pre>
+    </p>
+    <h2>Constructing string Objects</h2>
+    <a href='http://en.cppreference.com/w/cpp/string/basic_string'
+    target='_blank' title='cppreference.com - > basic_string'
+    alt='cppreference.com - > basic_string.'><span class='external left'
+    style='margin-left:-4em;'></span></a>
+
+    <p>You can create <kbd>string</kbd> objects in several ways:</p>
+<pre class='line-numbers'><code class='language-cpp'>string s1;
+string s2 = "Hello";
+string s3("World"); 
+string s4("Hello World", 6, 5);
+string s5("Hello World", 0, 5);
+string s6(20, '-');
+string s7 = R"(raw with \ and ")";</code></pre>
+    <p>This produces the following strings when printed.</p>
+<pre class='line-numbers'><code class='language-c'>s1->
+s2->Hello
+s3->World
+s4->World
+s5->Hello
+s6->--------------------
+s7->raw with \ and "</code></pre>
+    <p>The link has more possible constructors. Let me touch on the ones shown here.</p>
+    <ol>
+    <li>Produces the <i>empty string</i>, <b>not</b> the <kbd>null</kbd> string as in Java.</li>
+    <li><b>Implicitly</b> converts a character array to a string object.</li>
+    <li><b>Explicityly</b> converts a character array to a string object</li>
+    <li>Converts a <b>slice</b> of an array to a string object</li>
+    <li>Converts a different <b>slice</b></li>
+    <li>Produces a string made of 20 <kbd>'-'</kbd> characters.</li>
+        <a href='http://en.cppreference.com/w/cpp/language/string_literal'
+    target='_blank' title='cppreference.com - > string literal'
+    alt='cppreference.com - > string literal.'><span class='external left'
+    style='margin-left:-4em;'></span></a>
+    <li>Produces a string object from a <b>raw string literal</b>.</li>
+    </ol>
+</div>
+<div class='slide' id='string-input'>
+    <h1>String Input</h1>
+    <p> <b>Token-based Input</b>: using <kbd>&lt;&lt;</kbd> to read a <kbd>string</kbd> reads only a single <b>token</b>,
+        similar to the way the Java <kbd>Scanner</kbd> <kbd>next()</kbd> method does. Leading
+        <b>whitespace</b> characters are skipped, unless you change the input by using the 
+        manipulator <kbd>noskipws</kbd>. Unlike
+        Java, however, there is no simple way to change the delimiter used to surround tokens.
+    </p>
+    <p> <b>Line-based Input</b>: to read a line of text, or a portion of a line, use the 
+        <code class='language-cpp'>getline()</code> function that is part of the
+        <code class='language-cpp'>string</code> class. Use it like this:
+    </p>
+<pre class='line-numbers'><code class='language-cpp'>string s1, s2, s2;
+cout &lt;&lt; "Enter a line of text: ";
+getline(cin, s1); // use cin to fill s1 with the line of text
+cout &lt;&lt; "Enter two sentences (end with a period): ";
+getline(cin, s2); // first sentence
+getline(cin, s3); // second sentence</code></pre>
+    <p> When using <code class='language-cpp'>getline()</code>, the <b>delimiter</b>
+        is not stored. There is no newline at the end of <kbd>s1</kbd> and no
+        period at the end of <kbd>s2</kbd> or <kbd>s3</kbd>
+    </p>
+    
+</div>
+
+<div class='slide' id='string-operations'>
+    <h1>String Operations</h1>
+    <p>The library <b>overloads</b> several operators to work with <kbd>string</kbd> objects.
+       These are:
+    </p>
+    <ul>
+        <li><b>Concatenation</b>: the <kbd>+</kbd> sign concatenates (joins together) 
+            two <kbd>string</kbd> objects to produce a third. Neither <kbd>string</kbd>
+            is modified.
+            <ul>
+                <li>You <b>cannot</b> concatenate <kbd>string</kbd> objects and numbers as you can in Java.</li>
+                <li>You <b>may</b> concatenate <kbd>char</kbd> values to a <kbd>string</kbd> object.</li>
+                <li>You <b>cannot</b> concatenate two string literals: <kbd>"a" + "b"</kbd> is <b>illegal</b>.
+                    <b style='background:yellow;'>However</b>, you can concatenate string literals
+                    simply by separating them with whitespace. So <kbd>"a" "b"</kbd> would be legal
+                    and would be concatenated. Usually this is used to join long lines together
+                    in your source code.
+                </li>
+            </ul>
+        </li>
+        <li><b>Modifying Concatenation</b>: you can use the <kbd>+=</kbd> as long as the left-hand side is
+            a <kbd>string</kbd> object.
+        </li>
+        <li><b>Comparison</b>: use the relational operators to compare <kbd>string</kbd> objects, instead
+            of the <kbd>equals()</kbd> and <kbd>compareTo()</kbd> methods as in Java.
+        </li>
+        <li><b>Assignment</b>: assigning one <kbd>string</kbd> object to another creates a separate
+            copy, not an alias or reference, as in Java. In this case, the behavior of <kbd>string</kbd>
+            objects is just like the built-in types, such as <kbd>int</kbd>.
+        </li>
+        <li><b>Subscripting</b>: using <kbd>[ ]</kbd> with a <kbd>string</kbd> object allows you
+            to read and write individual characters, just as if it were an array. Unlike Java,
+            C++ <kbd>string</kbd> objects may be modified in this way. <b>NOTE</b>, unlike
+            Java, characters accessed by <kbd>[ ]</kbd> are not range checked. If your index
+            is out of bounds, the result is <b>undefined</b>.
+        </li>
+    </ul>
+</div>
+
+<div class='slide' id='string-member-functions'>
+    <h1>String Member Functions</h1>
+    <a href='http://en.cppreference.com/w/cpp/string/basic_string'
+    target='_blank' title='cppreference.com - > basic_string'
+    alt='cppreference.com - > basic_string.'><span class='external left'
+    style='margin-left:-4em;'></span></a>
+    <p>Here are the member functions that I've found most useful. None of these
+        require the user of <b>iterators</b>. Use the supplied link to see all of them. 
+    </p>
+    <ul>
+        <li><kbd>size()</kbd> or <kbd>length()</kbd> returns the number of characters in
+            the string as a <kbd>string::size_type</kbd> value. Use <kbd>size_t</kbd>
+            for this unsigned integer type.
+        </li>
+        <li><kbd>empty()</kbd> returns <kbd>true</kbd> if the string is empty.</li>
+        <li><kbd>at()</kbd> allows you to select a character exactly like
+            the <kbd>[ ]</kbd> subscript operator does, except <kbd>at()</kbd> is 
+            <b>range checked</b>. Use it on the left or right of an assignment operator.
+        </li>
+        <li><kbd>front()</kbd> and <kbd>back()</kbd> access the
+            first and last character (<b>C++11</b>). Range checked.
+        </li>
+        <li><kbd>substr(pos)</kbd> allows you to select a <b>substring</b> 
+            from an existing string starting at index <kbd>pos</kbd>. This is
+            range checked. <kbd>substr(pos, len)</kbd> constructs a new string
+            consisting of (at most) <kbd>len</kbd> characters, starting at 
+            <kbd>pos</kbd> from a string. No error if there are not <kbd>len</kbd>
+            characters left; you get what is there.
+        </li>
+        <li><kbd>clear()</kbd> erases the contents of a string.</li>
+        <li><kbd>find(subs)</kbd> finds the first occurrence of a the substring
+            <kbd>subs</kbd>, while <kbd>rfind(subs)</kbd> finds the last. If
+            <kbd>subs</kbd> is not in the string, the value <kbd>string::npos</kbd>
+            is returned.
+        </li>
+        <li>While <kbd>find(subs)</kbd> returns the first occurence of <kbd>subs</kbd>,
+            the <kbd>find_first_of(str)</kbd> returns the position of the first 
+            occurence of <b>any</b> of the characters in <kbd>str</kbd>. Similarly
+            <kbd>find_first_not_of(str)</kbd> finds the first character that is <b>not</b>
+            is <kbd>str</kbd>. There are two <kbd>rfind???</kbd> versions as well.
+        </li>
+    </ul>
+    <p>Many of the functions you are familiar with in the Java <kbd>String</kbd> class
+        are missing here, or work differently. For instance, there is no
+        <kbd>toLowerCase()</kbd> function. Similarly, many of Java's <b>builder</b>
+        functions, like <kbd>replace()</kbd> are much more complex in C++ because
+        the <kbd>string</kbd> objects are changed.
+    </p>
+</div>
+
+<div class='slide' id='char-type'>
+</div>
+
+
+</div></div>
+    <script type='text/javascript'>
+        var locSearch = window.location.search.substring(1).split('&')[0];
+        console.debug("looking for id" + locSearch)
+        if(locSearch){
+            document.getElementById( locSearch ).style.display = "block";
+        }    
+        else {
+            document.getElementById('main-structure').style.display = "block";
+        }
+    </script>
+
+</body></html>

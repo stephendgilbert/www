@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../cs150.css' rel='stylesheet' media='all'>
+    <link href='../cs150-screen.css' rel='stylesheet' media='screen'>
+    <link href='../cs150-print.css' rel='stylesheet' media='print'>
+
+    <link href='../prism.css' rel='stylesheet'>
+    <script src='../prism.js'></script>
+
+    <title>CS 150 Reader&mdash;Chapter 2&mdash;Values&amp;Calculation</title>
+</head>
+<body>
+<div id='page'>
+    <div id="chapterBanner">
+        <img id='chapterLogo' src='../images/logo-ch02b.png' alt='Chapter logo.'>
+        <p id='chapterSubtitle'>The CS 150 Reader</p>
+        <p id='chapterTitle'>Values, Variables &amp; Calculations</p>
+    </div>
+
+<div id='content'>
+    <p class='firstLine'>The first program we're going to solve in this 
+        chapter is a little more difficult than the one you solved for Chapter 1. 
+        Download the starter code (<kbd>H01.zip</kbd>) from 
+        Blackboard and we'll get started. Here's the problem: 
+        
+    </p>
+    <blockquote>
+    <p> Have you ever had time on your hands? Was it a mess? 
+        Write a program
+        that adds and subtracts time. It should ask the user for two input 
+        <img src='images/time-on-your-hands.png' class='right width-30' alt='Illustration.'>        
+        values&mdash;a time (like <kbd>3:57</kbd>) and a duration (such as
+        <kbd>1:05</kbd>). Then, print the <b>sum</b> (here <kbd>5:02</kbd>) 
+        and <b>difference</b> (<kbd>2:52</kbd>).<br>
+        &nbsp;&nbsp;<span class='small-ref'>&mdash;Doug Cooper's 
+        Oh Pascal, 3<sup>rd</sup> Edition, Chapter 2</span>
+    </p>
+    </blockquote>
+<h2>Planning a Solution</h2>
+    <p> This program is a little bit more difficult because we
+        there are several different ways we can solve it. 
+        The first difficulty is figuring out how to <b>read</b> a value
+        like <kbd>3:57</kbd> from the keyboard. To do that, you'll need
+        to learn a little bit more about the <b>standard input stream
+        object</b> from the standard library, named <kbd class='teal'>cin</kbd>.
+    </p>
+    <p> The second question we have to answer is: 
+        "how do we want to represent the
+        time elements"? We really have three choices:
+    </p>
+    <ul>
+        <li>As a single <b>real</b> or <b>floating-point</b> number
+            representing a <b>fractional hour</b>. For instance,
+            we can store the time <kbd>3:57</kbd> as the floating-point
+            number <kbd class='teal'>3.95</kbd>.
+        </li>
+        <li>As a single <b>integer</b> representing <b>whole minutes</b>. 
+            In this case, the time <kbd>3:57</kbd> would be stored as 
+            the integer <kbd class='teal'>237</kbd>.
+        </li>
+        <li>As <b>a pair of integers</b> with one representing the <b>hours</b>
+            and one representing the <b>minutes</b>.
+        </li>
+    </ul>
+    <p> Each has its own benefits and drawbacks. We'll write our solution
+        using the last of these.
+    </p>
+   <h3 style='page-break-before:always;'>Mockup the Interactions</h3>
+    <p>Here's what I'd like the interaction to look like:</p>
+    
+    <div class='consoleDisplay' style='padding-left:1em;'>
+        sgilbert-H01-Time on My Hands<br>
+        ------------------------------------------<br>
+        Give me a time (such as 3:57) and a duration<br>
+        (such as 1:05), and I'll tell you the sum<br>
+        (that is, the time that follows the given time<br>
+        by the given duration), and difference (the time that<br>
+        preceeds the given time by hat duration).<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Time: <span class='blue'>3:57</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Duration: <span class='blue'>1:05</span><br>
+        <br>
+        1:05 hours after, and before, 3:57 is <span class='darkred'>[5:02, 2:52]</span><br>
+        <br>
+    </div>
+    <p> Notice that I've split the interaction into three sections: a title and 
+        introduction, an input section, and an ouput section. My actual solution
+        will also have a section for processing, so that the basic form for
+        the <kbd class='teal'>run()</kbd> function will look like this:
+    </p>
+    <pre><code class='language-cpp'>int run()
+{
+    // 1. Title and introduction
+        // - blank line
+    // 2. Input section: prompt and input on same line
+    // 3. Processing section - compute the results
+        // - blank line
+    // 4. Output section: test data inside brackets [ ]
+
+    return 0;
+}</code></pre>
+<h1>Part 1 : Initial Output</h1>
+        <p>In Chapter 1, you saw that computer systems consists of 
+        hardware, (the physical parts of your computer), and software 
+        (the programs used by the hardware),
+        both working together to carry out the different steps of
+        the <b>information processing cycle</b>.
+    </p>
+    <p> The information processing cycle consists of the 
+        the steps that your computer goes through to <b>turn
+        data into information</b>. We can abbreviate these steps as
+        <b>I</b> (input), <b>P</b> (processing), and <b>O</b> (output)<br>
+        <img src='images/ipo2.gif' class='inlineCenter' alt='Input, Processing and Output.'>
+    </p>
+    <ul>
+        <li><b>Input</b> is retrieving the data to work on and
+            storing it in <b>variables</b>. We'll use the library
+            standard input stream named <kbd class='teal'>cin</kbd> to do this.
+        </li>
+        <li><b>Output</b> is displaying the results of your program's
+            calculations. We'll use the standard library <i>output stream</i>
+            object named <kbd class='teal'>cout</kbd> to do that.
+        </li>
+    </ul>
+    <p> The last step&#8212;<b>Processing</b>&#8212;involves organizing,
+        analyzing, modifying and manipulating the input to produce
+        the desired output. In this chapter we'll start by tackling the 
+        simplest kind of processing: using <b>arithmetic expressions</b> 
+        to perform numerical calculations, and using <b>standard library
+        functions</b> to perform more sophisitcated mathematical processing.
+    </p>
+    <h2>Console Output in C++</h2>
+ <!--
+    <p>Let's take a little closer look at the standard output object,
+        <kbd class='teal'>cout</kbd>.
+    </p>
+
+        <p><img src='images/console-app04.png' style='margin-top:-3em;' 
+            class='right plain' alt='A console program.'>
+            In C++, traditional console programs are arranged around following
+            a <b>sequential set of instructions</b> that produce 
+            the desired output.
+            In older programming languages, such as
+            in Pascal, Basic, FORTRAN or C, you 
+            display output by: </p>
+        <ul>
+            <li>find the particular <b>command</b> or <b>function</b>
+                that your programming language uses, like <kbd>Write</kbd> 
+                in Pascal, <kbd>PRINT</kbd> in BASIC, or <kbd>printf()</kbd>
+                in C)
+            </li>
+            <li>then, you type that command into your source code, along with the
+            information you want the computer to display.
+            </li>
+        </ul>
+        <p> For traditional console programs, the computer
+            then "prints" the desired information on your computer's
+            screen, usually in a "text-mode" window.
+        </p>
+        <p> <img src='images/teletype03.gif' class='left' alt='A Teletype machine.'>
+            In these traditional programs, the <b>console</b> or
+            <b>terminal</b> acts almost exactly as if you were printing on
+            an old-fashioned <b>Teletype terminal</b>, the sort that prints on
+            fan-fold perforated paper, like the one shown in this advertisement.
+        </p>
+        <p> On such a printer, when a line of
+            output is finished, the paper <b>scrolls up</b> to allow the printing
+            mechanism to print on a fresh line. When using this sort of
+            input and output (dubbed "console I/O") on a video monitor,
+            each line of text automatically starts to display on the
+            following line after each line is finished printing.
+        </p>
+        <p> When a line of output is displayed
+            on the <b>last</b> line of the terminal window, the entire image
+            "scrolls" up to provide a clean line to print the next output.
+            In practice, this looks kind of like a printing teletype terminals,
+            so this scrolling output has been dubbed the "<b>glass teletype</b>."
+        </p>
+    <h3>The C++ Teletype Object</h3>
+-->
+        <p> <img src='images/glass-teletype.png' class='right plain' style='margin-top:-5em;' alt='An early terminal.'>
+            Instead of using the older style of output inherited
+            from the <kbd>C</kbd> language, C++ has an <b>object-oriented</b> 
+            library organized around the idea of a <b>stream</b>. Instead of
+            using regular functions, like <kbd>printf()</kbd>, we'll be using
+            <b>library objects</b>, sending them <i>messages</i> asking them
+            to perform certain operations.
+        </p>
+        <div class='highlight'>
+        <p> Object-oriented programs are organized like a <b>community of
+            objects</b>; each object has various abilities, and each object
+            can interact with the user and with each other somewhat independently.
+        </p>
+        </div>
+        <p> The C++ standard library actually contains several
+            <b>predefined objects</b> that mimic this old-fashioned 
+            glass teletype. The name of the most used of these objects are 
+            <kbd class='teal'>cout</kbd>, for the standard <b>output</b> stream, 
+            <kbd class='teal'>cerr</kbd>, for the standard <b>error</b> stream,
+            and <kbd class='teal'>cin</kbd>, for the standard <b>input</b> stream.
+        </p>
+<!--    <h2>Formatted Output with cout</h2>-->
+        <p> To use any of these streams, you have to remember to include
+            at least one, and often two headers from the standard library:
+        </p>
+<pre><code class='language-cpp'>#include &lt;iostream&gt;   // standard stream objects
+#include &lt;iomanip&gt;    // standard stream "manipulators"</code></pre>
+        <p> While you don't need to include the manipulators if you don't
+            use them, most of the time you'll want them to control the formatting
+            of numbers.
+        </p>
+        <h3>The Insertion Operator</h3>
+        <p> The metaphore behind stream input and ouput is a stream of
+            data <b>flowing from</b> a source that produces it, and 
+            <b>flowing to</b> a destination where is is displayed or saved.
+            If you <b>insert</b> a value into the stream, it eventually
+            ends up at its destination.
+        </p>
+        <p> The <b>insertion</b> or <b>send-to</b> operator is simply
+            a pair of less-than signs (<kbd class='teal'>&lt;&lt;</kbd>)
+            pointing to an <b>output stream object</b> on the left.
+            On the right of the insertion operator is the value to
+            insert into the stream, sent to the output object.
+            Here are some examples:</p>
+<pre class='line-numbers'><code class='language-cpp'>cout &lt;&lt; "Some text\n";    // display text and newline
+cout &lt;&lt; 35.14;            // display a number
+cout &lt;&lt; endl;             // display a newline
+cout &lt;&lt; (275 * 7) &lt;&lt; endl;      // a number and a newline</code></pre>
+        <ol>
+            <li>To print text ("string") data, enclose it in double quotes.
+                You can use one of the <kbd>\n</kbd> <b>newline escape 
+                character</b> to add a newline to the text (like
+                <kbd>System.out.println()</kbd> in Java).
+            </li>
+            <li>You can print numbers of any type (including calculations),
+                <b>without</b> enclosing them in quotes. The <kbd class='teal'>cout</kbd>
+                object will convert the binary value to its character or text
+                representation. (<kbd class='teal'>cout</kbd> actually stands for
+                <b>character output</b> because of its ability to convert binary
+                values into their human readable form.
+            </li>
+            <li>To print a <b>newline</b> by itself you can use the escape 
+                character (as on line 1), or you can use the <kbd class='teal'>endl</kbd>
+                <b>stream manipulator</b> object. Using <kbd class='teal'>endl</kbd>
+                has the additional effect of "flushing" the ouput stream.
+            </li>
+            <li>You can use one output statement to <b>insert several values</b>
+                into the output stream; make sure though that each value has its
+                own insertion operator. You don't need to enclose expressions
+                in parentheses, as I've done here, but I feel it makes the
+                intention clearer.
+            </li>
+        </ol>
+    <p> <span class='external exercise left'></span>You should have enough information now to add the comments
+        to the starter code and to use the <kbd class='teal'>cout</kbd>
+        object to produce the output shown here. Remember, you won't
+        actually do any calculation at this point, but simply provide
+        dummy values for each of the input and ouput values.
+    </p>
+    <div class='highlight'>
+        <p>In H00 we entered the input and output values as <b>numeric
+            literals</b>, such as <kbd class='teal'>3.15</kbd>. You won't
+            be able to do that with this problem. Instead, use 
+            <b>string literals</b>, like <kbd class='darkred'>"5:02"</kbd>
+            to display the mocked-up input and output values.
+        </p>
+    </div>
+
+<h1 style='page-break-before:always;'>Part 2: Input and Variables</h1>
+    <p> Before we can allow the user to enter the starting time 
+        and duration for our program, we have to have some place to
+        store their answer. Data values in a program are usually 
+        stored in <b>variables</b>, which are:
+        <img src='images/box.png' class='right plain' alt='A cardboard box.'>
+    </p>
+    <p class="pullquote">
+        A named storage area that holds a value
+    </p>
+    <p> <a href='../_reference/index.html#identifiers'
+            target='cpp-reference' title='Reference: Identifiers and Names'
+            alt='Identifiers and Names.'><span class='external reference left'></span></a>
+        Before you can use a variable in C++, you must
+        <b>declare</b> it. A <b>declaration statement</b>
+        associates a <b class='bg-yellow'>name</b> with a particular <b>type</b> of
+        variable. (The reference link has more information on the
+        syntax and conventions for identifiers or names in C++.)
+    </p>
+    <p> To actually create the variable, though,
+        you also have to use a <b>definition</b> statement
+        that sets aside memory for the data the variable will hold.
+        In almost all cases, we'll combine both of these into a
+        <b>defining declaration</b> that looks like this:
+    </p>
+    <div class='syntaxbox'>
+        <span class='grey'>modifier(s)</span>
+        <span class='red'>type name-list</span>
+        <span class='grey'> = initializer</span><span class='red'>;</span>
+    </div>
+    <p>
+        The syntax elements appearing in gray (that is the <i>modifier(s)</i>
+        and the <i>= initializers</i> parts) are optional. The parts in
+        red (including the semicolon at the end) are required. The
+        <i>name-list</i> is a list of variable names separated by commas.
+    </p>
+    <p>Here are some example definitions:</p>
+<pre><code class='language-cpp'>double width, height; // no modifier or initializer
+unsigned int temp = 95;  // unsigned modifier and value initializer
+const Color BLACK(0, 0, 0); // const modifier and direct initialization
+static vector&lt;int&gt; v{1, 2, 3}; // static modifier, list initializer</pre></code>
+
+    <p> A definition or declaration tells the compiler:</p>
+    <ul>
+    <li>what <b>kind  of value</b> the storage location should 
+        contain (<kbd>int</kbd>, <kbd>Color</kbd>).
+    </li>
+    <li> the <b>name</b> of the storage
+        location, (<kbd>width</kbd>, <kbd>height</kbd>, <kbd>temp</kbd>,
+        <kbd>BLACK</kbd>, and <kbd>vec</kbd>). Make sure you read the
+        linked reference section for information on the <b>syntax</b> and
+        <b>convention</b> rules for <b>identifier names</b>.
+    </li>
+    <li>and, optionally, an initial value (or set of values) to 
+        store in the location.
+    </li>
+    </ul>
+<h2 style='page-break-before:always;'>Data Types</h2>
+    <p> When we store values in a variable, we can classify
+        each value by the <b>kind of thing</b> that it is,
+        just like you can classify the beverages you can
+        purchase at 7-11. There, for instance, you can get
+        hot drinks, like coffee or hot chocolate, and cold
+        drinks, like soda and Slurpies.<br>
+        <img src='images/data-types.png' class='inlineCenter width-60' alt='Different kinds of containers.'>
+        The computer world works in a similar fashion.
+        Instead of hot and cold, we can store <b>text</b> or
+        <b>numbers</b> in a variable. We call the <b>kind
+        of value</b> the value's <b>data type</b>.
+    </p>
+
+    <p>So far, you have seen variables of
+        type <kbd>int</kbd> and <kbd>double</kbd>, 
+        but C++ has many different types. We can
+        break these types down into several categories. 
+    </p>
+    <ul>
+    <li><b>Built-in value types</b> that are part of the C++ programming
+        language. These include <b>numbers</b> like <kbd>int</kbd> and 
+        <kbd>float</kbd>, the values <kbd>true</kbd> and <kbd>false</kbd>
+        and the character type. These built-in types are also
+        called the <b>fundamental</b>, <b>primitive</b> or <b>atomic</b> types. 
+    </li>
+    <li><b>Built-in derived types</b> that are built upon one of the other
+        types. These include <b>pointers</b>, <b>arrays</b>, <b>references</b>
+        and <b>enumerated</b> types. 
+    </li>
+    <li><b>Library class types</b>, such as <kbd>string</kbd>
+        and <kbd>vector</kbd>, which are
+        supplied as part of the Standard C++ library. 
+    </li>
+    <li><b>User-defined types</b> that are similar to the library types, but
+        that are designed and implemented by you (or other programmers),
+        but that are not part of C++ itself. These are called
+        <kbd>class</kbd>es or <kbd>struct</kbd>s.
+    </li>
+    </ul>
+    <p>The <b class='bg-yellow'>fundamental types</b> that are defined as part of the C++
+        language are grouped into four categories&mdash;integers,
+        floating-point numbers, Boolean, and character.  
+    </p>
+    <p> For <kbd>H01</kbd> we'll need to use the integer type.</p>
+    
+    <h3>The Integer Types</h3>
+    <p>
+        <a href='../_reference/index.html#integer-types'
+        target='cpp-reference' title='Reference: Integer types'
+        alt='Integer types.'><span class='external reference left'></span></a>
+        Integers are <b>whole</b>
+        numbers, including the counting numbers, zero and the negative
+        numbers. <kbd>27</kbd> is an integer, as is <kbd>-345</kbd>.
+        <kbd>7.25</kbd> is <b>not</b> an integer, because it is not
+        a whole number.
+    </p>
+    <p> <img src="images/d03.jpg" class="right width-25 plain" alt="Different popcorn sizes.">
+        In mathematics, integers are infinite. In contrast, integer 
+        primitives&#8212;in the computer sense&#8212;are
+        <b>finite</b> because each integer number must be stored in
+        a <b>fixed-size region of memory</b>. Just like the 
+        different tubs of popcorn at the movie theater, C++ integers
+        come in <b>different sizes</b>: <kbd class='teal'>short</kbd>,
+        <kbd class='teal'>int</kbd>, <kbd class='teal'>long</kbd>, and
+        <kbd class='teal'>long long</kbd>. 
+    </p>
+    <p> Each of these different sizes comes in two "flavors":
+        <b>signed</b> integers, which represent both positive and
+        negative whole numbers (as well as zero), and <b>unsigned</b>
+        integers, which represent only zero and the positive whole
+        numbers.
+    </p>
+    <p> Explicit numbers like <kbd>235</kbd> or <kbd>-75</kbd> that appear
+        in your source code are called integer <b>literals</b>. You enter
+        a literal by simply typing a sequence of numbers with no decimals
+        or commas. You may, however, specify a type or a different base
+        when entering your numbers. See the online reference for more
+        information.
+    </p>
+
+    <h3>Time in a Bottle</h3>
+    <p><span class='external exercise left'></span>You now have enough
+        information to create the four variables we'll need for the 
+        input. Place this code in your <kbd class='teal'>run()</kbd> function,
+        after the section that prints the title,
+        but before the section where you prompt and get the input.
+    </p>
+<pre><code class='language-cpp'>// Variables to hold the user's input
+int timeHours, timeMinutes;
+int durationHours, durationMinutes;</code></pre>
+    <p> Before we go on, let's take a look at what we can
+        do to these (or <b>any</b>) variables.
+    </p>
+    <h2>Changing Values</h2>
+    <p> <img src='images/present.png' class='right plain' alt='An unwrapped present.'>
+        A variable is a named "chunk" of memory, but <b>most</b>
+        of the time, we don't care about the chunk of memory
+        at all&#8212;what we care about is <b>what's inside</b> the
+        memory. The number stored inside a variable is
+        called the variable's <b>value</b>. As your program
+        runs, you can store <b>different numbers</b> inside
+        the same piece of memory. (That's why we call it a
+        <i>variable</i>, since its value can vary as the
+        program runs.)
+    </p>
+    <p> <a href='../_reference/index.html#variable-initialization-assignment'
+        target='cpp-reference' title='Reference: Initialization and Assignment'
+        alt='Initialization and Assignment.'><span class='external reference left'></span></a>
+        We can place a value in a variable in three different ways:</p>
+    <ul>
+        <li><b class='darkred'>Initialization</b> places a particular value in a variable
+            at the point where the variable is created. In C++, when 
+            you declare a simple variable, the <b>initial value</b> 
+            it contains is <b>undefined</b>. Here's one way to  
+            <b>explicitly initialize</b> a variable:
+<pre><code class='language-cpp'>int answerToEverything = 42;</code></pre>
+        </li>
+        <li style='page-break-before:always;'><b class='darkred'>Assignment</b> puts a <b>new value</b> into an existing 
+            variable. Here is an <b>assignment statement</b> that changes
+            the (existing) variable <kbd>sides</kbd>:
+<pre><code class='language-cpp'>sides = 10;  // executable assignment statement</code></pre>
+            The assignment statement <b>copies</b> the value on its
+            right, and stores the copy in the named memory
+            location (the variable) on its left. Assignments may only
+            appear inside a function.
+        </li>
+        <li><b class='darkred'>Input</b> reads data from some external source and stores
+            it in the desired variable. That's what we need to do
+            with our program.
+        </li>
+    </ul>
+    <div class='highlight'>
+        <p>There's more to initialization and assignment than what appears
+            here. Read the linked reference material for the details.
+        </p>
+    </div>
+<h2>Changing Values through Input</h2>
+    <p> In addition to assignment and initialization, variables
+        can also be given their values through <b>input</b>.
+        In C++ w use the <kbd class='teal'>cin</kbd> (<i>see-in</i>)
+        object to read from the <b>standard intput stream</b>.
+    </p>
+    <p> While the <kbd class='teal'>cout</kbd> object is very similar 
+        to the <kbd>System.out</kbd> object of Java, the <kbd class='teal'>cin</kbd>
+        object is closer to Java's <kbd>Scanner</kbd> class than to 
+        <kbd>System.in</kbd>. Like Java's <kbd>Scanner</kbd> object,
+        <kbd class='teal'>cin</kbd> both <b>reads input</b> and 
+        <b>converts</b> that input into a variety of formats. This
+        kind of input is called <b>formatted input</b>.
+    </p>
+    <p> The <b>extraction</b> or <b>get-from</b> operator 
+        (<kbd class='teal'>&gt;&gt;</kbd>) reads a value from the
+        console and converts and stores the result in your variable.
+        Here's an example:
+    </p>
+<pre><code class='language-cpp'>cout &lt;&lt; "Enter the limit: ";  // "prompt" (space but no newline) 
+int limit;                    // variable to hold value
+cin &gt;&gt; limit;                 // read, convert and store</code></pre>
+    <p> We, however, want to read a more complex input: an integer
+        representing the hours, the colon (which we'll discard),
+        and the second integer value representing the minutes.
+    </p>
+    <p> Although this would be fairly difficult in Java, in C++
+        it turns out to be fairly simple. To understand why, let's
+        look at how <b>numeric input</b> actually works.
+    </p>
+    <h2>Numeric Input</h2>
+        <p> When a user types the number <kbd>123</kbd> from the keyboard
+            in reponse to the three lines above, what is
+            <b>actually</b> stored in memory are the three binary values
+        </p>
+        <div class="consoleDisplay" style='width:75%;'>
+                0011-0001<br>
+                0011-0010<br>
+                0011-0011
+        </div>
+        <p> representing the three <kbd>ASCII</kbd> <kbd class='teal'>char</kbd>
+            (<i>character</i>) values
+            <kbd>'1'</kbd>, <kbd>'2'</kbd>, and <kbd>'3'</kbd>, stored 
+            sequentially in memory.
+            Because the user is entering values intended to be used in a
+            calculation, (and not a street address, for instance), those
+            three <kbd class='teal'>char</kbd> values will have to be 
+            <b>combined and converted</b> from
+            text to the binary integer <kbd class='darkred'>123</kbd>, 
+            shown here as a 32-bit signed integer:
+        </p>
+        <div class="consoleDisplay" style='width:75%'>
+            0000-0000 0000-0000 0000-0000 0111-1011
+        </div>
+        <p> This process&#8212;turning human-readable text, input from the keyboard
+            or a file, into binary numbers, (and its alter-ego, turning
+            binary numbers into human-readable text), is the job of
+            <b>parsing</b> or <b>conversion</b>. The <kbd class='teal'>cin</kbd>
+            object will do this for us.
+        </p>
+    <h3>Numeric Input Example</h3>
+        <p> Let's look at an example that reads a pair of numeric values,
+            reading both numbers on the same line:
+        </p>
+<pre class='line-numbers'><code class='language-cpp'>cout &lt;&lt; "How old are you and what's your GPA? ";
+int age;
+double gpa;
+cin &gt;&gt; age &gt;&gt; gpa;
+cout &lt;&lt; "Wow. " &lt;&lt; age &lt;&lt; " years old "
+     &lt;&lt; " and you can still earn a "  
+     &lt;&lt; gpa  &lt;&lt; " GPA?"  &lt;&lt; endl;</code></pre>
+    <ol>
+        <li>The user is prompted to enter their age and
+            gpa. I'm assuming the user will enter a whole number
+            for their age, and a real number for gpa.
+        </li>
+        <li> Next, the <kbd class='teal'>int</kbd> variable
+            <kbd class='teal'>age</kbd> is defined.
+        </li>
+        <li>On the next line, the <kbd class='teal'>double</kbd>
+            variable <kbd class='teal'>gpa</kbd> is defined. Neither
+            of these variables has a legitimate value.
+        </li>
+        <li> Next, the <b>extraction operator</b> reads an integer from
+            the <kbd class='teal'>cin</kbd> object and stores the result in
+            the variable <kbd class='teal'>age</kbd>. Following that, the
+            next extraction operator reads the characters that the user 
+            types at the keyboard and <b>automatically</b> converts them
+            from <kbd class='teal'>char</kbd> to <kbd class='teal'>double</kbd>
+            before placing the result in <kbd class='teal'>gpa</kbd>.
+        </li>
+        <li class="d">Finally, in the last statement, (spanning lines 5-7),
+            the user's input is concatenated along with the program's 
+            output message.
+        </li>
+    </ol>
+    <p> If you run this code fragment you'll see some
+        output that looks a little like this:<br>
+        <img src="images/input-example.png" class='inlineCenter width-75' 
+            alt='Reading numeric input.'>
+        Notice that you can enter the two numbers on the same line, separated
+        by tabs or spaces. You can also press <kbd>ENTER</kbd> after each 
+        number. Both styles of input will be processed correctly.
+    </p>
+    <h3 style='page-break-before:always;'>How Numeric Input Works</h3>
+        <p> Here's a picture that shows the characters I entered when I
+            ran the program. Notice that the first character is a space,
+            followed by a six and a zero. That is followed by another
+            space, a three, a period, a two and the <kbd>ENTER</kbd> key or newline:<br>
+            <img src='images/input.png' class='inlineCenter width-75' alt='My input.'>
+            When the code: <kbd class='teal'>cin &gt;&gt; age</kbd> is 
+            encountered at runtime, the <kbd class='teal'>cin</kbd>
+            object starts reading characters, looking for a character that
+            <b>could be</b> part of an integer (a digit or a sign character). 
+        </p>
+        <p> Any <b>whitespace</b> characters (spaces, tabs, newlines) are <b>simply
+            discarded</b>. In my example here, the first space character would be
+            read and then ignored. If any other characters are encountered,
+            an error occurs. (You can read about the errors in the next section.)
+        </p>
+        <p> When a character that makes up an integer is encountered,
+            (like the <kbd>6</kbd> in my input), <b>then</b> the 
+            <kbd class='teal'>cin</kbd> object method <b>keeps reading
+            and storing</b> characters, until a non-integer
+            character is found. In this case, it will read the <kbd>6</kbd>
+            and the <kbd>0</kbd>, but because the space following the zero 
+            is <b>not</b> part of an integer, it stops reading. 
+        </p> The characters read up to this point are collected together 
+            (or "marshalled") into the text sequence <kbd>"60"</kbd>, 
+            which is then converted to an <kbd class='teal'>int</kbd> value, 
+            and then stored in the variable <kbd class='teal'>age</kbd>.
+        </p>
+        <p> When the next extraction operator is encountered, 
+            the <kbd class='teal'>cin</kbd> object picks up
+            <b>exactly where the previous reading ended</b>, processing the
+            space character following the <kbd>0</kbd> in <kbd>60</kbd>:<br>
+            <img src='images/input02.png' class='inlineCenter width-75' alt='My input.'>
+            This was the non-integer character that caused 
+            the previous reading operation to <b>stop</b>.
+            As before, the extraction operator method skips or discards 
+            leading whitespace characters, looking for a character that 
+            matches the pattern for a valid <kbd class='teal'>double</kbd>
+            value.
+        </p>
+        <p> When it encounters the <kbd>3</kbd>, it starts assembling the 
+            characters into a temporary storage location (called a <i>buffer</i>).
+            The decimal point <b>is legal</b> inside a <kbd class='teal'>double</kbd>,
+            so that is added to the collection; likewise the <kbd>2</kbd> is legal as
+            part of a double following a decimal point. The newline character
+            that is encountered following that, though, <b>is not</b> a legal
+            <kbd class='teal'>double</kbd> character and so reading stops.
+        </p>
+        <p> The characters that are assembled so far are converted to a
+            <kbd class='teal'>double</kbd> by the <kbd class='teal'>cin</kbd> 
+            object, and then stored in the <kbd class='teal'>gpa</code> variable.
+        </p>
+        <p style='page-break-before:always;'> The next input method that is called will pick up with the newline
+            character as its first input.<br>
+            <img src='images/input03.png' class='inlineCenter width-75' alt='My input.'>
+        </p>
+    <h3>Input Errors</h3>
+        <p> What happens, if the user types in an unexpected
+            input value, say <kbd>60.5</kbd> for <kbd>age</kbd>, or perhaps "sixty",
+            or even just adds an extra comma separating the values?
+            If we write this in Java or C# or Python, you'll see
+            something like this:<br>
+            <img src='images/scanner11a.gif' class='inlineCenter width-75' alt='Bad user input.'>
+            In this case, the input stops on the comma. However,
+            when the second variable is encountered, 
+            first character of input is the comma, <b>which does not</b>
+            match the pattern for characters allowed in a 
+            <kbd class='teal'>double</kbd>.
+        </p>
+        <p> In Java (and C# and Python), when this error is noticed 
+            the system prints an error message on the console, and terminates
+            the program. This is called a <b>runtime error</b>, because it's detected when
+            your program runs, rather than when you compile it. (After all, the
+            compiler has no way of telling what the user will type in when
+            the program runs.)
+        </p>
+        <p><b class='bg-yellow'>C++ takes a different tack</b>. Instead of causing a runtime error
+            and stopping your program, the input stream itself is 
+            <b>placed in an invalid state</b>, and stops working as expected.
+            <img src='images/input-example2.png' class='inlineCenter width-75' 
+                alt='Bad user input in C++.'>
+            In C++ when the comma is encountered, your
+            program <b>doesn't crash</b>; the <kbd class='teal'>cin</kbd> 
+            object simply <b>stops working correctly</b>, as you can see 
+            from these pictures.
+        </p>
+        <p> Once you've learned how to write functions
+            and how to use the <kbd class='teal'>if</kbd> statement in the 
+            next few chapters, you'll be able to easily write bullet-proof
+            input routines. For right now, though, we'll just assume that
+            the user types in the data as requested.
+        </p>
+<h2 style='page-break-before:always;'>Time to Get Some Input</h2>
+    <p><span class='external exercise left'></span>You now have <b>almost</b> enough
+        information to prompt and read the input values for each of the 
+        the four input variables. Here's what we want the input section
+        to look like:
+    </p>
+    <p> And here's a good <b>first draft</b>, with only one small problem:</p>
+<pre><code class='language-cpp'>// Prompt and read the input
+cout &lt;&lt; "    Time: ";
+cin &gt;&gt; timeHours;
+cin &gt;&gt; timeMinutes;
+
+cout &lt;&lt; "    Duration: ";
+cin &gt;&gt; durationHours;
+cin &gt;&gt; durationMinutes;</code></pre>
+    <p>The problem? <b>We haven't handled the colon separating the
+        hours from the minutes!</b>. We can fix that
+        in two ways.
+    </p>
+    <h3>Method 1 - Dummy Input</h3>
+    <p> We don't want to keep the colon that appears between the
+        two integer variables, but we still need to read the data
+        to remove it from the stream. We do that by introducing a
+        "throw away" variable just for that purpose.
+    </p> 
+    <p> Because the colon is <b>not a number</b>, but a single
+        character, the type of the variable should be <kbd class='teal'>char</kbd>.
+        This allows you to make your code a little more compact as well.
+    </p>
+<pre><code class='language-cpp'>// Prompt and read the input
+char discard; // won't keep this 
+cout &lt;&lt; "    Time: ";
+cin &gt;&gt; timeHours &gt;&gt; discard &gt;&gt; timeMinutes;
+
+cout &lt;&lt; "    Duration: ";
+cin &gt;&gt; durationHours &gt;&gt; discard &gt;&gt; durationMinutes;</code></pre>
+    <h3>Method 2 - Unformatted Character Input</h3>
+    <p> Using the extraction operator is not the only way to
+        use the <kbd class='teal'>cin</kbd> object. The C++ input stream
+        objects also suppor <b>unformatted input</b> using the traditional
+        "method" syntax you should alreay be familiar with. Calling the
+        method (or <b>member function</b> in C++speak) 
+        <kbd class='teal'>cin.get()</kbd> simply removes and returns
+        one character from the input stream. Using this technique,
+        we can rewrite our code as:
+    </p>
+    
+<pre style='page-break-before:always;'><code class='language-cpp'>// Prompt and read the input
+cout &lt;&lt; "    Time: ";
+cin &gt;&gt; timeHours;
+cin.get(); // discard the colon
+cin &gt;&gt; timeMinutes;
+
+cout &lt;&lt; "    Duration: ";
+cin &gt;&gt; durationHours;
+cin.get(); // discard next
+cin &gt;&gt; durationMinutes;</code></pre>
+<h1>Part 3&mdash;Processing Some Time</h1>
+    <p> Our next step is <b>processing</b>&#8212;organizing,
+        analyzing, modifying and manipulating the input to produce
+        our desired output. The simplest kind of processing:
+        using <b>arithmetic expressions</b> to perform numerical
+        calculations.
+    </p>
+    <p> <img src='../images/meditate02.png' class='right plain' alt='be the computer.'>
+        Before you get started, though, remember to <b>do some planning</b>.
+        You know from the problem statement that if the user enters
+        a time of <kbd>3:57</kbd> and a duration of <kbd>1:05</kbd>,
+        then the <b>sum</b> should be <kbd>5:02</kbd> and the 
+        <b>difference</b> should be <kbd>2:52</kbd>.
+    </p>
+    <p> Let's take a look at some other expected inputs and outputs.
+        Here's an Excel spreadsheet with some inputs and expected outputs.
+        <img src='images/time-calculations.png' class='inlineCenter'
+            alt='Preliminary time calculations.'>
+    </p>
+    <h2>Planning the Processing</h2>
+    <p> Just as we had four variables for our input, we'll
+        need <b>four variables</b> for output. I'll call them: 
+        <kbd class='teal'>sumHours</kbd>,
+        <kbd class='teal'>sumMinutes</kbd>,
+        <kbd class='teal'>diffHours</kbd>
+        and <kbd class='teal'>diffMinutes</kbd>
+    </p>
+    <p> We can use <b>initialization</b>, <b>assignment</b> and simple 
+        integer arithmetic to add or subtract the appropriate time and 
+        duration values. As we do, it's important to 
+        <b class='bg-yellow'>mentally trace</b>
+        the results so you have rough idea whether you've done the
+        calculations correctly. Here's what will happen if we do that.
+        Note that I've marked the cells that <b class='bg-yellow'>don't</b>
+        work in light blue.
+        <img src='images/time-calculations2.png' class='inlineCenter'
+            alt='Preliminary time calculations with actual output.'>
+    </p>
+    <p> Looking at this, it's obvious that our naive solution
+        yields the <b>wrong answer</b>, at least for the addition
+        in the given set of inputs.
+        And, if the addition is wrong, we can be pretty sure that
+        the subtraction is only <b>accidentally correct</b>, just
+        like a "stopped clock is correct twice a day".
+    </p>
+    <h3>Corrections for Addition</h3>
+    <p> However, if we look at the numbers that are wrong, we can see that
+        the problem occurs <b>when the minutes go over 60 or less than 0</b>. 
+        If we can arrange to "carry" and borrow extra hours in those cases, 
+        we'll have the right output (at least for these
+        inputs). That leads us to the following <b>processing plan</b>
+        for addition:
+    </p>
+    <div class='pcode'>
+    <ol>
+        <li>Add time and duration minutes; store in sumMinutes</li>
+        <li>Add time and duration hours; store in sumHours</li>
+        <li>Add number of hours in sumMinutes to sumHours</li>
+        <li>Remove any hours > 12 from sumHours</li>
+        <li>Subtract number of hours * 60 from sumMinutes</li>
+    </ol>
+    </div>
+    <p> Here's an Excel spreadsheet showing each of these five steps,
+        So we have a plan for addtion that seems to work. 
+        <img src='images/time-calculations3.png' class='inlineCenter'
+            alt='Corrections for additon.'>
+        Now let's look at subtraction.
+    </p>
+    <h3 style='page-break-before:always;'>Corrections for Subtraction</h3>
+    <p> If we look at the subtraction examples we see something similar,
+        but not identical to addition. In this case, the problems occur
+        when our  "underflow" or go negative. Here's a plan to
+        correct that:
+    </p>
+    <div class='pcode'>
+    <ol>
+        <li>Add 60 to time minutes, subtract duration minutes; store in diffMinutes</li>
+        <li>Add 12 to time hours, subtract duration hours; store in diffHours</li>
+        <li>Add number of hours in diffMinutes to diffHours</li>
+        <li>Remove any minutes >= 60 from diffMinutes</li>
+        <li>Remove any over hours from diffHours</li>
+    </ol>
+    </div>
+    <p> Here's an Excel spreadsheet showing each of these five steps,
+        So we have a plan for subtraction that seems to work. 
+        <img src='images/time-calculations4.png' class='inlineCenter'
+            alt='Corrections for subtraction.'>
+    </p>
+    
+    <h2> From Psuedocode to C++</h2>
+    <p> To convert our plan to code, we need to: </p>
+    <ul>
+        <li> Create some variables to hold the output.</li>
+        <li> Write some <b>assignment statements</b> along with
+            <b>arithmetic expressions</b> to store the values
+            in the correct variables.
+        </li>
+    </ul>
+    <p> <span class='external exercise left'></span>
+        Begin by copying the plan into the processing section, using
+        <b>single-line</b> comments. Here's what that looks like
+        when I do it.<br>
+        <img src='images/processing-comments.png' class='inlineCenter'
+            alt='The initial processing comments.'>
+        Now I won't have to keep opening the textbook or my notes
+        to figure out what to do. Now, we'll simply go step-by-step
+        through the plan; along the way I'll explain a little more
+        C++ sytnax.
+    </p>
+    <h3>Expressions and Calculations</h3>
+        <p> <a href='../_reference/index.html#cpp-operators'
+            target='cpp-reference' title='Reference: Expressions and operators.'
+            alt='Expressions and Operators.'><span class='external reference left'></span></a>
+           An <b>expression</b> is any combination of <b>operators</b> and
+            <b>operands</b> which, when evaluated, yields a value.
+            Well, that's not very helpful; what is an operand?
+            What is an operator? What is evaluation? What do those
+            words mean? Let's look.
+        </p>
+        <p> An <b class='darkred'>operand</b> is simply a symbol that indicates a <b>value</b>
+            or <b>storage location in memory</b>. The important thing
+            to remember is that <b>all</b> operands are just
+            different ways of specifying <b>values</b> or <b>data</b>.
+            Operands include:
+        </p>
+        <ul>
+            <li><b><u>Literals</u> : </b> which <i>represent</i> a value</li>
+            <li><b><u>Variables</u> : </b> a storage location <i>containing</i> a value</li>
+            <li><b><u>Method invocations</u> : </b> which can <i>produce</i> a value</li>
+            <li><b><u>Sub-expressions</u> : </b> which <i>compute</i> a value</li>
+        </ul>
+        <p> Here are some examples:<br>
+            <img src='images/operands.png' class='inlineCenter width-75' alt='Different operands.'>
+        </p>
+        <p> An <b class='darkred'>operator</b> is a symbol that is used to perform
+            a calculation on one or more operands and, subsequently,
+            produce a value. Here are the five most used basic 
+            <b>arithmetic operators</b> that can
+            be applied to <b>any</b> numeric type. 
+        </p>
+        <table class='options'>
+            <tr> <th>Operator</th> <th>Meaning</th></tr>
+            <tr>
+                <th>+</th>
+                <td class='desc'>Addition (or unary plus)</td>
+            </tr>
+            <tr>
+                <th>-</th>
+                <td class='desc'>Subtraction (or unary minus)</td>
+            </tr>
+            <tr>
+                <th>*</th>
+                <td class='desc'>Multiplication</td>
+            </tr>
+            <tr>
+                <th>/</th>
+                <td class='desc'>Division (both integer and floating-point)</td>
+            </tr>
+            <tr>
+                <th>%</th>
+                <td class='desc'>Remainder or modulus (both integer and floating-point)</td>
+            </tr>
+        </table>
+    
+<h2 style='page-break-before:always;'>Handling Addition</h2>
+    <p> <span class='external exercise left'></span>
+        The <b class='darkred'>assignment statement</b>, which you've already
+        met, evaluates the expression on its right, and <b>copies</b> the
+        value produced into the variable on its left. With that information,
+        we can handle the first two lines in our addition plan:
+    </p>
+<pre><code class='language-cpp'>//  1. Add time and duration minutes; store in sumMinutes
+int sumMinutes = timeMinutes + durationMinutes;
+    
+//  2. Add time and duration hours; store in sumHours
+int sumHours = timeHours + durationHours;</code></pre>
+    <p> As you remember from earlier in this chapter, this is <b>not</b>
+        actually assignment, but <b>initialization</b>, since the variables
+        <kbd>sumMinutes</kbd> and <kbd>sumHours</kbd> have not yet
+        been created.
+    </p>
+    <div class='highlight'>
+        <p>In general, you should only define a variable when you have
+            a value to store in that variable. The only exception to
+            this is when the variable is initialized with <b>input</b>.
+        </p>
+    </div>
+    <p> The next three lines are a little more difficult. How do you find
+        out how many "hours" exist in <kbd>sumMinutes</kbd>? How do you
+        "remove" the hours greater than 60? For that, you need to learn
+        about <b>integer division and remainders</b>.
+    </p>
+    <h3>Integer Division and Remainders</h3>
+    <p> Integer division works like the division you learned in grade
+        school. You draw a little "house" on the board and put the
+        number you want to divide (called the <b>dividend</b>) inside the
+        house.
+        <img src="images/intdivision.gif" class="right plain width-40" 
+            alt="Integer division.">
+        You draw the number you want to divide by (the <b>divisor</b>),
+        standing at the front door of the house like a visitor.
+        You then ask yourself, "how many visitors" could fit inside
+        the house and place that number on the roof. This is the
+        <b>quotient</b>. 
+    </p>
+    <p> To perform the division, you multiply the quotient by the 
+        divisor, place the result underneath the dividend and subtract. 
+        The <b>remainder</b> is anything left over "down in the 
+        basement", <kbd>8</kbd> in the example the student is
+        solving on the board (on the left), and <kbd>3</kbd> 
+        in the example on the callout.
+    </p>
+    <p> When you perform integer division in C++, the quotient is
+        calculated, but the remainder is <b>discarded</b>. It's
+        important that you understand that when you divide two integers,
+        the result is <b>truncated</b>, not rounded. With normal division,
+        <kbd>15/4</kbd> would be <kbd>3.75</kbd> but with integer 
+        division, it's just <kbd>3</kbd>, not <kbd>4</kbd> as it 
+        would be if the <kbd>3.75</kbd> was rounded.
+    </p>
+    <p> The <kbd class='teal'>%</kbd> or <b>remainder operator</b>
+        (also sometimes called the <b>modulus</b> operator) does 
+        exactly the same thing, except, instead of returning the 
+        quotient portion from the roof, it <b>returns the remainder</b>
+        from the basement. If you divide <kbd>12</kbd> by <kbd>7</kbd>, 
+        the quotient is <kbd>1</kbd>, since there is one <kbd>7</kbd>
+        "living in" <kbd>12</kbd>. <kbd>12 % 7</kbd>, howevere, 
+        is <kbd>5</kbd> because that's what's left over after dividing 
+        <kbd>12</kbd> by <kbd>7</kbd>.
+    </p>
+    <h3 style='page-break-before:always;'>Finishing Addition</h3>
+    <p><span class='external exercise left'></span>
+        With this info, we can complete the remaining three lines
+        in our addition plan, like this:
+    </p>
+<pre><code class='language-cpp'>//  3. Add number of hours in sumMinutes to sumHours
+sumHours = sumHours + sumMinutes / 60;</code></pre>
+    <ul>
+        <li>The expression <kbd>sumMinutes / 60</kbd> represents the 
+            <b>number of hours</b> inside of <kbd>sumMinutes</kbd>,
+            since both operands are integers.
+        </li>
+        <li>Because of the <b>rules of precedence</b> the addition
+            occurs after the integer division.
+        </li>
+        <li>We want to change an existing variable,
+            <kbd>sumHours</kbd>, not create a new variable. This is
+            an <b>assignment statement</b>, not an initialization.
+        </li>
+        <li> Because we are adding to the variable <kbd>sumHours</kbd>
+            it must appear also on the right-hand side of the 
+            assignment operator. There is a <b>shorthand</b> way
+            to do this that is more consise:
+            <pre><code class='language-cpp'>sumHours += sumMinutes / 60;</code></pre>
+        </li>
+    </ul>
+<pre><code class='language-cpp'>//  4. Remove any hours > 12 from sumHours
+sumHours = (sumHours - 1) % 12 + 1;</code></pre>
+    <ul>
+        <li>We begin by subtracting <kbd>1</kbd> from <kbd>sumHours</kbd>,
+            turning <kbd>12</kbd> into <kbd>11</kbd> and <kbd>13</kbd> into
+            <kbd>12</kbd>. This expression <b>must appear in parentheses</b>
+            since the subtraction operator has <b>lower precedence</b> than
+            the remainder operator.
+        </li>
+        <li>We next use the <b>remainder operator</b> to calculate 
+            the number left over after dividing by <kbd>12</kbd>.
+        </li>
+        <li>Finally, we add the <kbd>1</kbd> back to the result.
+    </ul>
+    <p> If <kbd>sumHours</kbd> is greater than <kbd>12</kbd>,
+        (<kbd>13</kbd> or <kbd>14</kbd> say), we want to change it
+        to <kbd>1</kbd> or <kbd>2</kbd>. If we were to use the
+        expression: <kbd>sumHours % 12</kbd>, then <kbd>13</kbd> would
+        be correctly converted to <kbd>1</kbd>, but <kbd>12</kbd> 
+        would be converted to <kbd>0</kbd>, which isn't what we 
+        want.
+    </p>
+
+<pre><code class='language-cpp'>//  5. Subtract number of hours * 60 from sumMinutes    
+sumMinutes = sumMinutes % 60;</code></pre>
+    <ul>
+        <li>While the comment is correct, all we're really trying to
+            do is to change <kbd>sumMinutes</kbd> so that the largest
+            value is <kbd>59</kbd>. As with the previous example, we
+            can do this in a more concise way using the <b>shorthand
+            assignment operator</b>:
+            <pre><code class='language-cpp'>sumMinutes %= 60;</code></pre>
+        </li>
+        <li style='page-break-before:always;'>We could also follow the comment exactly and write the
+            expression like this:
+            <pre><code class='language-cpp'>sumMinutes - sumMinutes - (sumMinutes / 60 * 60);</code></pre>
+        </li>
+    </ul>
+<h2>Handling Subtraction</h2>
+    <p><span class='external exercise left'></span>
+        Finding the difference works almost the same as addition. Following
+        our plan, we come up with the following code:
+    </p>
+<pre><code class='language-cpp'>// SUBTRACT duration from time; store in diffMinutes, diffHours
+//  1. Add 60 to time minutes, subtract duration, store in diffMinutes
+int diffMinutes = 60 + timeMinutes - durationMinutes;
+
+//  2. Add 12 to time hours, subtract duration hours; store in diffHours
+int diffHours = timeHours + 12 - durationHours;</code></pre>
+    <ul>
+    <li> As with addition, we <b>define</b> and <b>initialize</b> 
+        both of the variables we'll use for output.
+    </li>
+    <li>Both of these additions are there to <b>avoid negative numbers</b>
+        when subtracting. We'll remove them in the subsequent steps.
+    </li>
+    </ul>
+
+<pre><code class='language-cpp'>//  3. Add number of hours in diffMinutes to diffHours
+diffHours = diffHours + diffMinutes / 60;
+
+//  4. Remove any minutes >= 60 from diffMinutes
+diffMinutes = diffMinutes % 60;</code></pre>
+    <ul><li>This code is almost exactly what we had to do with addition.</li></ul>
+
+<pre><code class='language-cpp'>//  5. Remove any over hours from diffHours
+diffHours = (diffHours - 1) % 12;</code></pre>
+    <ul><li>Finally we <b>remove the extra hours</b>.</li>
+    <li>We don't need to add an extra <kbd>1</kbd> at this point, 
+        because we did it in Step 1 (unlike with addition.)
+    </li>
+    </ul>
+<h1>Part 4&mdash;Output and Output Formatting</h1>
+    <p> We've now finished the input and processing sections, and
+        we're ready to go on to the final <b>output section</b>
+        where we display the results of all of our calculations.
+    </p>
+    <p> Your initial, "mocked-up" output section likely looks
+        something like this:
+    </p>
+<pre><code class='language-cpp'>cout &lt;&lt; endl;
+cout &lt;&lt; "1:05" &lt;&lt; " hours after, and before, "
+    &lt;&lt; "3:57" &lt;&lt; " is [" &lt;&lt; "5:02" &lt;&lt; ", " 
+    &lt;&lt; "2:52" &lt;&lt; "]" &lt;&lt; endl;</code></pre>
+    <p> The first line (ending in <kbd class='teal'>endl</kbd>)
+        adds a newline to the output stream, so that we have a
+        blank line separating the input and output sections on
+        the screen.
+    </p>
+    <p> The next few lines have been copied from our original 
+        output mockup at the beginning of the chapter, and placed
+        into a series of <kbd class='teal'>cout</kbd> statements.
+        As I mentioned in Part 1, you want to separate out the parts that
+        will be replaced (such as <kbd class='teal'>"1:05"</kbd> and so
+        on), from the static text that won't change.
+    </p>
+    <p> <span class='external exercise left'></span>
+        Now, all we have to do is replace each of these with
+        an expression that represents our calculated values. 
+        Here's a table that shows those replacements:
+    </p>
+    <table class='options'>
+    <tr><th>Mockup</th><th>Replacement</th></tr>
+    <tr><th>"3:57"</th>
+    <td style='font-size:1em;text-align:left;padding-left:5px;'>
+        <code class='language-cpp'>timeHours &lt;&lt; ":" &lt;&lt; timeMinutes</code>
+    </td> 
+    </tr>
+    <tr><th>"1:05"</th>
+    <td style='font-size:1em;text-align:left;padding-left:5px;'>
+        <code class='language-cpp'>durationHours &lt;&lt; ":" &lt;&lt; durationMinutes</code>
+    </td> 
+    </tr>
+    <tr><th>"5:02"</th>
+    <td style='font-size:1em;text-align:left;padding-left:5px;'>
+        <code class='language-cpp'>sumHours &lt;&lt; ":" &lt;&lt; sumMinutes</code>
+    </td> 
+    </tr>
+    <tr><th>"2:52"</th>
+    <td style='font-size:1em;text-align:left;padding-left:5px;'>
+        <code class='language-cpp'>diffHours &lt;&lt; ":" &lt;&lt; diffMinutes</code>
+    </td> 
+    </tr>
+    </table>
+    <h2>Output Formatting</h2>
+    <p> Go ahead and run the program, entering in the values suggested
+        in the introduction. You'll notice the output produces the
+        correct values, but they are <b class='bg-yellow'>formatted</b>
+        incorrectly; we are missing the <kbd>0</kbd> when is less than
+        <kbd>10</kbd>. If we tried a few other examples, you'd see
+        that you are also missing the leading zero, when the hours
+        is zero.<br>
+        <img src='images/formatting1.png' class='inlineCenter'
+            alt='Formatting without the fill and width.'>
+    </p>
+    <p> We can fix this by using some of the <b>output manipulators</b>
+        defined inside the <kbd class='teal'>&lt;iomanip&gt;</kbd>
+        standard library header. (<b class='bg-yellow'>Note</b>: if
+        you haven't added this header to the list of <kbd class='teal'>#include</kbd>
+        statements, <b>do it now</b>.
+    </p>
+    <p>Manipulators are functions that "massage" a stream to 
+        control formatting. For instance, <kbd class='teal'>endl</kbd>
+        is a manipulator that inserts a newline into the stream.
+    </p>
+    <p> Manipulators change the internal properties of the output 
+        stream to changes the formatting of subsequent output. The
+        two manipulators that we need to use are <kbd class='teal'>setw</kbd>
+        which changes the <b>column width</b> and <kbd class='teal'>setfill</kbd>
+        which affects how empty values in a column are filled.
+    </p>
+    <h3>Controlling Column Width</h3>
+    <p> To line up your output in columns (as with a table), 
+        you need to specified a <b>field width</b> for items to
+        be printed. You do that with the <kbd class='teal'>setw</kbd>
+        manipulator, like this:
+    </p>
+<pre><code class='language-cpp'>cout &lt;&lt; setw(2)  &lt;&lt;  num
+    &lt;&lt; setw(8)  &lt;&lt;  num * 1000  &lt;&lt;  endl;</code></pre>
+
+    <p> This statement prints the value of <kbd>num</kbd> in a field 
+        of <b>width 2</b> and the value of the expression
+        <kbd>num * 1000</kbd> in a field of <b>width 8</b>.
+    </p>
+    <ul>
+        <li>The values inside each "field" are right-justified.
+            If <kbd>num</kbd> is less than <kbd>10</kbd>, then
+            a <b>space</b> will be printed before the number.
+            If <kbd>num</kbd> is greater than <kbd>99</kbd> then
+            the field width is ignored.
+        </li>
+        <li>The <kbd class='teal'>setw</kbd> manipulator is
+            <b>transitory</b>. You have to place it in front of
+            <b>each value</b> you want formatted.
+        </li>
+    </ul>
+    <h3>Padding</h3>
+    <p> The <kbd class='teal'>setw</kbd> manipulator uses 
+        the <b>space character</b> to fill in the unused
+        room in a field. You can change this by using the
+        <kbd class='teal'>setfill</kbd> manipulator.
+    </p>
+    <ul>
+        <li>The <kbd class='teal'>setfill</kbd> manipulator requires
+            a <kbd class='teal'>char</kbd> argument, <b>not</b> an
+            integer. To change the fill character to a zero, we use
+            <kbd class='teal'>setfill('0')</kbd>.
+        </li>
+        <li>The <kbd class='teal'>setfill</kbd> manipulator is 
+            <b>persistent</b>, unlike the transitory
+            <kbd class='teal'>setw</kbd> manipulator. You only 
+            have to specify it once.
+        </li>
+    </ul>
+    <p> Using these two manipulators, we can change the 
+        output statement so that it looks like this:
+    </p>
+<pre><code class='language-cpp'>// Output section
+cout &lt;&lt; endl;
+cout &lt;&lt; setfill('0');
+cout &lt;&lt; durationHours &lt;&lt; ":" &lt;&lt; setw(2) &lt;&lt; durationMinutes
+    &lt;&lt; " hours after, and before, "
+    &lt;&lt; timeHours &lt;&lt; ":" &lt;&lt; setw(2) &lt;&lt; timeMinutes
+    &lt;&lt; " is [" 
+    &lt;&lt; sumHours &lt;&lt; ":" &lt;&lt; setw(2) &lt;&lt; sumMinutes
+    &lt;&lt; ", "
+    &lt;&lt; diffHours &lt;&lt; ":" &lt;&lt; setw(2) &lt;&lt; diffMinutes 
+    &lt;&lt; "]" &lt;&lt; endl;</code></pre>
+    <p> Run the program again, and you'll see we now get the
+        output we expect. Try a couple other examples from the
+        previous section, and you'll see that they should work 
+        as well.
+    </p>
+<h1>Part 6&mdash;Testing Your Code</h1>
+    <p> While everything looks pretty good up to this point,
+        we really <b>can't be sure</b> that our program is
+        bug-free. <b>Testing</b> is the process of using
+        many different (carefully crafted) inputs to see
+        if we can flush a bug out of hiding.
+    </p>
+    <p> As with the last chapter, I have used Excel to calculate
+        about 25 different inputs along with the <b>expected 
+        outputs</b> for each of those input sets. To
+        try your code against my test file, simply 
+        find the line at the beginning of the file
+        that currently reads:
+    </p>
+<pre><code class='language-cpp'>bool TESTING = false;</code></pre>
+    <p>Now, change the <kbd class='teal'>false</kbd> to 
+        <kbd class='teal'>true</kbd> and <b>build</b> the 
+        program again. Here's what happens when I
+        do that.
+    </p>
+    <img src='images/failing-test.png' class='inlineCenter' 
+        alt='A failing test for H01.'>
+    <div class='bug syntaxbox red'>
+        Yipee! A bug!
+    </div>
+    <p> That's the attitude you want to adopt as to 
+        gain more success in programming. Every bug that your
+        tests reveal tells you a little bit more about
+        the logic in your program, and brings one more
+        bug out of hiding <b>so that you can squish it</b>.
+    </p>
+    <h2>The Debugging Process</h2>
+        <p>Debugging your code is a process</b>&#8212;a
+            series of steps that help
+            you find and fix the errors in your program. The process
+            <b>begins</b> when you determine that your program is producing
+            the wrong output (something you'll normally discover by
+            testing.) The goal of the process is to fix the program, and this
+            is best done in <b>several disciplined steps</b>; it's altogether too
+            easy to fix one problem, and, in the process, introduce
+            another.
+        </p>
+        <p> To avoid that, you should perform each of the following steps
+            in the debugging process, in order:
+        </p>
+        <ul>
+            <li>break it,</li>
+            <li>isolate it,</li>
+            <li>fix it</li>
+            <li>and test it again</li>
+        </ul>
+    <h3 style='page-break-before:always;'>Break It</h3>
+        <p> <img src="images/broken.png" style="float: left; margin-left: -3em; margin-right: 1em;" alt="Breaking your program.">
+            It might seems strange that the first step in fixing your program
+            is to <b>break it</b>; after all, if your program wasn't already broken to
+            begin with, you certainly wouldn't be debugging it now.
+        </p>
+        <p> Well, that's not what breaking it means. Rather than
+            introducing new errors, breaking it refers to your ability to
+            <b>force your program to fail reliably</b>; that is,
+            repeatedly and at will. If your program bugs appear sporadically
+            and unexpectedly, then you don't really have a very good chance
+            of catching them.
+        </p>
+        <p> Breaking a program involves <b>reproducing the conditions under
+            which it fails</b>. Ask yourself what numbers you entered, where
+            did you click the mouse, what input was provided, what
+            controls were clicked and in what order. Then, sit down and
+            perform exactly the same actions making sure that you've
+            isolated the circumstances where the error occurs.
+        </p>
+        <p class="pullquote"> Don't try to fix the program until you can
+            break it at will.
+        </p>
+        <p> Until that occurs, you don't really know what the problem is.
+        </p>
+    <h3>Isolate and Understand</h3>
+        <p> <img src="images/locate.png" class="right" alt="Locating a bug.">
+            The next step, to <b>locate, isolate and understand</b> the bug, is the most
+            difficult of the four, so be patient and be prepared to take your
+            time. Usually you'll need to look at the clues in your
+            output to determine exactly what part is failing.
+        </p>
+        <div class='highlight'>
+            <p> Because of the pre-calculated test data and the
+                CS 105 Testing Framework, we can see that the problem
+                occurs with the <b>subtraction</b> part of our code.
+            </p>
+        </div>
+        <p> Once you've located the bug, before you can fix it you'll have
+            to <b>understand exactly what caused the problem</b>. To
+            understand the bug, you have to have a firm grip on <b>what your
+            program should do</b>. What that means is:
+        </p>
+        <ul>
+            <li>Before you look at the output, how have to know the
+                <b>expected</b> values. Just looking at the values won't help at
+                all, if you don't know what the values <b>should be</b>.
+            </li>
+            <li>When the value is correct, don't be afraid to look
+                elsewhere. Often this requires you to rethink what is
+                causing the problem. If multiple variables are used in a
+                calculation, for instance, make sure you look at all of
+                them, not just the final "output" variable.
+            </li>
+            <li>Make sure you <b>double-check your computations</b>,
+                especially if they involve integers and floating point
+                numbers or library methods.
+            </li>
+        </ul>
+        <p> Sometimes understanding the problem simply means <b>putting things
+            aside for a bit</b> and then <b>coming back to the problem later</b>.
+            This gives your subconscious mind a chance to chew on the problem a bit.
+        </p>
+    <h3>Fix and Test</h3>
+        <p>  <img src="images/fixit.gif" style="float: left; margin-left: -3em; margin-right: 1em;" alt="Fixing your program.">
+            Once you understand your program well enough to see why
+            it's not working, <b>you're ready to fix it</b>. Think through the
+            changes you need to make. Look at the big picture, especially
+            when you are working with large numbers or performing a
+            complex calculation. Is the answer you're getting generally
+            reasonable?
+        </p>
+        <p> Sometimes the change you need to make is simple and
+            involve only a single line of code; other times you may realize
+            that your whole concept was flawed and you'll need to
+            redesign an entire method or even an entire program.
+        </p>
+        <p> <img src='images/plumber.png' class='right' alt='A plumber.'>
+            If you've ever watched television, you've probably seen the
+            situation-comedy episode where the well-meaning father
+            decides to fix the roof or the shower instead of calling in an
+            expensive professional. This plot device has endured for so
+            many years because it is so true to human nature; all of us
+            tend to rush in blindly, "fixing" things but leaving the situation
+            worse than when we began.
+        </p>
+        <p> To avoid having to call in the "software plumber" to repair your
+            fixes, it's always a good idea to make a backup of your code
+            before performing radical surgery. For more modest changes,
+            you might want to comment out the original line of code <b>before</b>
+            adding your new changes, in the event that you discover your
+            original code was correct after all.
+        </p>
+        <p> At this point, 90% of the programmers will pack up their tools
+            and head for home. A good craftsman always performs one
+            more step: <b>testing the repair</b> to see if the new kitchen light
+            actually can be turned on and off.
+        </p>
+        <p> Testing and debugging are not the same thing. Debugging
+            begins when you learn that your program contains an error. It
+            is the process of isolating the bug and removing it. Testing, on
+            the other hand, is aimed at determining exactly what bugs still
+            remain in your program.
+        </p>
+        <p> Testing turns into debugging when an error is found and
+            debugging should always transition back to testing to make
+            sure your fixes are good. In the testing-debugging process you
+            will constantly bounce back and forth between these two until
+            you're sufficiently confident that no serious bugs remain.
+        </p>
+    <h2>The Problem with Subtraction</h2>
+    <p> The previous section is good advice, but maybe a little
+        <b>theoretical</b>. Let's put that theory to work, finding
+        our bug. Here's what we know.
+    </p>
+    <ul>
+        <li>With input of <kbd>3:18 15:19</kbd> we <b>expect</b> to have a
+            sum of <kbd>6:37</kbd> and a difference of <kbd>11:59</kbd>.
+        </li>
+        <li>Our <b>actual</b> output is find for the sum, but is
+            <kbd>-1:59</kbd> for the difference.
+        </li>
+    </ul>
+    <p> So let's reason a little about what could be happening:<p>
+    <ul>
+        <li>Since the <b>duration</b> is <kbd>15:19</kbd> (greater 
+            than <kbd>12</kbd> hours, our <b>effective duration</b>
+            is <kbd>3:19</kbd>.
+        </li>
+        <li>When we add <kbd>3:19</kbd> to <kbd>3:18</kbd> (the starting
+            time), we correctly get <kbd>6:37</kbd>.
+        </li>
+        <li>When we <b>subtract</b> <kbd>3:19</kbd> from <kbd>3:19</kbd>
+            we <b>should</b> get one minute before <kbd>12:00</kbd>
+            or <kbd>11:59</kbd>, but instead we get <kbd>-1:59</kbd>.
+        </li>
+    </ul>
+    <div class='highlight'>
+        <p>This kind of test condition is known as a <b>boundary
+            condition</b> and should always be tested.
+        </p>
+    </div>
+    <h3>Locating, Understanding &amp; Fixing the Bug</h3>
+    <p> From the analysis we just did, we can see that the
+        <kbd class='teal'>diffMinutes</kbd> value is <b>correctly</b> 
+        calculated, but <kbd class='teal'>diffHours</kbd> is not.
+    </p>
+    <p> To see <b>why</b> it's not, we want to <b>trace</b>
+        through the code; <b class='bg-yellow'>manually</b>
+        calculating the values for
+        <kbd class='teal'>diffHours</kbd> and see what we
+        get at each step. Given an input of <kbd class='teal'>3:18 15:19</kbd>
+        we can step through the code like this:
+    </p>
+<table class='trace' style='width:95%;'>
+<tr><td>int diffMinutes = 60 + timeMinutes - durationMinutes;</td><th>59</th></tr>
+<tr><td>int diffHours = timeHours + 12 - durationHours;</td><th>0</th></tr>
+<tr><td>diffHours = diffHours + diffMinutes / 60;</td><th>0</th></tr>
+<tr><td>diffMinutes = diffMinutes % 60;</td><th>59</th></tr>
+<tr><td>diffHours = (diffHours - 1) % 12;</td><th>-1</th></tr>
+</table>
+    <p>As you can see, <b>on the last line</b>, the hours goes to negative.
+        With an <kbd class='teal'>if</kbd> statement we could check to see
+        if <kbd class='teal'>diffHours</kbd> were zero and prevent it
+        from "rolling over". We can fix it just as easily, though,
+        <b>by adding 12</b> to <kbd class='teal'>diffHours</kbd> 
+        before subtracting <kbd>1</kbd>
+    </p>
+    <p> Correct the code so that the last line reads:</p>
+<pre><code class='language-cpp'>//  5. Remove any over hours from diffHours
+diffHours = (12 + diffHours - 1) % 12;</code></pre>
+    <p> Check it again and you'll see you got 24/24 or 100%. Paste 
+        the output of your finished assignment (remember your name) into the 
+        answer sheet provided on Blackboard, and <b class='bg-yellow'>
+        submit it before the deadline</b> to get credit for this
+        assignment.
+        <img src='images/test-results.png' class='inlineCenter'
+            alt='Finished test results.'>
+    </p>
+<h1 style='page-break-before:always;'>Part 7&mdash;Your Turn</h1>
+    <p> For every chapter, you'll complete two homework assignments.
+        The first assignment (<b>H01</b> for this chapter), I'll walk
+        you through the process, explaining the steps. The <b>second</b>
+        problem,  (<b>H02</b> for this chapter), you'll complete on
+        your own. (I will, however, provide a <b>video-cheat-sheet</b>
+        you can use if you get stuck.)
+    </p>
+    <p> Download <kbd>H02.zip</kbd> from Blackboard, and then complete
+        the following problem&mdash;<b>Angry Nerds</b>&mdash;using the same 
+        techniques you learned in this chapter.
+    </p>
+    <blockquote>
+    <p> With the hot new mobile game (Android/IOS) <b>Angry Nerds</b>, 
+        you not only score points, but can <b>also</b> earn online 
+        coupons depending on how well you play the game. You can 
+        redeem the coupons on the new video-sharing site <b>Aflicks</b>. 
+        (Another one of Ben's great investments.)
+    </p>
+    <p> For 10 coupons you can download full-length, current feature 
+        film. For 3 coupons, you can download a half-hour episode of a 
+        "classic" 1960's situation comedy. You prefer current feature 
+        films to old television reruns. Write a program that inputs 
+        the number of coupons you have won and prints out how many 
+        feature films and television sitcoms you can get if you 
+        spend all of your coupons on films first and any 
+        remaining coupons on sitcoms.
+    </p>
+    </blockquote>
+    <p>Here is what the program should look like when it runs:</p>
+    <div class='consoleDisplay' style='padding-left:1em;'>
+        sgilbert-H02-Angry Nerds<br>
+        ------------------------------------------<br>
+        Number of coupons to redeem: <span class='blue'>18</span><br>
+        With <span class='darkred'>18</span> coupons you can watch the following.<br>
+        Films, sitcoms, left-over coupons <span class='darkred'>[1, 2, 2]</span>
+        <br>
+    </div>
+    <p> You'll find the starter code, the test-cases and the submission
+        form in the download folder. If you get stuck, then you can turn
+        to <a href='../../movies/150-AngryNerds/index.html' target='_blank'>
+           <img src='../images/solution-sm.png' style='border:none;vertical-align:text-top;'
+                title='Click to watch video solution.'
+                alt='Click to watch video solution.'>
+            </a> this video <b class='bg-yellow'>if you get stuck</b>.
+    </p>
+
+    
+        
+
+
+
+</div>
+<div class="footer">
+    Materials on this web site &copy; 1995-2075, <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+    All rights reserved.<br>
+    Any materials may be reproduced for non-profit purposes so long as<br>
+    (1) this notice remains intact and (2) you notify me of your use.
+</div>
+</div>
+</body>
+</html>
