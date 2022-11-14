@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Meet the Vector</title>
+
+</head>
+<body>
+
+<div id='page'>
+<div>
+<h1>Meet the <em>vector</em></h1>
+<p>
+    The solution this problem is to use <strong><mark>the C++ library</mark></strong> 
+    class named <code>vector</code>. The most used of the standard library's 
+    <strong><mark>collection classes</mark></strong>, a <code>vector</code>:
+</p>
+<ul>
+    <li>
+        Stores <strong>multiple variables</strong>, of any type, 
+        in a list.
+    </li>
+    <img class='right width-30' 
+      src='../images/egg-carton-muffin-tin.png'
+      alt='Decorative picture of muffin-tin and egg-carton.'
+      title='Decorative picture of muffin-tin and egg-carton.'>
+    <li>Each variable (or <strong>element</strong>) must be 
+        <strong>exactly the same type</strong>. Just as you can't 
+        put eggs in a muffin tin or bake muffins in an egg carton, 
+        you can't put a <code>string</code> in a <code>vector</code>
+        of <code>int</code>. Because of this, we say a that 
+        <code>vector</code> is a <mark>homogenous</mark>
+        collection.
+    </li>
+</ul>
+<p> When you create a vector, its <strong>elements</strong> are 
+    stored right next to each other in memory; we say that the
+    <strong>elements are <mark>contiguous</mark></strong>. Each element
+    (except the first and last) has a <b>predecessor</b> and
+    a <b>successor</b>, so we say that the collection 
+    is <mark>linear</mark>. 
+</p>
+<p>Each element uses <strong>exactly the 
+    same amount of memory</strong> as any other, which allows your
+    computer to locate an individual element instantaneously, 
+    using simple arithmetic, rather than by searching.
+</p>
+<img class='width-80 inlineCenter' src='../images/vector-layout.png'
+  alt='A vector (or array) with 7 elements.'
+  title='A vector (or array) with 7 elements.'>
+<p> When creating a vector, you give the <strong>entire collection 
+    a name</strong>, just like you would any other
+    simple variable. You access vector elements by specifying an
+    <mark>index</mark> or <mark>subscript</mark> representing 
+    its <b>position</b> in the collection. The first element has the 
+    subscript <code>0</code>, the next <code>1</code>, and so on.
+</p>
+<div class='highlight'>
+<h3>Why Start with Zero?</h2>
+<p>Should numbering start with zero or one? If you think 
+  of a subscript as a <strong>counting number</strong>—#1, 
+  # 2, etc...—then zero-based subscripts make no sense. 
+  But subscripts are not counting numbers, but 
+  <strong>offsets</strong> from the beginning of the collection.
+</p>
+<p>
+    If you tell the compiler to retrieve <code>v.at(5)</code>, 
+    you are asking it to go to start of the <code>vector</code>
+    named <code>v</code>, then "walk past" five elements and 
+    bring you the element which it finds there. If you tell it 
+    to access <code>v.at(0)</code>, the compiler
+    knows it doesn't have to skip any elements at all, 
+    and it brings you the first element.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

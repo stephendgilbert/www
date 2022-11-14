@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+
+    <title>Vector Variables</title>
+
+</head>
+<body>
+
+<div id='page'>
+<div>
+<h1><em>vector</em> Variables</h1>
+<p> All <strong>library collection classes
+    specify the kind of values they contain</strong> 
+    by including the <mark>base type</mark> name in angle 
+    brackets following the class name.
+    For example:
+</p>
+<pre class='language-cpp'><code>vector&lt;int&gt;     //represents a vector that contains integers
+vector&lt;Card&gt;    // a vector of playing cards (a user-defined type)
+vector&lt;string&gt;  // a vector containing string objects.
+</code></pre>
+
+<p>Classes with a base-type specification are called
+  <mark>parameterized</mark> classes, and they are implemented,
+  in C++, using a technique called <strong>class templates</strong>. 
+  This means that the classes, <code>vector&lt;int&gt;</code>, 
+  <code>vector&lt;Card&gt;</code>, and <code>vector&lt;string&gt;</code>
+  are <strong>independent classes</strong> which each share a 
+  common general structure.
+</p>
+<p> To use the standard collections, <strong>include the appropriate 
+    header</strong> (<code>&lt;vector&gt;</code>). The
+    <code>vector</code>, like the <code>string</code> class, is 
+    in the <code>std namespace</code>.
+</p>
+<p> Creating a <code>vector</code> variable is 
+    similar to creating an <code>int</code> variable:
+</p>
+<pre class='language-cpp'><code>int n;  // create an integer
+vector&lt;int&gt; iVec;     // an empty vector that stores integers
+vector&lt;double&gt; dVec;  // stores doubles
+vector&lt;string&gt; sVec;  // stores strings
+</code></pre>
+<div class='bug'>
+<div>
+<p> The variable, <code>iVec</code> <mark>is</mark> a <code>vector</code> 
+    of integers. There is <mark>no separate instantiation step</mark> as in Java,
+    where you might expect to write something like this:
+</p>
+<pre class='language-cpp'><code>vector&lt;int&gt; ivec = new vector&lt;int&gt;(); // Illegal
+vector&lt;int&amp;&lt; v1; // <mark>Illegal</mark>
+const vector&lt;int&gt;&amp; = ...;  // OK
+</code></pre>
+<p> You <mark>cannot</mark> create a <code>vector</code> of 
+    references, but a <code>vector</code> may, 
+    itself, be a reference (usually when used as a parameter).
+</p>
+</div>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
