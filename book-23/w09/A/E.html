@@ -32,14 +32,22 @@ cout &lt;&lt; v.at(1) &lt;&lt; endl;  // the at member function</code></pre>
     reference</mark> to the selected element, so they may
     appear on either side of an assignment.
 </p>
-<p> C++11 (and later) added two additional member functions, 
+<h2><em>vector</em> Size</h2>
+  <p> You can find out how many elements a <code>vector</code>
+      contains by using the <code>size()</code> member function.
+      The first element in the <code>vector</code> is at 
+      subscript <code>0</code>, while the last is at
+      <code>v.at(v.size() - 1)</code>.
+    C++11 (and later) added two additional member functions, 
     <code>front()</code> and <code>back</code> which return a 
-    reference to the first and last elements. Calling 
+    reference to the first and last elements. 
+</p>
+<p> Calling 
     <code>front()</code> or <code>back()</code> on an empty 
-    <code>vector</code> <mark>is undefined</mark>. If you are lucky,
-    the operating system will catch it. If not, then your hard 
-    disk may get reformatted, or your bank account emptied. 
-    <mark>Don't do it.</mark>
+    <code>vector</code> <mark>is undefined</mark>. You can
+    find out if a <code>vector</code> contains elements by
+    calling its <code>empty()</code> member function, or by
+    checking if its <code>size()</code> is greater than zero. 
 </p>
 <h2>Undefined Behavior</h2>
 <p> Subscripting a <code>vector</code> past its bounds is an 
