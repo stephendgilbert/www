@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" 
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+    </script>
+    <script>
+      const urls = ['A.html', 'B.html', 'C.html', 'D.html', 'E.html', 'F.html'];
+      var i = 0;
+      $(document).ready(function() {
+        var url = urls[i];
+        $('div#content').load(url);
+      });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <title>Week 1 - Introduction to C++ Syntax, Variables &amp; Calculations</title>
+    <style>
+      #content {
+        max-width:800px;
+        margin:auto;
+      }
+      #nav {
+        text-align: center;
+        margin:auto;
+        font-family: georgia;
+        font-size: small;
+        max-width:900px;
+      }
+      #prev {
+        font-size:36px;
+        float:left;
+      }
+      #next {
+        font-size:36px;
+        float:right;
+      }
+    </style>
+</head>
+<body>
+<div id='nav'>
+  <div id='prev'><i class="fa fa-arrow-circle-left"></i></div>
+  <div id='next'><i class="fa fa-arrow-circle-right"></i></div>
+  <!--
+  <a href='A.html'>A</a> |
+  <a href='B.html'>B</a> |
+  <a href='C.html'>C</a> |
+  <a href='D.html'>D</a> |
+  <a href='E.html'>E</a> |
+  <a href='F.html'>F</a> |
+  -->
+</div>
+<div id='content'>
+</div>
+</div>
+<script>
+  $('a').bind('click', function(e) {           
+    var url = $(this).attr('href');
+      $('div#content').load(url); // load the html response into a DOM element
+      e.preventDefault(); // stop the browser from following the link
+});
+</script>
+</body>
+</html>

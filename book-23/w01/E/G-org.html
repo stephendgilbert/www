@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Expression Evaluation</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Expression Evaluation</h1>
+  <p class='firstLine'>When operators and operands are 
+    <strong>evaluated</strong>, each operator
+    is applied to its operands, and a <strong>temporary value</strong> is
+    calculated. This is the <mark>result</mark>
+    of the expression.
+  </p>
+  
+<pre class='language-cpp'><code>cout &lt;&lt; 10 + 1 &lt;&lt; endl;</code></pre>
+  <p>Let's see how this expression is <strong>evaluated</strong>:
+  </p>
+  <ol>
+    <li>There are <strong>four operands</strong>: the objects 
+      <code>cout</code> and <tt>endl</tt>, and two <tt>int</tt>
+      literals, along with <strong>three operators</strong>: the addition
+      operator and two instances of <tt>&lt;&lt;</tt>.
+    </li>
+    <li>Addition has higher precedence, so the first result is the temporary
+        value <tt>11</tt>.
+    </li>
+    <li>Now we have three operands and two operators at the same precedence.
+      Fall back on associativity (left to right) and evaluate <tt>cout &lt;&lt; 11</tt>.
+    </li>
+    <li>This expression has a <mark>side effect (it prints the value <tt>11</tt>)</mark>, 
+        but it also produces a result, which is the <tt>cout</tt> object. 
+        The last expression is <tt>cout &lt;&lt; endl;</tt>
+    </li>
+  </ol>
+  <p> See how this works by using parentheses to enclose each step, like this:
+  </p>
+<pre class='line-numbers language-cpp'><code>cout &lt;&lt; 10 + 1 &lt;&lt; endl;
+cout &lt;&lt; (10 + 1) &lt;&lt; endl;   // Precedence
+(cout &lt;&lt; 11) &lt;&lt; endl;       // Associativity, print 11
+cout &lt;&lt; endl;               // Side effect (newline)</code></pre>
+  <p>In C and C++, the <mark>order of operation</mark> (specified by
+      precedence and associativity) and the 
+      <strong>order of evaluation</strong>
+      are not identical. Here's a simple example:
+  </p>
+<pre class='language-cpp'><code>x = a() * b() + c();</code></pre>
+  <p> Order of operation guarantees that the results of (<tt>a() * b()</tt>) 
+      will be calculated before the addition of <tt>c()</tt>. 
+      However <mark>no guarantees</mark> are made about the order in which
+      the functions will be called: <tt>c()</tt> could be called 
+      first, or <tt>a()</tt> could be called first.
+  </p>
+  <p>If functions have no side effects (<mark>idempotent functions</mark>)
+    this doesn't make a difference. If functions have side effects, such
+    as printing, the result is <mark>undefined</mark>.
+  </p>
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

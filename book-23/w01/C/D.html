@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>The main Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The <i>main</i> Function</h1>
+  <p class='firstLine'>Below you'll find the code for the <tt class='i'>f2c</tt>
+    program. Use the arrow on the left to show and hide the code as we
+    discuss its various features.
+  </p>
+<details>
+  <summary>The <tt class='i'>f2c</tt> Source Code</summary>
+<pre class='line-numbers language-cpp'><code>/**
+ * @file f2c.cpp
+ * @author Stephen Gilbert
+ * @version CS 150 Reader
+ * Converts Fahrenheit to Celsius.
+ */
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+double convert(double temp);
+
+int main()
+{
+    cout &lt;&lt; "Enter a temperature in Fahrenheit: ";
+    double fahr;
+    cin &gt;&gt; fahr;
+    double celsius = convert(fahr);
+    cout &lt;&lt; "Converted: " &lt;&lt; fahr &lt;&lt; "F -&gt; "
+        &lt;&lt; celsius &lt;&lt; "C" &lt;&lt; endl;
+    return 0;
+}
+
+/**
+ * Converts a temperature from Fahrenheit to Celsius.
+ * @param temp the Fahrenheit temperature to convert.
+ * @return the Celsius temperature.
+ */
+double convert(double temp)
+{
+    return (temp - 32) * 5.0 / 9.0;
+}</code></pre>
+</details>
+
+  <p> A <mark>function</mark> is a <strong>named section of code</strong>
+      that performs an operation. Every C++ program must contain    
+      <strong>exactly one</strong> function with the name <tt class='i'>main</tt>,
+      which is <mark>automatically</mark> called when your program starts up.
+  </p>
+  <ul>
+      <li>Each <strong>statement</strong> in the body of the
+          <tt class='i'>main</tt> function is then run 
+          (or <strong>executed</strong>), one after another,
+          <strong>in order</strong>. This concept is called
+          <mark>sequence</mark>.
+      </li>
+      <li> When <tt class='i'>main</tt> has finished its work, execution
+            of the program ends.
+      </li>
+  </ul>
+  <p>The <tt class='i'>main</tt> function contains six different statements.
+  </p>
+  <ol>
+    <li>Line 15 is an <strong>output statement</strong>. It prints a    
+        <strong>prompt</strong>, telling the user what to enter. <tt>cout</tt>
+        is the standard <mark>output stream</mark> (similar to <tt>System.out</tt>
+        in Java or <tt>stdout</tt> in Python). The characters in quotes 
+        (generically called a <strong>string literal</strong>) are sent to
+        the screen using the <mark>insertion operator</mark> (<tt>&lt;&lt;</tt>).
+    </li>
+    <li>Line 16 is a <mark>variable definition</mark> for <tt>fahr</tt>, 
+        a floating-point number, called <tt>double</tt> in C++,
+        which is <mark>uninitialized</mark>.
+    </li>
+    <li>Line 17 is an <strong>input statement</strong>. <tt>cin</tt> is 
+        similar to a <tt>Scanner</tt> object in Java, or a <tt>file</tt>
+        object in Python. It reads a sequence of characters from the keyboard
+        and stores the converted value in <tt>fahr</tt> using the 
+        <tt>&gt;&gt;</tt> (or <mark>extraction</mark>) operator.
+    </li>
+    <li>Line 18 has both a <mark>variable definition</mark> and a 
+        function <mark>call</mark>. The line calls the function 
+        named <tt class='i'>convert</tt>, <b>passing</b> a copy of 
+        <tt>fahr</tt> as an <mark>argument</mark>. Then, it defines a
+        variable, <tt>celsius</tt>, and <strong>initializes</strong> 
+        it with the <strong>returned</strong> value.
+    </li>
+    <li>Lines 19 and 20 are a <strong>single output statement</strong>, spread
+      over two lines. The statement combines text and variables to produce the
+      desired result.
+    </li>
+    <li>Line 21 is a <tt>return</tt> statement which ends the program
+      and returns a value to the operating system. <tt>0</tt> indicates 
+      success, while anything else signals failure. You <mark>may omit</code>
+      this <tt>return</tt> statement in <tt class='i'>main</tt>, but not
+      in any other function.
+  </p>
+
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
