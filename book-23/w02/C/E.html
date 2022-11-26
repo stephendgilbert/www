@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>The Logical Operators</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Logical Operators</h1>
+  <p class='firstLine'>In addition to the relational 
+    operators, C++ defines three <mark>logical operators</mark> 
+    that take <b>Boolean operands</b> and <mark>combine
+    them</mark> to form other Boolean values:
+  </p>
+  <table class='options'>
+      <tbody>
+        <tr>
+            <th colspan="2">
+                    Logical Operators
+            </th>
+        </tr>
+        <tr>
+            <td style='width:18%;'><tt>!</tt> or <tt class='i'>not</tt></td>
+            <td style='text-align:left;padding:.5em;'>Unary <tt class='i'>NOT</tt> (<i>true</i> if its operand is <i>false</i>)
+            </td>
+        </tr>
+        <tr>
+            <td><tt>&amp;&amp;</tt> or <tt class='i'>and</tt></td>
+            <td style='text-align:left;padding:.5em;'>
+              Binary <tt class='i'>AND</tt> (<i>true</i>
+                    if <mark>both</mark> operands are <i>true</i>)
+            </td>
+        </tr>
+        <tr>
+            <td><tt>||</tt> or <tt class='i'>or</tt></td>
+            <td style='text-align:left;padding:.5em;'>
+              Binary <tt class='i'>OR</tt> (<i>true</i>
+                    if either or both operands are
+                    <i>true</i>)
+            </td>
+        </tr>
+    </tbody>
+    </table>
+  <p> In C++ you can use either they operators <tt>&amp;&amp;</tt>, 
+      <tt>||</tt>, and <tt>!</tt> as you would in Java, <mark>or</mark>
+      the English words <tt class='i'>and</tt>, <tt class='i'>or</tt>, 
+      and <tt class='i'>not</tt>, as you would in Python.
+  </p>
+  <p> Use the logical operators to <mark>combine multiple conditions</mark>
+      like this:
+  </p>
+<pre class='language-cpp'><code>if (percent &gt;= 6.25 &amp;&amp; percent &lt; 78) { grade = "C"; }</code></pre>
+  <p>Here, <mark>both conditions</mark> must be <tt>true</tt>
+  for <tt>grade</tt> to be set to <tt>"C"</tt>. Here's another example: 
+  </p>
+<pre class='language-cpp'><code>if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+{
+    result = "vowel";
+}</code></pre>
+  <p>Here, <tt>result</tt> is set to <tt>"vowel"</tt> if 
+    <mark>any one</mark> of the conditions is true.
+  </p>
+  <div class='highlight'>
+      <p> Remember, <tt>&amp;&amp;</tt> means all, and 
+          <tt>||</tt> means any!
+      </p>
+  </div>
+  <h2>Short-circuit Expressions</h2>
+  <p> When C++ evaluates an expression with the logical operators:
+  </p>
+  <ul>
+    <li>the sub-expressions are <strong>always evaluated from left 
+        to right</strong>.
+    </li>
+    <li><strong>evaluation ends</strong>
+        as soon as the result can be determined.
+    </li>
+  </ul>
+  <p> For example, if <em>expr1</em> is <tt>false</tt> in 
+      the expression <tt>expr1</tt> <tt>&amp;&amp;</tt>
+      <tt>expr2</tt>, there is no need to evaluate
+      <tt>expr2</tt> since the result will <strong>always</strong>
+      be <tt>false</tt>.
+  </p>
+  <p> Similarly, with <tt>expr1</tt> <tt>||</tt> <tt>expr2</tt>, 
+      there is no need to evaluate <tt>expr2</tt> <mark>when</mark>
+      <tt>expr1</tt> is <tt>true</tt>.
+  </p>
+  <p> In both of these cases, evaluation which stops as soon as 
+      the result is known. This is called
+      <mark>short-circuit evaluation</mark>.
+  <p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
