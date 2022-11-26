@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Concatenation &amp; Comparison</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Concatenation &amp; Comparison</h1>
+  <p class='firstLine'>The <tt>&lt;string&gt;</tt> library <mark>redefines</mark> 
+      several <strong>standard</strong> <mark>operators</mark> using a C++ 
+      feature called <strong>operator overloading</strong>. 
+      When you use the <tt>+</tt> operator with
+      numbers, it means addition, but, when you use it with 
+      the <tt>string</tt> type, it
+      means <mark>concatenation</mark>.
+  </p>
+<pre class='language-cpp'><code>string s1 = "hello", s2 = "world";
+string s2 = s1 + " " + s2;          // "hello world"</code></pre>
+  <p>The shorthand <tt>+=</tt> assignment operator has also 
+    been overloaded. It concatenates new text to the end of an existing
+    <tt>string</tt>. You may concatenate <tt>char</tt> values to a 
+    <tt>string</tt> object, but you <mark>cannot</mark> concatenate 
+    numbers to <tt>string</tt> objectss as you could in Java.
+  </p>
+<pre class='language-cpp'><code>string s{"abc"};  // uniform initialization
+s += s;           // ok, "abcabc"
+s += "def";       // literal ok, "abcabcdef"
+s += 'g';         // char ok, "abcabcdefg"
+s = s + 2;        // ERROR; no conversion</code></pre>
+
+  <p>You <strong>cannot</strong> concatenate two string literals: <tt>"a" + "b"</tt>
+      is <mark>illegal</mark>. However, separating them with whitespace, like
+      <tt>"a" "b"</tt>, is legal. Use this is used to join long lines together.
+  </p>
+  <h2>Comparisons</h2>
+  <p> C++ overloads the <strong>relational operators</strong> so that you can    
+      <strong>compare</strong> <tt>string</tt> values just like primitive 
+      types. To see if the value of <tt>str</tt> is equal to <tt>"quit"</tt>, 
+      just write this:
+  </p>
+<pre class='language-cpp'><code>if (str == "quit") . . .</code></pre>
+  <p>There is no need to use <tt>equals()</tt> or <tt>compareTo()</tt> as in Java.
+  </p>
+  <p> Strings are compared using <strong>lexicographic ordering</strong>.
+      Informally that means a <tt>string</tt> is smaller if it would 
+      appear earlier in the dictionary. However, when doing comparisons, 
+      case is significant, so <tt>"abc"</tt> is <strong>not</strong>
+      equal to <tt>"ABC"</tt>. Upper-case characters are "smaller" than 
+      lower-case characters, because they have smaller ASCII values.
+  </p>
+  
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
