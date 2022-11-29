@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>References</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <img src='../images/value-types.png' class='right width-25'
+    alt='string, int and double in memory.'>
+   <h1>References</h1>
+ <p class='firstLine'>In C++, both library types, like <tt>string</tt>, 
+      and the built-in primitive types, like <tt>int</tt> and 
+      <tt>double</tt>, are called <mark>value types</mark>. In
+      C++ such variables are "boxes" that <mark>contain</mark> data.
+  </p>
+  <p>
+      C++ also has several <mark>derived types</mark>:
+  </p>
+  <ul>
+      <li><strong>pointers</strong>, which contain the address of a variable,
+      </li>
+      <li><strong>arrays</strong>, which contain a sequence of variables
+      </li>
+      <li><strong>references</strong>, which provide an 
+        <mark>alias</mark> or alternate name for an existing variable
+      </li>
+  </ul>
+  <p>A reference name is an alternate name or <mark>alias</mark> for an existing object. 
+    Here’s an example of a variable <tt>n</tt> and its alias <tt>r</tt>. You create
+    a reference by putting an ampersand (<tt>&amp;</tt>) after the type name.
+    The type of <tt>r</tt> is usually pronounced <i>"int-ref"</i>.
+  </p>
+<pre class='language-cpp'><code>int n = 3;
+int&amp; r = n;     // r is now an alias for n
+r = 42;         // n is also now 42</code></pre>
+  <p> <img src='../images/reference.png' class='right'
+        alt='The logical representation of a reference.'>
+      Here, <tt>r</tt> is simply an alternate name for <tt>n</tt>. 
+      It <mark>is not</mark> a new
+      variable. Under the hood, the compiler often uses pointers to 
+      implement references (although that's not required). 
+      Even if you understand how pointers work, however, you should try
+      not to get the two concepts confused.
+  </p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
