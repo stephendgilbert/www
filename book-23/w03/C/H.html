@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Substrings Redux</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Substrings Redux</h1>
+ <p class='firstLine'>Instead of using a loop guard, 
+      let's <mark>think about the loop in a different way</mark>. You
+      need to loop through <tt>s1</tt>, extracting each substring, and
+      comparing it to <tt>s2</tt>. Rather than writing a <tt class='i'>for</tt> 
+      loop with <tt>index</tt>
+      refer to the <mark>beginning</mark> of the substring, you can have it
+      point to <strong>the element following the substring</strong>, and then
+      extract the characters <mark>preceding</mark> <tt>index</tt>.
+  </p>
+  <table class='array' align='center'>
+    <thead>
+      <tr>
+      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td>c</td><td>a</td><td>t</td><td>a</td><td>p</td><td>u</td><td>l</td><td>t</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+      <td colspan='3'>&nbsp;</td><td>&uarr;</td><td colspan='4'>&nbsp;</td><td>&uarr;</td>
+      </tr>
+    </tfoot>
+  </table>
+  <p> A picture might help. Suppose <tt>s1</tt> is <tt>"catapult"</tt> 
+      and <tt>s2</tt> is <tt>"tap"</tt>, here is how that looks.
+      Your loop becomes very easy to write, and you don't need any 
+      extra <tt class='i'>if</tt> statements:
+  </p>
+<pre class='language-cpp'><code>int count{0}; // times s2 found in s1
+size_t slen{s2.size()}; // size of string looking for
+for (size_t i = slen, len= s1.size(); i &lt;= len; ++i )
+{
+    string subs = s1.substr(i - slen, slen );
+    if (subs == s2) { ++count; }
+}
+return count;</code></pre>
+  <p> Things to notice about this loop:</p>
+  <ul>
+    <li>The loop index (<tt>i</tt>) starts at <tt>slen</tt>, 
+        where <tt>slen</tt> is the size of the
+        substring you intend to extract. It <mark>does not </mark>
+        start at <tt>0</tt>.
+    </li>
+    <li>When calling <tt>substr(index,</tt> <tt>count)</tt>, 
+        the index is <tt>i-slen</tt>, which means you
+        are extracting the characters <mark>before</mark> 
+        <tt>i</tt>, not <strong>after</strong> it.
+    </li>
+    <li>Since <tt>i</tt> points to the first position 
+        <mark>past</mark> your substring, the loop condition is not 
+        <tt>i</tt> <tt>&lt;</tt> <tt>len</tt>, but 
+        <tt>i</tt> <tt>&lt;=</tt> <tt>len</tt>. (Make
+        sure you don’t confuse <tt>len</tt> and <tt>slen</tt>).
+    </li>
+  </ul>
+  </p>
+  <p> All that’s left to do is to compare <tt>subs</tt> 
+      to <tt>s2</tt> and update your counter.
+      With C++ strings, you can use <tt>==</tt>; you don’t need to use 
+      an <tt>equals()</tt> method as you would in Java.
+  </p>
+
+   <details>
+  <summary>Watch the video</summary>
+  <iframe 
+    src="https://cccd.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e855b680-92d2-4488-9f8f-af5d01477f1d&autoplay=false&offerviewer=false&showtitle=false&showbrand=false&captions=false&interactivity=none" 
+    height="470" width="800" 
+    style="border: 1px solid #464646;" 
+    allowfullscreen allow="autoplay">
+  </iframe>
+  </details> 
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

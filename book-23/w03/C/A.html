@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Definite Loops with for</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <img src='../images/for-loop.png' class='right round shadow width-25'
+    alt='The for loop illustrated.'>
+   <h1>Definite Loops with <i>for</i></h1>
+ <p class='firstLine'>C++ has a loop designed for repeating an 
+    operation a fixed number of times: the for loop. You already 
+    met the <mark>range-based</mark> <tt class='i'>for</tt> loop 
+    in the last section. In this
+    section we'll cover the traditional <mark>classic counter-controlled </mark>
+    version.
+  </p>
+  <p>The pattern used when you simply want to <mark>repeat an action 
+      <tt>n</tt> times</mark> is this:
+  </p>
+<pre class='language-cpp'><code>times &lt;- times to repeat
+i &lt;- 0
+While i is less than times
+  Do action
+  i &lt;- i + 1</code></pre>
+  <p>Here is this pattern translated into C++ using the <tt class='i'>for</tt> loop.
+  </p>
+<pre class='language-cpp'><code>int times = 5;    // repeat 5 times;
+for (int i = 0; i &lt; times; ++i)
+{
+    cout &lt;&lt; "Hello" &lt;&lt; endl;
+}</code></pre>
+  <p>
+      The traditional <tt class='i'>for</tt> loop has 
+      <strong>three sections</strong> inside its
+      parentheses:
+  </p>
+  <ul>
+      <li>The <mark>initialization expression</mark> is evaluated once before
+          the loop is entered. It creates and initializes the  
+          <strong>loop control variable</strong>, often named <tt>i</tt>. 
+          You may create other variables of the same type in this section. 
+          These variables have <strong>statement scope</strong>; they are 
+          not available after the loop body. The initialization section
+          ends with a semicolon.
+      </li>
+      <li>The <mark>test condition</mark> is firest evaluated after the
+          initialization. If <tt>true</tt>, the body is entered; 
+          if <tt>false</tt>, it is skipped.
+          The condition also ends in a semicolon.
+      </li>
+      <li>The <mark>update expression</mark> is evaluated       
+          <strong>after</strong> the loop body is completed. 
+          It does not end in a semicolon. The update expression must 
+          change one of the variables in the condition, which is
+          evaluated again, immediately following the update.
+      </li>
+  </ul>
+  <p> Often, the <strong>index</strong> or <strong>loop control variable</strong>
+      is not used inside the body of the loop; it simply controls the number of
+      repetitions. Single letter names such as <tt>i</tt> and <tt>j</tt> are 
+      conventional. If you want others to understand your code, you'll conform
+      to this convention. 
+  </p>
+  <p> The loop shown here goes
+      from <tt>0</tt> to <mark>less-than</mark> <tt>times</tt>, 
+      so we say that this loop uses <mark>asymmetric bounds</mark>.
+      This means the <b>lower</b> bounds is <mark>included</mark> while
+      the <b>upper</b> bound is <mark>excluded</mark>.
+      </p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

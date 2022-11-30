@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Sequences &amp; Symmetric Bounds</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Sequences &amp; Symmetric Bounds</h1>
+ <p class='firstLine'>A second idiomatic variation
+    of the <tt class='i'>for</tt> loop is used to    
+    <mark>generate sequential data</mark>, such as counting from
+    <tt>start</tt> to <tt>finish</tt>:
+  </p>
+<pre class='language-cpp'><code>for (int var = start; var &lt; finish; update-var)...</code></pre>
+  <p> In this <tt class='i'>for</tt> loop the actions in the body 
+      are executed with the 
+      variable <tt>var</tt> set to each value between 
+      <tt>start</tt> and <tt>finish</tt>, <mark>inclusive</mark>. 
+  </p>
+  <p> Because we include both ends, we
+      say that the bounds used in this loop are 
+      <mark>symmetric</mark>. Use this loop to count
+      from <tt>1</tt> to <tt>100</tt> like this:
+  </p>
+<pre class='language-cpp'><code>for (int i = 1; i &lt;= 100; ++i)</code></pre>
+  <p> Here's another example. In this pattern, the loop variable is used to
+      <mark>produce a sequence of data</mark>.
+  </p>
+<pre class='language-cpp'><code>int factorial(int n)
+{
+    int result = 1;
+    for (int i = 1; i &lt;= n; ++i) { result *= i; }
+    return result;
+}</code></pre>
+  <p> As you can see, this example uses the loop to implement the 
+      <mark>factorial function</mark>, the product of the integers 
+      between <tt>1</tt> and <tt>n</tt>. The <tt class='i'>for</tt> 
+      <mark>loop variable</mark> <tt>i</tt> goes from <tt>1</tt>
+      to <tt>n</tt> (inclusive). The body
+      of the loop updates <tt>result</tt>
+      by multiplying it by <tt>i</tt>.
+  </p>
+<h2>Counting Down</h2>
+  <p>As the <i>factorial</i> example shows, the update update expression
+     need only move the loop variable closer to the loop bounds. It must
+     <mark>advance</mark> the loop; it doesn't need to increment. Here's
+     and example:
+   <img src='../images/sequence.png' class='inlineCenter width-40'
+    alt='A sequence of data.'>
+  </p>
+  <p>Here we want to <b>start the loop at a large number</b>, and <b>decrease the
+    index by four</b> on each iteration. In other words, we want to 
+    <mark>count down</mark> rather than counting up. Here's
+    what this looks like in code:
+  </p>
+<pre class='language-cpp'><code>for (int i = 19; i &gt;= 0; i -= 4)
+    cout &lt;&lt; i &lt;&lt; " ";
+cout &lt;&lt; endl;</code></pre>
+<div class='highlight'>
+  <p>Don't use conditions like <tt>i != 0</tt>, unless you are certain
+    that the condition will be met. Because we are decrementing by
+    four, we will never set <tt>i</tt> to <tt>0</tt> and so we would
+    have an <mark>infinite</mark> or <mark>endless</mark> loop.
+  </p>
+</div>
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
