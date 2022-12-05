@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Running Doxygen</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Running Doxygen</h1>
+   <p class='firstLine'>If you are using the Codespaces IDE, you can see if
+    Doxygen is installed by using the command: <tt>doxygen</tt>. If you see
+    this:
+  </p>
+<div class='consoleDisplay'>doxygen<br />
+bash: doxygen: command not found</div>
+  <p>then Doxygen is not installed in your instance. Install it like this:</p>
+<div class='consoleDisplay'><mark>sudo apt-get install doxygen</mark><br />
+Reading package lists... Done<br />
+... more stuff ...<br />
+After this operation, 20.0 MB of additional disk space will be used.
+Do you want to continue? [Y/n]</div>
+  <p>Type <mark>Y</mark> and press <tt>ENTER</tt> and it will be installed
+    for your current session. Type <tt>doxygen</tt> again, and you'll see
+    a list of the program's options. Here are the ones you want to use:
+  </p>
+  <ul>
+    <li>Type <tt>doxygen -g</tt> to generate a <mark>configuration
+      file</mark> named <tt>Doxyfile</tt>. You can change its name if
+      you like.
+    </li>
+    <li>In the configuration file, you might want to change these
+        items. Just open it with your text editor, make the changes
+        and save it.
+    </li>
+      <ul>
+        <li>Change the Project Name to something appropriate</li>
+        <li>Set <b>Brief Member Desc</b> to NO</li>
+        <li>Set <b>Javadoc auto brief</b> to YES</li>
+        <li>Set <b>Warn no param doc</b> to YES</li>
+        <li>Set <b>Generate Latex</b> to NO</li>
+        <li>Set <b>Have Dot</b> to NO</li>
+      </ul>
+    <li>Browse through the rest of the configuration file, and the
+    <a target='_blank'
+      href='https://doxygen.nl/manual/config.html'
+      >online configuration help</a>, to further customize your configuration.
+      Save the configuration file, so you don't need to reconfigure
+      if you need to install Doxygen again.
+    </li>
+  </ul>
+<p>After you've created your configuration file, put it in the folder
+  with your documented library files. Type the command
+  <tt><mark>doxygen Doxyfile</mark></tt> and Doxygen will process
+  your files and produce a new folder inside your project folder,
+  named <tt>html</tt>. 
+</p>
+<p>To view your files (inside the CodeSpaces IDE), just type 
+  <tt>http-server</tt> in the terminal window and <b>Control-Click</b>
+  the link  that it provides you. Navigate to the <tt>index.html</tt>
+  file in the <tt>html</tt> folder and click it, and you'll see the
+  documentation for your library. When you're done looking at it,
+  stop the <tt>http-server</tt> by typing <tt>Control-C</tt> in
+  the terminal window.
+  <img src='../images/documentation.png' class='inlineCenter width-90'
+    alt='Doxygen documentation.'>
+</p>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
