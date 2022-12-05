@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Adding the Prototypes</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Adding the Prototypes</h1>
+   <p class='firstLine'>When the compiler encounters a 
+      <mark>function call</mark> in your
+      program, it needs information in order to generate the correct 
+      code; the compiler doesn’t need to know <mark>how</mark>
+      the function is implemented, but it <strong>does</strong> 
+      need to know:
+  </p>
+  <ul>
+      <li>what types each of the <strong>arguments</strong> to the function are
+          (and how many)
+      </li>
+      <li> what type of value the function <strong>returns</strong>
+      </li>
+  </ul>
+  <p>That information is provided by a <mark>prototype</mark>, or    
+      <strong>function declaration</strong> (as opposed to a function
+      definition).
+  </p>
+<pre class='line-numbers language-cpp'><code>#ifndef DIGITS_H
+#define DIGITS_H
+int firstDigit(int);
+int lastDigit(int);
+int numDigits(int);
+#endif</code></pre>
+  <p>These prototypes associate the names <tt>firstDigit</tt>, 
+    <tt>lastDigit</tt>, and <tt>numDigits</tt> each with a function 
+    that <strong>takes</strong> a single <tt>int</tt> as an argument 
+    and which <strong>returns</strong> an <tt>int</tt> as its result. 
+    These are <strong>function declarations</strong>.    
+    <mark>Go ahead and complete the prototypes now.</mark>
+  </p>
+  <p> In a prototype, <strong>parameter names are optional</strong>. 
+    The compiler doesn't care about the names, but they help 
+    <mark>you remember</mark>
+    which parameter matches which argument.
+  </p>
+<pre class='language-cpp'><code>double focalLength(double d, rouble r1, double r2, double n);</code></pre>
+  <p> Supplying names in a prototype often helps the reader. 
+      The parameter names in a prototype are in 
+      <mark>prototype scope</mark>; they have no
+      meaning after the prototype ends, and, specifically, they 
+      do not need to match the names used in the defintion.
+  </p>
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
