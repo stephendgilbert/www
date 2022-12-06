@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Default Arguments</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Default Arguments</h1>
+   <p class='firstLine'>In your function declaration, 
+    you may indicate that <mark>certain arguments are optional</mark> 
+    by providing the parameter with a value to be used when no 
+    argument is passed in the call. 
+    These are called <mark>default arguments</mark>.
+  </p>
+  <p>To indicate that an argument is optional, include an initial value
+      <mark>in the declaration</mark> of that parameter in the function
+      prototype. For example, you might define a procedure with the following
+      prototype:
+  </p>
+<pre class='language-cpp'><code>void formatInColumns(int nColumns = 2);</code></pre>
+  <p>The <tt>=</tt> <tt>2</tt> in the prototype declaration means that 
+    this <strong>argument</strong> may be omitted when calling the 
+    function. You can now call the function in two different ways:
+  </p>
+<pre class='language-cpp'><code>formatInColumns();    // use 2 (default) for nColumns
+formatInColumns(3);   // use 3 for nColumns</code></pre>
+  <p>The <tt>getline()</tt> function which you have been using, 
+      actually has a third parameter, the terminating character, which 
+      is given the default value <tt>'\n'</tt> in its declaration.
+  </p>
+  <p> Since most of the time you want to read an entire line, ending in a
+      newline, that makes sense. However, if you supply a third argument, 
+      say <tt>';'</tt>, then <tt>getline</tt> will only read up to a 
+      <tt>';'</tt> instead of the entire line. This way you can use
+      <tt>getline</tt> to read a series of delimited fields inside
+      a single line.
+  </p>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
