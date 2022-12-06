@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Data Flows</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Data Flows</h1>
+   <p class='firstLine'>You may return more than one value
+      from a function by using reference parameters to    
+      <mark>return values through the argument list</mark>.
+  </p>
+  <p>As an example, suppose that you are writing a program to solve the
+      quadratic equation below and you want to structure that program into three
+      IPO phases like this:
+      <img src='../images/data-flows.png' class='inlineCenter width-90'
+        alt='The three IPO phases to solve the quadratic equation.'>
+  </p>
+  <p>
+      Using this plan, your <tt>main</tt> function might look like this:
+  </p>
+<pre class='language-cpp line-numbers'><code>int main()
+{
+    double a, b, c, root1, root2;
+    getCoefficients(a, b, c); 
+    solveQuadratic(a, b, c, root1, root2);
+    printRoots(root1, root2);
+}</code></pre>
+  <p>Here's what's happening:</p>
+  <ul>
+    <li>In line 4, the variables <tt>a</tt>, <tt>b</tt> and <tt>c</tt>
+        are <mark>output</mark> parameters. Instead of passing values
+        <b>into</b> the function, we're supplying three <b>variables</b>
+        which will be filled up in the funciton itself.
+    </li>
+    <li>In line 5, <tt>a</tt>, <tt>b</tt> and <tt>c</tt> are
+      <mark>input</mark> parameters. We are supplying their values to
+      the <tt>solveQuadratic</tt> function so that it can do its work.
+    </li>
+    <li> The variables <tt>root1</tt> and <tt>root2</tt> are 
+      <mark>output</mark> parameters on Line 5; they will be filled 
+      in inside the function. On line 6, they are <mark>input</mark>
+      parameters.
+    </li>
+  </ul>
+   
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
