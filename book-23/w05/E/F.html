@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Confirmation Loops</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <img src='../images/diver.png' class='right'
+    alt='A decorative image of a diver.'>
+   <h1>Confirmation Loops</h1>
+   <p class='firstLine'> When you make a withdrawal at your 
+    ATM, before your card is returned, the machine will ask you 
+    “Do you want to make another transaction?” 
+    This is a <mark>confirmation loop</mark>, and the 
+    <tt class='i'>do-while</tt> loop seems
+    ideal for solving this problem.
+</p>
+<p>However, there are still some things you need to watch out for. 
+    Considerthis code:
+</p>
+<pre class='language-cpp'><code>do
+{
+    completeSomeTransaction();
+    cout &lt;&lt; "Do you want another transaction? ";
+    string answer;
+    cin &gt;&gt; answer;
+}
+while (answer.front() == 'y');</code></pre>
+<p> While this <strong>looks reasonable</strong> (other than 
+  not providing for the empty string or an upper-case ‘Y’), 
+  it actually <mark>won’t compile</mark>. When you get to the
+  <strong>loop condition</strong>, the <tt>string</tt> variable 
+  <tt>answer</tt> has <strong>gone out of scope</strong>.
+  <img src='../images/confirm.jpg' class='inlineCenter'
+    alt='Error message shown with the code above.'>
+</p>
+<p>To fix this, you have to move the initial declaration for
+  <tt>answer</tt> before the <tt>do</tt> statement, which is
+  not quite as clear. 
+  So, even in this natural use-case, the <tt class='i'>while</tt> 
+    loop is a little more efficient.
+</p>
+     
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
