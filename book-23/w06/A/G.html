@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Fibonacci Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Fibonacci Function</h1>
+   <p class='firstLine'>To write a recursive implementation of 
+    a <em>fibonacci(n)</em> function, you need only plug in the 
+    simple cases, plus the recurrence relation, and
+    you're done.
+</p>
+<pre class='language-cpp'><code>int fibonacci(int n)
+{
+    if (n &lt; 2) { return n; }     // base case
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}</code></pre>
+<p>How do you convince yourself that the <tt>fibonacci()</tt> 
+  function works? If you begin by tracing through the logic, 
+  I guarantee that you'll be confused. Instead, 
+  <mark>regard this entire mechanism as irrelevant detail</mark>.
+</p>
+<p>Since the argument values are smaller,  
+  <strong> each of these calls represents a simpler case</strong>, and so,
+  applying the recursive leap of faith, <strong>
+        you can assume that the program correctly computes 
+        each of these values</strong>.
+    <mark>Case closed.</mark> You don’t need the details.
+</p>
+   
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

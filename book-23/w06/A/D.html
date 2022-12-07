@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Recursive Leap of Faith</title>
+</head>
+<body>
+<div id='page' style='background-image: url("../images/goldfish.png");
+                      background-position: right bottom;
+                      background-repeat: no-repeat;
+                      /*filter:opacity(25%);*/'>
+<div>
+   <h1>The Recursive Leap of Faith</h1>
+   <p class='firstLine'>The computer treats recursive functions 
+    just like all other functions.
+    It is useful to put the underlying details aside
+    and focus on <strong>a single level of the operation</strong>;    
+    <mark>assume</mark> that any recursive call automatically gets the
+    right answer as long as the arguments are in 
+    <strong>some sense simpler</strong> than the original.
+</p>
+<p>This psychological strategy—assuming that any simpler recursive call will
+    work correctly—is called <mark>the recursive leap of faith</mark>.
+    Learning to apply this strategy is essential to using recursion in
+    practical applications.
+</p>
+<p>Consider what happens when you call <tt>factorial(4)</tt>; 
+  the function must compute the expression <tt>n</tt> <tt>*</tt> 
+  <tt>factorial(n</tt> <tt>–</tt> <tt>1)</tt>, and, by substituting 
+  the current value of <tt>n</tt> into
+  the expression, you know that the result is <tt>4</tt> * <tt>factorial(3)</tt>.
+</p>
+<p><mark>Stop right there.</mark>
+  Computing <tt>factorial(3)</tt> is <mark>simpler</mark> than 
+  computing <tt>factorial(4)</tt>. <b>Because</b> it is simpler,
+  the recursive leap of faith allows you to 
+  <mark>assume that it works</mark>. Thus, you should assume that the
+  call
+  to <tt>factorial(3)</tt> will correctly compute the
+  value of 
+  <tt>3!</tt>, which is <tt>3</tt> <tt>×</tt> <tt>2</tt> <tt>×</tt> 
+  <tt>1</tt>, or <tt>6</tt>.
+  The result of calling 
+  <tt>fact(4)</tt> is therefore<br />
+  <tt>4</tt> <tt>×</tt> <tt>6</tt>, 
+  or <tt>24</tt>.
+</p>
+<p>As you look at the examples in the rest
+  of this chapter,<br /> try to    <strong>focus on the
+  big picture </strong>instead of <br />the details.
+  Once you have made the <br />recursive 
+    decomposition and identified<br /> the
+    simple, base cases, be satisfied <br />that
+    the computer can <br />
+    handle the rest.
+</p>
+   
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

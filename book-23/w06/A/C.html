@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>A Recursive Example</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>A Recursive Example</h1>
+       <img src='../images/factorial-formula2.png' class='right width-40'
+        style=''
+        alt='Factorial as a recurrence relation.'>
+  <p class='firstLine'>Another way to think of the <i>factorial</i>
+      function is as a <mark>recurrence relation</mark>,
+      which <strong>recursively defines</strong> a sequence; 
+      each further term is defined as a function of the preceding terms.
+  </p>
+  <p>Without qualification, this is a <strong>circular definition</strong>. 
+    The <mark>qualification</mark> is that <tt>0!</tt> <tt>=</tt> <tt>1</tt>. 
+    We can translate this <mark>recursive definition</mark> 
+    into code as well:
+  </p>
+<pre class='language-cpp'><code>int factorial(n)
+{
+    if (n == 0) { return 1; }       // qualification
+    return n * factorial(n - 1);    // recursion
+}</code></pre>
+  <p> The condition <tt>(n</tt> <tt>==</tt> <tt>0)</tt> is the 
+      simplest possible condition. It is called the
+      <mark>base case</mark>. If <tt>n</tt> is not zero,
+      then the function multiplies <tt>n</tt> times the
+      result of <i>(n - 1)!</i>. It does this, by 
+      <mark>calling itself</mark> again to simplify the 
+      problem.
+  </p>
+   <p>The solution to <mark>any</mark> recursive problem can be 
+      organized like this:
+  </p>
+<pre class='pcode'>
+If the answer is known then return it          <em class='t'>// the base case</em>
+If not, then 
+    Call the function with simpler inputs     <em class='t'>// recursive case</em>
+    Return the combined simpler results</pre>
+  <p>This <strong>pattern</strong> is called the    
+    <mark>recursive paradigm</mark>. You can apply this technique as long
+      as:
+  </p>
+  <ol>
+    <li>You can identify simple cases for which the answer is known.</li>
+    <li>You can find a <mark>recursive decomposition</mark> breaking 
+      any complex instance of the problem into simpler problems    
+      <strong>of the same form</strong>.
+    </li>
+  </ol>
+  <p>Because this depends on dividing complex problems into simpler 
+    instances of the same problem, such recursive solutions are 
+    often called <mark>divide-and-conquer algorithms</mark>.
+  </p>   
+   
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
