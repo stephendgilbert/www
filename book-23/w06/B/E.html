@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Mutual Recursion</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Mutual Recursion</h1>
+   <p class='firstLine'>Most recursive functions <strong>call 
+      themselves directly.</strong>
+      However, the definition of recursion is broader. To be recursive, a
+      function must call itself <strong>at some point during its 
+      evaluation</strong>. If a function <tt class='i'>ƒ()</tt>
+      calls a function <tt class='i'>g()</tt>, which,
+      in turn calls <tt class='i'>ƒ()</tt>, those function calls are
+      still considered to be recursive. 
+  </p>
+  <p> Because the functions <tt class='i'>ƒ()</tt> and <tt class='i'>g()</tt>
+      call <b>each other</b>, this type of recursion is called    
+      <mark>mutual recursion</mark>.
+  </p>
+  <p>
+  As a simple example, it turns out to be easy—<strong>although 
+      wildly inefficient</strong>—to use recursion to test
+      whether a number is even or odd:
+  </p>
+<pre class='language-cpp'><code>bool isEven(unsigned n);    // prototype 
+bool isOdd(unsigned n) { return ! isEven(n); }
+bool isEven(unsigned n)
+{
+    if (n == 0) return true;
+    return isOdd(n - 1);
+}</code></pre>
+
+  <p>This code implements the <tt>isEven()</tt> and 
+      <tt>isOdd()</tt> functions, by taking
+      advantage of the following informal definition:
+  </p>
+  <ul>
+      <li>A number is even if its predecessor is odd.</li>
+      <li>A number is odd if is not even.</li>
+      <li>The number <tt>0</tt> is even by definition.</li>
+  </ul>
+  <p> Even though these rules seem simple, they form the basis of 
+      an effective strategy for distinguishing odd and even 
+      numbers, as long as those numbers
+      are nonnegative. We ensure that by having 
+      <tt>isEven()</tt> and <tt>isOdd()</tt> take
+      arguments of type <tt>unsigned</tt>, which C++ uses to 
+      represent an integer that can
+      never be less than zero.
+  </p>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
