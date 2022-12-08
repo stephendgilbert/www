@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Error Redirection</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Error Redirection</h1>
+    <p class='firstLine'>Type this command 
+      (<mark>exactly</mark>) in the shell, and press <tt>ENTER</tt>:
+</p>
+<div class='consoleDisplay width-90'>$ <tt class='t'>cat &gt; output.txt &lt; input.text</tt></div>
+<p> In this case, there <mark>is no file</mark> named <tt>input.text</tt>, so
+    <tt>output.txt</tt> is <mark>erased</mark>. The <tt>cat</tt> filter prints an error
+    message on the <mark>standard error stream</mark>, still connected to
+    the screen.
+    <strong>
+        Output redirection <mark>only redirects standard output, not standard error</mark>.
+    </strong>
+</p>
+<p>You can the <mark>redirect standard error</mark> stream by 
+    using the symbol <mark><tt>2&gt;</tt></mark> like this:
+</p>
+<div class='consoleDisplay width-90'>$ <tt class='t'>cat &gt; output.txt 2&gt; err.txt &lt; input.text<br /></tt>
+$ <tt class='t'>cat &lt; output.txt<br /></tt>
+$ <tt class='t'>cat &lt; err.txt<br /></tt>
+<tt class='r'>bash: input.text: No such file or directory</tt><br />
+$</div>
+
+<p> Now <tt>output.txt</tt> is still empty, but <tt>err.txt</tt> contains the errors that
+    originally appeared on the screen. <mark>Combine both </mark>into a
+    single stream (which may be sent to a file) like this.
+</p>
+<div class='consoleDisplay width-90'>$ <tt class='t'>cat &gt; combined.txt 2&gt;&amp;1 &lt; input.text</tt></div>
+  <p>Sometimes, you <strong>don't want to see</strong> either the error messages
+      or any progress reports. For instance, if you try to remove a file which 
+      doesn't exist, the shell displays an error message like this:
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'>rm filter.exe</tt><br />
+  <tt class='r'>rm: cannot remove 'filter.exe': No such file or directory</tt></div>
+  <p>Instead of redirecting those messages to a file, you can send them to the
+      <mark>"bit bucket"</mark>
+      which has the name, (in Unix), <tt>/dev/null</tt>. (If you are using redirection on
+      Windows, the name is <tt>NUL:</tt> with the trailing colon.) Anything redirected to
+      <tt>/dev/null</tt> just disappears.
+  </p>   
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
