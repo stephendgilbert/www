@@ -6,62 +6,45 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Try It Out</title>
+    <title>A Recursion Checklist II</title>
 </head>
 <body>
 <div id='page'>
 <div>
-   <h1>Try It Out</h1>
-   <p class='firstLine'>On the Canvas course home page, you’ll find a link to    
-      <strong>Code Step-by-Step</strong>, a Web site providing practice problems
-      in several different programming languages, including C++. Go ahead and
-      create your own account, and then let’s walk through a problem.
-      <img src='../images/code-step-by-step.png' class='inlineCenter width-80 round shadow'
-        alt='The Code Step-by-Step Website.'>
+  <img src='../images/checklist.jpg' class='right width-128'
+    alt='A decorative image of a checklist.'>
+   <h1>A Recursion Checklist II</h1>
+   <p class='firstLine'>Here's the rest of the recursion checklist.
   </p>
-  <p>Click the C++ link as shown in the screenshot above, and then find the    
-    <mark>recursion</mark> section. Here are the instructions for the first
-      problem, <tt>collapseSequences</tt>.
+  <h3 class='i'><input type='checkbox'>
+      Have You Covered All Possibilities?
+  </h3>
+  <p>Does the simplification process always reach the base case, or    
+    <strong>have you left out some of the possibilities</strong>? A common
+      error is forgetting one of the base-cases. You need to check the empty
+      string in the <tt>isPalindrome()</tt> function, as well as the single-character
+      string. Since the function reduces the size of the string by two each time,
+      only having the one-character base case, would mean some strings would
+      fail.
   </p>
-  <div class='highlight'>
-      <p>
-          Write a <mark>recursive function</mark> named <tt>collapseSequences</tt>
-          that accepts a <tt>string</tt> <tt>s</tt> and <tt>char</tt> <tt>c</tt> as
-          parameters and returns a new <tt>string</tt> that is the same as <tt>s</tt> but with any
-          sequences of <strong>consecutive occurrences</strong> of <tt>c</tt> compressed
-          into a single occurrence of <tt>c</tt>. For example, if you collapse sequences of
-          character <tt>'a'</tt> in the <tt>string</tt> <tt>"aabaaccaaaaada"</tt>, 
-          you get <tt>"abaccada"</tt>.
-      </p>
-      <p>
-          Your function is <strong>case-sensitive</strong>; if the character <tt>c</tt>
-          is, for example, a lowercase <tt>'f</tt>', your function should not collapse
-          sequences of uppercase <tt>'F'</tt> characters. In other words, you do not need
-          to write code to handle case issues in this problem.
-      </p>
-  </div>
-  <br clear="all"/>
-  <p>
-      The following table shows two examples and their expected return values:
+  <h3 class='i'><input type='checkbox'>
+      Are Sub-problems Identical in Form?
+  </h3>
+  <p> Are the recursive sub-problems <strong>truly identical in form 
+      to the original?</strong> It is essential
+      that the sub-problems be of the same form. If the recursive calls change
+      the nature of the problem then the entire process can break down.
   </p>
-  <table class='options'>
-    <thead>
-      <tr>
-        <th>Call</th>
-        <th>Returns</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>collapseSequences("aabaaccaaaaaada", 'a')</td>
-        <td>"abaccada"</td>
-      </tr>
-      <tr>
-        <td>collapseSequences("mississssipppi", 's')</td>
-        <td>"misisipppi"</td>
-      </tr>
-    </tbody>
-  </table>
+  <h3 class='i'><input type='checkbox'>
+      Are You a Believer?
+  </h3>
+  <p> When you apply the recursive leap of faith, do the solutions to the
+      recursive sub-problems    <strong>provide a complete solution 
+      to the original problem</strong>? Work
+      through all the steps in the current function call, 
+      but assume that every recursive call returns the correct answer. 
+      If this process yields the right solution, your program should work.
+  </p>
 
    
 </div>
