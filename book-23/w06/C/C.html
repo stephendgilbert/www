@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Solving the Problem I</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Solving the Problem I</h1>
+   <p class='firstLine'>Let's walk through the steps 
+      listed in the checklist. Normally, of course,
+      you'll compress these steps together in an intuitive way. However, if you
+      have difficulty with solving a recursive problem, going back and checking
+      them individually is a good debugging tool.
+  </p>
+    <h3 class='i'><input type='checkbox'>
+      Check the Simple (Base) Cases
+  </h3>
+
+  <p><strong>What is the simplest base case?</strong> In other words, what
+      values for <tt>s</tt> require <strong>no compression</strong>? Well, obviously, if
+      we don’t have any characters, there can be no compression. Similarly, if we
+      have only a single character, there can be no compression. The
+      <strong>simplest thing that can work, without recursion</strong> is:
+  </p>
+<pre class='language-cpp'><code>string collapseSequences(const string&amp; s, char c)
+{
+    if (size() &lt; 2) return s;  // base case
+}</code></pre>
+  <h3 class='i'><input type='checkbox'>
+      Have You Solved the Base Cases Correctly?
+  </h3>
+  <p> <strong>Have we handled all of the base cases?</strong> The empty string
+      returns <tt>""</tt>, and a single character returns that character. It doesn’t
+      matter if the character matches the parameter <tt>c</tt>, since a single-character
+      cannot be a sequence. Those should be all of the base cases. If we have two
+      charcters, we may have a sequence <tt>"cc"</tt> that requires compression.
+  </p>
+    <h3 class='i'><input type='checkbox'>
+      Does Decomposition Make it Simpler?
+  </h3>
+  <p>
+      <strong>Does decomposition make it simpler?</strong> Or, in other words,
+      how can we solve a simpler version of the problem? Or, how can we approach
+      the base case? How? By <mark>passing a smaller</mark> string each time
+      we call the function recursively.
+  </p>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
