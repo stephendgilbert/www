@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>More on Streams</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>More on Streams</h1>
+    <p class='firstLine'>When <strong>writing a function</strong> which processes 
+      an input or output, the stream parameters must always be
+      <mark>passed by reference</mark>.
+  </p>
+  <p>Here, for example, is a function that copies input to output.</p>
+<pre class='language-cpp'><code>void streamCopy(istream&amp; in, ostream&amp; out)
+{
+    char ch;
+    while (in.get(ch)) { out.put(ch); }
+}</code></pre>
+
+  <p> We could rewrite <i><b>filter</b></i> by 
+      <mark>calling this function</mark>, like this:
+  </p>
+<pre class='language-cpp'><code>int main()
+{
+    streamCopy(cin, cout);
+}</code></pre>
+  <h2>Other I/O Functions</h2>
+  <p>When reading individual characters, you'll sometimes find 
+      that you have <strong>read more than you need</strong>. 
+      There are several ways to solve  this problem in C++.
+  </p>
+  <ol>
+    <li><tt class='y'>in.unget()</tt> returns the last read character <b>to the input stream</b>.</p>
+    <li><tt class='y'>in.putback(ch)</tt> allows you to put back a
+        <mark>different character</mark>.
+    </li>
+    <li><tt class='y'>in.peek()</tt> looks at the next character in the 
+      stream, but doesn't remove it from the stream.
+    </li>
+  </ol>
+  <p> The C++ library guarantees that it you can push back push one character.
+      You are not able to read several characters ahead and then push them all
+      back. Fortunately, being able to push back one character is sufficient in
+      the vast majority of cases.
+  </p>
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
