@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Counting the Lines</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Counting the Lines</h1>
+<details>
+  <summary>Check Your Work Here</summary>
+<pre class='line-numbers language-cpp'><code>string longest_line;
+string line;
+int line_number{0};
+while (getline(in, line))
+{
+    ++line_number;
+    if (line.size() &gt; longest_line.size()) { 
+        longest_line = line; 
+    }
+    out &lt;&lt; "Line " &lt;&lt; line_number &lt;&lt; " has ..." &lt;&lt; endl;
+}
+out &lt;&lt; "Longest line: " &lt;&lt; longest_line &lt;&lt; endl;</code></pre>
+
+</details>
+  <p class='firstLine'>To process and <b>count the lines</b>, you must:</p>
+  <ol>
+    <li>Create a variable to hold the line number <mark>before</mark> 
+        the <tt>while</tt> loop.
+    </li>
+    <li>Increment the variable every time a line is read</li>
+    <li>Print Line &lt;line number&gt; at the end of the <tt>while</tt> loop</li>
+  </ol>
+  <p>Here's the pseudocode to do that with the new lines highlighted. Try it
+  out and then check your work with the code I've supplied.
+  </p>
+<pre class='pcode'><em class='t'>longest line : string
+line number &lt;- 0</em>
+while getline line
+    <em class='t'>line number = line number + 1</em>
+    if line size &gt; longest line size then
+        longest line = line
+    <em class='t'>Print "Line &lt;line number&gt; has . . ."</em>
+Print "Longest line: " longest line</pre>
+
+      
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Processing the Tokens</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Processing the Tokens</h1>
+<details>
+  <summary>Check Your Work Here</summary>
+<pre class='line-numbers language-cpp'><code>void inputStats(istream&amp; in, ostream&amp; out)
+{
+   string longest_line;
+   string line;
+   int line_number = 0;
+   while (getline(in, line))
+   {
+       line_number++;
+       if (line.size() > longest_line.size()) {
+          longest_line = line;
+       }
+       istringstream str_in(line);
+       int num_tokens{0};
+       string token;
+       int longest_token = 0;
+       while (str_in &gt;&gt; token) { 
+          ++num_tokens; 
+          if (token.size() > longest_token) {
+             longest_token = token.size();
+          }
+       }
+       out &lt;&lt; "Line " &lt;&lt; line_number &lt;&lt; " has " 
+           &lt;&lt; num_tokens &lt;&lt; " tokens (longest = " 
+           &lt;&lt; longest_token &lt;&lt; ")" &lt;&lt; endl;
+   }
+   out &lt;&lt; "Longest line: " &lt;&lt; longest_line &lt;&lt; endl;
+}</code></pre>
+</details>
+  <p class='firstLine'>To process and <strong>count the tokens</strong>, you 
+      must re-read each line, token-by-token. To do that you must:
+  </p>
+  <ol>
+    <li>Create an <strong>input string stream variable</strong> using the line.</li>
+    <li>Read (and count) each <strong>token</strong> from the string stream.
+    </li>
+  </ol>
+  </p>
+  <p>Here's the pseudocode that does this:</p>
+<pre class='pcode'>str_in : istringstream(line)
+number of tokens &lt;- 0
+token : string
+while str_in &gt;&gt; token
+    number of tokens = number of tokens + 1
+Print "Line &lt;line number&gt; has &lt;number of tokens&gt; tokens . . ."</pre>
+
+  <h2>The Longest Token</h2>
+  <p>
+      To find the longest token, follow the same pattern which you used to find
+      the longest line.
+  </p>
+<pre class='pcode'>longest token &lt;- 0
+while str_int &gt;&gt; token
+    if token size &gt; longest token then
+        longest token = token size</pre>
+  <p>Implement this code and your function should work correctly. If you have
+      difficulty, then look at the code supplied above.
+  </p>
+
+      
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

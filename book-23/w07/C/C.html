@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Input String Streams</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Input String Streams</h1>
+  <p class='firstLine'>The C++11 <tt>string</tt> class introduced several new 
+    functions, like <tt>stoi()</tt> and <tt>stod()</tt>, which convert 
+    <tt>string</tt> values like <tt>42</tt> to <tt>int</tt> or <tt>double</tt>. 
+    Prior to C++11, you used the <tt>istringstream</tt> class.
+  </p>
+<pre class='language-cpp'><code>istringstream in("January 3, 2020");</code></pre>
+  <p> The <tt>istringstream</tt> (or <mark>input string stream</mark>)
+      variable named in allows you to <mark>parse</mark> all of the pieces of
+      the date that has been supplied, and, in a much easier manner than using
+      the <tt>string</tt> functions like <tt>find()</tt> and <tt>substr()</tt>:
+  </p>
+<pre class='language-cpp'><code>string month; int day, year;
+in &gt;&gt; month &gt;&gt; day; // read month and day
+in.get();           // consume comma
+in &gt;&gt; year;         // read and convert year</pre></code>
+  <p>
+      For complex values, like dates, the <tt>istringstream</tt> technique is the
+      most efficient.
+  </p>
+
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

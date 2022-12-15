@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Stream Classes</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Stream Classes</h1>
+    <p class='firstLine'>The C++ standard library stream headers contain several different
+          classes that form a  <mark>class hierarchy</mark>, 
+          designed using the object-oriented facility known as    
+          <strong>inheritance</strong>.
+      <img src='../images/stream-classes.png' class='inlineCenter width-80'
+        alt='The C++ stream class hierarchy.'>
+  </p>
+  <p>Note <mark>headers</mark>, not header. Until now, have one stream
+      header: <tt>&lt;iostream&gt;</tt>. To read and write to files (instead of the
+    standard streams, we'll use the <mark>file stream</mark> 
+    classes—<tt>ifstream</tt> and <tt>ofstream</tt>—found in the <tt>&lt;fstream&gt;</tt>
+      header. The name <tt>ifstream</tt> stands for <mark>input-file-stream,</mark> while the
+      name <tt>ofstream</tt> stands for <mark>output-file-stream</mark>.
+  </p>
+  <p> In the diagram above, each class is a <mark>derived class </mark>(or   
+      <strong> subclass</strong>), of the class above it. Thus, <tt>istream</tt>
+      and <tt>ostream</tt> are both <mark>derived from</mark> <tt>ios</tt>,
+      and are <mark>specialized</mark> kinds of <tt>ios</tt> objects. In the
+      opposite direction, <tt>ios</tt> is a <mark>base class</mark> (or    
+      <strong>superclass</strong>) of both <tt>istream</tt> and <tt>ostream</tt>.
+      Similarly, <tt>ifstream</tt> is derived from <tt>istream</tt> and    
+      <tt>ostream</tt> is the base class of <tt>ofstream</tt>.
+  </p>
+  <p>This relationship—between base and derived classes—is conveyed by the words
+      <mark>is a</mark>. Every <tt>ifstream</tt> object  <mark>is a</mark>
+      <tt>istream and</tt>, by continuing up the hierarchy, an <tt>ios</tt>. 
+      This means that characteristics of any class are <mark>inherited</mark>
+      by its derived classes.
+  </p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
