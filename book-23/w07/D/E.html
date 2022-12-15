@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Conditional Compilation</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Conditional Compilation</h1>
+  <p class='firstLine'>For <mark>source code control</mark>, you can
+    <tt>#define</tt> a symbol and not give it a value.
+    The preprocessor supports 
+      <mark>conditional compilation</mark>, using    
+      <strong>preprocessor directives</strong> to conditionally 
+      include a section of code based on which <tt>#defined</tt> 
+      symbols it has "seen":
+  </p>
+<pre class='language-cpp'><code>#if defined(A)
+    cout &lt;&lt; "A is defined." &lt;&lt; endl;
+#elif defined(B)
+    cout &lt;&lt; "B is defined." &lt;&lt; endl;
+#else
+    cout &lt;&lt; "Neither A or B is defined." &lt;&lt; endl;
+#endif</code></pre>
+  <p> This code is processed <mark>before the rest of the code is 
+      sent to the compiler;</mark> these
+      conditions can <strong>only</strong> refer to 
+      <tt>#defined</tt> constants, integer
+      values, and arithmetic and logical expressions using those values.
+  </p>
+  <p>Here we've used the predefined preprocessor function 
+      <tt>defined()</tt> to check if a constant
+      has been previously been <tt>#defined</tt>. You can
+      also use these "shorthand" expressions.
+  </p>
+  <ul>
+    <li><tt>#ifdef</tt> is short for <mark>if defined</mark>; 
+        <tt>#ifdef</tt> <tt>symbol</tt> is the same as <tt>#if</tt>
+        <tt>defined(symbol)</tt>.
+    </li>
+    <li><tt>#ifndef</tt> is short for <mark>if not defined</mark>, 
+        the opposite of <tt>#ifdef</tt>.
+    </li>
+  </ul>
+  <p>Conditional compilation determines whether pieces of code 
+      are sent to the compiler.
+      When the preprocessor encounters this, whichever conditional 
+      expression is true will have its corresponding code block 
+      included in the final program. If your code previously encountered
+      <tt>#define</tt> <tt>A</tt>, then this entire portion of code will go to
+      the compiler as:
+  </p>
+<pre class='language-cpp'><code>cout &lt;&lt; "A is defined." &lt;&lt; endl;</code></pre>
+  <p>The rest of the code will simply be discarded.</p>
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

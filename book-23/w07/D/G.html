@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Comparing the Results</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Comparing the Results</h1>
+  <p class='firstLine'>Now, go ahead and you run the test program.
+    Use <tt>make</tt> <tt>17</tt> to compile and run under C++ 17,
+    and <tt>make</tt> <tt>98</tt> to compile and run under C++ 98.
+    Your code should compile under both platforms. When you run it,
+    however, <strong>it doesn't produce exactly the same output</strong> 
+    as it does under C++17, which uses the <tt>stoi()</tt> 
+    from the standard library.
+         <img src='../images/stoi-error.png' class='inlineCenter width-90'
+        alt='Errors with stoi and stod.'>
+  </p>
+  <p> Look at the lines hightlighted in yellow, where 
+      we pass <tt>stod()</tt> or <tt>stoi()</tt> 
+      <strong>invalid input</strong>. C++17 and C++98 produce the 
+      same output for the first four inputs, but the
+      last one fails entirely. Neither the library nor your version fails on
+      <tt>stoi("3.14159")</tt>. Both convert what they can (the <tt>3</tt>) 
+      and leaves the rest. But, the library version 
+      <strong>crashes</strong> with <tt>stoi("UB-40")</tt>; there
+      is <strong>no possible conversion</strong>.
+  </p>
+      <img src='../images/girl.png' class='left width-128'
+        alt='A decorative image of a girl.'>
+  <blockquote>
+          So, that means the version we wrote is better, right?
+          <br/>
+          After all, who wants a function that crashes?
+  </blockquote>
+  <p align="left">
+      Well, not so fast. The question is, <mark>what should</mark> 
+      <tt>stod()</tt> and <tt>stoi()</tt> do with invalid input? In 
+      the next lesson, we'll use these techniques to look at more 
+      <mark>error handling</mark>.
+  </p>
+    
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

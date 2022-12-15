@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Using #define</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Using #define</h1>
+  <p class='firstLine'>One capability of the preprocessor is to
+    subtitute on portion of text for another, before your code is
+    compiled. You do this with the preprocessor directive <tt>#define</tt>.
+    Here's an example:
+  </p>
+<pre class='language-clike'><code>#define PI 3.14159265358979323846</code></pre>
+  <p>This is called a <tt class='y'>#defined</tt> constant. Note that you 
+  do <mark>not</mark> use an equals sign when creating these constants.
+  By convention,
+  constants and functions (called <tt class='y'>MACRO</tt>s) created by the 
+  preprocessor are named using all-caps.
+  </p>
+  <p>With <tt>PI</tt> previously defined, if you write this fragment:</p>
+<pre class='language-cpp'><code>cout &lt;&lt; PI &lt;&lt; endl;</code></pre>
+  <p>The preprocessor <mark>replaces</mark> the symbol <tt>PI</tt> with its
+    predefined value before sending it to the compiler, which only sees
+    this:
+  </p>
+<pre class='language-cpp'><code>cout &lt;&lt; 3.14159265358979323846 &lt;&lt; endl;</code></pre>
+  <p>Of course, in this case, a better solution is to just used 
+    <tt>const</tt>, which wasn't available in C. In C++, we 
+    <a target='_blank'
+      href='https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#es30-dont-use-macros-for-program-text-manipulation'
+      <mark>discourage</mark> the use excessive use of the 
+    preprocessor</a> because it can lead to unreadable, hard-to-maintain code,
+    as well as hiding bugs beneath several layers of obfusication. Of
+    course, some of you may revel in that, so you'll want to look at
+    the <a target='_blank'
+      href='https://www.ioccc.org/winners.html'>winners of the 
+      annual Obfusicated C Code Contest</a>.
+  </p>
+  <p>The one place where we still use <tt>#define</tt> in C++ is
+    for the use of <mark>source control</mark> using conditional
+    compilation. We'll look at that next.
+  </p>
+
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
