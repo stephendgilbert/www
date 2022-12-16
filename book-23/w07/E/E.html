@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Completion Codes</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Completion Codes</h1>
+   <img src='../images/tradition.jpg' class='right width-128'
+    alt='Decorative tradition scroll.'>
+  <p class='firstLine'>A second error-reporting option is the "tried-and-true" 
+    traditional <mark>completion code technique</mark> used for years in C, 
+    Pascal and FORTRAN. Have your function <strong>return a 
+    special value</strong> meaning that “the function failed to execute correctly.”
+  </p>
+  <p> In a way, this is what <tt>sqrt()</tt> does; it returns the 
+      "special" not-a-number value when its answer cannot be converted 
+      to a valid <tt>double</tt>. You can test for this
+      value using the <tt>isnan()</tt> function in the header 
+      <tt>&lt;cmath&gt;</tt>. You could use the "error code" like this:
+  </p>
+<pre class='language-cpp'><code>if (isnan(answer = sqrt(-1))) { /* error */ }</code></pre>
+  <p>The <tt>isnan()</tt> function was added to C++ 11. Before that,
+    <tt>sqrt()</tt> set the global variable <tt>errno</tt>, 
+    defined in <tt>&lt;cerrno&gt;</tt>, which was used like this.
+  </p>
+<pre class='language-cpp'><code>double answer = sqrt(-1.0); // invalid
+if (errno == EDOM) { /* invalid DOMain */ }</code></pre>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
