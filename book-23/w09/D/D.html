@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Returning Structures</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Returning Structures</h1>
+  <p class='firstLine'>Let's look at a variation on one of the problems 
+      given earlier on a Programming Exam. In the original exam, the 
+      two roots of the quadratic equation were returned via a pair of 
+      <mark>output parameters</mark>.
+      Now that we have structured types, we can write the function a 
+      little more naturally, by returning structure.
+  </p>
+  <blockquote>
+      <p>
+          Write a function <code><strong>quadratic()</strong></code> which
+          computes roots of quadratic equations. A quadratic equation is one of
+          the form: <code><strong>ax<sup>2</sup> + bx + c = 0</strong></code>.
+      </p>
+      <p>
+          Your function has three <strong>input</strong> parameters, the integer
+  coefficients <code><strong>a</strong></code>,        <code><strong>b</strong></code>, and <code><strong>c</strong></code>.
+          The function returns a <code><strong>struct</strong></code> containing
+  two <code><strong>double</strong></code> members:<code><strong>root1</strong></code> and        <code><strong>root2</strong></code>. Assume that the function has two
+          real roots. The quadratic formula is:
+          <img src='../images/quadratic.png' class='inlineCenter'
+            alt='The quadratic formula.'>
+      </p>
+  </blockquote>
+  <p>
+      Using structures, you could <strong>write the function</strong> like this:
+  </p>
+<pre class='language-cpp'><code>struct Roots { double root1, root2; };
+Roots quadratic(int a, int b, int c)
+{
+    double determinant = b * b - 4 * a * c;
+    Roots result;
+    result.root1 = (-b + sqrt(determinant)) / (2 * a);
+    result.root2 = (-b - sqrt(determinant)) / (2 * a);
+    return result;
+}</code></pre>
+  <p>Then, you could <strong>call the function</strong> like this:</p>
+<pre class='language-cpp'><code>Roots r = quadratic(1, -3, -4);
+cout &lt;&lt; "roots-&gt;" &lt;&lt; r.root1 &lt;&lt; ", " &lt;&lt; r.root2 &lt;&lt; endl;</code></pre>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

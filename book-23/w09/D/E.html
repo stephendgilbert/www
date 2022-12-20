@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Structured Bindings</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Structured Bindings</h1>
+  <p class='firstLine'>Let's look at that last function call once again:</p>
+<pre class='language-cpp'><code>Roots r = quadratic(1, -3, -4);
+cout &lt;&lt; "roots-&gt;" &lt;&lt; r.root1 &lt;&lt; ", " &lt;&lt; r.root2 &lt;&lt; endl;</code></pre>
+<p>
+    Notice that it is up to the programmer to <strong>"unpack"</strong> the
+    returned structure. C++17 added a new feature to the language that makes it
+    easier to retrieve several returned values from a function. These are
+    called <mark>structured bindings</mark>.
+</p>
+<p>
+    With structured bindings, you can <strong>automatically unpack</strong> the
+    structure into a special form of <tt>auto</tt> declared variables like this:
+</p>
+<pre class='language-cpp'><code>auto [r1, r2] = quadratic(1, -3, -4);
+cout &lt;&lt; "roots-&gt;" &lt;&lt; r1 &lt;&lt; ", " &lt;&lt; r2 &lt;&lt; endl;</code></pre>
+<p>
+    Note that you do not need to specify the names of the data members in
+    the returned structure variable, nor the types of the local
+    variables <tt>r1</tt> and <tt>r2</tt>. The structure is 
+    unpacked and <tt>root1</tt> is assigned to <tt>r1</tt>
+    and <tt>root2</tt> is assigned to <tt>r2</tt>. They are both 
+    <mark>automatically</mark> declared as type <tt>double</tt>.
+</p>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
