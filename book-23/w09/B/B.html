@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Function Templates</title>
+</head>
+<body>
+<div id='page'>
+<div>
+<img src='../images/teacher.jpg' class='right width-128'
+  alt='Decorative image of a teacher.'>
+   <h1>Function Templates</h1>
+  <p class='firstLine'>I hope the code on the preceding page
+  bothers you as much as it bothers me. It doesn't take much to notice 
+  that <mark>the body of each function is identical</mark>. Why can't we
+  define one version of the function that takes any kind of argument?    
+  </p><p><mark>Surprise! We can! </mark>
+</p>C++ functions with <strong>generic types</strong> are called    
+  <mark>function templates</mark>. 
+  (In Java these are called generic
+    functions, but <b>template</b> is used more often in C++). 
+</p>
+  <p>You define a function template with the same syntax as a 
+    regular function, <mark>preceded by</mark> the 
+    <tt>template</tt> keyword and a series of
+    <strong>template parameters</strong> inside 
+    angle-brackets <tt>&lt;&gt;</tt>.
+</p>
+<pre class='language-cpp line-numbers'><code>template &lt;typename T&gt;
+std::string to_string(const T&amp; n)
+{
+    std::ostringstream out;
+    out &lt;&lt; n;
+    return out.str();
+}</code></pre>
+<p>The template parameters are separated by commas, and use 
+  <mark>generic template type names</mark>: names preceded by either the
+  <tt>class</tt> or <tt>typename</tt> keyword followed by an identifier. 
+  Both keywords  <mark>are synonyms</mark> in template declarations
+</p>
+<p>When using separate compilation:</p>
+<ul>
+  <li>Function templates ar <mark>placed inside the header file</mark>, 
+    unlike normal functions, which are placed inside the implementation file.
+  </li>
+  <li>You must <mark>fully qualify all library types</mark>, such as
+    <tt>string</tt> and <tt>ostringstream</tt> in the example shown
+    here, since you are not allowed to add <tt>using</tt> <tt>namespace</tt>
+    <tt>std;</tt> to a header file.
+  </li>
+</ul>
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

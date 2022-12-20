@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Inferred Return Types</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Inferred Return Types</h1>
+  <p class='firstLine'>Rather than having the caller explicitly instantiate
+    the template and supply a return type, C++ 11 allows a template to
+    <mark>infer</mark> the return type like this:
+  </p>
+<pre class='language-cpp'><code>template &lt;typename T, typename U&gt;
+auto addem(const T&amp; a, const U&amp; b)->decltype(a + b)
+{
+    return a + b;
+}</code></pre>
+  <p>Using <tt>auto</tt> as the formal template return type, and moving 
+    the <strong>deduced</strong> return type so it <mark>follows</mark> the
+    argument list allows the compiler to replace the return type with the
+    <mark>declared type</mark> of the expression <tt>a+b</tt>. (That's what
+    the <tt>decltype</tt> keyword calculates at compile time.
+  </p>
+  <p> In C++14 this was further simplified. We can now write the 
+      <tt>addem</tt> template
+      like this. We <mark>don't</mark> need the trailing return type 
+      or <tt>decltype</tt>.
+  </p>
+<pre class='language-cpp'><code>template &lt;typename T, typename U&gt;
+auto addem(const T&amp; a, const U&amp; b)
+{
+    return a + b;
+}</code></pre>
+  <p> That doesn't mean, however, that you can write a template where only the
+      return type differs. For instance, the following template will not 
+      compile because it can't determine whether to use <tt>int</tt>
+      or <tt>double</tt> for the return type
+      when called like <tt>mybad(3,</tt> <tt>4.5)</tt>:
+  </p>
+<img src='../images/bug.png' class='left width-64' alt='A decorative bug icon.'>
+<pre class='language-cpp'><code>template &lt;typename T, typename U&gt;
+auto mybad(const T&amp; a, const U&amp; b)
+{
+    if (a > 0) return a;
+    return b;
+}</code></pre>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
