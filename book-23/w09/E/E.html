@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Enumerated Output</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Enumerated Input</h1>
+  <p class='firstLine'>Enumerated input is more difficult than
+    output, because:
+  </p>
+  <ul>
+    <li>You have to decide how you want to <mark>encode</mark> the external 
+        version.
+    </li>
+    <li>You cannot use the input operator (without overloading).
+    </li>
+    <li>Because the external representation is text, you
+      can't use a <tt>switch</tt>, but have to use sequential
+      <tt>if</tt>..<tt>else</tt> <tt>if</tt>..<tt>else</tt>
+      statements instead.
+    </li>
+  </ul>
+<pre class='language-cpp'><code>Month m1;
+cin &gt;&gt; m1; // does not compile</code></pre>
+
+  <p>Here's a version of a <tt>read_month</tt> function which
+    reads from input, using the first three letters of the 
+    input to convert it to a <tt>Month</tt>:
+  </p>
+<pre class='language-cpp'><code>istream&amp; read_month(Month&amp; m, istream&amp; in = cin)
+{
+    string encoded;
+    in &gt;&gt; encoded;
+    string subs = encoded.substr(0, 3);   // first three characters
+    for (char&amp; c : subs) c = to_lower(c); // lowercase
+    
+    if (subs == "jan")      m = Month::jan;
+    else if (subs == "feb") m = Month::feb;
+    else if (subs == "mar") m = Month::mar;
+    . . .
+    else in.setstate(ios::failbit);   // set failbit
+    return in;
+}</code></pre>
+  <p>You'd use the function like this:</p>
+<pre class='language-cpp'><code>cout &lt;&lt; "Enter a month: ";
+Month m;
+if (read_month(m)) {
+    cout &lt;&lt; "The month is " &lt;&lt; to_string(m) &lt;&lt; endl;
+}
+else {
+    cout &lt;&lt; "You entered an invalid value." &lt;&lt; endl;
+}</code></pre>
+    
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
