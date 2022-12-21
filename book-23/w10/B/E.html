@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Cumulative Algorithms</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Cumulative Algorithms</h1>
+  <p class='firstLine'>These are the algorithms that 
+    <strong>accumulate</strong> or <strong>compute a running sum</strong>. 
+    These algorithms include averaging and more complex algorithms 
+    like standard deviation and variance. Here is the pseudocode 
+    for computing an average:
+  </p>
+<pre class='pcode'>counter &lt;- 0
+accumulator &lt;- 0
+examine each item in the collection
+    if the item meets the condition then
+        count the item
+        add the item to the accumulator
+if the counter is > 0 then
+    average &lt;- accumulator / counter</pre>
+  <p>Here's a loop that calculates an <strong>average daily 
+    temperature</strong> from a list of readings.
+  </p>
+<pre class='language-cpp'><code>double sum{0.0};
+for (auto t : temperatures) 
+{ 
+    sum += t; 
+}
+double avg = sum / temp.size(); // nan if no elements</code></pre>
+  <p> Because <tt>sum</tt> is type <tt>double</tt>, this loop sets 
+      <tt>avg</tt> to <tt>nan</tt> if there are no elements
+      in the <tt>vector</tt>, using that as an <mark>error code</mark>. 
+      If both were <tt>int</tt>, then the program would crash from the 
+      division by zero. In addition, since this loop counts 
+      <mark>all</mark> of the readings, you don't need a
+      counter, but can use the <tt>vector</tt> size instead.
+  </p>
+  <p>Here's another example, which computes the <strong>average word 
+      size</strong> in a <tt>vector&lt;string&gt;</tt>. Because you 
+      don't want to make unnecessary copies of each element, nor 
+      to inadvertently modify an element, the loop
+      variable is <tt>const string&amp;</tt>.
+  </p>
+<pre class='language-cpp'><code>double sum{0};
+for (const string&amp; word : words) 
+{ 
+  sum += word.size(); 
+}
+double avg_word_size = sum / words.size();</code></pre>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
