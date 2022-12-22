@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Initializing Pointers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Initializing Pointers</h1>
+  <p class='firstLine'>A pointer can be in one of four states:<a href='#footnote'><sup>1</sup></a>
+  </p>
+  <ol>
+    <li>It can point to a <strong>valid object</strong>.</li>
+    <li>It can point <strong>one-past</strong> a valid object (in an
+        array or <tt>vector</tt> for instance.
+    </li>
+    <li>It can contain the value <tt>nullptr</tt> to indicate 
+      it points to "nothing", or is unused.
+    </li>
+    <li>It can <strong>be invalid</strong>, such as an uninitialized 
+        pointer.
+    </li>
+  </ol>
+  <p>You can <strong>initialize a pointer </strong>in several ways.
+  </p>
+  <ul>
+    <li>With the address of another object obtained from the
+        <strong>address operator.</strong>
+    </li>
+    <li> With the address of an object <strong>created on the heap</strong> with
+          the <tt>new</tt> operator.
+      </li>
+      <li>With the <strong>name of a previously defined array</strong>.
+      </li>
+      <li>By using <strong>pointer assignment</strong> to copy the 
+          address from another pointer
+      </li>
+  </ul>
+  <p> If you don't initialize a pointer, <mark>it is invalid</mark>. Here are
+      examples of each of these:
+  </p>
+<pre class='language-cpp'><code>int x{42}, y{0}, a[10]; // x->int, y->int, a->array
+
+int *p1{&amp;y};         // points to y
+int *p2{&amp;x};         // points to x
+int *p3{new int{3}}; // points to int on heap
+int *p4{a};          // points to first element of a
+int *p5{a+10};       // points "one past" the array a
+int *p6{nullptr};    // points to "nothing"
+int *p7;             // uninitialzed (invalid)</code></pre>
+
+<div id="footnote">
+    <p><sup>1</sup> Lippmann, C++ Primer, 5th Edition, Page 52, Section 3.3.2
+    </p>
+</div>
+  
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

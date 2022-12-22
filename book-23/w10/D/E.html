@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pointer Assignment</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Pointer Assignment</h1>
+   <img src='../images/show-memory-addresses.png' class='right'
+    alt='Drop-down list on animation.'>
+  <p class='firstLine'>It is also possible to 
+      <strong>assign new values to the pointer variables 
+      themselves</strong>. Look at this animation. Before you
+      do, change the drop-down list so that it says "show memory
+      addresses".
+  </p>
+<iframe width="800" height="500" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=int%20main%28%29%20%7B%0A%20%20int%20x%7B42%7D,%20y%7B0%7D%3B%0A%20%20int%20*p1%7B%26y%7D%3B%20%20%20%20//%20points%20to%20y%20%0A%20%20int%20*p2%7B%26x%7D%3B%20%20%20%20//%20points%20to%20x%20%0A%20%20*p1%20%3D%2017%3B%20%20%20%20%20%20%20//%20assign%20to%20y%0A%20%20p1%20%3D%20p2%3B%20%20%20%20%20%20%20%20//%20assign%20p2%20to%20p1%0A%0A%20%20return%200%3B%0A%7D&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=nevernest&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>      <p>
+  <p>Line 6 makes a copy of the <mark>direct value</mark> 
+      (that is the address) stored in 
+      <tt>p2</tt> and copies it into the variable <tt>p1</tt>. 
+      Afterwards, both
+      variables now point to the same location. 
+  </p>
+  <p> If you draw your diagrams using arrows, keep in mind that 
+      copying a pointer replaces the destination pointer with a 
+      new arrow that points to the same location as the old one. 
+      Thus <tt>p1</tt> = <tt>p2</tt> changes the arrow leading from 
+      <tt>p1</tt> so it points to the same location as the arrow 
+      originating from <tt>p2</tt>.
+  </p>
+  <div class='highlight'>
+      <p>
+          It is important to distinguish the assignment of a 
+            pointer from that of a value. <strong>Pointer 
+            assignment</strong>, <tt>p1</tt> <tt>=</tt> <tt>p2</tt>, 
+            makes <tt>p1</tt> and <tt>p2</tt> point to the same 
+            location. By contrast, <strong>value assignment</strong>, 
+            <tt>*p1</tt> <tt>=</tt> <tt>*p2</tt>, copies the value from the
+            location pointed to by <tt>p2</tt> into the location 
+            pointed to by <tt>p1</tt>.
+      </p>
+  </div>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
