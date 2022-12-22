@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Global Variables</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Global Variables</h1>
+  <p class='firstLine'>Global variables—usually constants in 
+    this class—are allocated in the <strong>static storage area</strong>. 
+    Thus, if the compiler sees the definition below (outside of 
+    any function), it reserves eight bytes in the static area, and 
+    stores the literal value when the <strong>program is compiled.</strong>
+
+</p>
+<pre class='language-cpp'><code>const double kPi = 3.14159;</code></pre>
+<p>    <img src='../images/global-var.png' class='right' 
+      alt='A picture of a global variable in memory.'>
+    As a programmer, you have no idea <strong>what</strong> address the
+    compiler will choose, but it often helps you to visualize 
+    what is happening if you make up an address and use that in a 
+    diagram. Here you might imagine that the constant <tt>kPi</tt>
+    is stored in the address <tt>0200</tt>. 
+  </p>
+  <p>Most platforms support
+    a much more accurate value for <tt>PI</tt>. We can calculate 
+    that value using the expression <tt>acos(-1.0)</tt>
+    <strong>at run-time</strong>.
+</p>
+<pre class='language-cpp'><code>const auto kPi = acos(-1.0);</code></pre>
+<p>
+    This produces the following output when printed with 16 digits of
+    precision:
+</p>
+<div class='consoleDisplay'>
+        kPI-&gt;3.1415926535897931
+</div>
+          
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

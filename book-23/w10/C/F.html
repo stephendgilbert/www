@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The sizeof Operator</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The sizeof Operator</h1>
+  <p class='firstLine'> The <mark><tt>sizeof</tt> operator</mark> 
+    returns the amount of memory allocated for a variable. 
+    The operator takes a single operand, which must be 
+    <strong>either</strong> <strong>an expression</strong>, such 
+    as the name of a variable or a <strong>type name</strong>. 
+    Type names must be enclosed in parentheses.
+  </p>
+  <p>If used with a variable or an expression, the <tt>sizeof</tt>
+      operator returns the <mark>number of bytes</mark> 
+      required to store the value of that expression. If used 
+      with a <mark>type</mark>, <tt>sizeof</tt> returns the number
+      of bytes required to store a value <mark>of that type</mark>.
+  </p>
+<pre class='language-cpp'><code>int a = 42;
+cout &lt;&lt; sizeof a &lt;&lt; endl;       // 4 (on our platform)
+cout &lt;&lt; sizeof(double) &lt;&lt; endl; // 8
+cout &lt;&lt; sizeof 7LL + 4 &lt;&lt; endl; // 12-WHY?</code></pre>
+  <p>The first line prints the bytes required to store the 
+    <tt>int</tt> variable <tt>a</tt>; the second line prints 
+    the number of bytes required to store <strong>any value</strong> 
+    of type <tt>double</tt>. The third is more confusing. On
+    our platform, a <tt>long</tt> <tt>long</tt> should take 
+    <tt>8</tt> bytes, but this prints <tt>12</tt>. <mark>Why?</mark>
+  </p>
+  <p>Simple: <tt>sizeof</tt> is a <strong>unary</strong> operator. 
+    That means that the expression shown here reads as <tt>sizeof(7LL)</tt>
+    <tt>+</tt> <tt>4</tt> which is <tt>8</tt> <tt>+</tt> <tt>4</tt>
+    or <tt>12</tt>. The fix is equally simple:
+    <mark>always parenthesize arguments</mark> to the <tt>sizeof</tt>
+      operator, <mark>even when they are not needed</mark>.
+  </p>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
