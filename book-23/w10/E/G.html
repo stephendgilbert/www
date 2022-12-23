@@ -6,53 +6,50 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Changing the Format</title>
+    <title>Saving an Image</title>
 </head>
 <body>
 <div id='page'>
 <div>
-  <h1>Changing the Format</h1>
-  <img src='../images/stego-color.png' class='right'
-    alt='A 4-channel stegosaurus image.'>
-  <p class='firstLine'>Although the previous example added an 
-      alpha (transparency) channel to the Pete the Pirate picture, 
-      it didn't really change how it looked. Our second
-      example loads this 4-channel <b>PNG</b> image as a 1-channel 
-      (that is, grayscale) image. We'll then save it as a 
-      <b>BMP</b> which is the native format for Windows
-      applications.
-  </p>
-  <p>
-      Here's the code that that does this.
-  </p>
-<pre class='language-cpp'><code>//Load a png file using 1 byte per pixel (Gray scale)
-channels = 1;
-unsigned char * const stego = 
-    stbi_load("stegosaurus.png", &amp;width, &amp;height, &amp;bpp, channels);
-stbi_write_bmp("stego-bw.bmp", width, height, channels, stego);
-stbi_image_free(stego);</code></pre>
-  <img src='../images/stego-bw.png' class='right'
-    alt='A 1-channel stegosaurus image.'>
-  <p>Notice that the conversion from 4-channel image on disk to 1-channel
-    image in memory, happened when we <b>loaded</b> the image, not when
-    we <b>wrote</b> the image.
-  </p>
-  <h2>
-      PNG to JPEG
-  </h2>
-  <p>The first example changed a <b>JPEG</b> into a <b>PNG</b>, 
-    but the final example goes the other way, removing the 
-    alpha (transparency) channel and saving it as a <b>JPEG</b>. 
-    The <tt class='i'>stb_write_jpg()</tt> function also takes one 
-    extra argument, which is the quality of the resulting image. 
-    This can go from <tt>0-100</tt>, where <tt>100</tt> has the highest quality.
-  </p>
-  <p>Go ahead now and type <tt>make</tt> <tt>run</tt> in the <b>Repl</b>
-    <b>Shell</b>, and you'll be able to examine the modified images.
-    In your homework, we'll use this newfound ability to read and 
-    write images to write <b>image filters</b>, like those found
-    in PhotoShop.
-  </p>
+  <h1>Saving an Image</h1>
+  <p class='firstLine'>When we save the image, we can <mark>use a different
+    format</mark> from the original. 
+    For instance, <b>JPEG</b> doesn't have transparent colors, but we can 
+    write the image back out as a <b>PNG</b>, which does. The <tt class='i'>stb_image_write</tt>
+    library has different functions for each image type.
+    Here's the code to save our image as <b>PNG</b>.
+</p>
+<pre class='language-cpp'><code>stbi_write_png("pete.png", width, height, channels, pete,
+        width * channels);</code></pre>
+<p> Each file type you want to use has its own function, but the first five
+    arguments are the same for each file type:
+</p>
+  <ol>
+    <li>The file name as a C-style string. Here we've hard-coded <tt>pete.png</tt></li>
+    <li>The <tt>width</tt> and <tt>height</tt> returned 
+      from <tt class='i'>stbi_load()</tt>.
+    </li>
+    <li>The number of channels (or bytes-per-pixel) used in memory to
+        represent the image.
+    </li>
+    <li>The pointer to the first byte of the image data in memory.</li>
+  </ol>
+  <p>The last argument, <tt>width</tt> <tt>*</tt> <tt>channels</tt>, 
+    is unique to <b>PNG</b> files. It tells the function at what byte the 
+    next row begins.
+</p>
+<h2>
+    Freeing the Memory
+</h2>
+<p>The <tt class='i'>stbi_load()</tt> function returns a pointer, 
+  but inside that function it asks the operating system to    
+  <mark>allocate enough memory</mark> to hold the image that it loads
+  from disk. This memory is <strong>on the heap</strong>, which you 
+  met in an earlier lesson. In the C programming language, you have 
+  to remember to <strong>free</strong> that memory before your 
+  program ends. We do that by using the function 
+  <tt class='i'>stbi_image_free(pete)</tt>.
+</p>
 
 </div>
 <br clear='all'>

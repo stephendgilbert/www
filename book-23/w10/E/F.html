@@ -6,50 +6,61 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Saving an Image</title>
+    <title>More Loading an Image</title>
 </head>
 <body>
 <div id='page'>
 <div>
-  <h1>Saving an Image</h1>
-  <p class='firstLine'>When we save the image, we can <mark>use a different
-    format</mark> from the original. 
-    For instance, <b>JPEG</b> doesn't have transparent colors, but we can 
-    write the image back out as a <b>PNG</b>, which does. The <tt class='i'>stb_image_write</tt>
-    library has different functions for each image type.
-    Here's the code to save our image as <b>PNG</b>.
-</p>
-<pre class='language-cpp'><code>stbi_write_png("pete.png", width, height, channels, pete,
-        width * channels);</code></pre>
-<p> Each file type you want to use has its own function, but the first five
-    arguments are the same for each file type:
-</p>
-  <ol>
-    <li>The file name as a C-style string. Here we've hard-coded <tt>pete.png</tt></li>
-    <li>The <tt>width</tt> and <tt>height</tt> returned 
-      from <tt class='i'>stbi_load()</tt>.
-    </li>
-    <li>The number of channels (or bytes-per-pixel) used in memory to
-        represent the image.
-    </li>
-    <li>The pointer to the first byte of the image data in memory.</li>
-  </ol>
-  <p>The last argument, <tt>width</tt> <tt>*</tt> <tt>channels</tt>, 
-    is unique to <b>PNG</b> files. It tells the function at what byte the 
-    next row begins.
-</p>
-<h2>
-    Freeing the Memory
-</h2>
-<p>The <tt class='i'>stbi_load()</tt> function returns a pointer, 
-  but inside that function it asks the operating system to    
-  <mark>allocate enough memory</mark> to hold the image that it loads
-  from disk. This memory is <strong>on the heap</strong>, which you 
-  met in an earlier lesson. In the C programming language, you have 
-  to remember to <strong>free</strong> that memory before your 
-  program ends. We do that by using the function 
-  <tt class='i'>stbi_image_free(pete)</tt>.
-</p>
+  <h1>More Loading an Image</h1>
+  <p class='firstLine'>The first part of the sample program (in <tt>main.cpp</tt>),
+    <strong>loads</strong> a JPEG version
+    of OCC's mascot, Pete the Pirate, into memory.
+  </p>
+<pre class='language-cpp line-numbers'><code>int width, height, bpp, channels = 4;
+unsigned char * const pete =
+    stbi_load("pete.jpg",             // input file
+              &amp;width, &amp;height, &amp;bpp,  // pointers (out)
+              channels);              // channels (in)</code></pre>
+  <ul>
+      <li>
+          The <tt class='i'>stbi_load()</tt> function returns a 
+          <strong>pointer</strong> to the first byte of the image 
+          data in memory. The type of the pointer is an
+          <tt>unsigned</tt> <tt>char</tt>, which, in C++ speak means 
+          a "raw" byte. If loading fails, then the function returns 
+          the <tt>nullptr</tt>.
+          <p>Note that the pointer <tt>pete</tt> is a <tt>const</tt>
+            pointer. This is necessary because you will later need to 
+            "free" the memory that the function has placed on the heap. 
+            If you move the pointer, then your program may crash.
+          </p>
+      </li>
+        <li>The first argument to the function is the 
+            <strong>path to the file.</strong> This can be absolute 
+            or relative (as used here), but it must be a <strong>C-style 
+            string</strong>. We'll look more at C-style strings in a 
+            future lesson. For right now,  
+            <strong>use a literal</strong> or use the <tt>c_str()</tt>
+            member function on a regular C++ string.
+      </li>
+      <li>The next three arguments are the <mark>address of the</mark>
+          <strong>width</strong>, <strong>height</strong>, and
+          <strong>bytes-per-pixel</strong> used in the original image. 
+          These are <strong>output parameters</strong>; that means that 
+          you first create the variables (on line 1), and then 
+          pass <mark>their addresses</mark> as arguments. The
+          function will <strong>fill them in</strong>. The 
+          information flows <strong>out of the function</strong>, 
+          not into it.
+      </li>
+      <li>The last argument is an <strong>input</strong> parameter 
+          telling the <tt class='i'>stbi_load()</tt> function how to 
+          store the image. Here we're telling it to store <b>4</b> 
+          bytes for each pixel (<b>RGBA</b>), even though the
+          original image only has <b>3</b> (<b>RBG</b>).
+      </li>
+  </ul>
+
 
 </div>
 <br clear='all'>

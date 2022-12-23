@@ -25,55 +25,7 @@
         and <b>bytes-per-pixel</b> used to encode the original image.
     </li>
   </ul>
-  <p>The first part of the sample program (in <tt>main.cpp</tt>),
-    <strong>loads</strong> a JPEG version
-    of OCC's mascot, Pete the Pirate, into memory.
-  </p>
-<pre class='language-cpp line-numbers'><code>int width, height, bpp, channels = 4;
-unsigned char * const pete =
-    stbi_load("pete.jpg",             // input file
-              &amp;width, &amp;height, &amp;bpp,  // pointers (out)
-              channels);              // channels (in)</code></pre>
-  <ul>
-      <li>
-          The <tt class='i'>stbi_load()</tt> function returns a 
-          <strong>pointer</strong> to the first byte of the image 
-          data in memory. The type of the pointer is an
-          <tt>unsigned</tt> <tt>char</tt>, which, in C++ speak means 
-          a "raw" byte. If loading fails, then the function returns 
-          the <tt>nullptr</tt>.
-          <p>Note that the pointer <tt>pete</tt> is a <tt>const</tt>
-            pointer. This is necessary because you will later need to 
-            "free" the memory that the function has placed on the heap. 
-            If you move the pointer, then your program may crash.
-          </p>
-      </li>
-        <li>The first argument to the function is the 
-            <strong>path to the file.</strong> This can be absolute 
-            or relative (as used here), but it must be a <strong>C-style 
-            string</strong>. We'll look more at C-style strings in a 
-            future lesson. For right now,  
-            <strong>use a literal</strong> or use the <tt>c_str()</tt>
-            member function on a regular C++ string.
-      </li>
-      <li>The next three arguments are the <mark>address of the</mark>
-          <strong>width</strong>, <strong>height</strong>, and
-          <strong>bytes-per-pixel</strong> used in the original image. 
-          These are <strong>output parameters</strong>; that means that 
-          you first create the variables (on line 1), and then 
-          pass <mark>their addresses</mark> as arguments. The
-          function will <strong>fill them in</strong>. The 
-          information flows <strong>out of the function</strong>, 
-          not into it.
-      </li>
-      <li>The last argument is an <strong>input</strong> parameter 
-          telling the <tt class='i'>stbi_load()</tt> function how to 
-          store the image. Here we're telling it to store <b>4</b> 
-          bytes for each pixel (<b>RGBA</b>), even though the
-          original image only has <b>3</b> (<b>RBG</b>).
-      </li>
-  </ul>
-
+<iframe width="1000" height="700" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=using%20uchar%20%3D%20unsigned%20char%3B%0Auchar%20*%20const%20%0Astbi_load%28const%20char%20*%20fname,%20%0A%20%20int*%20width,%20int*%20height,%20int*%20bpp,%20%0A%20%20int%20channels%29%0A%7B%0A%20%20//%20Ignore%20this%20code.%20Only%20for%20the%20animation%0A%20%20uchar%20*%20const%20p%20%3D%20new%20uchar%5B16%5D%7B255,0,0,255,0,255,0,255,0,0,255,255,0,0,0,255%7D%3B%0A%20%20*width%20%3D%20*height%20%3D%202%3B%20*bpp%20%3D%204%3B%0A%20%20return%20%28p%29%3B%20%20%0A%7D%0A%0Aint%20main%28%29%20%7B%0A%20%20int%20width%20%3D%200,%20height%20%3D%200,%20bpp%20%3D%200%3B%0A%20%20unsigned%20char%20*%20const%20data%20%3D%20%0A%20%20%20%20stbi_load%28%22pic.png%22,%20%26width,%20%26height,%20%26bpp,%204%29%3B%0A%20%20return%200%3B%0A%7D&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=nevernest&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
 
 </div>
 <br clear='all'>
