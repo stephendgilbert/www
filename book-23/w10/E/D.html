@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Digital Images in C++</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Digital Images in C++</h1>
+  <a target='_blank'
+    href='https://replit.com/@stephengilbert/Image-Starter#main.cpp'>
+  <img src='../images/running-man.png' class='right'
+    alt='Icon for links to Replit project.'></a>
+  <p class='firstLine'> C++ itself doesn't have any built-in 
+      support for images, graphics or
+      user-interfaces. All of those capabilities are added 
+      using libraries. Click
+      on the little Running-Man in the right to open the 
+      <strong>Replit</strong>
+      project for this lesson. Make sure you 
+      <strong>Fork the Repl</strong> to
+      get your own copy to work on.
+  </p>
+  <p>
+      We're going to use the <b><em>stb_image</em></b> and 
+      <b><em>stb_image_write</em></b>
+      libraries, written by <a target='_blank' 
+      href="https://nothings.org/">Sean 
+      T. Barret</a> (stb) and placed into the public domain. These 
+      libraries provide the ability to read and write several 
+      different image formats, in several different ways. Both are 
+      <mark>C libraries</mark> instead of C++
+      libraries.
+  </p>
+  <p> The STB libraries are <strong>header only</strong> libraries. 
+      That means you only need to include the header file; there is 
+      no separate library to compile and link to. <mark>I've already added 
+      the header files to the Repl you are working with in this lesson.</mark>
+  </p>
+  <p> In your own programs, 
+      <a href="https://github.com/nothings/stb" target="_blank">
+              https://github.com/nothings/stb
+          </a>download the latest
+      version of the <tt>stb_image.h</tt> and 
+      <tt>stb_image_write.h</tt> from the GitHub site</a> and
+      place both files in your project folder.
+    To make sure that the implementation is included, 
+      <mark>in one file</mark>, you need the 
+      <strong>following preprocessor directives</strong> before 
+      you include them:
+  </p>
+<pre class='language-cpp'><code>#define STB_IMAGE_IMPLEMENTATION        // REQUIRED (loading)
+#define STB_IMAGE_WRITE_IMPLEMENTATION  // writing
+#include "stb_image.h"                  // "header-only" C libraries
+#include "stb_image_write.h"</code></pre>
+  <p>I've already added these to <tt>main.cpp</tt> in the Repl you
+    are working with.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
