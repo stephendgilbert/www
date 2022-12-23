@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Call By Pointer</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Call By Pointer</h1>
+  <p class='firstLine'>When working with functions, you can 
+    <mark>simulate call by reference</mark> by using explicit
+    pointer parameters. Many programmers prefer to do this
+    because it is obvious that you are passing by pointer instead 
+    of by value at the function call site.
+</p>
+<p> Let's look at a <tt>swap()</tt> function that <strong>exchanges 
+    the values</strong> contained in two integers. The algorithm 
+    is simple, assuming the two parameters are <tt>a</tt> and <tt>b</tt>.
+    Using reference parameters, we write it like this:
+</p>
+<pre class='language-cpp'><code>void swap(int&amp; a, int&amp; b) {
+    int temp{a};
+    a = b;
+    b = temp;
+}</code></pre>
+<p>When you <strong>call the function</strong>, there is <mark>no 
+  indication</mark> that <tt>x</tt> and <tt>y</tt> will be changed.
+</p>
+<pre class='language-cpp'><code>swap(x, y);     // does this change x and y? Can't tell here!</code></pre>
+
+
+
+<p>To use <mark>explicit pointer parameters</mark>, change the 
+  implementation of <tt>swap()</tt> like this:
+</p>
+<pre class='language-cpp'><code>void swap(int *a, int *b) {
+    int temp{*a};
+    *a = *b;
+    *b = temp;
+}</code></pre>
+<p>Then, <mark>call the function</mark> like this. The effect is 
+    the same as pass-by-reference, but you
+    can tell at the call-site that <tt>x</tt> and <tt>y</tt>
+    may be changed in the function.
+</p>
+<pre class='language-cpp'><code>int x{3}, y{4};
+swap(&amp;x, &amp;y);     // explicit address passing
+cout &lt;&lt; "x-&gt;" &lt;&lt; x &lt;&lt; ", y-&gt;" &lt;&lt; y &lt;&lt; endl;
+// x-&gt;4, y-&gt;3</code></pre>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
