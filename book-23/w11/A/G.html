@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pointers &amp; Structures</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Pointers &amp; Structures</h1>
+  <p class='firstLine'>We often use pointers in 
+    conjunction with structures or objects.
+    Pointers are also used to work with the built-in C++ 
+    collection type, the <strong>array</strong>. 
+    We'll look at structures in the lesson, and arrays later.
+  </p>
+  <a target='_blank' href='https://goo.gl/s1y2DP'>
+  <img src='../images/running-man.png' class='right'
+    alt='The running-man icon.'></a>
+  <p>Click the "running man" to visualize these statements, 
+    which create two  variables.
+  </p>
+<pre class='language-cpp'><code>Point pt{3, 4};
+Point *pp = &pt;</code></pre>
+  <p> <img src='../images/struct1.png' class='right width-128' 
+    alt='A structure memory diagram.'>
+      The variable <tt>pt</tt> is a <tt>Point</tt> with the 
+      coordinates <tt>3</tt> and <tt>4</tt>. The variable <tt>pp</tt>
+      is a pointer, pointing to <tt>pt</tt>. The memory diagram of these declarations looks
+      like this.
+      From <tt>pp</tt>, you move to the object by using 
+      dereferencing, so <tt>*pp</tt> and <tt>pt</tt> are synonyms.
+  </p>
+  <p>If <tt>pt</tt> and <tt>*pp</tt> are effectively synonyms, 
+      you might expect to access <tt>pt.x</tt> by
+      writing <tt>*pp.x</tt>. Surprisingly, <mark>you cannot</mark>.<strong></strong>
+      The expression <tt>*pp.x</tt> uses <mark>two operators</mark> so 
+      when you evaluate it, the <mark>dot operator has higher 
+      precedence than the dereferencing operator</mark>,
+      so the compiler interprets the expression as <tt>*(pp.x)</tt>. 
+  </p>
+  <p>Of course, <tt>pp</tt> is a <mark>pointer</mark>, and that 
+      pointer <mark>doesn't have</mark> a
+      member called <tt>x</tt>, so you get an error. 
+      Instead, you must write <tt>(*pp).x</tt> which is 
+      certainly awkward.
+  </p>
+  <p>A (preferred) alternative, the operator <tt>-&gt;</tt> 
+    (usually read aloud as <strong>arrow</strong>), combines 
+    dereferencing and selection into a single
+    operator. Knowing that, you can see there are three ways 
+    to print <tt>x</tt> and <tt>y</tt> in the variable <tt>pt</tt>:
+  </p>
+<pre class='language-cpp line-numbers'><code>cout &lt;&lt; "(" &lt;&lt; pt.x &lt;&lt; "," &lt;&lt; pt.y &lt;&lt; ")" &lt;&lt; endl;
+cout &lt;&lt; "(" &lt;&lt; (*pp).x &lt;&lt; "," &lt;&lt; (*pp).y &lt;&lt; ")" &lt;&lt; endl;
+cout &lt;&lt; "(" &lt;&lt; pp-&gt;x &lt;&lt; "," &lt;&lt; pp-&gt;y &lt;&lt; ")" &lt;&lt; endl;</code></pre>
+  <ol>
+    <li>Line 1 uses a <strong>structure variable</strong> 
+      (an object) and the <mark>member selection operation</mark> 
+      (the "<strong>dot</strong>")
+      operator, to select the members <tt>x</tt> and <tt>y</tt>.
+    </li>
+    <li>Line 2 uses <mark>the temporary structure object</mark> obtained
+      from <mark>dereferencing</mark> the pointer <tt>pp</tt>. 
+      That object is used with the member selection operator to 
+      select the same two variables, <tt>x</tt> and <tt>y</tt>.
+    </li>
+    <li>Line 3 uses the pointer <tt>pp</tt> and the 
+      <mark>arrow</mark> operator to access the data members
+      without first making a temporary copy.
+    </li>
+  </ol>
+  <p>Using the arrow operator is more efficient, and less typing,
+    so you should use it when working with pointers to structures.
+  </p>
+
+  
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

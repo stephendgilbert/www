@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Using reinterpret_cast</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Using reinterpret_cast</h1>
+  <p class='firstLine'>The function <tt>stbi_load()</tt> always 
+      returns a pointer to the <mark>first byte</mark> of the digital 
+      image in memory, <mark>not the first pixel</mark>. That makes 
+      some code more complex than it needs to be. 
+      However, if you like, you can process your images
+      <b>pixel-by-pixel</b> instead of <b>byte-by-byte</b> by following these
+      instructions:
+  </p>
+  <ul>
+      <li>
+          Create a <tt>Pixel</tt> structure type with 3 <tt>unsigned</tt>
+          <tt>char</tt> data members (since our image only uses 3 channels).
+      </li>
+      <li>When creating your <tt>beg</tt> pointer, change it to a 
+          <tt>Pixel*</tt>, not an <tt>unsigned</tt> <tt>char</tt> <tt>*</tt>,
+          and then use <tt>reinterpret_cast&lt;Pixel*&gt;</tt> to 
+          cause <tt>beg</tt> to look at your image data pixel-by-pixel.
+      </li>
+      <li>When creating your <tt>end</tt> pointer, use <tt>beg</tt> as the
+        base pointer. You no longer need to use <tt>channels</tt> as
+        part of the calculation.
+      </li>
+    </ul>
+  <p> Here's a horizontal-stripes filter that does this, 
+      using <mark>nested for loops</mark>
+      instead of an iterator loop, to change all the pixels in 
+      each odd numbered row to white stripe.
+  </p>
+<pre class='language-cpp'><code>struct Pixel { unsigned char red, green, blue; };
+Pixel * beg = reinterpret_cast&lt;Pixel*&gt;(pete);
+Pixel * end = beg + width * height;
+
+for (int y = 0;  y &lt; height; ++y)
+{
+   for (int x = 0; x &lt; width; ++x, ++beg)
+   {
+      if (y % 2 == 1) { // odd rows
+          *beg = Pixel{255, 255, 255};
+      }
+   }
+}</code></pre>
+<p>Here's what the horizontal-stripes filter looks like
+  when it runs:
+  <img src='../images/horizontal-stripes.png' class='inlineCenter width-60'>
+</p>
+
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

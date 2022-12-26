@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Dealing with Channels</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Dealing with Channels</h1>
+  <p class='firstLine'> Each individual pixel in our image 
+    consist of <mark>3 bytes</mark>, each representing an
+    individual red, green, or blue channel in that image. 
+    So, if you want to only modify one color, or two colors, 
+    you have to keep track of which byte you are working on, 
+    by processing <mark>all three bytes every time through the loop</mark>.
+  </p>
+  <p> Here, for instance is a filter that only keeps the 
+      <strong>blue</strong> channel, and eliminates the 
+      <strong>red</strong> and <strong>green</strong> channels
+      in the image:
+  </p>
+<pre class='language-cpp'><code>while (beg != end)
+{
+   *beg = 0;   // turn off red
+   beg++;      // go to next color
+   *beg = 0;   // turn off green
+   beg++;      // go to next color
+   beg++;      // leave blue alone
+}</code></pre>
+  <p>Here's the result of running the blue filter:
+    <img src='../images/blue-filter.png' class='inlineCenter width-60'
+      alt='Running the blue filter.'
+  </p>
+  
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
