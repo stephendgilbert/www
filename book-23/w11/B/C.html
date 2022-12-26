@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Array Initialization</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Array Initialization</h1>
+  <p class='firstLine'>When you define an array, its elements 
+    are <mark>default</mark> initialized. So, what does that
+    mean?
+  </p>
+  <ul>
+    <li>If the base type is a primitive and the array is <b>local</b> 
+      the elements are <mark>uninitialized</mark>. Note: this 
+      is unlike <tt>vector</tt> where elements are initialized to <tt>0</tt>.
+    </li>
+    <li>If the base type is a primitive and the <b>array is global</b>
+      or <tt>static</tt>, the elements are <tt>0</tt>.
+    </li>
+    <li>If the base type is a <b>class type</b> then the 
+      <mark>default constructor</mark> for the type is used to 
+      initialize each element. (Different from Java or C#, where 
+      the elements are <tt>null</tt>.)
+    </li>
+  </ul>
+  <p>Arrays <b>may be explicitly initialized</b> at definition 
+    time using a list of initializers enclosed in curly braces. C++11 
+    list initialization was patterned after this 
+    <mark>built-in array feature</mark>. Note, however, with 
+    the array you must add the <tt>=</tt> sign.
+  </p>
+<pre class='language-cpp'><code>const int digits[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};</code></pre>
+<p>When using an <b>explicit initializer</b> you may skip the explicit array 
+  size; the compiler counts the number of values you supply. 
+  With <tt>digits</tt> the compiler <mark>implicitly</mark> supplies 
+  the size <tt>10</tt>.
+</p>
+<p>You can <mark>combine these two forms of definition</mark>; 
+  you can specify an array allocation size (or <b>dimension</b>) 
+  <b>and</b> provide an initializer list as well.
+</p>
+<ul>
+  <li>If you have <b>fewer initializers</b> than the size, 
+    the others <mark>are set to zero</mark>.
+  </li>
+  <li>If you supply a size, then the number of initializers 
+    <mark>cannot exceed<mark> the dimension.
+  </li>
+</ul>
+<pre class='language-cpp'><code>const size_t kLen = 3;
+int a1[kLen] = {0, 1, 2};        // [0, 1, 2]
+int a2[] = {0, 1, 2};            // [0, 1, 2]
+int a3[kLen + 2] = {0, 1, 2}     // [0, 1, 2, 0, 0]
+int a4[kLen - 1] = {0, 1, 2}     // ERROR
+int a5[kLen];                    // Uninitialized
+int a6[kLen] = {};               // [0, 0, 0]</code></pre>
+
+  
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Allocated Size</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Allocated Size</h1>
+  <p class='firstLine'>Suppose that you have an array containing 
+    the names of all U.S. cities with
+    populations of over 1,000,000. Taking data from the 2010 census, 
+    you would write:
+  </p>
+<pre class='language-cpp'><code>const string cities[] = {
+    "New York", "Los Angeles", "Chicago",
+    "Houston", "Philadelphia", "Phoenix",
+    "San Antonio", "San Diego", "Dallas",
+};</code></pre>
+  <p> However, the size of the cities <mark>changes over time</mark>. 
+    In 2020, both San Jose and Austin Texas joined the list. 
+    Fortunately, you <mark>may</mark> simply<strong>add new names 
+    to the list</strong>, or delete them, and then <strong>let 
+    the compiler count how many there are</strong>. This is so
+    common, <mark>you are allowed to leave a trailing comma</mark> 
+    (such as the one after Dallas) and <strong>it doesn't create 
+    a syntax error</strong>.
+  </p>
+  <p>So, <strong>how do you know how many cities there are?</strong> 
+    You don't want <strong>to have to count</strong> them! 
+    After all, <mark>the compiler knows</mark> how many there are. 
+    C++ has a <strong>standard idiom</strong> for determining the
+    <mark>allocated size</mark> of an array 
+    <mark>at compile time</mark>, provided 
+    <mark>the array definition is in scope</mark>.
+  </p>
+<pre class='language-cpp'><code>constexpr size_t kCitiesSize = sizeof(cities) / sizeof(cities[0]);</code></pre>
+  <p> This compile-time expression takes the size of the entire array 
+      (returned from the <tt>sizeof</tt> operator, and thus of type 
+      <tt>size_t</tt>), and divides it by the
+      size of the initial element in the array. Because all 
+      elements of an array are the same size, the result is 
+      the number of elements in the array,
+      regardless of the element type.
+  </p>
+  
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
