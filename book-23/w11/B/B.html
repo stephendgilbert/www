@@ -6,7 +6,7 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Defining Arrays</title>
+    <title>Arrays vs. vector</title>
     <style>
       tbody td {
         width:70px;
@@ -16,61 +16,36 @@
 <body>
 <div id='page'>
 <div>
-   <h1>Defining Arrays</h1>
-  <p class='firstLine'>An array must be defined before it is used:</p>
-<pre class='pcode'>base-type name[size];</pre>
-  <p>The definition requires a <b>base type</b>, <b>name</b>,
-    and <mark>allocated size</mark>; <b>size</b> is a    
-    <strong>positive integer constant expression</strong>
-    indicating the number of elements for the compiler to allocated. 
-    For example:
-  </p>
-<pre class='language-cpp'><code>const size_t kSize = 6;
-int a[kSize];</code></pre>
-<table class='array' align='center'>
-<thead>
-  <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
-</thead>
-<tbody>
-  <td>?</td><td>?</td><td>?</td><td>?</td><td>?</td><td>?</td>
-</tbody>
-<tfoot>
-  <th>0x505290</th><th>0x505294</th><th>0x505298</th><th>0x50529c</th><th>0x5052a0</th><th>0x5052a4</th>
-</tfoot>
-</table>
-
-  <p>This creates an array named <tt>a</tt>, of 
-      <tt>6</tt> elements, each of which is an <mark>unitialized</mark> <tt>int</tt>.
+   <h1>Arrays vs. vector</h1>
+  <p class='firstLine'><p>Why use an array if <tt>vector</tt> is so much
+    more convenient? Why bother learning about arrays at all?
+    Here's why.
   </p>
   <ul>
-      <li>A good practice is to <b>specify the size as a symbolic 
-          constant</b> instead of a literal.
+      <li><tt>vector</tt> <strong>elements</strong> are always 
+      <mark>allocated on the heap</mark>
       </li>
-      <li>The size <strong>must be positive</strong>; zero or negative are
-          illegal.
+      <li>Arrays may be <mark>allocated on the stack</mark>, 
+        <mark>static area</mark>, <mark>or the heap</mark>. This avoids
+          performance issues that arise with dynamic memory.
       </li>
-      <li>The size must be <strong>constant</strong>; a <mark>regular, non-const
-          variable should not work</mark>, although some compilers may permit it.
+      <li>Arrays often have <mark>higher performance</mark> and   
+        <mark>take less memory</mark>.
       </li>
-      <li>If defined inside a function, the <strong>elements are on 
-          the stack</strong>; if defined outside of a
-          function, the elements are allocated in the
-          <strong>static storage area</strong>.
+      <li>Arrays are generally used for low-level <strong>systems 
+          programming</strong> (operating systems)
+      </li>
+      <li>Array performance is <mark>deterministic</mark>; for this reason,
+          arrays are normally used for <strong>embedded programs</strong> 
+          that  must run for long periods of time.
       </li>
   </ul>
-  <p>Index numbers begin with <tt>0</tt> and run up to the <strong>array size 
-      minus one</strong>.
+  <p>In short, arrays are usually faster and may take less 
+    memory than dynamic library types like <tt>string</tt>
+    and <tt>vector</tt>. Using arrays in C++ is programming    
+    <mark>as the CPU sees it</mark>.
   </p>
-  <div class='highlight'>
-      <p>C++ arrays are different than those in Java where the 
-          array variable and the allocated actual array are different. 
-          In C++ there is no array variable
-          equivalent. Instead, the array name (<tt>a</tt> in the example)
-          is an alias for the <mark>address of the first element</mark>,
-          <tt>0x505290</tt> here.
-      </p>
-  </div>
-  </p>
+  
   
     
 </div>

@@ -6,7 +6,7 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Arrays and Loops</title>
+    <title>Array Selection</title>
     <style>
       tbody td {
         width:50px;
@@ -16,52 +16,41 @@
 <body>
 <div id='page'>
 <div>
-   <h1>Arrays and Loops</h1>
-  <p class='firstLine'>Just as with <tt>vector</tt>, the real advantage 
-      of arrays is that you can automate the processing of a 
-      collection of related elements, like the grades for all
-      the students in a class. However, because arrays are 
-      lower-level structures, processing them is not quite as convenient.
+   <h1>Array Selection</h1>
+  <p class='firstLine'> Array selection uses the <mark>subscript 
+    operator</mark> as in Java.
+    The result of selection expression is an <strong><em>lvalue</em>,</strong>
+    which means that you can assign new values to it, like this:
   </p>
-  <p>Most commonly, you'll use a <b>counter-controlled loop</b>, 
-    like this loop,
-    which could be used to compute the average of the elements in
-    an array:
-  </p>
-<pre class='language-cpp'><code>int count = 0;
-double sum = 0;
-for (size_t i = 0; i &lt; kSize; ++i) {
-    sum += array[i];
-    count++;
+<pre class='language-cpp'><code>const int kLen = 6;
+int a[6];
+for (size_t i = 0; i &lt; kLen; ++i) {
+    a[i] = 10 * i;
 }</code></pre>
-  <p>Unlike <tt>string</tt> and <tt>vector</tt>, arrays have no 
-    built-in <tt>size()</tt> member function.
-    That means, for a counter-controlled loop, the array's    
-    <strong>length</strong> must be stored in a variable prior to 
-    entering the loop. Since the array's length <mark>is a 
-    constant</mark>, you'll normally use the same constant
-    used to allocate the array.
-  <h2>
-      Other Loops
-  </h2>
-  <p>You may use the <mark>range-based</mark> <tt class='i'>for</tt> loop 
-    on arrays, provided that the array definition is still
-    <mark>in scope</mark>. Here's an example:
+
+<table class='array' align='center'>
+<thead>
+  <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+</thead>
+<tbody>
+  <td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td>
+</tbody>
+</table>
+  <p><mark>C++ performs no bounds checking</mark>
+      on array selection. Unlike <tt>vector</tt>,   
+      <strong>there is no safe, range-checked alternative</strong>, 
+      such as <tt>at()</tt>. If the array index is out of range, your 
+      compiler decides where the element <mark>would be</mark> 
+      in memory, and performs the requested operation,
+      leading to    <mark>undefined results</mark>.
   </p>
-<pre class='language-cpp'><code>int a[] = {...};
-for (auto e : a)
-{
-   cout &lt;&lt; e &lt;&lt; " ";
-}</code></pre>
-  <p>Similarly, you can use an <mark>iterator loop</mark> using
-  pointers, like the loops you used to process images in the
-  previous lesson. Finally, you can use a
-  <mark>sentinel loop</mark>
-  provided you place a special value in the array to mark its 
-  end. This is used with character arrays, as you'll see when 
-  we cover C-style strings.
+  <p> Worse still, if you assign a value to that index position, you    
+      <mark>can overwrite</mark> the contents of memory used by some other
+      part of the program. Writing beyond the end of an array is 
+      one of the
+      primary vulnerabilities used to attack computer systems.
   </p>
-    
+  
     
 </div>
 <br clear='all'>

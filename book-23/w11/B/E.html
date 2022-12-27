@@ -6,50 +6,49 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Array Selection</title>
-    <style>
-      tbody td {
-        width:50px;
-      }
-    </style>
+    <title>The Allocated Size</title>
 </head>
 <body>
 <div id='page'>
 <div>
-   <h1>Array Selection</h1>
-  <p class='firstLine'> Array selection uses the <mark>subscript 
-    operator</mark> as in Java.
-    The result of selection expression is an <strong><em>lvalue</em>,</strong>
-    which means that you can assign new values to it, like this:
+   <h1>The Allocated Size</h1>
+  <p class='firstLine'>Suppose that you have an array containing 
+    the names of all U.S. cities with
+    populations of over 1,000,000. Taking data from the 2010 census, 
+    you would write:
   </p>
-<pre class='language-cpp'><code>const int kLen = 6;
-int a[6];
-for (size_t i = 0; i &lt; kLen; ++i) {
-    a[i] = 10 * i;
-}</code></pre>
-
-<table class='array' align='center'>
-<thead>
-  <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
-</thead>
-<tbody>
-  <td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td>
-</tbody>
-</table>
-  <p><mark>C++ performs no bounds checking</mark>
-      on array selection. Unlike <tt>vector</tt>,   
-      <strong>there is no safe, range-checked alternative</strong>, 
-      such as <tt>at()</tt>. If the array index is out of range, your 
-      compiler decides where the element <mark>would be</mark> 
-      in memory, and performs the requested operation,
-      leading to    <mark>undefined results</mark>.
+<pre class='language-cpp'><code>const string cities[] = {
+    "New York", "Los Angeles", "Chicago",
+    "Houston", "Philadelphia", "Phoenix",
+    "San Antonio", "San Diego", "Dallas",
+};</code></pre>
+  <p> However, the size of the cities <mark>changes over time</mark>. 
+    In 2020, both San Jose and Austin Texas joined the list. 
+    Fortunately, you <mark>may</mark> simply<strong>add new names 
+    to the list</strong>, or delete them, and then <strong>let 
+    the compiler count how many there are</strong>. This is so
+    common, <mark>you are allowed to leave a trailing comma</mark> 
+    (such as the one after Dallas) and <strong>it doesn't create 
+    a syntax error</strong>.
   </p>
-  <p> Worse still, if you assign a value to that index position, you    
-      <mark>can overwrite</mark> the contents of memory used by some other
-      part of the program. Writing beyond the end of an array is 
-      one of the
-      primary vulnerabilities used to attack computer systems.
+  <p>So, <strong>how do you know how many cities there are?</strong> 
+    You don't want <strong>to have to count</strong> them! 
+    After all, <mark>the compiler knows</mark> how many there are. 
+    C++ has a <strong>standard idiom</strong> for determining the
+    <mark>allocated size</mark> of an array 
+    <mark>at compile time</mark>, provided 
+    <mark>the array definition is in scope</mark>.
   </p>
+<pre class='language-cpp'><code>constexpr size_t kCitiesSize = sizeof(cities) / sizeof(cities[0]);</code></pre>
+  <p> This compile-time expression takes the size of the entire array 
+      (returned from the <tt>sizeof</tt> operator, and thus of type 
+      <tt>size_t</tt>), and divides it by the
+      size of the initial element in the array. Because all 
+      elements of an array are the same size, the result is 
+      the number of elements in the array,
+      regardless of the element type.
+  </p>
+  
   
     
 </div>

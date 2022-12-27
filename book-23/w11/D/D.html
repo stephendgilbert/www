@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Arrays and Loops</title>
+    <style>
+      tbody td {
+        width:50px;
+      }
+    </style>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Arrays and Loops</h1>
+  <p class='firstLine'>Just as with <tt>vector</tt>, the real advantage 
+      of arrays is that you can automate the processing of a 
+      collection of related elements, like the grades for all
+      the students in a class. However, because arrays are 
+      lower-level structures, processing them is not quite as convenient.
+  </p>
+  <p>Most commonly, you'll use a <b>counter-controlled loop</b>, 
+    like this loop,
+    which could be used to compute the average of the elements in
+    an array:
+  </p>
+<pre class='language-cpp'><code>int count = 0;
+double sum = 0;
+for (size_t i = 0; i &lt; kSize; ++i) {
+    sum += array[i];
+    count++;
+}</code></pre>
+  <p>Unlike <tt>string</tt> and <tt>vector</tt>, arrays have no 
+    built-in <tt>size()</tt> member function.
+    That means, for a counter-controlled loop, the array's    
+    <strong>length</strong> must be stored in a variable prior to 
+    entering the loop. Since the array's length <mark>is a 
+    constant</mark>, you'll normally use the same constant
+    used to allocate the array.
+  <h2>
+      Other Loops
+  </h2>
+  <p>You may use the <mark>range-based</mark> <tt class='i'>for</tt> loop 
+    on arrays, provided that the array definition is still
+    <mark>in scope</mark>. Here's an example:
+  </p>
+<pre class='language-cpp'><code>int a[] = {...};
+for (auto e : a)
+{
+   cout &lt;&lt; e &lt;&lt; " ";
+}</code></pre>
+  <p>Similarly, you can use an <mark>iterator loop</mark> using
+  pointers, like the loops you used to process images in the
+  previous lesson. Finally, you can use a
+  <mark>sentinel loop</mark>
+  provided you place a special value in the array to mark its 
+  end. This is used with character arrays, as you'll see when 
+  we cover C-style strings.
+  </p>
+    
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
