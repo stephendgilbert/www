@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Arrays and Loops</title>
+    <style>
+      tbody td {
+        width:50px;
+      }
+    </style>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Arrays and Loops</h1>
+  <p class='firstLine'>Just as with <tt>vector</tt>, the real advantage 
+      of arrays is that you can automate the processing of a 
+      collection of related elements, like the grades for all
+      the students in a class. 
+  </p>
+  <p>However, because arrays are 
+      lower-level structures, processing them is not quite as convenient.
+      There are several ways to use loops to traverse an array.
+  </p>
+  <ol>
+    <li>Calculate the <mark>number of elements in the 
+      array</mark> and use
+      that as a limit on a traditional counter-controlled 
+      <tt class='i'>for</tt> or <tt class='i'>while</tt> loop.
+    </li>
+    <li>Use a <mark>sentinel value</mark> stored in 
+    the array to mark its   end.
+    </li>
+    <li>Use a pair of pointers: one to the first element 
+      in the array, and one to the address right past the 
+      end of the array. These are called 
+      <mark>iterator-based</mark> loops.
+    </li>
+    <li>Use the C++ 11 <strong>range-based</strong> 
+      <tt class='i'>for</tt> loop.
+    </li>
+  </ol>
+  <p>Inside a function, <mark>only the first three are 
+    meaningful</mark>. You <strong>cannot</strong> use the 
+    range-based for loop on an array name after it has decayed 
+    to a pointer. 
+  </p>
+<h2>The range-based for Loop</h2>
+  <p>You may, however, use the <mark>range-based</mark> 
+    <tt class='i'>for</tt> loop on arrays, provided that 
+    the array definition 
+    is <mark>in scope</mark>. Here's an example:
+  </p>
+<pre class='language-cpp'><code>int a[] = {...};
+for (int e : a) 
+{
+  cout &lt;&Lt; e &lt;&lt; " ";
+}</code></pre>
+    
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

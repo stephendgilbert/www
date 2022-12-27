@@ -6,7 +6,7 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Arrays and Loops</title>
+    <title>Iterator Loops</title>
     <style>
       tbody td {
         width:50px;
@@ -16,52 +16,46 @@
 <body>
 <div id='page'>
 <div>
-   <h1>Arrays and Loops</h1>
-  <p class='firstLine'>Just as with <tt>vector</tt>, the real advantage 
-      of arrays is that you can automate the processing of a 
-      collection of related elements, like the grades for all
-      the students in a class. However, because arrays are 
-      lower-level structures, processing them is not quite as convenient.
+   <h1>Iterator Loops</h1>
+  <p class='firstLine'>Another iteration approach is to pass 
+    the address of the <strong>first element you want to process</strong>, 
+    and the address of an imaginary element that is <strong>just past 
+    the last element you want to process</strong>. 
+    This is known as the <strong>range-based</strong> or 
+    <strong>iterator</strong> approach to passing array parameters.
+    <a target='_blank' href="https://rextester.com/SVA95889">
+    Click this link to run the function shown below</a>.
   </p>
-  <p>Most commonly, you'll use a <b>counter-controlled loop</b>, 
-    like this loop,
-    which could be used to compute the average of the elements in
-    an array:
-  </p>
-<pre class='language-cpp'><code>int count = 0;
-double sum = 0;
-for (size_t i = 0; i &lt; kSize; ++i) {
-    sum += array[i];
-    count++;
-}</code></pre>
-  <p>Unlike <tt>string</tt> and <tt>vector</tt>, arrays have no 
-    built-in <tt>size()</tt> member function.
-    That means, for a counter-controlled loop, the array's    
-    <strong>length</strong> must be stored in a variable prior to 
-    entering the loop. Since the array's length <mark>is a 
-    constant</mark>, you'll normally use the same constant
-    used to allocate the array.
-  <h2>
-      Other Loops
-  </h2>
-  <p>You may use the <mark>range-based</mark> <tt class='i'>for</tt> loop 
-    on arrays, provided that the array definition is still
-    <mark>in scope</mark>. Here's an example:
-  </p>
-<pre class='language-cpp'><code>int a[] = {...};
-for (auto e : a)
+<pre class='language-cpp line-numbers'><code>double sum(const double* beg, const double* end)
 {
-   cout &lt;&lt; e &lt;&lt; " ";
+    double result = 0.0;
+    while (beg != end) { result += *beg++; }
+    return result;
 }</code></pre>
-  <p>Similarly, you can use an <mark>iterator loop</mark> using
-  pointers, like the loops you used to process images in the
-  previous lesson. Finally, you can use a
-  <mark>sentinel loop</mark>
-  provided you place a special value in the array to mark its 
-  end. This is used with character arrays, as you'll see when 
-  we cover C-style strings.
+  <p>
+      In the <strong>iterator-based</strong> approach the <strong>caller</strong>
+      passes the array (the address of the element at index zero) and, the
+      address of the imaginary element <strong>just past the end</strong> of the
+      range which you want to process. 
   </p>
-    
+  <p> When you <mark>call a function</mark>, such as <tt>sum()</tt>, 
+      which uses an iterator loop, you can calculate the
+      pointers by using address arithmetic, like this:
+  </p>
+<pre class='language-cpp'><code>int main()
+{
+    double a[] = {1.5, 2.5, 3.5, 2.75, 1.75};
+    cout &lt;&lt; "sum->" &lt;&lt; sum(a, a + 5) &lt;&lt; endl; // 5 elements
+    return 0;
+}</code></pre>
+  <p>
+  Starting in C++11 you can <mark>automatically calculate these 
+    two pointers</mark> by using the
+      functions <tt>begin()</tt> and <tt>end()</tt> like this:
+  </p>
+<pre class='language-cpp'><code>double array[] = {.....};
+cout &lt;&lt; sum(begin(array), end(array)) &lt;&lt; endl;</code></pre>
+
     
 </div>
 <br clear='all'>
