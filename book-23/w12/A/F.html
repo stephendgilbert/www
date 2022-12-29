@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Improving Linear Search</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Improving Linear Search</h1>
+  <p class='firstLine'>We can improve our algorithm a little bit by 
+    <mark>putting the data in sorted order</mark>. To do that, just 
+    call the <tt>sort()</tt> function which I've supplied, 
+    immediately after you've loaded the
+    data, like this:
+</p>
+<pre class='language-cpp'><code>const int kSize = 1000;
+Person directory[kSize];
+load(directory, kSize);
+sort(directory, kSize);</code></pre>
+
+<p> Now, when you run the program and look for <strong>Thompson</strong>, it is
+    not immediately found, since Kimberly is no longer at the beginning of the
+    list, but much further down. So, that doesn't seem to be much of an
+    improvement.
+</p>
+<p>Remember, though, that before you sorted the data, you needed to 
+  <strong>check every single element</strong> before you could be sure that
+  the name was not found. Now, <mark>you can stop</mark> whenever the 
+  name in the directory is greater than the name you are looking for. 
+  Just add this code at the end of your loop <tt>do-while</tt> loop:
+</p>
+<pre class='language-cpp'><code>if (contacts[i].name > key) return -1;</code></pre>
+<p>The average performance time is still <tt>O(n / 2)</tt>,
+    but the <mark>worst case time has improved</mark> from
+    <tt>O(tt)</tt> to <tt>O(n / 2)</tt>
+    as well. In general it will take 500 comparisons to see if a name is
+    missing, instead of the 1,000 comparisons you made earlier.
+</p>
+<p>However, this is the best improvement we can make with linear 
+  search. To go faster, you'll <mark>need a better algorithm</mark>.
+</p>
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

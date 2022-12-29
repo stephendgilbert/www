@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Starter Code</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Starter Code</h1>
+  <p class='firstLine'>The file <tt>person.h</tt> contains the
+    definition of a <tt>Person</tt>
+    structure, with <tt>name</tt>, <tt>email</tt> and 
+    <tt>phone</tt> data members, as well as the prototypes for
+    some functions and operators.
+  </p>
+<pre class='language-cpp'><code>struct Person {
+	std::string name;
+	std::string email;
+	std::string phone;
+};</code></pre>
+  <p>The <tt>main()</tt> function <mark>creates an array</mark> 
+      of 1000 <tt>Person</tt> variables, and then
+      calls the <tt>load()</tt> function to read all of 
+      the data from the text file and
+      put it into the array.
+  </p>
+<pre class='language-cpp'><code>const int kSize = 1000;
+Person directory[kSize];
+load(directory, kSize);</code></pre>
+  <p>
+      Following the array declaration is a <tt>do-while</tt> loop 
+      which asks the user for a last name, and which then calls 
+      the <tt>find()</tt> function to retrieve the record number. 
+  </p>
+<pre class='language-cpp'><code>bool done = false;
+do {
+  cout &lt;&lt; "Enter the last name to search for (q to quit): ";
+  string last;
+  cin &gt;&gt; last;
+  if (last == "q") done = true;
+  else
+  {
+    int pos = find(directory, kSize, last);
+    if (pos &gt;= 0) {
+      cout &lt;&lt; "\nFound: " &lt;&lt; directory[pos] &lt;&lt; endl;
+    } else {
+      cout &lt;&lt; "\nCannot find " &lt;&lt; last &lt;&lt; endl;
+    }
+  }
+}
+while (! done);</code></pre>
+  <p>If the
+      name is found in the directory, then the program prints out the full name,
+      email and phone number. If the name could not be found, the program just
+      prints "Not found" and allows the user to enter another name. The user can
+      exit by entering "q" when asked for the last name.
+  </p>
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
