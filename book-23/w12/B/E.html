@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Applying the Algorithm</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Applying the Algorithm</h1>
+  <p class='firstLine'><a target='_blank'
+    href="https://onlinegdb.com/ixpwWrkzM">
+    Let's look at a practical example of this algorithm</a>. 
+    The <tt>insert()</tt> function at the top of the program 
+    has not been completed, so we're going to 
+    go ahead and do that.
+  </p>
+  <ol>
+    <li><mark>Find the position</mark> where the new element
+      <strong>should be</strong> inserted:
+    </li>
+<pre class='language-cpp'><code>size_t pos = 0;
+while (pos &lt; size &amp;&amp; a[pos] &lt; value) 
+{ 
+    ++pos; 
+}</code></pre>
+
+  <p>The variable (<tt>pos</tt>) is initialized to <tt>0</tt>. 
+      After the loop, it will contain the
+      location where the new element should be inserted.
+  </p>
+  <p>If there are no elements larger than the number you are 
+      inserting, <tt>pos</tt>
+      will contain the same value as <tt>size</tt>, 
+      and the number will then be added at the
+      end of the array, which is what you want.
+  </p>
+  <li><mark>Move the existing elements</mark>.
+      Before you can store value in the array, you must move the 
+      existing elements out of the way (to the right), to 
+      "open up a hole" for the new value.
+  </li>
+<pre class='language-cpp'><code>for (size_t i = size; i &gt; pos; --i) 
+{ 
+    a[i] = a[i - 1]; 
+}</code></pre>
+  <p> You must start <mark>at the end of the array</mark>, traversing
+      to the left, until you reach the location where you intend to 
+      insert the new element, so you don't overwrite data.
+  </p>
+  <li><mark>Insert the new element</mark>. After moving, copy the 
+      new number into position, and <mark>update the <tt>size</tt></mark>.
+  </li>
+<pre class='language-cpp'><code>a[pos] = value;
+++size;</code></pre>
+  </ol>
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
