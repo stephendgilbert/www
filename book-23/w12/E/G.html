@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Find First of Any</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Find First of Any</h1>
+  <p class='firstLine'>Suppose you want to find the position of the 
+    first digit inside a C-string. You can't just use <tt>find()</tt>
+    since you want to look for <mark>any</mark> digit. You'd want a 
+    function you could call like this:
+  </p>
+<pre class='language-cpp'><code>int pos = first_of_any(cstr, "0123456789");</code></pre>
+  <p>Here's the
+    algorithm you use:
+  </p>
+<pre class='pcode'>Look through every character in str
+    Compare the character to every character in target
+      If found return the index (in str)
+return error code</pre>
+  <p>Here's an implementation of this algorithm:</p>
+<pre class='language-cpp'><code>int first_of_any(const char *str, const char* target)
+{
+    const char * p1 = str;
+    while (*p1 != '\0')
+    {
+        const char * p2 = target;
+        while (*p2 != '\0')
+        {
+            if (*p2 == *p1) return p1 - str;  // found it
+            p2++;
+        }
+        p1++;
+    }
+    return -1;
+}</code></pre>
+  
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

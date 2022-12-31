@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The strcmp Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The strcmp Function</h1>
+  <p class='firstLine'>Like <tt>strcpy()</tt>, most implementations of 
+    <tt>strcmp()</tt> are cryptic. Here's the version from GNU C:
+  </p>
+<pre class='language-cpp'><code>int strcmp(const char *s1, const char *s2)
+{
+    const unsigned char *a1, *a2;
+    for (a1 = reinterpret_cast&lt;const unsigned char *&gt;(s1),
+         a2 = reinterpret_cast&lt;const unsigned char *&gt;(s2);
+         *a1 == *a2; a1++, a2++)
+        if (*a1 == '\0') return 0;
+    return *a1 - *a2;
+}</code></pre>
+  <p>The GNU version of <tt>strcmp()</tt> returns 
+      <mark>the difference</mark> between the first two
+      mismatched characters. <tt>a1</tt> and <tt>a2</tt> are 
+      temporary pointers to <tt>unsigned</tt> <tt>char</tt>, so the
+      characters can be interpreted as raw values between 
+      <tt>0-255</tt>. The pointers are initializaed by using a 
+      <tt>reinterpret_cast</tt>.
+  </p>
+  <p>Here is an alternate (Apple/Next/PPC) version of the same function, 
+      which returns <tt>0</tt>, <tt>+1</tt> and <tt>-1</tt> instead of 
+      the difference between the characters. This version, written in
+      1992, uses traditional C-style casts to handle the 
+      <tt>signed</tt>/<tt>unsigned</tt> instead of a 
+      C++ <tt>reinterpret_cast</tt>.
+  </p>
+<pre class='language-cpp'><code>int strcmp(const char *s1, const char *s2)
+{
+    for ( ; *s1 == *s2; s1++, s2++)
+        if (*s1 = '\0') return 0;   // reached both NULs. Equal
+    return ((*(unsigned char *)s1
+            &lt; *(unsigned char *)s2) ? -1 : +1);
+}</code></pre>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

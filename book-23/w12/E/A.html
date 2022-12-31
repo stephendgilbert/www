@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The strlen Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The strlen Function</h1>
+  <p class='firstLine'>In this lesson we're going to look at 
+    several implementations of the standard library functions beginning
+      with <tt>strlen()</tt>. We'll finish by learning to write
+      your own C-String functions.
+  </p>
+  <p>To find the length of a string, you <mark>count characters</mark>
+      until you reach the <tt>'\0'</tt>. Here is an implementation 
+      that uses array notation.
+  </p>
+<pre class='language-cpp'><code>size_t strlen(const char str[])
+{
+    size_t len = 0;
+    while (str[len] != '\0') len++;
+    return len;
+}</code></pre>
+  <div class='highlight'>
+      <p>
+          Note that the return type <strong>must be</strong> 
+          <tt>size_t</tt> (not <tt>int</tt>),
+          because we can't have a negative length on a string. 
+          The array must be <tt>const</tt>, otherwise it 
+          <strong>would be illegal</strong> to call the
+          function using a C-string literal.
+      </p>
+  </div>
+  <p>Another alternative is to advance the pointer until it reaches 
+    the end of the string, and then to 
+    <mark>use pointer subtraction</mark> (or <mark>pointer difference</mark>) 
+    to determine the number of characters. Here's a version that does that:
+  </p>
+<pre class='language-cpp'><code>size_t strlen(const char *str)
+{
+    const char *cp = str;
+    while (*cp != '\0') cp++;
+    return cp - str;
+}</code></pre>
+  <p>We can actually write this in an even more cryptic style.
+    I <mark>don't encourage you to write code like this</mark>, 
+    since it is quite a bit more error prone, but it 
+    <mark>is a common C idiom</mark> so you should recognize it
+    when you see it.
+  </p>
+<pre class='language-cpp'><code>size_t strlen(const char *str)
+{
+    const char *cp = str;
+    while (*cp++) /* do nothing */;
+    return cp - str - 1; // cp points to 1 past the NUL
+}</code></pre>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
