@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>C-String Assignment</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>C-String Assignment</h1>
+  <p class='firstLine'>Assignment
+      means "copy the thing on the right into the storage on the 
+      left". Instead of the assignment operator, used by the built-in 
+      types, C-strings use the <tt>strcpy()</tt> function, from the 
+      standard library header <tt>&lt;cstring&gt;</tt>, as
+      shown below:
+  </p>
+  <img src='../images/skull.png' class='left' alt='A skull icon.'>
+<pre class='language-cpp'><code>const size_t kMaxLen = 4096;
+char dest [kMaxLen];
+// Assume src is a C-style string
+strcpy(dest, src);</code></pre>
+
+  <p>Both <tt>src</tt> and <tt>dest</tt> are C-strings. (<tt>src</tt> is a common 
+    abreviation for <i>source</i>, where the characters are copied 
+    <b><i>from</i></b>,
+    while <tt>dest</tt> stands for <i>destination</i>, where the characters
+    are copied <i><b>to</b></i>). 
+    <tt>strcpy(dest,</tt> <tt>src)</tt> copies the characters,
+    one by one, from <tt>src</tt> into <tt>dest</tt>, stopping 
+    the <tt>'\0'</tt> is copied.
+      However:
+  </p>
+  <ul>
+      <li>
+          You don't know if the <strong>actual size</strong> of the 
+          C-string source is less than <tt>4095</tt> characters 
+          (+1 for the null character). <mark>Thus this code contains 
+          a security flaw</mark>.
+      </li>
+      <li>You normally won't need anywhere near <tt>4096</tt> 
+        characters allocated for destination, so 
+        <mark>the code is inefficient</mark>.
+      </li>
+  </ul>
+  <img src='../images/poison.png' class='right' alt='A bottle of rat poison.'>
+  <p><mark>It is up to you to ensure</mark> that there is enough space 
+    in <tt>dest</tt> to hold a copy of <tt>src</tt>. The icon 
+    used in front of the code does not mean that the code is
+    buggy; instead, it means that the 
+    <mark>function itself is intrinsically dangerous</mark>; it's like the
+    symbol found on rat poison.
+  </p>
+  <p>The library function itself <mark>
+          makes no attempt to check whether the destination has 
+          enough room
+      </mark>
+      to hold a copy of the source string. Even if there 
+      is not enough memory the
+    function keeps copying, possibly overwriting other data; 
+    this called a <mark>buffer overflow</mark>.
+  </p>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

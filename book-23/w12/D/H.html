@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The strcat Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The strcat Functions</h1>
+  <p class='firstLine'>Concatenation is the province of the 
+    <tt>strcat()</tt> (completely unsafe), and the 
+    <tt>strncat()</tt> (marginally safer) functions. 
+    Here is a (buggy) example using the functions:
+  </p>
+  <img src='../images/bug.png' class='left' alt='A bug.'>
+<pre class='language-cpp'><code>const size_t kLen = 10;
+char cstr[kLen] = "Goodbye";
+strcat(cstr, " cruel world!");      // OOPS
+cout &lt;&lt; strlen(cstr) &lt;&lt; " " &lt;&lt; cstr &lt;&lt; endl;</code></pre>
+  <p> When you run, you'll likely see: </p>
+<div class='consoleDisplay'>
+          Goodbye cruel world!
+</div>
+  <p>The C-string <tt>cstr</tt> has room for 9 characters, but you
+  <mark>appear to</mark> have stuffed <tt>21</tt> characters 
+  (including the <tt>NUL</tt>),
+  into that smaller space. Not really, of course:
+  <mark>this is a buffer overflow</mark> and the actual   
+  <mark>results are undefined</mark>.
+  </p>
+  <p>The <tt>strncat()</tt> function is marginally safer, if
+    <mark>fairly tricky to use correctly</mark>. If used incorrectly, it
+    overflows just like <tt>strcat()</tt>. Here is the prototype:
+  </p>
+<pre class='language-cpp'><code>char * strncat(char *dest, const char *src, size_t count);</code></pre>
+  <p>The tricky part is that <tt>count</tt> is not the maximum size of 
+    the result, but the maximum number of characters to be copied; 
+    you must first calculate the 
+    <mark>correct combined maximum</mark>, before calling the function.
+  </p>
+<pre class='language-cpp'><code>const size_t kLen = 39;        // max total characters
+const cstr[kLen + 1] = "This is the intial string";
+const char *str2 = "Extra text to add to the string";
+strncat(cstr, str2, kLen - strlen(cstr));</code></pre>
+  <p>This <mark>isn't efficient</mark> (since you need to count the
+    characters in <tt>cstr</tt> first), but it    
+    <strong>does stop copying when the destination string is 
+    full</strong>.
+  </p>
+<div class='highlight'>
+  <p><strong>Security Note</strong>: <tt>strncat()</tt> does not 
+      check for sufficient space in <tt>dest</tt>; it is therefore 
+      a potential cause of buffer overruns. Keep in mind that 
+      count limits the number of characters appended; it is not 
+      a limit on the size of <tt>dest</tt>.
+      </p>
+  </div>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
