@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Dynamic Arrays</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Dynamic Arrays</h1>
+  <p class='firstLine'>You can also create arrays on the heap; 
+    these are called <mark> dynamic arrays</mark>. Follow the type 
+    name with the desired number of elements enclosed in square 
+    brackets:
+  </p>
+<img src='../images/new-3.png' class='right width-30'
+  style='margin-top:-.5em;'
+  alt='A new dynamic array.'>
+<pre class='language-cpp' style='width:65%;'><code>double *da = new double[3];</code></pre>
+  <p> Here, <tt>da</tt> points to <mark>the first <tt>double</tt></mark>
+    in a block of memory large enough to hold three <tt>double</tt>s. 
+    Treat <tt>da</tt> as an array whose storage <strong>lives in the 
+    heap</strong> rather than on the stack. Remember to 
+    <mark>save the size of the array</mark>, though, since, you cannot use
+    the "sizeof trick" on a dynamic array.
+  </p>
+  <p>Before C++ 11, elements of a dynamic array were
+    <strong>uninitialized</strong>. With the new standard, you can value
+    initialize (that is, <strong>set to zero for primitive types</strong>),
+    <mark>all the elements</mark> on the heap by using a set of empty
+    parentheses after the square brackets.
+  </p>
+<img src='../images/new-4.png' class='right width-30'
+  style='margin-top:-.5em;'
+  alt='A new dynamic array zero initialized.'>
+<pre class='language-cpp' style='width:65%;'><code>double *da = new double[3]();</code></pre>
+  <p>Now, each element pointed to by the <tt>da</tt> 
+      pointer is guaranteed to hold <tt>0.0</tt>.
+  </p>
+  <p>You can also use <mark>list-style uniform initialization</mark> to
+      partly initialize a dynamic array:
+  </p>
+<img src='../images/new-5.png' class='right width-30'
+  style='margin-top:-.5em;'
+  alt='A new dynamic array initialized.'>
+<pre class='language-cpp' style='width:65%;'><code>double *da = new double[3]{1, 2};</code></pre>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

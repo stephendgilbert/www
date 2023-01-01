@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Introducing the Heap</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Introducing the Heap</h1>
+  <img src='../images/memory.png' class='right'
+    alt='A memory diagram.'>
+  <p class='firstLine'>The illustration on the right shows how 
+    memory is used when your
+    program runs. <strong>Global</strong> variables (and constants) are placed
+    in the <mark>static storage area</mark> (along with the program's
+    <mark>code or text</mark>), when your program is loaded. 
+    These remain    <strong>in the same location</strong> 
+    while your program is running. This
+    is called <mark>static allocation</mark>.
+</p>
+<p> Local variables and parameters are created    
+    <strong>when encountered</strong> during <mark>runtime</mark>. These
+    are <mark>allocated on the stack</mark>. When you call a function,
+    memory is allocated for the variable; when the function returns, that
+    memory is freed. This is known as <mark>automatic allocation</mark>.
+</p>
+<p> Finally, <mark>explicitly requesting</mark> memory from the operating
+    system as the program runs is called <mark>dynamic allocation</mark>.
+    The memory for these dynamic variables is    
+    <mark>allocated on the freestore or heap</mark>. 
+</p>
+<p> This makes it
+    possible for data structures to expand as your program runs. 
+    Classes like <tt>vector</tt> and <tt>string</tt> depend on this; 
+    when a <tt>vector</tt> needs more memory, for a
+    <tt>push_back()</tt> say, it requests it using dynamic allocation.
+</p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
