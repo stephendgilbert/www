@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Dangling Pointers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Dangling Pointers</h1>
+  <p class='firstLine'> A <mark>dangling pointer</mark> is a 
+      pointer that contains an address, but the address points 
+      to data you have already deleted. Here's a function
+      for a rather strange contest:
+  </p>
+<pre class='language-cpp'><code>bool hasWon(int y, int m, int d)
+{
+    Date *pd = new Date(y, m, d);
+    delete pd;  // avoid leaking
+    return pd->isValid() &amp;&amp; pd->year() % pd->day() == 0;
+}</code></pre>
+
+  <p>The <tt>Date</tt> object allocated on the heap is <b>deleted</b> 
+    before the function returns. But, <mark>after the <tt>Date</tt> 
+    has been deleted</mark>, the pointer is used to call three
+    functions. At this point, <tt>pd</tt> <mark>is a dangling pointer</mark>,
+    which is a pointer to heap memory that you <mark>no longer "own"</mark>.
+  </p>
+  <p>The insidious thing is that the function will do exactly what you 
+      want, <a target='_blank' href='https://onlinegdb.com/KmqoiqKSI'>but 
+      only under some circumstances</a>. If you run the link, you'll see
+      that since the <tt>Date</tt> on the heap hasn't changed, when
+      you call the functions they still work correctly.
+      This is similar to checking out of a hotel, but keeping
+      a copy of the key. You may be able to stay another night for free, if the
+      place isn't too busy, and no one catches you, 
+      but you <mark>might</mark> get into trouble.
+  </p>
+  <p> Of course, the code is still illegal and won't work at all 
+      on some platforms. For instance, if you run the same code on
+      Codespaces, you'll see it doesn't produce the right answer.
+      However, it also <mark>doesn't provide you with any indication that
+      you've made a mistake</mark>.
+  </p>
+  <p> To help you find your mistakes, you can set the pointer to
+    <tt>nullptr</tt> every time you delete the pointer. Here's a
+    template function you can use in place of <tt>delete</tt>
+    that will do that for you.
+  </p>
+<pre class='language-cpp'><code>template &lt;typename T&gt;
+void delete_raw(T&amp; p) {
+  delete p; 
+  p = nullptr;
+}</code></pre>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

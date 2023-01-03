@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Memory Management</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Memory Management</h1>
+  <p class='firstLine'>Although Java uses the <tt>new</tt> operator, 
+    just like C++, it has no corresponding <tt>delete</tt> operator. 
+    That's because in Java, when you run your program, a set of 
+    smaller programs <b>run at the same time</b>, scouring the 
+    heap, looking for unused objects, and <b>automatically</b> 
+    freeing them. This automatic memory management in Java is 
+    called <mark>garbage collection</mark>.
+    <img src='../images/java-garbage-collector-types.png'
+      class='inlineCenter width-60'
+      alt='Different types of Java garbage collectors.'>
+  </p>
+  <p>In contrast, C++ manual memory management, using 
+    <b>raw pointers</b> with <tt>new</tt> and <tt>delete</tt>, 
+    requires an almost superhuman attention to detail. 
+    Mistakes will cause your program to leak memory, or, 
+    to corrupt the memory manager itself.
+  </p>
+  <p>Let's look at the three most common pitfalls that 
+    accompany manual memory management: the <mark>memory leak</mark>, 
+    the <mark>dangling pointer</mark>, and the <mark>double 
+    <tt>delete</tt></mark>. Then, you'll meet C++11's new 
+    <mark>smart pointers</mark>, which ameliorate many of 
+    the failings of pure manual memory management.
+  </p>
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
