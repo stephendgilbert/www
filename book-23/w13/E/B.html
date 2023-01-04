@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Public Interface</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Public Interface</h1>
+  <p class='firstLine'>The goal of information hiding is to make 
+    it possible for <strong>clients</strong> to <mark>use</mark> 
+    <tt>Time</tt> objects <strong>without</strong> ever directly 
+    accessing the data members themselves. 
+  </p>
+  <p>To do that, you create 
+    a collection of <strong>functions</strong>, which provides    
+    <mark>a public interface</mark> for your type. 
+    These functions are specially dedicated to an individual class, 
+    so they are called <mark>member functions</mark>.
+  </p>
+  <p>Your interface should be as <strong>small as possible</strong>, yet
+      comprehensive enough to meet all of your client's needs. 
+      What features might those be? (Let's consider <tt>H01</tt>).
+  </p>
+  <ul>
+      <li>
+          <strong>Arithmetic</strong>: calculate the <strong>difference</strong> and <strong>sum</strong> of
+          two <tt>Time</tt> objects
+      </li>
+      <li><strong>Input and Output</strong>: read into and write out a 
+        <tt>Time</tt> object
+      </li>
+  </ul>
+  <p>
+      Here is your <tt>Time</tt> structure, including the above interface:
+  </p>
+<pre class='language-cpp'><code>struct Time
+{
+    int hours;
+    int minutes;
+
+    Time sum(const Time&amp; rhs);
+    Time difference(const Time&amp; rhs);
+
+    std::istream&amp; read(std::istream&amp; in);
+    std::ostream&amp; write(std::ostream&amp; out);
+};</code></pre>
+
+
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
