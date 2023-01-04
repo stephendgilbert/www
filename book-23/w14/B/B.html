@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Class Definition Syntax</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Class Definition Syntax</h1>
+<details>
+  <summary>The Time Class Definition</summary>
+<pre class='language-cpp'><code>class Time
+{
+public:
+    int hours() const;
+    int minutes() const;
+    Time sum(const Time&amp; rhs) const;
+    Time difference(const Time&amp; rhs) const;
+
+    istream&amp; read(istream&amp; in);
+    ostream&amp; write(ostream&amp; out) const;
+private:
+    int m_hours;
+    int m_minutes;
+};</code></pre>
+
+  
+</details>
+  <p class='firstLine'>To create a <mark>class definition</mark> 
+    for <tt>Time</tt>, similar to the structure from
+      last week, follow these rules:
+  </p>
+
+  <ol>
+    <li>Instead of <tt>struct</tt>, use the <tt>class</tt> 
+      keyword. There is no <tt>public</tt> in front of this as
+      with Java.
+    </li>
+    <li>The <tt>public</tt> keyword, followed by a colon, 
+        indicates the start of the <mark>public interface</mark>. 
+        Here we <strong>prototype</strong> the member functions it contains.
+    </li>
+    <li>The member functions <tt>hours()</tt>, <tt>minutes()</tt>, 
+        <tt>sum()</tt>, <tt>difference()</tt> and <tt>write()</tt>, 
+        all access the <tt>hours</tt> and <tt>minutes</tt> data
+        members <mark>without changing them</mark>. When this is
+        the case, add the 
+        <tt>const</tt> keyword <strong>after the argument list</strong>. 
+        We say these functions are <mark>accessors</mark>.
+    </li>
+    <li>The <tt>read()</tt> member function does <strong>modify</strong>
+      the <tt>Time</tt> object. This is called a <mark>mutator</mark>.
+    </li>
+    <li>The class definition <mark>ends with a semicolon</mark>,
+      just like a structure. This is not optional.
+    </li>
+  </ol>
+<h2>
+    Data Members
+</h2>
+<p>
+  Most of the implementation will appear inside a <tt>.cpp</tt> file.
+  <strong>Defining the data members</strong> which store 
+  <mark>object state</mark>, is <mark>written inside the header file 
+  instead</mark>. A common practice
+  is to use a special indicator like <tt>m_</tt> 
+  to show that it is a data member.
+</p>
+<p>The <tt>Time</tt> <tt>struct</tt> used two individual data members: 
+    one for <tt>hours</tt> and one for <tt>minutes</tt>. This is fine; 
+    it allows you to store all of information needed. By
+    adding <tt>private</tt>, you can <mark>prevent clients of 
+    <tt>Time</tt> from accessing the data members
+    directly.</mark>
+</p>  
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
