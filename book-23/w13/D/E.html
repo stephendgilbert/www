@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Type Invariants</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Type Invariants</h1>
+  <p class='firstLine'>The definition of <tt>Time</tt> is 
+    straightforward, but, it will cause problems.
+    There are <mark>certain restrictions</mark> on what values 
+    members of a <tt>Time</tt> object may and may not have. Given our
+    specification, for instance, <tt>hours</tt> must be between
+    <tt>0..23</tt> and <tt>minutes</tt> must be between <tt>0..59</tt>.
+    We call these the type's <mark>invariants</mark>. 
+  </p>
+  <p>But, with structures, 
+    we have <mark>no means of enforcing those restrictions</mark>.
+    There is <strong>nothing to prevent</strong> someone, (most 
+    likely you, if you aren't careful), from constructing a bogus 
+    <tt>Time</tt> object like this:
+</p>
+<pre class='language-cpp'><code>Time bed_time = {27, 95};</code></pre>
+<p>Both values supplied here makes the <tt>Time</tt> object, 
+    <tt>bed_time</tt>, <mark>invalid</mark>. But, the code compiles 
+    fine; everything is perfectly legal C++, and the compiler has no 
+    idea that something bad might
+    happen in the future.
+</p>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
