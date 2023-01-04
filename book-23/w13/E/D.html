@@ -6,44 +6,52 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>The Implementation File</title>
+    <title>Proving the Interface</title>
 </head>
 <body>
 <div id='page'>
 <div>
-  <h1>The Implementation File</h1>
-  <p class='firstLine'>The header file <mark>defines the instance 
-    variables</mark> used to
-      store the attributes or properties. 
-      The implementation file, which
-    typically uses the structure name with a <tt>.cpp</tt> extension,
-    <strong>provides a definition</strong> for each    
-    <mark>member function</mark> defined in the interface.
+  <h1>Proving the Interface</h1>
+  <p class='firstLine'>When designing an interface, its often useful 
+    to write a client program, just to try it out. This is called 
+    <mark>proving your interface</mark>.
+    You may find that you need additional member functions. 
+    Or, you might find that the prototypes for the functions 
+    are not exactly what you need to complete your task, and 
+    you can change them at this stage.
   </p>
-  <p>
-      Here's a starter for the implementation file:
+  <p> Here's the <tt>run()</tt> function which will act as the client for 
+      your new <tt>Time</tt>
+      type. This is a revision of <tt>H01</tt>, using member functions.
   </p>
-<pre class='language-cpp'><code>#include "time.h"
-#include &lt;iostream&gt;
-using namespace std;</code></pre>
-  <ol>
-    <li><tt>#include</tt> the header file with the class definition. 
-      If you don't, the compiler will flag all of the member 
-      functions as errors.
-    </li>
-    <li>Surround the header name in "double quotes" <tt>not</tt>
-      &lt;angle brackets&gt;, which the preprocessor sees as 
-      instructions to look for standard library files.
-    </li>
-    <li><tt>#include</tt> any standard libraries that the implementation 
-      uses. Here that is the <tt>&lt;iostream&gt;</tt> library, which 
-      is used for the <tt>read()</tt> and <tt>write()</tt>
-      member functions.
-    </li>
-  </ol>
-  <p>Because this is an implementation, not an interface file,
-    you may include a <code class='language-cpp'>using namespace std;</code>
-    preprocessor directive.
+<pre class='language-cpp'><code>int run()
+{
+    printHeading(); // already written
+
+    Time startTime;
+    Time duration;
+
+    // Prompt and read the input
+    cout &lt;&lt; "    Time: ";
+    if (! startTime.read(cin)) { return die(); }
+    cout &lt;&lt; "    Duration: ";
+    if (! duration.read(cin))  { return die(); }
+
+    // Processing section
+    Time after = startTime.sum(duration);
+    Time before = startTime.difference(duration);
+
+    // Output section
+    duration.write(cout) &lt;&lt; " hours after, and before, ";
+    startTime.write(cout) &lt;&lt; " is [";
+    after.write(cout) &lt;&lt; ", ";
+    before.write(cout) &lt;&lt; "]" &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+  <p> The interface looks OK, so let's go ahead and 
+    <mark>implement</mark> the member
+      functions.
   </p>
   
 </div>
