@@ -6,13 +6,32 @@
     <link href='../../cs150.css' rel='stylesheet' media='all'>
     <link href='../../prism.css' rel='stylesheet'>
     <script src='../../prism.js'></script>
-    <title>Returning Unique Pointers</title>
+    <title>Smart Pointers &amp; Functions</title>
 </head>
 <body>
 <div id='page'>
 <div>
-  <h1>Returning Unique Pointers</h1>
-  <p class='firstLine'>You <mark>can</mark> copy or assign 
+  <h1>Smart Pointers &amp; Functions</h1>
+  <p class='firstLine'>When you write functions, generally, the parameter types should
+  be <mark>raw</mark> pointers, <mark>not</mark> smart pointers. That
+  is because smart pointers only work with memory on the heap, and
+  you generally want to write functions that work with both
+  stack and heap-based variables. For instance, imagine that you have a <tt>Cat</tt> structure, and you want to
+  write a function that makes a <tt>Cat</tt> dance. The best way
+  is to write the function like this:
+</p>
+<pre class='language-cpp'><code>void dance(Cat * p);</code></pre>
+<p>Now, if you have a <tt>Cat</tt> object on the stack, you can call
+the function like this:</p>
+<pre class='language-cpp'><code>Cat bill; dance(&amp; bill);</code></pre>
+<p>To call the function with a <mark>smart pointer</mark> however,
+  you have to retrieve the raw pointer using the <tt>get()</tt> function
+  like this:
+</p>
+<pre class='language-cpp'><code>unique_ptr&lt;Cat&gt; cp(new Cat("Bill"));
+dance(cp.get());</code></pre>
+<h2>Returning Unique Pointers</h2>
+  <p>You <mark>can</mark> copy or assign 
     a <tt>unique_ptr</tt>
     <mark>that is about to be destroyed!</mark> This means
     that we can write functions which <mark>return</mark>
