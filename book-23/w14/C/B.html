@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Getter &amp; Setter Patterns</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Getter &amp; Setter Patterns</h1>
+  <p class='firstLine'> The pattern of pairing a "getter"
+      along with a "setter" function is common, and you
+      will see it in any major C++ project you work on. 
+      Unlike Java, the actual <tt>get*</tt> and <tt>set*</tt> 
+      name pattern is not as common. 
+      Instead, what programmers often 
+      do is write <strong>a pair of overloaded functions</strong>. 
+      <p>Instead of the name <tt>getHours()</tt> or <tt>setHours()</tt>, use 
+      the name <tt>hours()</tt> for both of them.
+  </p>
+  <ul>
+    <li>
+      The accessor is <tt>const</tt> and returns a value. </li>
+    <li>
+      The non-<tt>const</tt> mutator returns a reference, which can
+      be assigned to. 
+    </li>
+  </ul>
+<pre class='language-cpp'><code>Time Time::hours() const { return m_hours; }  // accessor
+Time&amp; Time::hours()                           // mutator
+{
+    if (h &lt; 0 || h &gt; 23) throw out_of_range("...");
+    return m_hours;
+}</code></pre>
+<p>In general, it is safer to allow clients to <mark>read the 
+      values</mark> of the data members than it is allow 
+      them to <strong>change</strong> those
+      values. As a result, "setters" are far less common 
+      than "getters" in class design. Classes with no mutators at 
+      all, are called <mark>immutable classes</mark>.
+</p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

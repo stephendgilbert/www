@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Working Constructor</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Working Constructor</h1>
+  <p class='firstLine'>With the <tt>Time</tt> class we might like 
+    to have another, <strong>overloaded</strong> constructor which 
+    takes hours and minutes. This is generally known as the    
+    <strong>working constructor</strong>. Here is the public 
+    interface of <tt>Time</tt>
+      with both of these constructors.
+  </p>
+<pre class='language-cpp'><code>class Time
+{
+public:
+    Time();                  // default
+    Time(int h, int m);      // working
+    . . .
+};</code></pre>
+  <p>Unfortunately, if you have <strong>any</strong> explicit 
+    constructors, the synthesized one <mark>is deleted</mark>, so 
+    you have to add an <strong>explicit default constructor</strong> as
+    done here. In C++11, however, you can
+    just add the phrase <tt>=default;</tt> to the end of the prototype 
+    in the class  header, and the compiler will 
+    <mark>retain</mark> the synthesized
+     constructor that it normally writes.
+  </p>
+  <p>
+      The <strong>implementation</strong> of the constructors goes 
+      into the <tt>.cpp</tt>
+      file along with the other member functions. The job of the 
+      constructor is to <strong>initialize the data members</strong>, 
+      so in the <tt>Time</tt> class, you
+      might have code that looks something like this.
+  </p>
+<pre class='language-cpp'><code>Time::Time() { m_hours = m_minutes = 0; }
+Time::Time(int hours, int minutes)
+{
+    m_hours = h; 
+    m_minutes = m;
+}</code></pre>
+
+  
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

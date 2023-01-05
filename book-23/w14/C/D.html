@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Member Initialization</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Member Initialization</h1>
+  <p class='firstLine'>In C++, <strong>all constructors 
+  </strong>must initialize    <mark>all primitive types</mark>. 
+  A C++ constructor does not need to
+  initialize any object members (like <tt>string</tt> or <tt>vector</tt>). 
+  </p>
+  <p>
+  This is    <mark>exactly the opposite from Java</mark>, 
+  where you must initialize
+      all of the object instance variables, or they are 
+      set to <tt>null</tt> (an invalid
+      object). In Java, all primitive instance variables are automatically 
+      initialized to <tt>0</tt> like this:
+  </p>
+<pre class='language-cpp'><code>public class Point
+{
+    private String name;
+    int x, y;
+    public Point() {}
+}
+
+Point p = new Point(); // x,y->0, name is null (invalid)</code></pre>
+  <p> In C++, if you fail to initialize a primitive data member, 
+    then it assumes    <strong>whatever random value</strong> was 
+    in memory; if you don't
+      initialize an object, such as <tt>string</tt> or <tt>vector</tt>, 
+      its default constructor
+      will <mark>automatically</mark> run, 
+      and it is still a valid object.
+  </p>
+<pre class='language-cpp'><code>class Point
+{
+public:
+    Point() {}
+private:
+    string name;
+    int x, y;
+};
+
+Point p; // x,y-&gt;random, name is valid empty string</code></pre>
+  <p> Of course, if you provide in-definition
+      initializers for your primitive data
+      members, they <mark>will</mark> automatically be initialized,
+      even if your construct does not explicitly initialize them.
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
