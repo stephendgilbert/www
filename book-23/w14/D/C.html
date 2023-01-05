@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Implicit vs. Explicit</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Implicit vs. Explicit</h1>
+  <p class='firstLine'>Conversion constructors can be 
+      <mark>implicit</mark> (which is the default), 
+      or <mark>explicit</mark>. The implicit 
+      conversion constructor is called
+      any time the compiler needs a <tt>Time</tt> object, 
+      but finds a <tt>double</tt> that it can
+      convert. Consider this fragment of code:
+  </p>
+<pre class='language-cpp line-numbers'><code>Time bed_time(23, 30);      // 11:30
+bed_time = 5.2;             // WHAAAAT?</code></pre>
+  <p> You would <mark>expect</mark> that line 2 would be a
+  syntax error, but, surprisingly, it is not. Instead,    
+  <strong>the conversion constructor is silently (implicitly) 
+  called</strong>, and <tt>bed_time</tt>
+  is changed to <b>5:12 am</b>. Probably not what you expected.
+  </p>
+  <p>You can add <tt>explicit</tt> as a modifier to the 
+      prototype to prevent this:
+  </p>
+<pre class='language-cpp'><code>explicit Time(double hours);  // 7.51 -> 7:35</code></pre>
+  <p>The keyword <tt>explicit</tt> <mark>only</mark> goes in the 
+      class definition. It <mark>is not repeated</mark> in the 
+      <tt>.cpp</tt> file. 
+  Sometimes, as you'll see
+      when you cover symmetric overloaded operators in CS 250, 
+      you'll <strong>want</strong>
+      to allow implicit conversion. For instance the 
+      <tt>string(const</tt> <tt>char*)</tt>
+      constructor is <mark>not explicit</mark>. 
+      Most of the time, however,
+      <tt>explicit</tt> is preferred.
+  </p>
+
+  
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
