@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Private Base-Class Members</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Private Base-Class Members</h1>
+  <p class='firstLine'>Private base-class data members 
+    <mark>are not directly accessible</mark> to the derived class
+    object member functions. To see how this works,
+    in the editor, change the <tt>Student</tt> constructor so that 
+    it attempts to set the <tt>private</tt> <tt>name</tt> data 
+    member directly, (instead of using the <tt>setName()</tt> member function).
+  </p>
+<pre class='language-cpp'><code>Student::Student(const string sname, long sid)
+{
+    // setName(sname);  // comment this out
+    name = sname;       // add this;
+    studentID = sid;
+}</code></pre>
+  <p> Type <tt>make</tt> in the console. You'll see an error message 
+    that looks something like this:
+  </p>
+<div class='consoleDisplay'>student.cpp:8:3:<span class='r'> error:</span> string Person::name is private here:<br />
+&nbsp;&nbsp;<span class='r'>name</span> = sname;<br />
+&nbsp;&nbsp;<span class='r'>^~~~</span></div>
+  <p>Even though you can't access the <tt>private</tt> <tt>name</tt> 
+    data member from the derived <tt>Student</tt> 
+    class, the data member <mark>exists inside the <tt>Student</tt> 
+    object nonetheless</mark>. You
+    know that is true, because the <strong>inherited</strong> 
+    <tt>setName()</tt> and <tt>getName()</tt>
+    member functions work correctly, and without the existance of the
+    <tt>private</tt> data member, that
+    would not be possible.
+  </p>
+  <div class='highlight'>
+    <p>
+    Private data members <strong>are</strong> inherited, in the 
+    sense that each derived class object contains a copy of 
+    each <tt>private</tt> variable defined in the base class, 
+    even though the member functions in the derived
+    object are not free to directly access that variable.
+      </p>
+  </div>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
