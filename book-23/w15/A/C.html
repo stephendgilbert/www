@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Constructor Chaining</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Constructor Chaining</h1>
+  <p class='firstLine'>Before a derived class constructor can do 
+  <strong>any</strong> of its work,
+  it must first initialize <strong>all of the base class data 
+  members</strong>. This must happen    <mark>before</mark> 
+  the derived constructor ever runs. (If this sounds
+      familiar, it should. It is the same reason that your 
+      class data members are
+      already initialized before the first line of your 
+      constructor runs!)
+  </p>
+  <p>
+      You needn't do anything special to make this happen. 
+      When your constructor
+  runs, if    <strong><mark>implicitly</mark> calls the default or 
+  no-argument constructor</strong> in
+  the base class as its first line of code, and that 
+  constructor calls    <strong>its</strong> base class 
+  constructor, and so on, all the way up to
+  the first class in your hierarchy. This is called   
+  <mark>constructor chaining</mark>.
+  </p>
+  <p>
+      So, consider for a second, the <tt>Student</tt> class constructor 
+      in the previous
+      section. Even though not explicit in the source code,
+      the following
+      commands are executed when the <tt>Student</tt> constructor is 
+      invoked (after memory
+      for both the <tt>Person</tt> part of the <tt>Student</tt> and the <tt>Student</tt> 
+      part of the <tt>Student</tt>
+      has been allocated).
+  </p>
+  <ol>
+    <li>call the <tt>Person</tt> default constructor</li>
+    <li>call the <tt>setName()</tt> inherited member function</li>
+    <li>assign the <tt>sid</tt> parameter to the data member</li>
+    <li>print the diagnostic message</li>
+  </ol>
+  <p>
+  That's why you saw <mark>three diagnostic messages</mark> 
+  when    <strong>you only created two objects</strong>. When 
+  you created the <tt>Student</tt>
+      object named <tt>steve</tt>, the <tt>Student</tt> constructor 
+      <strong>first</strong> called
+      the <strong>default</strong> constructor for 
+      the <tt>Person</tt> class.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

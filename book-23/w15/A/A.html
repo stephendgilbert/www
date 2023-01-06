@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Base-class Constructors</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Base-class Constructors</h1>
+<a target='_blank' href='https://replit.com/@stephengilbert/Inheritance?v=1'>
+<img src='../images/running-man.png' class='left width-32'
+  alt='The running-man icon.'></a>
+  <p class='firstLine'>Now that you've learned about inheritance 
+      and inherited members, let's
+      look at how  <mark>derived-class constructors</mark> are written. 
+      We'll with our simple
+      "finger-exercise" example that lets you concentrate on one piece of the
+      inheritance puzzle at a time. You can re-open it directly from 
+      <a target='_blank' href='https://replit.com'><b>Replit</b></a>,
+      or you can <strong>click the Running Man</strong> to
+      open my copy, and <b>Fork</b> it again.
+  </p>
+  <p> A constructor <strong>must</strong> have the same name as the 
+  class, so,  when you create a new class, it    
+  <strong>cannot inherit any of the base class constructors</strong>.
+  Instead, it defines new ones.
+  </p>
+  <p> To see how that works, modify the <tt>Person</tt> class, 
+      which now uses only the <strong>synthesized default 
+      constructor</strong> that is automatically
+      written by your compiler, when you don't supply any 
+      explicit constructors. In <tt>person.h</tt> add this code:
+  </p>
+<pre class='language-cpp'><code>class Person
+{
+public:
+    Person();
+    Person(const std::string&amp; pname);
+   . . .
+};</code></pre>
+  <p> In <tt>person.cpp</tt> add an implementation that prints a 
+      message so you can keep track of which constructor is called. 
+      The working constructor should use its <tt>string</tt> 
+      parameter to initialize the <tt>m_name</tt> data member in addition
+      to <strong>printing a diagnostic message</strong>.
+  </p>
+<pre class='language-cpp'><code>Person::Person() { cout &lt;&lt; "Calling Person()" &lt;&lt; endl; }
+
+Person::Person(const string&amp; pname)
+{
+    cout &lt;&lt; "Calling Person(" &lt;&lt; pname &lt;&lt; ")" &lt;&lt; endl;
+    name = pname;
+}</code></pre>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

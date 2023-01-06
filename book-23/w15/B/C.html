@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Overriding toString()</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Overriding toString()</h1>
+  <p class='firstLine'> When another class (like <tt>Student</tt>) 
+  wants to provide a different
+      implementation for a <tt>virtual</tt> member
+      function, like <tt>toString()</tt>, it must:
+  </p>
+  <ol>
+    <li>Use <mark>exactly the same 
+      signature</mark> (number and type of parameters) as the 
+      original <tt>virtual</tt> function in the base class. There are
+      no conversions between <tt>int</tt> and <tt>double</tt> for instance as 
+      with overloading.
+    </li>
+    <li>Return <strong>exactly</strong> the same type as the original 
+        member functions.
+    </li>
+  </ol>
+  <p>Let's override <tt>toString()</tt> in the <tt>Student</tt>
+    class. Here's the header:
+  </p>
+<pre class='language-cpp'><code>class Student : public Person
+{
+public:
+    Student(const std::string name, long sid);
+    long getID() const;
+    std::string toString() const;
+private:
+    long studentID;
+};</code></pre>
+  <p> Note that the prototype is copied <b>exactly</b> from
+      <tt>Person::toString()</tt>, except for the keyword <tt>virtual</tt>.
+      You <mark>do not need to repeat</mark> the 
+      word <tt>virtual</tt> in the derived
+      class definition, (although you <strong>may</strong> for 
+      documentation purposes). A
+      <tt>virtual</tt> function is always 
+      <tt>virtual</tt>, and a non-virtual function
+      <strong>cannot</strong> be made <tt>virtual</tt> in one of its subclasses.
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

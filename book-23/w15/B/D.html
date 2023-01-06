@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Implementing Student::toString()</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Implementing Student::toString()</h1>
+  <p class='firstLine'> Here's one possible implementation of 
+    <tt>Student::toString()</tt>:
+  </p>
+<pre class='language-cpp'><code>string Student::toString() const
+{
+    return "Name: " + getName() // inherited member
+        + ", ID: " + to_string(studentID);
+}</code></pre>
+  <img src='../images/using-toString2.png' class='right'
+    alt='Using the overridden toString member function.'>
+  <p> While this works, it <strong>doesn't</strong> take advantage 
+    of the of the already-written <tt>toString()</tt> member function in the 
+    <tt>Person</tt> class; in the <tt>Student</tt> version of 
+    <tt>toString()</tt>,
+    you're <mark>duplicating exactly the same code</mark>.
+  </p>
+  <p> Is there some way to run the original version of <tt>toString()</tt>, and
+      just <strong>add on</strong> the new parts you want, like 
+      the <tt>studentID</tt>? Is there some way you can 
+      <strong>combine</strong> inherited and overridden
+      member functions?
+  </p>
+  <p>
+      <mark>Yes, there is.</mark>
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

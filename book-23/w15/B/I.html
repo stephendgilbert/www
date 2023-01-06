@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Substitution vs. Conversion</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Substitution vs. Conversion</h1>
+  <p class='firstLine'>C++ allows automatic conversions between 
+  the built-in numeric types; with
+      numeric conversion, the compiler runs a built-in algorithm 
+      and tries to
+  calculate the closest value that you desire. That's    
+  <mark>not what happens</mark> with objects in a class hierarchy.
+  </p>
+  <p>
+      When you pass an <tt>ofstream</tt> object to a function that expects an
+      <tt>ostreams&amp;</tt>, <mark>no conversion takes place at 
+      all!</mark> Instead,
+      the <tt>ofstream</tt> object is automatically 
+      treated as if it    <mark>were</mark> an <tt>ostream</tt>
+      object, because the
+      <tt>ostream</tt> and <tt>ofstream</tt>
+      classes are related
+      as in a special way through inheritance. 
+      Because the <tt>ofstream</tt>
+      class is derived
+      from the <tt>ostream</tt> class we can    
+      <mark>substitute it</mark>
+      for the expected <tt>ostream</tt> parameter.
+  </p>
+  <p>
+  <img src='../images/liskov.png.jpg' class='left width-30 shadow round'
+    style='margin-top:.5em; margin-right:1em; margin-bottom:3em;'
+    alt='Barbara Liskov.'>
+  
+      We can do that because the derived class inherits all of the
+      characteristics of its base class, so that anything 
+      an <tt>ostream</tt> object can
+      do, an <tt>ofstream</tt> object can do as well, by definition. 
+      This ability to allow
+      a derived or subclass object to be used in any context
+      that expects a
+      base-class object is known as the    
+      <mark>Liskov Substitution Principle</mark>, 
+      after computer scientist
+      Barbara Liskov.
+  </p>
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

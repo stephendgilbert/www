@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Implementing toString()</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Implementing toString()</h1>
+  <p class='firstLine'>The implementation of <tt>toString()</tt>, 
+    in <tt>person.cpp</tt> <mark>does not</mark> repeat the keyword
+    <tt>virtual</tt>. Let's have it display the person's name, like this:
+  </p>
+<pre class='language-cpp'><code>string Person::toString() const
+{
+    return "Name: " + name;
+}</code></pre>
+   <p>The <tt>Student</tt> class inherits <tt>Person::toString()</tt>. 
+      If the <tt>Student</tt> class does
+      nothing else, then there is no difference between a 
+      <tt>virtual</tt> member function and a
+      regular member function. To see this, modify <tt>main()</tt>
+      to add the following two lines:
+  </p>
+<pre class='language-cpp'><code>cout &lt;&lt; "pete->" &lt;&lt; pete.toString() &lt;&lt; endl;
+cout &lt;&lt; "steve->" &lt;&lt; steve.toString() &lt;&lt; endl;</code></pre>
+  <img src='../images/using-toString.png' class='right'
+    alt='Exercising the toString member function.'>
+  <p>
+      When you run the sample program it looks like this.
+  </p>
+  <p> The variable <tt>pete</tt> prints out the name as you'd 
+      expect (since <tt>pete</tt> is a
+      <tt>Person</tt> object). The variable <tt>steve</tt>
+      <strong>also</strong>
+      uses the new <tt>toString()</tt> member function defined 
+      in <tt>Person</tt>. To <tt>steve</tt>, it is
+      just another <mark> inherited</mark>
+      member.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

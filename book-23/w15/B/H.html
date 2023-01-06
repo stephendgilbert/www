@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Stream Substitutability</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Stream Substitutability</h1>
+  <p class='firstLine'>Writing data to a file is almost as 
+  easy as printing it on the screen. Once
+  an <tt>ofstream</tt> object is set up, 
+  you can use the <tt>&lt;&lt;</tt>
+  operator with the file stream in the same way you can with
+  the <tt>cout</tt>  object:
+  </p>
+<pre class='language-cpp'><code>int x = 42;
+ofstream out("myfile.dat");
+cout &lt;&lt; "x-&gt;" &lt;&lt; x &lt;&lt; endl;   // of course this works
+out &lt;&lt; "x-&gt;" &lt;&lt; x &lt;&lt; endl;    // this works as well</code></pre>
+   <p>Well, the question is, <mark>why does that work?</mark> To understand
+   this, think back to the <tt>write</tt> function that you created for
+   the <tt>Point</tt> structure:
+<pre class='language-cpp'><code>ostream&amp; write(ostream&amp; out, const Point&amp; p)
+{
+    out &lt;&lt; "(" &lt;&lt; p.x &lt;&lt; ", " &lt;&lt; p.y &lt;&lt; ")";
+    return out;
+};</code></pre>
+  <p>This works with <tt>cout</tt> and <tt>cerr</tt>, both of 
+    which are <tt>ostream</tt> objects. 
+  </p>
+<pre class='language-cpp'><code>Point p = {4, 2};
+write(cout, p) &lt;&lt; endl;
+write(cerr, p) &lt;&lt; endl;</code></pre>
+  <p>So, what do you have to do to adapt the function 
+      so that it works with <tt>ofstream</tt> objects and maybe 
+      even <tt>ostringstream</tt> objects?
+      The answer, perhaps surprisingly, is that
+      <mark>you do not have to do anything</mark>; 
+      it already works with <tt>ofstream</tt>
+      objects just as it does with <tt>ostream</tt> objects like
+      <tt>cout</tt>, <mark>because every <tt>ofstream</tt> 
+      object IS-A <tt>ostream</tt> object</mark> through the
+      <b>principle of substitutability</b>.
+  </p>
+    
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

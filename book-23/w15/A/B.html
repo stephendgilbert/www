@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Derived-class Constructors</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Derived-class Constructors</h1>
+  <p class='firstLine'>The derived <tt>Student</tt> class
+    already has a constructor. Go ahead and modify it as well,
+      so it prints a message like this:
+  </p>
+<pre class='language-cpp'><code>Student::Student(const string sname, long sid)
+{
+    setName(sname);
+    studentID = sid;  
+    cout &lt;&lt; "Calling Student(" &lt;&lt; name &lt;&lt; ", "
+        &lt;&lt; sid &lt;&lt; ")\n";
+}</code></pre>
+  <p>Modify <tt>main</tt> inside <tt>client.cpp</tt> to create two 
+      objects, one <tt>Person</tt> and one
+      <tt>Student</tt>, and to print out their info, just 
+      like the existing example.
+  </p>
+<pre class='language-cpp'><code>Person pete("Pete the Pirate");
+Student steve("Steve", 1007);
+cout &lt;&lt; "pete->" &lt;&lt; pete.getName() &lt;&lt; endl;
+cout &lt;&lt; "steve->" &lt;&lt; steve.getName() &lt;&lt; endl;</code></pre>
+  <p> Type <tt>make</tt> <tt>run</tt> to compile and run the 
+    modified program. You'll see that instead of only two constructor
+    calls, which you'd expect,    
+    <strong>both</strong> <tt>Person</tt> constructors have been called, 
+    along with the <tt>Student</tt> constructor, for a total of 
+    three, even though <mark>only two objects are created</mark>. 
+    Why?
+    <img src='../images/extra-constructor-call.png' class='inlineCenter'
+      alt='Running the sample program.'>
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

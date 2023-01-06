@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The override Keyword</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The override Keyword</h1>
+  <p class='firstLine'>While always a <mark>logic error</mark> 
+  for a derived class to redefine
+  a non-virtual function, it <b>is not</b> a syntax error.
+  C++ 11 added new <mark>contextual 
+  keywords</mark> that    <strong>allow the compiler to 
+  catch such logic errors</strong> that
+      previously were often hidden, and turn them
+      into syntax errors that can be caught at 
+      compile time.
+  </p>
+  <p>
+      <strong>To tell the compiler</strong>
+      that you <mark>intend to override</mark> a base 
+      class function, add the contextual
+      keyword <tt>override</tt> to the end of the member function 
+      declaration like this:
+  </p>
+<pre class='language-cpp'><code>std::string toString() const override;</code></pre>
+  <p>
+      Now, if you were to forget the <tt>virtual</tt> in the base 
+      class, trying to (incorrectly) override a non-virtual 
+      inherited member function, 
+      or misspell the name of the member function, or provide 
+      the wrong arguments, the  <mark>compiler catches those 
+      errors</mark> and 
+      warns you when you compile, like this:
+  </p>
+<div class='consoleDisplay'>error: 'Student::toString()' marked override, but<br />
+&nbsp;&nbsp;&nbsp;&nbsp;does not override std::string Person::toString()</div>
+
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

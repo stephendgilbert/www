@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Virtual Member Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Virtual Member Functions</h1>
+  <p class='firstLine'>Now that you've learned about inheritance 
+    and constructors, let's take a  look at
+    how derived-class member functions may be    
+    <mark>redefined or overridden</mark>. Open the <b>Repl</b> 
+    from Lesson <b>15A</b> and we'll continue with our simple 
+    "finger-exercise" example that lets you
+    concentrate on one piece of the inheritance puzzle at a time.
+  </p>
+  <p><strong>A derived class may <mark>override</mark></strong>
+      member functions in the base class. The base class must permit that by
+      using the keyword <tt>virtual</tt> on the prototype. 
+      Let's see how that works by modifying the <tt>Person</tt> 
+      class to add a new <tt>virtual</tt> <tt>toString()</tt>
+      member function and a <tt>virtual</tt> destructor like this:
+  </p>
+<pre class='language-cpp'><code>class Person
+{
+public:
+    . . .
+    virtual std::string toString() const;
+    virtual ~Person() = default;
+private:
+    std::string name;
+};</pre></code>
+
+  <p> It is up to the <strong>base class designer</strong> 
+  to decide which member
+      functions <strong>may be</strong> overridden and which 
+      may not. Member
+  functions which allow derived classes to override them
+  <mark>should be preceded</mark> with the keyword <tt>virtual</tt>.
+  </p>
+  <p>As soon as you add a single <tt>virtual</tt> function, you 
+    should add a <mark><tt>virtual</tt> destructor</mark>as shown 
+    in the <tt>Person</tt> class header.
+    This uses the <tt>=default</tt> keyword to keep the 
+    synthesized destructor written
+      by the compiler.
+  </p>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
