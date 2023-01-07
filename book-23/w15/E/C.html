@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Creating an Abstract Class</title>
+</head>
+<body>
+<div id='page'>
+<div>
+ <h1>Creating an Abstract Class</h1>
+  <p class='firstLine'>Unlike Java and Python, C++ has no 
+      <tt>abstract</tt> keyword. Instead, in C++, an 
+      <mark>Abstract Base Class</mark> (or <strong>ABC</strong>)
+      is any class that has one, or more,    
+      <mark>pure virtual member functions</mark>, created 
+      using the following
+      syntax in the prototype:
+  </p>
+<pre class='language-cpp'><code>class Shape     // abstract class
+{
+public:
+    ...
+    // Pure virtual function (abstract method)
+    virtual void draw() const = 0;
+    ...
+};</code></pre>
+<img src='../images/shape-uml.png' class='right width-30'
+  alt='The Shape UML diagram.'>
+  <p>Think of the <mark><tt>= 0;</tt></mark> part of syntax as a 
+    <strong>replacement</strong> for the <tt>abstract</tt>
+    keyword in Java and Python. </p><p>Abstract classes are 
+    <strong>not restricted</strong> to abstract member functions 
+    like <tt>draw()</tt>; you can have as many regular (concrete) 
+    member functions as you'd like, freely mixed with your 
+    abstract methods. </p><p>The <tt>Shape</tt> class in the UML diagram
+    at the right has a <tt>setLocation()</tt> member function. 
+    In UML, abstract methods,
+    such as <tt>draw()</tt>, are drawn using italics.
+  </p>
+  <p>
+      Your concrete methods may <strong>call</strong> abstract methods as part of
+      their definition, even though the member function is never implemented in
+      the base class. 
+      Unlike Java, C++ pure virtual functions <mark>may have an 
+      optional implementation</mark>. Since you cannot
+      create an instance of an abstract base class, you could only
+      call this implementation from a derived class.
+  </p> 
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Redefining Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+ <h1>Redefining Functions</h1>
+  <p class='firstLine'>A derived class may <strong>replace</strong> 
+    an inherited member function,
+      which the class designer wanted left alone. In the 
+      <tt>Person</tt> class, <tt>getName()</tt>
+      returns the name of the person. <strong>This works fine as 
+      is</strong>;
+      there's no reason for a derived class to change it.
+  </p>
+  <p>However, <mark>nothing prevents a derived class from 
+      redefining it</mark> like this:
+  </p>
+<pre class='language-cpp'><code>class Imposter : public Person
+{
+public:
+    string getName() const 
+    {
+        return "Emperor " + Person::getName();
+    }
+};</code></pre>
+  <p> The derived class has no access to the <tt>private</tt> 
+      member <tt>name</tt>. However,
+      because the <tt>getName()</tt> member function can be 
+      <mark>redefined</mark>,
+      the derived class was able to effectively gain access to 
+      this field. And, because of the <strong>principle of 
+      substitutability</strong>, the <tt>Person</tt>
+      that your function receives as a parameter may 
+      actually be an <tt>Imposter</tt>.
+  </p>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

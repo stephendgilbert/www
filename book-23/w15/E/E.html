@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>A Triangle Example</title>
+</head>
+<body>
+<div id='page'>
+<div>
+ <h1>A Triangle Example</h1>
+  <p class='firstLine'>Let's look at an example. To create the 
+    <tt>Triangle</tt> (or <tt>Circle</tt> or <tt>Square</tt>)
+      classes, using the abstract Shape class as the base class, 
+      all you need do is:
+  </p>
+<pre class='language-cpp'><code>class Triangle : public Shape
+{
+public:
+    // MUST override; pure virtual in Shape class
+    void draw() const;
+};
+
+void Triangle::draw() const { /* your code here */ }</code></pre>
+  <ol>
+    <li>Specify the <tt>Shape</tt> class as the <tt>public</tt>
+        base class in the class header.
+    </li>
+    <li>Provide an implementation for <mark>every</mark> pure virtual
+      function (abstract method) in the <tt>Shape</tt> class.
+  </ol>
+  <p>
+      For <tt>Triangle</tt> that means you <mark>must</mark> 
+      define a <tt>draw()</tt> member
+      function where indicated by the comments. In reality, 
+      you'll probably do a
+      lot more; <tt>Circle</tt> might have a <tt>radius</tt> member, 
+      the <tt>Square</tt> class could have
+      members for the size of each <tt>side</tt>, and the 
+      <tt>Triangle</tt> class could have
+      members for <tt>base</tt> and <tt>height</tt>.
+  </p>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

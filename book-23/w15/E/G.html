@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Final Classes</title>
+</head>
+<body>
+<div id='page'>
+<div>
+ <h1>Final Classes</h1>
+  <p class='firstLine'>To prevent <tt>Imposter</tt> classes, 
+      when you design a base class, consider 
+      which functions you want to allow others to extend and which 
+      ones should be "set in stone". No one should ever change 
+      <tt>getName()</tt>, so you can <mark>seal it using
+      <tt>final</tt></mark> like this:
+  </p>
+<pre class='language-cpp'><code>class Person
+{
+public:
+    virtual std::string getName() const final;
+};</code></pre>
+  <p>When a member function is marked <tt>final</tt> then 
+      derived classes are <strong>prevented</strong> from 
+      overriding it and we would see an error
+      message like this:
+  </p>
+<div class='consoleDisplay'>Person.cpp:33:12: error: virtual function 'virtual<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string Imposter::getName() const'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string getName() const<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^<br />
+Person.cpp:21:8: error: overriding final function          <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'virtual std::string Person::getName() const'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string Person::getName() const { return name; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^</div>
+  <p>Only <tt>virtual</tt> functions can be marked <tt>final</tt>,
+    (which is really annoying). When designing a collection of
+    classes, you normally <strong>won't want all of the classes 
+    to be extensible</strong>. To prevent others from extending your 
+    class, add <tt>final</tt> to the class header, just like you did for the method.
+    If you make a class <tt>final</tt>, then there is no reason to make the methods
+    <tt>final</tt> as well.
+  </p>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
