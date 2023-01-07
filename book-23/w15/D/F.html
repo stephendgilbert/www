@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Composition</title>
+</head>
+<body>
+<div id='page'>
+<div>
+ <h1>Composition</h1>
+  <p class='firstLine'>Instead of using private inheritance, 
+    a better solution is to use <strong>composition</strong>.
+    <mark>Composition creates a new class by combining 
+    simpler classes</mark>,
+    using instances of the simpler class as the data members. In composition,
+    an object is <strong>composed of other objects</strong>, 
+    which make up its "parts." That's why it's called (informally) a 
+    <mark>has-a</mark>
+    relationship; because we can say that:
+     <img src='../images/bike-seat.png' class='right width-25'
+      alt='A bicycle seat.'>
+ </p>
+ <ul>
+
+      <li>A car <strong>has a</strong> motor, or
+      </li>
+      <li> A bicycle <strong>has a</strong> seat, or
+      </li>
+      <li>A computer <strong>has a</strong> CPU
+      </li>
+  </ul>
+  <p>Here is some code for a version of the <tt>GiPod</tt> 
+    which uses composition; note that it needs to
+    <strong>explicitly write the prototypes</strong> for any 
+    member functions that it uses.
+  </p>
+<pre class='language-cpp'><code>class GiPod
+{
+public:
+    void playMusic() const 
+    {
+        caddy.playMusic();  // forward or delegate
+    }
+private:
+    Cadillac caddy;         // data member
+};</code></pre>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

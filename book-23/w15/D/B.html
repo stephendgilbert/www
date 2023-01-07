@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>How Late Binding Works</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>How Late Binding Works</h1>
+  <p class='firstLine'>Virtual member functions are implemented 
+    by adding a new pointer to every
+    object that contains at least one virtual function. 
+    This pointer is called
+    a <mark><i>vptr</i></mark> and it points to a table 
+    of functions, called a
+      <mark><i>vtable</i></mark> or 
+       <a target='_blank'
+      href="http://en.wikipedia.org/wiki/Virtual_method_table"><b>Virtual 
+      Method Table</b></a>. 
+    The <b><em>vtable</em></b> contains the actual addresses of the 
+    functions to be called for that class.
+    <img src='../images/vptr-vtable.png' class='inlineCenter width-80'
+      alt='vtable-vptr illustration.'>
+  </p>
+  <p>
+      Using this illustration, let's see how late binding, or dynamic dispatch
+      works:
+  </p>
+  <ol>
+    <li>You call <tt>emp[0]-&gt;raiseSalary()</tt></li>
+    <li>Your call is routed though the <b><i>vptr</i></b>
+      in <tt>emp[0]</tt>, which is actually a <tt>Manger</tt>, 
+      and your call eventually finds the address of the
+      <tt>Manager::raiseSalary()</tt> function inside the 
+      <tt>Manager</tt> <i><strong>vtable</strong></i>.
+    </li>
+    <li>You call <tt>emp[1]-&gt;promote()</tt></li>
+    <li>Your call is routed through the <i><strong>vptr</strong></i>
+      in <tt>emp[1]</tt>, which is actually an <tt>Engineer</tt>. 
+      This <i><strong>vptr</strong></i> points to the 
+      <tt>Engineer</tt> <i><strong>vtable</strong></i>
+      where it finds the <tt>Engineer::promote()</tt> function.
+    </li>
+  </ol>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

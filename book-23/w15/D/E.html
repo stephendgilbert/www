@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Private Inheritance</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <img src='../images/gipod.png' class='right'
+     alt='The GiPod class'>
+ <h1>Private Inheritance</h1>
+  <p class='firstLine'>Private inheritance is one way to solve 
+    this problem. Private inheritance
+    means you want to <mark>inherit the implementation of 
+    a class, not the interface.</mark> Use this when a class 
+    has some functionality
+    that you want to exploit, but you don't want to use the 
+    interface of the base class.
+  </p>
+  <p>To use private inheritance,replace the keyword <tt>public</tt>
+    with <tt>private</tt>, or, simply omit it altogether. I'd recommend
+    that you explictly specify <tt>private</tt>to prevent subsequent
+    maintenance programmers from "fixing" your code inadvertently.
+  </p>
+  <pre class='language-cpp'><code>class GiPod : private Cadillac
+{
+    // ...
+};</code></pre>
+ <p>
+    <tt>GiPod</tt> objects are not, in the <mark>is-a</mark> sense, 
+      <tt>Cadillac</tt>. Calling any "inherited" member functions will
+      fail. To call any of the inherited member functions, 
+      you must add those member functions to the new interface,
+      with a <mark><tt>using</tt></mark> declaration like this:
+  </p>
+<pre class='language-cpp'><code>class GiPod : private Cadillac 
+{
+public:
+    using Cadillac::playMusic;
+};</code></pre>
+  <p>When you "import" a member function like this, 
+      you don't need to specify the arguments or supply 
+      an argument list. You do
+      need the <tt>public:</tt> if you want the name moved into 
+      the <tt>public</tt> section.
+  </p>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

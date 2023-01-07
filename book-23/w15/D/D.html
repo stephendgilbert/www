@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Contraction</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Contraction</h1>
+  <p class='firstLine'>Suppose you have a class which simulates a 
+      Cadillac. It has an exceptionally fine sound system, which 
+      required a lot of effort to implement and of which you're 
+      especially proud. 
+      <img src='../images/cadillac.png' class='inlineCenter width-75'
+        alt='A Cadillac dashboard.'>
+  </p>
+  <img src='../images/gipod.png' class='right'
+    alt='The UML diagram for the GiPod class.'>
+  <p> Now you want to reuse that sound system
+      in a portable <tt>GiPod</tt> class:
+      Because you’ve already created the <tt>Cadillac</tt> 
+      class, why not just create a derived class, and then 
+      eliminate all the member functions that have
+      nothing to do with playing music, 
+      <mark>transforming the car into a mere sound system</mark>?
+  </p>
+  <p> To reuse the code you’ve already written, you replace 
+      <tt>brake()</tt>, <tt>accelerate()</tt>, and all the other 
+      "extra" methods from the <tt>Cadillac</tt> class
+      with empty braces. In traditional computer-science terms, 
+      you replace them
+      with a <mark>NOP</mark> (<b>N</b>o <b>OP</b>eration).
+  </p>
+  <p>
+      This practice, called <mark>contraction</mark>, is a trap! You should
+      avoid doing this for two reasons:
+  </p>
+  <ul>
+      <li>
+          You're <strong>violating the substitutability rule</strong>. You will
+          undoubtedly break some code that relied on all 
+          <tt>Cadillac</tt> objects
+          carrying out certain operations.
+      </li>
+      <li>
+          It’s <mark>more work than doing the right thing! </mark>
+      </li>
+  </ul>
+  <p>Let's look at how you can use <b>private inheritance</b> and
+    <b>composition</b> to do this correctly.
+  </p>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

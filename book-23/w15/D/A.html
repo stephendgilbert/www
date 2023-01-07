@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Early &amp; Late Binding</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Early &amp; Late Binding</h1>
+  <p class='firstLine'>What would happen if you were to remove 
+    the keyword <tt>virtual</tt> from the definition of the 
+      <tt>toString()</tt> member
+      function in the <tt>Person</tt> class? Your code would 
+      still compile, but the
+      <tt>toString()</tt> function would no longer be overridden; 
+      it    <mark>would be hidden</mark> in the derived 
+      class <tt>Student</tt>.
+  </p>
+  <p>
+      Functions are <mark>bound</mark> to an object 
+      depending on how they are
+      declared. A non-virtual function is <strong>bound at 
+      compile time</strong>
+      to the class that it is defined in. A non-virtual 
+      function defined in the
+      <tt>Person</tt> class (such as <tt>getName()</tt>), will always be bound 
+      to the <tt>Person</tt> class,
+      and <mark>cannot be overridden</mark> in any subsequent classes.
+  </p>
+  <p>
+      This is called <mark>early binding</mark> 
+      (or compile-time binding).
+  </p> 
+  <p>When you add the keyword <tt>virtual</tt> to a function, 
+    the function call binding is not
+    determined at compile time, but
+    <strong>when the program is run</strong>. Instead of looking 
+    at the type of the pointer or reference used in the function 
+    call, <mark>the actual object pointed to</mark> is used 
+    to decide which function to call. 
+  </p>
+  <p> This decision is made when your program runs. If your
+      <tt>Shape*</tt> points to a <tt>Circle</tt> object, 
+      then <tt>Circle::draw()</tt> will be called, but 
+      <mark>only if</mark> <tt>draw()</tt> is a <tt>virtual</tt>
+      function.
+      <img src='../images/shapes.png' class='inlineCenter width-40'
+        alt='A Shape Hierarchy.'>
+  </p>
+  <p> This is called <mark>late-binding</mark>  or
+    <a target='blank'
+      href="http://en.wikipedia.org/wiki/Dynamic_dispatch">
+      <mark>dynamic dispatch</mark></a>. In Java,
+      <strong>all</strong> methods use late binding, but in C++ 
+      you, as the base-class designer get to
+      decide which version to use, through the 
+      application of the keyword
+      <tt>virtual</tt>.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
