@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Slicing Problem</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Slicing Problem</h1>
+  <p class='firstLine'>Here's why this happens.
+      First, objects in C++ are <strong>value types</strong>, unlike the
+      reference types in Java. When you assign a derived class object 
+      to a base class variable, <mark>only the base class portion</mark>
+      of the object is copied.
+      <mark>This is called the slicing problem.</mark>
+      <img src='../images/slicing.png' class='inlineCenter shadow round width-75'
+        alt='Illustrating the slicing problem.'>
+  </p>
+  <p>If you pass a derived class object <strong>by value</strong> to a function
+      that expects a base class object, the same slicing will occur as well. This
+      is easy to fix. Just <mark>always</mark> follow this rule:
+  </p>
+<div style='margin:auto;text-align:center;
+    font-family:Pangolin;
+    font-weight:bold;
+    font-size:24pt;width:90%;
+    border:3px solid blue;
+    padding:.25em;
+    line-height:115%;
+   	border-radius: 5px;
+    box-shadow: 5px 5px 10px 5px #CCC;
+    color:#e858d5;
+    text-shadow: 1px 1px 2px silver;
+'>
+  Never ever ever ever assign a derived class object to a base class variable. Ever!
+</div>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

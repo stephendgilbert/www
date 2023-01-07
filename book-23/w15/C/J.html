@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Maybe Smart Pointers?</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Maybe Smart Pointers?</h1>
+  <p class='firstLine'>You can eliminate the need to reclaim 
+      memory by using the two C++11 smart
+      pointers, <tt>shared_ptr</tt> and 
+      <tt>unique_ptr</tt>, which are declared in the 
+      header <tt>&lt;memory&gt;</tt>. 
+  </p>
+  <p>Here is a version of the program that uses 
+    <tt>unique_ptr</tt>, which doesn't
+      require the <tt>delete</tt> loop at the end.
+  </p>
+<pre class='language-cpp'><code>using up = unique_ptr&lt;Person&gt;;
+vector&lt;up&gt; people;
+people.push_back(up{new Student("Sam", 201795)});
+people.push_back(up{new Person("Pam B.")});
+for (const auto&amp; p : people) cout &lt;&lt; p->toString() &lt;&lt; endl;</code></pre>
+  <p> The <tt>unique_ptr</tt> constructor is <tt>explicit</tt>, so a
+      <mark>type alias</mark>
+      helps to shorten the name. Also, <tt>unique_ptr</tt> 
+      objects cannot be copied, so the range-based 
+      <tt class='i'>for</tt> loop accesses each element by 
+      <tt>const</tt> reference, which is what
+      you need anyway.
+  </p>
+  <p> Because the <tt>vector</tt> now stores 
+      <strong>only smart pointers,</strong> you
+      can't inadvertently add a stack-based pointer to the list.
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

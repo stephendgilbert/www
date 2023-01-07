@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Polymorphic Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Polymorphic Functions</h1>
+  <p class='firstLine'>What we really want are 
+    <mark>polymorphic functions</mark> like this:
+  </p>
+<pre class='language-cpp'><code>// A polymorphic function
+void greet(const Person&amp; p)     // any kind of Person
+{
+    cout &lt;&lt; "Hello, I'm " &lt;&lt; p.toString() &lt;&lt; endl;
+}</code></pre>
+ <p> This function is polymorphic because the formal parameter is a
+    <strong>reference to a base class</strong>. (Note, 
+    <strong>not</strong> a base class object.) You can 
+    <strong>pass any kind</strong> of <tt>Person</tt>, such
+    as a <tt>Student</tt> or an <tt>Employee</tt> object 
+    and it will behave appropriately.
+  </p>
+  <div class='highlight'>
+  <p>
+      Polymorphic functions should operate on references or pointers to a
+      base class. Functions should <b>never use pass-by-value</b> with base
+      class objects.
+  </p>
+  </div>
+  
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

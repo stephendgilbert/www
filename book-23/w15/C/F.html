@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>References &amp; Pointers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>References &amp; Pointers</h1>
+  <p class='firstLine'>While slicing is a problem it is not 
+    the only culprit here. Even without slicing, the code would still
+    not work because in C++ <mark>polymorphism only works 
+    with references or pointers</mark>. 
+  </p>
+  <p>To see, this, make the following changes to <tt>main.cpp</tt>:</p>
+<pre class='language-cpp'><code>Student sam = Student("Sam", 201795);
+Person pam = Person("Pam B.");
+Person&amp; samRef = sam;
+Person* samPtr = &amp;sam;
+cout &lt;&lt; "sam says->" &lt;&lt; samRef.toString() &lt;&lt; endl;
+cout &lt;&lt; "sam says->" &lt;&lt; samPtr-&gt;toString() &lt;&lt; endl;
+cout &lt;&lt; "pam says->" &lt;&lt; pam.toString() &lt;&lt; endl;</code></pre>
+  <p> Now, the <tt>Person&amp;</tt> reference <tt>samRef</tt> 
+      refers to the Student object <tt>sam</tt>, and
+      when we call <tt>samRef.toString()</tt> it calls 
+      <tt>Student::toString()</tt>, not
+      <tt>Person::toString()</tt> 
+      like our previous examples did.
+  </p>
+  <p>The same thing happens if we use the <tt>Person*</tt>
+    <tt>samPtr</tt>. It is also polymorphic.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

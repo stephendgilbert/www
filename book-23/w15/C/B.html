@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Polymorphic Inheritance</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Polymorphic Inheritance</h1>
+  <p class='firstLine'>Public inheritance is a form of 
+      <mark>specialization</mark>. The derived class inherits
+      both the member functions and the data members from the base 
+      class, while optionally adding more of both. The derived 
+      class <mark>IS-A
+      specialized form</mark> of the more general base class.
+  </p>
+  <p> A derived class <mark>may override</mark> a <tt>virtual</tt> 
+      member function to add specialized behavior, as we did with 
+      <tt>Student::toString()</tt>. This is
+      called <mark>polymorphic inheritance</mark>, it provides 
+      <mark>specialized
+      behavior</mark> in response to the same messages. 
+  </p>
+  <p>
+      <a target='_blank'
+        href='https://replit.com/@stephengilbert/Polymorphism?v=1'>
+      <img src='../images/running-man.png' class='left width-32'
+        alt='The running man icon.'></a>
+      Let's see if that's true. Let's
+      use our simple <tt>Person&lt;-Student</tt> hierarchy from the 
+      last few lessons and see what
+      happens with some experiments.
+      Click the Running Man on the left to open a copy of the lab for this
+      lesson. Make sure you <b>Fork</b> it so that you have your own copy.
+  </p>
+  <p>
+      Change <tt>toString()</tt> in each class so it identifies the 
+      class at the beginning of the  method. Here are the modified 
+      <tt>toString()</tt> member functions. Notice that this
+      version of the <tt>Student::toString()</tt> no longer calls 
+      its base class version;  it <strong>entirely replaces it</strong>. 
+  </p>
+<pre class='language-cpp'><code>string Person::toString() const
+{
+    return "Person::Name: " + name;
+}
+
+string Student::toString() const
+{
+    return "Student::Name: " + getName()
+        + ", ID: " + to_string(studentID);
+}</code></pre>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>A Perplexing Problem</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>A Perplexing Problem</h1>
+  <p class='firstLine'>Change the example (<tt>main.cpp</tt>) 
+    again, so it looks like this:
+  </p>
+<pre class='language-cpp'><code>int main()
+{
+    Person sam = Student("Sam", 201795);
+    Person pam = Person("Pam B.");
+    
+    cout &lt;&lt; "sam says->" &lt;&lt; sam.toString() &lt;&lt; endl;
+    cout &lt;&lt; "pam says->" &lt;&lt; pam.toString() &lt;&lt; endl;
+}</code></pre>
+  <p>Now you have two <tt>Person</tt> objects: one 
+    "regular" <tt>Person</tt>, and one specialized
+    <tt>Person</tt> who is a <tt>Student</tt>. 
+    It the output the same as previously?
+   <mark>No!!!</mark>
+  </p>
+  <img src='../images/sample-2.png' class='inlineCenter width-50'
+      alt='Running the new program.'>
+  <p>For the <tt>Student</tt> <tt>sam</tt>, you know longer see 
+      the <tt>ID</tt>. And, both the <tt>Student</tt> and
+      the <tt>Person</tt> are identified with <tt>Person::Name</tt>, 
+      even though we do have an overridden member function, 
+      <tt>Student::toString()</tt>. 
+  </p>
+  <mark>Why does this happen?</mark>
+ 
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

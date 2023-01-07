@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Polymorphic Lists</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Polymorphic Lists</h1>
+  <p class='firstLine'>Creating a list (<tt>vector</tt> or array) 
+    of different kinds of object also leads to slicing:
+  </p>
+<pre class='language-cpp'><code>vector&lt;Person&gt; v;
+v.push_back(Student("Sam", 201795));    // OOPS!!!
+v.push_back(Person("Pam B."));</code></pre>
+  <p> When you <tt>push_back</tt> a <tt>Student</tt> or 
+      <tt>Employee</tt> object, <mark>the object is sliced</mark>
+      when it is copied into the <tt>vector</tt>. The <tt>vector</tt> 
+      <tt>v</tt> <mark>does not</mark> contain a <tt>Student</tt>
+      and a <tt>Person</tt>; it contains two <tt>Person</tt>
+      objects. Sam has been stripped of everything that makes him a
+      <tt>Student</tt>; he has been <mark>effectively lobotomized</mark>; 
+      he no longer  knows who he is.
+  </p>
+  <p> You also cannot fall back on using references, like you did with
+      polymorphic functions, since you cannot create a 
+      <tt>vector&lt;Person&amp;&gt;</tt> <tt>v</tt> or an array,
+      <tt>Person&amp;</tt> <tt>a[3]</tt>.    
+      <mark> Both of these declarations are illegal.</mark> A reference is
+      not a variable or object (<b><em>lvalue</em></b>), 
+      but an <strong>alias</strong>
+      for an existing <b><em>lvalue</em></b>.
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

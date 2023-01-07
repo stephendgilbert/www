@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pointers to the Rescue</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Pointers to the Rescue</h1>
+  <p class='firstLine'>One solution is to create a 
+    <tt>vector&lt;Person*&gt;</tt> <tt>v</tt> or an array 
+    <tt>Person*</tt> <tt>a[2]</tt>.
+    Here's a short example that places two different kinds of 
+    <tt>Person</tt> pointers
+    in a <tt>vector</tt> and prints them. Each person 
+    responds appropriately. Go ahead and add this code to 
+    <tt>main()</tt>. Include the <tt>&lt;vector&gt;</tt> header.
+  </p>
+<pre class='language-cpp'><code>int main()
+{
+    vector&lt;Person*&gt; people;
+    people.push_back(new Student("Sam", 201795));
+    people.push_back(new Person("Pam B."));
+    
+    for (auto p : people) {cout &lt;&lt; p-&gt;toString() &lt;&lt; endl;}
+    for (auto p : people) delete p;
+}</code></pre>
+  <p> Since two of these objects are created on the heap, it is 
+      up to you to  reclaim their memory before the <tt>vector</tt>
+      goes out of scope and it is lost.
+      The <tt>vector</tt> cannot do it because it does not know 
+      if the pointers it contains point to objects on the heap or 
+      objects on the stack. If you add a stack-based pointer to 
+      this program, it crashes.
+  </p>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
