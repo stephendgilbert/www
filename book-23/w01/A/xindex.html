@@ -8,12 +8,9 @@
         referrerpolicy="no-referrer">
     </script>
     <script>
-      const urls = ['A/A.html', 'A/B.html', 'A/C.html', 'A/D.html', 'A/E.html', 'A/F.html',
-        'B/A.html', 'B/B.html', 'B/C.html', 'B/D.html', 'B/E.html', 'B/F.html',
-        'C/A.html', 'C/B.html', 'C/C.html', 'C/D.html', 'C/E.html', 'C/F.html',        
-        'D/A.html', 'D/B.html', 'D/C.html', 'D/D.html', 'D/E.html', 'D/F.html',        
-        'E/A.html', 'E/B.html', 'E/C.html', 'E/D.html', 'E/E.html', 'E/F.html',
-        ];
+      const prev = null;
+      const next = '../B/index.html';
+      const urls = ['A.html', 'B.html', 'C.html', 'D.html', 'E.html', 'F.html'];
       var i = 0;
       $(document).ready(function() {
         var url = urls[i];
@@ -32,13 +29,14 @@
         text-align: center;
         margin:auto;
         font-family: georgia;
-        font-size: small;
+        /*font-size: small;*/
         width: 100%;
+        /*background: yellow;*/
       }
       #prev {
         font-size:36px;
         float:left;
-        margin-left:-1em;
+        margin-left: -1em;
         color:silver;
       }
       #next {
@@ -46,20 +44,20 @@
         float:right;
         color:silver;
       }
+      #status {
+        font-style:italic;
+        border-top:1px solid aliceblue;
+        border-bottom:1px solid aliceblue;
+        width:500px;
+        display: inline-block;
+      }
     </style>
 </head>
 <body>
 <div id='nav' style='width:850px;'>
   <div id='prev'><i class="fa fa-arrow-circle-left"></i></div>
+  <div id='status'>Lesson 1A&mdash;An Overview of C++</div>
   <div id='next'><i class="fa fa-arrow-circle-right"></i></div>
-<!--
-  <a href='A.html'>A</a> |
-  <a href='B.html'>B</a> |
-  <a href='C.html'>C</a> |
-  <a href='D.html'>D</a> |
-  <a href='E.html'>E</a> |
-  <a href='F.html'>F</a> |
--->
 </div>
 <div id='content'>
 </div>
@@ -69,7 +67,10 @@ $('div#prev').bind('click', function(e) {
   $('div#next').show();
   --i;
   if (i == 0) {
-    $('div#prev').hide();
+    if (prev == null)
+      $('div#prev').hide();
+    else
+      location.href = prev;
   }
   else
   {
@@ -81,7 +82,10 @@ $('div#next').bind('click', function(e) {
   $('div#prev').show();
   ++i;
   if (i == urls.length) {
-    $('div#next').hide();
+    if (next == null)
+      $('div#next').hide();
+    else
+      location.href = next;
   }
   else
   {
