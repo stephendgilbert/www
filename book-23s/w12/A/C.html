@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The find() Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The find() Function</h1>
+  <p class='firstLine'>Your job is to complete the <tt>find()</tt>
+    function which searches the array. The
+      function is already stubbed out for you, returning <tt>-1</tt> 
+      to indicate that the
+      name could not be found.
+    Since the array is in no particular order, your <tt>find()</tt> function
+    <strong>must</strong> check each element <strong>sequentially</strong>,
+    until it finds a match or until it runs out of elements. 
+    This is called a <mark>linear-search</mark>. 
+  </p>
+  <p>Here is the pseudocode (as comments) that you should implement:
+  </p>
+<pre class='language-cpp'><code>int find(const Person contacts[], int size, const string&amp; key)
+{
+    // for each Person p in contacts
+    // print a . to indicate the progress
+    // if key == front part of p.name then
+    // return the index of p
+    return - 1; // Not found
+}</code></pre>
+  <p>
+      Here are some notes on implementing this:
+  </p>
+  <ul>
+      <li> Because this is inside a function, you     
+          <mark>can't use a range-based loop</mark>, even 
+          though I've written
+          the pseudocode comment that way. In fact, since you 
+          need to return the
+          index, a <strong>counter-controlled loop is more 
+          appropriate</strong>.
+      </li>
+      <li>Printing the "<tt>.</tt>" is not really part of the algorithm, 
+        but is going to <b>visually</b> give you an indication of 
+        <mark>how 
+        efficient</mark> your search is.
+      </li>
+      <li>To compare the <tt>key</tt> to <tt>p.name</tt>, you'll 
+          need to use <tt>substr()</tt> and the size of the <tt>key</tt>
+          in your comparison. Remember, the <tt>name</tt> data member 
+          includes both the last and first names, and you only 
+          want to compare
+          against the last.
+      </li>
+  </ul>
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

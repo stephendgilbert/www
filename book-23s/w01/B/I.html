@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>The Standard C++ Library</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Standard C++ Library</h1>
+  <p class='firstLine'>Below you'll find the code for the <tt class='i'>f2c</tt>
+    program. Use the arrow on the left to show and hide the code as we
+    discuss its various features.
+  </p>
+<details>
+  <summary>The <tt class='i'>f2c</tt> Source Code</summary>
+<pre class='line-numbers language-cpp'><code>/**
+ * @file f2c.cpp
+ * @author Stephen Gilbert
+ * @version CS 150 Reader
+ * Converts Fahrenheit to Celsius.
+ */
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+double convert(double temp);
+
+int main()
+{
+    cout &lt;&lt; "Enter a temperature in Fahrenheit: ";
+    double fahr;
+    cin &gt;&gt; fahr;
+    double celsius = convert(fahr);
+    cout &lt;&lt; "Converted: " &lt;&lt; fahr &lt;&lt; "F -&gt; "
+        &lt;&lt; celsius &lt;&lt; "C" &lt;&lt; endl;
+    return 0;
+}
+
+/**
+ * Converts a temperature from Fahrenheit to Celsius.
+ * @param temp the Fahrenheit temperature to convert.
+ * @return the Celsius temperature.
+ */
+double convert(double temp)
+{
+    return (temp - 32) * 5.0 / 9.0;
+}</code></pre>
+</details>
+  <p><strong>Libraries</strong> are collections of useful, pre-written 
+      components (functions and classes). The <mark>standard library</mark> 
+      comes with your C++ compiler. It is divided into a number of "packages", 
+      known as <strong>headers</strong> in C++. Here are the headers you'll 
+      use most often. You'll meet more as the semester goes on. Find the 
+      whole list at 
+      <a href="https://en.cppreference.com/w/cpp/header" target="-blank">cppreference.com</a>.
+  </p>
+  <div>
+<pre class='language-cpp'><code>#include &lt;iostream&gt; // input-output for reading and printing
+#include &lt;iomanip&gt;  // formatting output
+#include &lt;cmath&gt;    // all math functions
+#include &lt;string&gt;   // The C++ string class</code></pre>
+  <p>The <tt>#include</tt> directive instructs the 
+      <strong>preprocessor</strong> to read the declarations from the 
+      <strong>header file</strong> and insert
+      them, exactly as if you had typed them into your
+      source code.
+  </p>
+  <ul>
+      <li>Instructions to the preprocessor are called <mark>preprocessor 
+          directives</mark>; these always appear on a line
+          by themselves, always start with a <tt>#</tt>, and do <strong>not</strong> 
+          end in a semicolon.
+      </li>
+      <li>Angle brackets indicate a header is a <mark>system library</mark>,
+          part of standard C++.
+      </li>
+  </ul>
+  <p> In <tt class='i'>f2c</tt>, you'll find the <tt>#include</tt> statements on
+      lines 7-8.
+  </p>
+<h2>The Standard Namespace</h2>
+  <p> In C++, libraries are combined into larger groups called
+      <mark>namespaces</mark>. The standard library is in the namespace
+      called <tt class='i'>std</tt>, usually pronounced 
+      <strong>standard</strong> instead of
+      "es-tee-dee". For CS 150, add a <mark>using directive</mark> 
+      to the top of your source code, like this:
+  </p>
+<pre class='language-cpp'></code>using namespace std;</code></pre>
+  <p> In <tt class='i'>f2c</tt>, you find this on line 9. Think of
+      <tt>using namespace std;</tt> as one more incantation
+      that the C++ compiler requires to work its magic on your code. 
+      This only works correctly inside .cpp file. In header files, 
+      you must <a target='_blank'
+          href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#sf6-use-using-namespace-directives-for-transition-for-foundation-libraries-such-as-std-or-within-a-local-scope-only"
+      >use a different technique</a>, which we'll cover in lecture.
+  </p>
+
+
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

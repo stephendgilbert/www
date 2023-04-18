@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Loading an Image</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Loading an Image</h1>
+  <p class='firstLine'>When a digital image is stored on disk, it is
+    <mark>compressed and encoded</mark> using a specific encoding 
+    scheme, such as <b>JPEG</b>, <b>PNG</b>, or <b>GIF</b>. The <b>stb</b> library
+    function, <tt>stbi_load()</tt> will:
+  </p>
+  <ul>
+    <li>Open the file and read and decode the image data</li>
+    <li>Allocate enough memory to store the pixels <mark>on the heap</mark></li>
+    <li>Return a pointer to the <b>image data</b> as well as the 
+        <b>width</b>, <b>height</b>
+        and <b>bytes-per-pixel</b> used to encode the original image.
+    </li>
+  </ul>
+<iframe width="1000" height="700" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=using%20uchar%20%3D%20unsigned%20char%3B%0Auchar%20*%20const%20%0Astbi_load%28const%20char%20*%20fname,%20%0A%20%20int*%20width,%20int*%20height,%20int*%20bpp,%20%0A%20%20int%20channels%29%0A%7B%0A%20%20//%20Ignore%20this%20code.%20Only%20for%20the%20animation%0A%20%20uchar%20*%20const%20p%20%3D%20new%20uchar%5B16%5D%7B255,0,0,255,0,255,0,255,0,0,255,255,0,0,0,255%7D%3B%0A%20%20*width%20%3D%20*height%20%3D%202%3B%20*bpp%20%3D%204%3B%0A%20%20return%20%28p%29%3B%20%20%0A%7D%0A%0Aint%20main%28%29%20%7B%0A%20%20int%20width%20%3D%200,%20height%20%3D%200,%20bpp%20%3D%200%3B%0A%20%20unsigned%20char%20*%20const%20data%20%3D%20%0A%20%20%20%20stbi_load%28%22pic.png%22,%20%26width,%20%26height,%20%26bpp,%204%29%3B%0A%20%20return%200%3B%0A%7D&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=nevernest&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

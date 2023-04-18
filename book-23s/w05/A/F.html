@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Library Types in Interfaces</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Library Types in Interfaces</h1>
+   <p class='firstLine'>If the prototype <mark>includes any types from the standard 
+      library</mark> (such as <tt>string</tt> or <tt>vector</tt>), then
+      you must <tt>#include</tt> the correct header, and 
+      <mark>fully qualify </mark> the name of the type. Here's an example:
+  </p>
+<pre class='language-cpp'><code>// Header file
+std::string zipZap(const std::string&amp; str);
+// Implementation file
+string zipZap(const string&amp; str) { . . . }</code></pre>
+  <p>
+      Header files <mark>should never</mark> use identifiers from the
+      standard library without explicitly including the <tt>std::</tt>
+      qualifier. In the implementation file, you may use the name as 
+      is, because your implementation file will contain a 
+      <tt>using</tt> declaration or directive.
+  </p>
+      <p>Here are <strong>three rules to remember</strong>.
+      <ul>
+        <li><mark>Never</mark> add <tt>using</tt> <tt>namespace</tt>
+          <tt>std</tt> to a header file. Header files are 
+          <tt>#included</tt> in other files; doing so changes the
+          environment of that file.
+        </li>
+        <li><mark>Always</mark> add <tt>std::</tt> in front of
+          <strong>every</strong> library type, such as <tt>std::string</tt>, 
+          but <mark>never</mark> in front of primitive types like 
+          <tt>double</tt>.
+        </li>
+        <li>For all library types, <tt>#include</tt> the appropriate 
+            header file inside of your header file. If you use the 
+            <tt>std::string</tt> type, you must <tt>#include</tt>
+            <tt>&lt;string&gt;</tt> Note that when including standard
+            libraries, you enlose them in angle brackets (<tt>&lt;&gt;</tt>),
+            while your header files use double quotes when included.
+        </li>
+      </ul>
+  <h2>Linker Errors</h2>
+  <p>Once you have finished prototyping all three functions, 
+      build your project again by by typing <tt>make</tt> <tt>client</tt>. 
+      When you do, you <strong>won't</strong> see any
+      compiler error messages; the client program compiles. 
+      However, you will see some <mark>linker error messages</mark>. 
+      Your function was <strong>declared</strong> correctly, but 
+      the <strong>definition</strong> could not be found at linking time.
+  </p>
+  <div class='consoleDisplay'>
+    $ make client<br />
+    client.cpp:(.text+0x32): <mark>undefined reference to</mark>
+          `firstDigit(int)'
+  </div>
+  <div class='highlight'>
+      <p> If you still see <strong>undeclared</strong> (instead of
+      <strong>undefined</strong>), make sure you have added the line 
+      <tt>#include</tt> <tt>"digit.h"</tt> to the top of the client program.
+      </p>
+  </div>
+  <p> Two words to note in your compiler's error messages:    
+      <mark>undefined</mark> and <mark>undeclared</mark>. Recognizing
+      these will help you locate and fix the problem.
+  </p>
+  <ul>
+    <li> An <mark>undeclared</mark> error message is a        
+        <strong>compiler</strong> syntax error. It means you are missing a
+          prototype or you are calling a function incorrectly.
+    </li>
+    <li> An <mark>undefined</mark> error message comes from the       
+      <strong>linker</strong> and means that you are missing the definition
+      for a function.
+    </li>
+  </ul>
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

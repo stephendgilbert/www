@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Structure Definitions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Structure Definitions</h1>
+  <p class='firstLine'>Here is the C++ <mark>definition</mark> for 
+    a <tt>Date</tt> user-defined
+      structure type:
+  </p>
+<pre class='language-cpp'><code>#include &lt;string&gt;
+struct Date
+{
+    std::string month;
+    int day;
+    int year;
+};</code></pre>
+  <p>Unlike a variable definition, a structure definition does not
+    create an object in memory. Instead, it <strong>defines or specifies a new 
+    type</strong> which contains <mark>three data members</mark>. 
+    (You should not call them fields&mdash;ala Java&mdash; since the
+    term <i>field</i> has a slightly different meaning in C++). 
+  </p>
+  <p>The structure name (<tt>Date</tt>) is formally known as
+      the <mark>structure tag</mark>. As mentioned earlier, structure 
+      members <strong>do not</strong> all <strong>need</strong> to 
+      be of the same type. In <tt>Date</tt>, <tt>month</tt> is of 
+      type <tt>string</tt>, while <tt>day</tt> and <tt>year</tt>
+      are of type <tt>int</tt>.
+  </p>
+<h2>Nested Structures</h2>
+  <p>A structure member may be another type of structure. 
+      This is called a <mark>nested structure</mark>. For instance,
+      a person has a name and a birthday. We have a <tt>Date</tt> type,  
+      so we can use it as part of a <tt>Person</tt> definition.
+  </p>
+<pre class='language-cpp'><code>struct Person
+{
+    std::string name;
+    Date birthday;
+};</code></pre>
+      <p> Structure definitions are normally found <strong>inside 
+      header files</strong>. Thus, all library members (such as
+      the <tt>std::string month</tt>), must be <mark>fully qualified</mark>. 
+      It is <mark>illegal</mark> to include the same type definition 
+      multiple times, even if the definitions are exactly the same.
+      Protect against this by using <mark>header guards</mark> 
+      (which are not shown here).
+  </p>
+  <div class='highlight'>
+      <p>
+          Don't forget the semicolon appearing after the final brace. If you
+          leave it off, you're likely to see a misleading error message pointing
+          to a different area of your code.
+      </p>
+  </div>
+
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

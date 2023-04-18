@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Problem</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Problem</h1>
+  <p class='firstLine'>If you're lucky, the code will have some extra checking to catch 
+    this, and report an error. If you are unlucky and the code actually 
+    sends too much radiation to the patient, then they would die, 
+    just as in the original Therac-25 incident.
+</p>
+<p> In other words, because the user of the <tt>Time</tt> structure 
+    set a single field to a nonsensical value, it's possible that 
+    your program could cause real injury.
+    <mark>
+        This is clearly unacceptable, and you will need to do something about
+        it.
+    </mark>
+</p>
+There are two problems with implementing <tt>Time</tt> as a <tt>struct</tt>.
+</p>
+<ul>
+    <li>
+        <mark>Structures do not enforce invariants</mark>.
+        Structures use "naked" variables to represent data, so        
+        <mark>any part of the program</mark> can modify those variables
+        without any validation. <tt>Time</tt> <mark>expects</mark> 
+        certain relationships between its data members,
+        <strong>but cannot enforce those relationships</strong>.
+    </li>
+    <li><tt>Time</tt> is <mark>represented in a particular way</mark>, 
+    as two <tt>int</tt> members. We say that code which uses the 
+    <tt>Time</tt> data type is <mark> tightly coupled to 
+    that implementation</mark>.
+    </li>
+</ul>
+<p>Both of these are real problems, and this is what C++ programming 
+  is like with raw structures. Code is <mark>brittle</mark>, 
+  bugs are more likely, and <strong>changes are more difficult</strong>. 
+  So, in the next lesson, let's change gears and represent 
+  <tt>Time</tt> in a slightly different way.
+</p>  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

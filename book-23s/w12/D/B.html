@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>C-String Basics</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>C-String Basics</h1>
+  <p class='firstLine'>The library <tt>string</tt> type works    
+    <mark>as if</mark> it were built into the C++ language. It 
+    uses C++ features to allow a <tt>string</tt> to act as a 
+    built-in type. C-strings are more primitive:
+  </p>
+  <ul>
+      <li>C-strings are <tt>char</tt> <strong>arrays</strong> with a
+        <mark>sentinel terminator</mark>, the <tt>NUL</tt>
+        character <tt>'\0'</tt>.
+      </li>
+      <li>C-strings can be passed to functions without overhead.</li>
+      <li>"String literals" automatically include the terminating <tt>NUL</tt>.</li>
+  </ul>
+  <p>
+      The literal <b><i>"Hello, CS 150"</i></b> contains <tt>13</tt>
+      characters—<tt>12</tt> for the meaningful
+      characters plus one extra for the terminating <tt>NUL</tt>. 
+      The compiler generates:
+  </p>
+<table class='array' align='center'>
+<tbody>
+  <td>H</td><td>e</td><td>l</td><td>l</td><td>l</td><td>o</td><td>&nbsp;</td>
+  <td>C</td><td>S</td><td>&nbsp;</td><td>1</td><td>5</td><td>0</td>
+</tbody>
+<tfoot>
+  <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+  <th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th>
+</tfoot>
+</table>
+  <p>C-string functions all <mark>assume</mark> that this 
+    <tt>NUL</tt> exists; some insert it for you.
+    Without a <tt>NUL</tt>, functions don't know when the 
+    string stops, either returning garbage or crashing. 
+    The length of a C-style string is <mark>not stored 
+    explicitly</mark>; the <tt>NUL</tt> serves as a sentinel,
+    and your program loops through the characters, counting
+    them when it needs to find the size.
+  </p>
+  <div class='highlight'>
+  <p>Don't confuse <tt>'0'</tt> with <tt>'\0'</tt>. 
+      One has the ASCII value <tt>48</tt> and the other <tt>0</tt>.
+  </p>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

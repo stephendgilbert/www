@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Some Bad Habits</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Some Bad Habits</h1>
+ <p class='firstLine'> You may see the idiomatic loop written like this:
+  </p>
+<pre class='language-cpp'><code>for (size_t i = 0; i &lt; str.size(); ++i)
+    // do something with str[i] or str.at(i)</code></pre>
+  <p> This is a <mark>bad habit</mark> which <strong>assumes</strong> that
+      calling size() is "free"—that is, it executes in constant time and there is
+      no overhead for calling the function. This is close to true for
+  <tt>string::size()</tt>, but <strong>it is not true</strong> for all functions.    
+  For instance, when working with C-style strings, using the
+  equivalent <tt>strlen()</tt> function is very expensive.
+  <mark>Don't</mark> <strong>train your fingers</strong> to do that.
+  </p>
+  <p><mark>Even</mark> worse is combining this bad habit with 
+    <tt>int</tt> indexes, like this:
+  </p>
+<pre class='language-cpp'><code>for (int i = 0; i &lt; str.size(); ++i)...</pre></code>
+  <p> The comparison <tt>i</tt> <tt>&lt;</tt> <tt>str.size()</tt> 
+    automatically converts the type of <tt>i</tt> to an <tt>unsigned</tt>
+    <tt>size_t</tt>. If <tt>i</tt> ever becomes negative, it is compared
+    <mark>as if it were a very large positive number</mark>. Your compiler
+    may warn you if you mix signed and unsigned numbers like this, but it's
+    easier to remember: <mark>Just don't do it! </mark>
+  </p>
+  <p>Since <tt>size()</tt> never changes in the loop,
+    <mark>store the length in a variable</mark>, and    
+    <strong>use the variable</strong> in your test. 
+    Here is an example:
+  </p>
+<pre class='language-cpp'><code>for (size_t i = 0, len = str.size(); i &lt; len; ++i)...</code></pre>
+<div class='highlight'>
+  <p>Should you use <tt>i++</tt> or <tt>++i</tt> in your loop update expression?
+    With <tt>int</tt> or <tt>size_t</tt> indexes, it makes to difference. The
+    effect is the same either way. However, I prefer the prefix version (<tt>++i</tt>)
+    because I want to "train my fingers" for more the more advanced 
+    <b>iterator</b> loops you'll work with in CS 250. With iterators,
+    often the <tt>i++</tt> version is much slower, or even non-existent.
+  </p>
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

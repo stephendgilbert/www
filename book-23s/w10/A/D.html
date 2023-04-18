@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+
+    <title>vector Initialization</title>
+
+</head>
+<body>
+
+<div id='page'>
+<div>
+<h1><em>vector</em> Initialization</h1>
+<p>
+    A newly-created <code>vector</code> is <strong>empty</strong>; 
+    it contains no elements. To create a <mark>sized</mark> 
+    <code>vector</code>, specify the initial size (in 
+    <mark>parentheses</mark>) when the <code>vector</code> is 
+    created. For example, to create a <code>vector</code>
+    that initially holds fifteen elements, write:
+</p>
+<pre class='language-cpp'><code>vector&lt;int&gt; iVec(15);</code></pre>
+<p> This specifies the initial size; you <b>may</b> add 
+    additional elements later. All elements are 
+    <mark>default-initialized</mark>. For primitive types,
+    such as <code>int</code>, that means they are set to <code>0</code>.
+    For class types, such as <code>string</code>, each element is 
+    constructed by implicitly calling its 
+    <strong>default constructor</strong>.
+</p>
+<p> You may want to initialize all elements with    
+    <mark>a value other than zero</mark>. Suppose, for example,
+    you want five copies of the <code>string</code> 
+    <code>"(none)"</code> or twenty copies of the 
+    <code>int</code> value <code>137</code>. To do this,
+    <mark>specify both</mark> the number of elements, 
+    and default value for each element elements like this:
+</p>
+<pre class='language-cpp'><code>vector&lt;int&gt; v137(10, 137);
+vector&lt;string&gt; vNone(5, "(none)");</code></pre>
+<p> This syntax is <b>only</b> legal when initially
+    <strong>creating</strong> a <code>vector</code>. You    
+    <mark>must use parentheses</mark>; if you use braces, 
+    something else will happen.
+</p>
+<h2>List and Copy Initialization</h2>
+<p> In C++11 (or later), you can specify a <mark>initial list</mark> 
+    of values. Write the values, separated by commas, 
+    and<mark>surrounded by braces</mark>.
+    <mark>This doesn't work in C++ 98</mark>.
+</p>
+<pre class='language-cpp'><code>vector&lt;string&gt; months{"Jan", "Feb", "Mar"};</code></pre>
+<p> Lastly, you can initialize one <code>vector</code>, 
+    from an existing <code>vector</code>. The new
+    <code>vector</code> is a <strong>completely independent 
+    copy</strong> of the original, not an alias, as in Java. Here's how:
+</p>
+<pre class='language-cpp'><code>vector&lt;int&gt; v1{...};
+. . .
+vector&lt;int&gt; v2(v1);</code></pre>
+</div>
+<div id='footer'>
+    Materials on this web site &copy; 1995-2075, 
+    <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+    All rights reserved.<br>
+    Any materials may be reproduced for non-profit purposes so long as<br>
+    (1) this notice remains intact and (2) you notify me of your use.
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

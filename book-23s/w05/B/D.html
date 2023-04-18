@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Limit Bounds</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Limit Bounds</h1>
+   <p class='firstLine'>A limit loop first does a calculation,
+    and then checks to see if the calculation has reached a limit.
+    Limit loops are used extensively in scientific, financial and
+    graphical computing. Kinds of limits include reduction to zero,
+    bisection, non-convergence tests (as in Calculus) and successive
+    approximations. You'll use several of those in Lecture.
+  </p>
+  <p>Here is a limit loop whose limit is the reduction to zero. This
+    computes the sum of the digits in an integer, <tt>n</tt>:
+  </p>
+<pre class='language-cpp'><code>int temp = n;
+while (temp &gt; 0)
+{
+    sum += temp % 10;
+    temp /= 10;
+}
+cout &lt;&lt; "The sum of the digits in " &lt;&lt; n &lt;&lt; " is " &lt;&lt; sum &lt;&lt; endl;</code></pre>
+  <ul>
+    <li>The expression <tt>temp</tt> <tt>%</tt> <tt>10</tt> 
+      always returns the last digit in the positive integer <tt>temp</tt>.
+    </li>
+    <li>The expression <tt>temp</tt> <tt>/</tt> <tt>10</tt> returns 
+        the number without its final digit.
+    </li>
+  </ul>
+  <p>In this case, the condition that is being tested is the 
+      value of <tt>temp</tt>, which is changed each time 
+      through the loop. Once <tt>n</tt> reach its
+      <mark>limit</mark> (<tt>0</tt>), the loop terminates.
+  </p>
+<div class='highlight'>
+  <p>Note that instead of changing <tt>n</tt> itself, the 
+    solution creates a separate variable named <tt>temp</tt>. 
+    This is better style because it doesn't confuse the 
+    concept of a parameter or input variable, with that 
+    of a local variable used for the function output. 
+    In this case, if the loop had used <tt>n</tt> then the
+    last output statement would have been incorrect.
+  </p>
+</div>
+<h2>More Loop Plans</h2>
+<p>Here are the plans that I created for each of the 
+  remaining two functions. Using limit loops, you should 
+  be able to complete these on your own.
+</p>
+<p>Here is <tt>firstDigit()</tt></p>
+<pre class='language-cpp'><code>// result &lt;- |n|
+// while result greater or equal to 10
+//      result &lt;- result / 10
+// return result;</code></pre>
+<p>And, here is <tt>numberOfDigits</tt></p>
+<pre class='language-cpp'><code>// Assume that 0 is a digit
+// result &lt;- |n|
+// counter &lt;- 1
+// while result is greater or equal to 10
+//     result &lt;- result / 10
+//     counter &lt;- counter + 1
+// return counter</code></pre>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

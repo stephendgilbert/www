@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Working Constructor</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The Working Constructor</h1>
+  <p class='firstLine'>As you saw in the last lesson,
+    <mark>working constructor</mark>
+    is the short-hand description of a constructor that takes as many
+    user-supplied arguments as possible.
+    In the <tt>Time</tt> class the working constructor looks like this:
+  </p>
+<pre class='language-cpp'><code>Time(int hours, int minutes);</code></pre>
+  <p> In the <tt>.cpp</tt> file, you might have code that looks 
+      something like this, using
+      the initializer list, also from the last lesson:
+  </p>
+<pre class='language-cpp'><code>Time::Time(int hours, int minutes)
+  : m_hours(hours), m_minutes(minutes)
+{
+    // validate the constructor arguments
+    assert(hours &gt;= 0 &amp;&amp; hours &lt; 24);
+    assert(minutes &gt;= 0 &amp;&amp; minutes &lt; 60);
+}</code></pre>
+  <p>It is important that your constructor intitializes your object
+    so that it is <mark>in a valid state</mark>. In the example shown here, we've
+    used <tt>assert()</tt> on the assumption that it is a programming
+    error if an invalid <tt>Time</tt> is constructed. If, however,
+    you were constructing <tt>Time</tt> objects using external data,
+    it is possible you would want to <tt>throw</tt> and <tt>catch</tt>
+    an exception instead.
+  </p>
+
+  
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

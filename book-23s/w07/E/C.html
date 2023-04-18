@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Using assert</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Using assert</h1>
+  <p class='firstLine'> An
+    <a target='_blank' 
+      href="https://en.wikipedia.org/wiki/Assertion_(software_development)">
+          <mark>assertion</mark>
+      </a>
+      is a statement about a condition <strong>which must be true</strong> when
+      encountered. If the condition is <strong>not true</strong>, then 
+      <tt>assert()</tt>, (declared in <tt>&lt;cassert&gt;</tt>), 
+      causes the program to immediately fail,
+      printing an error message. 
+  </p>
+  <p> Programmers use assertions to <strong>reason</strong> about 
+      <mark>logical correctness</mark>. Assertions can be used to check    
+      <strong>preconditions</strong> (what must be true before the program runs
+      correctly), and <strong>postconditions</strong> (what must be true after a
+      calculation completes).
+  </p>
+  <p>Here is an (admittedly silly) example using <tt>assert()</tt>.
+<pre class='language-cpp'><code>cout &lt;&lt; "Making sure that 2 + 2 is 5?" &lt;&lt; endl;
+assert(2 + 2 == 5); // false</code></pre>
+
+  <p>The programmer assumed (<strong>wrongly</strong>) that the expression
+    <tt>2</tt> <tt>+</tt> <tt>2</tt> should produce <tt>5</tt>.
+    The assertion causes the program to stop and <strong>print an error 
+    message</strong>, so the programmer can fix the
+    mistake. The message will depend on the toolchain. Here is 
+    <strong>g++</strong> on Unix.
+  </p>
+  <div class='consoleDisplay'>
+    Making sure that 2 + 2 is 5?<br />
+    a.out: main.cpp:10: int main():<br />
+    &nbsp;&nbsp;&nbsp;Assertion `2 + 2 == 5' failed.<br />
+    Aborted (core dumped)</div>
+  <p>The message includes the executable name (<tt>a.out</tt>), the source file
+    (<tt>main.cpp</tt>), the line number (<tt>10</tt>), the function name 
+    and the assertion which failed, so you can immediately open your editor
+    and fix the code.
+  </p>
+      
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

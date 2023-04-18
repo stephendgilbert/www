@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Address Arithmetic</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Address Arithmetic</h1>
+  <p class='firstLine'>When a pointer points to
+      a contiguous list of data elements, such as the data 
+      stored on the heap by calling <tt>stbi_load()</tt>, we 
+      can apply the operators <tt>+</tt> and <tt>–</tt> to the 
+      pointer. This is called <mark>pointer or address arithmetic</mark>. 
+      Pointer arithmetic is
+      similar to mixed type arithmetic with integers and floating-point numbers.
+      If you add an integer and a floating-point number, the result is a
+      floating-point number. Similarly:
+  </p>
+  <ul>
+      <li>
+          <mark>Adding an integer</mark>
+          to a pointer gives us a <mark>new address value.</mark>
+      </li>
+      <li>
+          <mark>Subtracting one pointer from another</mark>
+          produces an integer.
+      </li>
+  </ul>
+  <p>Pointer addition considers the <mark> size of the base type</mark>;
+      it doesn't just change the address by x number of bytes.
+      Consider <a target='_blank'
+        href="https://onlinegdb.com/NXgppXIMe">this code</a>:
+  </p>
+<pre class='language-cpp'><code>vector&lt;int&gt; v{1, 2, 3, 4, 5};
+auto *p = &amp;v[1];
+cout &lt;&lt; "p->" &lt;&lt; p &lt;&lt; ", " &lt;&lt; *p &lt;&lt; endl;
+cout &lt;&lt; "(p+1)->" &lt;&lt; (p+1) &lt;&lt; ", " &lt;&lt; *(p+1) &lt;&lt; endl;</code></pre>
+  <p>When run, (click the previous link) you'll see something like this:
+  </p>
+<div class='consoleDisplay'>
+<mark>p</mark>-&gt;0x559a1c997eb4, 2<br />
+<mark>(p+1)</mark>-&gt;0x559a1c997eb8, 3</div>
+  <p> The pointer <tt>p</tt> contains the address 
+      <tt>0x559a1c997eb4</tt> (although it may be a different address
+      when you run it), and it points to the
+      second element in the <tt>vector&lt;int&gt;</tt> <tt>v</tt>. 
+      The address <tt>(p</tt> <tt>+</tt> <tt>1)</tt> is
+      <tt>0x559a1c997eb8</tt>. Note that for each unit that is added 
+      to a pointer value, the internal numeric value must be 
+      increased by the size of the <strong>base type of the 
+      pointer</strong>. In this case, that is <tt>4</tt> bytes,
+      since the <tt>sizeof(int)</tt> is <tt>4</tt> on this platform.
+  </p>
+  <h2>
+      Pointer Difference
+  </h2>
+  <p>Subtracting one pointer from another returns a 
+    <strong>signed number</strong> (of type <tt>ptr_diff</tt>) 
+    which represents the <strong>number of elements</strong> 
+    (<mark>not</mark> the bytes) between the two pointers. 
+    This is called <mark>pointer difference</mark>, and we'll use 
+    it more when we start looking at arrays.
+  </p>
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

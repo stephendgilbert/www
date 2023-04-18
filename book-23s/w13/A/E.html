@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Traversing the Arguments</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Traversing the Arguments</h1>
+  <p class='firstLine'>
+    <a target='_blank' href="https://onlinegdb.com/6vZLXgDRf">This program</a>
+    prints out the command-line by stepping through the array.
+</p>
+<pre class='language-cpp'><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    cout &lt;&lt; "The program name is " &lt;&lt; argv[0] &lt;&lt; endl;
+    for (int i = 1; i &lt; argc; ++i)
+    {
+        cout &lt;&lt; "Argument " &lt;&lt; i &lt;&lt; " is " &lt;&lt; argv[i] &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+<p> Each whitespace-delimited cluster of characters on the command 
+    line is turned into a separate array argument. However, the rules 
+    for deciding what makes up a "cluster" are up to the operating 
+    system. Placing quotes around a pair of words works in any operating 
+    system; other features, like back-ticks, work only under some. Try some.
+</p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

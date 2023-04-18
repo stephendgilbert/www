@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Stub the Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Stub the Function</h1>
+  <details>
+  <summary>You can check your work here, or peek if you get stuck.</summary>
+<pre class='language-cpp'><code>void searchFile(const string&amp; filename, const string&amp; word)
+{
+    ifstream in(filename);    // open the file
+    if (in.fail())            // or, if (!in)
+    {
+        cerr &lt;&lt; "Cannot open " &lt;&lt; filename &lt;&lt; endl;
+        return;
+    }
+    
+    string line;
+    while (getline(in, line))
+    {
+        // next part here
+    }
+}</code></pre>
+</details>
+  <p class='firstLine'>You should be able to <mark>stub out the function</mark> on
+    your own. You shouldn't have to think about this part; you should memorize and 
+    practice each of these steps until they become second nature.
+  </p>
+  
+  <ol>
+    <li><strong>Open the file using the supplied filename</strong>.</li>
+    <li>If it can't be opened, then print the error message using <tt>cerr</tt>. 
+      To check if the file was opened, <strong>explicitly</strong> use the 
+      <tt>fail()</tt> function or, <strong>implicitly</strong> check using 
+      the stream variable itself. If you use the second method, don't forget the 
+      <strong>not operator</strong>.
+    </li>
+    <li>Instead of adding an <tt class='i'>else</tt> to the 
+      <tt class='i'>if</tt> statement, add a <tt class='i'>return</tt> statement to
+        end the function if nothing else can be done.
+    </li>
+    <li>Add the <mark>line-oriented I/O pattern</mark>. You will have read
+        and printed every line, and so you'll be ready to go on to the next step,
+        where you actually solve the problem.
+    </li>
+  </ol>
+  
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Setters</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Setters</h1>
+  <p class='firstLine'>In Java, many classes have
+    member functions that start with <tt>set</tt>. These are 
+    called <mark>mutators</mark>, since they <strong>change the state</strong> 
+    of the object. Mutators should <mark>validate data</mark> 
+    written to the object to <mark>enforce the class invariants</mark>. 
+  </p>
+  <p>With properly written mutators, the errors described in earlier lessons
+    <strong>cannot occur</strong>.
+    Consider your <tt>Time</tt> class. If you were to add 
+    <tt>setHours()</tt> and <tt>setMinutes()</tt>
+    members to the class, you would have to enforce 
+    these restrictions:
+</p>
+<ul>
+  <li><tt>m_hours</tt> must be between <tt>0</tt> and <tt>23</tt> 
+    inclusive.
+  </li>
+  <li><tt>m_minutes</tt> must be between <tt>0</tt> and <tt>59</tt> 
+    inclusive.
+  </li>
+</ul>
+</p>
+<p>Unlike the <tt>read()</tt> member function, where you could 
+    put the stream into a failed state, if these conditions were 
+    not met, in a mutator you need to
+    <tt>throw</tt> an exception like this:
+</p>
+<pre class='language-cpp'><code>void Time::setHours(int h)
+{
+    if (h &lt; 0 || h &gt; 23) throw out_of_range("...");
+    m_hours = h;
+}</code></pre>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

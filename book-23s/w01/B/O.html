@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Initialization</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Initialization</h1>
+  <p class='firstLine'>A variable is a named 
+    "chunk" of memory which contains a <mark>value</mark>,
+    while a value is <mark>a set of bits, interpreted according to its 
+    type</mark>. Initialization provides a value 
+    <strong>when a variable is created</strong>.
+  </p>
+  <p>Here are three ways to initialize a variable: </p>
+<pre class='language-cpp'><code>int a{42};    // uniform initialization
+int b(35.5);  // direct initialization
+int c = 4;    // legacy initialization</code></pre>
+  <ul>
+      <li> Starting with C++11, <strong>uniform</strong>, 
+          <mark>universal</mark> or <mark>list initialization</mark> is
+          the preferred way to initialize most variables. This form of
+          initialization is value-preserving, like initialization in Java and 
+          C#. Attempts to use an initializer that would lose information 
+          (called a <mark>narrowing conversion</mark>), are rejected.
+      </li>
+      <li> <mark>Direct initialization</mark>
+          uses parentheses, not braces, surrounding the initializer. Direct
+          initialization permits <mark>narrowing conversions</mark>, where
+          the initializer is implicitly <strong>truncated</strong> if it is too
+          large. In the example above, the initializer <tt>35.5</tt> is 
+          truncated to the <tt>int</tt> value <tt>35</tt>. 
+          Direct initialization allows you to supply multiple
+          initializers which is appropriate for many class types.
+      </li>
+      <li><mark>Legacy</mark>) initialization is inherited from C. Like
+          direct initialization, both widening and narrowing conversions are
+          allowed.
+      </li>
+  </ul>
+  <p> What happens when variables are <strong>not</strong> initialized? 
+      In Java, C# and Python, <mark>they can't be used</mark>. (This is called the
+      <b>definite assignment</b> rule. In C++, they <mark>may be used</mark>, according 
+      to these rules.
+  </p>
+  <ul>
+      <li><strong>Primitive</strong> <mark>local</mark>
+          variables, which are not initialized, are <strong>undefined</strong>.
+          Using such a variable is <mark>undefined behavior</mark> but it is
+          not a syntax error, as in Java/C#. (Primitive variables are the
+          built-in types like <tt>int</tt>, <tt>double</tt>, 
+          <tt>char</tt> and <tt>bool</tt>.)
+      </li>
+      <li><strong>Library variables</strong>
+          (such as <tt>string</tt>) are <mark>automatically</mark> 
+          initialized by implicitly calling their constructors (unlike Java).
+      </li>
+      <li><b>Global</b> primitive variables are automatically 
+        initialized to <tt>0</tt>.
+      </li>
+    </ul>
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Data Flow Checklists</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Data Flow Checklists</h1>
+   <p class='firstLine'>Consider the <tt>string::getline(in,</tt> 
+      <tt>str)</tt> function:
+    </p>
+    <ul>
+        <li><tt>in</tt> is an <mark>input-output</mark> parameter. 
+            The function depends on the stream's initial state 
+            (formatting, etc.) and it is changed by calling
+            the function (setting the error value).
+        </li>
+        <li><tt>str</tt> is an <mark>output only</mark> parameter; 
+            it makes no difference what is inside <tt>str</tt>
+            when you call the function—data <mark>only flows out</mark>.
+        </li>
+    </ul>
+    <p>The Java concept of data flow&mdash;parameters are input, 
+        return statements are output&mdash;is too simplistic for C++. 
+        In C++ (as in many other languages),
+        parameters can be used as input, as output, or as 
+        a combination of both.
+    </p>
+    <p><strong>Use this checklist</strong> to determine the direction 
+        of data flow:
+    </p>
+    <ul style='list-style-type:none;'>
+      <li style='margin-left:-1em;'><input type='checkbox'> Argument not modified by function: <mark>input parameter</mark></li>
+      <li style='margin-left:-1em;'><input type='checkbox'> Argument modified, input value not used: <mark>output</mark>
+        parameter
+      </li>
+      <li style='margin-left:-1em;'><input type='checkbox'> Argument used and changed by function: <mark>input-output</mark>
+        parameter
+      </li>
+    </ul>
+     <p>Use this checklist to determine <strong>how to declare</strong> the
+        parameter variable:
+    </p>
+    <ul style='list-style-type:none;'>
+      <li style='margin-left:-1em;'><input type='checkbox'> Output and Input-Output parameters: <mark>by reference</mark></li>
+      <li style='margin-left:-1em;'><input type='checkbox'> Input primitive (built-in and enumerated) types: <mark>by value</mark>
+      </li>
+      <li style='margin-left:-1em;'><input type='checkbox'> Input library and class types: by <mark>const reference</mark>
+      </li>
+    </ul>
+    
+    <div class='highlight'>
+        <p>
+            <mark>Never</mark>
+            pass by value for class or library types.
+        </p>
+    </div>
+
+     
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

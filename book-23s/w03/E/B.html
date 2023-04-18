@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Primed Loop Pattern</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <img src='../images/pump.png' class='right width-25'
+    alt='Drinking from an old-fashioned water pump.'>
+  <h1>The Primed Loop Pattern</h1>
+  <p> The <mark>primed-loop pattern</mark> is named after the old-west water
+    pump which required users to pour water down the well to establish suction,
+    before pumping began.
+  </p>
+  <p>Here's what that looks like in pseudocode:</p>
+<pre class='pcode'>Prompt user and read in a value
+While the value is not the sentinel
+    Process the data value
+    Prompt user and read next value</pre>
+<p> This is the <mark>classic way</mark> to process sentinel data. 
+    The code used to read each data value is <mark>duplicated,
+    before the loop and at the end of the loop</mark>.
+</p>
+<p> Here's a <strong>primed-sentinel-loop</strong> that sums a sequence, using
+    <tt>0</tt> as the sentinel:
+</p>
+<pre class='language-cpp'><code>cout &lt;&lt; "Add integers. Enter 0 when done." &lt;&lt; endl;
+
+int total = 0, value = -1;
+cout &lt;&lt; "&gt; ";
+cin &gt;&gt; value;               // Read before the loop
+while (value != 0)          // Check for the sentinel
+{
+    total += value;         // No sentinel? Process
+    cout &lt;&lt; "&gt; ";           // Prompt and read next item
+    cin &gt;&gt; value;
+}
+cout &lt;&lt; "Total: " &lt;&lt; total &lt;&lt; endl;</code></pre>
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

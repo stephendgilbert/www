@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The while Loop</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The <em>while</em> Loop</h1>
+   <p class='firstLine'>The other two functions in our library are 
+    more difficult. Both of them require you to learn about a new kind 
+    of loop bounds, called <mark>limit bounds</mark>. Loops that do 
+    some processing and then check the results against a boundary 
+    condition are <mark>limit loops</mark>.
+  </p>
+  <p> To write a limit loop, use the <tt>while</tt> loop, which 
+      executes a statement repeatedly <mark>while its condition 
+      remains true</mark>. The general form of the while
+      loop looks like this:
+  </p>
+<pre class='language-cpp'><code>while (condition)
+{
+    statements;
+}</code></pre>
+  <p> A <tt>while</tt> loop first evaluates the condition. 
+      If <tt>false</tt>, the loop terminates
+      and the program continues with the next statement after the loop body. 
+      If <tt>true</tt>, the actions in the body are run, after which 
+      control <mark>returns to the loop condition</mark>. 
+      One pass through the body constitutes a <strong>cycle or 
+      iteration of the loop</strong>.
+  </p>
+  <ol>
+    <li>The test is performed <strong>before every cycle of the loop</strong>,
+      including the first. If the test is <tt>false</tt> initially, the body of the loop
+      is <strong>not executed at all</strong>. That's why this is known
+      as a <b>guarded</b> loop.
+    </li>
+    <li>The test is performed <strong>only</strong> at the beginning 
+      of a loop cycle. If the condition <strong>becomes</strong>
+      <tt>false</tt> at some point during the loop, the
+      <mark>program won’t notice</mark> that fact until it completes 
+      the entire cycle. When the program evaluates
+      the test condition again, if it is still <tt>false</tt>, 
+      only then does the loop terminate.
+  </p>
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

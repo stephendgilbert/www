@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pointer Arithmetic &amp; Arrays</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Pointer Arithmetic &amp; Arrays</h1>
+  <p class='firstLine'>You can <strong>change the 
+    location</strong> where a pointer points by
+    incrementing or decrementing it. You can also    
+    <strong>generate new pointer</strong> values by adding or subtracting
+    integers from an existing pointer. The <mark>effective 
+    address</mark> depends upon the <strong>base type</strong> 
+    of the pointer.
+  </p>
+  <p> Given <tt>4</tt>-byte <tt>int</tt> and <tt>8</tt>-byte 
+      <tt>double</tt>, if you add <tt>1</tt> to an integer 
+      address, the new address 
+      produced is <tt>4</tt> bytes larger than the original pointer value; 
+      if you add <tt>1</tt> to a <tt>double</tt> address,
+      the new address is <tt>8</tt> bytes larger.
+  </p>
+<pre class='language-cpp'><code>int array[] = {1, 2, 3, 4, 5};
+int *p = array;     // p &lt;- &amp;array[0]
+p = array + 1;      // p &lt;- &amp;array[1]
+p = array + 4;      // p &lt;- &amp;array[4]</code></pre>
+
+  <p> Of course, unlike a pointer, you    
+    <mark>cannot increment or decrement</mark> an array name.
+  </p>
+<iframe width="800" height="500" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=int%20main%28%29%20%7B%0A%20%20int%20array%5B%5D%20%3D%20%7B1,%202,%203,%204,%205%7D%3B%0A%20%20int%20*p%20%3D%20array%3B%20%20%0A%20%20p%20%3D%20array%20%2B%201%3B%20%20%0A%20%20p%20%3D%20array%20%2B%204%3B%20%20%0A%20%20return%200%3B%0A%7D&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=nevernest&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

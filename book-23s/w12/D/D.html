@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pointer-based C-Strings</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Pointer-based C-Strings</h1>
+  <p class='firstLine'>Pointers to <tt>NUL</tt>-terminated character 
+    array literals can be used as C-strings, <mark>provided you
+    don't attempt to modify them</mark>:
+  </p>
+<pre class='language-cpp'><code>const char *s3 = "String #3";</code></pre>
+  <p><mark>The character array itself is not copied
+      into your user space</mark>. The characters are stored in the 
+      <strong>static storage area</strong>
+      when the <strong>program loads</strong>. Attempting to 
+      change a character in <tt>s3</tt> is a <mark>compiler error</mark>, 
+      because of the <tt>const</tt>.
+  </p>
+  <p> In C and in some older C++ code, you may see this declaration:</p>
+<pre class='language-cpp'><code>char *s4 = "String #4"</code></pre>
+  <p>The declaration for <tt>s4</tt> is obsolete in modern C++, 
+    but may be found in older code (and is legal in C). The compiler 
+    will probably compile your code (<mark>with warnings</mark>), but    
+    <mark>your program will probably crash</mark> if you attempt to modify
+    the string in any way. The portion of the static storage where 
+    string literals are stored is <mark>effectively read-only</mark>.
+  </p>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

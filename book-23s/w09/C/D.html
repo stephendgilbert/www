@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Initialization</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Initialization</h1>
+  <p class='firstLine'>Starting with C++11 you can provide 
+    <mark>in-definition initializers</mark> for each of your data members,
+    just like Java. You should definitely take advantage of this as
+    it will eliminate unininitialized data members.
+  </p>
+<pre class='language-cpp'><code>struct Date
+{
+    std::string month;    // no initializer required
+    int day = 0;          // legacy initialization
+    int year{0};          // uniform initialization
+};</code></pre>
+  <p> Use legacy ("assignment") initialization (<tt>day</tt>), 
+      or uniform initialization (<tt>year</tt>). You 
+      <strong>may not use direct initialization</strong> with
+      parentheses instead of braces. Note that <tt>month</tt> does not need an
+      initializer, since it is a library type, and it will automatically
+      be initialized by its constructor. However, you <mark>may</mark>
+      explicitly initialize it as well, if you like.
+  </p>
+<h2>Aggregate Initialization</h2>
+<p> You may <b>explicitly initialize</b> a structure variable 
+    by supplying <mark>a list of values</mark>, one for every data member,
+    inside curly braces, separated by commas and ending with a semicolon. 
+    This is called <mark>aggregate initialization</mark>.
+</p>
+<pre class='language-cpp'><code>Date birthday = {"February", 2, 1950};
+Date empty = {};</code></pre>
+<p>If you supply no initializers, as with the <tt>Date</tt> <tt>empty</tt>,
+    then all members are <strong>default 
+    initialized</strong>. In this case, that means that <tt>day</tt> and
+    <tt>year</tt> are set to <tt>0</tt> instead of a random number.
+    If the members already have default initializers (from the structure
+    definition), then those default initializers are used instead.
+</p>
+
+  
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

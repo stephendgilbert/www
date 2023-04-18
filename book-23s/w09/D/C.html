@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>A Compare Function</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>A Compare Function</h1>
+  <p class='firstLine'>Of course, when comparing dates, we don't just want to know if they are
+    equal. More often we want to know of one date is earlier or later than
+    another. </p><p>Instead of writing additional functions, such as <tt>lessThan()</tt> and
+    <tt>greaterThan()</tt>, we can write a single function named 
+    <tt>compare()</tt>, which returns <tt>0</tt> if the two dates are equal, 
+    and a negative or positive number if the first date is earlier than, 
+    or later than the second.
+</p>
+<p>
+    This is a very common, <mark>three-way pattern.</mark> Here's a
+    possible solution
+</p>
+<pre class='language-cpp'><code>bool compare(const Date& lhs, const Date& rhs)
+{
+   if (lhs.year == rhs.year &amp;&amp; 
+         lhs.month == rhs.month &amp;&amp; lhs.day == rhs.day) {
+      return 0;   // all the same
+   } 
+   else if (lhs.year &lt; rhs.year) {
+      return -1;  // year is earlier
+   } 
+   else if (lhs.year == rhs.year &amp;&amp; lhs.month &lt; rhs.month) {
+      return -1;  // year same but month earlier
+   }
+   else if (lhs.year == rhs.year &amp;&amp; lhs.month == rhs.month &amp;&amp;
+            lhs.day &lt; rhs.day) {
+      return -1;  // year, month same, but day earlier
+   } else {
+         return 1; // must be after
+   }
+}</code></pre>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

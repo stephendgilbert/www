@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Converting Arguments</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Converting Arguments</h1>
+  <p class='firstLine'>The command-line consists of C-style strings; 
+    to use any C++ <tt>string</tt> functions from the standard library, 
+    first <strong>assign</strong> the array element (<tt>argv[i]</tt>)
+    to a local <tt>string</tt> variable.
+    Once you've converted the C-string argument to a C++ <tt>string</tt>,
+    you may then treat the argument as a number by convert it with the 
+    <tt>stoi()</tt>, <tt>stol()</tt> and <tt>stod()</tt> function in 
+    the <tt>&lt;string&gt;</tt> header. 
+  </p>
+  <p>However, you <mark>may</mark>
+    convert directly from C-style strings to numbers, with out first
+    converting to <tt>string</tt>, by using
+    the helper functions in <tt>&lt;cstdlib&gt;</tt> which include
+    <tt>atoi()</tt>, <tt>atol()</tt>, and <tt>atof()</tt>.
+</p>
+<pre class='language-cpp'><code>#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    for (int i = 1; i &lt; argc; ++i)
+        cout &lt;&lt; atoi(argv[i]) &lt;&lt; endl;
+}</code></pre>
+<p> Notice that loop starts at <tt>1</tt> to skip over the program 
+    name at <tt>argv[0]</tt>. If
+    you pass a floating-point number on the command line, 
+    <tt>atoi()</tt> takes only the
+    digits up to the decimal point. If you pass non-numbers, 
+    these come back
+    from <tt>atoi()</tt> as zero.
+</p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

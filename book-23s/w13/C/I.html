@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Unique Pointers and Containers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Unique Pointers and Containers</h1>
+  <p class='firstLine'>Library containers (such as 
+    <tt>vector</tt>) are designed to hold <mark>copies of items</mark>, 
+    using the regular assignment operators. Suppose, for instance,
+    that you are writing a video game, and you have a <tt>Sprite</tt>
+    class.
+  </p>
+<pre class='language-cpp'><code>vector&lt;unique_ptr&lt;Sprite&gt;&gt; v;
+unique_ptr&lt;Sprite&gt; sp(new Sprite);
+v.push_back(sp);</code></pre>
+  <p> If you write this code you will get an altogether baffling 
+      error message that appears to say that
+      there are bugs in the standard library. 
+  </p>
+  <p> What the error message 
+      <mark>means</mark> is that you cannot use <tt>push_back()</tt>
+      on a <tt>unique_ptr</tt> because there <mark>cannot be two 
+      copies</mark> of the same <tt>unique_ptr</tt>. Instead, use
+      the standard function <tt>move()</tt> to    
+      <mark>explicitly transfer ownership</mark>, like this:
+  </p>
+<pre class='language-cpp'><code>unique_ptr&lt;Sprite&gt; sp(new Sprite);
+v.push_back(move(sp));</code></pre>
+
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Public and Private</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Public and Private</h1>
+  <p class='firstLine'>So, what do <tt>public</tt> and <tt>private</tt>
+    mean in C++? If a member of a class is <tt>public</tt>, 
+    then <strong>any part of your code</strong> can access and 
+    manipulate it directly. If you have a <tt>public</tt> member 
+    function, any code can <strong>call it using an object of that 
+    type</strong>. If a data member is marked <tt>private</tt>, 
+    then <mark>only</mark> member functions of the class can access it.
+  </p>
+  <p>The <tt>public</tt> and <tt>private</tt> keywords are the 
+    C++ mechanism for <strong>defining interfaces and enforcing 
+    encapsulation</strong>. Once you add <tt>private</tt>, the 
+    compiler enforces the <strong>appropriate encapsulation</strong>.
+    <img src='../images/private.png' class='inlineCenter width-75 shadow'
+        alt='Compiler message when trying to break encapsulation.'>
+  </p>
+  </p>
+  <p> By prohibiting clients from directly accessing <tt>private</tt>
+      data, the implementation can assume that all access to that 
+      data goes through the <tt>public</tt> interface (unlike the 
+      <tt>Time</tt> <tt>struct</tt> of last week, where clients
+      <strong>should use the member functions</strong>, but    
+      <strong>were not prohibited</strong> from directly accessing 
+      the data members <tt>m_hours</tt> and <tt>m_minutes</tt>.)
+      
+  <div class='highlight'>
+      <p>
+          Actually, the only <b>real</b> difference between <tt>class</tt>
+          and <tt>struct</tt> in C++ is that with a <tt>struct</tt>,
+          the members are <tt>public</tt> by default; with a 
+          <tt>class</tt> they are <tt>private</tt>. By convention, 
+          we will use <tt>struct</tt>
+           for <strong>POD</strong> (plain-old-data) data types, and 
+          <tt>class</tt>
+           for encapsulated types.
+      </p>
+  </div>
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

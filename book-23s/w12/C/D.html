@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>2D Arrays &amp; Functions</title>
+    <style>
+      table td { width:30px; }
+      .w { width: 70px; }
+    </style>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>2D Arrays &amp; Functions</h1>
+  <p class='firstLine'> Pass <b>2D</b> arrays to functions 
+      <strong>by address</strong>, just like <b>1D</b>
+      arrays. The following function prints the contents of a 
+      <tt>ROWS</tt> <tt>×</tt> <tt>COLS</tt> <b>2D</b>
+      array of <tt>double</tt>:
+  </p>
+<pre class='language-cpp'><code>void print(const double m[ROWS][COLS])
+{
+    for (size_t row = 0; row &lt; ROWS; ++row)
+    {
+        for (size_t col = 0; col &lt; COLS; col++)
+            cout &lt;&lt; setw(5) &lt;&lt; m[row][col];
+        cout &lt;&lt; endl;   // end of each row
+    }
+}</code></pre>
+  <p> Of course, <mark>this function is really quite limited </mark>
+    since <mark>it can only be used</mark> to process an array that is
+    <strong>exactly</strong> <tt>ROWS</tt> <tt>x</tt> <tt>COLS</tt> 
+    elements in size.
+  </p>
+  <p> You can make it a little more flexible by    
+    <strong>omitting the first dimension</strong>, and then passing 
+    the number of rows as a parameter. <mark>You cannot</mark>, 
+    however, leave off the number of columns. That must be a constant.
+  </p>
+<pre class='language-cpp'><code>void print(const double m[][COLS], size_t nRows)
+{
+    for (size_t row = 0; row &lt; nRows; ++row)
+    {
+      ...
+    }
+}</code></pre>
+  <p>This inflexibility is one of the reasons that the built-in 
+    <b>2D</b> arrays are so limiting in C/C++.
+  </p>
+  <p>
+      An expression that uses just one subscript with a <b>2D</b> array
+    <strong>represents a single row</strong>
+      within the <b>2D</b> array. This row is itself a 
+      <b>1D</b> array. Thus, if <tt>a2d</tt> is a <b>2D</b>
+      array and <tt>i</tt> is an integer, then the expression 
+      <tt>a2d[i]</tt> is a <b>1D</b> array representing row <tt>i</tt>.
+  </p>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

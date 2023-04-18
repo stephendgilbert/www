@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Increment and Decrement</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Increment and Decrement</h1>
+  <p class='firstLine'>To <strong>add or subtract <mark>one</mark></strong> from a 
+      variable use <mark>increment</mark> (<tt>++</tt>) and 
+      <mark>decrement</mark> (<tt>--</tt>) operators. These
+      are <strong>unary operators</strong> that can 
+      <strong>only</strong> be applied to a variable (<tt class='i'>lvalue</tt>).
+  </p>
+<pre class='language-cpp'><code>int a = 5, b = 10;
+a++;        // a is changed to 6
+--b;        // b is changed to 9</code></pre>
+  <p>In addition to the side effect (changing the variable), expressions using
+    these operators produce a value. When placed <strong>before</strong> 
+    a variable, it is called <mark>pre-increment</mark> (or decrement);
+    when placed <strong>after</strong>, it is called a 
+    <mark>post-increment</mark> (or
+    decrement) expression. The side effect is the same for both: 
+    the variable is left with a value one greater (or less) than 
+    it was before.
+  </p>
+  <p>The <mark>expression value</mark> (result) produced depends on whether
+      the expression uses post or pre-increment.
+  </p>
+<pre class='language-cpp'><code>int a = 5, b = 10, c, d;
+c = a++;        // a is changed to 6; c is assigned 5
+d = --b;        // b is changed to 9 and so is d</code></pre>
+  <p> With <strong>pre-increment</strong>, the variable is    
+      <strong>first modified</strong> and the <mark>modified variable</mark>
+      is returned as the value. A prefix expression is thus an 
+      <tt class='i'>lvalue</tt>, so the expression  <tt>++++a</tt> is legal.
+  </p>
+  <p> With <strong>post-increment</strong>, the original value is saved to 
+      a <mark>temporary</mark> location. Then, the variable is changed. 
+      Finally, the temporary value is returned from the expression. 
+      That's why <tt>c</tt> in the example above is given the value
+      <tt>5</tt> and not <tt>6</tt>. A postfix expression is an 
+      <tt class='i'>rvalue</tt>, so the expression <tt>a++++</tt>
+      is <mark>illegal</mark>.
+  </p>
+  <h2>A Side-effect Pitfall</h2>
+  <p><mark>Don't ever </mark> use any side-effect operator twice 
+      on the same variable in the same expression. These
+      expressions all result in <mark>undefined behavior</mark>, as
+      you'll see if you run the code yourself in
+      <a
+          target='_blank'
+          href="https://godbolt.org/z/EvbaKPjh7"
+          title="Side effect pitfall with g++."
+      >
+          g++
+      </a>,
+      <a
+          target='_blank'
+          href="https://godbolt.org/z/6zsf9eYbv"
+          title="Side-effect pitfall with Visual C++"
+      >
+          visual c++
+      </a>
+      or in
+      <a
+          target='_blank'
+          href="https://godbolt.org/z/qEhsjaMKo"
+          title="Side-effect pitfall in clang++."
+      >
+          clang++
+      </a>.
+  </p>
+<pre class='language-cpp'><code>int n = 6;
+print(n, ++n);    // passing 6,7 or 7,7? Can't tell!
+int a = n * n++;
+n = n++;
+cout &lt;&lt; n++ &lt;&lt; n++ &lt;&lt; n++ &lt;&lt; endl;</code></pre>
+  
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

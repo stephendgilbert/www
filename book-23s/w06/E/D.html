@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Data Loops</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Data Loops</h1>
+    <p class='firstLine'>Let's look at how the <i>filter</i> program works.
+      C++ input streams read a single character using the <mark>member 
+      function</mark> <tt>cin.get()</tt>. To <mark>read successive characters</mark>, 
+      until all of the data has been processed, use a <mark>data</mark> 
+      (or <tt>eof-controlled</tt>) loop. 
+      (<tt>eof</tt> is shorthand for <strong>end-of-file)</strong>.
+  </p>
+  <pre class='pcode'>while there is still data to process
+    read a data item
+    process the data item</pre>
+  <p>Translate this into C++ by <mark>using streams
+    as conditions</mark>, as shown here:
+  </p>
+<pre class='language-cpp'><code>char ch;
+while (cin.get(ch))
+{
+    cout.put(ch);   // print the output
+}</code></pre>
+  <p>The expression <tt>cin.get(ch)</tt> does two things.
+  </p>
+  <ol>
+    <li><mark>It reads</mark> the next character from the stream into the
+      <tt>char</tt> variable <tt>ch</tt> (which is passed to the function
+      by reference). Whitespace <mark>is not</mark> skipped.
+    </li>
+    <li><mark>It returns the input stream</mark> (in this case <tt>cin</tt>) after
+        reading the variable so you can determine whether the I/O operation succeeded.
+    </li>
+  </ol>
+  <p>The <tt>cin</tt> object has a member function, named <tt>fail()</tt>, 
+      which indicates whether the last operation succeeded. <tt>fail()</tt>
+      <mark>is implicitly called when a stream is used as a condition.</mark>
+      In a condition, the stream is interpreted as <tt>true</tt> if it is still good,
+      and as </tt>false</tt> on failure.
+  </p>
+  <p> When reading characters using <tt>cin.get()</tt>, input fails 
+      <strong>only</strong> <mark>if there are no characters left</mark> 
+      in the stream. The effect of the <mark>basic data loop</mark> 
+      is to execute the body of the <tt>while</tt> loop once for 
+      <strong>each</strong> character until
+      the stream reaches what is known as <mark>end of the file</mark>.
+  </p>
+  <p>For <strong>output streams</strong>, the <tt>put()</tt> member function
+      takes a <tt>char</tt> value as
+      its argument and writes that character to the stream.
+  </p>
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

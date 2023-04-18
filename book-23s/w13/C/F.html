@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Shared Pointers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Shared Pointers</h1>
+  <p class='firstLine'>There are two ways to create 
+    <tt>shared_ptr</tt> objects: with <tt>new</tt> and using
+    the <tt>make_shared()</tt> function. Here's an example of each:
+  </p>
+<pre class='language-cpp'><code>shared_ptr&lt;int&gt; shared_1(new int(2));       // using new
+auto shared_2 = make_shared&lt;int&gt;(3);        // using make_shared</code></pre>
+  <p><a target='_blank' href='https://tinyurl.com/pvh72txf'>Click this link to visualize a 
+    short program</a> that uses shared pointers. Click the Next&gt; 
+    button and watch what the code does. Here's a commentary:
+  </p>
+  <ul>
+    <li>Allocate a new <tt>int</tt> on the heap and assign it to 
+        <tt>raw</tt>. (Line 7)
+    </li>
+    <li>Create a <tt>shared_ptr&lt;int&gt;</tt>; 
+        initialize it by using the <tt>new</tt> operator. (Line 8)
+    </li>
+    <li>Print out the "use count" for the shared pointer (Line 9)</li>
+    <li>Create a block and then "Copy" a <tt>shared_ptr</tt>; both 
+      <tt>shared_1</tt> and <tt>copied</tt> both "point to" the same 
+        <tt>int</tt> on the heap. (Line 11)
+    </li>
+    <li>Print out the "use count" for <tt>shared_1</tt> inside the 
+        block (Line 12). Note that there are now 2 pointers sharing
+        the one object on the heap.
+    </li>
+    <li>After the inner block ends, the <tt>copied</tt> pointer goes
+        out of scope, so when we print the "use count" for <tt>shared_1</tt>
+        again, there is now only one pointer pointing to the value
+        on the heap.
+    </li>
+  </ul>
+  <p>The variables <tt>shared_1</tt>
+      and <tt>copied</tt>, both <mark>encapsulate a raw pointer</mark>
+      which you don't "see" in the Visualizer. In
+      addition, both variables contain additional 
+      <strong>"plumbing"</strong>. This includes a 
+      <mark>reference count</mark> 
+      which keeps track of which pointers are pointing to this memory. 
+      This allows the smart pointer to know that this heap variable <strong>is 
+      still in use</strong>, so it won't automatically be deleted.
+  </p>
+  <p> When the end of each block is reached, in the Visualizer 
+      you'll see the current-line jump back to where the smart pointer 
+      was declared, and then, <mark>the reference count will be 
+      decremented</mark>. Once the reference count for each shared 
+      pointer reaches <tt>0</tt>, the memory is automatically deleted.
+  </p>
+  <p>The raw pointer is <strong>not automatically deleted</strong>. It goes out
+      of scope at the end of the block, so <mark>that memory is leaked</mark>
+      and cannot be reclaimed elsewhere in the program.
+  </p>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

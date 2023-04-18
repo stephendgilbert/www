@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Loop-and-a-half Pattern</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Loop-and-a-half Pattern</h1>
+   <p class='firstLine'>The <b>loop-and-a-half</b> is a kind of
+      loop that is available in some language (like Ada's <tt>Exit When</tt>),
+      but which must be simulated in C and C++, by using <tt class='i'>if</tt>
+      and <tt>break</tt>. This is another way to write a sentinel loop.
+    </p>
+    <ul>
+        <li>Write an endless loop (or a <tt>while</tt> loop with a necessary condition).</li>
+        <li>Add in <tt class='i'>if</tt> statement inside the loop which
+            checks the <b>sentinel</b>.
+        </li>
+        <li>If you find the sentinel, use <tt>break</tt>,
+            which has the effect of immediately terminating the 
+            nearest enclosing loop.
+        </li>
+    </ul>
+  <p> The loop-and-a-half pattern has the advantage that it
+      <strong>follows the natural structure</strong>: 
+      the <mark>read-until-sentinel</mark> pattern:
+  </p>
+<pre class='pcode'>While True
+    Prompt user and read value
+    If value is the sentinel then
+        break out of the loop
+    Process the value</pre>
+  <p>Note that this is an endless loop, where the only way to 
+    exit is by executing the <tt>break</tt> statement. 
+    Here's the same problem as on the previous page, using the    
+    <mark>loop-an-a-half pattern</mark>. You may want to look
+    back and compare them.
+  </p>
+<pre class='language-cpp'><code>while (true)                    // Endless loop
+{
+    cout &lt;&lt; "&gt; ";               // Prompt and read item
+    cin >> value;
+    if (value == 0) { break; }  // Sentinel? Leave loop
+    total += value;             // No sentinel? Process
+}</code></pre>
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

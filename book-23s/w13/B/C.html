@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The new Operator</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The new Operator</h1>
+  <p class='firstLine'> Like Java, C++ uses the <tt>new</tt> 
+      operator to allocate memory on the heap. In its
+      simplest form, the <tt>new</tt> operator takes <strong>a type</strong>
+      and allocates  space for <mark>a single variable</mark> of that type located on the
+      heap. For example, look at this code:
+  </p>
+  <img src='../images/new-1.png' class='right width-25' 
+      style='margin-top:-.5em;' alt='Allocating a variable.'>
+<pre class='language-cpp' style='width:70%;'><code>int *p = new int;</code></pre>
+ <p>
+      The <tt>new</tt> operator <mark>returns the address</mark> 
+      of the variable it allocates. I just ran this on my machine 
+      and the first location on the heap was located at <mark>address 
+      <tt>0x558f24791eb0</tt></mark>, so that is what is stored 
+      in the variable <tt>p</tt>.
+  </p>
+  <p>Knowing the exact address value stored in <tt>p</tt>
+    is really meaningless; instead, realize that whatever 
+    the address, the variable <tt>p</tt> on the stack    
+    <mark>always</mark> <strong>points to</strong> the newly allocated 
+    <tt>int</tt> on the heap. That means we can 
+    <strong>indicate the relationship with an arrow.</strong>
+  </p>
+  <p>To use the object on the heap, just <mark>dereference the 
+      pointer</mark>. To store <tt>42</tt> just write this:
+  </p>
+  <img src='../images/new-2.png' class='right width-25' 
+      style='margin-top:-.5em;' alt='Allocating a variable.'>
+<pre class='language-cpp' style='width:70%;'><code>*p = 42;</code></pre>
+
+  <p>Using the raw <tt>new</tt> operator to create an object 
+    leaves the variable <mark>uninitialized</mark> if it is a 
+    primitive or built-in type and <mark>default initialized</mark> 
+    for class types. Instead creating <strong>uninitialized</strong>
+    elements on the heap, you can <strong>initialize</strong> individual 
+    variables by <strong>using direct initialization</strong>. 
+    In C++11, you can also use uniform initialization.
+  </p>
+<pre class='language-cpp'><code>int *p1 = new int;          // uninitialized
+int *p2 = new int(42);      // direct initialized
+string *p3 = new string;    // default initialized
+double *p4 = new double{};  // default (c++11)</code></pre>
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

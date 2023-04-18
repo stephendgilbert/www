@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Double Deletes</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Double Deletes</h1>
+  <p class='firstLine'> When you discover a memory leak, 
+    your first inclincation is to start adding <tt>delete</tt>
+    statements. That can create more problems.
+    <a target='_blank'
+      href='https://onlinegdb.com/Gfkzsn88i'>Here is an example:</a>
+  </p>
+<pre class='language-cpp'><code>void checkDate(int yr, int mo, int da)
+{
+    Date *pd = new Date(yr, mo, da);
+    if (! pd->isValid()) delete pd;     // avoid leak
+    else cout &lt;&lt; (*pd) &lt;&lt; " is OK" &lt;&lt; endl;
+    delete pd;  // OOPS, a double delete
+}</code></pre>
+  <p>Here, the programmer adds a <tt>delete</tt> for 
+    <mark>both</mark> the <tt>true</tt> and
+    <tt>false</tt> branches (unlike the memory leak example, where
+    an invalid <tt>Data</tt> was never <b>deleted</b>. 
+    However, because the programmer <mark>forgot</mark> to add braces 
+    around the two statements in the <tt>else</tt> part, 
+    the final <tt>delete</tt> is a <mark>double <tt>delete</tt>:
+    deleting an already freed pointer</mark> whenever the <tt>Date</tt>
+    is invalid.
+  </p>
+  <p>This is also a big no-no. <mark>This should always result in 
+    a runtime error</mark>, because this
+    is almost certain to corrupt the heap. Technically, 
+    however, it results in <mark>undefined behavior.</mark>
+  </p> 
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

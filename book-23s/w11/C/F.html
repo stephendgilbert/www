@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Arrays &amp; Const</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Arrays &amp; Const</h1>
+  <p class='firstLine'>Arrays passed to a function act
+    <mark>as if the array was passed by reference</mark>. 
+    That <strong>can be dangerous</strong>, because the function 
+    may inadvertently modify the caller's argument.
+  </p>
+<pre class='language-cpp line-numbers'><code>for (size_t i = 0; i &lt; len; ++i)
+{
+    sum += a[i];
+    a[i] = sum;
+}</code></pre>
+
+  <p> This function was <mark>intended to</mark> <b>sum all the 
+      elements</b> in an array. If you were distracted
+      and inadvertently used an assignment operator instead of
+      the comparison operator, as on line 4, the function would still 
+      produce the  correct sum, but mistakenly
+      <mark>destroy the values in the array passed to it</mark>.
+  </p>
+  <p><mark>Not a good thing</mark>. To fix this, use the same 
+      technique you used for pass-by-reference:
+  </p>
+  <ul>
+      <li>If a function <mark>intends</mark> to modify the array
+          (initialization, shifting, sorting, etc.) then 
+          <mark>do not</mark> <strong> use</strong> <tt>const</tt>
+          in front of the formal parameter. (Since
+          you are passing by address, <mark>you will never use</mark> 
+          <tt>&amp;</tt>.)
+      </li>
+      <li> If a function <mark>does not intend to modify the array</mark> 
+          (counting, summing, printing, etc.) then <mark>always</mark> 
+          use <tt>const</tt> in front of the parameter.
+      </li>
+  </ul>
+<pre class='language-cpp'><code>double average(const int a[], size_t len);</code></pre>
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

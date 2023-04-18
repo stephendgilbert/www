@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Structure Variables</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Structure Variables</h1>
+   <p class='firstLine'>A structure definition 
+      <mark>introduces a new type.</mark> Once you
+      have the type definition, you can <mark>define variables</mark>, 
+      as you would with any other type.
+  </p>
+  <pre class='language-cpp'><code>int n;          // uninitialized int variable n
+Date today;     // uninitialized Date variable today</code></pre>
+  <img src='../images/date2.png' class='right' 
+    alt='A box diagram of the Date variable today.'>
+  <p> These two lines instruct the compiler to <mark>allocate 
+      memory</mark> for the <tt>int</tt> variable <tt>n</tt>, and 
+      for the <tt>Date</tt> variable <tt>today</tt>. The <tt>Date</tt>
+      variable today includes data members that store the values 
+      of its <tt>month</tt>, <tt>day</tt> and <tt>year</tt> 
+      components. </p>
+    <p>If you were to draw a box diagram of the variable, it
+      would look something like the picture on the right.
+      Just as the <tt>int</tt> variable <tt>n</tt> is 
+      <mark>uninitialized</mark>, <tt>day</tt> and <tt>year</tt>
+      in the variable today are <strong>also</strong> uninitialized. 
+  </p>
+<div class='highlight'>
+    <p>The <tt>month</tt>
+    member is <strong>default initialized</strong>, because it is a library
+    type.
+        This is the opposite of Java. If we were to create a Java 
+        <tt>Date</tt> class with a public <tt>String</tt> field, 
+        that field would be uninitialized, while the
+        primitive types would be default initialized.
+    </p>
+</div>  
+  <h2>
+    Anonymous Structures
+</h2>
+<p>
+    You may also create a <strong>structure variable</strong> along with the
+    definition. This can be useful when you need to group together a pair of
+    variables for immediate use.
+</p>
+<pre class='language-cpp'><code>struct iPair {int a, b;} p1; 
+struct {int a, b} p2;</code></pre>
+<p> Here, <tt>p1</tt> is a structure variable, of type <tt>iPair</tt>. 
+    When you do this, you may  also <mark>omit</mark> the structure tag, 
+    as is done for the variable <tt>p2</tt>, creating an 
+    <mark>anonymous structure</mark>.
+</p>
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

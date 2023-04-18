@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The try and catch Block</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The <em>try</em> and <em>catch</em> Blocks</h1>
+  <p class='firstLine'>To <mark>handle</mark> and <mark>recover</mark> 
+    from errors, you need a combination of <tt>try</tt> and 
+    <tt>catch</tt> blocks. A <tt>try</tt> block is simply a block
+    of code where runtime errors might occur; write the keyword 
+    <tt>try</tt>, and then
+    surround the appropriate code in a pair of curly braces, like this:
+  </p>
+<pre class='language-cpp line-numbers'><code>string str;
+cin &gt;&gt; str;
+try {
+    int a = stoi(str);
+    cout &lt;&lt; "a = " &lt;&lt; a &lt;&lt; endl;  // skipped if exception thrown
+}
+catch (const invalid_argument&amp; e) {
+    cerr &lt;&lt; e.what() &lt;&lt; endl;     // if exception thrown
+}</code></pre>
+  <p>There are three things to note here.</p>
+  <ol>
+    <li>If the user enters <tt>"one"</tt> then <tt>stoi()</tt> will
+        throw an exception, and control <mark>immediately</mark>
+      breaks out of the <tt>try</tt> block and <b>jumps</b> to 
+      the <tt>catch</tt> block, skipping the line that prints <tt>a</tt>.
+      We're guaranteed that <mark>the rest of the code in the
+      <tt>try</tt> block will not execute</mark>, preventing error cascades.
+    </li>
+    <li>If an exception is thrown and caught, control <mark>does not 
+      return</mark> to the <tt>try</tt> block. Instead, control resumes 
+      directly <mark>following</mark> the <tt>try</tt>/<tt>catch</tt>
+      pair.
+    </li>
+    <li>Catch exception classes from the standard library <b>by 
+        const reference</b>. This avoids making copies and 
+        <mark>enables polymorphism</mark>. You will get a compiler
+        warning if you don't do this.
+    </li>
+  </ol>
+  </p>
+  <p>If no error occurs, then all of the code inside the 
+      <tt>try</tt> block executes as normal, and the 
+      subsequent <tt>catch</tt> block is ignored.
+      The function <tt>what()</tt> will return the <tt>string</tt> used
+      to construct the exception object. Here, its used to print the 
+      error message in the <tt>catch</tt> block. 
+  </p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

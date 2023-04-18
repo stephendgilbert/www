@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Fibonacci Sequence</title>
+</head>
+<body>
+<div id='page'>
+<div>
+<img src='../images/fib-day-poster.jpg' class='right width-25 round shadow'
+  alt='Poster for Fibonacci Day, November 23.'>
+   <h1>The Fibonacci Sequence</h1>
+   <p class='firstLine'>In 1202, the Italian mathematician 
+   <a target='_blank'
+      href='https://en.wikipedia.org/wiki/Fibonacci'
+    >Leonardo Fibonacci</a> experimented with how
+    a population of rabbits would grow from generation to generation,
+    <mark>give a set of rules</mark>. His rules lead to a
+    <strong>sequence of terms</strong>, which today are called the    
+    <mark>Fibonacci sequence</mark>: each term is the sum of the two
+    numbers preceding it. 
+  </p>
+  <p>Expressed as a recurrence relation:
+    <img src='../images/fibonacci-recurence-relation.png' 
+      class='width-25' 
+      style='vertical-align: middle;'
+      alt='The Fibonacci recurrence relationship.'>
+</p>
+<p>This alone is not sufficient, however; you can define new 
+  terms, but <strong>the process has to start somewhere!</strong>
+  You need <strong>at least two terms already available</strong>, 
+  which means that the first two terms in the sequence—<strong>
+  <em>t<sub>0</sub></em></strong> and 
+  <strong><em>t<sub>1</sub></em></strong>—must be 
+  defined explicitly.
+</p>
+<img src='../images/fibonacci-formula.png' class='right width-50'
+  style='margin-top:-1em;'
+  alt='The Fibonacci formula.'>
+<p>Given this qualification, the Fibonacci sequence can be expressed as:
+</p>
+<br clear='all' />
+   <p>To write a recursive implementation of 
+    a <em>fibonacci(n)</em> function, you need only plug in the 
+    simple cases, plus the recurrence relation, and
+    you're done.
+</p>
+<pre class='language-cpp'><code>int fib(int n)
+{
+    if (n &lt; 2) { return n; }     // base case
+    return fib(n - 1) + fib(n - 2);
+}</code></pre>
+<p>How do you convince yourself that the <tt>fib()</tt> 
+  function works? If you begin by tracing through the logic, 
+  I guarantee that you'll be confused. Instead, 
+  <mark>regard this entire mechanism as irrelevant detail</mark>.
+</p>
+<p>Since the argument values are smaller,  
+  <strong> each of these calls represents a simpler case</strong>, and so,
+  applying the recursive leap of faith, <strong>
+        you can assume that the program correctly computes 
+        each of these values</strong>.
+    <mark>Case closed.</mark> You don’t need the details.
+</p>
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Default Argument Rules</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Default Argument Rules</h1>
+   <p class='firstLine'>Here are the rules that determine the use
+   of default arguments:</p>
+  <ol>
+      <li>The default value appears <mark>only in the function 
+        prototype</mark>. If you repeat the default argument 
+        in the implementation file you will get a compiler error.
+      </li>
+      <li> Parameters with defaults must <mark>appear at the end 
+          of the parameter list</mark> and cannot be
+          followed by a parameter without a default. Here’s a bad example:
+      </li>
+<pre class='language-cpp'><code>void badOrder(int a = 3, int b);    // how would you call this?</code></pre>
+      <li style='margin-top:1em;'>Default arguments are only used with value, <mark>not 
+          reference</mark> parameters. Here’s another (bad) example:
+<pre class='language-cpp'><code>void badType(int&amp; a = ????);    // what to set it to?</code></pre>
+        Since a reference must refer to an <tt class='i'>lvalue</tt>, 
+        there is no way to specify which <tt class='i'>lvalue</tt>
+        should be used when the function is called.
+      </li>
+  </ol>
+<h2>Prefer Overloading</h2>
+  <p> Overloading is usually preferable to default arguments. Suppose
+      for example, you wish to define a procedure named
+      <tt>setLocation()</tt> which takes an <tt>x</tt> and a <tt>y</tt>
+      coordinate as arguments.
+  </p>
+  <p> You may write the prototype, <strong>using default 
+      arguments</strong>, like this:
+  </p>
+<pre class='language-cpp'><code>void setLocation(double x = 0, double y = 0);</code></pre>
+  <p>Now, the default location defaults to the origin <tt>(0,</tt> 
+  <tt>0)</tt>. However, it <mark>is possible</mark> to call the 
+  function with <mark>only one argument</mark>, which is 
+  <strong>confusing</strong> to anyone reading the code. It is 
+  <strong>better to just define a pair of overloaded</strong> 
+  functions like this:
+  </p>
+<pre class='language-cpp'><code>void setLocation(double x, double y);   // supply both
+inline void setLocation() { setLocation(0, 0); }</code></pre>
+  <p> The body of the second function, can just calls 
+      the first, passing <tt>0</tt>, <tt>0</tt> as the arguments.
+      Since the function is very, very short, it can be marked
+      <tt>inline</tt> which means it does not need to be 
+      defined inside the implementation file.
+  </p>   
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

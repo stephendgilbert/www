@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Indefinite Loop Categories</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Indefinite Loop Categories</h1>
+ <p class='firstLine'>Indefinite loops are those that wait until 
+    an event occurs at runtime to complete. You might wonder, "what
+    kind of event could that be?". Here are three kinds of indefinite 
+    bounds; each uses a different sort of bounds:
+  </p>
+  <p><mark>Data bound</mark> loops are those that keep <b>reading 
+    from input</b> until there is <b>no more data</b> to be read. Data loops are
+    used when processing files or network data. We'll work 
+    extensively with data loops when we get to <b>streams</b>.
+  </p>
+  <p>Here is an indefinite data loop that reads all of 
+    the words from a file, represented by the input file object 
+    named <tt>in</tt>, and prints each one on its own line:
+<pre class='language-cpp'><code>string word;
+while (in &gt;&gt; word)
+{
+    cout &lt;&lt; word &lt;&lt; endl;
+}</code></pre>
+  <p><mark>Sentinel bound</mark> loops look for the presence of a 
+    special value, <mark>contained within its input</mark>, to determine when to
+    quit. If your problem is "read characters until you encounter a period", 
+    then the period is the sentinel. 
+  </p>
+  <p>Sentinel loops are often 
+    used in searching, but have other uses as well. This sentinel 
+    loop finds the position of the first period entered.
+  </p>
+<pre class='language-cpp'><code>int position = 0; char c;
+cin &gt;&gt; c;
+while (c != '.') // Loop sentinel
+{
+    position++;
+    cin &gt;&gt; c;
+}</code></pre>
+  <p><mark>Limit bound</mark> loops end when another repetition 
+    of the loop won't get you any closer to your goal. They are 
+    often used in scientific calculations and other numeric 
+    algorithms, when stating a precise termination condition 
+    is not possible. 
+  </p>
+  <p> Often this involves monitoring the difference between 
+      two variables, and stopping the loop when the difference 
+      passes a predetermined threshold. Here is a limit-loop 
+      example which counts the number of odd digits in an integer <tt>n</tt>:
+  </p>
+<pre class='language-cpp'><code>int count = 0;
+while (n != 0) // Loop limit
+{
+    if (n % 10 % 2 == 1) { count++; }
+    n = n / 10;
+}</code></pre>
+
+
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

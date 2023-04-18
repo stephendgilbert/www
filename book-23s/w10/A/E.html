@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+
+    <title>Element Access</title>
+
+</head>
+<body>
+
+<div id='page'>
+<div>
+<h1>Element Access</h1>
+<p> The variables stored inside a vector are called its
+    <mark>elements</mark>. To access an individual element, you use 
+    its <mark>subscript</mark> (or <strong>index</strong>). This 
+    is called <mark>selecting</mark> the element. 
+    To <strong>select</strong> an
+    element, pass the subscript as an argument to the 
+    <code>vector::at()</code> member function, or, place 
+    the subscript in <mark>square brackets</mark> after
+    the variable name. (The square brackets are called the
+    <b>subscript operator</b>).
+</p>
+<pre class='language-cpp'><code>cout &lt;&lt; v[1] &lt;&lt; endl;   // the subscript operator
+cout &lt;&lt; v.at(1) &lt;&lt; endl;  // the at member function</code></pre>
+<p> Both the <strong>subscript operator</strong> and the 
+    <code>at()</code> member function <mark>return a 
+    reference</mark> to the selected element, so they may
+    appear on either side of an assignment.
+</p>
+<h2><em>vector</em> Size</h2>
+  <p> You can find out how many elements a <code>vector</code>
+      contains by using the <code>size()</code> member function.
+      The first element in the <code>vector</code> is at 
+      subscript <code>0</code>, while the last is at
+      <code>v.at(v.size() - 1)</code>.
+    C++11 (and later) added two additional member functions, 
+    <code>front()</code> and <code>back</code> which return a 
+    reference to the first and last elements. 
+</p>
+<p> Calling 
+    <code>front()</code> or <code>back()</code> on an empty 
+    <code>vector</code> <mark>is undefined</mark>. You can
+    find out if a <code>vector</code> contains elements by
+    calling its <code>empty()</code> member function, or by
+    checking if its <code>size()</code> is greater than zero. 
+</p>
+<h2>Undefined Behavior</h2>
+<p> Subscripting a <code>vector</code> past its bounds is an 
+    error which invokes <mark>undefined behavior</mark> in C++. 
+    Undefined behavior means that the compiler is completely free 
+    to ignore the error (which is what usually happens).
+    However, the compiler is also free to format your hard disk, 
+    send your credit-card credentials to Timbucktu, or, to
+    <a target='_blank' href="http://catb.org/jargon/html/N/nasal-demons.html">
+        make demons fly out of your nose</a>.
+</p>
+<p> C++ also has <mark>implementation-defined</mark> and    
+    <strong>unspecified</strong> behavior. Implementation-defined 
+    means the compiler <strong>must pick</strong> a particular 
+    implementation, and document it, such as the size of an integer. 
+    Unspecified means that the compiler <strong>must do something 
+    reasonable</strong>, but need not document what it does. The 
+    order in which arguments are evaluated when passed to a 
+    function is unspecified; it may be different each time.
+</p>
+</div>
+
+<div id='footer'>
+    Materials on this web site &copy; 1995-2075, 
+    <a href="mailto:StephenGilbert@gmail.com">Stephen Gilbert</a>
+    All rights reserved.<br>
+    Any materials may be reproduced for non-profit purposes so long as<br>
+    (1) this notice remains intact and (2) you notify me of your use.
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

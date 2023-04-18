@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Implementing Member Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Implementing Member Functions</h1>
+  <p class='firstLine'>To define a member function, specify the name 
+    of the function <mark>preceded by the name of the structure
+    that it belongs to</mark>. To implement
+      write(), for instance, write:
+  </p>
+<pre class='language-cpp'><code>ostream&amp; Time::write(ostream&amp; out)
+{
+    // format and print output here
+    return out;
+}</code></pre>
+  <p>The name of the member function is <tt>Time::write</tt>; the 
+      double-colon operator (<tt>::</tt>) is called the 
+      <strong>scope resolution operator</strong> and tells C++
+      where to look for the function. 
+  </p>
+  <p> You can think of the syntax <tt>X::Y</tt> as meaning
+      <i>“look inside <b>X</b> for <b>Y</b>.”</i> 
+      It is important to use the <mark>fully-qualified name</mark> 
+      of the function when implementing it. The code shown below may 
+      compile, but C++ thinks you are implementing a regular (or 
+      <mark>free</mark>) function named <tt>write()</tt> that has    
+      <mark>no relationship whatsoever</mark> to the <tt>Time</tt> class.
+  </p>
+  <img src='../images/bug.png' class='left' alt='A bug icon.'>
+<pre class='language-cpp'><code>ostream&amp; write(ostream&amp; out)
+{
+    // Error... not a member function
+    return out;
+}</code></pre>
+
+
+
+
+
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

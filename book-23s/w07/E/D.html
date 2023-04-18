@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>More Assertions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>More Assertions</h1>
+   <img src='../images/writing-solid-code.png' class='right width-128'
+    alt='Cover of Writing Solid Code.'>
+  <p class='firstLine'>Assertions are <mark>not</mark> designed to
+    handle runtime errors. They are designed to point out bugs in
+    your code. <strong>Steve Maguire</strong>, one of the original developers 
+    of Excel, wrote a classic book named
+      <a target='_blank'
+          href="https://writingsolidcode.com/">Writing Solid Code</a>,
+      which contains a chapter on assertions in C. Here are the points he makes:
+  </p>
+  <ul>
+      <li>
+          Assertions are shorthand way to write <strong>debugging checks</strong>
+      </li>
+      <li>
+          Use assertions to check for <strong>illegal conditions</strong>, not
+          error conditions
+      </li>
+      <li>
+          Use assertions to <strong>validate function arguments</strong> under
+          your control
+      </li>
+      <li>
+          Use assertions to validate any <strong>assumptions</strong> you have
+          made
+      </li>
+  </ul>
+  <p>If you want your code to <b>help you</b> find your bugs, make
+    liberal use of <tt>assert()</tt>.
+  </p>
+  <p>Since assertions are only needed while you are developing your code,
+    you can remove them from your <mark>production build</mark> by compiling
+    with the <tt>-D</tt> <tt>NDEBUG</tt> compiler switch, or by adding
+    <tt>#define</tt> <tt>NDEBUG</tt> <mark>before</mark> including 
+    <tt>&lt;cassert&gt;</tt>. 
+  </p>
+  <p><tt>assert()</tt> is not actually a function, but a <mark>preprocessor
+    macro</mark>, so defining <tt>NDEBUG</tt> allows the preprocessor to
+    remove all <tt>assert()</tt> statements before your code is compiled.
+    Becuase of this, you need to make sure that an <tt>assert()</tt> never
+    has a side effect, which could change the way your program runs 
+    when it is removed.
+  </p>
+  <h2>Static Asserts</h2>
+  <p>C++ 11 also introduced the <tt>static_assert()</tt> declaration which 
+      may be used to double-check your assumptions about the platform you 
+      are developing on. For instance, if your code assumes that the 
+      <tt>int</tt> type is a 32-bit signed number,
+      you can check that with:
+  </p>
+<pre class='language-cpp'><code>static_assert(sizeof(int) == 4, "int must be 32 bits.");</code></pre>
+  <p> Unlike regular assertions, <tt>static_assert</tt> is checked when you 
+      compile; it does not check for runtime errors. You can only check on 
+      compile-time constants and the error message must be a string literal; 
+      you cannot include variables. (In C++17 you may omit the error message.)
+  </p>
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

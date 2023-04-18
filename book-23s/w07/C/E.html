@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Arguments</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Arguments</h1>
+  <p class='firstLine'>Take a look at the starter code for the <tt>inputStats</tt> function.
+    Reading the documentation comment, you can see that the two arguments it expects
+    are an <strong>input stream</strong> and an <strong>output stream</strong>. 
+    <img src='../images/input-stats.png' class='inlineCenter shadow round width-80'
+      alt='The inputStats problem'>
+  </p>The first question is "What kind of streams should you pass?" You
+    should be able to <mark>call</mark> the function in any of these ways:
+  </p>
+<pre class='line-numbers language-cpp'><code>inputStats(cin, cout);
+inputStats(inFile, outFile);  // ifstream, ofstream
+inputStats(inStr, outStr);    // istringstream, ostringstream</code></pre>
+  <p>To make sure it will work with <mark>all</mark> of these stream types, 
+    you must use the  <mark>most general</mark> types for your parameters: 
+    <tt>istream</tt> and <tt>ostream</tt>. 
+  </p>
+  <p> In addition, <strong>all</strong> stream types must be passed
+    <mark>by reference</mark>, not by value. If you forget this,
+    your code will not compile, and the error message will not
+    be helpful at all.
+    <img src='../images/error.png' class='inlineCenter width-75'
+      alt='Error message when passing streams by value.'>
+  </p>
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

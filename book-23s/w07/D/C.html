@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Stub the Replacements</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Stub the Replacements</h1>
+  <p class='firstLine'>Place these <strong>definitions</strong> 
+      for the functions right above  <tt>main</tt>.
+  </p>
+<pre class='language-cpp'><code>int stoi(const string&amp; str) { return 0; }
+double stod(const string&amp; str) { return 0.0; }</code></pre>
+  <p> Now, type <tt class='y'>make 98</tt> once again. You'll see 
+      that the code compiles and "runs" (although your stubs don't 
+      produce the correct value, of course).
+  </p>
+  <img src='../images/clash-of-symbols.jpg' 
+    class='right round shadow width-128'
+    style='margin-top:-1em;'
+    alt='Decorative image from "Clash of Symbols" album.'>
+  <p><mark>What happens when you upgrade to Visual Studio 19</mark>?
+      Will the code still compile? <mark>Nope!</mark> Your version of
+      <tt>stoi()</tt> <mark>conflicts with</mark> the one already 
+      defined inside the new C++ standard library; we get a
+      <mark>clash of symbols</mark>.
+      <img src='../images/replit-3.png' class='inlineCenter round shadow width-90'
+        alt='Compiling the new stubs with make 17.'>
+  </p>
+  <p>At link time, there can be <mark>only one copy</mark> of the 
+    <tt>stoi()</tt> function in the executable; if the library already 
+    has one, <strong>your program <mark>won't</mark> link</strong>. 
+    This is called the <b>ODR</b> or <b>One Definition Rule</b>.
+  </p>
+  <p> What you would like to say is:
+      <i>"if I'm using C++11 or later use the library version, and, 
+      if I'm using an older version of C++, then use the version 
+      which I've written".</i>
+      You can do that with <mark>conditional compilation</mark>.
+  </p>
+  
+  
+  
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

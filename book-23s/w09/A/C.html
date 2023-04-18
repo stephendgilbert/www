@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>What Should You Throw?</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>What Should You Throw?</h1>
+  <p class='firstLine'>Unlike Java, in C++, it is legal to    
+      <mark>throw any kind of object</mark>, not just members
+      of an exception class hierarchy. So, in C++, all of
+      these are legal:
+  </p>
+<pre class='language-cpp'><code>if (len &lt; 3) throw "Too short"s; // throw a string
+if (a &gt; b) throw 42;    // throw an integer error code
+if (b &lt; c) throw 3.5;   // throw a double</code></pre>
+      <a target='_blank' href='../images/exceptions.png'>
+      <img src='../images/exceptions.png' class='right width-30 round shadow'
+        alt='The C++ standard library exception classes.'></a>
+  <p>The question is, though, what <mark>should</mark> <tt>stoi()</tt>
+    throw when an error occurs? The
+      <a target='_blank' 
+        href="https://en.cppreference.com/w/cpp/string/basic_string/stol">
+          library documentation
+      </a>says that the function throws an <tt>invalid_argument</tt> 
+      exception.</p><p> The header file, <tt>&lt;stdexcept&gt;</tt> defines 
+      this and several other classes that let us
+      specify what specific error triggered the exception,
+      similar to the <tt>Exception</tt> class hierarchy from
+      the Java Class Libraries. (Click the image to enlarge it.)
+  </p>
+  <p>The <tt>invalid_argument</tt> exception is ideal because
+  </p>
+  <ul>
+    <li>its constructor takes a <tt>string</tt> argument, useful for error messages.
+    <li>it has a member function <tt>what()</tt> that returns what the error was</li>
+  </ul>
+  <p>Include <tt>&lt;stdexcept&gt;</tt>, and rewrite the <tt>throw</tt> statement like this:
+  </p>
+<pre class='language-cpp'><code>throw invalid_argument(str + " not an int.");</code></pre>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

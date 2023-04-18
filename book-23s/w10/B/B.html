@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <link href='https://horstmann.com/codecheck/css/codecheck_tracer.css' rel='stylesheet' type='text/css'/>
+    <title>Vectors &amp; Loops</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Vectors &amp; Loops</h1>
+  <p class='firstLine'>The modern C++ <strong>range-based </strong>loops 
+      work with <tt>vector</tt> as well as with <tt>string</tt>. 
+      This loop automatically visits every element in the <tt>vector</tt>:
+  </p>
+<pre class='language-cpp line-numbers'><code>for (auto e : v) {...}          // e is a copy
+for (auto&amp; e : v) {...}         // no copy; may modify
+for (const auto&amp; e : v) {...}   // no copy; cannot modify</code></pre>
+  <ol>
+    <li>The <strong>local variable</strong> <tt>e</tt> is initialized with 
+        <mark>a copy</mark> of the next value in <tt>vector</tt> <tt>v</tt>.
+    </li>
+    <li>Here, <tt>e</tt> is a <mark>reference</mark> to the next 
+        element in <tt>v</tt>. When you modify <tt>e</tt> you are actually
+        modifying the element inside the <tt>vector</tt> <tt>v</tt>.
+    </li>
+    <li>If <tt>v</tt> is a <tt>vector&lt;string&gt;</tt>, for example,
+      you <mark>don't want to make a copy</mark> of each of the elements. 
+      And, if <mark>you want to prevent any changes</mark>, then use this
+      version of the range-based <tt class='i'>for</tt> loop.
+    </li>
+  </ol>
+  <h2>
+      Counter-controlled Loops
+  </h2>
+  <p>
+      The <mark>general pattern</mark> for <strong>manually</strong>
+      iterating through a vector looks like this:
+  </p>
+<pre class='language-cpp'><code>for (size_t i = 0, len = v.size(); i &lt; len; ++i)
+{
+    // Process the vector elements here
+}</code></pre>
+  <p>Some notes about this loop:</p>
+  <ul>
+    <li>Instead of calling <tt>v.size()</tt> each time in the loop, 
+      call it once and <mark>save the value in a variable</mark>; your 
+      loop initializer will thus have <strong>two</strong> variables.
+    </li>
+    <li>Use <tt>size_t</tt> to avoid the lengthy declaration of 
+      <tt>vector::size_type</tt>.
+    </li>
+    <li><mark>At all costs</mark> avoid comparing an 
+      <tt>int</tt> to the value returned from <tt>v.size()</tt>.
+      <mark>Mixing signed and unsigned numbers is error prone</mark>.
+    </li>
+  </ul>
+  <p>Next, let's look at a few common vector algorithms.
+  </p>  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Templates &amp; Overloading</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Templates &amp; Overloading</h1>
+  <p class='firstLine'>Suppose you wanted to print 
+    <strong>pointers</strong> differently than non-pointers, you can
+      add an <mark>overloaded template function</mark> like this:
+  </p>
+<pre class='language-cpp'><code>template &lt;typename T&gt;
+void print(const T* p)
+{
+    cout &lt;&lt; "Pointer: " &lt;&lt; p &lt;&lt; " ";
+    if (p) cout &lt;&lt; *p; else cout &lt;&lt; "nullptr";
+}</code></pre>
+  <p> Now, what if you want
+      floating-point numbers and Booleans to print differently than other 
+      kinds of values? You can add a pair of <mark>explicit, non-template, 
+      overloaded functions</mark>, like this:
+  </p>
+<pre class='language-cpp'><code>void print(double val, int dec=2)
+{ 
+    cout &lt;&lt; fixed &lt;&lt; setprecsion(dec) &lt;&lt; val;
+}
+void print(bool val)
+{
+    cout &lt;&lt; boolalpha &lt;&lt; val;
+}</code></pre>
+  <p>Now <tt>print(2.5)</tt> will print <tt>2.50</tt>, 
+      while <tt>print(2.5,</tt> <tt>4)</tt> will print <tt>2.5000</tt>.
+      Printing a <i>Boolean</i> expression will print 
+      <tt>true</tt> or <tt>false</tt>, not <tt>0</tt> or <tt>1</tt> like the
+      original template.
+  </p>
+  <p> When you overload template functions:</p>
+  <ul>
+    <li>Any call to a template function, where the template 
+      argument deduction succeeds, is a <strong>viable member</strong> 
+      of the overload <strong>candidate set</strong>.
+    </li>
+    <li>If there is a <strong>non-template</strong> function in the 
+        viable set, then <strong>it is preferred</strong>.
+    </li>
+  </ul>
+  <p>The <strong>most specialized</strong> template function in the viable set
+      is preferred over the other template functions.
+  </p>
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

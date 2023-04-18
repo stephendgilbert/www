@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Memory Leaks</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Memory Leaks</h1>
+  <p class='firstLine'>The <tt>delete</tt> operator frees the
+    allocated memory on the heap, but it <mark>does not 
+    physically change the 
+    pointer</mark> in any way. This leads to three possible errors. 
+    Here is one:
+  </p>
+<pre class='language-cpp'><code>bool validDate(int yr, int mo, int da)
+{
+    Date *pd = new Date(yr, mo, da);
+    if (! pd->isValid()) { return false; }
+    cout &lt;&lt; "Date " &lt;&lt; (*pd) &lt;&lt; " OK" &lt;&lt; endl;
+    delete pd;  // free heap memory
+    return true;
+}</code></pre>
+  <p> This function constructs a new <tt>Date</tt> object 
+      <strong>on the heap</strong>, and
+      then calls the <tt>isValid()</tt> member function to see if 
+      the resulting combination is legal. If it is <mark>not valid</mark>,
+      the function returns <tt>false</tt>. If it is valid,
+      then the function prints the <tt>Date</tt> object, 
+      deletes the object on the heap and returns true.
+  </p>
+    <img src='../images/leak.jpg' class='right width-128' alt='Illustrating a leak.'>
+
+  <p>This code has <strong>one</strong> <tt>new</tt> and 
+      <strong>one matching</strong>
+      <tt>delete</tt>, but it still <mark>has a memory leak</mark>
+      whenever an invalid data is entered.
+      That's because there are two <tt>return</tt> statements in 
+      the function. If the <tt>Date</tt>
+      is invalid, the function returns <mark>without</mark>
+      <strong> deleting the data on the heap</strong>.
+  </p>
+  <p>
+  <a target='_blank'
+    href='https://onlinegdb.com/T_qMdPL74'>Try running the program
+    oneline</a>.
+  </p>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

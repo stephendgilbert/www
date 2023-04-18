@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Unique Pointers</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Unique Pointers</h1>
+  <p class='firstLine'>A <tt>unique_ptr</tt> “<mark>owns</mark>” 
+      the object to which it points. <mark>Only one</mark> 
+      <tt>unique_ptr</tt> at a time can point to a given object.
+      The object to which a <tt>unique_ptr</tt> points is destroyed 
+      when the <tt>unique_ptr</tt> is
+      destroyed.
+  </p>
+  <p>Define a <tt>unique_ptr</tt> by constructing it with an 
+      address returned from <tt>new</tt>, like this:
+  </p>
+<pre class='language-cpp'><code>unique_ptr&lt;int&gt; p(new int{45});</code></pre>
+  <p>The <tt>unique_ptr</tt> does <mark>not</mark> support assignment.
+    The following code is illegal:
+  </p>
+<pre class='language-cpp'><code>unique_ptr&lt;Cat&gt; p1(new Cat("Felix"));
+unique_ptr&lt;Cat&gt; p2 = p1;      //ERROR. Only one can point to Felix</code></pre>
+<h2>Transferring Ownership</h2>
+<p>While you cannot <mark>copy</mark> unique pointers, 
+    you can    <mark>transfer ownership</mark> of a heap object
+    from one <tt>unique_ptr</tt> to another by
+    calling <tt>release()</tt> and/or <tt>reset()</tt>:
+  </p>
+  <ul>
+    <li><tt>release()</tt> returns the "raw" pointer stored inside
+      the <tt>unique_ptr</tt> and makes that <tt>unique_ptr</tt> null.
+    </li>
+    <li><tt>reset()</tt> takes an optional raw pointer and 
+      repositions the <tt>unique_ptr</tt> to
+      point to the given pointer. If the <tt>unique_ptr</tt> is not 
+      null, then the object to which the <tt>unique_ptr</tt>
+      <strong>had pointed</strong> is deleted.
+    </li>
+  </ul>
+<pre class='language-cpp'><code>unique_ptr&lt;Cat&gt; p1(new Cat("Felix"));
+unique_ptr&lt;Cat&gt; p2(p1.release());     //OK, p2 now owns Felix
+p2.reset(new Cat("Kitty"));           //OK. Felix deleted</code></pre>
+  <p>The pointer returned by <tt>release()</tt> is often used to
+    <mark>initialize another smart pointer</mark>; in this way,
+    responsibility for
+    memory is <strong>transferred</strong> from one smart pointer 
+    to another.
+  </p>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

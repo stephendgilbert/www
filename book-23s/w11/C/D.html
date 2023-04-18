@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Arrays &amp; Functions</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Arrays &amp; Functions</h1>
+  <p class='firstLine'>You cannot pass an array <mark>by 
+    value</mark> to a function as you can a vector. While you
+    can pass an array to a function by reference, you'll 
+    almost never do that.
+    Instead, we need to learn about a new way of passing 
+    parameters: <mark>pass by address</mark>.
+  </p>
+  <p> Recall that an array name <mark>is an address</mark>, 
+      which you may store inside a pointer.
+  </p>
+<pre class='language-cpp'><code>int array[5];
+int *p = array;</code></pre>
+  <p>This is the secret to writing functions that process arrays:
+  </p>
+  <ul>
+      <li>Create a function <mark>with a pointer as a parameter</mark>. 
+        You <strong>may</strong> declare this pointer as <tt>int</tt>
+        <tt>a[]</tt>, indicating that you <mark>intend</mark> to 
+        initialize it with the address of the first element in an array.
+      </li>
+      <li><strong>Call the function</strong>, <strong>supplying the 
+          name of an array</strong> as the argument.
+      </li>
+  </ul>
+  <p> Here are two prototypes. The first uses the square brackets 
+      to declare the pointer variable <tt>a</tt>. The second uses 
+      the normal pointer parameter syntax. Both have identical 
+      meaning <mark>when as a parameter declaration</mark>.
+  </p>
+<pre class='language-cpp'><code>int aSum(const int a[], size_t size);
+int aSum(const int *a, size_t size);</code></pre>
+  <div class='bug'>
+  <p>
+      With "pointer notation", the star comes <strong>before</strong> the name,
+      while with "array notation", the <strong>brackets come after</strong>. A
+      common error, for Java programmers moving to C++, is to write the prototype
+      like this, 
+      <code style='display:block; border-top:1px dotted silver;
+        border-bottom:1px dotted silver; margin-top:.25em; margin-bottom:.25em;'
+        class='language-cpp'>int aSum(const int[] a, size_t size);</code>
+      which is a syntax error.
+  </p>
+  </div>
+  
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

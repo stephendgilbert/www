@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Postcondition</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Postcondition</h1>
+   <p class='firstLine'>Loops end when reaching their bounds.
+      <mark>not</mark> when they've <mark>reached the goal!</mark>
+      After the loop is over, you have to ask yourself:    
+      "<mark>Has my loop reached its goal?</mark>"
+  </p>
+  <p>In our case, the problem asked us to count the period as well, 
+      and we haven't done that. So, after the loop is over we'll have to 
+      add a <mark>postcondition</mark> statement like this:
+  </p>
+<pre class='pcode'>str &lt;- string supplied to the problem
+counter &lt;- 0
+pos &lt;- 0
+letter &lt;- str.at(pos)
+while letter is not a period
+{
+    counter &lt;- counter + 1
+    pos &lt;- pos + 1
+    letter &lt;-> str.at(pos)
+}
+<em>Step 6: The Loop Postcondition (reached the goal?)</em>
+<i>counter &lt;- counter + 1</i>  // count the period
+// Now the variable counter contains our goal</pre>
+<p>Now our loop has correctly counted the number of characters in the first
+   sentence. <mark>Or has it?</mark> Next we'll look at two 
+   small details that I glossed over.
+  </p>
+
+
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

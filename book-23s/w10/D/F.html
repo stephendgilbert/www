@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The "null" Pointer</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The "null" Pointer</h1>
+  <p class='firstLine'>The value that indicates that a pointer 
+    is not being used is called the <strong>null pointer</strong>. It 
+    is represented internally by <tt>0</tt>. While you    
+    <strong>cannot assign an arbitrary integer</strong> to a 
+    pointer variable, you <strong>can assign the value</strong> <tt>0</tt>.
+  </p>
+  <p>Using a literal <tt>0</tt>, however, makes it hard to find 
+      all of the null pointers in your code. C++11 introduced 
+      <mark>an actual null pointer constant</mark>
+      named <tt>nullptr</tt>. You should use that instead 
+      <tt>0</tt>. Do not use the C language value <tt>NULL</tt>.
+  </p>
+  <p>It is <mark>illegal to dereference</mark> a null pointer. 
+    In UNIX, it usually results in a <strong>segmentation fault</strong>, 
+    but that is <strong>not guaranteed</strong>. Some machines return 
+    the contents of address <tt>0000</tt>. As a result, 
+    <mark>this is undefined behavior</mark>, as
+      in the case of uninitialized pointers.
+  </p>
+  <p> If you declare a pointer but <strong>fail to initialize it</strong>, 
+      the computer tries to interpret the contents of that pointer as 
+      an address and tries to read that region of memory. Such programs
+      can fail in ways that are extremely difficult to detect. 
+      Again, this is    <strong>undefined behavior</strong>.
+  </p>
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

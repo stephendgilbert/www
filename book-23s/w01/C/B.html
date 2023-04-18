@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Console Input</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Console Input</h1>
+  <p class='firstLine'>The <tt>cin</tt> (<i>see-in</i>) <mark>standard input 
+    stream</mark> can <strong>read</strong> and <strong>convert</strong> 
+    user input, and store it into different kinds of variables. 
+    This is called <mark>formatted input</mark>, and it uses the 
+    <mark>extraction operator</mark> (<tt>&gt;&gt;</tt>) to read
+    (extract) data from input, <strong>convert it and store</strong> the
+    results in a variable.
+  </p>
+  <p>Here's an example:</p>
+<pre class='language-cpp line-numbers'><code>cout &lt;&lt; "Enter limit: ";  // prompt
+int limit;                // variable to hold the value
+cin &gt;&gt; limit;             // read, convert and store</code></pre>
+  <p>
+      <strong></strong>
+  </p>
+  <p> When a user types <tt>123</tt> in response when prompted for 
+      <tt>limit</tt>, the input is three <tt>ASCII</tt> character 
+      values <tt>'1'</tt>, <tt>'2'</tt>, <tt>'3</tt>'. These are 
+      stored sequentially in memory, and then, when the user types
+      <tt>ENTER</tt>, the three <tt>char</tt> values are
+      <strong>combined and converted</strong> from text into to the    
+      <mark><tt>int</tt></mark> <tt>123</tt>, which looks like this in memory:
+  </p>
+  <div class='consoleDisplay'>
+  0000-0000 0000-0000 0000-0000 0111-1011
+  </div>
+  <p>This process—turning human-readable text into binary numbers, 
+      (and it's the reverse), is the job of <strong>parsing</strong> or    
+      <strong>conversion</strong>. <mark>The <tt>cin</tt> object does this for us.</mark>
+  </p>
+  <h2>Input Errors</h2>
+  <p>If the user <mark>types an unexpected input value</mark> in Java or C#
+      or Python, the system <mark>prints an error message on the console</mark>, 
+      and terminates the program.
+      <img src='../images/input-error.jpg' class='inlineCenter'
+        alt='An input-error message in a Java IDE.'
+        title='An input-error message in a Java IDE.'>
+  </p>
+  <p>This is a <strong>runtime error</strong> or <mark>exception</mark>,
+      detected when your program runs, rather than when you compile it.    
+      <mark>C++ uses a different technique</mark>.
+  </p>
+  <p> Instead of causing a runtime error and stopping, the input stream is
+      <strong>placed in an invalid state</strong>, and stops receiving input. 
+      In C++ when the comma is encountered, your program
+      <mark>doesn't crash</mark>. You'll learn how to handle these
+      kinds of errors soon.
+  </p>
+
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

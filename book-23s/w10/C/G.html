@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The Address Operator</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The Address Operator</h1>
+  <p class='firstLine'>The <mark>address operator</mark>, 
+      <tt>&amp;</tt>, when placed in front of a
+      variable, returns the <strong>address where</strong> 
+      the variable is
+      stored in memory.
+  </p>
+<pre class='language-cpp'><code>cout &lt;&lt; "&amp;a-&gt;" &lt;&lt; &amp;a &lt;&lt; endl;
+cout &lt;&lt; "&amp;b-&gt;" &lt;&lt; &amp;b &lt;&lt; endl;</code></pre>
+  <p>Addresses are normally printed in hexadecimal, and 
+    depend on the size of the pointer. Here's the output 
+    from this fragment of code when run on two platforms:
+  </p>
+<div class='consoleDisplay'>
+&amp;a-&gt;009CF808 - Visual C++ 19 (Windows)<br />
+&amp;b-&gt;009CF7F8<br />
+&amp;a-&gt;0x7fff448e448c - G++ &amp; Clang (Unix)<br />
+&amp;b-&gt;0x7fff448e4490</div>
+  <p> Notice that Visual Studio has 32-bit addresses, 
+      while Unix uses 64-bit. Of course, the actual values of the 
+      addresses printed on your machine will be entirely different.
+      You can take the address of a variable, such as <tt>&amp;a</tt>
+      or <tt>&amp;b</tt>, <mark>but not a type</mark>. Writing
+      <tt>&amp;int</tt> is nonsensical and illegal.
+  </p>
+  <p>You also cannot take the address of a literal or
+    expression: <tt>&amp;12</tt> is meaningless.
+  </p>
+  
+  
+  
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

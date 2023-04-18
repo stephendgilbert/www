@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Sentinel Loops</title>
+    <style>
+      tbody td {
+        width:50px;
+      }
+    </style>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Sentinel Loops</h1>
+  <p class='firstLine'>If an array contains a special value 
+    marking the end of the data, then you can use a <mark>sentinel 
+    loop</mark> to process the array. In the
+    long-ago data-processing days, for instance, an array of 
+    positive values would contain a <tt>-1</tt> as a terminator or sentinel.
+  </p>
+  <p>One <strong>advantage</strong> of the sentinel technique, 
+      is that it allows you to write functions that process 
+      variable amounts of data. (Later, we'll look at 
+      <strong>partially-filled arrays</strong>, which are a more general
+      solution to this problem.) 
+  </p>
+  <p>Here's an example using a sentinel loop, which calculates the average
+      grade on a test:
+  </p>
+<pre class='language-cpp'><code>double average(const double grades[]) 
+{
+   double sum = 0;
+   int count = 0;
+   for (size_t i = 0; grades[i] &gt;= 0; ++i)
+   {
+      sum += grades[i];
+      count++;
+   }
+   return sum / count;
+}</code></pre>
+  <p>The <mark>disadvantage of this technique</mark> is that your 
+    function needs to trust
+    that the array has been properly terminated, which is 
+    really a security hole. This technique is not used 
+    that widely for numeric arrays. However, C-style strings
+    use a special sentinel (called the NUL byte) to mark the 
+    end of the string, and all C-string functions employ 
+    sentinel loops.
+  </p>
+    
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

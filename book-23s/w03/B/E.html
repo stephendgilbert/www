@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Range-based Loops</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Range-based Loops</h1>
+  <img src='../images/range-rover.png' class='right width-25'
+    alt='A decorative Range Rover icon.'>
+ <p class='firstLine'>As mentioned earlier, range-based loops were 
+    added in C++11. A range loop will visit each element in a collection,
+    setting the range variable to each value in the collection, in turn.
+    These loops are very similar to the simplified <tt>for</tt> loop added
+    in Java 5, and the <tt>for</tt> <tt>in</tt> loops in Python.
+  </p>
+  <p> Let's look at the three variations of range-based loops which are 
+    offered in C++. We'll start with <mark>value iteration</mark>, which
+    is the closest to the version used in Java.
+  </p>
+  <p>Here's a short example, which prints each character in a string 
+    on a line by itself:
+  </p>
+<pre class='language-cpp'><code>string snake{"Ouroboros"};
+for (char c : snake)
+{
+    cout &lt;&lt; c &lt;&lt; endl;
+}</code></pre>
+  <p>On each loop cycle, the variable <tt>c</tt> is initialized 
+    with a <mark>copy</mark> of the next character in the <tt>string</tt>
+    <tt>snake</tt>. When all of the characters have been processed, 
+    the loop stops. Thus, you can read this loop as saying <i>"for each 
+    character in snake, do something".</i>
+  </p>
+  <p>With value iteration, changes to the variable <tt>c</tt> have no
+    effect on the <tt>string</tt> <tt>snake</tt>. If you <b>want</b>
+    to change the <tt>string</tt> itself, then use <mark>reference iteration</mark>.
+    Here's a second example which does that:
+  </p>
+<pre class='language-cpp'><code>string str{"one two three"};
+for (char&amp; c : str)
+{
+    if (c == ' ') { c == '_'; }
+}
+cout &lt;&lt; str &lt;&lt; endl;</code></pre>
+  <p>Finally, if the items you are iterating over are very large,
+    and you want to make sure you don't change them, then you'd use
+    <mark>const-ref iteration</mark> like this (made up) example.
+  </p>
+<pre class='language-cpp'><code>Album photos(get_phone_photos());
+for (const Image&amp; img : photos)
+{
+    if (is_cute_cat(img))
+    {
+        display(img);
+    }
+}</code></pre>
+  <p>Because each picture in your photos library might be very large,
+    you <mark>wouldn't</mark> want to copy them with value iteration.
+    Similarly, since you wouldn't want the <b>CuteCats</b> app to have
+    the ability to modify (or perhaps erase) your cute cat photos,
+    the loop should access each variable as a 
+    <code class='language-cpp'>const Image&amp;</code>.
+  </p>
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

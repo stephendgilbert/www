@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Conversion Constructors</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Conversion Constructors</h1>
+  <p class='firstLine'>A <b>conversion constructor</b> 
+  is a constructor (usually 1-argument) that 
+  <mark> implicitly converts between one type and 
+  another</mark>. Here's
+  an overloaded conversion constructor that converts 
+  between fractional hours
+  and hours and minutes:
+</p>
+<pre class='language-cpp'><code>Time(double hours);</code></pre>
+<p> The implementation of the constructor (converting first to seconds, 
+    then extracting the hours and minutes) could look like this:
+</p>
+<pre class='language-cpp'><code>Time::Time(double hours)
+{
+    assert(hours &gt;= 0 &amp;&amp; hours &lt; 24);
+    const int kSecondsPerHour = 3600;
+    const int kHoursPerMinute = 60;
+    auto time = static_cast&lt;int&gt;(hours * kSecondsPerHour);
+    m_hours = time / kSecondsPerHour;
+    m_minutes = time % kSecondsPerHour / kHoursPerMinute;
+}</code></pre>
+<div>
+
+  
+
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
