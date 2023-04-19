@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Signed and Unsigned</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Signed and Unsigned</h1>
+  <p class='firstLine'>Unlike Java, 
+      C++ integers come in two "flavors": <strong>signed</strong> and 
+      <strong>unsigned</strong>. Unsigned variables offer 
+      <strong>twice the range of positive numbers</strong>, but cannot store
+      negative numbers. For example, a 32-bit <tt>int</tt> has a maximum value of
+      2,147,483,647, while the maximum <tt>unsigned</tt> <tt>int</tt> 
+      is 4,294,967,295. C++ allows <tt>unsigned</tt> <tt>int</tt> 
+      to be abbreviated as <tt>unsigned</tt>.
+  </p>
+  <p>Since integers use a fixed amount of memory, what happens if you
+    exceed their range? Unsigned numbers will "wrap around". For instance,
+    try this. 
+  </p>
+<pre class='language-cpp'><code>unsigned n = 0;
+cout &lt;&lt; n - 1 &lt;&lt; endl; </code></pre>
+ <p>As you can see, the output wraps around
+    from zero to the largest possible <tt>unsigned</tt> value.
+  </p>
+  <div class='consoleDisplay'>
+  4294967295
+  </div>
+<h2>Signed Overflow</h2>
+   <p> This is not necessarily the case with signed numbers, however. Overflow
+      and underflow on signed numbers is <mark>undefined behavior</mark>.
+      Consider this code:
+    </p>
+<pre class='language-cpp'><code>int n = 2147483647; // max size of 32-bit int
+cout &lt;&lt; "one larger is " &lt;&lt; n + 1 &lt;&lt; endl;</code></pre>
+    <p>On many modern compilers (including ours), if you add the compiler
+      flag<br /><tt>-fsanitize=undefined</tt>, you will get a runtime error, like
+      that shown here. 
+    </p>
+    <div class='consoleDisplay'>
+    overflow.cpp:7:37: <tt class='r'>runtime error:</tt>
+    signed integer overflow: <br />2147483647 + 1 cannot be represented in type 'int'
+    </div>
+    <p>If you leave off that flag, most compilers wrap 
+      around just as with signed numbers, and it will print this:
+  </p>
+  <div class='consoleDisplay'>
+  one larger is -2147483648
+  </div>
+ 
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

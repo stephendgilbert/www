@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>The f2c Program</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>The <em>f2c</em> Program</h1>
+  <p class='firstLine'>Below you'll find the code for the <tt class='i'>f2c</tt>
+    program. Use the arrow on the left to show and hide the code as we
+    discuss its various features.
+  </p>
+<details>
+  <summary>The <tt class='i'>f2c</tt> Source Code</summary>
+<pre class='line-numbers language-cpp'><code>/**
+ * @file f2c.cpp
+ * @author Stephen Gilbert
+ * @version CS 150 Reader
+ * Converts Fahrenheit to Celsius.
+ */
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+double convert(double temp);
+
+int main()
+{
+    cout &lt;&lt; "Enter a temperature in Fahrenheit: ";
+    double fahr;
+    cin &gt;&gt; fahr;
+    double celsius = convert(fahr);
+    cout &lt;&lt; "Converted: " &lt;&lt; fahr &lt;&lt; "F -&gt; "
+        &lt;&lt; celsius &lt;&lt; "C" &lt;&lt; endl;
+    return 0;
+}
+
+/**
+ * Converts a temperature from Fahrenheit to Celsius.
+ * @param temp the Fahrenheit temperature to convert.
+ * @return the Celsius temperature.
+ */
+double convert(double temp)
+{
+    return (temp - 32) * 5.0 / 9.0;
+}</code></pre>
+</details>
+  <h2>Comments</h2>
+  <p> A <mark>comment</mark> is text provided for 
+      readers of your code; comments are ignored by the compiler. 
+      C++ has two kinds of comments:
+  </p>
+  <ul>
+      <li><strong>Single-line</strong> (<tt>//</tt>) are comments that end 
+          when the line ends.
+      </li>
+      <li><strong>Paired</strong> (<tt>/* … */</tt>) are comments which can enclose
+          several lines.
+      </li>
+  </ul>
+  <p><mark>Documentation comments</mark>(<tt>/** … */</tt>) are 
+      paired comments, which start with <tt>/**</tt> instead of <tt>/*</tt>.
+      The are processed 
+      using a tool called <strong>Doxygen</strong>. The <tt class='i'>f2c</tt>
+      program begins with a documentation <mark>file comment</mark> (lines 1-6), 
+      which describes the program as a whole, and uses three 
+      <strong>Doxygen</strong> <mark>tags</mark>:
+  </p>
+  <ul>
+      <li><tt class='t'>@file</tt> contains the name of the program file and
+          allows <b>Doxygen</b> to locate and identify the functions which it needs
+          to document.
+      </li>
+      <li><tt class='t'>@author</tt> should your CS 150 login id 
+          (such as <strong>sgilbert</strong>).
+      </li>
+      <li><tt class='t'>@version</tt> should contain your CS 150 section 
+          (such as <strong>Spring '24 MWAM</strong>)
+      </li>
+  </ul>
+  <p> Functions also have documentation comments appearing <mark>before</mark> 
+      each one. Such comments start with a line describing the 
+      purpose of the functions, and then contain tags
+      which describe the function <mark>inputs and outputs</mark>:
+  </p>
+  <ul>
+      <li><tt class='t'>@param</tt> is the name and description 
+          of each input, or <strong>parameter</strong>.
+      </li>
+      <li><tt class='t'>@return</tt> describes the meaning of the 
+          output produced by the function.
+      </li>
+  </ul>
+  <p> Lines 24-28 in the sample code contain the documentation comment for 
+      the    <tt class='i'>convert</tt> function. You'll learn more about
+      documentation comments in the homework.
+  </p>
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

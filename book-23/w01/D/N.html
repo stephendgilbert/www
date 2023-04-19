@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+
+    <title>Expression Evaluation</title>
+</head>
+<body>
+<div id='page'>
+<div>
+  <h1>Expression Evaluation</h1>
+  <p class='firstLine'>When operators and operands are 
+    <strong>evaluated</strong>, each operator
+    is applied to its operands, and a <strong>temporary value</strong> is
+    calculated. This is the <mark>result</mark>
+    of the expression.
+  </p>
+  <p>Let's see how this expression is <strong>evaluated</strong>:
+  
+<pre class='language-cpp'><code>int a = 3 + 7 * 5 / 2 - 4;</code></pre>
+  </p>
+  <ol>
+    <li>There are <strong>six operands</strong>: the variable <tt>a</tt>s 
+      and five <tt>int</tt> literals, along with <strong>five operators</strong>: 
+      the assignment operator, multiplication, division, addition and subtraction.
+    </li>
+    <li>Multiplication and division have higher precedence than addition or
+        subtraction. However, the <tt>*</tt> and <tt>/</tt> operators are
+        <mark>tied</mark> when it comes to dealing with the <tt>5</tt>. 
+        That means we have to fall back on <mark>associativity</mark>,
+        going left-to-right, performing the multiplication before the division.
+<pre class='language-cpp'><code>a = 3 + ((7 * 5) / 2) - 4;</code></pre>
+        Using parentheses we can represent the expression at this stage like 
+        this. Evaluating those subexpressions, we end up with:
+<pre class='language-cpp'><code>a = 3 + ((35) / 2) - 4;   // multiplication
+a = 3 + 17 - 4;           // division</code></pre>
+    </li>
+    <li>Now we have three operands and two operators at the same precedence.
+      Again, we fall back on associativity (left to right) and evaluate addition (on the left)
+      and then subtraction (on the right).
+<pre class='language-cpp'><code>a = (3 + 17) - 4;   // addition
+a = 20 - 4;         // subtraction</code></pre>
+    </li>
+    <li>The assignment operator has the lowest precedence of all, so
+        we finish up by copying <tt>16</tt> into the variable <tt>a</tt>
+        (this is the <mark>side effect of the expression) and returning
+        <tt>16</tt> as its value.
+    </li>
+  </ol>
+  <p>In C and C++, the <mark>order of operation</mark> (specified by
+      precedence and associativity) and the 
+      <strong>order of evaluation</strong>
+      are not identical. Here's a simple example:
+  </p>
+<pre class='language-cpp'><code>x = a() * b() + c();</code></pre>
+  <p> Order of operation guarantees that the results of (<tt>a() * b()</tt>) 
+      will be calculated before the addition of <tt>c()</tt>. 
+      However <mark>no guarantees</mark> are made about the order in which
+      the functions will be called: <tt>c()</tt> could be called 
+      first, or <tt>a()</tt> could be called first.
+  </p>
+  <p>If functions have no side effects (<mark>idempotent functions</mark>)
+    this doesn't make a difference. If functions have side effects, such
+    as printing, the result is <mark>undefined</mark>.
+  </p>
+    
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
