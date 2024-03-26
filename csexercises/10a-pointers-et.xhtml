@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Interactivities</title> 
+    <script type="text/javascript" src="script/horstmann_all_min.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/horstmann_all_min.css"></link>
+  <script type="text/javascript" src="assets/receiveMessage.js"></script> 
+  <style type='text/css'>
+     ol.interactivities > li {
+       list-style: none;
+       margin-bottom: 2em;
+     }
+     body {
+       margin-left: 2em;
+       margin-right: 2em;
+       overflow-y: visible;
+     }
+    </style>
+  </head> 
+  <body>
+   <ol class='interactivities' id='interactivities'>
+<li title='10a-pointers-et' id='10a-pointers-et'><div class='hc-included'>
+<div>
+  <p>Examine the following variable declarations:</p>
+<pre>int a = 1;
+int b = 2;
+int* p = &amp;b;
+int* q = &amp;a;
+</pre>
+  <p>Show the output of each of these code snippets. Answer ? if there is an error or the output cannot be determined.</p> 
+  <div class='horstmann_exampletable'>
+    <table>
+      <tr>
+        <th>Code</th> 
+        <th>Output</th> 
+        <th>Explanation</th> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>cout &lt;&lt; *p &lt;&lt; " " &lt;&lt; *q;
+</pre>
+        </td> 
+        <td><code>2 1</code></td> 
+        <td><code>p</code> points to <code>b</code>, <code>q</code> to <code>a</code>.</td> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>cout &lt;&lt; p &lt;&lt; " " &lt;&lt; q;</pre>
+        </td> 
+        <td>?</td> 
+        <td>This will print the memory locations stored in <code>p</code> and <code>q</code>, but we don't know what those are.</td> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>*p = *q;
+cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b;</pre>
+        </td> 
+        <td>1 1</td> 
+        <td>Because <code>q</code> points to <code>a</code> and <code>p</code> points to <code>b</code>, <code>b</code> is set to the value of <code>a</code>.</td> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>q = p;
+(*p)++;
+(*q)++;
+cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b;</pre>
+        </td> 
+        <td>1 3</td> 
+        <td>Both <code>p</code> and <code>q</code> point to <code>b</code>, so it is incremented twice.</td> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>int* r;
+*p = *r;
+cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b;</pre>
+        </td> 
+        <td>?</td> 
+        <td><code>r</code> has not been initialized, so we don't know where it points to. <code>*r</code> might be an unpredictable value, or the program might terminate if <code>r</code> points to an address that the program may not access.</td> 
+      </tr> 
+      <tr>
+        <td>
+          <pre>r = nullptr;
+*p = *r;
+cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b;</pre>
+        </td> 
+        <td>?</td> 
+        <td>It is an error to access data through a <code>nullptr</code>.</td> 
+      </tr> 
+    </table> 
+    <script type='text/javascript'>//<![CDATA[
+				horstmann_exampletable.setup.push([])
+   //]]>
+    </script> 
+  </div> 
+</div>
+</div></li>
+</ol>
+  <div class='vstreport'></div>
+</body></html>
