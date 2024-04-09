@@ -26,15 +26,14 @@
     <li>
       The accessor is <tt>const</tt> and returns a value. </li>
     <li>
-      The non-<tt>const</tt> mutator returns a reference, which can
-      be assigned to. 
+      The non-<tt>const</tt> mutator takes and argument and returns <tt>void</tt>.
     </li>
   </ul>
-<pre class='language-cpp'><code>Time Time::hours() const { return m_hours; }  // accessor
-Time&amp; Time::hours()                           // mutator
+<pre class='language-cpp'><code>int Time::hours() const { return m_hours; }  // accessor
+void Time::hours(int h)                      // mutator
 {
     if (h &lt; 0 || h &gt; 23) throw out_of_range("...");
-    return m_hours;
+    m_hours = h;
 }</code></pre>
 <p>In general, it is safer to allow clients to <mark>read the 
       values</mark> of the data members than it is allow 
