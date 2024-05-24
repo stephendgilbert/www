@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Counting &amp; Adding</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Counting &amp; Accumulating</h1>
+  <p class='firstLine'>Let's start with counting. To count 
+    all of the elements that <strong>match a condition</strong>:
+  </p>
+<pre class='pcode'>
+counter &lt;- 0
+for each element in the array
+    if the element matches the condition then
+        counter &lt;- counter + 1</pre>
+  <p>Here's a <strong>traditional implementation</strong> of 
+      this that counts for exact matches to a value:
+  </p>
+<pre class='language-cpp'><code>int aCount(const int a[], size_t len, int value)
+{
+    int counter = 0;
+    for (size_t i = 0; i &lt; len; ++i)
+        if (a[i] == value) 
+            counter++;
+    return counter;
+}</code></pre>
+  <p class='firstLine'>Cumulative algorithms such as sum, 
+      average, standard deviation, and so on, visit each
+      element in the array and then add, multiply or otherwise 
+      process it. 
+      Here is an example which adds all of the <strong>even 
+      numbers</strong> in an array named <tt>a</tt>:
+  </p>
+  <ul>
+      <li>
+          The array <tt>a</tt> is <tt>const</tt>, since the 
+            elements won't be changed.
+      </li>
+      <li>The <mark>accumulator</mark> <tt>sum</tt> is <tt>double</tt> 
+          so it doesn't overflow.
+      </li>
+      <li> Only the <mark>even</mark> elements (those where 
+          <tt>n</tt> <tt>%</tt> <tt>2</tt> <tt>==</tt> <tt>0</tt>)
+          are added.
+      </li>
+  </ul>
+<pre class='language-cpp'><code>double addEvens(const int a[], size_t len)
+{
+    double sum{0};
+    for (size_t i = 0; i &lt; len; ++i)
+    {
+        if (a[i] % 2 == 0) { sum += a[i]; }
+    }
+    return sum;
+}</code></pre>
+
+
+    
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
