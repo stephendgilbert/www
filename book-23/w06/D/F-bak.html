@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Pipes &amp; Pipelines</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Pipes &amp; Pipelines</h1>
+    <p class='firstLine'>Input redirection gets input from a file and 
+      output redirection sends its data to another file. Pipes, however, 
+      redirect the <mark>output</mark> of one program so that it acts
+      as the input <mark>of another program</mark>. The pipe
+      character is the <strong>vertical bar</strong>. Several pipe commands is
+      called <mark>a pipeline</mark>.
+  </p>
+  <p>The Unix ls command shows the files of the    
+      <strong>current directory</strong> on standard output.
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'>ls</tt><br />
+  <tt class='b'>err.txt  filter.cpp  input.txt  moby.txt  output.txt</tt></div>
+  <p> Of course you can save the directory listing to a file using output redirection:
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'> ls &gt; files.txt</tt></div>
+  <p> However, instead of saving it, we can <mark>pipe the output</mark> 
+      to the <tt>wc</tt> (<strong>word count</strong>) filter, adding a 
+      command-line switch <tt>-l</tt>, to indicate that we only want to 
+      count the number of lines. Try it yourself and see what happens.
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'> ls | wc -l</tt></div>
+  <p>Here is another pipeline which lists the current directory, and then
+    <strong>sorts the output</strong> in reverse order, sending that output to
+    the screen.
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'>ls | sort -r</tt></div>
+  <p> One of the most useful Unix filters is <tt>grep</tt> (which stands for the mouthful
+      "global regular expression parser"). While quite complicated, especially
+      when used with <mark>regular expressions</mark>, it is easy to use for
+      searching through text to find a particular word.
+  </p>
+  <p>Let's find out, for instance, on which lines the name    
+      <strong>Ishmael</strong> is used in Moby Dick.
+  </p>
+   <div class='consoleDisplay width-90'>$ <tt class='t'>cat &lt; moby.txt | grep "Ishmael" -n</tt></div>
+   <p>And how many lines are there??
+  </p>
+   <div class='consoleDisplay width-90'>$ <tt class='t'>cat &lt; moby.txt | grep "Ishmael" -n | wc -l</tt></div>
+    
+  
+  
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>

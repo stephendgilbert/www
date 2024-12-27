@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>Output Redirection</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>Output Redirection</h1>
+    <p class='firstLine'>All standard output streams are connected to the console; any output
+      appears on your screen. You can <mark>redirect standard output</mark> by using
+      the <mark><tt>&gt;</tt></mark> symbol when you run:
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'> cat &lt; input.txt &gt; output.txt</tt></div>
+ <p> This time, no output will appear on your screen; instead, the file 
+      <tt>output.txt</tt> will be created and all the output, which would have
+      been sent to the screen, will instead be written to the file.
+      <mark>This can be a little dangerous</mark>, because if there is
+      <strong>already</strong> an <tt>output.txt</tt>, it will be 
+      <strong>overwritten</strong> with the new data.
+  </p>
+  <p> Ater you've typed the previous line, you can examine the new
+      contents of <tt>output.txt</tt> by using <tt>cat</tt> again, like this:
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'>cat &lt; output.txt</tt><br />
+   <tt class='b'>This is text stored in "input.txt".<br />
+   A second line in input.txt<br /></tt>
+   $</div>
+  <p>Instead of erasing the existing data in the output file, 
+      you can <mark>append</mark> to it by using the <mark><tt>&gt;&gt;</tt></mark>
+      symbols like this:
+  </p>
+  <div class='consoleDisplay width-90'>$ <tt class='t'> cat &lt; input.txt <mark>&gt;&gt;</mark> output.txt</tt></div>
+  <p>Try it and see what <tt>output.txt</tt> contains now.</p>
+   
+   
+</div>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
