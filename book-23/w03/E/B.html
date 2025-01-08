@@ -27,19 +27,20 @@ While the value is not the sentinel
     The code used to read each data value is <mark>duplicated,
     before the loop and at the end of the loop</mark>.
 </p>
-<p> Here's a <strong>primed-sentinel-loop</strong> that sums a sequence, using
-    <tt>0</tt> as the sentinel:
+<p> <a target='_blank' href='https://onlinegdb.com/5szZx0PUi'>Here's 
+    a <strong>primed-sentinel-loop</strong></a>
+    that sums a sequence, using <tt>0</tt> as the sentinel:
 </p>
 <pre class='language-cpp'><code>cout &lt;&lt; "Add integers. Enter 0 when done." &lt;&lt; endl;
 
-int total = 0, value = -1;
+int total = 0;
 cout &lt;&lt; "&gt; ";
+int value = -1;
 cin &gt;&gt; value;               // Read before the loop
 while (value != 0)          // Check for the sentinel
 {
     total += value;         // No sentinel? Process
-    cout &lt;&lt; "&gt; ";           // Prompt and read next item
-    cin &gt;&gt; value;
+    cin &gt;&gt; value;           // Read next value
 }
 cout &lt;&lt; "Total: " &lt;&lt; total &lt;&lt; endl;</code></pre>
 
