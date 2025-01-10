@@ -19,25 +19,26 @@
       handle a different type of exception, like this:
   </p>
 <pre class='language-cpp'><code>try {
-    int n = stoi(str); // throws invalid_argument or out_of_range
+    int n = stoi(str);    // may throw an invalid_argument exception
+    int x = str.at(5);    // may throw an out_of_range exception
     // ... other statements that may throw exceptions
 }
 catch (const invalid_argument&amp; e) {
-    // handle "cannot convert" errors from stoi()
+    // handle errors from stoi
 }
 catch (const out_of_range&amp; e) {
-    // handle "too large" errors from stoi()
+    // handle errors from at()
 }
 catch (...) {
     // handle any exceptions not previously caught
 }</code></pre>
   <p> The last block, with the <tt>...</tt> in the argument list is the
-      <mark>catch all</mark> handler. It catches <strong>any exceptions</strong> 
+      <mark>catch all</mark> handler. It catches<strong>any exceptions</strong> 
       thrown in the <tt>try</tt> block, <mark>not previously caught.</mark> 
       The <strong>catch all</strong> hander <mark>only</mark> catches 
       thrown exceptions, not other errors like segmentation faults or
       <mark>operating system traps or signals</mark> such as those caused
-      by dividing by zero. Your code will jump to <strong>only one</strong> of the 
+      by dividing by zero. Code jumps to <strong>only one</strong> of the 
       <tt>catch</tt> blocks shown here. If no exceptions
       are thrown, then no <tt>catch</tt> blocks are entered.
   </p>
@@ -48,9 +49,6 @@ catch (...) {
       and then call <tt>e.what()</tt> like this:
   </p>
 <pre class='language-cpp'><code>catch (const invalid_argument&amp; e) {
-    cerr &lt;&lt; "Error: " &lt;&lt; e.what() &lt;&lt; endl;
-}
-catch (const out_of_range&amp; e) {
     cerr &lt;&lt; "Error: " &lt;&lt; e.what() &lt;&lt; endl;
 }
 cout &lt;&lt; "--program done--" &lt;&lt; endl;</code></pre>

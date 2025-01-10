@@ -28,40 +28,23 @@ if (b &lt; c) throw 3.5;   // throw a double</code></pre>
       <a target='_blank' 
         href="https://en.cppreference.com/w/cpp/string/basic_string/stol">
           library documentation
-      </a>says that the function throws <b>two</b> different kinds
-          of exceptions:
-  </p>
-  <ul>
-    <li>An <tt>invalid_argument</tt> exception when the argument cannot
-        be converted to an int.
-    </li>
-    <li>An <tt>out_of_range</tt> exception when the converted argument
-        would be too big to fit into an <tt>int</tt>.
-    </li>
-  </ul>The header file, <tt>&lt;stdexcept&gt;</tt> defines 
-      both of these (and several other classes) that let us
+      </a>says that the function throws an <tt>invalid_argument</tt> 
+      exception.</p><p> The header file, <tt>&lt;stdexcept&gt;</tt> defines 
+      this and several other classes that let us
       specify what specific error triggered the exception,
       similar to the <tt>Exception</tt> class hierarchy from
       the Java Class Libraries. (Click the image to enlarge it.)
   </p>
-  <p>Both of these exceptions:
+  <p>The <tt>invalid_argument</tt> exception is ideal because
   </p>
   <ul>
-    <li>have a constructor which takes a <tt>string</tt> argument, useful for error messages.
-    <li>have a member function <tt>what()</tt> that returns what the error was</li>
+    <li>its constructor takes a <tt>string</tt> argument, useful for error messages.
+    <li>it has a member function <tt>what()</tt> that returns what the error was</li>
   </ul>
-  <p>Include <tt>&lt;stdexcept&gt;</tt>, and rewrite the <tt>throw</tt> statements like this:
+  <p>Include <tt>&lt;stdexcept&gt;</tt>, and rewrite the <tt>throw</tt> statement like this:
   </p>
-<pre class='language-cpp'><code>if (in.eof()) 
-    throw out_of_range("str + " is too large for an int.");
-else
-    throw invalid_argument(str + " not an int.");</code>
-</pre>
-  <p>The first check here, <code class='language-cpp'>if (in.eof())...</code>
-     is thrown when all of the string has been converted to integers, but the
-     resulting integer is to large to fit into an <tt>int</tt>.
-      The second is thrown when the string cannot be converted at all.
-  </p>
+<pre class='language-cpp'><code>throw invalid_argument(str + " not an int.");</code></pre>
+  
 </div>
 <div id='footer'>
 <p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
