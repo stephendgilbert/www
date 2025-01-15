@@ -25,9 +25,12 @@
       <tt>0</tt>. Do not use the C language value <tt>NULL</tt>.
   </p>
   <p>It is <mark>illegal to dereference</mark> a null pointer. 
-    In UNIX, it usually results in a <strong>segmentation fault</strong>, 
-    but that is <strong>not guaranteed</strong>. Some machines return 
-    the contents of address <tt>0000</tt>. As a result, 
+    In UNIX, it usually <a href='https://onlinegdb.com/LLdlutCAU'
+    target='_blank'>results in a <strong>segmentation fault</strong></a>, 
+    but that is <strong>not guaranteed</strong>. Some machines 
+    <a href='https://cpp.sh/?source=%23include+%3Ciostream%3E%0Ausing+namespace+std%3B%0A%0Aint+main()%0A%7B%0A++++int+*p+%3D+nullptr%3B%0A++++cout+%3C%3C+*p+%3C%3C+endl%3B%0A%7D'
+      target='_blank'>return 
+    the contents of address <tt>0000</tt></a>. As a result, 
     <mark>this is undefined behavior</mark>, as
       in the case of uninitialized pointers.
   </p>

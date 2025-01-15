@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../cs150.css' rel='stylesheet' media='all'>
+    <link href='../../prism.css' rel='stylesheet'>
+    <script src='../../prism.js'></script>
+    <title>The std::array Library Type</title>
+</head>
+<body>
+<div id='page'>
+<div>
+   <h1>The <i>array</i> &amp; <i>span</i> Library Types</h1>
+  <p class='firstLine'>C++11 added the <tt>std::array</tt> library type
+  in an attempt to create a safer array, without adding any
+  of the overhead of the <tt>vector</tt> class. The new
+  <tt>array</tt> type allows range-checked access to it's 
+  elements, knows the number of elements it contains, allows
+  assignment, and comparison, just like <tt>vector</tt>.
+  </p>
+  <p><a href='https://onlinegdb.com/CdeBB5Xtq' target='_blank'>Here 
+    are some examples</a> that you can compare with the 
+    previous page, which shows the difference between
+    the built-in arrays, and the <tt>array</tt> type
+<pre class='language-cpp'><code>array&lt;int, 3&gt; a1{1, 2, 3}, a2;
+a2 = a1;                    // 1. Fine
+a2[0] = a1[0];              // 2. Fine
+a2 = {3, 4, 5};             // 3. Fine
+if (a1 == a2) . . .         // 4. Fine
+cout &lt;&lt; a1.at(3);     // 5. throws an exception
+</code></pre>
+  <p>There is one downside of using <tt>std::array</tt> instead of the
+      built-in C-style array. When you pass the new <code>std::array</code>
+      to a function, your function <b>must</b> specify the size of the
+      array it is going to operate on, like this:
+  </p>
+  <pre class='language-cpp'><code>void print(const string&amp; desc, const array&lt;int, 3>&amp; a);</code></pre>
+  <p>The <tt>print()</tt> function show here will only work on
+    <tt>int</tt> arrays with three elements. You can fix this shortcoming
+    by writing function templates, or, if you can use C++20, using the
+    new <tt>span</tt> type. The <tt>span</tt> type is really exciting
+    because it works on any type of contiguous, sequential container.
+    <a href='https://onlinegdb.com/YALl_eMs8' target='_blank'>Here is 
+    an example of the same function, using <tt>span</tt></a>.
+  </p>
+     
+</div>
+<br clear='all'>
+<div id='footer'>
+<p><img src='https://du11hjcvx0uqb.cloudfront.net/dist/images/cc/cc_by_nc-1d2b7301ee.png'
+      class='left'
+    alt='CC-Attribution-No Commercial icon.'>
+    This course content is offered under a 
+    <a target='_blank' href='https://creativecommons.org/licenses/by-nc/4.0'>CC
+      Attribution Non-Commercial</a> license. Content in this course
+      can be considered under this license unless otherwise noted.
+</p>
+</div>
+</div>
+</body>
+    <script src='../../receiveMessage.js'></script>
+</html>
