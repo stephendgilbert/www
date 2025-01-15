@@ -12,19 +12,23 @@
 <div id='page'>
 <div>
    <h1>Templates &amp; Overloading</h1>
-  <p class='firstLine'>Suppose you wanted to print 
-    <strong>pointers</strong> differently than non-pointers, you can
-      add an <mark>overloaded template function</mark> like this:
+  <p class='firstLine'>Suppose you wanted to print different kinds
+    of values in different ways? You can do that by
+    <a href='https://onlinegdb.com/yBf-I6J9_' target='_blank'>
+    writing different kinds of overloaded functions</a>.
+    For instance, what if you want to print <strong>pointers</strong> 
+    differently than non-pointers. You can
+    add an <mark>overloaded template function</mark> like this:
   </p>
 <pre class='language-cpp'><code>template &lt;typename T&gt;
-void print(const T* p)
+void print(T* p)
 {
     cout &lt;&lt; "Pointer: " &lt;&lt; p &lt;&lt; " ";
     if (p) cout &lt;&lt; *p; else cout &lt;&lt; "nullptr";
 }</code></pre>
-  <p> Now, what if you want
-      floating-point numbers and Booleans to print differently than other 
-      kinds of values? You can add a pair of <mark>explicit, non-template, 
+  <p> Now, what if you want floating-point numbers and Booleans 
+      to print differently than other kinds of values? 
+      You can add a pair of <mark>explicit, non-template, 
       overloaded functions</mark>, like this:
   </p>
 <pre class='language-cpp'><code>void print(double val, int dec=2)

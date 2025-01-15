@@ -13,10 +13,18 @@
 <div>
    <h1>Explicit Template Arguments</h1>
   <p class='firstLine'>Suppose you wish to pass <tt>3.5</tt> to 
-      the <tt>print(int)</tt> version of the template. You
-      may <mark>explicitly instantiate</mark> the function
-      by specifying the type of template parameter inside angle 
-      brackets, when calling the function, like this:
+      the <tt>print(int)</tt> function generated from the template 
+      shown here.
+  </p>
+  <pre class='language-cpp'><code>template &lt;typename T&gt; 
+void print(const T&amp; value) {
+  cout &lt;&lt; value &lt;&lt; endl;
+}</code></pre>
+  <p> Writing <tt>print(3.5)</tt> will generate the <tt>print(double)</tt>
+      function. You may <mark>explicitly instantiate</mark> a
+      <i>different</i> function by specifying the type of template 
+      parameter inside angle brackets, when calling the function, 
+      like this:
   </p>
 <pre class='language-cpp'><code>print&lt;int&gt;(3.5);</code></pre>
   <p>Even though you pass a <tt>double</tt> as the function argument, 
@@ -25,7 +33,7 @@
     the fractional part of the argument before it prints the number, 
     rather than generating an overloaded <tt>print(double)</tt> function.
   </p>
-  <p>To fix your <tt>addem()</tt> problem, you can just add an extra 
+  <p>Similarly, to fix your <tt>addem()</tt> problem, you can just add an extra 
     <strong>template parameter</strong> for the return type:</p>
 <pre class='language-cpp'><code>template &lt;typename RET, typename T, typename U&gt;
 RET addem(const T&amp; a, const U&amp; b)

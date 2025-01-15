@@ -25,7 +25,7 @@ auto addem(const T&amp; a, const U&amp; b)->decltype(a + b)
     the <strong>deduced</strong> return type so it <mark>follows</mark> the
     argument list allows the compiler to replace the return type with the
     <mark>declared type</mark> of the expression <tt>a+b</tt>. (That's what
-    the <tt>decltype</tt> keyword calculates at compile time.
+    the <tt>decltype</tt> keyword calculates at compile time.)
   </p>
   <p> In C++14 this was further simplified. We can now write the 
       <tt>addem</tt> template
@@ -37,7 +37,8 @@ auto addem(const T&amp; a, const U&amp; b)
 {
     return a + b;
 }</code></pre>
-  <p> That doesn't mean, however, that you can write a template where only the
+  <p> That doesn't mean, however, that you can write a template where 
+      <mark>only</mark> the
       return type differs. For instance, the following template will not 
       compile because it can't determine whether to use <tt>int</tt>
       or <tt>double</tt> for the return type
