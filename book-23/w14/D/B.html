@@ -28,10 +28,10 @@
 {
     assert(hours &gt;= 0 &amp;&amp; hours &lt; 24);
     const int kSecondsPerHour = 3600;
-    const int kHoursPerMinute = 60;
+    const int kSecondsPerMinute = 60;
     auto time = static_cast&lt;int&gt;(hours * kSecondsPerHour);
     m_hours = time / kSecondsPerHour;
-    m_minutes = time % kSecondsPerHour / kHoursPerMinute;
+    m_minutes = time % kSecondsPerHour / kSecondsPerMinute;
 }</code></pre>
 <div>
 

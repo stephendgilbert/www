@@ -16,7 +16,7 @@
  <p class='firstLine'>One use of the <tt class='i'>for</tt> loop 
     is to <strong>process strings</strong>.
     The <tt class='i'>for</tt> loop, and the <mark>asymmetric bounds pattern</mark>
-    are ideal, because the subscripts use by strings and arrays all begin at <tt>0</tt>,
+    are ideal, because the subscripts used by strings and arrays all begin at <tt>0</tt>,
     and the last element is always found at <tt>size()</tt> <tt>–</tt> <tt>1</tt>.
   </p>
   <p> The <strong>canonical classic</strong> <em>for</em> loop to process every
@@ -54,7 +54,7 @@
     <ul>
       <li>cast the returned value from <tt>str.size()</tt> to an <tt>int</tt>
           like this:
-          <code class='language-cpp'>for (int i = static_cast&lt;int&gt;(str.size()); i &gt;= 0; --i) ...</code>
+          <code class='language-cpp'>for (int i = static_cast&lt;int&gt;(str.size()) - 1; i &gt;= 0; --i) ...</code>
       </li>
       <li>make sure that the <tt>string</tt> you are processing is 
         no longer than the positive range of an <tt>int</tt>. If you 
